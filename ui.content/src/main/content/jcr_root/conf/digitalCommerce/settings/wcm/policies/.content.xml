@@ -9,6 +9,8 @@
                 <responsivegrid jcr:primaryType="nt:unstructured">
                     <content-default
                         jcr:description="Policy for editable layout containers"
+                        jcr:lastModified="{Date}2019-12-31T15:06:31.230+05:30"
+                        jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tech Data Digital Commerce Default"
                         sling:resourceType="wcm/core/components/policy/policy"
