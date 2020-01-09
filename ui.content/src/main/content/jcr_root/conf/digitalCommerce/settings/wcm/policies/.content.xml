@@ -2,7 +2,21 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
-    <rep:policy/>
+    <digitalCommerce jcr:primaryType="nt:unstructured">
+        <components jcr:primaryType="nt:unstructured">
+            <form jcr:primaryType="nt:unstructured">
+                <container jcr:primaryType="nt:unstructured">
+                    <form-container
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tech Data Digital Commerce Form"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/apps/digitalCommerce/components/form/button,/apps/digitalCommerce/components/form/hidden,/apps/digitalCommerce/components/form/options,/apps/digitalCommerce/components/form/text]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </form-container>
+                </container>
+            </form>
+        </components>
+    </digitalCommerce>
     <wcm jcr:primaryType="nt:unstructured">
         <foundation jcr:primaryType="nt:unstructured">
             <components jcr:primaryType="nt:unstructured">
@@ -31,23 +45,19 @@
                             jcr:primaryType="nt:unstructured"
                             mergeList="{Boolean}true"/>
                     </content-default>
+                    <content-all-core
+                        jcr:description="Enabling All core components, from components, and layout container to template authors"
+                        jcr:lastModified="{Date}2020-01-07T20:30:23.555+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tech Data Digital Commerce All Core Components"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/libs/cq/experience-fragments/editor/components/experiencefragment,/libs/wcm/foundation/components/responsivegrid,group:Tech Data Digital Commerce,group:Tech Data Digital Commerce Form]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </content-all-core>
                 </responsivegrid>
             </components>
         </foundation>
     </wcm>
-    <digitalCommerce jcr:primaryType="nt:unstructured">
-        <components jcr:primaryType="nt:unstructured">
-            <form jcr:primaryType="nt:unstructured">
-                <container jcr:primaryType="nt:unstructured">
-                    <form-container
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Tech Data Digital Commerce Form"
-                        sling:resourceType="wcm/core/components/policy/policy"
-                        components="[/apps/digitalCommerce/components/form/button,/apps/digitalCommerce/components/form/hidden,/apps/digitalCommerce/components/form/options,/apps/digitalCommerce/components/form/text]">
-                        <jcr:content jcr:primaryType="nt:unstructured"/>
-                    </form-container>
-                </container>
-            </form>
-        </components>
-    </digitalCommerce>
+    <rep:policy/>
 </jcr:root>
