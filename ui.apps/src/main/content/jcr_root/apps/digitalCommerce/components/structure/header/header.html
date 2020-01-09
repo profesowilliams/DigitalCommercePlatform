@@ -1,3 +1,6 @@
+<sly data-sly-test="${wcmmode.edit}">
+	<div class="cq-placeholder section" data-emptytext="${component.title}"></div>
+</sly>
 <header class="container-fluid shadow-sm td-corp">
   <!--
   <section class="row">
@@ -55,6 +58,18 @@
       </div>
       <div class="col-lg-3">
         <nav class="top-nav td-fineprint text-right py-0">
+	      <sly data-sly-use.jsonModel="${'com.techdata.digitalCommerce.core.models.LoginModel'}">
+			<sly data-sly-test= ${jsonModel.isLoggedIn==false}>Login</sly>
+			<sly data-sly-test= ${jsonModel.isLoggedIn==true}>
+			    <div data-sly-list.keyName="${jsonModel.jsonMap}"> 
+					<sly data-sly-test="${keyname == 'UserId'}"><div>User Id : ${jsonModel.jsonMap[keyName]}</div></sly>
+					<sly data-sly-test="${keyname == 'CustomerNumber'}"><div>Customer Number : ${jsonModel.jsonMap[keyName]}</div></sly>
+					<sly data-sly-test="${keyname == 'FirstName'}"><div>First Name : ${jsonModel.jsonMap[keyName]}</div></sly>
+					<sly data-sly-test="${keyname == 'LastName'}"><div>Last Name : ${jsonModel.jsonMap[keyName]}</div></sly>
+				</div>
+			    Logout
+			 </sly>
+			</sly>
           <a href="" class="td-font btn bnt-link td-call-outs mr-2">
             <i class="fas fa-search"></i>
           </a>
