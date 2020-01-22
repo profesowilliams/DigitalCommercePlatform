@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2020-01-16T12:04:10.015+05:30"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/base-page"
+        jcr:description="News / Article List page Template"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="news/article-list-page"
+        status="enabled"/>
+</jcr:root>
