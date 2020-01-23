@@ -3,6 +3,6 @@
     cq:adobeTargetExportFormat="html"
     jcr:primaryType="sling:OrderedFolder"
     jcr:title="Digital Commerce Tech Data">
-    
     <ExperienceFragmentTeaser/>
+    <ExperienceFragmentCTA/>
 </jcr:root>

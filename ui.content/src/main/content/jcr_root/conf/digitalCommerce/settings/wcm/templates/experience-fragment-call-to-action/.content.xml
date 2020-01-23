@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2020-01-21T15:24:54.332+05:30"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/experience-fragments-template"
+        jcr:description="Experience Fragment created for Call To Action"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Experience fragment Call To Action"
+        status="enabled"/>
+</jcr:root>
