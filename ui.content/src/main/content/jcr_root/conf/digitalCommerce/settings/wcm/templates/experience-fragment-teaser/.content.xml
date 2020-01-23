@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2020-01-15T18:12:13.428+05:30"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/experience-fragments-template"
+        jcr:description="This experience fragment is used for teaser copmponent"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Experience fragment teaser"
+        status="enabled"/>
+</jcr:root>

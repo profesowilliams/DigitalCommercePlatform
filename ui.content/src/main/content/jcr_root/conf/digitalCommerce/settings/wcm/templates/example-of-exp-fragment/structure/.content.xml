@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2020-01-15T18:34:51.088+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/digitalCommerce/settings/wcm/templates/example-of-exp-fragment"
+        jcr:primaryType="cq:PageContent"
+        sling:resourceType="digitalCommerce/components/structure/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <experience_fragment
+                jcr:created="{Date}2020-01-15T18:18:36.328+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-01-15T18:18:47.064+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digitalCommerce/components/content/Experience Fragment"
+                fragmentPath="/content/experience-fragments/DigitalCommerceTechData/ExperienceFragmentteaser/master"
+                text="Snowy Mountain Description of Snowy Mountain CTA Lava Rock Formation Description of Lava Rock Formation Lava into Ocean Description for Lava into Ocean"/>
+        </root>
+        <cq:responsive jcr:primaryType="nt:unstructured">
+            <breakpoints jcr:primaryType="nt:unstructured">
+                <phone
+                    jcr:primaryType="nt:unstructured"
+                    title="Smaller Screen"
+                    width="{Long}650"/>
+                <tablet
+                    jcr:primaryType="nt:unstructured"
+                    title="Tablet"
+                    width="{Long}1200"/>
+            </breakpoints>
+        </cq:responsive>
+    </jcr:content>
+</jcr:root>

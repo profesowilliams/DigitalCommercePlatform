@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2020-01-23T15:45:03.995+05:30"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/digitalCommerce/settings/wcm/templates/experience-fragment-teaser"
+        cq:xfMasterVariation="{Boolean}true"
+        cq:xfVariantType="web"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Experience Fragment Teaser "
+        sling:resourceType="digitalCommerce/components/structure/Experience Fragment">
+        <root
+            jcr:lastModified="{Date}2020-01-15T18:12:06.694+05:30"
+            jcr:lastModifiedBy="admin"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <teaser
+                jcr:created="{Date}2020-01-23T15:41:58.673+05:30"
+                jcr:createdBy="admin"
+                jcr:description="&lt;p>Description of Mountain Ranges&lt;/p>&#xd;&#xa;"
+                jcr:lastModified="{Date}2020-01-23T15:43:08.543+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Mountain Ranges"
+                sling:resourceType="digitalCommerce/components/content/teaser"
+                actionsEnabled="true"
+                descriptionFromPage="false"
+                fileReference="/content/dam/core-components-examples/library/sample-assets/mountain-range.jpg"
+                textIsRich="true"
+                titleFromPage="false">
+                <cq:responsive jcr:primaryType="nt:unstructured">
+                    <default
+                        jcr:primaryType="nt:unstructured"
+                        offset="0"
+                        width="4"/>
+                </cq:responsive>
+                <actions jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        link="/content/digitalCommerce/en"
+                        text="English"/>
+                </actions>
+            </teaser>
+            <teaser_1890171073
+                jcr:created="{Date}2020-01-23T15:42:04.805+05:30"
+                jcr:createdBy="admin"
+                jcr:description="&lt;p>Description of&amp;nbsp;Lava into Ocean&lt;/p>&#xd;&#xa;"
+                jcr:lastModified="{Date}2020-01-23T15:44:25.123+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Lava into Ocean"
+                sling:resourceType="digitalCommerce/components/content/teaser"
+                actionsEnabled="false"
+                descriptionFromPage="false"
+                fileReference="/content/dam/core-components-examples/library/sample-assets/lava-into-ocean.jpg"
+                linkURL="/content/digitalCommerce/en"
+                textIsRich="true"
+                titleFromPage="false">
+                <cq:responsive jcr:primaryType="nt:unstructured">
+                    <default
+                        jcr:primaryType="nt:unstructured"
+                        offset="0"
+                        width="4"/>
+                </cq:responsive>
+            </teaser_1890171073>
+            <teaser_1507214814
+                jcr:created="{Date}2020-01-23T15:42:11.758+05:30"
+                jcr:createdBy="admin"
+                jcr:description="&lt;p>Description of Lava Rock Formation&lt;/p>&#xd;&#xa;"
+                jcr:lastModified="{Date}2020-01-23T15:45:03.905+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Lava Rock Formation"
+                sling:resourceType="digitalCommerce/components/content/teaser"
+                actionsEnabled="true"
+                descriptionFromPage="false"
+                fileReference="/content/dam/core-components-examples/library/sample-assets/lava-rock-formation.jpg"
+                textIsRich="true"
+                titleFromPage="false">
+                <cq:responsive jcr:primaryType="nt:unstructured">
+                    <default
+                        jcr:primaryType="nt:unstructured"
+                        offset="0"
+                        width="4"/>
+                </cq:responsive>
+                <actions jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        link="/content/digitalCommerce/fr"
+                        text="Français"/>
+                </actions>
+            </teaser_1507214814>
+        </root>
+    </jcr:content>
+</jcr:root>
