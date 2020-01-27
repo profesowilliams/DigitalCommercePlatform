@@ -157,7 +157,7 @@ public class LoginModel {
 				isLoggedIn=false;
 
 				try {			
-					con =   urlConnection.conn(urlConfig.getApiUrl());
+					con =   urlConnection.conn(urlConfig.getApiUrl(), td_session_cookie.getValue());
 					try(OutputStream os = con.getOutputStream())
 					{
 						byte[] input = jsonInput.getBytes("utf-8");
