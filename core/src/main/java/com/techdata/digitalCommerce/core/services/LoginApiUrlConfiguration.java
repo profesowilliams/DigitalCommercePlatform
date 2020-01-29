@@ -1,7 +1,4 @@
 package com.techdata.digitalCommerce.core.services;
-
-
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
