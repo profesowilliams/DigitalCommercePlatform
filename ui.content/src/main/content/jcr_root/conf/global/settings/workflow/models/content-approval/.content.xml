@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/libs/settings/wcm/designs/default"
+        cq:lastModified="{Date}2020-01-31T12:30:31.812+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/libs/cq/workflow/templates/model"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Content Approval"
+        sling:resourceType="cq/workflow/components/pages/model">
+        <flow
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <participant
+                jcr:created="{Date}2020-01-23T15:47:58.678+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-01-23T15:48:31.061+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Content approval by editors"
+                sling:resourceType="cq/workflow/components/model/participant">
+                <metaData
+                    jcr:primaryType="nt:unstructured"
+                    DO_NOTIFY="true"
+                    PARTICIPANT="editors"/>
+            </participant>
+            <or
+                jcr:created="{Date}2020-01-23T15:48:39.103+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-01-23T15:48:39.103+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="cq/workflow/components/model/or"
+                branches="2"
+                orSplit="true">
+                <_x0031_
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="cq/flow/components/parsys">
+                    <set_variable_1158552453
+                        jcr:created="{Date}2020-01-27T11:21:41.158+05:30"
+                        jcr:createdBy="admin"
+                        jcr:description="Set value of variables"
+                        jcr:lastModified="{Date}2020-01-27T11:22:19.918+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Approve content"
+                        sling:resourceType="cq/workflow/components/model/set_variable"
+                        defaultValue="false">
+                        <metaData
+                            jcr:primaryType="nt:unstructured"
+                            PROCESS="com.adobe.granite.workflow.core.process.SetVariableProcess"
+                            PROCESS_AUTO_ADVANCE="true"
+                            variableMappings="\{&quot;variableName&quot;:&quot;rejected&quot;,&quot;mappingType&quot;:&quot;LITERAL&quot;,&quot;mappingValue&quot;:&quot;false&quot;}"/>
+                    </set_variable_1158552453>
+                    <process
+                        jcr:created="{Date}2020-01-23T15:53:22.189+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2020-01-27T11:21:57.287+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content approved and published"
+                        sling:resourceType="cq/workflow/components/model/process">
+                        <metaData
+                            jcr:primaryType="nt:unstructured"
+                            PROCESS="com.day.cq.wcm.workflow.process.ActivatePageProcess"
+                            PROCESS_AUTO_ADVANCE="true"/>
+                    </process>
+                </_x0031_>
+                <_x0032_
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="cq/flow/components/parsys">
+                    <set_variable
+                        jcr:created="{Date}2020-01-27T11:08:33.420+05:30"
+                        jcr:createdBy="admin"
+                        jcr:description="Set value of variables"
+                        jcr:lastModified="{Date}2020-01-27T11:16:09.898+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Reject content"
+                        sling:resourceType="cq/workflow/components/model/set_variable"
+                        defaultValue="true">
+                        <metaData
+                            jcr:primaryType="nt:unstructured"
+                            PROCESS="com.adobe.granite.workflow.core.process.SetVariableProcess"
+                            PROCESS_AUTO_ADVANCE="true"
+                            variableMappings="\{&quot;variableName&quot;:&quot;rejected&quot;,&quot;mappingType&quot;:&quot;LITERAL&quot;,&quot;mappingValue&quot;:&quot;true&quot;}"/>
+                    </set_variable>
+                    <dynamic_participant
+                        jcr:created="{Date}2020-01-31T12:29:07.141+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2020-01-31T12:30:31.660+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content rejected - Go to initiator"
+                        sling:resourceType="cq/workflow/components/model/dynamic_participant">
+                        <metaData
+                            jcr:primaryType="nt:unstructured"
+                            DO_NOTIFY="true"
+                            DYNAMIC_PARTICIPANT="/libs/workflow/scripts/initiator-participant-chooser.ecma"/>
+                    </dynamic_participant>
+                    <goto
+                        jcr:created="{Date}2020-01-23T15:54:09.689+05:30"
+                        jcr:createdBy="admin"
+                        jcr:description="Goto Step"
+                        jcr:lastModified="{Date}2020-01-27T11:16:39.254+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Go to editor approval step"
+                        sling:resourceType="cq/workflow/components/model/goto">
+                        <metaData
+                            jcr:primaryType="nt:unstructured"
+                            expression="\{&quot;nodeName&quot;:&quot;ROOT&quot;,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CONDITION&quot;,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;,&quot;value&quot;:{&quot;id&quot;:&quot;rejected&quot;,&quot;displayName&quot;:&quot;rejected&quot;,&quot;type&quot;:&quot;BOOLEAN&quot;,&quot;displayPath&quot;:&quot;workflow_variables/rejected/&quot;,&quot;name&quot;:&quot;rejected&quot;,&quot;parent&quot;:&quot;workflow_variables&quot;}}},{&quot;nodeName&quot;:&quot;OPERATOR&quot;,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_TRUE&quot;,&quot;value&quot;:null}},{&quot;nodeName&quot;:&quot;EXPRESSION&quot;,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;,&quot;value&quot;:null}}]},&quot;nested&quot;:false}}],&quot;isValid&quot;:true,&quot;enabled&quot;:true,&quot;version&quot;:1}"
+                            PROCESS="com.adobe.granite.workflow.core.process.GotoProcess"
+                            PROCESS_AUTO_ADVANCE="false"
+                            TARGET_NODE_PATH="/conf/global/settings/workflow/models/content-approval/jcr:content/flow/participant"/>
+                    </goto>
+                </_x0032_>
+            </or>
+        </flow>
+        <variables jcr:primaryType="nt:unstructured">
+            <rejected
+                jcr:primaryType="nt:unstructured"
+                additionalProperties="\{}"
+                defaultValue="true"
+                name="rejected"
+                type="java.lang.Boolean"/>
+        </variables>
+    </jcr:content>
+</jcr:root>
