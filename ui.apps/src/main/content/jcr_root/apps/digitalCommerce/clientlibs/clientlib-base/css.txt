@@ -1,2 +1,4 @@
 #base=css
 td-global.css
+../../clientlib-vendor/css/googleApiFont.css
+shop-global-v2.css
