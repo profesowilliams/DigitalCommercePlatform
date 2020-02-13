@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:created="{Date}2020-02-11T13:45:35.269+05:30"
+    jcr:createdBy="admin"
     jcr:primaryType="nt:unstructured"
     jcr:title="Text"
     sling:resourceType="cq/gui/components/authoring/dialog"
@@ -35,6 +37,7 @@
                                                 sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                                 externalStyleSheets="[text.css]"
                                                 name="./text"
+                                                path="digitalCommerce/components/content/text/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/text"
                                                 useFixedInlineToolbar="{Boolean}true">
                                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                                     <format
@@ -79,6 +82,48 @@
                                                             </chars>
                                                         </specialCharsConfig>
                                                     </misctools>
+                                                    <paraformat
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*">
+                                                        <formats jcr:primaryType="nt:unstructured">
+                                                            <default_p
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Paragraph"
+                                                                tag="p"/>
+                                                            <default_h1
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 1"
+                                                                tag="h1"/>
+                                                            <default_h2
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 2"
+                                                                tag="h2"/>
+                                                            <default_h3
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 3"
+                                                                tag="h3"/>
+                                                            <default_h4
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 4"
+                                                                tag="h4"/>
+                                                            <default_h5
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 5"
+                                                                tag="h5"/>
+                                                            <default_h6
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Heading 6"
+                                                                tag="h6"/>
+                                                            <default_blockquote
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Quote"
+                                                                tag="blockquote"/>
+                                                            <default_pre
+                                                                jcr:primaryType="nt:unstructured"
+                                                                description="Preformatted"
+                                                                tag="pre"/>
+                                                        </formats>
+                                                    </paraformat>
                                                     <table
                                                         jcr:primaryType="nt:unstructured"
                                                         features="*">
@@ -106,10 +151,14 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         features="*">
                                                         <styles jcr:primaryType="cq:WidgetCollection">
-                                                            <samplestyle
+                                                            <td-space
                                                                 jcr:primaryType="nt:unstructured"
-                                                                cssName="sampleclass"
-                                                                text="Sample class for red text"/>
+                                                                cssName="td-space"
+                                                                text="Color: Black"/>
+                                                            <roboto_x0020_text-sg-primary
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="roboto text-sg-primary"
+                                                                text="Font: Roboto Color: Blue"/>
                                                         </styles>
                                                     </styles>
                                                 </rtePlugins>

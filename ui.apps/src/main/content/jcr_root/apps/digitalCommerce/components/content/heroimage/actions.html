@@ -1,6 +1,0 @@
-<sly data-sly-template.actions="${@ teaser}">
-    <div class="cmp-teaser__action-container" >
-         <a data-sly-test.isNewTab="${properties.openLinkInNewTab}" class="cmp-teaser__action-link" href="${teaser.linkURL}" target="_blank">${properties.buttonLabel}</a>
-         <a data-sly-test="${!isNewTab}" class="cmp-teaser__action-link" href="${teaser.linkURL}">${properties.buttonLabel}</a>
-    </div>
-</sly>
