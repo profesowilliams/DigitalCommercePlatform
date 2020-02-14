@@ -23,12 +23,12 @@
                 <responsivegrid jcr:primaryType="nt:unstructured">
                     <content-default
                         jcr:description="Policy for editable layout containers"
-                        jcr:lastModified="{Date}2019-12-31T15:06:31.230+05:30"
+                        jcr:lastModified="{Date}2020-02-13T16:05:57.093+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tech Data Digital Commerce Default"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:Tech Data Digital Commerce,/apps/digitalCommerce/components/form/container]"
+                        components="[group:Tech Data Digital Commerce,/apps/digitalCommerce/components/form/container,group:Tech Data Digital Commerce Structure]"
                         policyResourceType="wcm/foundation/components/responsivegrid">
                         <cq:authoring jcr:primaryType="nt:unstructured">
                             <assetToComponentMapping jcr:primaryType="nt:unstructured">
@@ -55,6 +55,16 @@
                         components="[/libs/cq/experience-fragments/editor/components/experiencefragment,/libs/wcm/foundation/components/responsivegrid,group:Tech Data Digital Commerce,group:Tech Data Digital Commerce Form]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </content-all-core>
+                    <footer-customLinksPolicy
+                        jcr:lastModified="{Date}2020-02-14T11:11:23.730+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Footer CustomLinks Policy"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/apps/digitalCommerce/components/content/customLinks]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                        <section jcr:primaryType="nt:unstructured"/>
+                    </footer-customLinksPolicy>
                 </responsivegrid>
             </components>
         </foundation>

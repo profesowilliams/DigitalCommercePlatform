@@ -1,0 +1,7 @@
+	div.customLinks {
+    display: flex;
+    justify-content: space-around;
+}
+a.listLinks {
+    color: #ebf5ff;
+}
