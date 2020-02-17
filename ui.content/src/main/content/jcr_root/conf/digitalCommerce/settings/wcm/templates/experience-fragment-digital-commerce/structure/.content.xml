@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:template="/conf/digitalCommerce/settings/wcm/templates/experience-fragment-call-to-action"
+        cq:template="/conf/digitalCommerce/settings/wcm/templates/experience-fragment-digital-commerce"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="digitalCommerce/components/structure/page">
         <root

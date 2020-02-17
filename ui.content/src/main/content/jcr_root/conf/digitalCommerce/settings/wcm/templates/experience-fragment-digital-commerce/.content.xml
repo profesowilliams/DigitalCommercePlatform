@@ -5,8 +5,8 @@
         cq:lastModified="{Date}2020-01-21T15:24:54.332+05:30"
         cq:lastModifiedBy="admin"
         cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/experience-fragments-template"
-        jcr:description="Experience Fragment created for Call To Action"
+        jcr:description="Experience Fragment created for Digital Commerce"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Experience fragment Call To Action"
+        jcr:title="Experience fragment [Digital Commerce]"
         status="enabled"/>
 </jcr:root>
