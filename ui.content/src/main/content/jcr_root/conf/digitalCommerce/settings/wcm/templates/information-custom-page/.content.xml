@@ -7,6 +7,6 @@
         cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/base-page"
         jcr:description="Information Custom Page Template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="information-custom-page"
+        jcr:title="Information Custom Page"
         status="enabled"/>
 </jcr:root>

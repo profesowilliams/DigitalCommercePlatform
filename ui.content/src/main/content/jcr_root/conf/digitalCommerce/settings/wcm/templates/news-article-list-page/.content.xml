@@ -7,6 +7,6 @@
         cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/base-page"
         jcr:description="News / Article List page Template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="news/article-list-page"
+        jcr:title="News/Article List Page"
         status="enabled"/>
 </jcr:root>

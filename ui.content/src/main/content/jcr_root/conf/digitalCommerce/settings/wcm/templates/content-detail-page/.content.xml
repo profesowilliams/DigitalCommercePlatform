@@ -7,6 +7,6 @@
         cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/base-page"
         jcr:description="Content Detail Page Template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="content-detail-page"
+        jcr:title="Content Detail Page"
         status="enabled"/>
 </jcr:root>

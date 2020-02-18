@@ -7,6 +7,6 @@
         cq:templateType="/conf/digitalCommerce/settings/wcm/template-types/base-page"
         jcr:description="Feature page template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="feature-page"
+        jcr:title="Feature Page"
         status="enabled"/>
 </jcr:root>
