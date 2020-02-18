@@ -3,6 +3,8 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2020-02-12T17:29:42.735+05:30"
+        cq:lastModifiedBy="admin"
         cq:template="/conf/digitalCommerce/settings/wcm/templates/content-detail-page"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="digitalCommerce/components/structure/page">
@@ -30,7 +32,13 @@
                 jcr:lastModified="{Date}2019-12-27T12:34:20.640+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="digitalCommerce/components/structure/footer"/>
+                sling:resourceType="digitalCommerce/components/structure/footer">
+                <par
+                    jcr:lastModified="{Date}2020-01-31T11:24:25.274+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="wcm/foundation/components/parsys"/>
+            </footer>
         </root>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">

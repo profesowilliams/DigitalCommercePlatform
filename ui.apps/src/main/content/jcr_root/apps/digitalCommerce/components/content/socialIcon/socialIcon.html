@@ -1,4 +1,4 @@
-<sly data-sly-test="${properties.link==null}">Configure Social Links Component</sly>
-<div class="col-lg-4 corp-social td-title-lg text-center">
-<a href="${properties.link}" class="mr-lg-4 td-brand-white" target="_blank"><i class="${properties.socialIcon}"></i></a>
-</div>
+<sly data-sly-test.empty="${properties.link==null}"/>
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+
+<a href="${properties.link}" class="td-brand-white" target="_blank"><i class="${properties.socialIcon}"></i></a>
