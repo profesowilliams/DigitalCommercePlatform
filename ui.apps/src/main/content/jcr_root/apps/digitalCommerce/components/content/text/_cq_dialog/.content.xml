@@ -155,10 +155,22 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 cssName="td-space"
                                                                 text="Color: Black"/>
-                                                            <roboto_x0020_text-sg-primary
+                                                            <roboto-text-sg-primary
                                                                 jcr:primaryType="nt:unstructured"
                                                                 cssName="roboto text-sg-primary"
                                                                 text="Font: Roboto Color: Blue"/>
+                                                            <h2-class
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="display-5 roboto td-title-xl"
+                                                                text="Heading-Font:Roboto Size:XL"/>
+                                                            <paragraph-1
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="roboto td-title-sm pt-4 h2"
+                                                                text="Paragraph 1: Font: Roboto-Text Size: Small "/>
+                                                            <paragraph-2
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-title-sm pt-3 h2"
+                                                                text="Paragraph 2: Text Size: Small"/>
                                                         </styles>
                                                     </styles>
                                                 </rtePlugins>
