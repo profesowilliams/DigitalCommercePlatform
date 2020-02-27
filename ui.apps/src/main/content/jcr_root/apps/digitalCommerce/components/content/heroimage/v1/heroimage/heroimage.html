@@ -47,7 +47,7 @@
 				<div class="hero-image" data-sly-test="${teaser.imageResource}" data-sly-resource="${teaser.imageResource}"> </div>
                     <div class="hero-banner-section">
                         <h2 data-sly-test="${teaser.title}" class="text-sg-primary td-title-lg ">${teaser.title} </h2>
-
+						<h1 data-sly-test="${properties.subTitle}" class="roboto text-sg-primary">${properties.subTitle}</h1>
                         <h3 class="text-sg-primary td-title-font py-3">${properties.text @ context = 'html'}</h3>
 						<sly data-sly-test="${teaser.linkURL}">
                         <button data-sly-test="${properties.buttonLabel}" class="btn btn-lg td-brand-bg-ocean my-3">
