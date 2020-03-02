@@ -29,11 +29,11 @@
                     <h2 data-sly-test="${teaser.title}" class="display-5 roboto text-sg-primary">${teaser.title}</h2>
                     <h1 data-sly-test="${properties.subTitle}" class="roboto text-sg-primary">${properties.subTitle}</h1>
                     ${properties.text @ context = 'html'}
-                    <sly data-sly-test="${teaser.linkURL}">
-                    <button data-sly-test="${properties.buttonLabel}" class="btn btn-lg td-brand-bg-ocean my-2">
-                        <a class="td-brand-white" data-sly-test.isNewTab="${properties.openLinkInNewTab}" href="${teaser.linkURL}" target="_blank">${properties.buttonLabel}</a>
-                        <a class="td-brand-white" data-sly-test="${!isNewTab}" href="${teaser.linkURL}">${properties.buttonLabel}</a>
-                    </button>
+                     <sly data-sly-test="${teaser.linkURL}">
+                    	<sly data-sly-test="${properties.buttonLabel}">
+                        	<a class="btn btn-lg td-brand-bg-ocean my-2 td-brand-white" data-sly-test.isNewTab="${properties.openLinkInNewTab}" href="${teaser.linkURL}" target="_blank">${properties.buttonLabel}</a>
+                        	<a class="btn btn-lg td-brand-bg-ocean my-2 td-brand-white" data-sly-test="${!isNewTab}" href="${teaser.linkURL}">${properties.buttonLabel}</a>
+                        </sly>
                     </sly>
                 </div>
             </div>
@@ -50,11 +50,11 @@
 						<h1 data-sly-test="${properties.subTitle}" class="roboto text-sg-primary">${properties.subTitle}</h1>
                         <h3 class="text-sg-primary td-title-font py-3">${properties.text @ context = 'html'}</h3>
 						<sly data-sly-test="${teaser.linkURL}">
-                        <button data-sly-test="${properties.buttonLabel}" class="btn btn-lg td-brand-bg-ocean my-3">
-                            <a class="td-brand-white" data-sly-test.isNewTab="${properties.openLinkInNewTab}" href="${teaser.linkURL}" target="_blank">${properties.buttonLabel}</a>
-                            <a class="td-brand-white" data-sly-test="${!isNewTab}" href="${teaser.linkURL}">${properties.buttonLabel}</a>
-                        </button>
-                        </sly>
+							<sly data-sly-test="${properties.buttonLabel}">
+								<a class="btn btn-lg td-brand-bg-ocean my-3 td-brand-white" data-sly-test.isNewTab="${properties.openLinkInNewTab}" href="${teaser.linkURL}" target="_blank">${properties.buttonLabel}</a>
+								<a class="btn btn-lg td-brand-bg-ocean my-3 td-brand-white" data-sly-test="${!isNewTab}" href="${teaser.linkURL}">${properties.buttonLabel}</a>
+							</sly>
+						</sly>
                     </div>
                 </div>
             </div>
