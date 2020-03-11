@@ -1,0 +1,17 @@
+<div class="module_container module_container--outer">        
+	<div>
+    	<a class="module_view-all-link module_view-all-link--top button button--cta" href="${currentPage.parent.path @ extension='html'}">
+		<span class="module_view-all-text">View all news</span>
+		</a>
+    </div>
+	<div class="module_container module_container--inner">
+		<h3 class="module-details_title">
+			<sly data-sly-test.title="${currentPage.properties.pageTitle ? currentPage.properties.pageTitle : currentPage.properties.jcr:title }">${title}</sly>
+		</h3>
+		<div class="module_container module_container--content">
+			<div class="module_date-time">
+				<span>${ 'dd-MM-yyyy' @ format=currentPage.jcr:created}</span>
+			</div>
+		</div>
+	</div>
+</div>

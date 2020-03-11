@@ -3,6 +3,6 @@
     cq:icon="asset"
     jcr:description="Embed a third-party widget or safe free-form HTML."
     jcr:primaryType="cq:Component"
-    jcr:title="Embed"
+    jcr:title="Video"
     sling:resourceSuperType="core/wcm/components/embed/v1/embed"
     componentGroup="Tech Data Digital Commerce"/>

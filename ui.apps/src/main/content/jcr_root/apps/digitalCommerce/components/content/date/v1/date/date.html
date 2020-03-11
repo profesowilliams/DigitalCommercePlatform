@@ -1,0 +1,6 @@
+<sly data-sly-test.empty="${!properties.date}"/>
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+
+<div class="module_date-time">
+	<span>${ 'dd-MM-YYYY' @ format=properties.date}</span>
+</div>

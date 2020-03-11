@@ -15,6 +15,78 @@
                     </form-container>
                 </container>
             </form>
+            <content jcr:primaryType="nt:unstructured">
+                <image jcr:primaryType="nt:unstructured"/>
+                <date jcr:primaryType="nt:unstructured">
+                    <v1 jcr:primaryType="nt:unstructured">
+                        <date jcr:primaryType="nt:unstructured">
+                            <policy_1583327575728
+                                jcr:lastModified="{Date}2020-03-04T18:46:08.539+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Date policy"
+                                sling:resourceType="wcm/core/components/policy/policy">
+                                <jcr:content jcr:primaryType="nt:unstructured"/>
+                                <cq:styleGroups jcr:primaryType="nt:unstructured">
+                                    <item0
+                                        cq:styleGroupLabel="Style"
+                                        jcr:primaryType="nt:unstructured">
+                                        <cq:styles jcr:primaryType="nt:unstructured">
+                                            <item0
+                                                cq:styleClasses="date-module-one"
+                                                cq:styleId="1583327586983"
+                                                cq:styleLabel="Style one"
+                                                jcr:primaryType="nt:unstructured"/>
+                                            <item1
+                                                cq:styleClasses="date-module-two"
+                                                cq:styleId="1583327599776"
+                                                cq:styleLabel="Style two"
+                                                jcr:primaryType="nt:unstructured"/>
+                                        </cq:styles>
+                                    </item0>
+                                    <item1
+                                        cq:styleGroupLabel="Container"
+                                        jcr:primaryType="nt:unstructured">
+                                        <cq:styles jcr:primaryType="nt:unstructured">
+                                            <item0
+                                                cq:styleId="1583327730057"
+                                                cq:styleLabel="2-Column"
+                                                jcr:primaryType="nt:unstructured"/>
+                                            <item1
+                                                cq:styleId="1583327743882"
+                                                cq:styleLabel="3-Column"
+                                                jcr:primaryType="nt:unstructured"/>
+                                        </cq:styles>
+                                    </item1>
+                                </cq:styleGroups>
+                            </policy_1583327575728>
+                        </date>
+                    </v1>
+                </date>
+                <embed jcr:primaryType="nt:unstructured">
+                    <v1 jcr:primaryType="nt:unstructured">
+                        <embed jcr:primaryType="nt:unstructured">
+                            <policy_1582798332643
+                                jcr:lastModified="{Date}2020-02-27T15:42:42.214+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Embed Policy"
+                                sling:resourceType="wcm/core/components/policy/policy"
+                                allowedEmbeddables="core/wcm/components/embed/v1/embed/embeddable/youtube"
+                                embeddablesDisabled="false"
+                                htmlDisabled="false"
+                                urlDisabled="false">
+                                <jcr:content jcr:primaryType="nt:unstructured"/>
+                            </policy_1582798332643>
+                        </embed>
+                    </v1>
+                </embed>
+                <socialIcon jcr:primaryType="nt:unstructured">
+                    <v1 jcr:primaryType="nt:unstructured">
+                        <socialIcon jcr:primaryType="nt:unstructured"/>
+                    </v1>
+                </socialIcon>
+            </content>
         </components>
     </digitalCommerce>
     <wcm jcr:primaryType="nt:unstructured">
@@ -47,33 +119,42 @@
                     </content-default>
                     <content-all-core
                         jcr:description="Enabling All core components, from components, and layout container to template authors"
-                        jcr:lastModified="{Date}2020-01-07T20:30:23.555+05:30"
+                        jcr:lastModified="{Date}2020-02-28T15:09:13.277+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tech Data Digital Commerce All Core Components"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[/libs/cq/experience-fragments/editor/components/experiencefragment,/libs/wcm/foundation/components/responsivegrid,group:Tech Data Digital Commerce,group:Tech Data Digital Commerce Form]">
+                        components="[/libs/cq/experience-fragments/editor/components/experiencefragment,/libs/wcm/foundation/components/responsivegrid,/libs/foundation/components/title,group:Tech Data Digital Commerce,group:Tech Data Digital Commerce Form]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </content-all-core>
                     <footer-customLinksPolicy
-                        jcr:lastModified="{Date}2020-02-14T11:11:23.730+05:30"
+                        jcr:lastModified="{Date}2020-02-28T15:07:57.267+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Footer CustomLinks Policy"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[/apps/digitalCommerce/components/content/customLinks]">
+                        components="[/apps/digitalCommerce/components/content/customlinks/v1/customLinks]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                         <section jcr:primaryType="nt:unstructured"/>
                     </footer-customLinksPolicy>
                     <footer-socialLinkPolicy
-                        jcr:lastModified="{Date}2020-02-17T12:32:24.122+05:30"
+                        jcr:lastModified="{Date}2020-02-28T15:08:24.902+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Footer Social Icons Policy"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="/apps/digitalCommerce/components/content/socialIcon">
+                        components="/apps/digitalCommerce/components/content/socialIcon/v1/socialIcon">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </footer-socialLinkPolicy>
+                    <content-newsArticlePolicy
+                        jcr:lastModified="{Date}2020-03-05T13:11:06.883+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="News Article Policy"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/apps/digitalCommerce/components/content/button,/apps/digitalCommerce/components/content/contentfragment,/apps/digitalCommerce/components/content/date/v1/date,/apps/digitalCommerce/components/content/download,/apps/digitalCommerce/components/content/embed/v1/embed,/apps/digitalCommerce/components/content/image,/apps/digitalCommerce/components/content/text]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </content-newsArticlePolicy>
                 </responsivegrid>
             </components>
         </foundation>
