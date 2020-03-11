@@ -15,7 +15,7 @@
                     </form-container>
                 </container>
             </form>
-            <content jcr:primaryType="nt:unstructured">
+           <content jcr:primaryType="nt:unstructured">
                 <image jcr:primaryType="nt:unstructured"/>
                 <date jcr:primaryType="nt:unstructured">
                     <v1 jcr:primaryType="nt:unstructured">
@@ -86,6 +86,26 @@
                         <socialIcon jcr:primaryType="nt:unstructured"/>
                     </v1>
                 </socialIcon>
+            </content>
+            <content jcr:primaryType="nt:unstructured">
+                <marketo jcr:primaryType="nt:unstructured">
+                    <v1 jcr:primaryType="nt:unstructured">
+                        <marketo jcr:primaryType="nt:unstructured">
+                            <marketoPolicy
+                                jcr:lastModified="{Date}2020-03-05T13:55:56.373+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Marketo Policy"
+                                sling:resourceType="wcm/core/components/policy/policy"
+                                allowedEmbeddables="acs-commons/components/content/embeddable/marketo"
+                                embeddablesDisabled="false"
+                                htmlDisabled="false"
+                                urlDisabled="false">
+                                <jcr:content jcr:primaryType="nt:unstructured"/>
+                            </marketoPolicy>
+                        </marketo>
+                    </v1>
+                </marketo>
             </content>
         </components>
     </digitalCommerce>
