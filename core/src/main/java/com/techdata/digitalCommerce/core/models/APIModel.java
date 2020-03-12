@@ -73,6 +73,13 @@ public class APIModel {
 	@PostConstruct
 	protected void init() {
 		LOG.error("Inside APIModel");
+		
+		String id = httpServletRequest.getParameter(Constants.QUERY_PARAM_ID);
+		if(id!=null)
+		{
+			apiURL = apiURL.replace("{ID}",id);
+		}
+		
 		LOG.error("apiURL " + apiURL);
 		LOG.error("apiURL from Configuration " + digitalCommerceAPIConfiguration.getProductApiUrl());
 
