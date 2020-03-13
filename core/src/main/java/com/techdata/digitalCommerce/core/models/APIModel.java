@@ -1,13 +1,9 @@
 package com.techdata.digitalCommerce.core.models;
-import com.techdata.digitalCommerce.core.services.DigitalCommerceAPIConfiguration;
-import com.techdata.digitalCommerce.core.services.LoginApiUrlConfiguration;
-import com.techdata.digitalCommerce.core.utilities.Cryptography;
-import com.techdata.digitalCommerce.core.utilities.URLConnection;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -23,6 +19,10 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techdata.digitalCommerce.core.constants.Constants;
+import com.techdata.digitalCommerce.core.services.DigitalCommerceAPIConfiguration;
+import com.techdata.digitalCommerce.core.services.LoginApiUrlConfiguration;
+import com.techdata.digitalCommerce.core.utilities.Cryptography;
+import com.techdata.digitalCommerce.core.utilities.URLConnection;
 
 
 @Model(adaptables=SlingHttpServletRequest.class)
@@ -73,36 +73,29 @@ public class APIModel {
 	@PostConstruct
 	protected void init() {
 		LOG.error("Inside APIModel");
-		
-		String id = httpServletRequest.getParameter(Constants.QUERY_PARAM_ID);
-		if(id!=null)
-		{
-			apiURL = apiURL.replace("{ID}",id);
-		}
-		
-		LOG.error("apiURL " + apiURL);
+		LOG.error("apiURL " + getApiURL());
 		LOG.error("apiURL from Configuration " + digitalCommerceAPIConfiguration.getProductApiUrl());
 
 		ObjectMapper mapper = new ObjectMapper();
-		td_session_cookie =  httpServletRequest.getCookie(Constants.TD_SESSION_COOKIE_NAME);
+		td_session_cookie =  getHttpServletRequest().getCookie(Constants.TD_SESSION_COOKIE_NAME);
 		
-		String productId = httpServletRequest.getParameter("productId");
+		String productId = getHttpServletRequest().getParameter("productId");
 
 		try {
 
 			if(productId!=null)
 			{
 				if(digitalCommerceAPIConfiguration.getProductApiUrl() != null) {
-					apiURL = digitalCommerceAPIConfiguration.getProductApiUrl();
+					setApiURL(digitalCommerceAPIConfiguration.getProductApiUrl());
 				}
-				con = urlConnection.conn(apiURL+"?productId="+productId, td_session_cookie.getValue(), method);
+				con = urlConnection.conn(getApiURL()+"?productId="+productId, td_session_cookie.getValue(), getMethod());
 			}
 			else
 			{
-				con = urlConnection.conn(apiURL, td_session_cookie.getValue(), method);
+				con = urlConnection.conn(getApiURL(), td_session_cookie.getValue(), getMethod());
 			}
 
-			if(jsonInput != null && "POST".equals(method)) { 
+			if(jsonInput != null && "POST".equals(getMethod())) { 
 				con.setDoOutput(true);
 				LOG.error("OUTPUT Stream");
 
@@ -117,10 +110,11 @@ public class APIModel {
 			LOG.error("code " + code);
 
 			InputStream inputStream = con.getInputStream();
-			
-			jsonMap = mapper.readValue(inputStream, Map.class);
-			
-			httpServletRequest.setAttribute(requestVariable, jsonMap);
+			LOG.error("con.getInputStream()" +con.getInputStream());
+			LOG.error("Hello CF");
+			setJsonMap(mapper.readValue(inputStream, Map.class));
+				LOG.error("jsonMap" +getJsonMap());
+			getHttpServletRequest().setAttribute(getRequestVariable(), getJsonMap());
 
 			con.disconnect();
 		
@@ -129,6 +123,42 @@ public class APIModel {
 			System.out.println("Error while Encryption Decryption : " + e.toString());
 		}
 		
+	}
+
+	public SlingHttpServletRequest getHttpServletRequest() {
+		return httpServletRequest;
+	}
+
+	public void setHttpServletRequest(SlingHttpServletRequest httpServletRequest) {
+		this.httpServletRequest = httpServletRequest;
+	}
+
+	public String getApiURL() {
+		return apiURL;
+	}
+
+	public void setApiURL(String apiURL) {
+		this.apiURL = apiURL;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public void setJsonMap(Map<String, Object> jsonMap) {
+		this.jsonMap = jsonMap;
+	}
+
+	public String getRequestVariable() {
+		return requestVariable;
+	}
+
+	public void setRequestVariable(String requestVariable) {
+		this.requestVariable = requestVariable;
 	}
 
 	

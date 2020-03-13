@@ -1,0 +1,8 @@
+<sly data-sly-test.empty="${!properties.apiURL}" />
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+<sly data-sly-test="${!empty}"
+	data-sly-use.model="${'com.techdata.digitalCommerce.core.models.NewsModel' @ apiURL=properties.apiURL, jsonInput= ' ', method='GET' , requestVariable='newsDetails'}">
+        <h3>${model.jsonMap.properties.title}</h3>
+    Released: <sly data-sly-use.date="${'DateUtil.js' @value=model.jsonMap.properties.elements.Date.value}">${date.ShortDate}</sly><br>
+            ${model.jsonMap.properties.elements.Content.value @context="html"}
+</sly> 
