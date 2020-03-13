@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Base64;
 
 public class URLConnection {
 	URL url;
@@ -22,6 +23,11 @@ public class URLConnection {
 				con.setRequestMethod("GET"); 
 			else if("POST".equals(method)) 
 				con.setRequestMethod("POST");
+			
+			String userPass= "admin" + ":" + "admin";
+			String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userPass.getBytes())) ;
+			con.setRequestProperty("Authorization", basicAuth);
+			
 			
 			con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 			con.setRequestProperty("Accept", "application/json");

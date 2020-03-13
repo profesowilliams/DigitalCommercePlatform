@@ -117,9 +117,9 @@ public class APIModel {
 			LOG.error("code " + code);
 
 			InputStream inputStream = con.getInputStream();
-
+			
 			jsonMap = mapper.readValue(inputStream, Map.class);
-
+			
 			httpServletRequest.setAttribute(requestVariable, jsonMap);
 
 			con.disconnect();
