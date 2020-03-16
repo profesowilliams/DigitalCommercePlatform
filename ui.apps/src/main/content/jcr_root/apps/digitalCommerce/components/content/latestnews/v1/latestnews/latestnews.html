@@ -3,7 +3,7 @@
 
 
 <sly data-sly-test="${!empty}"
-	data-sly-use.model="${'com.techdata.digitalCommerce.core.models.APIModel' @ apiURL=properties.apiURL, jsonInput= ' ', method='GET' , requestVariable='latestNews'}">
+	data-sly-use.model="${'com.techdata.digitalCommerce.core.models.NewsModel' @ apiURL=properties.apiURL, jsonInput= ' ', method='GET' , requestVariable='latestNews'}">
 
  <table border=1>
         <tr><td>Date</td><td>Title</td><td>Description</td></tr>
