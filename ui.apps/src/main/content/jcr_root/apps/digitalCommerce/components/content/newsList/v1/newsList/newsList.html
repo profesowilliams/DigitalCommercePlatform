@@ -1,0 +1,29 @@
+<sly data-sly-test="${currentPage.name!='newsroom'}">
+	<ul data-sly-list.page="${currentPage.parent.listChildren}">
+		<li> <a href="${page.path}.html">${page.title}</li>
+	</ul>
+	<ul data-sly-list.subPage="${currentPage.listChildren}">
+		<li>
+			<a href="${subPage.path}.html">${subPage.title}</a>
+			${subPage.description}
+		</li>
+	</ul>
+</sly>
+
+<sly data-sly-test="${currentPage.name=='newsroom'}">
+	<ul data-sly-list.subpage="${currentPage.listChildren}">
+		<li> 
+			<a href="${subpage.path}.html">${subpage.title}</a>
+		</li>
+	</ul>
+	<ul data-sly-list.page="${currentPage.listChildren}">
+		<sly data-sly-test="${pageList.index==0}">
+			<sly data-sly-list.subPage=${page.listChildren}>
+				<li>
+					<a href="${subPage.path}.html">${subPage.title}</a>
+					${subPage.description}
+				</li>
+			</sly>
+		</sly>
+	</ul>
+</sly>
