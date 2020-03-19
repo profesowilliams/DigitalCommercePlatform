@@ -1,0 +1,11 @@
+<sly data-sly-test.empty="${!properties.id}" />
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+<sly data-sly-test="${!empty}">
+	<script src="//app-abk.marketo.com/js/forms2/js/forms2.min.js"></script>
+	<form id="mktoForm_${properties.id}"></form>
+	<script>
+		var form_id = ${properties.id @ context="scriptToken"}
+		var element = document.getElementById("mktoForm_"+form_id);
+		MktoForms2.loadForm("//app-abk.marketo.com", "063-HRH-168", form_id);
+	</script>
+</sly>
