@@ -3,4 +3,6 @@
     <filter root="/apps/digitalCommerce"/>
     <filter root="/etc/workflow/notification/email/default/en.txt" mode="merge"/>
     <filter root="/var/workflow/models/content-approval" mode="merge"/>
+    <filter root="/etc/map/http" mode="merge"/>
+    <filter root="/etc/map/https" mode="merge"/>
 </workspaceFilter>
