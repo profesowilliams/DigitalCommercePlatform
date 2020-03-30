@@ -28,7 +28,6 @@ public class URLConnection {
 			String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userPass.getBytes())) ;
 			con.setRequestProperty("Authorization", basicAuth);
 
-		
 			con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 			con.setRequestProperty("Accept", "application/json");
 			con.setDoOutput(true);
