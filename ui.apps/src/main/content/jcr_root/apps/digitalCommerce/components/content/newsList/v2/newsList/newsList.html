@@ -1,0 +1,35 @@
+<sly data-sly-use.list="com.adobe.cq.wcm.core.components.models.List">
+
+<sly data-sly-test.empty="${list.listItems.size == 0}" />
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+
+
+<sly data-sly-test="${properties.itemType=='item'}">
+<div class="container">
+    <div id="list" class="mt-2">
+			<ul	data-sly-list.item="${list.listItems}"
+				data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+				data-sly-use.itemTemplate="item.html"
+				data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}" class="cmp-list">
+
+			<p class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}" data-sly-unwrap></p>
+
+			</ul>
+     </div>
+<div data-sly-resource="${'pagination' @resourceType='/apps/digitalCommerce/components/content/pagination/v1/pagination'}"></div>
+</div>
+</sly>
+<sly data-sly-test="${properties.itemType=='article'}">
+	<ul	data-sly-list.item="${list.listItems}"
+		data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+		data-sly-use.itemTemplate="item.html"
+		data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}" class="cmp-list">
+
+	<p class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}" data-sly-unwrap></p>
+	</ul>
+</sly>
+
+
+
+
+
