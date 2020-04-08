@@ -1,0 +1,63 @@
+<sly data-sly-test.empty ="${!properties.videoId}" />
+<div data-sly-test="${wcmmode.edit && empty}" class="cq-placeholder" data-emptytext="${component.title}"></div>
+
+<sly data-sly-test= "${!empty}">
+
+	<sly data-sly-test.thumbnail="${properties.type == 'thumbnail'}">
+		<sly data-sly-test.openLinkInNewTab="${properties.openLinkInNewTab}">
+        	<sly data-sly-test.autoplay="${properties.thumbnailAutoplay}">
+                <a target="_blank" href="${'https://share.vidyard.com/watch/{0}?autoplay=1' @ format=[properties.videoId]}">
+                    <sly data-sly-call="${temp1}"></sly>
+                </a>
+            </sly>
+
+            <sly data-sly-test.autoplay="${!properties.thumbnailAutoplay}">
+				<a target="_blank" href="${'https://share.vidyard.com/watch/{0}' @ format=[properties.videoId]}">
+                    <sly data-sly-call="${temp1}"></sly>
+                </a>				
+            </sly>
+        </sly>
+
+        <sly data-sly-test.autoplay="${!openLinkInNewTab}">
+			<sly data-sly-test.autoplay="${properties.thumbnailAutoplay}">
+                <a href="${'https://share.vidyard.com/watch/{0}?autoplay=1' @ format=[properties.videoId]}">
+                    <sly data-sly-call="${temp1}"></sly>
+                </a>
+            </sly>
+
+            <sly data-sly-test.autoplay="${!properties.thumbnailAutoplay}">
+				<a href="${'https://share.vidyard.com/watch/{0}' @ format=[properties.videoId]}">
+                    <sly data-sly-call="${temp1}"></sly>
+                </a>				
+            </sly>
+        </sly>
+    </sly>
+
+	<sly data-sly-test="${properties.type == 'inline'}">
+
+        <sly data-sly-test.autoplay="${properties.inlineAutoplay}">
+            <img style="width: 100%; margin: auto; display: block;"
+            	class="vidyard-player-embed" data-uuid="${properties.videoId}"
+            	data-type="inline" data-v="4" data-autoplay=1 
+            />
+        </sly>
+        <sly data-sly-test="${!autoplay}">
+            <img style="width: 100%; margin: auto; display: block;"
+            	class="vidyard-player-embed" data-uuid="${properties.videoId}"
+            	data-type="inline" data-v="4" 
+            />
+        </sly>
+    </sly>
+
+    <sly data-sly-test="${properties.type == 'lightbox'}">
+            <img style="width: 100%; margin: auto; display: block;"
+            	class="vidyard-player-embed" data-uuid="${properties.videoId}"
+            	data-type="lightbox" data-v="4" data-autoplay=1 
+            />
+    </sly>
+</sly>
+
+<sly data-sly-template.temp1="${@ teaser}">
+	<img style="width: 100%; margin: auto; display: block;"
+    	src="${'https://play.vidyard.com/{0}.{1}' @ format=[properties.videoId, 'jpg']}" />
+</sly>
