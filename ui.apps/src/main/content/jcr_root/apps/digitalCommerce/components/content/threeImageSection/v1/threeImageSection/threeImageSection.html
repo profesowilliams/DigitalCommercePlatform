@@ -1,0 +1,35 @@
+<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.hasContent="${image.src}">
+    <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+        <sly data-sly-call="${clientlib.css @ categories='digitalCommerce.threeImageSection'}"/>
+    </sly>
+
+	<div class="container-fluid td-brand-white">
+    <div class="row container-border">
+        <div class="col-lg-12 p-0">
+            <img src="${image.src}"
+                class="section-image" />
+            <div class="row bg-color-container m-0">
+                <div class="col-lg-4 nav-blue-container p-0">
+                    <div class="tagline-container">
+						${properties.columnOneText @ context = 'html'}
+                    </div>
+                </div>
+                <div class="col-lg-4 ocean-blue-container p-0">
+                    <div class="tagline-container">
+                        ${properties.columnTwoText @ context = 'html'}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="tagline-container p-0">
+                        ${properties.columnThreeText @ context = 'html'}
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+	</div>
+</div>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !image.src, classAppend = 'cmp-image cq-dd-image'}"></sly>
+
