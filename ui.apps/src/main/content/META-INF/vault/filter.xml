@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/apps/digitalCommerce"/>
+	<filter root="/apps/granite" mode="merge"/>
+	<filter root="/apps/wcm" mode="merge"/>
     <filter root="/etc/workflow/notification/email/default/en.txt" mode="merge"/>
     <filter root="/var/workflow/models/content-approval" mode="merge"/>
     <filter root="/etc/map/http" mode="merge"/>
