@@ -171,6 +171,46 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 cssName="td-title-sm pt-3 h2"
                                                                 text="Paragraph 2: Text Size: Small"/>
+                                                            <td-brand-white
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-brand-white"
+                                                                text="Color: White"/>
+                                                            <td-accent-burnt-yellow
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-accent-burnt-yellow"
+                                                                text="Color:Orange Yellow"/>
+                                                            <td-brand-planet
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-brand-planet"
+                                                                text="Color:Green Yellow"/>
+                                                            <td-brand-sky
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-brand-sky"
+                                                                text="Color:Sky Blue"/>
+                                                            <text-sg-primary
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="text-sg-primary"
+                                                                text="Color:Dark Blue"/>
+                                                            <td-title-xl
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-title-xl"
+                                                                text="Text Size: XL"/>
+                                                            <td-title-sm
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-title-sm"
+                                                                text="Text SIze: Small"/>
+                                                            <td-title-font
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-title-font"
+                                                                text="Font size:1.2 rem"/>
+                                                            <td-title-lg
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="td-title-lg"
+                                                                text="Font size: 2 rem"/>
+                                                            <py-3
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cssName="py-3"
+                                                                text="Padding: py-3"/>
                                                         </styles>
                                                     </styles>
                                                 </rtePlugins>
