@@ -1,0 +1,20 @@
+    .news-list-item {
+        list-style: none;
+        border-bottom: 1px solid #E0E0E0;
+    }
+
+    .top-news-img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .border-bottom-gray {
+        border-bottom: 1px solid #666;
+    }
+
+    .top-news-list-container {
+        margin-bottom: 25px;
+        border-bottom: 1px dotted #97999b;
+        padding-bottom: 10px;
+    }
+
