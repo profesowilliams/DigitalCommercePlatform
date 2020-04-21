@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: enterprisebuild.process.props (formally build.environment)
+ * Author: jhudak
+ * Description: Properties file which configures the general enterprise build environment. 
+ *              This file is included within each project that is being built by the enterprise build
+ *              process. The file is included at the top (before or prior-to) each project file in the tree.
+ **************************************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0" DefaultTargets="Build" >  
+    
+  <!-- prevents dupe imports -->
+  <PropertyGroup>
+     <ImportedEnterprisebuildEnvironmentProps>true</ImportedEnterprisebuildEnvironmentProps>
+  </PropertyGroup>
+  
+  
+  <!-- 
+  **************************************************************************************************************
+  *  This section sets global build environment variables
+  **************************************************************************************************************
+  -->
+	<PropertyGroup>
+	  <!-- BuildSourceControlSystem- Assign the build system. Can be GIT or TFVC -->
+	  <BuildSourceControlSystem>GIT</BuildSourceControlSystem>
+
+     <!-- BuildContext- Assign the build context. Should be PRIVATEBUILD unless otherwise specified. -->
+     <BuildContext>PRIVATEBUILD</BuildContext>
+     <BuildContext Condition="'$(BuildingInsideVisualStudio.ToLowerInvariant())' == 'true' OR '$(BUILD_CONTEXT.ToLowerInvariant())' == 'privatebuild'">PRIVATEBUILD</BuildContext>    
+     <BuildContext Condition="'$(BUILD_CONTEXT.ToLowerInvariant())' == 'officialbuild' OR '$(COMPUTERNAME.ToLowerInvariant().Contains(&quot;build&quot;))' == 'true'">OFFICIALBUILD</BuildContext>
+		
+     <!-- BuildToolset- Assign the build toolset. -->
+     <BuildToolset>15.0</BuildToolset>
+  
+     <!-- BuildDrive- Assign the build drive. -->
+     <BuildDrive>$([System.IO.Path]::GetPathRoot('$(MSBuildProjectDirectory)'))</BuildDrive>
+     <BuildDrive>$(BuildDrive.TrimEnd('\'))</BuildDrive>
+
+     <!-- BuildRoot- Assign the build root. -->
+	  <BuildRoot Condition="'$(_DirectoryBuildPropsBasePath)' != ''">$(_DirectoryBuildPropsBasePath)</BuildRoot>
+	  <BuildRoot Condition="'$(_DirectoryBuildTargetsBasePath)' != ''">$(_DirectoryBuildTargetsBasePath)</BuildRoot>
+
+     <BuildRoot Condition="'$(BuildRoot)' != ''">$([System.IO.Path]::GetFullPath('$(BuildRoot)'))</BuildRoot>
+     <BuildRoot Condition="'$(BUILD_ROOT)' != ''">$([System.IO.Path]::GetFullPath('$(BUILD_ROOT)'))</BuildRoot>     
+     <BuildRoot Condition="'$(GitRoot)' != ''">$(GitRoot.Replace('/', '\'))</BuildRoot>
+     <BuildRoot>$(BuildRoot.TrimEnd('\'))</BuildRoot>
+
+     <!-- BuildRootNoRoot- Assign the build root no root. -->
+     <BuildRootNoRoot Condition="'$(BuildDrive)' != ''">$(BuildRoot.Replace('$(BuildDrive)', ''))</BuildRootNoRoot>
+     <BuildRootNoRoot>$(BuildRootNoRoot.TrimStart('\').TrimEnd('\'))</BuildRootNoRoot>
+
+     <!-- BuildRootName- Assign the build root name. -->
+     <BuildRootName>$(BuildRootNoRoot)</BuildRootName>
+     <BuildRootName Condition="$(BuildRootName.IndexOf('\')) > 0">$(BuildRootName.Substring(0, $(BuildRootName.IndexOf('\')) ))</BuildRootName>
+     <BuildRootName Condition="'$(BuildRootName)' == ''">build</BuildRootName>
+
+	 <BuildArtifactZipFile></BuildArtifactZipFile>
+	 <BuildArtifactStagingDirectory>$(BUILD_ROOT)</BuildArtifactStagingDirectory>
+   <BuildArtifactStagingDirectory Condition="'$(BuildArtifactStagingDirectory)' != ''">$(BuildArtifactStagingDirectory.Replace('StreamOne',''))a\</BuildArtifactStagingDirectory>
+   <BuildArtifactStagingDirectory Condition="'$(BuildArtifactStagingDirectory)' == ''">$(MSBuildThisFileDirectory.Replace('s\public\env\',''))a\</BuildArtifactStagingDirectory>
+   
+  </PropertyGroup>
+
+ 
+  <!-- 
+  **************************************************************************************************************
+  *  This section sets global build environment variables (output paths)
+  **************************************************************************************************************
+  -->
+  
+	<!-- Assign the build type. -->
+	<PropertyGroup>
+		<BuildPlatform>$(Platform)</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'X86' OR '$(Platform.ToUpperInvariant())' == 'X64'">x86</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'WIN32' OR '$(Platform.ToUpperInvariant())' == 'WIN32'">Win32</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'AMD64' OR '$(Platform.ToUpperInvariant())' == 'X64'">x64</BuildPlatform>    
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'ARM' OR '$(Platform.ToUpperInvariant())' == 'ARM'">ARM</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'ARM64' OR '$(Platform.ToUpperInvariant())' == 'ARM'">ARM64</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'IA64' OR '$(Platform.ToUpperInvariant())' == 'ITANIUM'">IA64</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM.ToUpperInvariant())' == 'MSIL' OR '$(Platform.ToUpperInvariant())' == 'ANYCPU'">MSIL</BuildPlatform>
+		<BuildPlatform Condition="'$(BuildPlatform)' != ''">$(BuildPlatform)</BuildPlatform>
+		<BuildPlatform Condition="'$(BUILD_PLATFORM)' != ''">$(BUILD_PLATFORM)</BuildPlatform>
+	</PropertyGroup>
+
+   <!-- Assign the public build configuration. -->
+	<PropertyGroup>
+		<BuildConfiguration>$(Configuration)</BuildConfiguration>
+		<BuildConfiguration Condition="'$(BUILD_CONFIGURATION.ToUpperInvariant())' == 'CHK' OR '$(Configuration.ToUpperInvariant())' == 'DEBUG'">Debug</BuildConfiguration>
+		<BuildConfiguration Condition="'$(BUILD_CONFIGURATION.ToUpperInvariant())' == 'FRE' OR '$(Configuration.ToUpperInvariant())' == 'RELEASE' OR '$(Configuration.ToUpperInvariant())' == 'RETAIL'">Release</BuildConfiguration>
+		<BuildConfiguration Condition="'$(BuildConfiguration)' != ''">$(BuildConfiguration)</BuildConfiguration>
+		<BuildConfiguration Condition="'$(BUILD_CONFIGURATION)' != ''">$(BUILD_CONFIGURATION)</BuildConfiguration>
+	</PropertyGroup>
+  
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section sets global build environment variables ('public' ref paths)
+  **************************************************************************************************************
+  -->
+	<PropertyGroup>
+
+		<!-- Assign build variable - BuildPublicPath -->
+		<BuildPublicPath>$(BuildRoot)\public</BuildPublicPath>
+
+		<!-- Assign the build env path. -->
+		<BuildEnvPath>$(BuildRoot)\public\env</BuildEnvPath>		
+		<PublicEnvPath>$(BuildRoot)\public\env</PublicEnvPath>
+		<BuildPublicEnvPath>$(MSBuildThisFileDirectory)</BuildPublicEnvPath>
+
+		<!-- Assign build variable - BuildPublicRefPath -->
+		<BuildPublicRefPath>$(BuildRoot)\public\ref</BuildPublicRefPath>
+
+		<!-- Assign build variable - BuildRefPath -->
+		<BuildRefPath>$(BuildRoot)\public\ref</BuildRefPath>
+				
+		<!-- Assign build variable - BuildClrRefPath -->
+		<BuildClrRefPath>$(BuildRoot)\public\ref\microsoft\Framework\v4.7.2</BuildClrRefPath>
+
+		<!-- Assign build variable - BuildVsRefPath -->
+		<BuildVsRefPath>$(BuildRoot)\public\ref\ms\vs\17</BuildVsRefPath>
+
+		<!-- Assign build variable - BuildTfsRefPath -->
+		<BuildTfsRefPath>$(BuildRoot)\public\ref\ms\tfs\17</BuildTfsRefPath>
+
+		<!-- Assign build variable - BuildOfficeRefPath -->
+		<BuildOfficeRefPath>$(BuildRoot)\public\ref\ms\office\16</BuildOfficeRefPath>
+
+		<!-- Assign build variable - BuildPublicRedistPath -->
+		<BuildPublicRedistPath>$(BuildRoot)\public\redist</BuildPublicRedistPath>
+		</PropertyGroup>
+
+		<ItemGroup>
+		<!-- Assign build variable - BuildPublicReferencePaths -->
+		<BuildPublicReferencePaths Include="$(BuildPublicRefPath)\**\" />
+	</ItemGroup>
+
+  
+  
+  <!-- 
+  **************************************************************************************************************
+  *  This section sets global build environment variables ('public' tool paths)
+  **************************************************************************************************************
+  -->
+	<PropertyGroup>
+		<!-- BuildToolsPath- Assign the build tools path. -->
+		<BuildToolsPath>$(BuildRoot)\public\tools</BuildToolsPath>
+
+		<!-- BuildPublicToolsPath- Assign build variable - BuildPublicToolsPath -->
+		<BuildPublicToolsPath>$(BuildRoot)\public\tools</BuildPublicToolsPath>
+
+		<!-- BuildPublicMSBuildExtPackToolsPath- Assign build variable - BuildPublicMSBuildExtPackToolsPath -->
+		<BuildPublicMSBuildExtPackToolsPath>$(BuildPublicToolsPath)\msbuildextpack\35</BuildPublicMSBuildExtPackToolsPath>
+
+		<!-- BuildPublicInteropRedistOutputDropPath- Assign build variable - BuildPublicInteropRedistOutputDropPath -->
+		<BuildPublicInteropRedistOutputDropPath>$(BuildPublicOutputPath)\root\Public\redist\interops\</BuildPublicInteropRedistOutputDropPath>
+	</PropertyGroup>
+
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *assigns* build output paths
+  **************************************************************************************************************
+  -->
+
+  <!-- Assign environment variable - BuildOutputPath - Same As $(OUTDIR)-->
+  <PropertyGroup>
+    <BuildOutputPath>$(MSBuildProjectDirectory)\bin</BuildOutputPath>	
+  </PropertyGroup>
+
+  <!-- Assign environment variable - BuildOutputProjectDropPath - Same As $(OUTPUTPATH) -->
+  <!-- Example Path: D:\build.staging.binaries.amd64chk\node1\node2\node3\workingfolder1\ -->
+  <PropertyGroup>
+  	<OutputPath Condition="'$(OutputPath)' == ''">$(MSBuildProjectDirectory)\bin</OutputPath>
+    <BuildOutputProjectDropPath>$(MSBuildProjectDirectory)\bin</BuildOutputProjectDropPath> 
+  </PropertyGroup>
+
+  
+  <!-- 
+  **************************************************************************************************************
+  *  This section *assigns* build intermediate output paths
+  **************************************************************************************************************
+  -->
+  
+  <!-- Assign environment variable - BuildIntermediateOutputPath/BaseIntermediateOutputPath -->
+  <PropertyGroup>
+    <BuildIntermediateOutputPath>$(MSBuildProjectDirectory)\obj</BuildIntermediateOutputPath>      
+  </PropertyGroup>
+
+  <!-- Assign environment variable - BuildIntermediateOutputProjectDropPath/ObjectDir/IntermediateOutputPath -->
+  <PropertyGroup>
+    <BuildIntermediateOutputProjectDropPath>$(MSBuildProjectDirectory)\obj</BuildIntermediateOutputProjectDropPath>
+  </PropertyGroup>
+
+  <!-- Assign environment variable - temp file locations -->
+  <PropertyGroup>
+    <BuildTempFileOutputProjectDropPath>$(MSBuildProjectDirectory)\obj</BuildTempFileOutputProjectDropPath>
+  </PropertyGroup>
+
+  
+  <!-- 
+  **************************************************************************************************************
+  *  This section sets internal build environment variables (using input parameters from build environment)
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <BuildGlobalWarningsToSuppressCS>3008;1607;1701;1702;$(NoWarn)</BuildGlobalWarningsToSuppressCS>
+    <BuildGlobalWarningsToSuppressVB>42355;42105;42032;42036;42019;42353;42018;42021;42024;42312;40025;40026;40027;40028;40010;40056;40059;42030;42104;42109;42307;42016;42017;42020;42022;42025;40004;$(NoWarn)</BuildGlobalWarningsToSuppressVB>
+    <BuildGlobalWarningsToSuppressBLD>0001</BuildGlobalWarningsToSuppressBLD>
+  </PropertyGroup>
+
+  
+  
+  <!-- 
+  **************************************************************************************************************
+  *  This section configures pass thru settings
+  **************************************************************************************************************
+  -->
+
+  <!-- import msbuild overrides -->
+  <Import Project="enterprisebuild.environment.tools.props"/>
+  <Import Project="enterprisebuild.process.before.props"/>
+  
+    <!-- specify global properties to pass thru to builds -->
+  <PropertyGroup>    
+    <BuildGlobalProperties>BUILD_CONTEXT=$(BuildContext);BUILD_ROOT=$(BuildRoot);BUILD_ENV_PATH=$(BuildPublicEnvPath);BUILD_PLATFORM=$(BuildPlatform);BUILD_CONFIGURATION=$(BuildConfiguration);BUILD_OUTPUT_PATH=$(BuildOutputPath);BUILD_INTERMEDIATE_OUTPUT_PATH=$(BuildIntermediateOutputPath);Platform=$(Platform);PlatformTarget=$(PlatformTarget);ProcessorArchitecture=$(ProcessorArchitecture);</BuildGlobalProperties>
+  </PropertyGroup>
+</Project>

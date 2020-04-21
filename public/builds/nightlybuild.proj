@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: nightlybuild.proj
+ * Author: jhudak
+ * Description: Defines the nightly enterprise build process.
+ *              Nightly build definition point here.
+ *              
+ **************************************************************************************************************
+-->
+<Project DefaultTargets="NightlyBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <Import Project="..\env\enterprisebuild.environment.props"/>  
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGET NightlyBuild
+  **************************************************************************************************************
+  -->
+  <Target Name="NightlyBuild">
+
+    <!--BUILD: Set properties for the build -->
+    <PropertyGroup>      
+      <BUILD_NAME>NIGHTLY</BUILD_NAME>
+      <BUILD_CONTEXT>OFFICIALBUILD</BUILD_CONTEXT>
+    </PropertyGroup>
+    
+    <!--BUILD: Configure the build environment -->
+    <Message Text="BUILD: Configuring Build Environment.. [NightlyBuild]" />
+    <CallTarget Targets="ConfigureBuildEnvironment" />
+
+    <!--BUILD: START PASS1 BUILD OF SOURCE TREE FROM ROOT DIRS.PROJ -->
+    <Message Text="BUILD: Starting Build.. [NightlyBuild]" />
+    <Message Text="$(BUILD_ROOT)"/>
+    
+    <MSBuild Projects="..\..\dirs.proj"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Clean;Restore;Build"
+             RemoveProperties="OutDir"
+             Properties="$(BuildGlobalProperties);BUILD_NAME=$(BUILD_NAME);BUILD_CONTEXT=$(BUILD_CONTEXT)"
+             ToolsVersion="Current"
+			 
+             />
+    
+    <!-- BUILD: Reset Build Environment -->
+    <Message Text="BUILD: Resetting Build Environment.. [NightlyBuild]" />
+    <CallTarget Targets="ResetBuildEnvironment" />
+
+  </Target>
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGET Clean
+  **************************************************************************************************************
+  -->
+  <ItemGroup>  
+    <OutputFiles Include="$(OutputPath)**\*"/>  
+  </ItemGroup>  
+  
+  <ItemGroup>  
+    <IntermediateOutputFiles Include="$(IntermediateOutputPath)**\*"/>  	
+  </ItemGroup>  
+
+  <Target Name="Clean">
+     <Message Text="BUILD: Cleaning Build Environment.. [NightlyBuild]" />
+
+  </Target>
+
+  <Import Project="..\env\enterprisebuild.process.targets" />
+</Project>
+

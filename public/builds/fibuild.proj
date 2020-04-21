@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: FIBuild.proj
+ * Author: jhudak
+ * Description: Defines our automated forward integration process.
+ *              FI build definitions / tfs workflow(s) point here.
+ *              
+ *              - Encapsulates TFS -> BUILD invocation complexities
+ *              - Further facilitates building source tree in 'passes'
+ *
+ *              Enables having a fully automated FI process
+ *
+ **************************************************************************************************************
+-->
+<Project DefaultTargets="FIBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="..\env\enterprisebuild.official.props"/>
+  <Import Project="..\public\tools\msbuild\extensionpack\35\MSBuild.ExtensionPack.tasks" />
+  
+  
+  <!-- 
+  ****************************************************************************************************************************************
+  * DESCRIPTION:  FI Global Properties
+  **************************************************************************************************************************************** 
+  -->
+  <PropertyGroup>
+    <BUILD_NAME>FI</BUILD_NAME>
+    <BUILD_CONTEXT>OFFICIALBUILD</BUILD_CONTEXT>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--TFS: SPECIFY PROPERTY SET FOR FULL BUILD -->
+    <SkipClean>false</SkipClean>
+    <SkipInitializeWorkspace>false</SkipInitializeWorkspace>
+    <IncrementalBuild>false</IncrementalBuild>
+    <ForceGet>true</ForceGet>
+
+    <ChangesToMerge>true</ChangesToMerge>
+    <SendEmail Condition="'$(SendEmail)' == ''">true</SendEmail>
+	<BuildEmailNotificationList>john.hudak@ulraltd.net</BuildEmailNotificationList>
+  </PropertyGroup>
+  
+  
+  
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET: FIBuild
+  * DESCRIPTION:  Defines the enterprise forward integration build process
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="FIBuild", DependsOnTarget="FIClean">
+
+  
+    <!-- ******************************************************** -->
+    <!--STEP1: Configure the build environment -->
+    <!-- ******************************************************** -->
+    <Message Text="FIBUILD: Configuring Build Environment.. [FIBuild]" />
+    <CallTarget Targets="ConfigureBuildEnvironment" />
+
+	
+	<!-- ******************************************************** -->
+    <!--STEP2: always undo pending changes in case the workspace -->
+    <!-- ******************************************************** -->	
+    <MakeDir Directories="$(BuildOutputProjectDropPath)" Condition="'Exists(&quot;$(BuildOutputProjectDropPath)&quot;)' == 'false'" ContinueOnError="true" />
+	<Choose>
+	   <!--- TFVC --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'">
+	      <Exec Command='$(BuildTfsToolsPath)\TF.EXE UNDO $([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))* /RECURSIVE /NOPROMPT' WorkingDirectory='$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))' IgnoreExitCode='true' Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'" />
+	   </When>
+	   <!--- GIT --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'">
+	      <Exec Command='$(BuildGitToolsPath)\GIT.EXE STASH -u)* /RECURSIVE /NOPROMPT' WorkingDirectory='$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))' IgnoreExitCode='true' Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'" />
+	   </When>
+	</Choose>    
+    
+    
+    <!-- ******************************************************** -->
+    <!--STEP3: initialize the build  -->
+    <!-- ******************************************************** -->	
+    <Message Text="BUILD: Starting Build.. [FIBuild]" />
+    <Error Text="BUILD: A source branch was not provided!" Condition="'$(SourceBranch)' == ''"/>
+    <Error Text="BUILD: A destination branch was not provided!" Condition="'$(DestinationBranch)' == ''"/>
+    
+
+
+    <!-- ******************************************************** -->
+    <!--STEP4: attempt merge  -->
+    <!-- ******************************************************** -->	
+	<Choose>
+	   <!--- TFVC --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'">
+	     <!--- perform tfs merge, output the results to mergelog.txt --->
+	     <Exec Command="$(BuildTfsToolsPath)\TF.EXE MERGE &quot;$/$(TFSProjectName)/$(SourceBranch)/&quot; &quot;$/$(TFSProjectName)/$(DestinationBranch)/&quot; /recursive /noprompt /format:Detailed /conservative &quot;$(BuildOutputProjectDropPath)\mergelog.txt&quot;" WorkingDirectory="$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))" IgnoreExitCode="true"  	       <ReadLinesFromFile File="$(BuildOutputProjectDropPath)\mergelog.txt" >			
+		 <!--- perform tfs auto merge to auto-resolve conflicts, output the results to resolvelog.txt --->
+      	 <Exec Command="$(BuildTfsToolsPath)\TF.EXE RESOLVE * /recursive /noprompt /auto:AutoMerge &quot;$(BuildOutputProjectDropPath)\resolvelog.txt&quot;&quot;" WorkingDirectory="$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))"  IgnoreExitCode="true"  Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'" />
+	   </When>
+	   
+	   <!--- GIT --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'">
+	      <!--- switch to destination branch --->
+	      <Exec Command="$(BuildGitToolsPath)\GIT.EXE CHECKOUT $(DestinationBranch) /recursive /noprompt /format:Detailed /conservative &quot;$(BuildOutputProjectDropPath)\mergelog.txt&quot;" WorkingDirectory="$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))" IgnoreExitCode="true"  Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'" />	
+		  <!--- perform a no-commit merge ignoring whitespace, output the results to mergelog.txt --->
+	      <Exec Command="$(BuildGitToolsPath)\GIT.EXE merge --no-commit -Xignore-space-change -no-ff $(SourceBranch) >> &quot;$(BuildOutputProjectDropPath)\mergelog.txt&quot;" WorkingDirectory="$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))" IgnoreExitCode="true"  Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'" />	
+	   </When>
+	</Choose>
+
+    
+	
+	<!-- ******************************************************** -->
+    <!-- STEP5: Interpret Results of the merge 
+	<!-- Read the output logs to determine what happened 
+    <!-- ******************************************************** -->	
+	<Choose>
+	
+	   <!--- TFVC --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'" >
+	        <!-- read the mergelog.txt file -->
+	        <ReadLinesFromFile File="$(BuildOutputProjectDropPath)\mergelog.txt" >
+			   <Output TaskParameter="Lines" ItemName="MergeLogLines"/>
+			</ReadLinesFromFile>
+			
+			<!-- read the resolvelog.txt file -->
+			<ReadLinesFromFile File="$(BuildOutputProjectDropPath)\resolvelog.txt" >
+			  <Output TaskParameter="Lines" ItemName="ResolveLogLines"/>
+			</ReadLinesFromFile>
+			
+			<PropertyGroup>
+			  <MergeLogContent>@(MergeLogLines)</MergeLogContent>
+			  <ResolveLogContent>@(ResolveLogLines)</ResolveLogContent>
+			</PropertyGroup>    
+			
+			<PropertyGroup>      
+			  <!-- determine if there are changes to merge -->
+			  <ChangesToMerge>false</ChangesToMerge>
+			  <ChangesToMerge Condition="'$(MergeLogContent.StartsWith(&quot;merge, &quot;))' == 'true'">true</ChangesToMerge>
+			  <ChangesToMerge Condition="'$(MergeLogContent.Contains(&quot;->&quot;))' == 'true'">true</ChangesToMerge>
+			  <ChangesToMerge Condition="'$(MergeLogContent.Contains(&quot;:&quot;))' == 'true'">true</ChangesToMerge>
+			  
+			  <!-- determine if a manual merge is required -->
+			  <ManualMergeRequired>false</ManualMergeRequired>
+			  <ManualMergeRequired Condition="'$(ResolveLogContent.Contains(&quot;There are no conflicts to resolve.&quot;))' == 'true'">false</ManualMergeRequired>
+			  <ManualMergeRequired Condition="'@(ResolveLogLines.Identity.Contains(&quot;conflicting&quot;))' == 'true' AND '@(ResolveLogLines.Identity.Contains(&quot;0 conflicting&quot;))' == 'false'">true</ManualMergeRequired>
+			  <ManualMergeRequired Condition="'$(ResolveLogContent.Contains(&quot;and 1 conflicting&quot;))' == 'true'">true</ManualMergeRequired>			  
+			  
+			  <FIBlocked>false</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false'">false</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'true'">true</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'false' AND '$(ManualMergeRequired)' == 'false'">true</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'false' AND '$(ManualMergeRequired)' == 'true'">true</FIBlocked>
+			</PropertyGroup>
+
+			<!-- include results in the build log -->
+			<Message Text="MERGE LOG: $(MergeLogContent)" />
+			<Message Text="RESOLVE LOG: $(ResolveLogContent)" />
+
+			<Warning Condition="'$(ManualMergeRequired)' == 'true'" Text="The build found merge conflicts which require manual user intervention. Aborting forward integration." />
+			<Warning Condition="'$(ChangesToMerge)' == 'false'" Text="The build found no changes to merge. Aborting forward integration." />    			
+	   </When>
+	   
+	   
+	   <!--- GIT --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'">
+	   
+	        <!-- read the mergelog.txt file -->
+	   	    <ReadLinesFromFile File="$(BuildOutputProjectDropPath)\mergelog.txt" >
+			   <Output TaskParameter="Lines" ItemName="MergeLogLines"/>
+			</ReadLinesFromFile>
+			
+			<PropertyGroup>
+			  <MergeLogContent>@(MergeLogLines)</MergeLogContent>
+			</PropertyGroup>    
+			
+			<PropertyGroup>      
+			  <!-- determine if there are changes to merge -->
+			  <ChangesToMerge>false</ChangesToMerge>
+			  <ChangesToMerge Condition="'$(MergeLogContent.StartsWith(&quot;Auto-merging, &quot;))' == 'true'">true</ChangesToMerge>
+			  <ChangesToMerge Condition="'$(MergeLogContent.Contains(&quot;CONFLICT&quot;))' == 'true'">true</ChangesToMerge>
+
+			  <!-- determine if a manual merge is required -->
+			  <ManualMergeRequired>false</ManualMergeRequired>
+			  <ManualMergeRequired Condition="'$(ResolveLogContent.Contains(&quot;Automatic merge failed; fix conflicts and then commit the result.&quot;))' == 'true'">true</ManualMergeRequired>
+			  <ManualMergeRequired Condition="'$(ResolveLogContent.Contains(&quot;Automatic merge failed; fix conflicts and then commit the result.&quot;))' == 'false'">false</ManualMergeRequired>
+			  
+			  <!-- leveraging the above two determinations, determine if the fi is blocked or not -->
+			  <FIBlocked>false</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false'">false</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'true'">true</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'false' AND '$(ManualMergeRequired)' == 'false'">true</FIBlocked>
+			  <FIBlocked Condition="'$(ChangesToMerge)' == 'false' AND '$(ManualMergeRequired)' == 'true'">true</FIBlocked>
+			</PropertyGroup>
+
+			<!-- include results in the build log -->
+			<Message Text="MERGE LOG: $(MergeLogContent)" />
+			
+			<!-- post build warnings if neccessary -->
+			<Warning Condition="'$(ManualMergeRequired)' == 'true'" Text="The build found merge conflicts which require manual user intervention. Aborting forward integration." />
+			<Warning Condition="'$(ChangesToMerge)' == 'false'" Text="The build found no changes to merge. Aborting forward integration." />    
+	   </When>
+	</Choose>
+	
+
+    
+	<!-- ******************************************************** -->
+    <!-- STEP6: Build Merge Results
+	<!-- Attempt to build the source tree with the pending changes 
+    <!-- ******************************************************** -->		
+	<Choose>
+	   <When Condition="'ChangesToMerge' == 'true' AND '$(ManualMergeRequired)' == 'false'">
+	   
+		   <MSBuild Projects="$([System.IO.Path]::GetFullPath(&quot;..\..\dirs.proj&quot;))"
+				 BuildInParallel="$(BuildInParallel)"
+				 SkipNonexistentProjects="$(SkipNonexistentProjects)"
+				 Targets="Build"
+				 RemoveProperties="OutDir"
+				 ContinueOnError ="true"
+				 Properties="$(BuildGlobalProperties);BUILD_NAME=$(BUILD_NAME);BUILD_CONTEXT=$(BUILD_CONTEXT)"
+				 ToolsVersion="$(BuildToolset)"
+				 Condition="'$(FIBlocked)' == 'false'"
+				 />
+		
+		   <PropertyGroup>
+		     <FITestBuildSucceeded>$(MSBuildLastTaskResult)</FITestBuildSucceeded>
+		   </PropertyGroup>		
+	   </When>
+	</Choose>
+	
+	
+
+	<!-- ******************************************************** -->
+    <!-- STEP7: Checkin
+	<!-- Automatically checkin the change set to source control when: 
+	
+         - There are new changes to merge from the source branch into the target branch, 
+         - AND the code merge does not require manual intervention (has merge conflicts), 
+         - AND the FI test build completed successfully -->
+    <!-- ******************************************************** -->	
+	<Choose Condition="'ChangesToMerge' == 'true' AND '$(ManualMergeRequired)' == 'false'" >
+	   <!--- TFVC --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'">
+	      <Exec Command='$(BuildTfsToolsPath)\TF.EXE CHECKIN /author:ultra\build /comment:&quot;BUILD: Automated Forward Integration From $(SourceBranch) to $(DestinationBranch)&quot; /noprompt /override:&quot;build&quot; /recursive /bypass &gt;&gt; &quot;$(BuildOutputProjectDropPath)\checkinlog.txt&quot;' WorkingDirectory='$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))' IgnoreExitCode='true' Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false' AND '$(FITestBuildSucceeded)' == 'true'"  Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'" />
+	   </When>
+	   <!--- GIT --->
+	   <When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'">
+	      <Exec Command='$(BuildTfsToolsPath)\git checkin /author:ultra\build /comment:&quot;BUILD: Automated Forward Integration From $(SourceBranch) to $(DestinationBranch)&quot; /noprompt /override:&quot;build&quot; /recursive /bypass &gt;&gt; &quot;$(BuildOutputProjectDropPath)\checkinlog.txt&quot;' WorkingDirectory='$([System.IO.Path]::GetFullPath(&quot;..\..\&quot;))' IgnoreExitCode='true' Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false' AND '$(FITestBuildSucceeded)' == 'true'"  Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'" />
+
+	   </When>
+	</Choose>
+	
+    
+	<!-- ******************************************************** -->
+    <!-- STEP8: InterpretCheckinResults - 
+	<!-- Roll-up the checkin log as part of the build.
+    <!-- ******************************************************** -->	
+    <Choose Condition="'ChangesToMerge' == 'true' AND '$(ManualMergeRequired)' == 'false'">
+	   <When>
+		    <ReadLinesFromFile File="$(BuildOutputProjectDropPath)\checkinlog.txt" >
+		       <Output TaskParameter="Lines" ItemName="MergeLogLines"/>
+	    	</ReadLinesFromFile>			
+			
+	        <PropertyGroup>
+		       <MergeLogContent>@(CheckinLogLines)</MergeLogContent>
+		    </PropertyGroup>
+			
+		    <Message Text="CHECKIN LOG: $(CheckinLogLines)" Condition="'$(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false' AND '$(FITestBuildSucceeded)' == 'true'" />			
+	   </When>
+	</Choose>
+	
+
+    
+
+	<!-- ******************************************************** -->
+    <!-- STEP9: Notification of FI Results 
+	<!-- dispatch the appropriate automated email to the team based 
+	     on the outcome:
+		 
+		 - Succeeded (with or without merged changes)
+         - Failed (merge failed for some reason)
+         - Blocked (could not merge the changes, fi requires manual intervention)
+         - No Email (No changes to merge)
+    <!-- ******************************************************** -->		
+    <CallTarget Targets="NotifySuccessfulForwardIntegration" Condition="'(ChangesToMerge)' == 'true' AND '$(ManualMergeRequired)' == 'false' AND '$(FITestBuildSucceeded)' == 'true'" />
+    <CallTarget Targets="NotifyFailedForwardIntegration" Condition="'$(ChangesToMerge)' != 'true' AND '$(ManualMergeRequired)' == 'false' AND '$(FITestBuildSucceeded)' == 'false'" />
+    <CallTarget Targets="NotifyBlockedForwardIntegration" Condition="'$(ChangesToMerge)' != 'false' AND '$(ManualMergeRequired)' == 'true'" />
+    
+    
+    <!-- ******************************************************** -->
+    <!-- STEP10: Reset Build Environment 
+	<!-- 
+    <!-- ******************************************************** -->		
+    <Message Text="BUILD: Resetting Build Environment.. [FIBuild]" />
+	<CallTarget Targets="UndoPendingChanges" ContinueOnError="true"/>
+    <CallTarget Targets="ResetBuildEnvironment" />
+    <OnError ExecuteTargets="UndoPendingChanges;NotifyFailedForwardIntegration;ResetBuildEnvironment"/>
+  </Target>  
+  
+  
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET- NotifySuccessfulForwardIntegration
+  * Dispatches a notification to the team that the forward integration completed successfully.
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="NotifySuccessfulForwardIntegration">
+    <ItemGroup>
+      <!-- Specify some attachments -->
+      <Attachment Include="$(BuildOutputProjectDropPath)\mergelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\mergelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\resolvelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\resolvelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\checkinlog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\checkinlog.txt')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <SendMail>true</SendMail>
+      <SendMail Condition="'$(SendMail.ToUpperInvariant())' == 'FALSE'">false</SendMail>
+      <MailToRecipients>$(BuildEmailNotificationList)</MailToRecipients>
+    </PropertyGroup>
+
+    <!-- dispatch appropriate email to the team, unless the SendMail flag is set to false. Put some indication as to if any changes were merged. -->
+    <MSBuild.ExtensionPack.Communication.Email Subject="Build Forward Integration from '$(SourceBranch)' to '$(DestinationBranch)' completed successfully." Body="Automated Build Forward Integration completed successfully. Please see the attached logs for details." TaskAction="Send" SmtpServer="MPSMTP01" MailFrom="buildservice@metapress.com" MailTo="$(MailToRecipients)" Attachments="@(Attachment)" Condition="'$(SendMail)' != 'false' AND '$(ChangesToMerge)' == 'true'"  />
+    <MSBuild.ExtensionPack.Communication.Email Subject="Build Forward Integration from '$(SourceBranch)' to '$(DestinationBranch)' completed. (No changes to be merged)" Body="Automated Build Forward Integration completed successfully. There were no changes to be merged. Please see the attached logs for details." TaskAction="Send" SmtpServer="MPSMTP01" MailFrom="buildservice@metapress.com" MailTo="$(MailToRecipients)" Attachments="@(Attachment)" Condition="'$(SendMail)' != 'false' AND '$(ChangesToMerge)' == 'false'"  />
+  </Target>
+
+
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET- NotifyFailedForwardIntegration
+  * Dispatches a notification to the team that the forward integration failed.
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="NotifyFailedForwardIntegration">
+    <ItemGroup>
+      <!-- Specify some attachments -->
+      <Attachment Include="$(BuildOutputProjectDropPath)\mergelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\mergelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\resolvelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\resolvelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\checkinlog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\checkinlog.txt')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <SendMail>true</SendMail>
+      <SendMail Condition="'$(SendMail.ToUpperInvariant())' == 'FALSE'">false</SendMail>
+      <MailToRecipients>$(BuildEmailNotificationList)</MailToRecipients>
+    </PropertyGroup>
+
+    <!-- dispatch appropriate email to the team, unless the SendMail flag is set to false. -->
+    <MSBuild.ExtensionPack.Communication.Email Subject="Build Forward Integration from '$(SourceBranch)' to '$(DestinationBranch)' failed." Body="Automated Build Forward Integration failed. Please see the attached logs for details." TaskAction="Send" SmtpServer="MPSMTP01" MailFrom="buildservice@metapress.com" MailTo="$(MailToRecipients)" Attachments="@(Attachment)" Condition="'$(SendMail)' != 'false'"  />
+  </Target>
+
+
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET- NotifyBlockedForwardIntegration
+  * Dispatches a notification to the team that the forward integration is blocked and requires manual intervention.
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="NotifyBlockedForwardIntegration">
+    <ItemGroup>
+      <!-- Specify some attachments -->
+      <Attachment Include="$(BuildOutputProjectDropPath)\mergelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\mergelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\resolvelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\resolvelog.txt')" />
+      <Attachment Include="$(BuildOutputProjectDropPath)\checkinlog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\checkinlog.txt')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <SendMail>true</SendMail>
+      <SendMail Condition="'$(SendMail.ToUpperInvariant())' == 'FALSE'">false</SendMail>
+      <MailToRecipients>$(BuildEmailNotificationList)</MailToRecipients>
+    </PropertyGroup>
+
+    <!-- dispatch appropriate email to the team, unless the SendMail flag is set to false. -->
+    <MSBuild.ExtensionPack.Communication.Email TaskAction="Send" Subject="Build Forward Integration from '$(SourceBranch)' to '$(DestinationBranch)' requires manual intervention." Body="Automated Build Forward Integration is blocked. There maybe merge conflicts which need to be resolved manually. Please see the attached logs for details." SmtpServer="MPSMTP01" MailFrom="buildservice@metapress.com" MailTo="$(MailToRecipients)" Attachments="@(Attachment)" Condition="'$(SendMail)' != 'false'"  />
+  </Target>  
+  
+  
+  
+  
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET: FIClean
+  * DESCRIPTION:  Cleans up the FI Build and prepares for another merge 
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="FIClean" DependsOnTarget="UndoPendingChanges">
+  <!-- ******************************************************** -->
+    <!--STEP3: initialize the build  -->
+    <!-- ******************************************************** -->	
+    <Message Text="FIClean: Starting Clean Process.. [FIBuild]" />
+
+
+    <!-- ******************************************************** -->
+    <!--STEP4: clean-up existing logs -->
+    <!-- ******************************************************** -->	
+    <Message Text="CLEAN: Merging Branches.. FROM: $(SourceBranch) TO: $(DestinationBranch) [FIBuild]" />
+    <MakeDir Directories="$(BuildOutputProjectDropPath)\" Condition="!Exists('$(BuildOutputProjectDropPath)\')"/>
+    <Delete Files="$(BuildOutputProjectDropPath)\mergelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\mergelog.txt')" />
+    <Delete Files="$(BuildOutputProjectDropPath)\resolvelog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\resolvelog.txt')" />
+    <Delete Files="$(BuildOutputProjectDropPath)\checkinlog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\checkinlog.txt')" />
+    <Delete Files="$(BuildOutputProjectDropPath)\undolog.txt" Condition="Exists('$(BuildOutputProjectDropPath)\undolog.txt')" />
+  </Target>
+  
+  
+  <!-- 
+  ****************************************************************************************************************************************
+  * TARGET- UndoPendingChanges
+  * Reverts any pending changes 
+  **************************************************************************************************************************************** 
+  -->
+  <Target Name="UndoPendingChanges">
+	  <Choose>
+	  
+		<!--- TFVC --->
+		<When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'TFVC'">
+		   <Exec Command="$(BuildTfsToolsPath)\TF.EXE UNDO * /recursive / noprompt">
+		</When>
+		
+		<!--- GIT --->
+		<When Condition="'$(BuildSourceControlSystem.ToUpperInvariant())' == 'GIT'">
+		   <Exec Command="$(BuildTfsToolsPath)\git merge --abort">
+		   <Exec Command="$(BuildTfsToolsPath)\GIT stash -u">	   
+		</When>
+	  </Choose>
+  </Target>
+  
+  <Import Project="..\env\enterprisebuild.process.targets" />
+</Project>
+

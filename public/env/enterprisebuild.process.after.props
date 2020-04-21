@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: enterprisebuild.process.before.props
+ * Author: jhudak
+ * Description: Overrides common msbuild properties found within most project files to ensure more consistent
+ *              overall team build behavior during the enterprise build process
+ *
+ *              What belongs in this file:
+ *
+ *              - Common MSBUILD properties which are appropriate to preset
+ *              - Any other setting that applies to all builds, which should be preset 
+ **************************************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0" >
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild output paths
+  **************************************************************************************************************
+  -->
+  <!-- capture default input parameters -->
+  <PropertyGroup>
+
+    <!-- override TargetDir -->
+    <!--<TargetDir>$(BuildOutputProjectDropPath)\</TargetDir>-->
+
+    <!-- override OutDir -->
+    <!--<OutDir Condition="'$(OutDir)' != ''">$([System.IO.Path]::GetFullPath('$(OutDir)'))</OutDir>
+    <OutDir>$(OutDir.Replace('\\', ''))</OutDir>
+    <OutDir>$(OutDir.TrimEnd('\\'))</OutDir>
+    <OutDir>$(OutDir.TrimEnd('\'))</OutDir>
+    <OutDir>$(BuildOutputProjectDropPath)\</OutDir>-->
+
+    <!-- override OutputPath -->
+    <!--<OutputPath Condition="'$(OutDir)' != ''">$([System.IO.Path]::GetFullPath('$(OutDir)'))</OutputPath>
+    <OutputPath>$(OutputPath.Replace('\\', ''))</OutputPath>
+    <OutputPath>$(OutputPath.TrimEnd('\\'))</OutputPath>
+    <OutputPath>$(OutputPath.TrimEnd('\'))</OutputPath>
+    <OutputPath>$(BuildOutputProjectDropPath)</OutputPath>-->
+
+    <!-- override BaseOutputPath -->
+    <!-- <BaseOutputPath>$(BuildOutputPath)</BaseOutputPath> -->
+
+    <!-- override ObjectDir -->
+    <!--  <ObjectDir>$(BuildIntermediateOutputProjectDropPath)</ObjectDir> -->
+
+    <!-- override IntDir -->
+    <!--  <IntDir>$(BuildIntermediateOutputProjectDropPath)</IntDir> -->
+
+    <!-- override IntermediateOutputPath -->
+    <!-- <IntermediateOutputPath>$(BuildIntermediateOutputProjectDropPath)</IntermediateOutputPath>-->
+
+    <!-- override BaseIntermediateOutputPath -->
+    <!-- <BaseIntermediateOutputPath>$(BuildIntermediateOutputPath)</BaseIntermediateOutputPath> -->
+
+    <!-- override TMP & TEMP -->
+    <!--<TEMP>$(BuildIntermediateOutputProjectDropPath)temp</TEMP>
+    <TMP>$(BuildIntermediateOutputProjectDropPath)temp</TMP>-->
+  </PropertyGroup>
+
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild tool paths
+  **************************************************************************************************************
+  -->
+  <!--<PropertyGroup>
+
+    -->
+  <!--MSBUILD EXTENSION PACK PATH-->
+  <!--
+    <ExtensionTasksPath>$(BuildPublicMSBuildExtPackToolsPath)\</ExtensionTasksPath>
+    <MSBuildExtensionPackPath>$(BuildPublicMSBuildExtPackToolsPath)\</MSBuildExtensionPackPath>
+
+    -->
+  <!--MSBUILD EXTENSION PATHS-->
+  <!--
+    <MSBuildExtensionsPath>$(BuildPublicMSBuildExtensionsPath)</MSBuildExtensionsPath>
+    <MSBuildExtensionsPath32>$(BuildPublicMSBuildExtensionsPath)</MSBuildExtensionsPath32>
+    <MSBuildExtensionsPath64>$(BuildPublicMSBuildExtensionsPath)</MSBuildExtensionsPath64>
+  </PropertyGroup>-->
+
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild platform settings
+  **************************************************************************************************************
+  -->
+  <Choose>  
+    <When Condition=" '$(BuildDisablePlatformOverride.ToLowerInvariant())' != 'true' ">  
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION X86-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'X86' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'X86'">
+		<Platform>x86</Platform>
+		<PlatformTarget>x86</PlatformTarget>
+		<ProcessorArchitecture>x86</ProcessorArchitecture>
+	  </PropertyGroup>
+	  
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION WIN32-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'Win32' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'WIN32'">
+		<Platform>Win32</Platform>
+		<PlatformTarget>x86</PlatformTarget>
+		<ProcessorArchitecture>x86</ProcessorArchitecture>
+	  </PropertyGroup>
+	  
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION AMD64-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'X64' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'AMD64'">
+		<Platform>x64</Platform>
+		<PlatformTarget>x64</PlatformTarget>
+		<ProcessorArchitecture>amd64</ProcessorArchitecture>
+	  </PropertyGroup>
+
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION IA64  -->
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'IA64' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'IA64'">
+		<Platform>Itanium</Platform>
+		<PlatformTarget>ia64</PlatformTarget>
+		<ProcessorArchitecture>ia64</ProcessorArchitecture>
+	  </PropertyGroup>
+
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION ARM-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'ARM' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'ARM'">
+		<Platform>Arm</Platform>
+		<PlatformTarget>arm</PlatformTarget>
+		<ProcessorArchitecture>arm</ProcessorArchitecture>
+	  </PropertyGroup>
+	  
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION ARM64-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'ARM64' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'ARM64'">
+		<Platform>Arm</Platform>
+		<PlatformTarget>arm</PlatformTarget>
+		<ProcessorArchitecture>arm</ProcessorArchitecture>
+	  </PropertyGroup>
+
+	  
+   <!--BUILD OVERRIDE- CONFIGURATION MSIL-->  
+	  <PropertyGroup Condition=" '$(BuildPlatform.ToUpperInvariant())' == 'ANYCPU' OR '$(BUILD_PLATFORM.ToUpperInvariant())' == 'MSIL'">
+		<Platform>AnyCPU</Platform>
+		<PlatformTarget>anycpu</PlatformTarget>
+		<ProcessorArchitecture>msil</ProcessorArchitecture>
+	  </PropertyGroup>
+    </When>
+  </Choose>
+
+
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild configuration settings
+  **************************************************************************************************************
+  -->
+  <Choose>
+    <When Condition=" '$(BuildDisableConfigurationOverride.ToLowerInvariant())' != 'true' ">
+      <!-- BUILD OVERRIDE- CONFIGURATION RELEASE -->
+      <PropertyGroup Condition="'$(BuildConfiguration.ToUpperInvariant())' == 'RETAIL' OR '$(BuildConfiguration.ToUpperInvariant())' == 'RELEASE' OR '$(BuildConfiguration.ToUpperInvariant())' == 'FRE'">
+        <Configuration>Release</Configuration>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>pdbonly</DebugType>
+        <DefineDebug>false</DefineDebug>
+        <DefineTrace>true</DefineTrace>
+        <DefineConstants Condition="'$(DefineConstants)' != ''">TRACE</DefineConstants>
+        <Optimize>true</Optimize>
+      </PropertyGroup>
+
+      <!-- BUILD OVERRIDE- CONFIGURATION DEBUG -->
+      <PropertyGroup Condition="'$(BuildConfiguration.ToUpperInvariant())' == 'DEBUG' OR '$(BuildConfiguration.ToUpperInvariant())' == 'CHK'">
+        <Configuration>Debug</Configuration>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <DefineDebug>true</DefineDebug>
+        <DefineTrace>true</DefineTrace>
+        <DefineConstants Condition="'$(DefineConstants)' != ''">DEBUG;TRACE</DefineConstants>
+        <Optimize>false</Optimize>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild build performance 
+  **************************************************************************************************************
+  -->
+
+  <!-- BUILD OVERRIDE- global build processing properties -->
+  <PropertyGroup>    
+    <MaxCpuCount>$(NUMBER_OF_PROCESSORS)</MaxCpuCount>
+    <BuildInParallel>false</BuildInParallel>
+    <BuildProjectReferences>false</BuildProjectReferences>
+    <SkipNonexistentProjects>false</SkipNonexistentProjects>
+	
+	  <BuildProjectReferences>false</BuildProjectReferences>
+    <IgnoreProjectExtensions>.csproj,.vbproj,.vcxproj,.dbproj,.sln</IgnoreProjectExtensions>
+	  <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section *overrides* msbuild logging & warning settings
+  **************************************************************************************************************
+  -->
+
+  <!-- BUILD OVERRIDE- global build logging properties -->
+  <!--
+  <PropertyGroup>
+    <ErrorReport Condition="'$(ErrorReport)'==''">prompt</ErrorReport>
+    <WarningLevel Condition="'$(WarningLevel)'==''">3</WarningLevel>
+    <VbcVerbosity>Verbose</VbcVerbosity>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+
+  -->
+  <!-- BUILD OVERRIDE- global build warning properties -->
+  <!--
+  <PropertyGroup>
+    <NoWarn Condition="'$(Language)' == 'VB' OR '$(ProjectType)' == 'VISUALBASIC'">$(BuildGlobalWarningsToSuppressVB);$(NoWarn)</NoWarn>
+    <NoWarn Condition="'$(Language)' == 'C#' OR '$(ProjectType)' == 'CSHARP'">$(BuildGlobalWarningsToSuppressCS);$(NoWarn)</NoWarn>
+    <DisabledWarnings Condition="'$(Language)' == 'VB' OR '$(ProjectType)' == 'VISUALBASIC'">$(BuildGlobalWarningsToSuppressVB);$(DisabledWarnings)</DisabledWarnings>
+    <DisabledWarnings Condition="'$(Language)' == 'C#' OR '$(ProjectType)' == 'CSHARP'">$(BuildGlobalWarningsToSuppressCS);$(DisabledWarnings)</DisabledWarnings>
+  </PropertyGroup>-->
+
+</Project>

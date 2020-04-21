@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: enterprisebuild.transversal.targets
+ * Author: jhudak
+ * Description: Specifies how the source tree should be transversed when building source tree nodes recursively
+ *              Only targets defined herein are capable of being recursively executed against the source tree.
+ **************************************************************************************************************
+-->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <Import Project="$(BUILD_ENV_PATH)\enterprisebuild.environment.props"/>
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGETNAME: BUILD
+  *  DESCRIPTION: Builds projects within the source tree.
+  *  HISTORY: 
+  *            4/25/12 JHUDAK - Updated custom task
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      CoreBuild
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)" />
+  <Target Name="CoreBuild">
+    <!--
+    Properties BuildInParallel and SkipNonexistentProjects
+    should be defined in the .setting file.
+    -->
+    <MSBuild Projects="@(ProjectFiles)"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Build"
+             Properties="$(BuildGlobalProperties)"
+             />
+  </Target>
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGETNAME: REBUILD
+  *  DESCRIPTION: Builds projects within the source tree.
+  *  HISTORY: 
+  *            4/25/12 JHUDAK - Updated custom task
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <RebuildDependsOn>
+      $(RebuildDependsOn);
+      CoreRebuild
+    </RebuildDependsOn>
+  </PropertyGroup>
+  <Target Name="Rebuild" DependsOnTargets="$(RebuildDependsOn)" />
+  <Target Name="CoreRebuild">
+    <MSBuild Projects="@(ProjectFiles)"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Rebuild"
+             Properties="$(BuildGlobalProperties)"
+             />
+  </Target>
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGETNAME: CLEAN
+  *  DESCRIPTION: Purges output from projects within the source tree.
+  *  HISTORY: 
+  *            4/25/12 JHUDAK - Updated custom task
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      CoreClean
+    </CleanDependsOn>
+  </PropertyGroup>
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)" />
+  <Target Name="CoreClean">
+    <MSBuild Projects="@(ProjectFiles)"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Clean"
+             Properties="$(BuildGlobalProperties)"
+             />
+  </Target>
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGETNAME: RESTORE
+  *  DESCRIPTION: Restores NGET packages within the source tree.
+  *  HISTORY: 
+  *            11/11/19 JHUDAK - Updated custom task
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <RestoreDependsOn>
+      $(RestoreDependsOn);
+      CoreRestore;
+    </RestoreDependsOn>
+  </PropertyGroup>
+  <Target Name="Restore" DependsOnTargets="$(RestoreDependsOn)" />
+  <Target Name="CoreRestore">
+    <MSBuild Projects="@(ProjectFiles)"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Restore"
+             Properties="$(BuildGlobalProperties)"
+             />
+  </Target>
+ 
+
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGETNAME: Analyze
+  *  DESCRIPTION: Static code analysis
+  *  HISTORY: 
+  *            4/25/12 JHUDAK - Updated custom task
+  **************************************************************************************************************
+  -->
+  <PropertyGroup>
+    <AnalyzeDependsOn>
+      $(CleanDependsOn);
+      CoreClean
+    </AnalyzeDependsOn>
+  </PropertyGroup>
+  <Target Name="Analyze" DependsOnTargets="$(AnalyzeDependsOn)" />
+  <Target Name="CoreAnalyze">
+    <MSBuild Projects="@(ProjectFiles)"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Analyze"
+             Properties="$(BuildGlobalProperties)"
+             />
+  </Target>
+</Project>

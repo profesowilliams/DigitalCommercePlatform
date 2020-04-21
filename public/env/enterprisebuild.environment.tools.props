@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: enterprisebuild.environment.tools.props
+ * Author: jhudak
+ * Description: Properties file which configures tool paths for the enterprise build process
+ **************************************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0" DefaultTargets="Build" >  
+
+	<!-- WIX TOOLS PATHS -->
+	<PropertyGroup>
+	  <WixToolPath>$(BuildPublicToolsPath)\deployment\wix\311\</WixToolPath>
+	  <WixTargetsPath>$(WixToolPath)Wix.targets</WixTargetsPath>
+	  <WixTasksPath>$(WixToolPath)wixtasks.dll</WixTasksPath>
+	</PropertyGroup>
+	
+</Project>
+
