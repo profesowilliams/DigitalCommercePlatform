@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: cibuild.proj
+ * Author: jhudak
+ * Description: Defines the enterprise rolling/CI build process.          
+ *
+ **************************************************************************************************************
+-->
+<Project DefaultTargets="CIBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <Import Project="..\env\enterprisebuild.environment.props"/>  
+
+  <!-- 
+  **************************************************************************************************************
+  *  TARGET CIBuild
+  **************************************************************************************************************
+  -->
+  <Target Name="CIBuild">
+
+    <!--BUILD: Set properties for the build -->
+    <PropertyGroup>      
+      <BUILD_NAME>CI</BUILD_NAME>
+      <BUILD_CONTEXT>OFFICIALBUILD</BUILD_CONTEXT>
+    </PropertyGroup>
+    
+    <!--BUILD: Configure the build environment -->
+    <Message Text="BUILD: Configuring Build Environment.. [CIBuild]" />
+    <CallTarget Targets="ConfigureBuildEnvironment" />
+
+    <!--BUILD: START PASS1 BUILD OF SOURCE TREE FROM ROOT DIRS.PROJ -->
+    <Message Text="BUILD: Starting Build.. [CIBuild]" />
+    <Message Text="Configuration: $(BUILD_CONFIGURATION)"/>
+    <Message Text="Build Artifact Directory: $(BuildArtifactStagingDirectory)"/>
+    <Message Text="Build In Parallel: $(BuildInParallel)"/>
+    <Message Text="$(BUILD_ROOT)"/>
+    
+    <MSBuild Projects="..\..\dirs.proj"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="$(SkipNonexistentProjects)"
+             Targets="Clean;Restore;Build"
+             RemoveProperties="OutDir"
+             Properties="$(BuildGlobalProperties);
+							BUILD_NAME=$(BUILD_NAME);
+							BUILD_CONTEXT=$(BUILD_CONTEXT);
+							Configuration=$(BUILD_CONFIGURATION);									
+            "
+             ToolsVersion="Current"
+
+             />
+    
+    <!-- BUILD: Reset Build Environment -->
+    <Message Text="BUILD: Resetting Build Environment.. [CIBuild]" />
+    <CallTarget Targets="ResetBuildEnvironment" />
+
+  </Target>
+
+  <Import Project="..\env\enterprisebuild.process.targets" />
+</Project>
+

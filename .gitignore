@@ -1,0 +1,114 @@
+﻿# Ignore VLT files
+.vlt
+.vlt-sync.log
+.vlt-sync-config.properties
+
+# AEM
+*.brackets.json
+**/target/*
+**/jcr_root/libs
+
+# Ignore Quickstart launches in the source tree
+license.properties
+crx-quickstart
+
+# Ignore IDE and Operating System artifacts
+.idea
+.classpath
+.metadata
+.project
+.settings
+.lazybones
+
+### Eclipse ###
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+local.properties
+.settings/
+.loadpath
+
+# IDE - VSCode
+.vscode/*
+
+### Java ###
+*.class
+
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.dir
+
+### Maven ###
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+### IntelliJ ###
+.idea/
+*.iml
+
+maven-eclipse.xml
+*.iml
+*.ipr
+*.iws
+.DS_Store
+release.properties
+
+cqdam.*
+#cq5dam.*
+folderThumbnail
+
+# Folders and temp files to ignore
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+/.sass-cache/*
+/.tmp/*
+/dist/*
+/website/node_modules/*
+.build
+/.dist/*
+/.vs/*
+**/.vs
+/RemoteSystemsTempFiles/*
+/Servers/*
+# Terraform
+**/.terraform/*
+**/terraform.tfstate
+/tng-next-generation/.vs
+/website/tng-next-generation/ui.apps/src/main/content/jcr_root/etc/designs/tng-aem-project/clientlib-angularAem/js/*
+/website/tng-next-generation/ui.apps/src/main/content/jcr_root/etc/designs/tng-aem-project/clientlib-angularAem/css/*
+/website/tng-next-generation/ui.apps/src/main/content/jcr_root/etc/designs/tng-aem-project/clientlib-angularAem/assets/*
+/website/tng-next-generation/ui.apps/src/main/content/jcr_root/etc/designs/tng-aem-project/clientlib-marketplaceFilters
+/website/tng-next-generation/aem-angular/.vs
+/website/tng-next-generation/aem-angular/node_modules
+*.suo
+/website/tng-next-generation/aem-angular/aem-angular.sln
+/platform/services/StreamOneTng.CartService/TestResults

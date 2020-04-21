@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: enterprisebuild.process.override.targets
+ * Author: jhudak
+ * Description: Contains selective target overrides needed by the enterprise build process
+ *              If you need to override a target in a microsoft/3rd party .targets file, do it here.
+ **************************************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0" DefaultTargets="Build" >
+
+  
+</Project>
