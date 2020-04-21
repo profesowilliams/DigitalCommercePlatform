@@ -4,8 +4,6 @@
 
   <!-- DIRS TO BUILD -->
   <ItemGroup>
-    <ProjectFiles Include="database/dirs.proj"/>
-    <ProjectFiles Include="platform/dirs.proj"/>
     <ProjectFiles Include="website/dirs.proj"/>
   </ItemGroup>
   
