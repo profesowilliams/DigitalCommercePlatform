@@ -1,0 +1,173 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>aem-angular</Name>
+    <RootNamespace>aem-angular</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>dd974d7a-1d44-4565-ab08-3c0d8c09d338</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include=".babelrc" />
+    <Content Include=".gitignore" />
+    <Content Include="clientlib.config.js" />
+    <Content Include="pom.xml" />
+    <Content Include="package.json" />
+    <Content Include="src\main\webpack\base\sass\_shared.scss" />
+    <Content Include="src\main\webpack\components\content\accordion\scss\accordion.scss" />
+    <Content Include="src\main\webpack\components\content\breadcrumb\scss\breadcrumb.scss" />
+    <Content Include="src\main\webpack\components\content\button\scss\button.scss" />
+    <Content Include="src\main\webpack\components\content\carousel\scss\carousel.scss" />
+    <Content Include="src\main\webpack\components\content\container\scss\container.scss" />
+    <Content Include="src\main\webpack\components\content\contentfragmentlist\scss\contentfragmentlist.scss" />
+    <Content Include="src\main\webpack\components\content\contentfragment\scss\contentfragment.scss" />
+    <Content Include="src\main\webpack\components\content\download\scss\download.scss" />
+    <Content Include="src\main\webpack\components\content\helloworld\scss\helloworld.scss" />
+    <Content Include="src\main\webpack\components\content\helloworld\ts\helloworld.js" />
+    <Content Include="src\main\webpack\components\content\image\scss\image.scss" />
+    <Content Include="src\main\webpack\components\content\languagenavigation\scss\languagenavigation.scss" />
+    <Content Include="src\main\webpack\components\content\list\scss\list.scss" />
+    <Content Include="src\main\webpack\components\content\navigation\scss\navigation.scss" />
+    <Content Include="src\main\webpack\components\content\search\scss\search.scss" />
+    <Content Include="src\main\webpack\components\content\tabs\scss\tabs.scss" />
+    <Content Include="src\main\webpack\components\content\teaser\scss\teaser.scss" />
+    <Content Include="src\main\webpack\components\content\text\scss\text.scss" />
+    <Content Include="src\main\webpack\components\content\title\scss\title.scss" />
+    <Content Include="src\main\webpack\components\form\button\scss\button.scss" />
+    <Content Include="src\main\webpack\components\form\container\scss\container.scss" />
+    <Content Include="src\main\webpack\components\form\options\scss\options.scss" />
+    <Content Include="src\main\webpack\components\form\text\scss\text.scss" />
+    <Content Include="src\main\webpack\site\main.scss" />
+    <Content Include="src\main\webpack\site\vendors.js" />
+    <Content Include="tsconfig.json" />
+    <Content Include="tslint.json" />
+    <Content Include="webpack.common.js" />
+    <Content Include="webpack.dev.js" />
+    <Content Include="webpack.prod.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\main\" />
+    <Folder Include="src\main\webpack\" />
+    <Folder Include="src\main\webpack\base\" />
+    <Folder Include="src\main\webpack\base\sass\" />
+    <Folder Include="src\main\webpack\components\" />
+    <Folder Include="src\main\webpack\components\content\" />
+    <Folder Include="src\main\webpack\components\content\accordion\" />
+    <Folder Include="src\main\webpack\components\content\accordion\scss\" />
+    <Folder Include="src\main\webpack\components\content\breadcrumb\" />
+    <Folder Include="src\main\webpack\components\content\breadcrumb\scss\" />
+    <Folder Include="src\main\webpack\components\content\button\" />
+    <Folder Include="src\main\webpack\components\content\button\scss\" />
+    <Folder Include="src\main\webpack\components\content\carousel\" />
+    <Folder Include="src\main\webpack\components\content\carousel\scss\" />
+    <Folder Include="src\main\webpack\components\content\container\" />
+    <Folder Include="src\main\webpack\components\content\container\scss\" />
+    <Folder Include="src\main\webpack\components\content\contentfragmentlist\" />
+    <Folder Include="src\main\webpack\components\content\contentfragmentlist\scss\" />
+    <Folder Include="src\main\webpack\components\content\contentfragment\" />
+    <Folder Include="src\main\webpack\components\content\contentfragment\scss\" />
+    <Folder Include="src\main\webpack\components\content\download\" />
+    <Folder Include="src\main\webpack\components\content\download\scss\" />
+    <Folder Include="src\main\webpack\components\content\helloworld\" />
+    <Folder Include="src\main\webpack\components\content\helloworld\scss\" />
+    <Folder Include="src\main\webpack\components\content\helloworld\ts\" />
+    <Folder Include="src\main\webpack\components\content\image\" />
+    <Folder Include="src\main\webpack\components\content\image\scss\" />
+    <Folder Include="src\main\webpack\components\content\languagenavigation\" />
+    <Folder Include="src\main\webpack\components\content\languagenavigation\scss\" />
+    <Folder Include="src\main\webpack\components\content\list\" />
+    <Folder Include="src\main\webpack\components\content\list\scss\" />
+    <Folder Include="src\main\webpack\components\content\navigation\" />
+    <Folder Include="src\main\webpack\components\content\navigation\scss\" />
+    <Folder Include="src\main\webpack\components\content\search\" />
+    <Folder Include="src\main\webpack\components\content\search\scss\" />
+    <Folder Include="src\main\webpack\components\content\tabs\" />
+    <Folder Include="src\main\webpack\components\content\tabs\scss\" />
+    <Folder Include="src\main\webpack\components\content\teaser\" />
+    <Folder Include="src\main\webpack\components\content\teaser\scss\" />
+    <Folder Include="src\main\webpack\components\content\text\" />
+    <Folder Include="src\main\webpack\components\content\text\scss\" />
+    <Folder Include="src\main\webpack\components\content\title\" />
+    <Folder Include="src\main\webpack\components\content\title\scss\" />
+    <Folder Include="src\main\webpack\components\form\" />
+    <Folder Include="src\main\webpack\components\form\button\" />
+    <Folder Include="src\main\webpack\components\form\button\scss\" />
+    <Folder Include="src\main\webpack\components\form\container\" />
+    <Folder Include="src\main\webpack\components\form\container\scss\" />
+    <Folder Include="src\main\webpack\components\form\options\" />
+    <Folder Include="src\main\webpack\components\form\options\scss\" />
+    <Folder Include="src\main\webpack\components\form\text\" />
+    <Folder Include="src\main\webpack\components\form\text\scss\" />
+    <Folder Include="src\main\webpack\site\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\main\webpack\components\content\helloworld\ts\helloworld.ts" />
+    <TypeScriptCompile Include="src\main\webpack\site\main.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+<Target Name="Build" BeforeTargets="CoreCompile">
+    <Message Text="Starting AEM Build Script"/>
+	<Exec Command="npm install"/>
+	<Exec Command="npm run prod"/>
+  </Target>
+</Project>
