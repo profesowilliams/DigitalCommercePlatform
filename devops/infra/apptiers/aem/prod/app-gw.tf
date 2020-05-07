@@ -43,7 +43,7 @@ module "app-gw" {
 
     {
       backend_address_pool_name = local.backend_address_pool_name
-      backend_ip_addresses      = ["172.23.132.19"]
+      backend_ip_addresses      = ["172.23.0.5"]
     }
   ]
 

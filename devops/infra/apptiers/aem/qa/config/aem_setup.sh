@@ -64,10 +64,10 @@ date
 echo "Adding the run modes in sling.properties file according to the branch name"
 echo "======================================================================"
 cd /opt/aem/author/crx-quickstart/conf
-sed -i '$ a sling.run.modes=dev' sling.properties
+sed -i '$ a sling.run.modes=qa' sling.properties
 
 cd /opt/aem/publish/crx-quickstart/conf
-sed -i '$ a sling.run.modes=dev' sling.properties
+sed -i '$ a sling.run.modes=qa' sling.properties
 #mv /opt/aem/author/crx-quickstart/conf/sling.properties  /opt/aem/author/crx-quickstart/conf/sling.properties_bkp
 #mv /opt/aem/publish/crx-quickstart/conf/sling.properties  /opt/aem/publish/crx-quickstart/conf/sling.properties_bkp
 #
@@ -115,12 +115,12 @@ sed -i '$ a sling.run.modes=dev' sling.properties
 
 #### Reset the admin password
 
-curl -s -u admin:admin -Fplain=9DlRcIvqM9YpLHc3kQWr -Fverify=9DlRcIvqM9YpLHc3kQWr  -Fold=admin -FPath=$USER_PATH http://localhost:4502/crx/explorer/ui/setpassword.jsp
+curl -s -u admin:admin -Fplain=6WBZO5C0LkSi0XcHcwid -Fverify=6WBZO5C0LkSi0XcHcwid  -Fold=admin -FPath=$USER_PATH http://localhost:4502/crx/explorer/ui/setpassword.jsp
 sleep 60
 echo "======================================================================"
 echo "Resetting admin password for Author ..."
 echo "======================================================================"
-curl -s -u admin:admin -Fplain=9DlRcIvqM9YpLHc3kQWr -Fverify=9DlRcIvqM9YpLHc3kQWr  -Fold=admin -FPath=$USER_PATH http://localhost:4503/crx/explorer/ui/setpassword.jsp
+curl -s -u admin:admin -Fplain=6WBZO5C0LkSi0XcHcwid -Fverify=6WBZO5C0LkSi0XcHcwid  -Fold=admin -FPath=$USER_PATH http://localhost:4503/crx/explorer/ui/setpassword.jsp
 sleep 60
 echo "======================================================================"
 echo "Resetting admin password for Publish Instance ..."

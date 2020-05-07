@@ -1,23 +1,23 @@
 variable "environment" {
   description = "Name of environments:"
-  default = "Terraform-globalsite-dev"
+  default = "Terraform-globalsite-uat"
 }
 variable "host_name" {
   description = "Please provide hostname for VM"
-  default = "amer-east-aem-globalsite-dev"
+  default = "amer-east-aem-globalsite-uat"
 }
 variable "resourcegroup" {
   description = "Please enter Resource group name:"
-  default = "amer-east-aem-globalsite-dev-rg"
+  default = "amer-east-aem-globalsite-uat-rg"
 }
 variable "environment-name" {
- default = "amer-east-aem-globalsite-dev"
+ default = "amer-east-aem-globalsite-uat"
 }
 variable "aem-domain-author" {
-  default = "us-dev-author.tdebusiness.cloud"
+  default = "us-uat-author.tdebusiness.cloud"
 }
 variable "aem-domain-publish" {
-  default = "us-dev.tdebusiness.cloud"
+  default = "us-uat.tdebusiness.cloud"
 }
 variable "incaps_dns" {
   default ="test.incaps.dns" 

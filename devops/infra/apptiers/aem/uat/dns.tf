@@ -3,8 +3,8 @@ module "dns-records" {
   zone_name            = var.zone_name
   dns_rg               = var.dns_rg
   dns_a_records = {
-      "us-dev-author" = "52.151.247.149",
-       "us-dev"       = "52.151.247.149"
+      "us-uat-author" = "172.23.132.21",
+       "us-uat"       = "172.23.132.21"
      }
 }
 

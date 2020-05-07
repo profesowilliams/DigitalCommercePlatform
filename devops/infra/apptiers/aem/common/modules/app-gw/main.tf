@@ -3,7 +3,7 @@ locals {
   frontend_ip_configuration_name = lower("${var.host_name}-feip")
 }
 resource "azurerm_public_ip" "public_ip" {
-  name                = "${var.host_name}-pip"
+  name                = "${var.host_name}-appgateway-pip"
   resource_group_name = var.resourcegroup
   location            = var.location
   sku                 = "Standard"

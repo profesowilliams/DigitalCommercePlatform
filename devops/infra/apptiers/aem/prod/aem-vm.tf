@@ -22,9 +22,9 @@ module "aem-vm" {
   custom_data         = data.template_cloudinit_config.config.rendered
   ssh_key             = "../common/script/S1-Root.pub"
   username            = var.username
-  vm_private_ips      = "172.23.132.19"
+  vm_private_ips      = "172.23.0.5"
 #  public_ip	      = "azurerm_public_ip.publicip.ip_address"
-  vm_size             = "Standard_D2s_v3"
+  vm_size             = "Standard_D4_v3"
   
   
   vm_image = {
