@@ -16,7 +16,7 @@
   **************************************************************************************************************
   -->
   <ItemGroup>
-     <Sources Include="main.tf"/>
+     <Sources Include="*.tf"/>
   </ItemGroup>
 
   <Import Project="$(BUILD_ENV_PATH)\terraform.targets" />
