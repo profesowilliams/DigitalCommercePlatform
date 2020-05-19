@@ -59,23 +59,17 @@ variable "rg_depends_on" {
 }
 variable "custom_data" {}
 
-#variable "recovery_vault" {
-#  description = "Please provide the backup recovery vault name"
+variable "recovery_vault" {
+  description = "Please provide the backup recovery vault name"
 #  default = "us-recovery-vault"
-#}
-#variable "vault_rg" {
-#  description = "Please provide the Recovery vault RG name"
+}
+variable "vault_rg" {
+  description = "Please provide the Recovery vault RG name"
 #  default = "us-recovery-vault-rg"
-#}
-#variable "bkppolicy_name" {
-#  description = "Please provide backup policy name"
+}
+variable "bkppolicy_name" {
+  description = "Please provide backup policy name"
 #  default = "DailyRetain15D"
-#}
-#variable "keyvault_name" {
-#  description = "Please provide Azure Key vault name"
-#  default = "us-tng-vault"
-#}
-#variable "keyvault_rg" {
-#  description = "Please provide Azure Key vault RG name"
-#  default = "us-tng-security-rg"
-#}
+}
+variable "recovery_vault_name" {}
+variable "backup_policy_id" {}

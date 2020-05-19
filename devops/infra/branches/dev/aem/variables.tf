@@ -69,3 +69,15 @@ variable "dns_rg" {
 variable "zone_name" {
   default = "tdebusiness.cloud"
 }
+variable "recovery_vault" {
+  description = "Please provide the backup recovery vault name"
+  default = "ebusiness-nonprod-vault"
+}
+variable "vault_rg" {
+  description = "Please provide the Recovery vault RG name"
+  default = "ebusiness-nonprodvault-rg"
+}
+variable "bkppolicy_name" {
+  description = "Please provide backup policy name"
+  default = "DailyVMBackup"
+}

@@ -42,15 +42,15 @@ resource "azurerm_virtual_machine" "mainvm" {
     }
 }
 
-#resource "azurerm_backup_protected_vm" "vm_policy" {
-#  resource_group_name = "${var.vault_rg}"
-#  recovery_vault_name = "${data.azurerm_recovery_services_vault.recovery_vault.name}"
-#  source_vm_id        = "${azurerm_virtual_machine.mainvm.id}"
-#  backup_policy_id    = "${data.azurerm_recovery_services_protection_policy_vm.backup_policy.id}"
+resource "azurerm_backup_protected_vm" "vm_policy" {
+  resource_group_name = var.vault_rg
+  recovery_vault_name = var.recovery_vault_name
+  source_vm_id        = azurerm_virtual_machine.mainvm.id
+  backup_policy_id    = var.backup_policy_id 
 #  lifecycle {
 #            prevent_destroy = true
 #    }
-#}
+}
 
 resource "azurerm_network_interface" "nic" {
     name                      = "${var.host_name}-nic"
