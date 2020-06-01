@@ -1,1 +1,0 @@
-#This is for AEM instance setup for Global Website 

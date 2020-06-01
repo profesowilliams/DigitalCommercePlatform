@@ -1,6 +1,7 @@
 #!/bin/bash
 # Setup AEM 6.5 Publish and Author
 FILE=/etc/aem-setup.lock
+passwd=https://amer-east-globalsite-key.vault.azure.net/secrets/aem-dev/b045ca1bd3804f0d99335c6c9119bd03
 if test -f "$FILE"; then
     echo "$FILE exist - The server is already setup"
     exit 0
@@ -56,8 +57,8 @@ echo "======================================================================"
 date
 cd /opt/aem/publish/
 #nohup java -jar cq5-publish-p4503.jar & > /dev/null
-nohup Java -jar cq5-publish-p4503.jar -Dsling.run.modes=publish,nosamplecontent &
-sleep 800
+nohup Java -jar cq5-publish-p4503.jar -Dsling.run.modes=publish,nosamplecontent & > /dev/null
+sleep 600
 echo "======================================================================"
 date
 ######Add Sling.run.modes as per branch
@@ -68,16 +69,15 @@ sed -i '$ a sling.run.modes=dev' sling.properties
 
 cd /opt/aem/publish/crx-quickstart/conf
 sed -i '$ a sling.run.modes=dev' sling.properties
-curl -s -u admin:admin -Fplain=9DlRcIvqM9YpLHc3kQWr -Fverify=9DlRcIvqM9YpLHc3kQWr  -Fold=admin -FPath=$USER_PATH http://localhost:4502/crx/explorer/ui/setpassword.jsp
+curl -s -u admin:admin -Fplain=$passwd -Fverify=$passwd  -Fold=admin -FPath=$USER_PATH http://localhost:4502/crx/explorer/ui/setpassword.jsp
 sleep 60
 echo "======================================================================"
 echo "Resetting admin password for Author ..."
 echo "======================================================================"
-curl -s -u admin:admin -Fplain=9DlRcIvqM9YpLHc3kQWr -Fverify=9DlRcIvqM9YpLHc3kQWr  -Fold=admin -FPath=$USER_PATH http://localhost:4503/crx/explorer/ui/setpassword.jsp
+curl -s -u admin:admin -Fplain=$passwd -Fverify=$passwd  -Fold=admin -FPath=$USER_PATH http://localhost:4503/crx/explorer/ui/setpassword.jsp
 sleep 60
 echo "======================================================================"
-echo "Resetting admin password for Publish Instance ..."
-echo "======================================================================"
+
 kill -9 `ps -ef |grep -v "grep"|grep -i "cq5-author-p4502.jar"|awk '{print $2}'`
 kill -9 `ps -ef |grep -v "grep"|grep -i "cq5-publish-p4503.jar"|awk '{print $2}'`
 
@@ -89,16 +89,6 @@ systemctl restart publish.service
 rm -rf /opt/aem/*.zip
 ####Enable Monitoring for Diskspace and load average 
 curl -s https://monitor.tddevops.com/install-agent.sh | sudo bash -s -
-
-echo "================================================================================================================="
-echo "The AEM setup installation is completed. Please check below points for further steps:"
-echo "1)Check configMgr for root mapping"
-echo "2)Install VSTS agent for deployment"
-echo "3)Update the admin password for Default Agent (publish)"
-echo "4)After deployment Give read permission for etc/designs to anonymous user and save"
-echo "5)Inform the PING team to configure SSO domains"
-echo "6)Verify the SSO URL and global API config URLs"
-echo "================================================================================================================="
 
 # Install Nessus Agent
 if [ -n "$(uname -a | grep Ubuntu)" ]; then
