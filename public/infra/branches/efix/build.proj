@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+ **************************************************************************************************************
+ * Source File Name: build.proj
+ * Author: jhudak
+ * Description: Enterprise Build File
+ * 
+ **************************************************************************************************************
+-->
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(BUILD_ENV_PATH)\enterprisebuild.environment.props" />
+
+  <!-- 
+  **************************************************************************************************************
+  *  This section specifies general project properties
+  **************************************************************************************************************
+  -->
+  <ItemGroup>
+     <Sources Include="main.tf"/>
+  </ItemGroup>
+
+  <Import Project="$(BUILD_ENV_PATH)\terraform.targets" />
+</Project>
