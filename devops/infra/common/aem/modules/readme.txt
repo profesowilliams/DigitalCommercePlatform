@@ -1,1 +1,0 @@
-NOTE: This folder is where your terraform modules go that are common to your app tier. 
