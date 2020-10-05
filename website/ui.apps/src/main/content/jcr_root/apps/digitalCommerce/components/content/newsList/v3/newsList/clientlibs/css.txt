@@ -1,3 +1,0 @@
-#base=css
-list.css
-story.css

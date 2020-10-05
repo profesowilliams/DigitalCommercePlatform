@@ -1,8 +1,0 @@
-These reference assemblies come were sourced from the
-"C:\Program Files (x86)\Reference Assemblies" folder 
-
-These are special versions of common framework binaries (build includes with function exports) and are required 
-to build the source tree without relying on the GAC on each developers private machine.
-
-
-
