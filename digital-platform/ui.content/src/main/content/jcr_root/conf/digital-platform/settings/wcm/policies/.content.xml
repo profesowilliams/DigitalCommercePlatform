@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="cq:Page">
+    <rep:policy/>
+    <wcm jcr:primaryType="nt:unstructured">
+        <foundation jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <responsivegrid jcr:primaryType="nt:unstructured">
+                    <content-default
+                        jcr:description="Policy for editable layout containers"
+                        jcr:lastModified="{Date}2020-10-06T10:39:25.132-04:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="TD Platform Default"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[group:digital-platform.Content,/apps/digital-platform/components/form/container,group:digital-platform.Structure]"
+                        policyResourceType="wcm/foundation/components/responsivegrid">
+                        <cq:authoring jcr:primaryType="nt:unstructured">
+                            <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                <image
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="media"
+                                    assetMimetype="image/*"
+                                    droptarget="image"
+                                    resourceType="digital-platform/components/content/image"
+                                    type="Images"/>
+                            </assetToComponentMapping>
+                        </cq:authoring>
+                        <jcr:content
+                            jcr:primaryType="nt:unstructured"
+                            mergeList="{Boolean}true"/>
+                    </content-default>
+                    <policy_xfm
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="TD Platform Experience Fragment"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/libs/wcm/foundation/components/responsivegrid,group:digital-platform.Content,group:digital-platform.Form,group:digital-platform.Structure]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                        <cq:authoring jcr:primaryType="nt:unstructured">
+                            <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                <mapping_1568417184586
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="media"
+                                    assetMimetype="image/*"
+                                    droptarget="image"
+                                    resourceType="digital-platform/components/content/image"/>
+                                <mapping_1570048100274
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="content"
+                                    assetMimetype="text/html"
+                                    droptarget="experiencefragment"
+                                    resourceType="digital-platform/components/content/experiencefragment"/>
+                                <mapping_1570048111074
+                                    jcr:primaryType="nt:unstructured"
+                                    assetGroup="media"
+                                    assetMimetype="[text/html,application/vnd.adobe.contentfragment]"
+                                    droptarget="contentfragment"
+                                    resourceType="digital-platform/components/content/contentfragment"/>
+                            </assetToComponentMapping>
+                        </cq:authoring>
+                    </policy_xfm>
+                    <policy_694723948639700
+                        jcr:description="User dashboard policies"
+                        jcr:lastModified="{Date}2020-10-08T17:47:35.981-04:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Dashboard Template Policies"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[/libs/wcm/foundation/components/responsivegrid,/apps/digital-commerce/components/content/accordion,/apps/digital-commerce/components/content/container,/apps/digital-commerce/components/content/contentfragment,/apps/digital-commerce/components/content/contentfragmentlist,/apps/digital-commerce/components/content/experiencefragment,/apps/digital-commerce/components/content/image,/apps/digital-commerce/components/content/tabs,/apps/digital-commerce/components/content/text,/apps/digital-commerce/components/content/title]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </policy_694723948639700>
+                </responsivegrid>
+            </components>
+        </foundation>
+    </wcm>
+</jcr:root>

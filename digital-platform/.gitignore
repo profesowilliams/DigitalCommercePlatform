@@ -74,5 +74,3 @@ buildNumber.properties
 ### IntelliJ ###
 .idea/
 *.iml
-node_modules/
-.history/
