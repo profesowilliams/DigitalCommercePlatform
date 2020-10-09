@@ -31,7 +31,7 @@
                             <default
                                 jcr:primaryType="nt:unstructured"
                                 offset="0"
-                                width="6"/>
+                                width="8"/>
                             <tablet
                                 jcr:primaryType="nt:unstructured"
                                 width="8"/>
@@ -40,25 +40,7 @@
                                 width="8"/>
                         </cq:responsive>
                     </navigation>
-                    <title
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Follow Us"
-                        sling:resourceType="digital-platform/components/content/title"
-                        type="h4">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                                jcr:primaryType="nt:unstructured"
-                                offset="0"
-                                width="2"/>
-                            <phone
-                                jcr:primaryType="nt:unstructured"
-                                offset="0"
-                                width="12"/>
-                            <tablet
-                                jcr:primaryType="nt:unstructured"
-                                width="12"/>
-                        </cq:responsive>
-                    </title>
+
                     <responsivegrid
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
@@ -66,7 +48,7 @@
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
                                 jcr:primaryType="nt:unstructured"
-                                width="2"/>
+                                width="4"/>
                             <tablet
                                 jcr:primaryType="nt:unstructured"
                                 width="12"/>
