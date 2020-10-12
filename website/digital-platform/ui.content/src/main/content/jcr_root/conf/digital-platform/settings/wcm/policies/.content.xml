@@ -8,8 +8,9 @@
             <components jcr:primaryType="nt:unstructured">
                 <responsivegrid jcr:primaryType="nt:unstructured">
                     <content-default
+                        cq:styleDefaultClasses="p-0"
                         jcr:description="Policy for editable layout containers"
-                        jcr:lastModified="{Date}2020-10-06T10:39:25.132-04:00"
+                        jcr:lastModified="{Date}2020-10-09T14:27:53.868-04:00"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="TD Platform Default"
@@ -30,6 +31,45 @@
                         <jcr:content
                             jcr:primaryType="nt:unstructured"
                             mergeList="{Boolean}true"/>
+                        <cq:styleGroups jcr:primaryType="nt:unstructured">
+                            <item0
+                                cq:styleGroupLabel="padding"
+                                cq:styleGroupMultiple="true"
+                                jcr:primaryType="nt:unstructured">
+                                <cq:styles jcr:primaryType="nt:unstructured">
+                                    <item0
+                                        cq:styleClasses="px-1"
+                                        cq:styleId="1602267710002"
+                                        cq:styleLabel="small-x"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <item1
+                                        cq:styleClasses="px-3"
+                                        cq:styleId="1602267775164"
+                                        cq:styleLabel="med-x"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <item2
+                                        cq:styleClasses="px-5"
+                                        cq:styleId="1602267821180"
+                                        cq:styleLabel="large-x"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <item3
+                                        cq:styleClasses="py-1"
+                                        cq:styleId="1602267848865"
+                                        cq:styleLabel="small-y"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <item4
+                                        cq:styleClasses="py-3"
+                                        cq:styleId="1602267862264"
+                                        cq:styleLabel="med-y"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <item5
+                                        cq:styleClasses="py-5"
+                                        cq:styleId="1602267872898"
+                                        cq:styleLabel="large-y"
+                                        jcr:primaryType="nt:unstructured"/>
+                                </cq:styles>
+                            </item0>
+                        </cq:styleGroups>
                     </content-default>
                     <policy_xfm
                         jcr:primaryType="nt:unstructured"
@@ -62,7 +102,7 @@
                     </policy_xfm>
                     <policy_694723948639700
                         jcr:description="User dashboard policies"
-                        jcr:lastModified="{Date}2020-10-08T17:47:35.981-04:00"
+                        jcr:lastModified="{Date}2020-10-09T12:20:46.461-04:00"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Dashboard Template Policies"
