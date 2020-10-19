@@ -5,66 +5,6 @@ mvn -PautoInstallSinglePackage clean install
 
 ###########################################################
 
-mvn archetype:generate -B \
-    -DarchetypeGroupId=com.adobe.granite.archetypes \
-    -DarchetypeArtifactId=aem-project-archetype \
-    -DarchetypeGroupId=com.adobe.aem \
-    -DarchetypeVersion=24 \
-    -DappId=blankDemo \
-    -DappTitle="blank Demo" \
-    -DgroupId=com.techdata.dcp \
-    -Dversion=0.0.1-SNAPSHOT \
-    -DappsFolderName=blank-demo \
-    -DartifactId=blank-demo \
-    -Dpackage=com.techdata.dcp \
-    -DartifactName="Aem Blank Site" \
-    -DcomponentGroupName=blank-demo \
-    -DconfFolderName=blank-demo \
-    -DcontentFolderName=blank-demo \
-    -DcssId=blank-demo \
-    -DisSingleCountryWebsite=n \
-    -Dlanguage_country=en_us \
-    -DoptionAemVersion=6.5.0 \
-    -DoptionDispatcherConfig=none \
-    -DoptionIncludeErrorHandler=n \
-    -DoptionIncludeExamples=y \
-    -DoptionIncludeFrontendModule=y \
-    -DpackageGroup=blank-demo \
-    -DsiteName="Aem Blank Site"
-
-
-
-#########################################################
-
-DCP
-
-mvn archetype:generate -B \
-    -DarchetypeGroupId=com.adobe.granite.archetypes \
-    -DarchetypeArtifactId=aem-project-archetype \
-    -DarchetypeVersion=22 \
-    -DgroupId=com.techdata.dcp \
-    -Dversion=0.0.1-SNAPSHOT \
-    -DappsFolderName=dcp \
-    -DartifactId=dcp \
-    -Dpackage=com.techdata.dcp \
-    -DartifactName="DCP Platform" \
-    -DcomponentGroupName=dcp \
-    -DconfFolderName=dcp \
-    -DcontentFolderName=dcp \
-    -DcssId=dcp \
-    -DisSingleCountryWebsite=n \
-    -Dlanguage_country=en_us \
-    -DoptionAemVersion=6.5.0 \
-    -DoptionDispatcherConfig=none \
-    -DoptionIncludeErrorHandler=n \
-    -DoptionIncludeExamples=y \
-    -DoptionIncludeFrontendModule=y \
-    -DpackageGroup=dcp \
-    -DsiteName="DCP Platform"
-
-
-#############################################################
-
 Digital Platform
 
 mvn archetype:generate -B \
@@ -76,7 +16,7 @@ mvn archetype:generate -B \
     -DappsFolderName=digital-platform \
     -DartifactId=digital-platform \
     -Dpackage=com.techdata.platform \
-    -DartifactName="Techdata DCP" \
+    -DartifactName="TD Digital Platform" \
     -DcomponentGroupName=digital-platform \
     -DconfFolderName=digital-platform \
     -DcontentFolderName=digital-platform \
@@ -89,7 +29,7 @@ mvn archetype:generate -B \
     -DoptionIncludeExamples=y \
     -DoptionIncludeFrontendModule=y \
     -DpackageGroup=digital-platform \
-    -DsiteName="Techdata DCP"
+    -DsiteName="TD Digital Platform"
 
 #############################################################
 
@@ -104,7 +44,7 @@ mvn archetype:generate -B \
     -DappsFolderName=digital-commerce \
     -DartifactId=digital-commerce \
     -Dpackage=com.techdata.commerce \
-    -DartifactName="Techdata Digital Commerce" \
+    -DartifactName="TD Digital Commerce" \
     -DcomponentGroupName=digital-commerce \
     -DconfFolderName=digital-commerce \
     -DcontentFolderName=digital-commerce \
@@ -117,4 +57,7 @@ mvn archetype:generate -B \
     -DoptionIncludeExamples=n \
     -DoptionIncludeFrontendModule=n \
     -DpackageGroup=digital-commerce \
-    -DsiteName="Techdata DCP"
+    -DsiteName="TD Digital Commerce"
+
+
+
