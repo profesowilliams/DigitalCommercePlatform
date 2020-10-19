@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<workspaceFilter version="1.0">
-    <filter root="/conf/digital-commerce" mode="merge"/>
-    <filter root="/content/digital-commerce" mode="merge"/>
-    <filter root="/content/dam/digital-commerce" mode="merge"/>
-    <filter root="/content/experience-fragments/digital-commerce" mode="merge"/>
-</workspaceFilter>
