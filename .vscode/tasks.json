@@ -1,0 +1,40 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "AEMFED start aem fed server",
+            "type": "shell",
+            "command": "aemfed -t \"http://admin:admin@localhost:4502\" -w \"./\"",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "MVN:install build and package the whole project and deploy into AEM",
+            "type": "shell",
+            "command": "mvn clean install -PautoInstallPackage"
+        },
+        {
+            "label": "MVN:clean build all the modules run in the project root directory",
+            "type": "shell",
+            "command": "mvn clean install",
+            "problemMatcher": []
+        },
+        {
+            "label": "MVN:core deploy only the core bundle to the author, run this command",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/core"
+            },
+            "command": "mvn clean install -PautoInstallBundle",
+        }
+    ]
+}

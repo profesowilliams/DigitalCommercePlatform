@@ -1,0 +1,83 @@
+{
+	// Place your aem-uikit workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Aem Dialog ": {
+		"prefix": "aem_dialog",
+		"body": [
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+			"<jcr:root xmlns:sling=\"http://sling.apache.org/jcr/sling/1.0\" xmlns:cq=\"http://www.day.com/jcr/cq/1.0\" xmlns:jcr=\"http://www.jcp.org/jcr/1.0\" xmlns:nt=\"http://www.jcp.org/jcr/nt/1.0\"",
+			"    jcr:primaryType=\"nt:unstructured\"",
+			"    jcr:title=\"Properties\"",
+			"    sling:resourceType=\"cq/gui/components/authoring/dialog\">",
+			"    <content",
+			"        jcr:primaryType=\"nt:unstructured\"",
+			"        sling:resourceType=\"granite/ui/components/coral/foundation/fixedcolumns\">",
+			"        <items jcr:primaryType=\"nt:unstructured\">",
+			"            <column",
+			"                jcr:primaryType=\"nt:unstructured\"",
+			"                sling:resourceType=\"granite/ui/components/coral/foundation/container\">",
+			"                <items jcr:primaryType=\"nt:unstructured\">",
+			"                    <${1:fieldName}",
+			"                        jcr:primaryType=\"nt:unstructured\"",
+			"                        sling:resourceType=\"granite/ui/components/coral/foundation/form/textfield\"",
+			"                        fieldLabel=\"${1:Label}\"",
+			"                        name=\"./${2:field_name}\"/>",
+			"                </items>",
+			"            </column>",
+			"        </items>",
+			"    </content>",
+			"</jcr:root>",
+			""
+		],
+		"description": "Aem Dialog "
+	},
+	"CQ HTML Tag place in _cq_dialog foldes": {
+		"prefix": "aem_htmlTag",
+		"body": [
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+			"<jcr:root xmlns:cq=\"http://www.day.com/jcr/cq/1.0\" xmlns:jcr=\"http://www.jcp.org/jcr/1.0\" xmlns:nt=\"http://www.jcp.org/jcr/nt/1.0\"",
+			"    cq:tagName=\"${1:span}\"",
+			"    jcr:primaryType=\"nt:unstructured\"",
+			"    class=\"${2:classs(s)}\"/>",
+			""
+		],
+		"description": "CQ HTML Tag"
+	},
+	"Simple Aem Component XML node": {
+		"prefix": "aem_component",
+		"body": [
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+			"<jcr:root xmlns:cq=\"http://www.day.com/jcr/cq/1.0\" xmlns:jcr=\"http://www.jcp.org/jcr/1.0\"",
+			"    jcr:primaryType=\"cq:Component\"",
+			"    jcr:title=\"${1:ComponentTitle}\"",
+			"    componentGroup=\"${2:component_group_name}.Content\"/>"
+		],
+		"description": "Simple Aem Component XML node"
+	},
+	"Advance AEM Component XML node ": {
+		"prefix": "aem_advance_component",
+		"body": [
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+			"<jcr:root xmlns:sling=\"http://sling.apache.org/jcr/sling/1.0\" xmlns:cq=\"http://www.day.com/jcr/cq/1.0\" xmlns:jcr=\"http://www.jcp.org/jcr/1.0\"",
+			"    jcr:primaryType=\"cq:Component\"",
+			"    jcr:title=\"${1:ComponentTitle}\"",
+			"    sling:resourceSuperType=\"wcm/foundation/components/responsivegrid\"",
+			"    componentGroup=\"${2:component_group_name}.Content\"/>"
+		],
+		"description": "Advance AEM Component XML node "
+	}
+}
