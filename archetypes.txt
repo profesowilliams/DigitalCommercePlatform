@@ -8,56 +8,53 @@ mvn -PautoInstallSinglePackage clean install
 Digital Platform
 
 mvn archetype:generate -B \
-    -DarchetypeGroupId=com.adobe.granite.archetypes \
-    -DarchetypeArtifactId=aem-project-archetype \
-    -DarchetypeVersion=22 \
-    -DgroupId=com.techdata.platform \
-    -Dversion=0.0.1-SNAPSHOT \
-    -DappsFolderName=digital-platform \
-    -DartifactId=digital-platform \
-    -Dpackage=com.techdata.platform \
-    -DartifactName="TD Digital Platform" \
-    -DcomponentGroupName=digital-platform \
-    -DconfFolderName=digital-platform \
-    -DcontentFolderName=digital-platform \
-    -DcssId=digital-platform \
-    -DisSingleCountryWebsite=n \
-    -Dlanguage_country=en_us \
-    -DoptionAemVersion=6.5.0 \
-    -DoptionDispatcherConfig=none \
-    -DoptionIncludeErrorHandler=n \
-    -DoptionIncludeExamples=y \
-    -DoptionIncludeFrontendModule=y \
-    -DpackageGroup=digital-platform \
-    -DsiteName="TD Digital Platform"
+    -D archetypeGroupId=com.adobe.granite.archetypes \
+    -D archetypeArtifactId=aem-project-archetype \
+    -D archetypeVersion=22 \
+    -D groupId=com.techdata.platform \
+    -D version=0.0.1-SNAPSHOT \
+    -D appsFolderName=digital-platform \
+    -D artifactId=digital-platform \
+    -D package=com.techdata.platform \
+    -D artifactName="TD Digital Platform" \
+    -D componentGroupName=digital-platform \
+    -D confFolderName=digital-platform \
+    -D contentFolderName=digital-platform \
+    -D cssId=digital-platform \
+    -D isSingleCountryWebsite=n \
+    -D language_country=en_us \
+    -D optionAemVersion=6.5.0 \
+    -D optionDispatcherConfig=none \
+    -D optionIncludeErrorHandler=n \
+    -D optionIncludeExamples=y \
+    -D optionIncludeFrontendModule=y \
+    -D packageGroup=digital-platform \
+    -D siteName="TD Digital Platform"
 
 #############################################################
 
 Digital Commerce
 
 mvn archetype:generate -B \
-    -DarchetypeGroupId=com.adobe.granite.archetypes \
-    -DarchetypeArtifactId=aem-project-archetype \
-    -DarchetypeVersion=22 \
-    -DgroupId=com.techdata.commerce \
-    -Dversion=0.0.1-SNAPSHOT \
-    -DappsFolderName=digital-commerce \
-    -DartifactId=digital-commerce \
-    -Dpackage=com.techdata.commerce \
-    -DartifactName="TD Digital Commerce" \
-    -DcomponentGroupName=digital-commerce \
-    -DconfFolderName=digital-commerce \
-    -DcontentFolderName=digital-commerce \
-    -DcssId=digital-commerce \
-    -DisSingleCountryWebsite=n \
-    -Dlanguage_country=en_us \
-    -DoptionAemVersion=6.5.0 \
-    -DoptionDispatcherConfig=none \
-    -DoptionIncludeErrorHandler=n \
-    -DoptionIncludeExamples=n \
-    -DoptionIncludeFrontendModule=n \
-    -DpackageGroup=digital-commerce \
-    -DsiteName="TD Digital Commerce"
-
-
-
+    -D archetypeGroupId=com.adobe.granite.archetypes \
+    -D archetypeArtifactId=aem-project-archetype \
+    -D archetypeVersion=22 \
+    -D groupId=com.techdata.commerce \
+    -D version=0.0.1-SNAPSHOT \
+    -D appsFolderName=digital-commerce \
+    -D artifactId=digital-commerce \
+    -D package=com.techdata.commerce \
+    -D artifactName="TD Digital Commerce" \
+    -D componentGroupName=digital-commerce \
+    -D confFolderName=digital-commerce \
+    -D contentFolderName=digital-commerce \
+    -D cssId=digital-commerce \
+    -D isSingleCountryWebsite=n \
+    -D language_country=en_us \
+    -D optionAemVersion=6.5.0 \
+    -D optionDispatcherConfig=none \
+    -D optionIncludeErrorHandler=n \
+    -D optionIncludeExamples=n \
+    -D optionIncludeFrontendModule=n \
+    -D packageGroup=digital-commerce \
+    -D siteName="TD Digital Commerce"
