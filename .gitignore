@@ -76,3 +76,5 @@ buildNumber.properties
 *.iml
 node_modules/
 .history/
+/content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/templates/experience-fragment-web-variation-template/thumbnail.png.dir
+/content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/templates/home-page

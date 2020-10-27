@@ -9,6 +9,8 @@
                 <responsivegrid jcr:primaryType="nt:unstructured">
                     <content-default
                         jcr:description="Policy for editable layout containers"
+                        jcr:lastModified="{Date}2020-10-20T11:34:12.494-04:00"
+                        jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="TD Digital Platform Default"
                         sling:resourceType="wcm/core/components/policy/policy"
@@ -281,7 +283,7 @@
                         jcr:title="TD Digital Platform Experience Fragment - Footer"
                         sling:resourceType="wcm/core/components/policy/policy">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
-                </policy_footer>
+                    </policy_footer>
                 </experiencefragment>
             </content>
             <structure jcr:primaryType="nt:unstructured">
@@ -303,6 +305,17 @@
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </policy_content_page>
                 </page>
+                <main jcr:primaryType="nt:unstructured">
+                    <policy_1603209288471
+                        jcr:lastModified="{Date}2020-10-27T17:22:08.879-04:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Digital Platform Content Policy (Default)"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[group:digital-platform.Content,/apps/digital-platform/components/structure/responsivegrid]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </policy_1603209288471>
+                </main>
             </structure>
         </components>
     </digital-platform>
