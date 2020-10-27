@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12 col-lg-4 offset-8 text-right">
+			<div class="dropdown" data-sly-unwrap="{$wcmmode.disabled}">
+				<button
+					class="btn btn-link btn-sm dropdown-toggle"
+					type="button"
+					id="dropdownMenuButton"
+					data-toggle="dropdown"
+					aria-expanded="false"
+				>
+					Lang
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-unwrap="{$wcmmode.disabled}"
+						data-sly-resource="${'top-nav' @ resourceType='/apps/digital-platform/components/content/languagenavigation'}"
+					></div>
+				</ul>
+			</div>
+			<button class="btn btn-sm btn-link">Become Reseller</button>
+			<button class="btn btn-sm btn-link">Become Vendor</button>
+		</div>
+	</div>
+</div>
