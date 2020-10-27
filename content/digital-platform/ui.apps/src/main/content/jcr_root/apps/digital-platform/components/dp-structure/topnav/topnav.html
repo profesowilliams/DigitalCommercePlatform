@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid py-1 mb-1">
 	<div class="row">
 		<div class="col-12 col-lg-4 offset-8 text-right">
 			<div class="dropdown" data-sly-unwrap="{$wcmmode.disabled}">
@@ -18,8 +18,14 @@
 					></div>
 				</ul>
 			</div>
-			<button class="btn btn-sm btn-link">Become Reseller</button>
-			<button class="btn btn-sm btn-link">Become Vendor</button>
+			<button class="btn btn-sm btn-link">
+				<sly data-sly-test="${properties.text}">{$properties.text}</sly>
+				<sly data-sly-test="${!properties.text}">Become Vendor</sly>
+			</button>
+			<button class="btn btn-sm btn-link">
+				<sly data-sly-test="${properties.text}">{$properties.text}</sly>
+				<sly data-sly-test="${!properties.text}">Become Vendor</sly>
+			</button>
 		</div>
 	</div>
 </div>
