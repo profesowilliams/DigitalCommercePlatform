@@ -13,14 +13,15 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div
-	class="cmp-experiencefragment"
-	data-sly-use.fragment="com.adobe.cq.wcm.core.components.models.ExperienceFragment"
-	data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-	data-sly-test.localizedFragmentVariationPath="${fragment.localizedFragmentVariationPath}"
-	data-sly-unwrap="${wcmmode.disabled}"
-	data-sly-resource="${@path=localizedFragmentVariationPath, selectors='content', wcmmode='disabled'}"
-></div>
-<sly
-	data-sly-call="${template.placeholder @ isEmpty=!localizedFragmentVariationPath, classAppend='cmp-dd-experiencefragment'}"
-></sly>
+<button
+	data-sly-use.button="com.adobe.cq.wcm.core.components.models.Button"
+	data-sly-use.iconTemplate="icon.html"
+	data-sly-element="${button.link ? 'a' : 'button'}"
+	class="cmp-button btn"
+	href="${button.link}"
+	aria-label="${button.accessibilityLabel}"
+>
+	<sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
+	<span data-sly-test="${button.text}" class="cmp-button__text">${button.text}</span>
+	<span data-sly-test="${!button.text}">Button Label</span>
+</button>
