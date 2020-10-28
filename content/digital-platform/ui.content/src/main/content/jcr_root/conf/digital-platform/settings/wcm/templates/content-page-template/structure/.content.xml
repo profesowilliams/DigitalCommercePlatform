@@ -3,6 +3,8 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2020-10-27T12:11:50.488-04:00"
+        cq:lastModifiedBy="admin"
         cq:template="/conf/digital-platform/settings/wcm/templates/content-page-template"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="digital-platform/components/structure/page">
