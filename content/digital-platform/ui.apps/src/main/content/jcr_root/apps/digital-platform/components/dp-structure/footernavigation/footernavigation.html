@@ -1,6 +1,6 @@
 <div data-sly-unwrap="${wcmmode.disabled}">
-	<div class="row">
-		<div class="col-6">
+	<div class="row py-4">
+		<div class="col-6 px-4">
 			<div
 				data-sly-resource="${'corp-title' @ resourceType='/apps/digital-platform/components/content/title'}"
 				class="corp-title"
@@ -12,9 +12,36 @@
 		</div>
 		<div class="col-6">
 			<div class="row">
-				<div class="col-lg-4">menu 1</div>
-				<div class="col-lg-4">Menu 2</div>
-				<div class="col-lg-4">Menu 3</div>
+				<div class="col-lg-4">
+					<div
+						data-sly-resource="${'footer-menu-1' @ resourceType='/apps/digital-platform/components/content/title'}"
+						class="corp-title"
+					></div>
+					<div
+						data-sly-resource="${'nav-1' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						class="corp-title"
+					></div>
+				</div>
+				<div class="col-lg-4">
+					<div
+						data-sly-resource="${'footer-menu-2' @ resourceType='/apps/digital-platform/components/content/title'}"
+						class="corp-title"
+					></div>
+					<div
+						data-sly-resource="${'nav-2' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						class="corp-title"
+					></div>
+				</div>
+				<div class="col-lg-4">
+					<div
+						data-sly-resource="${'footer-menu-3' @ resourceType='/apps/digital-platform/components/content/title'}"
+						class="corp-title"
+					></div>
+					<div
+						data-sly-resource="${'nav-3' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						class="corp-title"
+					></div>
+				</div>
 			</div>
 		</div>
 	</div>
