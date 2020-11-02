@@ -2,7 +2,7 @@
 
 - Clone the repo `git clone https://dev.azure.com/techdatacorp/WW%20Digital%20Commerce/_git/DigitalCommercePlatform`
 - Go the the folder of the cloned repo `cd DigitalCommercePlatform`
-- Chevkout the develop branch `git checkout develop`
+- Checkout the develop branch `git checkout develop`
 - Test your maven setup `mvn help:effective-settings` if you dont see a `SUCCESS` message please check you maven setup
 - cd into the `content/digital-platform` folder
 - Please ensure your aem author instance is running, if it's not please start it now before you proceed
