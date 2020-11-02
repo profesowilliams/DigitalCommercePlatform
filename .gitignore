@@ -78,3 +78,6 @@ node_modules/
 .history/
 /content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/templates/experience-fragment-web-variation-template/thumbnail.png.dir
 /content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/templates/home-page
+content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/template-types/landing-page-template-v2/thumbnail.png.dir/_jcr_content/_dam_thumbnails/_dam_thumbnail_48.png
+content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/template-types/landing-page-template-v2/thumbnail.png.dir/_jcr_content/_dam_thumbnails/_dam_thumbnail_300.png
+content/digital-platform/ui.content/src/main/content/jcr_root/conf/digital-platform/settings/wcm/template-types/landing-page-template-v2/initial/_jcr_content/root/responsivegrid_446286786/image/file.dir/.content.xml
