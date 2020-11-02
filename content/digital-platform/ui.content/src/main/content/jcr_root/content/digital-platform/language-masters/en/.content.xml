@@ -21,4 +21,5 @@
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         </root>
     </jcr:content>
+    <Sandbox/>
 </jcr:root>
