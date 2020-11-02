@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2020-10-30T12:10:39.120-04:00"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/digital-platform/settings/wcm/template-types/layout-template"
+        jcr:description="The landing page template version w/thumbnail"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Landing Page Template v2"
+        status="enabled"/>
+</jcr:root>

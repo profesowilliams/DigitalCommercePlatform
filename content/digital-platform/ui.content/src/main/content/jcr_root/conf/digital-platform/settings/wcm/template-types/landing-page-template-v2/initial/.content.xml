@@ -71,21 +71,14 @@
                 jcr:lastModified="{Date}2020-10-29T18:45:21.384-04:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="digital-platform/components/structure/responsivegrid">
-                <image
-                    jcr:created="{Date}2020-10-29T18:46:56.542-04:00"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2020-10-29T18:48:06.037-04:00"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="digital-platform/components/content/image"
-                    displayPopupTitle="true"
-                    fileName="AdobeStock_214661153.jpeg"
-                    imageCrop="19,505,5160,1973"
-                    isDecorative="false">
-                    <file/>
-                </image>
-            </responsivegrid_446286786>
+                sling:resourceType="digital-platform/components/structure/responsivegrid"/>
+            <landingcontentv2
+                jcr:created="{Date}2020-10-30T12:08:08.934-04:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-10-30T12:15:15.150-04:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digital-platform/components/content/blocks/landingcontentv2"/>
         </root>
     </jcr:content>
 </jcr:root>

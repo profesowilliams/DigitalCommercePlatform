@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2020-10-29T20:28:25.319-04:00"
+        cq:lastModified="{Date}2020-10-30T12:10:39.120-04:00"
         cq:lastModifiedBy="admin"
         cq:template="/conf/digital-platform/settings/wcm/templates/landing-page-template-v2"
         jcr:primaryType="cq:PageContent"

@@ -4,11 +4,13 @@
     <jcr:content
         cq:contextHubPath="/etc/cloudsettings/default/contexthub"
         cq:contextHubSegmentsPath="/etc/segmentation/contexthub"
+        cq:lastModified="{Date}2020-10-29T20:26:58.825-04:00"
+        cq:lastModifiedBy="admin"
         cq:template="/conf/digital-platform/settings/wcm/templates/content-page-template"
         jcr:primaryType="cq:PageContent"
         jcr:title="en"
         sling:resourceType="digital-platform/components/structure/page"
-        pageTitle="New Project"
+        pageTitle="Home"
         socialMedia="[facebook]">
         <root
             jcr:primaryType="nt:unstructured"
@@ -19,6 +21,5 @@
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         </root>
     </jcr:content>
-    <test/>
-    <sandbox-layout/>
+    <Sandbox/>
 </jcr:root>
