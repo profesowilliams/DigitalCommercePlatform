@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace DigitalCommercePlatform.UiServices.Order.Controllers
+namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
     [ApiController]
     [Route("[controller]")]
