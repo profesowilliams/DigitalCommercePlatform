@@ -2,11 +2,11 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Template">
     <jcr:content
-        cq:lastModified="{Date}2020-11-04T17:42:54.979-05:00"
+        cq:lastModified="{Date}2020-11-04T18:25:40.781-05:00"
         cq:lastModifiedBy="admin"
         cq:templateType="/conf/digital-platform/settings/wcm/template-types/landing-page-template-v2"
-        jcr:description="The landing page/sections template"
+        jcr:description="Open template for creating brand templates"
         jcr:primaryType="cq:PageContent"
-        jcr:title="DP Landing Page V2"
+        jcr:title="DP Brands"
         status="enabled"/>
 </jcr:root>
