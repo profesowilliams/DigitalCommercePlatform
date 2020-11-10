@@ -1,26 +1,60 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using DigitalFoundation.Common.Logging;
+using Microsoft.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
-    public class Program
+    [ExcludeFromCodeCoverage]
+    public static class Program
     {
+        private static IConfigurationRoot _config;
+
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //Read Configuration from appSettings
+            _config = new ConfigurationBuilder()
+                //pull initial log settings from appsettings
+                .AddJsonFile("appsettings.json")
+                //Override appsettings with commandline args e.g  /Serilog:MinimumLevel:Default=Warning
+                .AddCommandLine(args)
+                .AddEnvironmentVariables()
+                .Build();
+
+            //Early Initialize Logger (needed for app startup failures)
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(_config)
+                .CreateLogger();
+            try
+            {
+                Log.Information($"The {typeof(Program).FullName.Replace(".", " ", StringComparison.InvariantCulture)} is starting.");
+
+                CreateWebHost(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, $"The {typeof(Program).FullName.Replace(".", " ", StringComparison.InvariantCulture)} failed to start.");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(o => { o.AllowSynchronousIO = true; o.ListenAnyIP(_config.GetPortNumberFromArguments()); })
+                .ConfigureServices(service => service.AddScoped<IStartupLogger, StartupLogger>())
+                .UseIISIntegration()
+                .UseSerilog()
+                .UseStartup<Startup>();
+        }
     }
 }
