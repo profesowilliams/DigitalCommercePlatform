@@ -20,45 +20,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
     //[Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
-    //public class BrowseController : BaseUIServiceController
-    //{
-    //    private readonly ILogger<BrowseController> _logger;
-
-    //    public BrowseController(
-    //        IMediator mediator,
-    //        IHttpContextAccessor httpContextAccessor,
-    //        IOptions<AppSettings> options,
-    //        ILoggerFactory loggerFactory,
-    //        IContext context,
-    //        IUserIdentity userIdentity,
-    //        ISiteSettings siteSettings)
-    //        : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
-    //    {
-    //        _logger = loggerFactory.CreateLogger<BrowseController>();
-    //    }
-
-    //    [HttpGet]
-    //    [Route("testBrowseAPI")]
-    //    public string Test([FromQuery] string name)
-    //    {
-    //        return "Welcome " + name + " !";
-    //    }
-
-    //    [HttpPost]
-    //    [Route("GetMenu")]
-    //    public string GetMenu([FromBody] MenuRequest request)
-    //    {
-    //        return "Menu";
-    //    }
-    //}
-
-    public class BrowseController : Controller
+    public class BrowseController : BaseUIServiceController
     {
         private readonly ILogger<BrowseController> _logger;
 
         public BrowseController(
-            ILoggerFactory loggerFactory
-            )
+            IMediator mediator,
+            IHttpContextAccessor httpContextAccessor,
+            IOptions<AppSettings> options,
+            ILoggerFactory loggerFactory,
+            IContext context,
+            IUserIdentity userIdentity,
+            ISiteSettings siteSettings)
+            : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
         {
             _logger = loggerFactory.CreateLogger<BrowseController>();
         }
@@ -70,5 +44,31 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             return "Welcome " + name + " !";
         }
 
+        [HttpPost]
+        [Route("GetMenu")]
+        public string GetMenu([FromBody] MenuRequest request)
+        {
+            return "Menu";
+        }
     }
+
+    //public class BrowseController : Controller
+    //{
+    //    private readonly ILogger<BrowseController> _logger;
+
+    //    public BrowseController(
+    //        ILoggerFactory loggerFactory
+    //        )
+    //    {
+    //        _logger = loggerFactory.CreateLogger<BrowseController>();
+    //    }
+
+    //    [HttpGet]
+    //    [Route("testBrowseAPI")]
+    //    public string Test([FromQuery] string name)
+    //    {
+    //        return "Welcome " + name + " !";
+    //    }
+
+    //}
 }

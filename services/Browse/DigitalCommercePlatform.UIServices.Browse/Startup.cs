@@ -1,51 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using DigitalFoundation.Common.Logging;
+using DigitalFoundation.Common.Services.StartupConfiguration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse
 {
-    public class Startup
+    [ExcludeFromCodeCoverage]
+    public class Startup : BaseAppServiceStartup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
-            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        protected override string HealthCheckEndpoint => "http://core-order/health/heartbeat";
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
         }
     }
 }
