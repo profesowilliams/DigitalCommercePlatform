@@ -1,0 +1,18 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Custom Text component
+  ~
+  ~
+  ~ We added a small developer note
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.textModel="com.adobe.cq.wcm.core.components.models.Text"
+  data-sly-use.templates="core/wcm/components/commons/v1/templates.html" />
+<p data-sly-test.text="${textModel.text}" data-sly-unwrap="${textModel.isRichText}">${text @ context =
+  textModel.isRichText ? 'html' : 'text'}</p>
+
+<sly data-sly-call="${templates.placeholder @ isEmpty = !text}"></sly>
+<div data-sly-test="${wcmmode.edit}" class="alert alert-primary">
+  <!--/* Customize title and text to provide instructions for developers */-->
+  <h4>Developer Mode Only</h4>
+  <p>Rich text component. This component may be limited by polices to follow design rules.</p>
+  <p>If you need a different functionality please contact support.</p>
+</div>
