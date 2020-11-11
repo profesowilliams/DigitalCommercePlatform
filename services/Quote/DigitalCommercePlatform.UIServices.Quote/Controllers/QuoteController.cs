@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.DTO.Request;
+﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Request;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
@@ -14,17 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace DigitalCommercePlatform.UIServices.Browse.Controllers
+namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
-    public class BrowseController : BaseUIServiceController
+    public class QuoteController : BaseUIServiceController
     {
-        private readonly ILogger<BrowseController> _logger;
+        private readonly ILogger<QuoteController> _logger;
 
-        public BrowseController(
+        public QuoteController(
             IMediator mediator,
             IHttpContextAccessor httpContextAccessor,
             IOptions<AppSettings> options,
@@ -34,41 +30,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             ISiteSettings siteSettings)
             : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
         {
-            _logger = loggerFactory.CreateLogger<BrowseController>();
+            _logger = loggerFactory.CreateLogger<QuoteController>();
         }
-
         [HttpGet]
-        [Route("testBrowseAPI")]
+        [Route("testQuoteAPI")]
         public string Test([FromQuery] string name)
         {
             return "Welcome " + name + " !";
         }
 
         [HttpPost]
-        [Route("GetMenu")]
-        public string GetMenu([FromBody] MenuRequest request)
+        [Route("GetQuote")]
+        public string GetQuote([FromBody] QuoteRequest request)
         {
             return "Menu";
         }
+
     }
-
-    //public class BrowseController : Controller
-    //{
-    //    private readonly ILogger<BrowseController> _logger;
-
-    //    public BrowseController(
-    //        ILoggerFactory loggerFactory
-    //        )
-    //    {
-    //        _logger = loggerFactory.CreateLogger<BrowseController>();
-    //    }
-
-    //    [HttpGet]
-    //    [Route("testBrowseAPI")]
-    //    public string Test([FromQuery] string name)
-    //    {
-    //        return "Welcome " + name + " !";
-    //    }
-
-    //}
 }
