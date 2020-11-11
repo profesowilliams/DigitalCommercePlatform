@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Browse;
+using DigitalCommercePlatform.UIServices.Browse.DTO;
 using DigitalCommercePlatform.UIServices.Browse.DTO.Request;
 using DigitalCommercePlatform.UIServices.Browse.DTO.Response;
 using DigitalFoundation.Common.Contexts;
@@ -17,11 +18,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+//using DigitalCommercePlatform.UIServices.Browse.Actions.Customer;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 {
-    [ApiVersion("1.0")]
-    [Route("/v{apiVersion}")]
+    [ApiController]
+    [ApiVersion("1")]
+    [Route("/v{​​​​apiVersion}​​​​")]
+    [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     public class BrowseController : BaseUIServiceController
     {
         private readonly ILogger<BrowseController> _logger;
@@ -45,14 +49,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<GetMenuResponse> GetAsync(string id)
-        {
-            var orderResponse = await _mediator.Send(new GetMenuRequest { Id = id }).ConfigureAwait(false);
-            return orderResponse;
-        }
-
-        [HttpGet]
         [Route("testBrowseAPI")]
         public string Test([FromQuery] string name)
         {
@@ -60,28 +56,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         }
 
         //[HttpGet]
-        //[Route("testforjson")]
-        //public async Task<GetMenuResponse> Mounika(string filename)
+        //[Route("mounika")]
+        //public async Task<GetMenu.GetMenuResponseDetails> GetMenu([FromQuery] ICollection<Menu> criteria)
         //{
-        //   var 
+        //    //_logger.LogInformation($"App.Browse.Get:{JsonConvert.SerializeObject(criteria)}");
+
+        //    return await _mediator.Send(new GetMenu.GetMenuRequest(criteria));
+        //        //.ConfigureAwait(false);
         //}
 
 
-        //[HttpGet]
-        //public async Task<GetMenu.GetMenuResponse> GetMultiple([FromQuery] ICollection<GetCriteriaDto> criteria)
-        //{
-        //    _logger.LogInformation($"App.Browse.Get:{JsonConvert.SerializeObject(criteria)}");
 
-        //    return await _mediator.Send(new GetMenu.GetMenuRequest(criteria)).ConfigureAwait(false);
-        //}
-
-        [HttpGet]
-        [Route("mounika")]
-        public string TestForJson()
-        {
-            string text = System.IO.File.ReadAllText(@"C:\Users\T396608F\Source\Repos\DigitalCommercePlatform3\services\Browse\DigitalCommercePlatform.UIServices.Browse\Menu-in-json.json");
-            string jsonString = JsonConvert.SerializeObject(text);
-            return jsonString;
-        }
     }
 }
