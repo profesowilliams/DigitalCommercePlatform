@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
+    [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
     public class OrderController : BaseUIServiceController
@@ -50,7 +50,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
         }
 
         [HttpGet]
-        [Route("testBrowseAPI")]
+        [Route("testOrderAPI")]
         public string Test([FromQuery] string name)
         {
             return "Welcome " + name + " !";

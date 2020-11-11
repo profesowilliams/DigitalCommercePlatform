@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Order
+namespace DigitalCommercePlatform.UIServices.Quote
 {
     [ExcludeFromCodeCoverage]
     public class Startup : BaseAppServiceStartup
@@ -13,7 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Order
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-order/health/heartbeat";
+        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-quote/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
