@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.DTO.Request
 {
-    public class GetMenuRequest :IRequest<GetMenuResponse>
+    public class MenuRequest : IRequest<MenuResponse>
     {
         public string Id { get; set; }
         public string Site { get; set; }

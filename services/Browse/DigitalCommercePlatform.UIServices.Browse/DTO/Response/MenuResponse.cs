@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.DTO.Response
 {
-    public class GetMenuResponse
+    public class MenuResponse
     {
         public string Country { get; set; }
         public string SalesOrganization { get; set; }
