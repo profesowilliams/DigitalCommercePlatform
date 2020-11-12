@@ -46,5 +46,22 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             return "Menu";
         }
 
+        [HttpGet]
+        [Route("getQuotes")]
+        public JsonStringResult GetQuotes([FromQuery] string countryCode)
+        {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\Data\TDQuotes.json";
+            string content = System.IO.File.ReadAllText(filename);
+            return new JsonStringResult(content);
+        }
+        public class JsonStringResult : ContentResult
+        {
+            public JsonStringResult(string json)
+            {
+                Content = json;
+                ContentType = "application/json";
+            }
+        }
     }
 }
