@@ -1,10 +1,17 @@
 <div data-sly-unwrap="{$wcmmode.disabled}">
 	<div class="row py-2 pb-3 d-flex align-items-center">
-		<div class="col-lg-1 td-logo">Logo</div>
-		<div class="col-lg-6 td-main-site-navigation">
+		<div class="col-lg-2 td-logo">
+			<img
+				class="shop-logo img-fluid"
+				src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
+				style="height: 40px; width: auto"
+				alt="TechData Logo"
+			/>
+		</div>
+		<div class="col-lg-5 td-main-site-navigation">
 			<span class="dropdown">
 				<button
-					class="btn btn-link dropdown-toggle"
+					class="btn btn-link btn-sm dropdown-toggle"
 					type="button"
 					id="dropdownMenuButton"
 					data-toggle="dropdown"
@@ -12,15 +19,15 @@
 				>
 					Products
 				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-resource="${ @path='products-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
+					></div>
 				</ul>
 			</span>
 			<span class="dropdown">
 				<button
-					class="btn btn-link dropdown-toggle"
+					class="btn btn-link btn-sm dropdown-toggle"
 					type="button"
 					id="dropdownMenuButton"
 					data-toggle="dropdown"
@@ -28,15 +35,15 @@
 				>
 					Solutions
 				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-resource="${ @path='solutions-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
+					></div>
 				</ul>
 			</span>
 			<span class="dropdown">
 				<button
-					class="btn btn-link dropdown-toggle"
+					class="btn btn-link btn-sm dropdown-toggle"
 					type="button"
 					id="dropdownMenuButton"
 					data-toggle="dropdown"
@@ -44,31 +51,16 @@
 				>
 					Services
 				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-resource="${ @path='services-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
+					></div>
 				</ul>
 			</span>
+
 			<span class="dropdown">
 				<button
-					class="btn btn-link dropdown-toggle"
-					type="button"
-					id="dropdownMenuButton"
-					data-toggle="dropdown"
-					aria-expanded="false"
-				>
-					Products
-				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
-				</ul>
-			</span>
-			<span class="dropdown">
-				<button
-					class="btn btn-link dropdown-toggle"
+					class="btn btn-link btn-sm dropdown-toggle"
 					type="button"
 					id="dropdownMenuButton"
 					data-toggle="dropdown"
@@ -76,15 +68,15 @@
 				>
 					Brands
 				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-resource="${ @path='brands-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
+					></div>
 				</ul>
 			</span>
 			<span class="dropdown">
 				<button
-					class="btn btn-link dropdown-toggle"
+					class="btn btn-link btn-sm dropdown-toggle"
 					type="button"
 					id="dropdownMenuButton"
 					data-toggle="dropdown"
@@ -92,10 +84,10 @@
 				>
 					About Us
 				</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
+					<div
+						data-sly-resource="${ @path='about-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
+					></div>
 				</ul>
 			</span>
 		</div>
@@ -108,7 +100,10 @@
 			/>
 		</div>
 		<div class="col-lg-2 col td-search">
-			<button class="btn btn-sm btn-primary">John Hannock</button>
+			<div
+				data-sly-unwrap="{$wcmmode.disabled}"
+				data-sly-resource="${'profile-button' @ resourceType='/apps/digital-platform/components/content/button'}"
+			></div>
 		</div>
 	</div>
 	<!--/* <sly data-sly-resource="${'td-breadcrumb' @ resourceType='/apps/core/wcm/components/breadcrumb/v2/breadcrumb'}"></sly> */-->
