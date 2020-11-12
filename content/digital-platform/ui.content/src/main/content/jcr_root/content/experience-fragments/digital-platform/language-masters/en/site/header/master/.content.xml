@@ -1,28 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
-  xmlns:cq="http://www.day.com/jcr/cq/1.0"
-  xmlns:jcr="http://www.jcp.org/jcr/1.0"
-  xmlns:nt="http://www.jcp.org/jcr/nt/1.0" jcr:primaryType="cq:Page">
-  <jcr:content cq:lastModified="{Date}2020-10-28T14:40:19.069-04:00" cq:lastModifiedBy="admin" cq:tags="[]" cq:template="/conf/digital-platform/settings/wcm/templates/experience-fragment-web-variation-template" cq:xfMasterVariation="{Boolean}true" cq:xfVariantType="web" jcr:primaryType="cq:PageContent" jcr:title="Header" sling:resourceType="digital-platform/components/structure/xfpage">
-    <root jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
-      <responsivegrid jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
-        <responsivegrid jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
-          <cq:responsive jcr:primaryType="nt:unstructured"/>
-          <topnav_536068475 jcr:created="{Date}2020-10-27T12:50:01.428-04:00" jcr:createdBy="admin" jcr:lastModified="{Date}2020-10-27T12:50:01.428-04:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="digital-platform/components/dp-structure/topnav">
-            <cq:responsive jcr:primaryType="nt:unstructured">
-              <default jcr:primaryType="nt:unstructured" offset="1" width="10"/>
-            </cq:responsive>
-          </topnav_536068475>
-          <mainnavigation jcr:created="{Date}2020-10-27T14:41:46.133-04:00" jcr:createdBy="admin" jcr:lastModified="{Date}2020-10-27T14:41:46.133-04:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="digital-platform/components/dp-structure/mainnavigation">
-            <cq:responsive jcr:primaryType="nt:unstructured">
-              <default jcr:primaryType="nt:unstructured" offset="1" width="10"/>
-            </cq:responsive>
-          </mainnavigation>
-        </responsivegrid>
-        <responsivegrid_1195249223 jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
-          <cq:responsive jcr:primaryType="nt:unstructured"/>
-        </responsivegrid_1195249223>
-      </responsivegrid>
-    </root>
-  </jcr:content>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2020-11-12T18:41:49.753-05:00"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/digital-platform/settings/wcm/templates/experience-fragment-web-variation-template"
+        cq:xfMasterVariation="{Boolean}true"
+        cq:xfVariantType="web"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Header"
+        sling:resourceType="digital-platform/components/structure/xfpage">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <responsivegrid
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="wcm/foundation/components/responsivegrid">
+                    <cq:responsive jcr:primaryType="nt:unstructured"/>
+                    <topnav_536068475
+                        jcr:created="{Date}2020-10-27T12:50:01.428-04:00"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2020-10-27T12:50:01.428-04:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="digital-platform/components/dp-structure/topnav">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                                jcr:primaryType="nt:unstructured"
+                                offset="1"
+                                width="10"/>
+                        </cq:responsive>
+                    </topnav_536068475>
+                    <mainnavigation
+                        jcr:created="{Date}2020-10-27T14:41:46.133-04:00"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2020-10-27T14:41:46.133-04:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="digital-platform/components/dp-structure/mainnavigation">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                                jcr:primaryType="nt:unstructured"
+                                offset="1"
+                                width="10"/>
+                        </cq:responsive>
+                        <products-nav
+                            jcr:lastModified="{Date}2020-11-12T18:40:01.052-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="digital-platform/components/structure/navigation"
+                            collectAllPages="true"
+                            disableShadowing="false"
+                            navigationRoot="/content/digital-platform/language-masters/en/Sandbox/products"
+                            structureStart="1"/>
+                        <solutions-nav
+                            jcr:lastModified="{Date}2020-11-12T18:40:20.504-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="digital-platform/components/structure/navigation"
+                            collectAllPages="true"
+                            disableShadowing="false"
+                            navigationRoot="/content/digital-platform/language-masters/en/Sandbox/solutions"
+                            structureStart="1"/>
+                        <services-nav
+                            jcr:lastModified="{Date}2020-11-12T18:40:36.249-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="digital-platform/components/structure/navigation"
+                            collectAllPages="true"
+                            disableShadowing="false"
+                            navigationRoot="/content/digital-platform/language-masters/en/Sandbox/services"
+                            structureStart="1"/>
+                        <brands-nav
+                            jcr:lastModified="{Date}2020-11-12T18:40:58.965-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="digital-platform/components/structure/navigation"
+                            collectAllPages="true"
+                            disableShadowing="false"
+                            navigationRoot="/content/digital-platform/language-masters/en/Sandbox/brands"
+                            structureStart="1"/>
+                        <about-nav
+                            jcr:lastModified="{Date}2020-11-12T18:41:24.677-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="digital-platform/components/structure/navigation"
+                            collectAllPages="true"
+                            disableShadowing="false"
+                            navigationRoot="/content/digital-platform/language-masters/en/Sandbox/about-us"
+                            structureStart="1"/>
+                        <main-site-search jcr:primaryType="nt:unstructured">
+                            <site-search-categories
+                                jcr:lastModified="{Date}2020-11-12T18:41:49.659-05:00"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="digital-platform/components/structure/navigation"
+                                collectAllPages="false"
+                                disableShadowing="false"
+                                navigationRoot="/content/digital-platform/language-masters/en/Sandbox"
+                                structureDepth="1"
+                                structureStart="1"/>
+                        </main-site-search>
+                    </mainnavigation>
+                </responsivegrid>
+                <responsivegrid_1195249223
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="wcm/foundation/components/responsivegrid">
+                    <cq:responsive jcr:primaryType="nt:unstructured"/>
+                </responsivegrid_1195249223>
+            </responsivegrid>
+        </root>
+    </jcr:content>
 </jcr:root>
