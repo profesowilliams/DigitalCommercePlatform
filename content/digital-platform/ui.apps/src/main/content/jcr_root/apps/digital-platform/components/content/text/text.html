@@ -1,13 +1,15 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Custom Text component
+  ~ Customized Text component
   ~
   ~
   ~ We added a small developer note
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.textModel="com.adobe.cq.wcm.core.components.models.Text"
   data-sly-use.templates="core/wcm/components/commons/v1/templates.html" />
-<p data-sly-test.text="${textModel.text}" data-sly-unwrap="${textModel.isRichText}">${text @ context =
-  textModel.isRichText ? 'html' : 'text'}</p>
+<article class="${properties.textColor} ${properties.customClasses}">
+  <p data-sly-test.text="${textModel.text}" data-sly-unwrap="${textModel.isRichText}">${text @ context =
+    textModel.isRichText ? 'html' : 'text'}</p>
+</article>
 
 <sly data-sly-call="${templates.placeholder @ isEmpty = !text}"></sly>
 <div data-sly-test="${wcmmode.edit}" class="alert alert-primary">
