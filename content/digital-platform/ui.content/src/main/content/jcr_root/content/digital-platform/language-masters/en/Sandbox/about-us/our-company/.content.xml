@@ -2,10 +2,11 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2020-10-29T20:34:39.765-04:00"
+        cq:lastModified="{Date}2020-11-04T18:30:28.867-05:00"
         cq:lastModifiedBy="admin"
-        cq:template="/conf/digital-platform/settings/wcm/templates/landing-page-v2"
+        cq:template="/conf/digital-platform/settings/wcm/templates/content-page-template--td-"
         jcr:primaryType="cq:PageContent"
+        jcr:title="Our Company"
         sling:resourceType="digital-platform/components/structure/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -71,9 +72,7 @@
                 jcr:lastModified="{Date}2020-10-29T18:45:21.384-04:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="digital-platform/components/structure/responsivegrid">
-                <image/>
-            </responsivegrid_446286786>
+                sling:resourceType="digital-platform/components/structure/responsivegrid"/>
             <landingcontentv2
                 jcr:created="{Date}2020-10-30T12:08:08.934-04:00"
                 jcr:createdBy="admin"
