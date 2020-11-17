@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Actions\Orders\CreateOrder\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Config\" />
     <Folder Include="Extensions\" />
