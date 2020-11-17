@@ -14,12 +14,17 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <div data-sly-use.progressBar="com.adobe.cq.wcm.core.components.models.ProgressBar"
-     id="${progressBar.id}"
-     class="cmp-progressbar progress"
-     data-cmp-data-layer="${progressBar.data.json}">
-    <!--/* <span class="cmp-progressbar__label--completed">${'#.##' @ format=progressBar.completed}</span>
-    <span class="cmp-progressbar__label--remaining">${'#.##' @ format=progressBar.remaining}</span> */-->
+    id="${progressBar.id}"
+    class="cmp-progressbar progress"
+    data-cmp-data-layer="${progressBar.data.json}">
+    <!--/*<span class="cmp-progressbar__label--completed">${'#.##' @ format=progressBar.completed}</span>
+    <span class="cmp-progressbar__label--remaining">${'#.##' @ format=progressBar.remaining}</span>*/-->
     <div class="cmp-progressbar__bar progress-bar ${properties.backgroundColor} ${properties.customClasses} ${properties.isStriped}" role="progressbar"
-         aria-valuenow="${'#.##' @ format=progressBar.completed}" aria-valuemin="0" aria-valuemax="100"
-         style="width: ${progressBar.completed @ context='number'}%">${'#.##' @ format=progressBar.completed}</div>
+        aria-valuenow="${'#.##' @ format=progressBar.completed}" aria-valuemin="0" aria-valuemax="100"
+        style="width: ${progressBar.completed @ context='number'}%">
+          <span data-sly-test="${progressBar.remaining > 0}" data-sly-unwrap >
+            <span data-sly-test="${!properties.hideProgress}" data-sly-unwrap >${'#.##' @ format=progressBar.completed}</span>
+          </span>
+          
+        </div>
 </div>

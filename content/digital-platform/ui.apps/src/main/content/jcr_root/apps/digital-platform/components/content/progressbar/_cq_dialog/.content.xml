@@ -56,7 +56,16 @@
                                                 min="0"
                                                 name="./completed"
                                                 step="0.01"
-                                                value=""/>
+                                                value="0"/>
+                                            <hideProgress
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                checked="${not empty cqDesign.hideProgress ? cqDesign.hideProgress : false}"
+                                                fieldDescription="Hide text inside progress bar"
+                                                name="./hideProgress"
+                                                text="Hide progress text"
+                                                uncheckedValue="false"
+                                                value="true"/>
                                             <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -109,7 +118,7 @@
                                 <isStriped
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                            checked="${not empty cqDesign.isDisabled ? cqDesign.isDisabled : false}"
+                                            checked="${not empty cqDesign.isStriped ? cqDesign.isStriped : false}"
                                             fieldDescription="Add stripe style to this progress bar"
                                             name="./isStriped"
                                             text="Stripe progress bar"
