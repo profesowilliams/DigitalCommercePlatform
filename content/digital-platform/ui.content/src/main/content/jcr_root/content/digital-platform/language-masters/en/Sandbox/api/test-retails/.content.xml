@@ -2,14 +2,11 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:allowedTemplates="[/conf/digital-platform/settings/wcm/templates/digital-platform-api-s/*,]"
-        cq:contextHubPath="/etc/cloudsettings/default/contexthub"
-        cq:contextHubSegmentsPath="/etc/segmentation/contexthub"
-        cq:lastModified="{Date}2020-11-17T15:17:47.929-05:00"
+        cq:lastModified="{Date}2020-11-17T16:14:49.362-05:00"
         cq:lastModifiedBy="admin"
         cq:template="/conf/digital-platform/settings/wcm/templates/digital-platform-api-s"
         jcr:primaryType="cq:PageContent"
-        jcr:title="API"
+        jcr:title="test-retails"
         sling:resourceType="digital-platform/components/structure/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -89,8 +86,19 @@
                 jcr:lastModified="{Date}2020-11-17T14:48:27.563-05:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <contentfragmentlist
+                    jcr:created="{Date}2020-11-17T16:12:48.573-05:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2020-11-17T16:14:49.356-05:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="digital-platform/components/content/contentfragmentlist"
+                    modelPath="/conf/we-retail/settings/dam/cfm/models/we-retail-store-info"
+                    orderBy="jcr:created"
+                    parentPath="/content/dam/we-retail/en/stores"
+                    sortOrder="asc"/>
+            </responsivegrid>
         </root>
     </jcr:content>
-    <test-retails/>
 </jcr:root>
