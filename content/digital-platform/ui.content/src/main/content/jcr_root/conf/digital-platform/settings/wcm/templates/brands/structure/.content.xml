@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2020-10-30T12:10:39.120-04:00"
+        cq:lastModified="{Date}2020-11-13T14:52:05.620-05:00"
         cq:lastModifiedBy="admin"
         cq:template="/conf/digital-platform/settings/wcm/templates/brands"
         jcr:primaryType="cq:PageContent"
@@ -49,6 +49,13 @@
                         width="10"/>
                 </cq:responsive>
             </breadcrumb>
+            <text
+                jcr:created="{Date}2020-11-13T14:52:05.615-05:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-11-13T14:52:05.615-05:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digital-platform/components/content/text"/>
             <main
                 jcr:created="{Date}2020-10-20T11:34:43.447-04:00"
                 jcr:createdBy="admin"
