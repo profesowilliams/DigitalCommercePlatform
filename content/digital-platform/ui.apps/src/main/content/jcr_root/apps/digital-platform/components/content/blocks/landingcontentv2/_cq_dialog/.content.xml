@@ -7,10 +7,9 @@
     <items jcr:primaryType="nt:unstructured">
       <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-          <styles jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldLabel="Block Styles Names" fieldDescription="Styles the component container" name="./styles"/>
+          <styles jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Styles the component container" fieldLabel="Block Styles Names" name="./styles"/>
         </items>
       </column>
     </items>
   </content>
 </jcr:root>
-

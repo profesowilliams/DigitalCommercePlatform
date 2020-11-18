@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:dam="http://www.day.com/dam/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:isCheckedOut="{Boolean}true"
+    jcr:mixinTypes="[mix:referenceable,mix:versionable]"
+    jcr:primaryType="dam:Asset"
+    jcr:uuid="aaffa90f-008f-49ba-95ed-469644f1783a">
+    <jcr:content
+        cq:name="search-filters"
+        cq:parentPath="/content/dam/digital-platform/en/search-filters"
+        jcr:description=""
+        jcr:lastModified="{Date}2020-11-17T17:59:18.671-05:00"
+        jcr:lastModifiedBy="admin"
+        jcr:primaryType="dam:AssetContent"
+        jcr:title="Search Filters"
+        contentFragment="{Boolean}true"
+        lastFragmentSave="{Date}2020-11-17T17:59:18.671-05:00">
+        <data
+            cq:model="/conf/digital-platform/settings/dam/cfm/models/search-filters"
+            jcr:primaryType="nt:unstructured">
+            <master
+                jcr:mixinTypes="[cq:Taggable]"
+                jcr:primaryType="nt:unstructured"
+                filterLabel="Products"
+                filterLabel_x0040_LastModified="{Date}2020-11-17T17:59:18.642-05:00"
+                filterName="products"
+                filterName_x0040_LastModified="{Date}2020-11-17T17:59:18.642-05:00"/>
+        </data>
+        <metadata
+            jcr:mixinTypes="[cq:Taggable]"
+            jcr:primaryType="nt:unstructured"/>
+        <related jcr:primaryType="nt:unstructured"/>
+    </jcr:content>
+</jcr:root>
