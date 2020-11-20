@@ -11,8 +11,12 @@
           <colWidth jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/foundation/form/select" fieldLabel="Layout style" name="./colWidth" fieldDescription="Sets the layout style of the main column">
             <items jcr:primaryType="nt:unstructured">
               <default jcr:primaryType="nt:unstructured" text="Default" value=""/>
-              <medium jcr:primaryType="nt:unstructured" text="Medium" value="col-lg-6"/>
-              <equal jcr:primaryType="nt:unstructured" text="Three way splil" value="col-lg-4"/>
+              <medium jcr:primaryType="nt:unstructured" text="Medium" value="col-lg-7"/>
+              <large jcr:primaryType="nt:unstructured" text="Large" value="col-lg-9"/>
+              <split jcr:primaryType="nt:unstructured" text="Split columns" value="col-lg-6"/>
+              <left jcr:primaryType="nt:unstructured" text="Right Sidebar" value="col-lg-4"/>
+              <leftMedium jcr:primaryType="nt:unstructured" text="Right Sidebar Medium" value="col-lg-3"/>
+              <leftLarge jcr:primaryType="nt:unstructured" text="Right Sidebar Large" value="col-lg-2"/>
             </items>
           </colWidth>
         </items>
