@@ -7,3 +7,9 @@
 //.cmp-languagenavigation__item--level-0 {}
 .cmp-languagenavigation__item-link {}
 .cmp-languagenavigation__item-title {}
+
+.v-divider {
+    span:last-of-type {
+      display: none;
+    }
+  }
