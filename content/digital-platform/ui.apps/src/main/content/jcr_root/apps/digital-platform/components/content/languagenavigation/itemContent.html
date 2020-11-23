@@ -17,7 +17,7 @@
   <p data-sly-test="${item.level == 0}" data-sly-test.hasChildren="${item.children.size > 0}"
     class="td-font-size-default text-uppercase td-brand-smoke mb-1 cmp-languagenavigation__item-title" lang="${item.language}">${item.title}</p>
   <p data-sly-test="${item.level == 1}" data-sly-test.hasChildren="${item.children.size > 0}"
-    class="v-divider td-font-size-subtitle font-weight-bolder mb-0 cmp-languagenavigation__item-title" lang="${item.language}">${item.title}</p>
+    class="td-font-size-subtitle font-weight-bolder mb-0 cmp-languagenavigation__item-title" lang="${item.language}">${item.title}</p>
     <a data-sly-test="${!hasChildren}"
        data-cmp-clickable="${item.data ? true : false}"
        class="td-font-size-fineprint text-black-50 text-decoration-none cmp-languagenavigation__item-link" href="${item.URL}"
