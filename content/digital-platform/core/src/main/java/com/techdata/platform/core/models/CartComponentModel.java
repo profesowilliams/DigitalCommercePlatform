@@ -23,8 +23,8 @@ public class CartComponentModel extends BaseComponentModel {
     public void init() throws Exception {
         // API call for retrieve data related to cart
         java.util.Random random = new java.util.Random();
-        Price price = new Price(random.nextInt(1) + 11000, "USD");
-        this.cartData = new CartComponentData(java.util.UUID.randomUUID().toString(), random.nextInt(1) + 21, price);
+        Price price = new Price(random.nextInt(10000), "USD");
+        this.cartData = new CartComponentData(java.util.UUID.randomUUID().toString(), random.nextInt(99), price);
     }
 
     public String getCartData() throws JsonProcessingException {

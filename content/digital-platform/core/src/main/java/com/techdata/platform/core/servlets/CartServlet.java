@@ -1,7 +1,6 @@
 package com.techdata.platform.core.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
@@ -9,9 +8,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.propertytypes.ServiceDescription;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,8 +18,6 @@ import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
-import java.util.stream.Collectors;
-
 import com.techdata.platform.core.models.CartComponentData;
 import com.techdata.platform.core.models.businessModels.Price;
 import com.techdata.platform.core.models.apiModels.CartActionRequest;
