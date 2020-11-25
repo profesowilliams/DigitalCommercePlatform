@@ -14,8 +14,7 @@
  |  See the License for the specific language governing permissions and
  |  limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.techdata.platform</groupId>
@@ -42,7 +41,8 @@
                             <goal>bnd-process</goal>
                         </goals>
                         <configuration>
-                            <bnd><![CDATA[
+                            <bnd>
+                                <![CDATA[
 Bundle-Category: digital-platform
 Import-Package: javax.annotation;version=0.0.0,*
 -exportcontents: ${packages;VERSIONED}
@@ -50,7 +50,8 @@ Sling-Model-Packages: com.techdata.platform.core.models
 -snapshot: ${tstamp;yyyyMMddHHmmssSSS}
 Bundle-DocURL:
 -plugin org.apache.sling.caconfig.bndplugin.ConfigurationClassScannerPlugin
-                                ]]></bnd>
+                                ]]>
+                            </bnd>
                         </configuration>
                     </execution>
                 </executions>
@@ -187,6 +188,11 @@ Bundle-DocURL:
         <dependency>
             <groupId>uk.org.lidalia</groupId>
             <artifactId>slf4j-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
         </dependency>
     </dependencies>
 </project>

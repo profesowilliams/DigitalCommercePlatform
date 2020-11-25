@@ -1,0 +1,30 @@
+<div data-sly-include="/apps/digital-platform/components/content/basecomponent/basecomponent.html"></div>
+<p data-sly-use.ctrl="com.techdata.platform.core.models.CartComponentModel"></p>
+<!--/* all related data */-->
+<div class="cart-data"
+		data-component-id="${ctrl.id}"
+		data-cart-data="${ctrl.cartData}">
+</div>
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+	<sly data-sly-call="${clientLib.all @ categories='cart'}" data-sly-unwrap />
+
+	<!--/* Vue entry point */-->
+	<div id="${ctrl.id}" class="cart">
+		<div class="dropdown">
+			<i id="cart-menu" data-toggle="dropdown" aria-expanded="false" class="icon fas fa-shopping-cart"></i>
+			<div class="amount">{{numberOfItems}}</div>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart-menu">
+				<div class="summary">
+					<p><span class="header">Summary</span> ({{numberOfItems}} {{ numberOfItems > 1 ? 'Items' : 'Item' }})</p>
+					<p><span class="subtotal">Subtotal</span> <span class="value">{{subtotal.value}} {{subtotal.currency}}</span></p>
+				</div>
+				<button v-on:click="checkoutCart">Checkout</button>
+				<div class="actions">
+					<div v-on:click="convertCartToQuote"><i class="fas fa-comment-alt"></i> Convert Cart to Quote</div>
+					<div v-on:click="saveCart"><i class="fas fa-phone-alt"></i> Save This Cart</div>
+					<div v-on:click="changeCart"><i class="fas fa-envelope"></i> Change Carts</div>
+			</div>
+		</div>
+	</div>
+</sly>
