@@ -2,12 +2,9 @@
 	<div class="row py-4">
 		<div class="col-6 px-4">
 			<h3>
-				<img
-					class="shop-logo img-fluid"
-					src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
-					style="height: 40px; width: auto"
-					alt="TechData Logo"
-				/>
+				<sly
+					data-sly-resource="${ @path='headerLogo', resourceType='/apps/digital-platform/components/content/image'}"
+				></sly>
 			</h3>
 			<div
 				data-sly-resource="${'corp-desc' @ resourceType='/apps/digital-platform/components/content/text'}"
