@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Security
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddHttpClient();
         }
     }
 }
