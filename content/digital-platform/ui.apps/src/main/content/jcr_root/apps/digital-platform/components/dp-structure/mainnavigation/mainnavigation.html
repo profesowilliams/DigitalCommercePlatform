@@ -96,10 +96,18 @@
 			></sly>
 		</div>
 		<div class="col-lg-2 col-sm-12 td-search text-right">
-			<div
+			<sly
 				data-sly-unwrap="{$wcmmode.disabled}"
 				data-sly-resource="${'profile-button' @ resourceType='/apps/digital-platform/components/content/button'}"
-			></div>
+			></sly>
+			<!-- <sly
+				data-sly-unwrap="{$wcmmode.disabled}"
+				data-sly-resource="${'cart-component' @ resourceType='/apps/digital-platform/components/content/cart'}"
+      ></sly> -->
+			<sly
+				data-sly-unwrap="{$wcmmode.disabled}"
+				data-sly-resource="${'profile-button' @ resourceType='/apps/digital-platform/components/content/button'}"
+			></sly>
 		</div>
 	</div>
 	<!--/* <sly data-sly-resource="${'td-breadcrumb' @ resourceType='/apps/core/wcm/components/breadcrumb/v2/breadcrumb'}"></sly> */-->
