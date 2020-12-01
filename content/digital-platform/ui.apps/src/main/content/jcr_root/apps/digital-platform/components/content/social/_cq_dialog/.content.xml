@@ -122,6 +122,14 @@
                                 fieldLabel="customClasses"
                                 name="./customClasses"
                                 required="{Boolean}false"/>
+                            <customItemClasses
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                emptyText=""
+                                fieldDescription="Custom item classes."
+                                fieldLabel="customItemClasses"
+                                name="./customItemClasses"
+                                required="{Boolean}false"/>
                         </items>
                     </styles>
                 </items>

@@ -1,11 +1,12 @@
-<sly data-sly-list="${resource.children}">
+<div data-sly-list="${resource.children}" data-sly-unwrap="${!properties.customClasses}"
+  class="d-flex ${properties.customClasses}">
   <sly data-sly-list="${item.children}">
-    <a data-sly-test="${item.socialMedia && item.linkUrl}" class="m-2 rounded-circle bg-${item.socialMedia}"
-      href="${item.linkUrl}">
+    <a data-sly-test="${item.socialMedia && item.linkUrl}"
+      class="m-2 rounded-circle bg-${item.socialMedia} ${properties.customItemClasses}" href="${item.linkUrl}">
       <i class="fab fa-${item.socialMedia}"></i>
     </a>
   </sly>
-</sly>
+</div>
 
 <div data-sly-use.template="core/wcm/components/commons/v1/templates.html"
   data-sly-call="${template.placeholder @ isEmpty=!resource.children}"></div>
