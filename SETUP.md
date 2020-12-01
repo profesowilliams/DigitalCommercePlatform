@@ -10,10 +10,12 @@
 - Navigate to the sites console [http://localhost:4502/sites.html/content](http://localhost:4502/sites.html/content) you should see Digital Platform as a new site
 - AEM development setup complete
 
-## Development Workflow (FE)
+### VCS Development Workflow (FE)
 
 - Pull the latest branch from develop `git checkout develop`
 - Create a new branch `git checkout -b users/network_name/feature/task-name`
 - Run `mvn -PautoInstallSinglePackage clean install` to build and deploy to your local AEM instance
-- Commit changes to your branch as frequently possible
+- Commit/Push changes to the repo as frequently possible
 - When you are complete create and submit a Pull Request to develop branch
+- Fix all merge conflicts if there are any
+- Set your branch to auto-complete
