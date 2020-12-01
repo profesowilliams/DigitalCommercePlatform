@@ -1,0 +1,70 @@
+/* variables: */
+
+.cart {
+	--light-blue: #1798d1;
+}
+
+/* style */
+
+.cart {
+	user-select: none;
+	white-space: nowrap;
+}
+
+.cart .amount {
+	border-radius: 50%;
+	width: 1.7em;
+	height: 1.7em;
+	background: var(--light-blue);;
+	border: 1px solid white;
+	color: white;
+	text-align: center;
+	display: inline-block;
+	font-size: 0.8em;
+	transform: translate(-0.3em, -0.3em);
+}
+
+.cart .summary .header {
+	color: var(--light-blue);
+}
+
+.cart .summary .value {
+	float: right;
+}
+
+.cart .icon {
+	font-size: 1.5em;
+}
+
+.cart .dropdown-menu {
+	padding: 0.7em 1.5em 0.7em 1.5em;
+	width: fit-content;
+}
+
+.cart .actions div {
+	padding-top: 1em;
+}
+
+.cart i {
+	color: var(--light-blue);
+}
+
+.cart .actions i {
+	padding-right: 1em;
+}
+
+.cart button {
+	width: 100%;
+	background-color: var(--light-blue);
+	color: white;
+	border: 0.2em solid var(--light-blue);
+	border-radius: 0.2em;
+	margin-top: 0.2em;
+	outline: none;
+}
+
+/* behaviour */
+
+.cart .actions div, .cart .icon {
+	cursor: pointer;
+}
