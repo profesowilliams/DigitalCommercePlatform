@@ -1,5 +1,4 @@
-<div data-sly-include="/apps/digital-platform/components/content/basecomponent/basecomponent.html"></div>
-<p data-sly-use.ctrl="com.techdata.platform.core.models.CartComponentModel"></p>
+<div data-sly-use.ctrl="com.techdata.platform.core.models.CartComponentModel"></div>
 <!--/* all related data */-->
 <div class="cart-data"
 		data-component-id="${ctrl.id}"
@@ -10,7 +9,7 @@
 	<sly data-sly-call="${clientLib.all @ categories='cart'}" data-sly-unwrap />
 
 	<!--/* Vue entry point */-->
-	<div id="${ctrl.id}" class="cart">
+	<div id="${ctrl.id}" class="cart cmp-button btn">
 		<div class="dropdown">
 			<i id="cart-menu" data-toggle="dropdown" aria-expanded="false" class="icon fas fa-shopping-cart"></i>
 			<div class="amount">{{numberOfItems}}</div>
