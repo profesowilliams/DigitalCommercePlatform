@@ -2,10 +2,6 @@
 	<div class="row py-2 pb-3 d-flex align-items-center">
 		<div class="col-lg-2 td-logo">
 			<h1>
-				<!-- <sly
-					data-sly-resource="${ @path='headerLogo', resourceType='/apps/digital-platform/components/content/image'}"
-        ></sly> -->
-				<!-- TODO replace manual logo will with image component -->
 				<img
 					src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
 					alt=""
@@ -108,9 +104,8 @@
 			></div>
 			<div
 				data-sly-unwrap="{$wcmmode.disabled}"
-				data-sly-resource="${'profile-cart' @ resourceType='/digital-platform/components/content/cart'}"
+				data-sly-resource="${'profile-cart' @ resourceType='/apps/digital-platform/components/content/cart'}"
 			></div>
 		</div>
 	</div>
-	<!--/* <sly data-sly-resource="${'td-breadcrumb' @ resourceType='/apps/core/wcm/components/breadcrumb/v2/breadcrumb'}"></sly> */-->
 </div>
