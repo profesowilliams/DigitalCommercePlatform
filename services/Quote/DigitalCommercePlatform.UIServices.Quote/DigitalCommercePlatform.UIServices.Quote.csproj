@@ -15,7 +15,7 @@
     <PackageReference Include="DigitalFoundation.Common" Version="3.50.35" />
     <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.35" />
     <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.35" />
-    <PackageReference Include="Flurl" Version="2.8.2" />
+    <PackageReference Include="Flurl" Version="3.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
