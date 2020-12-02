@@ -1,5 +1,6 @@
 using DigitalCommercePlatform.UIServices.Quote.Controllers;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
 using MediatR;
@@ -18,19 +19,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
         {
             // Arrange
             var mockMediator = new Mock<IMediator>();
-            var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
             var mockOptions = new Mock<IOptions<AppSettings>>();
-            var mockLoggerFactory = new Mock<ILoggerFactory>();
+            var mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>> ();
             var mockContext = new Mock<IContext>();
-            var mockUserIdentity = new Mock<IUserIdentity>();
             var mockSiteSettings = new Mock<ISiteSettings>();
             
             var _sut = new QuoteController(mockMediator.Object,
-                mockHttpContextAccessor.Object,
-                mockOptions.Object,
                 mockLoggerFactory.Object,
                 mockContext.Object,
-                mockUserIdentity.Object,
+                mockOptions.Object,
                 mockSiteSettings.Object);
             var nameToTest = "John";
             // Act

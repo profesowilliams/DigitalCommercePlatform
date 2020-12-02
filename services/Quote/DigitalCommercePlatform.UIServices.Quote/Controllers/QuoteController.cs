@@ -22,15 +22,16 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         public QuoteController(
             IMediator mediator,
-            IHttpContextAccessor httpContextAccessor,
-            IOptions<AppSettings> options,
-            ILoggerFactory loggerFactory,
+            ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
-            IUserIdentity userIdentity,
-            ISiteSettings siteSettings)
-            : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
+            IOptions<AppSettings> options,
+            ISiteSettings siteSettings
+            //IHttpContextAccessor httpContextAccessor,
+            //IUserIdentity userIdentity,
+            )
+            : base(mediator, loggerFactory, context, options, siteSettings)
         {
-            _logger = loggerFactory.CreateLogger<QuoteController>();
+            //_logger = loggerFactory.BeginScope<QuoteController>();
         }
         [HttpGet]
         [Route("testQuoteAPI")]
