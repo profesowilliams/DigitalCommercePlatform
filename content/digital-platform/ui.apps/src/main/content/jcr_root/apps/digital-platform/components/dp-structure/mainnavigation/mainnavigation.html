@@ -1,12 +1,17 @@
 <div data-sly-unwrap="{$wcmmode.disabled}">
 	<div class="row py-2 pb-3 d-flex align-items-center">
 		<div class="col-lg-2 td-logo">
-			<img
-				class="shop-logo img-fluid"
-				src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
-				style="height: 40px; width: auto"
-				alt="TechData Logo"
-			/>
+			<h1>
+				<!-- <sly
+					data-sly-resource="${ @path='headerLogo', resourceType='/apps/digital-platform/components/content/image'}"
+        ></sly> -->
+				<!-- TODO replace manual logo will with image component -->
+				<img
+					src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
+					alt=""
+					class="img-fluid pr-5"
+				/>
+			</h1>
 		</div>
 		<div class="col-lg-4 col-sm-12 td-main-site-navigation">
 			<span class="dropdown">
@@ -20,9 +25,9 @@
 					Products
 				</button>
 				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
-					<div
+					<sly
 						data-sly-resource="${ @path='products-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
-					></div>
+					></sly>
 				</ul>
 			</span>
 			<span class="dropdown">
@@ -36,9 +41,9 @@
 					Solutions
 				</button>
 				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
-					<div
+					<sly
 						data-sly-resource="${ @path='solutions-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
-					></div>
+					></sly>
 				</ul>
 			</span>
 			<span class="dropdown">
@@ -52,9 +57,9 @@
 					Services
 				</button>
 				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
-					<div
+					<sly
 						data-sly-resource="${ @path='services-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
-					></div>
+					></sly>
 				</ul>
 			</span>
 
@@ -69,9 +74,9 @@
 					Brands
 				</button>
 				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
-					<div
+					<sly
 						data-sly-resource="${ @path='brands-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
-					></div>
+					></sly>
 				</ul>
 			</span>
 			<span class="dropdown">
@@ -85,16 +90,16 @@
 					About Us
 				</button>
 				<ul class="dropdown-menu p-4 rounded-0" aria-labelledby="dropdownMenuButton">
-					<div
+					<sly
 						data-sly-resource="${ @path='about-nav', resourceType='/apps/digital-platform/components/structure/navigation'}"
-					></div>
+					></sly>
 				</ul>
 			</span>
 		</div>
 		<div class="col-sm-12 col-lg-4 td-main-site-navigation">
-			<div
+			<sly
 				data-sly-resource="${ @path='main-site-search', resourceType='/apps/digital-platform/components/content/dp-content/sitesearch'}"
-			></div>
+			></sly>
 		</div>
 		<div class="col-lg-2 col-sm-12 td-search text-right" style="display: flex; justify-content: space-between">
 			<div
@@ -103,7 +108,7 @@
 			></div>
 			<div
 				data-sly-unwrap="{$wcmmode.disabled}"
-				data-sly-resource="${'profile-button' @ resourceType='/apps/digital-platform/components/content/cart'}"
+				data-sly-resource="${'profile-cart' @ resourceType='/apps/digital-platform/components/content/cart'}"
 			></div>
 		</div>
 	</div>

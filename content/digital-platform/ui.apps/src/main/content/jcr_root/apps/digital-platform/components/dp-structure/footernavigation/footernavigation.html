@@ -2,12 +2,9 @@
 	<div class="row py-4">
 		<div class="col-6 px-4">
 			<h3>
-				<img
-					class="shop-logo img-fluid"
-					src="https://shopglobaluidesign-techdata-dev.azurewebsites.net/images/Tech-Data.png"
-					style="height: 40px; width: auto"
-					alt="TechData Logo"
-				/>
+				<sly
+					data-sly-resource="${ @path='headerLogo', resourceType='/apps/digital-platform/components/content/image'}"
+				></sly>
 			</h3>
 			<div
 				data-sly-resource="${'corp-desc' @ resourceType='/apps/digital-platform/components/content/text'}"
@@ -17,40 +14,40 @@
 		<div class="col-6">
 			<div class="row">
 				<div class="col-lg-4 color-white">
-					<h6 class="td-font-size-description">Products</h6>
+					<h5 class="td-font-size-subtitle">Products</h5>
 					<div
-						data-sly-resource="${'footer-products' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						data-sly-resource="${'footer-products' @ resourceType='/apps/digital-platform/components/content/list'}"
 						class="corp-title"
 					></div>
-					<h6 class="td-font-size-description">Solutions</h6>
+					<h5 class="td-font-size-subtitle">Solutions</h5>
 					<div
-						data-sly-resource="${'footer-solutions' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
-						class="corp-title"
-					></div>
-				</div>
-				<div class="col-lg-4">
-					<h6 class="td-font-size-description">Partner with Tech Data</h6>
-
-					<div
-						data-sly-resource="${'footer-partner' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
-						class="corp-title"
-					></div>
-					<h6 class="td-font-size-description">Services</h6>
-					<div
-						data-sly-resource="${'footer-services' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						data-sly-resource="${'footer-solutions' @ resourceType='/apps/digital-platform/components/content/list'}"
 						class="corp-title"
 					></div>
 				</div>
 				<div class="col-lg-4">
-					<h6 class="td-font-size-description">About Us</h6>
+					<h5 class="td-font-size-subtitle">Partner with Tech Data</h5>
 
 					<div
-						data-sly-resource="${'footer-about' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						data-sly-resource="${'footer-partner' @ resourceType='/apps/digital-platform/components/content/list'}"
 						class="corp-title"
 					></div>
-					<h6 class="td-font-size-description">Contact Tech Data</h6>
+					<h5 class="td-font-size-subtitle">Services</h5>
 					<div
-						data-sly-resource="${'footer-contact' @ resourceType='/apps/core/wcm/components/navigation/v1/navigation'}"
+						data-sly-resource="${'footer-services' @ resourceType='/apps/digital-platform/components/content/list'}"
+						class="corp-title"
+					></div>
+				</div>
+				<div class="col-lg-4">
+					<h5 class="td-font-size-subtitle">About Us</h5>
+
+					<div
+						data-sly-resource="${'footer-about' @ resourceType='/apps/digital-platform/components/content/list'}"
+						class="corp-title"
+					></div>
+					<h5 class="td-font-size-subtitle">Contact Tech Data</h5>
+					<div
+						data-sly-resource="${'footer-contact' @ resourceType='/apps/digital-platform/components/content/list'}"
 						class="corp-title"
 					></div>
 				</div>
