@@ -19,10 +19,21 @@
 						data-sly-resource="${'footer-products' @ resourceType='/apps/digital-platform/components/content/list'}"
 						class="corp-title"
 					></div>
-					<h5 class="td-font-size-subtitle">Solutions</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-solutions"
+							aria-expanded="false"
+							aria-controls="collapseExample"
+						>
+							Solutions
+						</a>
+					</h5>
 					<div
+						id="footer-solutions"
 						data-sly-resource="${'footer-solutions' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
 				</div>
 				<div class="col-lg-4">
