@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.48" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.48" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.48" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.55" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.55" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.55" />
     <PackageReference Include="Flurl" Version="3.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
