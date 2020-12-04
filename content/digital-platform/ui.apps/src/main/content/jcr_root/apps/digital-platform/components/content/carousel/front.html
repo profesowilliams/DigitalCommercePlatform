@@ -1,0 +1,17 @@
+<div data-sly-use.carousel="com.adobe.cq.wcm.core.components.models.Carousel" id="${carousel.id}"
+  class="carousel slide ${properties.customWrapperClasses}">
+  <div class="carousel-inner">
+    <div data-sly-repeat.item="${carousel.items}" data-sly-resource="${item.name @ decorationTagName='div'}"
+      id="${item.id}" class="carousel-item${itemList.first ? ' active' : ''} ${properties.customItemClasses}"
+      role="tabpanel" aria-roledescription="slide"
+      aria-label="${'Slide {0} of {1}' @ format=[itemList.count, carousel.items.size], i18n}"
+      data-cmp-data-layer="${item.data.json}" data-dp-hook-carousel="item"></div>
+  </div>
+  <a class="carousel-control-prev" href="#${carousel.id}" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#${carousel.id}" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
