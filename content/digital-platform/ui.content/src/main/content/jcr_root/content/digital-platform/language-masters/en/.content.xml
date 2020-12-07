@@ -4,9 +4,9 @@
     <jcr:content
         cq:contextHubPath="/etc/cloudsettings/default/contexthub"
         cq:contextHubSegmentsPath="/etc/segmentation/contexthub"
-        cq:lastModified="{Date}2020-10-29T20:26:58.825-04:00"
+        cq:lastModified="{Date}2020-11-13T13:43:10.546-05:00"
         cq:lastModifiedBy="admin"
-        cq:template="/conf/digital-platform/settings/wcm/templates/content-page-template"
+        cq:template="/conf/digital-platform/settings/wcm/templates/landing-page-v2"
         jcr:primaryType="cq:PageContent"
         jcr:title="en"
         sling:resourceType="digital-platform/components/structure/page"
@@ -19,7 +19,56 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
+            <responsivegrid_446286786
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digital-platform/components/structure/responsivegrid">
+                <image_copy
+                    jcr:created="{Date}2020-11-02T16:55:03.762-05:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2020-11-13T13:01:56.943-05:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="digital-platform/components/content/image"
+                    displayPopupTitle="false"
+                    fileName="actionvance-t7EL2iG3jMc-unsplash.jpg"
+                    imageCrop="11,790,3570,1897"
+                    isDecorative="false">
+                    <cq:responsive jcr:primaryType="nt:unstructured">
+                        <default
+                            jcr:primaryType="nt:unstructured"
+                            offset="0"
+                            width="12"/>
+                    </cq:responsive>
+                    <file/>
+                </image_copy>
+            </responsivegrid_446286786>
+            <main
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digital-platform/components/structure/main">
+                <landingcontentv2
+                    jcr:created="{Date}2020-11-13T13:41:46.722-05:00"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2020-11-13T13:41:46.722-05:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="digital-platform/components/content/blocks/landingcontentv2">
+                    <cq:responsive jcr:primaryType="nt:unstructured">
+                        <default
+                            jcr:primaryType="nt:unstructured"
+                            offset="1"
+                            width="10"/>
+                    </cq:responsive>
+                    <component-desc
+                        jcr:lastModified="{Date}2020-11-13T13:43:10.542-05:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="digital-platform/components/content/text"
+                        text="&lt;p>Credibly underwhelm cost effective materials rather than process-centric results. Efficiently grow interactive interfaces before team driven vortals. Quickly simplify inexpensive experiences and ubiquitous action items. Proactively reintermediate cross functional internal or &amp;quot;organic&amp;quot; sources for distributed customer service. Objectively reintermediate resource maximizing paradigms rather than wireless platforms.&lt;/p>&#xd;&#xa;&lt;p>Collaboratively monetize principle-centered mindshare after goal-oriented users. Progressively aggregate cross functional collaboration and idea-sharing and fully researched models. Dynamically develop compelling mindshare via resource sucking e-services. Competently transform magnetic scenarios rather than e-business mindshare. Synergistically visualize front-end processes vis-a-vis compelling ideas.&lt;/p>&#xd;&#xa;&lt;p>Completely brand holistic deliverables rather than installed base scenarios. Dramatically unleash revolutionary e-markets whereas top-line web services. Phosfluorescently optimize cost effective ideas whereas B2B platforms. Credibly reinvent covalent e-markets with interactive processes. Monotonectally disintermediate world-class products without out-of-the-box infomediaries.&lt;br>&#xd;&#xa;&lt;/p>&#xd;&#xa;"
+                        textIsRich="true"/>
+                </landingcontentv2>
+            </main>
         </root>
     </jcr:content>
     <Sandbox/>
+    <layouts/>
 </jcr:root>

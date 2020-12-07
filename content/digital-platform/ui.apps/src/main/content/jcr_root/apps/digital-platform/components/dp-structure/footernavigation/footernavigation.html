@@ -1,6 +1,6 @@
 <div data-sly-unwrap="${wcmmode.disabled}">
 	<div class="row py-4">
-		<div class="col-6 px-4">
+		<div class="col-6 px-5 border-right border-white">
 			<h3>
 				<sly
 					data-sly-resource="${ @path='headerLogo', resourceType='/apps/digital-platform/components/content/image'}"
@@ -11,44 +11,110 @@
 				class="corp-desc"
 			></div>
 		</div>
-		<div class="col-6">
+		<div class="col-6 pl-5">
 			<div class="row">
 				<div class="col-lg-4 color-white">
-					<h5 class="td-font-size-subtitle">Products</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-products"
+							aria-expanded="false"
+							aria-controls="collapseExample"
+						>
+							Products
+						</a>
+					</h5>
 					<div
+						id="footer-products"
 						data-sly-resource="${'footer-products' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
-					<h5 class="td-font-size-subtitle">Solutions</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-solutions"
+							aria-expanded="false"
+							aria-controls="collapseExample"
+						>
+							Solutions
+						</a>
+					</h5>
 					<div
+						id="footer-solutions"
 						data-sly-resource="${'footer-solutions' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
 				</div>
 				<div class="col-lg-4">
-					<h5 class="td-font-size-subtitle">Partner with Tech Data</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-partners"
+							aria-expanded="false"
+							aria-controls="collapseExample"
+						>
+							Partner with Tech Data
+						</a>
+					</h5>
 
 					<div
+						id="footer-partners"
 						data-sly-resource="${'footer-partner' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
-					<h5 class="td-font-size-subtitle">Services</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-services"
+							aria-expanded="false"
+							aria-controls="collapseExample"
+						>
+							Services
+						</a>
+					</h5>
 					<div
+						id="footer-services"
 						data-sly-resource="${'footer-services' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
 				</div>
 				<div class="col-lg-4">
-					<h5 class="td-font-size-subtitle">About Us</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-about"
+							aria-expanded="false"
+							aria-controls="Example"
+						>
+							About Us
+						</a>
+					</h5>
 
 					<div
+						id="footer-about"
 						data-sly-resource="${'footer-about' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
-					<h5 class="td-font-size-subtitle">Contact Tech Data</h5>
+					<h5 class="td-font-size-subtitle">
+						<a
+							class="text-white td-font-size-subtitle"
+							data-toggle="collapse"
+							href="#footer-contact"
+							aria-expanded="false"
+							aria-controls="collapse nav"
+						>
+							Contact Us
+						</a>
+					</h5>
 					<div
+						id="footer-contact"
 						data-sly-resource="${'footer-contact' @ resourceType='/apps/digital-platform/components/content/list'}"
-						class="corp-title"
+						class="corp-title collapse"
 					></div>
 				</div>
 			</div>
