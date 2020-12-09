@@ -29,18 +29,18 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <adButlerId
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Add your AdBulter ID."
-                                                fieldLabel="AdButler ID"
-                                                name="./adbutlerId"/>
                                             <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="HTML ID attribute to apply to the component."
-                                                fieldLabel="ID"
+                                                fieldLabel="AdButler ID"
                                                 name="./id"/>
+                                            <html
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldDescription="Add your AdButler HTML code"
+                                                fieldLabel="Embed code"
+                                                name="./embedCode"/>
                                         </items>
                                     </column>
                                 </items>
