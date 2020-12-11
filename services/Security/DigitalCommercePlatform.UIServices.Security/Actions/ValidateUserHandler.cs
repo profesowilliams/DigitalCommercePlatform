@@ -16,28 +16,30 @@ namespace DigitalCommercePlatform.UIServices.Security.Actions
 {
     public class ValidateUserHandler : IRequestHandler<ValidateUserRequest, ValidateUserResponse>
     {
-        private readonly CoreSecurityEndpointsOptions _coreSecurityEndpointsOptions;
         private readonly ILogger<ValidateUserHandler> _logger;
         private readonly IHttpClientFactory _clientFactory;
-        private readonly string CoreSecurityUrl;
+        private readonly string _coreSecurityUrl;
+        private readonly string _coreSecurityValidateEndpointUrl;
 
-        public ValidateUserHandler(ILoggerFactory loggerFactory,IOptions<AppSettings> options
-            ,IOptions<CoreSecurityEndpointsOptions> coreSecurityEndpointsOptions, IHttpClientFactory clientFactory)
+
+        public ValidateUserHandler(ILogger<ValidateUserHandler> logger, IOptions<AppSettings> appSettingsOptions
+                                    ,IOptions<CoreSecurityEndpointsOptions> coreSecurityEndpointsOptions, IHttpClientFactory clientFactory)
         {
-            _logger = loggerFactory.CreateLogger<ValidateUserHandler>();
-            _clientFactory = clientFactory;
-            _coreSecurityEndpointsOptions = coreSecurityEndpointsOptions.Value;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
+            if (coreSecurityEndpointsOptions == null) { throw new ArgumentNullException(nameof(coreSecurityEndpointsOptions)); }
+            _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
 
-            const string key = "Core.Security.Url";
-            CoreSecurityUrl = options?.Value?.TryGetSetting(key);
-            if (CoreSecurityUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
+            const string appSettingsNameForCoreSecurityUrl = "Core.Security.Url";
+            _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(appSettingsNameForCoreSecurityUrl) ?? throw new InvalidOperationException($"{appSettingsNameForCoreSecurityUrl} is missing from AppSettings");
+            _coreSecurityValidateEndpointUrl = coreSecurityEndpointsOptions.Value?.Validate ?? throw new InvalidOperationException("Validate key/value is missing from AppSettings");
         }
 
         public async Task<ValidateUserResponse> Handle(ValidateUserRequest request, CancellationToken cancellationToken)
         {
-            var url = CoreSecurityUrl.AppendPathSegment(_coreSecurityEndpointsOptions.Validate).AppendPathSegment(request.ApplicationName);
+            var requestUrl = _coreSecurityUrl.AppendPathSegment(_coreSecurityValidateEndpointUrl).AppendPathSegment(request?.ApplicationName);
 
-            var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl);
             var client = _clientFactory.CreateClient("CoreSecurityClient");
             var response = await client.SendAsync(requestMessage,cancellationToken).ConfigureAwait(false);
             var validateUserResponse = await response.Content.ReadAsAsync<ValidateUserResponse>().ConfigureAwait(false);
