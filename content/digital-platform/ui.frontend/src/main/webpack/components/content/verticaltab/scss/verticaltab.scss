@@ -1,0 +1,22 @@
+.small-circle{
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  background-color: #21314d;
+  border-color: #00b1e2!important;
+}
+
+.vertical-list{
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  a{
+    color: #9d9fa1;
+    transition: all .3s;
+    &:hover, &.active{
+      color: #00558c;
+      transform: scale(1.1);
+    }
+  }
+}
