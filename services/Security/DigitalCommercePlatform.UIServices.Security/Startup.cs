@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Security
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/core-security/health/heartbeat";
+        protected override string HealthCheckEndpoint => "https://eastus-dit-service.dc.tdebusiness.cloud/core-security/health/heartbeat";
                                                           
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
