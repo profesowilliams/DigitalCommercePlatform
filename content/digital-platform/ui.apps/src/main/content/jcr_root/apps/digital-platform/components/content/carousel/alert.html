@@ -1,0 +1,7 @@
+<div class="dp-alert-wrapper" data-sly-test="${properties.enableAlert}">
+  <p>${properties.alertTitle}</p>
+  <div class="dp-alert-actions" data-sly-repeat.item="${properties.actions.items}">
+    <p>${item.linkText}</p>
+    <p>${item.linkurl}</p>
+  </div>
+</div>

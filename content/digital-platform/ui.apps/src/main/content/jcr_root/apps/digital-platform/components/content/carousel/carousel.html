@@ -32,6 +32,10 @@
   <div data-sly-unwrap data-sly-call="${frontTemplate}"></div>
 </div>
 
+<div data-sly-unwrap data-sly-use.alertTemplate="alert.html">
+  <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
+</div>
+
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
   data-sly-call="${template.placeholder @ isEmpty=!resource.children}"></sly>
 <div data-sly-test="${wcmmode.edit && carousel.items.size < 1}" class="alert alert-primary">
