@@ -1,5 +1,7 @@
 <div data-sly-use.carousel="com.adobe.cq.wcm.core.components.models.Carousel" id="${carousel.id}"
-  class="carousel slide ${properties.customWrapperClasses}">
+  class="carousel slide ${properties.customWrapperClasses}" aria-label="${carousel.accessibilityLabel}"
+  data-interval="${carousel.autoplay ? carousel.delay : 'false'}"
+  data-pause="${carousel.autopauseDisabled ? 'false' : 'hover'}" data-ride="${carousel.autoplay ? 'carousel' : ''}">
   <div class="carousel-inner">
     <div data-sly-repeat.item="${carousel.items}" data-sly-resource="${item.name @ decorationTagName='div'}"
       id="${item.id}" class="carousel-item${itemList.first ? ' active' : ''} ${properties.customItemClasses}"
@@ -15,3 +17,4 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </a>
+  <p>ALERT: ${properties.enableAlert?'TRUE':'FALSE'}</p>
