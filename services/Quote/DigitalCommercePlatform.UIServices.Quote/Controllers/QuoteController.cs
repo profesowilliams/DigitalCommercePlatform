@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Request;
+using DigitalFoundation.AppServices.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
@@ -9,6 +10,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
@@ -33,36 +40,120 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         {
             //_logger = loggerFactory.BeginScope<QuoteController>();
         }
-        [HttpGet]
-        [Route("testQuoteAPI")]
-        public string Test([FromQuery] string name)
-        {
-            return "Welcome " + name + " !";
-        }
 
-        [HttpPost]
-        [Route("GetQuote")]
-        public string GetQuote([FromBody] QuoteRequest request)
-        {
-            return "Menu";
-        }
-
+        /// <summary>
+        /// QuoteController Get by Id
+        /// </summary>
         [HttpGet]
-        [Route("getQuotes")]
-        public JsonStringResult GetQuotes([FromQuery] string countryCode)
+        [Route("{id}")]
+        public async Task<JsonStringResult> Get(string id, [FromQuery] bool details = true)
         {
-            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\Data\TDQuotes.json";
-            string content = System.IO.File.ReadAllText(filename);
-            return new JsonStringResult(content);
-        }
-        public class JsonStringResult : ContentResult
-        {
-            public JsonStringResult(string json)
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+            httpClient.DefaultRequestHeaders.Add("Site", "NA");
+            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
+            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/" + id;
+            var request = new HttpRequestMessage()
             {
-                Content = json;
-                ContentType = "application/json";
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get,
+            };
+
+            try
+            {
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var result = new JsonStringResult(responseBody);
+                return result;
             }
+            catch (HttpRequestException e)
+            {
+                var toto = e.Message;
+                return null;
+            }
+        }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetByIds(
+            [FromQuery(Name = "id")] List<string> id, bool details = true)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+            httpClient.DefaultRequestHeaders.Add("Site", "NA");
+            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
+            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";
+            var separator = "?";
+            foreach (var item in id)
+            {
+                url = string.Concat(url, separator + "id=" + item);
+                if (separator == "?") { separator = "&"; }
+            }
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get,
+            };
+
+            try
+            {
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var result = new JsonStringResult(responseBody);
+                return result;
+            }
+            catch (HttpRequestException e)
+            {
+                var toto = e.Message;
+                return null;
+            }
+        }
+
+        [HttpGet]
+        [Route("Find")]
+        public async Task<IActionResult> Search([FromQuery] FindModel search)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+            httpClient.DefaultRequestHeaders.Add("Site", "NA");
+            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
+            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/Find?id=" + search.Id;
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get,
+            };
+
+            try
+            {
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var result = new JsonStringResult(responseBody);
+                return result;
+            }
+            catch (HttpRequestException e)
+            {
+                var toto = e.Message;
+                return null;
+            }
+        }
+    }
+
+    public class JsonStringResult : ContentResult
+    {
+        public JsonStringResult(string json)
+        {
+            Content = json;
+            ContentType = "application/json";
         }
     }
 }

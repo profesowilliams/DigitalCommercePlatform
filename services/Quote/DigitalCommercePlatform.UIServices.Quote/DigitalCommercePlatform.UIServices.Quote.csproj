@@ -8,6 +8,7 @@
     <Folder Include="Actions\" />
     <Folder Include="AutoMapper\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Contracts\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
 {
-    public class QuoteControllerTest
+    public class DemoControllerTest
     {
         [Fact]
         public void GetTest()
@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             var mockContext = new Mock<IContext>();
             var mockSiteSettings = new Mock<ISiteSettings>();
             
-            var _sut = new QuoteController(mockMediator.Object,
+            var _sut = new DemoController(mockMediator.Object,
                 mockLoggerFactory.Object,
                 mockContext.Object,
                 mockOptions.Object,
@@ -34,12 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             var result = _sut.Test(nameToTest);
             // Assert
             Assert.Contains(nameToTest, result);
-        }
-
-        [Fact(Skip = "It's not ready yet")]
-        public void GetQuotesTests()
-        {
-            // TODO
         }
     }
 }
