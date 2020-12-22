@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<JsonStringResult> Get(string id, [FromQuery] bool details = true)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
@@ -82,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             [FromQuery(Name = "id")] List<string> id, bool details = true)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
@@ -120,7 +120,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<IActionResult> Search([FromQuery] FindModel search)
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006kxqfQ9h1UcqtALFIEK4Q4aih");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
