@@ -26,19 +26,22 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
     public class QuoteController : BaseUIServiceController
     {
         private readonly ILogger<QuoteController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public QuoteController(
             IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
             IOptions<AppSettings> options,
-            ISiteSettings siteSettings
+            ISiteSettings siteSettings,
+            IHttpClientFactory httpClientFactory
             //IHttpContextAccessor httpContextAccessor,
             //IUserIdentity userIdentity,
             )
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
             //_logger = loggerFactory.BeginScope<QuoteController>();
+            _httpClientFactory = httpClientFactory;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("{id}")]
         public async Task<JsonStringResult> Get(string id, [FromQuery] bool details = true)
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
@@ -81,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<IActionResult> GetByIds(
             [FromQuery(Name = "id")] List<string> id, bool details = true)
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
@@ -119,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("Find")]
         public async Task<IActionResult> Search([FromQuery] FindModel search)
         {
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
             httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
