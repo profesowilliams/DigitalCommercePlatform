@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.71" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.71" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.71" />
-    <PackageReference Include="Flurl" Version="3.0.0" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.102" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.102" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.102" />
+    <PackageReference Include="Flurl" Version="3.0.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />

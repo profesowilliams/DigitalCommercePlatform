@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.14.0" />
-    <PackageReference Include="AutoFixture.AutoMoq" Version="4.14.0" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.14.0" />
-    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="3.50.71" />
+    <PackageReference Include="AutoFixture" Version="4.15.0" />
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.15.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.15.0" />
+    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="3.50.102" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
