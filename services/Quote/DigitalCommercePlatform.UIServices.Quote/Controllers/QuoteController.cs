@@ -1,4 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Request;
+using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
+using DigitalCommercePlatform.UIServices.Quote.Generated;
 using DigitalFoundation.AppServices.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -10,11 +12,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
@@ -148,6 +150,50 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
                 var toto = e.Message;
                 return null;
             }
+        }
+
+        [HttpGet]
+        [Route("GetQuoteSummaryList")]
+        public async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
+        {
+            var quote1 = new QuoteSummaryResponse()
+            {
+                QuoteId = "123456",
+                EndUserName = "John Doe",
+                VendorReference = "ACME Corporation"
+            };
+            var quote2 = new QuoteSummaryResponse()
+            {
+                QuoteId = "8888888",
+                EndUserName = "Steve W.",
+                VendorReference = "At home"
+            };
+            var result = new List<QuoteSummaryResponse>()
+            {
+
+            };
+            result.Add(quote1);
+            result.Add(quote2);
+            return result;
+        }
+
+        [HttpGet]
+        [Route("GetQuote")]
+        public async Task<ResponseDto<List<QuoteDto>>> GetQuote(string id)
+        {
+            var jsonResult = await this.Get(id);
+
+            var result = JsonSerializer.Deserialize<ResponseDto<List<QuoteDto>>>(jsonResult.Content, GetJsonSerializerOptions());
+            return result;
+        }
+
+        private static JsonSerializerOptions GetJsonSerializerOptions()
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            return options;
         }
     }
 

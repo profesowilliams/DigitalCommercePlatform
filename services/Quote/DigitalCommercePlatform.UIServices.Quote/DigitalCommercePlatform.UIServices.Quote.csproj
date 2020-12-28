@@ -9,10 +9,12 @@
     <Folder Include="AutoMapper\" />
     <Folder Include="Helpers\" />
     <Folder Include="Contracts\" />
+    <Folder Include="AutoMapper\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="DigitalFoundation.Common" Version="3.50.102" />
     <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.102" />
     <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.102" />
