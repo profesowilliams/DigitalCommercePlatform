@@ -9,11 +9,32 @@
       aria-label="${'Slide {0} of {1}' @ format=[itemList.count, carousel.items.size], i18n}"
       data-cmp-data-layer="${item.data.json}" data-dp-hook-carousel="item"></div>
   </div>
-  <a class="carousel-control-prev" href="#${carousel.id}" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#${carousel.id}" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </a>
+  <sly data-sly-test="${properties.navigationType == 'arrows'}">
+    <a class="carousel-control-prev" href="#${carousel.id}" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#${carousel.id}" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </sly>
+  <div data-sly-unwrap data-sly-use.alertTemplate="alert.html">
+    <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
+  </div>
+  <ol data-sly-test="${properties.navigationType == 'dots'}" class="carousel-indicators"
+    aria-label="${'Choose a slide to display' @ i18n}">
+    <li data-sly-repeat.item="${carousel.items}" data-target="#${carousel.id}" data-slide-to="${itemList.index}"
+      class="${itemList.first ? 'active' : ''}" aria-label="${'Slide {0}' @ format=[itemList.count], i18n}">
+      ${item.title}</li>
+  </ol>
+  <section data-sly-test="${properties.navigationType == 'labels'}" aria-label="${'Choose a slide to display' @ i18n}"
+    class="d-flex justify-content-end font-12 px-4 pt-1">
+    <sly data-sly-repeat.item="${carousel.items}">
+      <span data-sly-test="${!itemList.first}" class="text-white mr-2">|</span>
+      <a data-target="#${carousel.id}" data-slide-to="${itemList.index}" class="${itemList.first ? 'active' : ''}"
+        aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" href="#"
+        class="text-decoration-none text-white mr-2">${item.title}</a>
+    </sly>
+  </section>
+</div>

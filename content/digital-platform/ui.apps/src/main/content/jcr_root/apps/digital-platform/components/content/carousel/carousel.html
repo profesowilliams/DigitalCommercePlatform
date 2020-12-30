@@ -13,6 +13,9 @@
         role="tabpanel" aria-roledescription="slide"
         aria-label="${'Slide {0} of {1}' @ format=[itemList.count, carousel.items.size], i18n}"
         data-cmp-data-layer="${item.data.json}" data-cmp-hook-carousel="item"></div>
+      <div data-sly-unwrap data-sly-use.alertTemplate="alert.html">
+        <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
+      </div>
       <ol class="cmp-carousel__indicators" role="tablist" aria-label="${'Choose a slide to display' @ i18n}"
         data-cmp-hook-carousel="indicators">
         <li data-sly-repeat.item="${carousel.items}"
@@ -30,10 +33,6 @@
 
 <div data-sly-unwrap data-sly-test="${!wcmmode.edit && !wcmmode.preview}" data-sly-use.frontTemplate="front.html">
   <div data-sly-unwrap data-sly-call="${frontTemplate}"></div>
-</div>
-
-<div data-sly-unwrap data-sly-use.alertTemplate="alert.html">
-  <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
 </div>
 
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
