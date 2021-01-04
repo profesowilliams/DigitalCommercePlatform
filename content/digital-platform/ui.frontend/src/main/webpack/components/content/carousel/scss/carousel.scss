@@ -12,3 +12,77 @@
 .cmp-carousel__action-text {}
 .cmp-carousel__indicators {}
 .cmp-carousel__indicator {}
+
+.dp-carousel{
+  &.dp-nav__nav-item{
+    &--blue{
+      .dp-carousel__nav-label{
+        color: #04588e!important;
+      }
+      .dp-carousel__nav-dot{
+        background-color: #04588e!important;
+      }
+    }
+    &--medium{
+      .dp-carousel__nav-label{
+        font-size: .9rem!important;
+      }
+    }
+    &--big{
+      .dp-carousel__nav-label{
+        font-size: 1.1rem!important;
+      }
+    }
+  }
+}
+
+.dp-carousel__nav-label{
+  position: relative;
+  color: #fff;
+  &::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background-color: #04588e;
+    transition: width .3s;
+  }
+  &.active::before{
+    width: 100%;
+  }
+  &:hover::before{
+    width: 100%;
+  }
+  &.dp-nav__nav-item--blue{
+    color: #04588e;
+  }
+  &.dp-nav__nav-item--medium{
+    font-size: .9rem;
+  }
+  &.dp-nav__nav-item--big{
+    font-size: 1.1rem;
+  }
+}
+
+.dp-carousel__nav-label-separator{
+  position: absolute;
+  left: -1.2rem;
+  top: 0;
+}
+
+.dp-carousel__nav-dot{
+  background-color: #fff!important;
+  width: 7px!important;
+  height: 7px!important;
+  border: 0 none;
+  border-radius: 50%;
+  opacity: .6!important;
+  &.active{
+    opacity: 1!important;
+  }
+  &.dp-nav__nav-item--blue{
+    background-color: #04588e!important;
+  }
+}

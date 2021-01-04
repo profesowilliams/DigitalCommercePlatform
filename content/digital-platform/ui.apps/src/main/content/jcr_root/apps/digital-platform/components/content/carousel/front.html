@@ -22,19 +22,23 @@
   <div data-sly-unwrap data-sly-use.alertTemplate="alert.html">
     <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
   </div>
-  <ol data-sly-test="${properties.navigationType == 'dots'}" class="carousel-indicators"
+  <ol data-sly-test="${properties.navigationType == 'dots'}"
+    class="dp-carousel__nav m-0 px-4 py-2 position-absolute w-100 bottom-0 carousel-indicators ${properties.navigationHorizontal}"
     aria-label="${'Choose a slide to display' @ i18n}">
     <li data-sly-repeat.item="${carousel.items}" data-target="#${carousel.id}" data-slide-to="${itemList.index}"
-      class="${itemList.first ? 'active' : ''}" aria-label="${'Slide {0}' @ format=[itemList.count], i18n}">
-      ${item.title}</li>
+      class="dp-carousel__nav-dot ${properties.navigationColor} ${itemList.first ? 'active' : ''}"
+      aria-label="${'Slide {0}' @ format=[itemList.count], i18n}">
+    </li>
   </ol>
   <section data-sly-test="${properties.navigationType == 'labels'}" aria-label="${'Choose a slide to display' @ i18n}"
-    class="d-flex justify-content-end font-12 px-4 pt-1">
+    class="dp-carousel__nav carousel-indicators m-0 position-absolute w-100 bottom-0 d-flex font-12 px-4 py-2 ${properties.navigationHorizontal}">
     <sly data-sly-repeat.item="${carousel.items}">
-      <span data-sly-test="${!itemList.first}" class="text-white mr-2">|</span>
-      <a data-target="#${carousel.id}" data-slide-to="${itemList.index}" class="${itemList.first ? 'active' : ''}"
+      <a data-target="#${carousel.id}" data-slide-to="${itemList.index}"
         aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" href="#"
-        class="text-decoration-none text-white mr-2">${item.title}</a>
+        class="dp-carousel__nav-label text-decoration-none position-relative mx-3 py-1 ${properties.navigationColor} ${properties.navigationSize} ${itemList.first ? 'active' : ''}">
+        <span data-sly-test="${!itemList.first}" class="dp-carousel__nav-label-separator text-white py-1">|</span>
+        ${item.title}
+      </a>
     </sly>
   </section>
 </div>
