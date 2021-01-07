@@ -1,16 +1,14 @@
 <div data-sly-unwrap data-sly-use.nodes="com.techdata.platform.core.models.CarouselComponentModel"></div>
-<div
-  class="dp-carousel__alert-wrapper background-before ${properties.alertAligment} ${properties.alertBackground}${properties.alertOpacity}px-4 py-3 mt-1 position-absolute w-100"
-  data-sly-test="${properties.enableAlert}">
-  <div class="row align-items-center">
-    <div class="col dp-alert__text position-relative h5 m-0 ${properties.alertFontColor} text-shadow-1">
+<div class="dp-carousel__alert" data-sly-test="${properties.enableAlert}">
+  <div class="dp-carousel__alert-container">
+    <div class="dp-carousel__alert-text text-shadow-1">
       ${properties.alertTitle}</div>
-    <div class="col-md-auto d-flex align-items-end position-relative">
+    <div class="dp-carousel__alert-buttons">
       <sly data-sly-repeat.item="${nodes.actionItems.listChildren}">
-        <button href="${item.linkurl}" class="text-uppercase btn btn-light rounded-0 font-weight-bold mr-4">
-          <span class="text-primary">${item.linkText}</span>
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right font-weight-bold"
-            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <button href="${item.linkurl}" class="dp-carousel__alert-button">
+          <span class="">${item.linkText}</span>
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
               d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
           </svg>

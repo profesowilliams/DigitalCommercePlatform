@@ -142,13 +142,13 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <center jcr:primaryType="nt:unstructured"
                                                     text="center"
-                                                    value="justify-content-center"/>
+                                                    value=""/>
                                                     <left jcr:primaryType="nt:unstructured"
                                                     text="Left"
-                                                    value="justify-content-start"/>
+                                                    value="dp-carousel__nav--align-start"/>
                                                     <right jcr:primaryType="nt:unstructured"
                                                     text="Right"
-                                                    value="justify-content-end"/>
+                                                    value="dp-carousel__nav--align-end"/>
                                                 </items>
                                             </navigationHorizontal>
                                             <navigationColor 
@@ -162,7 +162,7 @@
                                                     value=""/>
                                                     <blue jcr:primaryType="nt:unstructured"
                                                     text="blue"
-                                                    value="dp-nav__nav-item--blue"/>
+                                                    value="dp-carousel__nav__nav-item--blue"/>
                                                 </items>
                                             </navigationColor>
                                             <navigationSize 
@@ -176,10 +176,10 @@
                                                     value=""/>
                                                     <medium jcr:primaryType="nt:unstructured"
                                                     text="medium"
-                                                    value="dp-nav__nav-item--medium"/>
+                                                    value="dp-carousel__nav__nav-item--medium"/>
                                                     <big jcr:primaryType="nt:unstructured"
                                                     text="big"
-                                                    value="dp-nav__nav-item--big"/>
+                                                    value="dp-carousel__nav__nav-item--big"/>
                                                 </items>
                                             </navigationSize>
                                         </items>
