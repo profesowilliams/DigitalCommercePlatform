@@ -4,18 +4,16 @@
   ~
   ~ We added a small developer note
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<sly
-	data-sly-use.textModel="com.adobe.cq.wcm.core.components.models.Text"
-	data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
-/>
-<article class="${properties.textColor} ${properties.customClasses}">
+<sly data-sly-use.textModel="com.adobe.cq.wcm.core.components.models.Text"
+	data-sly-use.templates="core/wcm/components/commons/v1/templates.html" />
+<article class="">
 	<p data-sly-test.text="${textModel.text}" data-sly-unwrap="${textModel.isRichText}">
 		${text @ context = textModel.isRichText ? 'html' : 'text'}
 	</p>
 </article>
 
 <sly data-sly-call="${templates.placeholder @ isEmpty = !text}"></sly>
-<div data-sly-test="${wcmmode.edit && !wcmmode.preview }" class="alert alert-primary td-font-size-fineprint">
+<div data-sly-test="${wcmmode.edit && !wcmmode.preview && !text }" class="dp-aem-alert">
 	<!--/* Customize title and text to provide instructions for developers */-->
 	<h6>Developer Mode Only</h6>
 	<p class="">Rich text component. This component may be limited by polices to follow design rules.</p>
