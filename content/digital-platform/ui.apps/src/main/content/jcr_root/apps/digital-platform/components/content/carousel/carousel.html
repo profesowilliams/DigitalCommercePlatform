@@ -34,16 +34,15 @@
         <span class="cmp-carousel__action-text">${'Play' @ i18n}</span>
       </button>
     </div> -->
-    <ol data-sly-test="${properties.navigationType == 'dots'}" class="cmp-carousel__indicators dp-carousel__nav"
-      role="tablist" aria-label="${'Choose a slide to display' @ i18n}" data-cmp-hook-carousel="indicators">
+    <ol class="cmp-carousel__indicators dp-carousel__nav dp-carousel__nav-dots" role="tablist"
+      aria-label="${'Choose a slide to display' @ i18n}" data-cmp-hook-carousel="indicators">
       <li data-sly-repeat.item="${carousel.items}"
         class="cmp-carousel__indicator${itemList.first ? ' cmp-carousel__indicator--active' : ''} dp-carousel__nav-dot ${properties.navigationColor}"
         role="tab" aria-controls="${carousel.id}-item-${itemList.index}"
         aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" data-cmp-hook-carousel="indicator">${item.title}
       </li>
     </ol>
-    <section data-sly-test="${properties.navigationType == 'labels'}" aria-label="${'Choose a slide to display' @ i18n}"
-      class="dp-carousel__nav dp-carousel__nav-labels">
+    <section aria-label="${'Choose a slide to display' @ i18n}" class="dp-carousel__nav dp-carousel__nav-labels">
       <sly data-sly-repeat.item="${carousel.items}">
         <a role="tab" aria-controls="${carousel.id}-item-${itemList.index}"
           aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" data-cmp-hook-carousel="indicator"

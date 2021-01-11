@@ -46,6 +46,9 @@
       transition: width .3s;
     }
   }
+  .dp-carousel__nav-dots{
+    display: none;
+  }
   .dp-carousel__nav-label-separator{
     //text-white py-1
     color: #D6D6D6;
@@ -183,6 +186,15 @@
       .dp-carousel__alert-text{
         color: #04588e;
       }
+    }
+  }
+  //select navigation
+  &.dp-carousel__nav-use-dots{
+    .dp-carousel__nav-dots{
+      display: flex;
+    }
+    .dp-carousel__nav-labels{
+      display: none;
     }
   }
 }
