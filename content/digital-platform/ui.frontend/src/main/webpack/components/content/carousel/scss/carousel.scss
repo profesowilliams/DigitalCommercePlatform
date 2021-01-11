@@ -13,8 +13,6 @@
 .cmp-carousel__indicators {}
 .cmp-carousel__indicator {}
 
-.dp-carousel.dp-carousel__nav-item--blue  .dp-carousel__nav-label{}
-
 .dp-carousel{
   //default
   .dp-carousel__nav{
@@ -101,6 +99,9 @@
     font-weight: bold;
     text-transform: uppercase;
     margin-right: 1.5rem;
+  }
+  .dp-carousel__alert-button-color{
+    color: #00B1E2;
   }
   //nav items styles
   &.dp-carousel__nav-item{
