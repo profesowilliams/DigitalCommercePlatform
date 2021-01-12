@@ -23,14 +23,17 @@
 	data-sly-unwrap="${wcmmode.disabled}"
 	class="cmp-title"
 >
-	<h1 class="cmp-title__text" data-sly-element="${title.type}">
+	<h1 class="dp-title__text" data-sly-element="${title.type}">
 		<a
 			data-sly-unwrap="${!title.linkURL || title.linkDisabled}"
-			class="cmp-title__link"
+			class="dp-title__link"
 			href="${title.linkURL}"
 			data-cmp-clickable="${title.data ? true : false}"
 			>${text}</a
 		>
+		<span data-sly-test="${title.linkURL}" class="dp-title__plus-sign">
+			+
+		</span>
 	</h1>
 </div>
 <sly data-sly-call="${template.placeholder @ isEmpty=!text, classAppend='cmp-title'}"></sly>
