@@ -22,10 +22,11 @@ public class BaseComponentModel {
     public void init() throws Exception {
         Node node = resource.adaptTo(Node.class);
         node.setProperty("id", getId());
+        node.setProperty("prefix", prefix);
         node.getSession().save();
     }
 
-    public String getId() {
+    public String getId() throws Exception {
         if (prefix == null) {
             prefix = "app";
         }

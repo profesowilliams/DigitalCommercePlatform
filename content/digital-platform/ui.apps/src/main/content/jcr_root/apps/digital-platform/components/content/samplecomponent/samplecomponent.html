@@ -1,0 +1,10 @@
+<div data-sly-use.ctrl="${'samplecomponent.js' @ id = properties.id}">
+	Response:
+	<pre>${ctrl.response}</pre>
+</div>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+	<sly data-sly-call="${clientLib.all @ categories='sample'}" data-sly-unwrap />
+</sly>
+<div id="sample">
+	<div>Cart state: {{cart}}</div>
+</div>

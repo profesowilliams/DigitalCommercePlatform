@@ -2,7 +2,7 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Template">
     <jcr:content
-        cq:lastModified="{Date}2020-11-20T07:11:03.284-05:00"
+        cq:lastModified="{Date}2021-01-13T14:51:56.459+01:00"
         cq:lastModifiedBy="admin"
         cq:templateType="/conf/digital-platform/settings/wcm/template-types/landing-page-template-v2"
         jcr:description="A base template for content"

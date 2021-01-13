@@ -15,7 +15,7 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         defaultValue="app"
-                        fieldLabel="Component prefix"
+                        fieldLabel="Component prefix (app by default)"
                         name="./prefix"/>
                     <id
                         jcr:primaryType="nt:unstructured"

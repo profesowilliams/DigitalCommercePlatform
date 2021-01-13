@@ -9,11 +9,13 @@
 	<sly data-sly-call="${clientLib.all @ categories='cart'}" data-sly-unwrap />
 
 	<!--/* Vue entry point */-->
-	<div id="${ctrl.id}" class="cart cmp-button btn">
+	<div id="${ctrl.id}" class="cart">
 		<div class="dropdown">
-			<i id="cart-menu" data-toggle="dropdown" aria-expanded="false" class="icon fas fa-shopping-cart"></i>
-			<div class="amount">{{numberOfItems}}</div>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="cart-menu">
+			<span class="icon-container cmp-button btn" data-toggle="dropdown" aria-expanded="false">
+				<i id="cart-menu"  class="icon fas fa-shopping-cart"></i>
+				<div class="amount">{{numberOfItems}}</div>
+			</span>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="icon-container">
 				<div class="summary">
 					<p><span class="header">Summary</span> ({{numberOfItems}} {{ numberOfItems > 1 ? 'Items' : 'Item' }})</p>
 					<p><span class="subtotal">Subtotal</span> <span class="value">{{subtotal.value}} {{subtotal.currency}}</span></p>
