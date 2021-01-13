@@ -7,7 +7,7 @@ namespace DigitalFoundation.Core.Services.Quote.DTO.Internal
     [ExcludeFromCodeCoverage]
     public class ProductDto
     {
-        public ProductType Type { get; set; }
+        public ProductType? Type { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Manufacturer { get; set; }
