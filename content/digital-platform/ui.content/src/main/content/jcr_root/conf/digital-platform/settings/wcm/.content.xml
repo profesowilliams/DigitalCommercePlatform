@@ -7,7 +7,6 @@
         jcr:createdBy="admin"
         jcr:mixinTypes="[rep:AccessControllable]"
         jcr:primaryType="nt:unstructured">
-        <rep:policy/>
         <wcm jcr:primaryType="nt:unstructured">
             <foundation jcr:primaryType="nt:unstructured">
                 <components jcr:primaryType="nt:unstructured">
@@ -305,6 +304,32 @@
                             <jcr:content jcr:primaryType="nt:unstructured"/>
                         </policy_footer>
                     </experiencefragment>
+                    <search jcr:primaryType="nt:unstructured">
+                        <policy_1610545765683
+                            jcr:lastModified="{Date}2021-01-13T14:51:56.453+01:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Search Sample Policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            resultsSize="10"
+                            searchRoot="/content/digital-platform/language-masters"
+                            searchTermMinimumLength="3">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <cq:styleGroups jcr:primaryType="nt:unstructured">
+                                <item0
+                                    cq:styleGroupLabel="Sample Style"
+                                    jcr:primaryType="nt:unstructured">
+                                    <cq:styles jcr:primaryType="nt:unstructured">
+                                        <item0
+                                            cq:styleClasses="bg-danger"
+                                            cq:styleId="1610545816695"
+                                            cq:styleLabel="background-color"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    </cq:styles>
+                                </item0>
+                            </cq:styleGroups>
+                        </policy_1610545765683>
+                    </search>
                 </content>
                 <structure jcr:primaryType="nt:unstructured">
                     <page jcr:primaryType="nt:unstructured">
@@ -393,6 +418,7 @@
                 </components>
             </digital-platform>
         </apps>
+        <rep:policy/>
     </policies>
     <segments/>
     <template-types/>
