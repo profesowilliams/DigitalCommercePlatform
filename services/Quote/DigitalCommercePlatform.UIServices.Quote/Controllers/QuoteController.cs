@@ -1,11 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Request;
-using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
-using DigitalCommercePlatform.UIServices.Quote.Generated;
+﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
 using DigitalFoundation.AppServices.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Core.Services.Quote.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -59,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/" + id;
+            var url = "https://eastus-sit-service.dc.tdebusiness.cloud/app-quote/v1/" + id;
             var request = new HttpRequestMessage()
             {
                 RequestUri = new Uri(url),
@@ -92,7 +91,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";
+            var url = "https://eastus-sit-service.dc.tdebusiness.cloud/app-quote/v1/";
             var separator = "?";
             foreach (var item in id)
             {
@@ -130,7 +129,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/Find?id=" + search.Id;
+            var url = "https://eastus-sit-service.dc.tdebusiness.cloud/app-quote/v1/Find?id=" + search.Id;
             var request = new HttpRequestMessage()
             {
                 RequestUri = new Uri(url),
@@ -177,14 +176,16 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             return result;
         }
 
+
         [HttpGet]
         [Route("GetQuote")]
         public async Task<ResponseDto<List<QuoteDto>>> GetQuote(string id)
         {
             var jsonResult = await this.Get(id);
 
-            var result = JsonSerializer.Deserialize<ResponseDto<List<QuoteDto>>>(jsonResult.Content, GetJsonSerializerOptions());
-            return result;
+            var quote = JsonSerializer.Deserialize<ResponseDto<List<QuoteDto>>>(jsonResult.Content, GetJsonSerializerOptions());
+
+            return quote;
         }
 
         private static JsonSerializerOptions GetJsonSerializerOptions()

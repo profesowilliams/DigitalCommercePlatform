@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Quote.Generated
+namespace DigitalFoundation.Core.Services.Quote.DTO
 {
     [ExcludeFromCodeCoverage]
     public class ResponseDto<T>
