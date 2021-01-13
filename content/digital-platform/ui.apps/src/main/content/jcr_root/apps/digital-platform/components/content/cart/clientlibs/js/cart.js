@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function mapResponseToModel(json) {
           that.$data.numberOfItems = json.numberOfItems;
           that.$data.subtotal = { value: json.subtotal.value, currency: json.subtotal.currency };
+          dispatcher.state.saveState("cart", { items: that.$data.numberOfItems, subtotal: that.$data.subtotal.value });
         }
         dispatcher.on('updateCart', function () {
           getDataFromCartApi(cartId).then(result => {

@@ -7,15 +7,18 @@ export class DispatcherEvent implements IEvent {
         this.eventName = eventName;
         this.callbacks = [];
     }
+
     public registerCallback = (callback: (data: unknown) => unknown) => {
         this.callbacks.push(callback);
     }
+
     public unregisterCallback = (callback: (data: unknown) => unknown) => {
         const index = this.callbacks.indexOf(callback);
         if (index > -1) {
             this.callbacks.splice(index, 1);
         }
     }
+
     public fire = (data: unknown) => {
         const callbacks = this.callbacks.slice(0);
         callbacks.forEach((callback) => {
