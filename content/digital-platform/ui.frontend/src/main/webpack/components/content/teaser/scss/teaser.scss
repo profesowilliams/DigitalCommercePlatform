@@ -6,3 +6,83 @@
 .cmp-teaser__description {}
 .cmp-teaser__action-container {}
 .cmp-teaser__action-link {}
+
+.dp-teaser{
+    &__card{
+        .cmp-teaser{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #dee2e6;
+            border-width: 2px;
+            border-radius: 0;
+            border-color: #EAEAEA ;
+        }
+        .cmp-teaser__content{
+            display: flex;
+            flex-direction: column-reverse;
+            h2{
+                text-align: center;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+                font-size: 1.3125rem;
+                margin-top: 0;
+                
+            }
+        }
+        .cmp-teaser__image{
+            img{
+                border-radius: 50%;
+                width: 6.625rem;
+                height: 6.625rem;
+                position: relative;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%) translateY(-50%);
+            }
+        }
+        .cmp-teaser__description{
+            flex: 1 1 auto;
+            padding: 1rem 1rem;
+            padding-top: 0;
+            padding-right: 1.5rem;
+            padding-left: 1.5rem;
+
+            p{
+                font-size: 0.8125rem ; 
+                font-weight: 300;
+                margin-top: 0;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+            }
+        }
+        .cmp-teaser__pretitle{
+            text-align: center;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+
+            p{
+                font-size: 1.3125rem ;
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+    &__card-image--rounded{
+        .cmp-teaser__image{
+            img{
+                border-radius: 50%;
+                border: 1.2rem solid #020B20;
+                width: 16rem;
+                height: 16rem;
+                position: relative;
+                left: 50%;
+                top: 0;
+                transform: translateX(-50%) translateY(-50%);
+            }
+        }
+    }
+}
