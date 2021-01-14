@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Product", "DigitalCommercePlatform.UIService.Product\DigitalCommercePlatform.UIService.Product.csproj", "{5C955E20-D4B3-4962-AE57-CCE9CB26D963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Product.IntegrationTests", "DigitalCommercePlatform.UIServices.Product.IntegrationTests\DigitalCommercePlatform.UIServices.Product.IntegrationTests.csproj", "{2046FAF0-9E1F-497E-BB25-357CED02BCDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Product.Tests", "DigitalCommercePlatform.UIServices.Product.Tests\DigitalCommercePlatform.UIServices.Product.Tests.csproj", "{96EC3895-C993-4287-A826-A96BC420F5B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C955E20-D4B3-4962-AE57-CCE9CB26D963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C955E20-D4B3-4962-AE57-CCE9CB26D963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C955E20-D4B3-4962-AE57-CCE9CB26D963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C955E20-D4B3-4962-AE57-CCE9CB26D963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2046FAF0-9E1F-497E-BB25-357CED02BCDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2046FAF0-9E1F-497E-BB25-357CED02BCDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2046FAF0-9E1F-497E-BB25-357CED02BCDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2046FAF0-9E1F-497E-BB25-357CED02BCDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96EC3895-C993-4287-A826-A96BC420F5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96EC3895-C993-4287-A826-A96BC420F5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96EC3895-C993-4287-A826-A96BC420F5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96EC3895-C993-4287-A826-A96BC420F5B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF73F103-F55F-4F68-9513-4E4F1FEAB171}
+	EndGlobalSection
+EndGlobal

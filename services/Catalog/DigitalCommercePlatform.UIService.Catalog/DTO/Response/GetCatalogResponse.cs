@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse
+namespace DigitalCommercePlatform.UIServices.Browse.DTO.Response
 {
-    public class GetProductCategories
+    public class GetCatalogResponse
     {
+       
     }
 }
