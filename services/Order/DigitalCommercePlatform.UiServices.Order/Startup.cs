@@ -15,11 +15,25 @@ namespace DigitalCommercePlatform.UIServices.Order
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-order/health/heartbeat";
+        protected override string HealthCheckEndpoint => "http://core-order/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
+
+
+    //public class Startup : BaseAppServiceStartup
+    //{
+    //    public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
+    //    {
+    //    }
+
+    //    protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-order/health/heartbeat";
+
+    //    public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
+    //    {
+    //        services.AddMediatR(Assembly.GetExecutingAssembly());
+    //    }
+    //}
 }

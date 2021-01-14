@@ -1,6 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Order.DTO.Request;
-using DigitalCommercePlatform.UIServices.Order.DTO.Response;
-using DigitalFoundation.Common.Contexts;
+﻿using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
@@ -19,35 +17,27 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
-    public class OrderController : BaseUIServiceController
+    public class OrderController : BaseUIServiceController//BaseUIServiceController
     {
-        private readonly ILogger<OrderController> _logger;
-        private readonly IUserIdentity _userIdentity;
-
-#pragma warning disable S107 // Methods should not have too many parameters
-
         public OrderController(
             IMediator mediator,
             IOptions<AppSettings> options,
-            ILoggerFactory loggerFactory,
-            IUserIdentity userIdentity,
+            ILogger<OrderController> logger,
             IContext context,
-            IHttpContextAccessor httpContextAccessor,
             ISiteSettings siteSettings)
-#pragma warning restore S107 // Methods should not have too many parameters
-            : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
+            : base(mediator, logger, context, options, siteSettings)
         {
-            _logger = loggerFactory.CreateLogger<OrderController>();
-            _userIdentity = userIdentity;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<GetOrderResponse> GetAsync(string id)
-        {
-            var orderResponse = await _mediator.Send(new GetOrderRequest { Id = id }).ConfigureAwait(false);
-            return orderResponse;
-        }
+        
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<GetOrderInOneFile> GetAsync(string id)
+        //{
+        //    var orderResponse = await _mediator.Send(new GetOrderInOneFile { Id = id }).ConfigureAwait(false);
+        //    return orderResponse;
+        //}
+
 
         [HttpGet]
         [Route("testOrderAPI")]

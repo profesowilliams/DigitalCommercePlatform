@@ -29,6 +29,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Helpers
 
         public static LogEventLevel ExcludeHealthChecks(HttpContext ctx, double _, Exception ex)
         {
+            if (ctx == null)
+            {
+                throw new ArgumentNullException(nameof(ctx));
+            }
             if (ex != null || ctx.Response.StatusCode > 499)
                 return LogEventLevel.Error;
 
