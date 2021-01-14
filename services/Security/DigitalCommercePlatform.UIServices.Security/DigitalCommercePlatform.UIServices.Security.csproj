@@ -6,9 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.69" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.69" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.69" />
+    <Compile Remove="Actions\**" />
+    <Compile Remove="DTO\**" />
+    <Content Remove="Actions\**" />
+    <Content Remove="DTO\**" />
+    <EmbeddedResource Remove="Actions\**" />
+    <EmbeddedResource Remove="DTO\**" />
+    <None Remove="Actions\**" />
+    <None Remove="DTO\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.99" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.99" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.99" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
     <PackageReference Include="Flurl" Version="3.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -29,6 +40,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

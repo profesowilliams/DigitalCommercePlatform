@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Security.DTO.Request;
+﻿using DigitalCommercePlatform.UIServices.Security.AppServices;
+using DigitalCommercePlatform.UIServices.Security.Requests;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -21,11 +22,37 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         }
 
         [HttpGet]
-        [Route("validate/{applicationName}")]
-        public async Task<IActionResult> ValidateUser(ValidateUserRequest validateUserRequest)
+        [Route("GetUser")]
+        public async Task<IActionResult> GetUserAsync(UserAndTokenRequest userAndTokenRequest)
         {
-            var validateUserResponse = await _mediator.Send(validateUserRequest).ConfigureAwait(false);
-            return StatusCode((int)validateUserResponse.HttpStatusCode, validateUserResponse);
+            var userAndTokenResponse = await Mediator.Send(new GetUserQuery(userAndTokenRequest?.ApplicationName, userAndTokenRequest?.SessionId)).ConfigureAwait(false);
+            return StatusCode((int)userAndTokenResponse.HttpStatusCode, userAndTokenResponse);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        [Route("signin")]
+        public async Task<IActionResult> GetTokenAsync([FromBody]GetTokenRequest getTokenRequest)
+        {
+            var tokenResponse = await _mediator.Send(new LoginCommand("","")).ConfigureAwait(false);
+            return Ok(tokenResponse);
         }
     }
 }
