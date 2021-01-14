@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Order.Actions.Orders
 {
-    public class GetOrder
+    public class GetOrderInOneFile
     {
 #pragma warning disable CA1034 // Nested types should not be visible
         public class Handler : IRequestHandler<GetOrderRequest, GetOrderResponse>
