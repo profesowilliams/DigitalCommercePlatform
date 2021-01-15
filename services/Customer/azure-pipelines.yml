@@ -1,0 +1,20 @@
+resources:
+  repositories:
+    - repository: DCP
+      type: git
+      name: 'WW Digital Commerce/DigitalCommercePlatform'
+      
+
+trigger: none
+
+pool:
+  name: 'CLW'
+
+
+extends:
+  template: pullrequest-template-v2.yml@DCP
+  parameters:
+          projectSources: 'services/Customer/DigitalCommercePlatform.UIServices.Customer.sln'
+          unitTestSources: 'services/Customer/DigitalCommercePlatform.UIServices.Customer.*/*Tests.csproj'
+          projectKey: 'DC-DF-Customer-UI'
+          projectName: 'DC-DF-Customer-UI'          
