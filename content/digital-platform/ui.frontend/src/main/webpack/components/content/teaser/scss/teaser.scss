@@ -74,14 +74,11 @@
     &__card-image--rounded{
         .cmp-teaser__image{
             img{
-                border-radius: 50%;
+                
                 border: 1.2rem solid #020B20;
                 width: 16rem;
                 height: 16rem;
-                position: relative;
-                left: 50%;
-                top: 0;
-                transform: translateX(-50%) translateY(-50%);
+                
             }
         }
     }
