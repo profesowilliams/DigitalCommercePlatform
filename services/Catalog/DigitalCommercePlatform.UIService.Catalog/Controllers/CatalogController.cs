@@ -1,10 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Catalog.DTO.Request;
-using DigitalFoundation.Common.Contexts;
+﻿using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
