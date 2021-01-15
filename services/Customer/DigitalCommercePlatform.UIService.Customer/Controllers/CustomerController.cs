@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.DTO.Request;
+﻿using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Find;
+using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Security.Identity;
@@ -9,36 +10,115 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Customer.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
-    [Route("/v{apiVersion}")]
+    [Route("/v{apiVersion}/{controller}")]
     public class CustomerController : BaseUIServiceController
     {
-        private readonly ILogger<CustomerController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public CustomerController(
             IMediator mediator,
-            IHttpContextAccessor httpContextAccessor,
             IOptions<AppSettings> options,
-            ILoggerFactory loggerFactory,
+            ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
-            IUserIdentity userIdentity,
-            ISiteSettings siteSettings)
-            : base(mediator, httpContextAccessor, loggerFactory, context, userIdentity.User, options, siteSettings)
+            ISiteSettings siteSettings,
+            IHttpClientFactory httpClientFactory
+            )
+            : base(mediator, loggerFactory, context, options, siteSettings)
         {
-            _logger = loggerFactory.CreateLogger<CustomerController>();
+            _httpClientFactory = httpClientFactory;
         }
+
+        //[HttpGet]
+        //[Route("{name}")]
+        //public async Task<ActionResult<GetCustomerResponse>> Get(string name)
+        //{
+        //    var request = new GetCustomerRequest
+        //    {
+        //        Id = name,
+        //    };
+        //    var response = await _mediator.Send(request);
+        //    return Ok(response);
+        //}
 
         [HttpGet]
-        [Route("testCustomerAPI")]
-        public string Test([FromQuery] string name)
+        [Route("{name}")]
+        public async Task<JsonResult> Get(string name)
         {
-            return "Welcome Customer " + name + " !";
-        }
-             
+            HttpClient httpClient = _httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006mCkUFmWLnYIxSawBCgMtSxId");
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+            httpClient.DefaultRequestHeaders.Add("Site", "NA");
+            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
+            var url = "https://eastus-dit-service.dc.tdebusiness.cloud/app-customer/v1/" + name;
 
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri(url),
+                Method = HttpMethod.Get,
+            };
+
+            try
+            {
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                return Json(responseBody);
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
+        }
+
+        //[HttpPost]
+        //[Route("find")]
+        //public async Task<ActionResult<FindCustomerResponse>> Find(FindCustomerRequest request)
+        //{
+        //    var response = await _mediator.Send(request);
+        //    return Ok(response);
+        //}
+
+        [HttpGet]
+        [Route("Find")]
+        public async Task<IActionResult> Find([FromQuery] FindCustomerRequest query, [FromQuery] int? page, [FromQuery] int? pageSize, [FromQuery] bool withPaginationInfo, [FromQuery] bool details = true)
+        {
+
+            if (details)
+            {
+                //query = new FindCustomerRequest 
+                //{ 
+                //    Query = query, 
+                //    WithPaginationInfo = withPaginationInfo, 
+                //    Page = page ?? 1, 
+                //    PageSize = pageSize ?? 10 
+                //};
+            }
+            else
+            {
+                //query = new FindCustomerRequest
+                //{
+                //    Query = query,
+                //    WithPaginationInfo = withPaginationInfo,
+                //    Page = page ?? 1,
+                //    PageSize = pageSize ?? 10
+                //};
+            }
+
+            var response = await _mediator.Send(query).ConfigureAwait(false);
+            if (response?.ReturnObject == null) /*|| !response.ReturnObject.Any())*/
+                return NotFound();
+            else
+                return Ok(response);
+        }
     }
 }

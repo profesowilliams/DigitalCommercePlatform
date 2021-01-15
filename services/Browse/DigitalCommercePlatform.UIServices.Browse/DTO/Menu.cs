@@ -26,6 +26,24 @@ namespace DigitalCommercePlatform.UIServices.Browse.DTO
         }
 
     }
+
+    //public partial class Menu
+    //{
+    //    [JsonProperty("Products")]
+    //    public List<Product> Products { get; set; }
+
+    //    [JsonProperty("Solutions")]
+    //    public List<Solution> Solutions { get; set; }
+
+    //    [JsonProperty("Services")]
+    //    public List<Service> Services { get; set; }
+
+    //    [JsonProperty("Brands")]
+    //    public List<Brand> Brands { get; set; }
+
+    //    [JsonProperty("About Us")]
+    //    public List<AboutUs> AboutUs { get; set; }
+    //}
 }
 
     //public class Root

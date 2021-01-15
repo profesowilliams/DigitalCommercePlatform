@@ -5,12 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.18" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.18" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.18" />
-    <PackageReference Include="DigitalFoundation.Common.Sql" Version="3.50.18" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.102" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.102" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.102" />
+    <PackageReference Include="DigitalFoundation.Common.Sql" Version="3.50.102" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
-    <PackageReference Include="Flurl" Version="2.8.2" />
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.3.0" />
+    <PackageReference Include="Flurl" Version="3.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
@@ -18,6 +21,10 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Enums\" />
   </ItemGroup>
 
 
