@@ -2,12 +2,10 @@
 using DigitalFoundation.AppServices.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Core.Services.Quote.DTO;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -26,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     public class QuoteController : BaseUIServiceController
     {
-        private readonly ILogger<QuoteController> _logger;
+        //private readonly ILogger<QuoteController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
         public QuoteController(
@@ -153,7 +151,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         [HttpGet]
         [Route("GetQuoteSummaryList")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var quote1 = new QuoteSummaryResponse()
             {

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Quote.IntegrationTests", "DigitalCommercePlatform.UIServices.Quote.IntegrationTests\DigitalCommercePlatform.UIServices.Quote.IntegrationTests.csproj", "{FF36CA44-407C-46C8-AE3E-2A179E8F22AC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3A2E71A3-75FB-4D15-9C53-FECE191D8DD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{613A73C0-9F78-490E-8984-0CCDAAA217D3} = {3A2E71A3-75FB-4D15-9C53-FECE191D8DD7}
+		{FF36CA44-407C-46C8-AE3E-2A179E8F22AC} = {3A2E71A3-75FB-4D15-9C53-FECE191D8DD7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8B8CCB8-476F-4D33-B987-A46A9A2DE817}
