@@ -15,6 +15,6 @@ extends:
   template: pullrequest-template-v2.yml@DCP
   parameters:
           projectSources: 'services/Customer/DigitalCommercePlatform.UIService.Customer.sln'
-          unitTestSources: 'services/Customer/DigitalCommercePlatform.UIService.Customer.*/*Tests.csproj'
+          unitTestSources: 'services/Customer/DigitalCommercePlatform.UIServices.Customer.*/*Tests.csproj'
           projectKey: 'DC-DF-Customer-UI'
           projectName: 'DC-DF-Customer-UI'          
