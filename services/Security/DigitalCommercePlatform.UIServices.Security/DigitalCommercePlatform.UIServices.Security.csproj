@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>DigitalCommercePlatform.UIServices.Security</AssemblyName>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIServices.Security.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
@@ -20,6 +21,10 @@
     <EmbeddedResource Remove="DTO\**" />
     <None Remove="Actions\**" />
     <None Remove="DTO\**" />
+  </ItemGroup>	
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-security-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
   <ItemGroup>
