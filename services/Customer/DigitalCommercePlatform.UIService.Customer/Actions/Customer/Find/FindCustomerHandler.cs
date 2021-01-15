@@ -2,16 +2,12 @@
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Core.Models.DTO.Common;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get;
 
 namespace DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Find
 {
@@ -32,7 +28,9 @@ namespace DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Find
             CoreCustomerUrl = options?.Value?.TryGetSetting(key);
             if (CoreCustomerUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
         }
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<FindCustomerResponse> Handle(FindCustomerRequest request, CancellationToken cancellationToken)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
 
             try

@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer;
+using DigitalCommercePlatform.UIService.Customer.Models.Dtos;
+using DigitalCommercePlatform.UIService.Customer.Services.Abstract;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Core.Models.DTO.Common;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,10 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get;
-using DigitalCommercePlatform.UIService.Customer.Services.Abstract;
-using DigitalCommercePlatform.UIService.Customer.Models.Dtos;
-using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer;
 
 namespace DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get
 {

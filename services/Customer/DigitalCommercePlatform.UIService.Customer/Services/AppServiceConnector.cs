@@ -1,16 +1,11 @@
-﻿using DigitalCommercePlatform.UIService.Customer.Services.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-using DigitalFoundation.Common.Models;
-using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer;
+﻿using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer;
+using DigitalCommercePlatform.UIService.Customer.Services.Abstract;
 using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Customer.Services
 {

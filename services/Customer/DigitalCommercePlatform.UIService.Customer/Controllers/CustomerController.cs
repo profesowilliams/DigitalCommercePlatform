@@ -1,12 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Find;
-using DigitalCommercePlatform.UIServices.Customer.Actions.Customer.Get;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -114,7 +110,9 @@ namespace DigitalCommercePlatform.UIServices.Customer.Controllers
                 //};
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var response = await _mediator.Send(query).ConfigureAwait(false);
+#pragma warning restore CS0618 // Type or member is obsolete
             if (response?.ReturnObject == null) /*|| !response.ReturnObject.Any())*/
                 return NotFound();
             else
