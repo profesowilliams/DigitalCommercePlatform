@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Dto.Summary;
 using DigitalCommercePlatform.UIService.Product.Models.Summary;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using DigitalFoundation.Core.Models.DTO.Common;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

@@ -3,12 +3,9 @@ using DigitalCommercePlatform.UIService.Product.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
-using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

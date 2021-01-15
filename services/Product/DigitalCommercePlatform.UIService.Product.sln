@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Product", "DigitalCommercePlatform.UIService.Product\DigitalCommercePlatform.UIService.Product.csproj", "{5C955E20-D4B3-4962-AE57-CCE9CB26D963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Product.IntegrationTests", "DigitalCommercePlatform.UIServices.Product.IntegrationTests\DigitalCommercePlatform.UIServices.Product.IntegrationTests.csproj", "{2046FAF0-9E1F-497E-BB25-357CED02BCDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Product.IntegrationTests", "DigitalCommercePlatform.UIServices.Product.IntegrationTests\DigitalCommercePlatform.UIServices.Product.IntegrationTests.csproj", "{2046FAF0-9E1F-497E-BB25-357CED02BCDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Product.Tests", "DigitalCommercePlatform.UIServices.Product.Tests\DigitalCommercePlatform.UIServices.Product.Tests.csproj", "{96EC3895-C993-4287-A826-A96BC420F5B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Product.Tests", "DigitalCommercePlatform.UIServices.Product.Tests\DigitalCommercePlatform.UIServices.Product.Tests.csproj", "{96EC3895-C993-4287-A826-A96BC420F5B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{16023B41-9999-44EC-B71F-BD4199F3425E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2046FAF0-9E1F-497E-BB25-357CED02BCDD} = {16023B41-9999-44EC-B71F-BD4199F3425E}
+		{96EC3895-C993-4287-A826-A96BC420F5B6} = {16023B41-9999-44EC-B71F-BD4199F3425E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF73F103-F55F-4F68-9513-4E4F1FEAB171}
