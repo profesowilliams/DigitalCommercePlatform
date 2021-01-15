@@ -1,11 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.DTO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 
 namespace DigitalCommercePlatform.UIServices.Browse.Helpers
@@ -22,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             var res = JsonConvert.DeserializeObject<dynamic>(json);
 
             return res.Name;
-           // Response.Write(res.Name);
+            // Response.Write(res.Name);
 
             //string file = @"..\DigitalCommercePlatform.UIServices.Browse\Menu-in-json.json";
 
@@ -100,7 +93,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             //    }
             //    menu.SubMenus.Add(sm);
             //}
-            return "Created Menu for account # : " + accountNumber; 
+#pragma warning disable CS0162 // Unreachable code detected
+            return "Created Menu for account # : " + accountNumber;
+#pragma warning restore CS0162 // Unreachable code detected
         }
 
         

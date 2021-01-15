@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-//using DigitalCommercePlatform.UIServices.Browse.Actions.Browse;
+﻿//using DigitalCommercePlatform.UIServices.Browse.Actions.Browse;
 using DigitalCommercePlatform.UIServices.Browse.DTO;
-using DigitalCommercePlatform.UIServices.Browse.DTO.Request;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Security.Identity;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Threading.Tasks;
 
 //using QuickType;
 
@@ -29,9 +22,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     public class BrowseController : BaseUIServiceController
     {
-        private readonly ILogger<BrowseController> _logger;
-        private readonly IMediator _mediator;
-        //private readonly IUserIdentity userIdentity;
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        //private readonly ILogger<BrowseController> _logger;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        //private readonly IMediator _mediator;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+                              //private readonly IUserIdentity userIdentity;
 
         public BrowseController(
                         IMediator mediator,
@@ -65,11 +62,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             return "Welcome " + name + " !";
         }
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public Menu Json { get; set; }
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         public Menu SecondJson { get; set; }
         [HttpGet]
         [Route("testMultiple")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<Menu> Menu()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
              
                 try
@@ -103,8 +104,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 {
                     //return ex;
                     throw ex;
+#pragma warning disable CS0162 // Unreachable code detected
                 return null;
-                }
+#pragma warning restore CS0162 // Unreachable code detected
+            }
             
 
         }
@@ -116,7 +119,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         }
         [HttpGet]
         [Route("GetMenu")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<string> GetMenuAsync([FromQuery] string accountNumber)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             //var menuResponse = await _mediator.Send(new GetMenu.GetMenuRequest { AccountNumber = accountNumber }).ConfigureAwait(false);
             return "Requested account number : " + accountNumber;

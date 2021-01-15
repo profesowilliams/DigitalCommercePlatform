@@ -1,19 +1,14 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.DTO.Response;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Core.Models.DTO.Common;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse;
-using DigitalCommercePlatform.UIServices.Browse.DTO.Request;
-using DigitalCommercePlatform.UIServices.Browse.DTO.Response;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse
 {
@@ -34,7 +29,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse
             CoreBrowseUrl = options?.Value?.TryGetSetting(key);
             if (CoreBrowseUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
         }
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<GetBrowseResponse> Handle(GetBrowseRequest request, CancellationToken cancellationToken)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
 
             try
