@@ -1,13 +1,6 @@
-﻿using DigitalCommercePlatform.UIServices.Security.AppServices;
-using FluentValidation;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Net;
 
 namespace DigitalCommercePlatform.UIServices.Security.Infrastructure
 {
@@ -62,12 +55,12 @@ namespace DigitalCommercePlatform.UIServices.Security.Infrastructure
             //context.ExceptionHandled = true;
         }
 
-        private class JsonErrorResponse
-        {
-            public string[] Messages { get; set; }
+        //private class JsonErrorResponse
+        //{
+        //    public string[] Messages { get; set; }
 
-            public object DeveloperMessage { get; set; }
-        }
+        //    public object DeveloperMessage { get; set; }
+        //}
     }
 
     

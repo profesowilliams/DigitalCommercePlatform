@@ -51,7 +51,9 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         [Route("signin")]
         public async Task<IActionResult> GetTokenAsync([FromBody]GetTokenRequest getTokenRequest)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var tokenResponse = await _mediator.Send(new LoginCommand("","")).ConfigureAwait(false);
+#pragma warning restore CS0618 // Type or member is obsolete
             return Ok(tokenResponse);
         }
     }

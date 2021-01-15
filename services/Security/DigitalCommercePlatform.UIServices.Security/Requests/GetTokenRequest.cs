@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIServices.Security.Requests
+﻿namespace DigitalCommercePlatform.UIServices.Security.Requests
 {
     public class GetTokenRequest
     {

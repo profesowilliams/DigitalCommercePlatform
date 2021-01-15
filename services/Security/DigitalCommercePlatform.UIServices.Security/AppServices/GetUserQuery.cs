@@ -5,7 +5,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
