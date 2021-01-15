@@ -14,3 +14,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA1801:Review unused parameters")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types")]
 [assembly: SuppressMessage("Design", "CA1052:Static holder types should be Static or NotInheritable")]
+[assembly: SuppressMessage("Critical Code Smell", "S4487:Unread \"private\" fields should be removed")]

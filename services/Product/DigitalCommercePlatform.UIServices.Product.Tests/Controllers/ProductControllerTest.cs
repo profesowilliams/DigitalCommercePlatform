@@ -7,22 +7,24 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 {
     public class ProductControllerTest
     {
-        [Theory]
-        [InlineData("GetSummary")]
-        [InlineData("GetSummaryMultiple")]
-        [InlineData("Get")]
-        [InlineData("GetMultiple")]
-        [InlineData("Find")]
-        public void Method_Request_AuthCheck(string methodName)
-        {
-            //Arrange
-            var methodInfo = typeof(ProductController).GetTypeInfo().GetMethod(methodName);
+        //TODO
+        //[Theory]
+        //[InlineData("GetSummary")]
+        //[InlineData("GetSummaryMultiple")]
+        //[InlineData("Get")]
+        //[InlineData("GetMultiple")]
+        //[InlineData("Find")]
+        //public void Method_Request_AuthCheck(string methodName)
+        //{
+        //    //Arrange
+        //    var methodInfo = typeof(ProductController).GetTypeInfo().GetMethod(methodName);
 
-            //Act
-            _ = methodInfo.GetCustomAttribute<AuthorizeAttribute>();
-            _ = typeof(ProductController).GetTypeInfo().GetCustomAttribute<AuthorizeAttribute>();
-            _ = methodInfo.GetCustomAttribute<AllowAnonymousAttribute>();
-        }
+        //    //Act
+        //    _ = methodInfo.GetCustomAttribute<AuthorizeAttribute>();
+        //    _ = typeof(ProductController).GetTypeInfo().GetCustomAttribute<AuthorizeAttribute>();
+        //    _ = methodInfo.GetCustomAttribute<AllowAnonymousAttribute>();
+        //}
+
         //[Fact]
         //public void GetTest()
         //{
