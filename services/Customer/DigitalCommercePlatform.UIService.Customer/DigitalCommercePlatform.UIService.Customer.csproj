@@ -2,13 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIService.Customer.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
 	<NoWarn>1591</NoWarn>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	<WarningLevel>4</WarningLevel>
-  </PropertyGroup>	
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-customer-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>	
 
   <ItemGroup>
     <PackageReference Include="DigitalFoundation.Common" Version="3.50.102" />
