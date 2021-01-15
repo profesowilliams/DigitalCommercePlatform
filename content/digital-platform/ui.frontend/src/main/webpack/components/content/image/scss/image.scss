@@ -2,3 +2,14 @@
 .cmp-image__link {}
 .cmp-image__image {}
 .cmp-image__title {}
+
+.dp-figure{
+  &--spacing-header{
+    padding: 1.063rem 1.3rem 1rem .6rem;
+    margin: 0;
+  }
+  &--spacing-footer{
+    padding: .4rem 0 .5rem;
+    margin: 0;
+  }
+}
