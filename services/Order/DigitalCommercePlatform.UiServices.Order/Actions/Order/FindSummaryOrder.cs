@@ -4,7 +4,6 @@ using DigitalCommercePlatform.UIServices.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using FluentValidation;
 using Flurl;
 using MediatR;
 using Microsoft.Extensions.Logging;

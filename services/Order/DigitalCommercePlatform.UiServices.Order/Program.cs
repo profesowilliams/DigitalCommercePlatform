@@ -1,13 +1,12 @@
+using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Logging;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using DigitalFoundation.Common.Logging;
-using Microsoft.AspNetCore;
-using Microsoft.Extensions.DependencyInjection;
-using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
