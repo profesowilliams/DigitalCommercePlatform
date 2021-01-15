@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIService.Catalog.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
@@ -9,6 +10,10 @@
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	<WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-catalog-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DigitalFoundation.Common" Version="3.50.18" />
