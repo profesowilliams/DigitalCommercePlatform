@@ -55,6 +55,13 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <id
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="HTML ID attribute to apply to the component and handle actions."
+                                                fieldLabel="ID"
+                                                required="{Boolean}true"
+                                                name="./id"/>
                                             <autoplay
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
@@ -110,12 +117,6 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     cmp-carousel-v1-dialog-hook="autoplayGroup"/>
                                             </autoplayGroup>
-                                            <id
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="HTML ID attribute to apply to the component."
-                                                fieldLabel="ID"
-                                                name="./id"/>
                                         </items>
                                     </column>
                                 </items>
@@ -150,30 +151,59 @@
                             </columns>
                         </items>
                     </accessibility>
-                    <styles
+                    <alert
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Styles"
+                        jcr:title="Alert"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         margin="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
-                            <customWrapperClasses
+                            <enableAlert
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                fieldDescription="If checked, activate alert content."
+                                name="./enableAlert"
+                                text="Enable alert label"
+                                uncheckedValue="false"
+                                value="true">
+                            </enableAlert>
+                            <alertTitle
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                 emptyText=""
-                                fieldDescription="Custom wrapper classes."
-                                fieldLabel="customWrapperClasses"
-                                name="./customWrapperClasses"
-                                required="{Boolean}false"/>}
-                            <customItemClasses
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                emptyText=""
-                                fieldDescription="Custom item classes."
-                                fieldLabel="customItemClasses"
-                                name="./customItemClasses"
+                                fieldDescription="Alert text to display"
+                                fieldLabel="Alert title"
+                                name="./alertTitle"
                                 required="{Boolean}false"/>
+                            <actions
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                fieldDescription="Click 'Add field' to add alert action."
+                                fieldLabel="Actions"
+                                composite="{Boolean}true">
+                                <field sling:resourceType="granite/ui/components/coral/foundation/container"
+                                    jcr:primaryType="nt:unstructured" name="./actionItems">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <linkText
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Link Text"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./linkText" />
+                                                <linkurl
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Link Url"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./linkUrl" />
+                                            </items>
+                                        </column>
+                                    </items>
+                                </field>
+                            </actions>
                         </items>
-                    </styles>
+                    </alert>
                 </items>
             </tabs>
         </items>

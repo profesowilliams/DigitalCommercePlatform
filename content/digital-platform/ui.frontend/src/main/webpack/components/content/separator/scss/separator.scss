@@ -1,0 +1,52 @@
+.dp-separator {
+  width: auto;
+  &--light-blue{
+    .cmp-separator__horizontal-rule{
+      color: #00B1E2;
+    }
+  }
+  &--dark-blue{
+    .cmp-separator__horizontal-rule{
+      color: #000C21;
+    }
+  }
+  &--gray{
+    .cmp-separator__horizontal-rule{
+      color: #979797;
+    }
+  }
+  &--white{
+    .cmp-separator__horizontal-rule{
+      color: #FFFFFF;
+    }
+  }
+
+  &--hidden{
+    .cmp-separator__horizontal-rule{
+      visibility: hidden;
+    }
+  }
+
+  &--space{
+    &-small{
+      .cmp-separator {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+    }
+
+    &-medium{
+      .cmp-separator {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+    }
+
+    &-large{
+      .cmp-separator {
+        margin-top: 4em;
+        margin-bottom: 4em;
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIService.Product.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+	<NoWarn>1591</NoWarn>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<WarningLevel>4</WarningLevel>
+  </PropertyGroup>	
+
+  <ItemGroup>
+    <Compile Remove="Dto\GetProductMultiple\**" />
+    <Compile Remove="Dto\GetProduct\**" />
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="HttpClients\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Validators\**" />
+    <Content Remove="Dto\GetProductMultiple\**" />
+    <Content Remove="Dto\GetProduct\**" />
+    <Content Remove="Helpers\**" />
+    <Content Remove="HttpClients\**" />
+    <Content Remove="Services\**" />
+    <Content Remove="Validators\**" />
+    <EmbeddedResource Remove="Dto\GetProductMultiple\**" />
+    <EmbeddedResource Remove="Dto\GetProduct\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="HttpClients\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Dto\GetProductMultiple\**" />
+    <None Remove="Dto\GetProduct\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="HttpClients\**" />
+    <None Remove="Services\**" />
+    <None Remove="Validators\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Dto\CoreServiceOwners.cs" />
+    <Compile Remove="Dto\MaterialIdDto.cs" />
+    <Compile Remove="Dto\Plant.cs" />
+    <Compile Remove="Dto\PlantInfoDto.cs" />
+    <Compile Remove="Dto\Price.cs" />
+    <Compile Remove="Dto\ProductDetailDto.cs" />
+    <Compile Remove="Dto\ProductSummaryDto.cs" />
+    <Compile Remove="Dto\SalesOrganizationDto.cs" />
+    <Compile Remove="Dto\Source.cs" />
+    <Compile Remove="Dto\Stock.cs" />
+    <Compile Remove="Dto\SubstituteMaterialDto.cs" />
+    <Compile Remove="Exceptions\InvalidCatalogException.cs" />
+    <Compile Remove="Models\CoreProductModel.cs" />
+    <Compile Remove="Models\CoreProductSummaryModel.cs" />
+    <Compile Remove="Models\PlantModel.cs" />
+    <Compile Remove="Models\PriceModel.cs" />
+    <Compile Remove="Models\SalesOrganization.cs" />
+    <Compile Remove="Models\StockModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-product-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.45" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.45" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.45" />
+    <PackageReference Include="DigitalFoundation.Common.Sql" Version="3.50.45" />
+    <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
+    <PackageReference Include="Flurl" Version="2.8.2" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="3.1.8" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+
+</Project>

@@ -1,0 +1,45 @@
+parameters:
+- name: projectSources  
+  default: '**/*.csproj'
+- name: unitTestSources
+  default: '**/*Tests.csproj'
+- name: projectKey  
+  default: 'DC-DF-Core-*'
+- name: projectName  
+  default: 'DC-DF-Core-*'
+
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Restore Packages
+  inputs:
+    command: 'restore'
+    projects: ${{ parameters.projectSources }}
+    feedsToUse: 'select'
+    vstsFeed: 'c1db23e3-14aa-4e9a-9464-1e9b795ce2b3'
+
+- task: SonarQubePrepare@4
+  displayName: 'Prepare analysis on SonarQube'
+  continueOnError: true   
+  inputs:
+    SonarQube: 'DC-SonarQube'
+    projectKey: ${{ parameters.projectKey }} 
+    projectName: ${{ parameters.projectName }} 
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Build Projects'
+  inputs:
+    command: 'build'
+    projects: ${{ parameters.projectSources }}
+    arguments: '--configuration Debug --no-restore' 
+
+- task: DotNetCoreCLI@2
+  displayName: Run Unit Tests
+  inputs:
+    command: 'test'
+    projects: ${{ parameters.unitTestSources }}  
+    arguments: '--configuration Debug --no-restore --collect "Code coverage"'  
+   
+- task: SonarQubeAnalyze@4
+  displayName: 'Run Code Analysis'
+  continueOnError: true     
