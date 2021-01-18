@@ -14,7 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Browse
     {
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
-            
         }
 
         protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-product/health/heartbeat";

@@ -1,6 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Controllers;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Security.Identity;
+﻿using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var mockOptions = new Mock<IOptions<AppSettings>>();
             var mockLoggerFactory = new Mock<ILoggerFactory>();
             var mockContext = new Mock<IContext>();
-           // var mockUserIdentity = new Mock<IUserIdentity>();
+            // var mockUserIdentity = new Mock<IUserIdentity>();
             var mockSiteSettings = new Mock<ISiteSettings>();
 
             //var _sut = new BrowseController(mockMediator.Object,

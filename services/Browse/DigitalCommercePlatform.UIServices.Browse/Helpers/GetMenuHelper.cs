@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-
 namespace DigitalCommercePlatform.UIServices.Browse.Helpers
 {
     public static class GetMenuHelper
@@ -12,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
       'Description': 'des'
     }";
 
-            var res = JsonConvert.DeserializeObject<dynamic>(json);
+            dynamic res = JsonConvert.DeserializeObject<dynamic>(json);
 
             return res.Name;
             // Response.Write(res.Name);
@@ -33,8 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
 
             //var customerFromJson = JsonConvert.DeserializeObject<Menu>;
 
-
-            //deserialize JSON from file  
+            //deserialize JSON from file
             //string Json = System.IO.File.ReadAllText(file);
             //JavaScriptSerializer ser = new JavaScriptSerializer();
             //var personlist = ser.Deserialize<List<Menu>>(Json);
@@ -55,7 +53,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             //{
             //    JObject o2 = (JObject)JToken.ReadFrom(reader);
             //}
-
 
             // string fileName = File.ReadAllText(@"..\DigitalCommercePlatform.UIServices.Browse\Menu-in-json.json");
             // string weatherForecast = JsonSerializer.Deserialize<Menu>(jsonString);
@@ -84,11 +81,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             //    menu = new Menu();
             //    foreach (var sm in subMenus)
             //    {
-
             //        subMenu = new SubMenu();
             //        foreach (var item in collection)
             //        {
-
             //        }
             //    }
             //    menu.SubMenus.Add(sm);
@@ -97,7 +92,5 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             return "Created Menu for account # : " + accountNumber;
 #pragma warning restore CS0162 // Unreachable code detected
         }
-
-        
     }
 }

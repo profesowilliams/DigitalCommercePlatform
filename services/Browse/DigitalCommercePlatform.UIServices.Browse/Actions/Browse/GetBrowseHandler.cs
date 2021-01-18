@@ -18,6 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse
         private readonly ILogger _logger;
         private readonly IMiddleTierHttpClient _client;
         private readonly string CoreBrowseUrl;
+
         public GetBrowseHandler(IMapper mapper, IMiddleTierHttpClient client, ILoggerFactory loggerFactory,
                 IOptions<AppSettings> options)
         {
@@ -29,11 +30,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse
             CoreBrowseUrl = options?.Value?.TryGetSetting(key);
             if (CoreBrowseUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
         }
+
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
         public async Task<GetBrowseResponse> Handle(GetBrowseRequest request, CancellationToken cancellationToken)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-
             try
             {
                 _logger.LogInformation($"AppService.Browse.Id");

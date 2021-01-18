@@ -4,6 +4,7 @@ using MediatR;
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Browse.GetBrowse
 {
     public class GetBrowseRequest : IRequest<GetBrowseResponse>
-    {        public string Id { get; set; }
+    {
+        public string Id { get; set; }
     }
 }

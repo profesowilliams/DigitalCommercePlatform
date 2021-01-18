@@ -1,15 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIServices.Browse.DTO
+﻿namespace DigitalCommercePlatform.UIServices.Browse.DTO
 {
     //public class MainMenu
     //{
-
-
     //}
     //public class Menu
     //{
@@ -20,12 +12,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.DTO
     //    public List<AboutU> AboutUs { get; set; }
     //}
 
-
-
     //public class Root
     //{
     //    public Menu Menu { get; set; }
     //}
-
-
 }

@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         //private readonly IMediator _mediator;
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
-                              //private readonly IUserIdentity userIdentity;
+        //private readonly IUserIdentity userIdentity;
 
         public BrowseController(
                         IMediator mediator,
@@ -39,7 +39,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
-
         }
 
         //    IMediator mediator,
@@ -66,17 +65,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         public Menu Json { get; set; }
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         public Menu SecondJson { get; set; }
+
         [HttpGet]
         [Route("testMultiple")]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<Menu> Menu()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-             
-                try
-                {
+            try
+            {
                 string rawJson = System.IO.File.ReadAllText(@"..\DigitalCommercePlatform.UIServices.Browse\Menu-in-json-String.json");
-               dynamic json = System.Text.Json.JsonSerializer.Deserialize<Menu>(rawJson);
+                dynamic json = System.Text.Json.JsonSerializer.Deserialize<Menu>(rawJson);
 
                 //var data = (JObject)JsonConvert.DeserializeObject(rawJson);
                 //string timeZone = data["Menu"].Value<Menu>();
@@ -101,22 +100,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 return json;
             }
             catch (Exception ex)
-                {
-                    //return ex;
-                    throw ex;
+            {
+                //return ex;
+                throw ex;
 #pragma warning disable CS0162 // Unreachable code detected
                 return null;
 #pragma warning restore CS0162 // Unreachable code detected
             }
-            
-
         }
-        [HttpGet]
-        [Route("TestMethod")]
-        public void JsonArrayParsingTest()
-        {
 
-        }
         [HttpGet]
         [Route("GetMenu")]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -126,12 +118,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             //var menuResponse = await _mediator.Send(new GetMenu.GetMenuRequest { AccountNumber = accountNumber }).ConfigureAwait(false);
             return "Requested account number : " + accountNumber;
         }
+
         [HttpGet]
         [Route("Test")]
         public void GetResultofJson()
         {
             var jsonString = System.IO.File.ReadAllText(@"..\DigitalCommercePlatform.UIServices.Browse\Menu-in-json.json");
-            JArray jsonVal = JArray.Parse(jsonString) as JArray;
+            JArray jsonVal = JArray.Parse(jsonString);
             dynamic albums = jsonVal;
             foreach (dynamic album in albums)
             {
