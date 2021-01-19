@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DigitalFoundation.Common.Extensions;
+using Microsoft.AspNetCore.Http;
 using Serilog.Events;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Order.Helpers
 {
@@ -10,7 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Helpers
     /// https://andrewlock.net/using-serilog-aspnetcore-in-asp-net-core-3-excluding-health-check-endpoints-from-serilog-request-logging/
     /// </summary>
     ///
-    [ExcludeFromCodeCoverage]
     public static class LogHelper
     {
         private static bool IsHealthCheckEndpoint(HttpContext ctx)
@@ -29,15 +28,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Helpers
 
         public static LogEventLevel ExcludeHealthChecks(HttpContext ctx, double _, Exception ex)
         {
-            if (ctx == null)
-            {
-                throw new ArgumentNullException(nameof(ctx));
-            }
-            if (ex != null || ctx.Response.StatusCode > 499)
+            if (ex != null || ObjectExtensions.PassThrowNonNull(ctx).Response.StatusCode > 499)
                 return LogEventLevel.Error;
 
             return IsHealthCheckEndpoint(ctx) ? LogEventLevel.Verbose : LogEventLevel.Information;
         }
     }
 }
-

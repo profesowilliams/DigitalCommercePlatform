@@ -26,10 +26,11 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Order
         {
             public long Count { get; set; }
             public IEnumerable<SalesOrderModel> Data { get; set; }
+
             public Response(IEnumerable<SalesOrderModel> orders)
             {
                 Data = orders;
-            }            
+            }
         }
 
         public class Handler : OrderRequestHandler<Request, Response>

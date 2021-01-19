@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Dto.SalesOrder;
 using DigitalCommercePlatform.UIServices.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
@@ -11,6 +8,9 @@ using Flurl;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Order.Actions.Order
 {
@@ -19,7 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Order
         public class Request : IRequest<SalesOrderModel>
         {
             public string Id { get; set; }
-        }        
+        }
 
         public class Handler : OrderRequestHandler<Request, SalesOrderModel>
         {
