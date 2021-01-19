@@ -30,17 +30,14 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.Search
 
             public async Task<TypeAheadResponse> Handle(TypeAheadRequest request, CancellationToken cancellationToken)
             {
-
-
                 try
                 {
                     _logger.LogInformation($"UIService.Product.FindProduct");
-                    var url =$"{_typeSearchUrl}"
-                             .BuildQuery(request); 
+                    var url = $"{_typeSearchUrl}"
+                             .BuildQuery(request);
 
                     var data = await _client.GetAsync<TypeAheadResponse>(url).ConfigureAwait(false);
                     return data;
-
                 }
                 catch (Exception ex)
                 {
@@ -55,9 +52,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.Search
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindProduct)}");
                     throw;
                 }
-
-
-
             }
         }
     }

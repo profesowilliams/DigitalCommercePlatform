@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DigitalCommercePlatform.UIService.Product.Models.Product
 {
     public class ProductModel
-    {        
+    {
         public SourceModel Source { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

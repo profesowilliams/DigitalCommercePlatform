@@ -2,12 +2,10 @@
 using DigitalCommercePlatform.UIService.Product.Models.Find;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -44,8 +42,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
             private readonly IMapper _mapper;
             private readonly string _appProductUrl;
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger,
-                IOptions<AppSettings> options)
+            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
                 _mapper = mapper;
                 _client = client;
@@ -64,7 +61,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
                     var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return data;
-
                 }
                 catch (Exception ex)
                 {
@@ -80,9 +76,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindSummary)}");
                     throw;
                 }
-
             }
-
         }
     }
 }

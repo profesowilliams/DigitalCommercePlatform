@@ -4,7 +4,6 @@ namespace DigitalCommercePlatform.UIService.Product.Models.Search
     {
         public string Description { get; set; }
         public TypeAheadSuggestionRefinementTypes RefinementType { get; set; }
-        
     }
 
     public class TypeAheadSuggestionRefinementV2
@@ -12,6 +11,5 @@ namespace DigitalCommercePlatform.UIService.Product.Models.Search
         public string Description { get; set; }
         public string RefinementId { get; set; }
         public TypeAheadSuggestionRefinementTypes RefinementType { get; set; }
-
     }
 }

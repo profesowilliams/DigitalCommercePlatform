@@ -6,7 +6,6 @@ using DigitalCommercePlatform.UIService.Product.Models.Find;
 using DigitalCommercePlatform.UIService.Product.Models.Product;
 using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
 
-
 namespace DigitalCommercePlatform.UIService.Product.Automapper
 {
     public class ProductProfile : Profile
@@ -16,8 +15,7 @@ namespace DigitalCommercePlatform.UIService.Product.Automapper
             CreateMap<FindProductModel, FindModelDto>()
                 .ForMember(x => x.Page, opt => opt.Ignore())
                 .ForMember(x => x.PageSize, opt => opt.Ignore())
-                .ForMember(x => x.Details, opt => opt.Ignore())
-                ;
+                .ForMember(x => x.Details, opt => opt.Ignore());
 
             CreateMap<ABCDto, ABCModel>();
             CreateMap<AccountAssignmentGroupDto, AccountAssignmentGroupModel>();
@@ -35,8 +33,7 @@ namespace DigitalCommercePlatform.UIService.Product.Automapper
             CreateMap<MaterialProfileDto, MaterialProfileModel>();
             CreateMap<MaterialStatusDto, MaterialStatusModel>();
             CreateMap<PlantDto, PlantModel>()
-                .ForMember(x => x.Stock, opt => opt.Ignore())
-                ;
+                .ForMember(x => x.Stock, opt => opt.Ignore());
             CreateMap<PlantSpecificMaterialStatusDto, PlantSpecificMaterialStatusModel>();
             CreateMap<ProductHierarchyDto, ProductHierarchyModel>();
             CreateMap<IndicatorDto, IndicatorModel>();

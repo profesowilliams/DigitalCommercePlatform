@@ -1,5 +1,5 @@
-﻿using System.ServiceModel;
-using DigitalCommercePlatform.UIService.Product.Models.Search;
+﻿using DigitalCommercePlatform.UIService.Product.Models.Search;
+using System.ServiceModel;
 
 namespace DigitalCommercePlatform.UIService.Product.Service
 {

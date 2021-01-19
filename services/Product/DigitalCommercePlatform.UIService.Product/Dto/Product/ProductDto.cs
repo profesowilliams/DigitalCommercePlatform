@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DigitalCommercePlatform.UIService.Product.Dto.Product
 {
     public class ProductDto
-    {        
+    {
         public SourceDto Source { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -41,8 +41,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
             private readonly string _appProductUrl;
-            //private readonly string _coreProductUrl;
-            //private readonly string _coreStockUrl;
 
             public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
@@ -54,7 +52,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                
                 try
                 {
                     _logger.LogInformation($"UIService.Product.FindProduct");
@@ -64,7 +61,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
                     var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return data;
-
                 }
                 catch (Exception ex)
                 {
@@ -79,12 +75,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindProduct)}");
                     throw;
                 }
-
-
-
             }
-
         }
-
     }
 }
