@@ -622,13 +622,14 @@
           <artifactId>filevault-package-maven-plugin</artifactId>
                                         
           
-          <version>1.0.3</version>
+          <version>1.1.2</version>
                                         
           
           <configuration>
                                                 
             
             <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
+            <skipValidation>true</skipValidation>
                                             
           
           </configuration>
@@ -685,7 +686,7 @@
           <artifactId>maven-enforcer-plugin</artifactId>
                                         
           
-          <version>1.4.1</version>
+          <version>3.0.0-M2</version>
                                     
         
         </plugin>
