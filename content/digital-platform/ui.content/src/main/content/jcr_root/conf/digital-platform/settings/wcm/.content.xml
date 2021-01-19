@@ -306,10 +306,10 @@
                     </experiencefragment>
                     <search jcr:primaryType="nt:unstructured">
                         <policy_1610545765683
-                            jcr:lastModified="{Date}2021-01-13T15:01:49.702+01:00"
+                            jcr:lastModified="{Date}2021-01-18T14:48:13.458+01:00"
                             jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Search Sample Policy"
+                            jcr:title="Search Component Policy"
                             sling:resourceType="wcm/core/components/policy/policy"
                             resultsSize="10"
                             searchRoot="/content/digital-platform/language-masters"
@@ -317,27 +317,38 @@
                             <jcr:content jcr:primaryType="nt:unstructured"/>
                             <cq:styleGroups jcr:primaryType="nt:unstructured">
                                 <item0
-                                    cq:styleGroupLabel="Sample Style"
+                                    cq:styleGroupLabel="Color Theme"
                                     jcr:primaryType="nt:unstructured">
                                     <cq:styles jcr:primaryType="nt:unstructured">
                                         <item0
-                                            cq:styleClasses="bg-danger"
+                                            cq:styleClasses="cmp-search--light-blue"
                                             cq:styleId="1610545816695"
-                                            cq:styleLabel="background-color"
+                                            cq:styleLabel="Light blue"
                                             jcr:primaryType="nt:unstructured"/>
                                         <item1
-                                            cq:styleClasses="p-5"
+                                            cq:styleClasses="cmp-search--dark-blue"
                                             cq:styleId="1610546477186"
-                                            cq:styleLabel="padding"
+                                            cq:styleLabel="Dark blue"
                                             jcr:primaryType="nt:unstructured"/>
                                         <item2
+                                            cq:styleClasses="cmp-search--grey"
                                             cq:styleId="1610546502576"
+                                            cq:styleLabel="Grey"
+                                            jcr:primaryType="nt:unstructured"/>
+                                        <item3
+                                            cq:styleClasses="cmp-search--white"
+                                            cq:styleId="1610619218770"
+                                            cq:styleLabel="White"
                                             jcr:primaryType="nt:unstructured"/>
                                     </cq:styles>
                                 </item0>
                             </cq:styleGroups>
                         </policy_1610545765683>
                     </search>
+                    <tabs jcr:primaryType="nt:unstructured"/>
+                    <download jcr:primaryType="nt:unstructured"/>
+                    <teaser jcr:primaryType="nt:unstructured"/>
+                    <carousel jcr:primaryType="nt:unstructured"/>
                 </content>
                 <structure jcr:primaryType="nt:unstructured">
                     <page jcr:primaryType="nt:unstructured">
