@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIService.Product.Models.Search;
-using System.ServiceModel;
+﻿using System.ServiceModel;
+using DigitalCommercePlatform.UIService.Product.Models.Search;
 
 namespace DigitalCommercePlatform.UIService.Product.Service
 {
@@ -8,5 +8,8 @@ namespace DigitalCommercePlatform.UIService.Product.Service
     {
         [OperationContract]
         TypeAheadResponse GetTypeAheadSuggestions(TypeAheadRequest request);
+
+        //[OperationContract]
+        //TypeAheadResponseV2 GetTypeAheadSuggestionsV2(TypeAheadRequest request);
     }
 }

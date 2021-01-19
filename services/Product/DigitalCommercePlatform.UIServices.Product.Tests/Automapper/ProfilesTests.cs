@@ -14,8 +14,8 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Automapper
             {
                 //config.AddProfile(new PriceProfile());
                 config.AddProfile(new ProductProfile());
-                config.AddProfile(new ProductSummaryProfile());
-                config.AddProfile(new StockProfile());
+                //config.AddProfile(new ProductSummaryProfile());
+                //config.AddProfile(new StockProfile());
             });
 
             //Act - Assert

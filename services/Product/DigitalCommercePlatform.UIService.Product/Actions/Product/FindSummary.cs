@@ -1,18 +1,21 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
+    [ExcludeFromCodeCoverage]
     public sealed class FindSummary
     {
         public class Request : IRequest<Response>
@@ -42,7 +45,8 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
             private readonly IMapper _mapper;
             private readonly string _appProductUrl;
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger)
+            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger,
+                IOptions<AppSettings> options)
             {
                 _mapper = mapper;
                 _client = client;
@@ -61,22 +65,16 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
                     var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return data;
+
                 }
                 catch (Exception ex)
                 {
-                    if (ex is RemoteServerHttpException)
-                    {
-                        var remoteEx = ex as RemoteServerHttpException;
-                        if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                        {
-                            return null;
-                        }
-                    }
-
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindSummary)}");
                     throw;
                 }
+
             }
+
         }
     }
 }

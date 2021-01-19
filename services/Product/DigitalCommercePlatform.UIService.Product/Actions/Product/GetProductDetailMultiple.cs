@@ -2,16 +2,20 @@
 using DigitalCommercePlatform.UIService.Product.Models.Product;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
+    [ExcludeFromCodeCoverage]
     public class GetProductDetailMultiple
     {
         public class Request : IRequest<GetProductDetailMultipleResponse>
@@ -32,27 +36,29 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<GetProductDetailMultiple> _logger;
-            private readonly string _appProductUrl;
+            private readonly string _AppProductUrl;
             private readonly IMapper _mapper;
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<GetProductDetailMultiple> logger)
+            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<GetProductDetailMultiple> logger, IOptions<AppSettings> options)
+
             {
                 _client = client;
                 _logger = logger;
+                _AppProductUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1";
                 _mapper = mapper;
-                _appProductUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1";
             }
 
             public async Task<GetProductDetailMultipleResponse> Handle(Request request, CancellationToken cancellationToken)
-            {
+            {                
                 try
                 {
                     _logger.LogInformation($"UIService.Product.GetProductDetailMultiple");
-                    var url = $"{_appProductUrl}/"
+
+                    var url = $"{_AppProductUrl}/"
                     .BuildQuery(request);
 
                     var AppResponse = await _client.GetAsync<GetProductDetailMultipleResponse>(url).ConfigureAwait(false);
-
+                        
                     return AppResponse;
                 }
                 catch (Exception ex)
@@ -60,7 +66,9 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                     _logger.LogError(ex, "Exception at: " + nameof(GetProductDetailMultiple));
                     throw;
                 }
-            }
+
+            }            
         }
+
     }
 }

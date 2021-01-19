@@ -1,8 +1,12 @@
-﻿namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class IndicatorModel
     {
-        public HAZMATModel HAZMAT { get; set; }
-        public ABCModel ABC { get; set; }
+        public ContextModel Context { get; set; }
+        public IDictionary<string, string> Values { get; set; }
     }
 }

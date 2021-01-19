@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace DigitalCommercePlatform.UIService.Product.Exceptions
 {
-    [Serializable]
     public class ProductNotFoundException : Exception
     {
         public ProductNotFoundException()

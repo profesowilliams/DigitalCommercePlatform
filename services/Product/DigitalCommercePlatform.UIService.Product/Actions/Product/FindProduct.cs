@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
-using DigitalFoundation.Core.Models.DTO.Common;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Core.Models.DTO.Common;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
@@ -41,6 +41,8 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
             private readonly string _appProductUrl;
+            //private readonly string _coreProductUrl;
+            //private readonly string _coreStockUrl;
 
             public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
@@ -52,6 +54,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                
                 try
                 {
                     _logger.LogInformation($"UIService.Product.FindProduct");
@@ -61,6 +64,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 
                     var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return data;
+
                 }
                 catch (Exception ex)
                 {
@@ -75,7 +79,12 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindProduct)}");
                     throw;
                 }
+
+
+
             }
+
         }
+
     }
 }

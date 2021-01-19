@@ -6,7 +6,6 @@ namespace DigitalCommercePlatform.UIService.Product.Models.Search
     {
         public string SearchApplication { get; set; }
         public string Keyword { get; set; }
-
         public object Clone()
         {
             return new TypeAheadRequest
