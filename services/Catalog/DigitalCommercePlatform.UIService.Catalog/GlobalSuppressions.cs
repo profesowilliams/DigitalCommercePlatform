@@ -7,3 +7,5 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+[assembly: SuppressMessage("Security", "CA5394:Do not use insecure randomness", Justification = "<Pending>", Scope = "member", Target = "~M:DigitalCommercePlatform.UIService.Catalog.Controllers.WeatherForecastController.Get~System.Collections.Generic.IEnumerable{DigitalCommercePlatform.UIService.Catalog.WeatherForecast}")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static")]
