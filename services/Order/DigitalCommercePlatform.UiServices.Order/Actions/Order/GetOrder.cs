@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Dto.SalesOrder;
+using DigitalCommercePlatform.UIServices.Order.Infrastructure.Contracts;
 using DigitalCommercePlatform.UIServices.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
@@ -36,12 +37,17 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Order
             protected override async Task<SalesOrderModel> OnHandle(Request request, CancellationToken cancellationToke)
             {
                 Logger.LogInformation($"AppService.Order.Id");
-                var url = CoreOrder
-                    .AppendPathSegment("SalesOrder")
-                    .AppendPathSegment(request.Id);
+                var url = GetUrl(request.Id);
 
-                var coreResponse = await Client.GetAsync<SalesOrderDto>(url).ConfigureAwait(false);
+                var coreResponse = await Client.GetAsync<SalesOrderDto>(url.ToString(), null, null).ConfigureAwait(false);
                 return Mapper.Map<SalesOrderModel>(coreResponse);
+            }
+
+            private Url GetUrl(string Id)
+            {
+                return CoreOrder
+                    .AppendPathSegment(AppConstants.SalesOrderSegment)
+                    .AppendPathSegment(Id);
             }
         }
 
