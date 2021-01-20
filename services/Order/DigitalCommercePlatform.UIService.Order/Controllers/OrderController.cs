@@ -96,13 +96,16 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
                 else
                     return Ok(findResponse);
             }
-
-            var findSummaryResponse = await Mediator.Send(new FindSummaryOrder.Request { SearchQuery = search }).ConfigureAwait(false);
-
-            if (findSummaryResponse?.Data?.Any() != true)
-                return NotFound();
             else
-                return Ok(findSummaryResponse);
+            {
+                var findSummaryResponse = await Mediator.Send(new FindSummaryOrder.Request { SearchQuery = search }).ConfigureAwait(false);
+
+                if (findSummaryResponse?.Data?.Any() != true)
+                    return NotFound();
+                else
+                    return Ok(findSummaryResponse);
+            }
+            
 
         }
     }
