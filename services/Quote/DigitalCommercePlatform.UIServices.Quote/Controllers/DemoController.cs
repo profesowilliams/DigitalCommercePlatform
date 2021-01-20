@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Request;
+﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
@@ -38,13 +41,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             return "Welcome " + name + " !";
         }
 
-        [HttpPost]
-        [Route("GetQuote")]
-        public string GetQuote([FromBody] QuoteRequest request)
-        {
-            return "Menu";
-        }
-
         [HttpGet]
         [Route("getQuotes")]
         public JsonStringResult GetQuotes([FromQuery] string countryCode)
@@ -62,5 +58,62 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
                 ContentType = "application/json";
             }
         }
+
+        [HttpGet]
+        [Route("GetQuoteSummaryList")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var quote1 = new QuoteSummaryResponse()
+            {
+                QuoteId = "123456",
+                EndUserName = "John Doe",
+                VendorReference = "ACME Corporation"
+            };
+            var quote2 = new QuoteSummaryResponse()
+            {
+                QuoteId = "8888888",
+                EndUserName = "Steve W.",
+                VendorReference = "At home"
+            };
+            var result = new List<QuoteSummaryResponse>()
+            {
+
+            };
+            result.Add(quote1);
+            result.Add(quote2);
+            return result;
+        }
+
+
+        //[httpget]
+        //[route("getquote")]
+        //public async task<responsedto<list<quotedto>>> getquote(string id)
+        //{
+        //    var jsonresult = await this.get(id);
+
+        //    var quote = jsonserializer.deserialize<responsedto<list<quotedto>>>(jsonresult.content, getjsonserializeroptions());
+
+        //    return quote;
+        //}
+
+        private static JsonSerializerOptions GetJsonSerializerOptions()
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            return options;
+        }
     }
 }
+public class JsonStringResult : ContentResult
+{
+    public JsonStringResult(string json)
+    {
+        Content = json;
+        ContentType = "application/json";
+    }
+}
+
