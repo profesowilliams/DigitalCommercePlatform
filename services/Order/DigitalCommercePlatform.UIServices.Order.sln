@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Order", "DigitalCommercePlatform.UiServices.Order\DigitalCommercePlatform.UIServices.Order.csproj", "{583DAB28-A855-4972-93C4-A570A6B64D7F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDE8E6FC-113E-4B1A-B66E-E0DAA11219ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Order.IntegrationTests", "DigitalCommercePlatform.UIServices.Order.IntegrationTests\DigitalCommercePlatform.UIServices.Order.IntegrationTests.csproj", "{2AE78451-EB10-458C-8DD7-02F00D049D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Order.IntegrationTests", "DigitalCommercePlatform.UIServices.Order.IntegrationTests\DigitalCommercePlatform.UIService.Order.IntegrationTests.csproj", "{2AE78451-EB10-458C-8DD7-02F00D049D8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Order.Tests", "DigitalCommercePlatform.UIServices.Order.Tests\DigitalCommercePlatform.UIServices.Order.Tests.csproj", "{6E20B0F6-7428-4A21-8DC7-4EE9F36D9EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Order.Tests", "DigitalCommercePlatform.UIServices.Order.Tests\DigitalCommercePlatform.UIService.Order.Tests.csproj", "{6E20B0F6-7428-4A21-8DC7-4EE9F36D9EB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Order", "DigitalCommercePlatform.UIService.Order\DigitalCommercePlatform.UIService.Order.csproj", "{F4875C28-C1D5-49D4-85D3-43111ABBC96E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{583DAB28-A855-4972-93C4-A570A6B64D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{583DAB28-A855-4972-93C4-A570A6B64D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{583DAB28-A855-4972-93C4-A570A6B64D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{583DAB28-A855-4972-93C4-A570A6B64D7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AE78451-EB10-458C-8DD7-02F00D049D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AE78451-EB10-458C-8DD7-02F00D049D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AE78451-EB10-458C-8DD7-02F00D049D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,6 +25,10 @@ Global
 		{6E20B0F6-7428-4A21-8DC7-4EE9F36D9EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E20B0F6-7428-4A21-8DC7-4EE9F36D9EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E20B0F6-7428-4A21-8DC7-4EE9F36D9EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4875C28-C1D5-49D4-85D3-43111ABBC96E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4875C28-C1D5-49D4-85D3-43111ABBC96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4875C28-C1D5-49D4-85D3-43111ABBC96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4875C28-C1D5-49D4-85D3-43111ABBC96E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
