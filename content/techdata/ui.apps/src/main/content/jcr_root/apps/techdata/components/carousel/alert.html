@@ -1,22 +1,31 @@
-<div data-sly-unwrap data-sly-use.nodes="com.techdata.platform.core.models.CarouselComponentModel"></div>
-<div class="dp-carousel__alert" data-sly-test="${properties.enableAlert}">
-  <div class="dp-carousel__alert-container">
-    <div class="dp-carousel__alert-text text-shadow-1">
-      ${properties.alertTitle}</div>
-    <div class="dp-carousel__alert-buttons">
-      <sly data-sly-repeat.item="${nodes.actionItems.listChildren}">
-        <button data-sly-use.labelParsed="${'label.js' @ descriptionLength=50, title=item.linkText}"
-          href="${item.linkurl}" class="dp-carousel__alert-button">
-          <span>
-            ${labelParsed.titles @ context = 'html' }
-          </span>
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-          </svg>
-        </button>
-      </sly>
-    </div>
-  </div>
+<div data-sly-unwrap data-sly-use.nodes="com.techdata.platform.core.models.CarouselComponentModel">
+	<div class="dp-carousel__alert" data-sly-test="${properties.enableAlert}">
+		<div class="dp-carousel__alert-container">
+			<div class="dp-carousel__alert-text text-shadow-1">${properties.alertTitle}</div>
+			<div class="dp-carousel__alert-buttons">
+				<sly data-sly-repeat.item="${nodes.actionItems.listChildren}">
+					<button
+						data-sly-use.labelParsed="${'label.js' @ descriptionLength=50, title=item.linkText}"
+						href="${item.linkurl}"
+						class="dp-carousel__alert-button"
+					>
+						<span> ${labelParsed.titles @ context = 'html' } </span>
+						<svg
+							width="1em"
+							height="1em"
+							viewBox="0 0 16 16"
+							class="bi bi-chevron-right"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+							/>
+						</svg>
+					</button>
+				</sly>
+			</div>
+		</div>
+	</div>
 </div>
