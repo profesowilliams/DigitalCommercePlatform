@@ -26,12 +26,10 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.GetOrder
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<GetOrder> _logger;
             private readonly string _AppOrderUrl;
-            private readonly IMapper _mapper;
 
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<GetOrder> logger, IOptions<AppSettings> options)
+            public Handler(IMiddleTierHttpClient client, ILogger<GetOrder> logger )
             {
-                _mapper = mapper;
                 _client = client;
                 _logger = logger;
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";

@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIService.Order.Models;
-using DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder.Internal;
+﻿using DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder.Internal;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

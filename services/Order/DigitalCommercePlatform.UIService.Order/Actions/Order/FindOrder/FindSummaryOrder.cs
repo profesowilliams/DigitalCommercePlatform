@@ -33,12 +33,10 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<Handler> _logger;
-            private readonly IMapper _mapper;
             private readonly string _AppOrderUrl;
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<Handler> logger)
+            public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
-                _mapper = mapper;
                 _client = client;
                 _logger = logger;
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";

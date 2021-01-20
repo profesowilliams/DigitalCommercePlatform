@@ -1,8 +1,8 @@
 ﻿namespace DigitalCommercePlatform.UIService.Order.Infrastructure
 {
-    public class AppProductEndPointsOptions
+    public class OrderEndPointsOptions
     {
-        public const string AppProductEndPoints = "AppProductEndPoints";
+        public const string OrderEndPoints = "OrderEndPoints";
         public string Validate { get; set; }
     }
 }

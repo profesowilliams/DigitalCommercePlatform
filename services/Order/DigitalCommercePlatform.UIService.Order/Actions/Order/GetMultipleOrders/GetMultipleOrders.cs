@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,12 +25,10 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.GetMultipleOrder
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<GetMultipleOrders> _logger;
             private readonly string _AppOrderUrl;
-            private readonly IMapper _mapper;
 
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger, IOptions<AppSettings> options)
+            public Handler(IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger)
             {
-                _mapper = mapper;
                 _client = client;
                 _logger = logger;
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
