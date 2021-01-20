@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder
 {
     [ExcludeFromCodeCoverage]
-    public static class FindSummaryOrder
+    public class FindSummaryOrder
     {
         public class Request : IRequest<Response>
         {
