@@ -21,6 +21,11 @@ namespace DigitalCommercePlatform.UIServices.Security
         {
             services.Configure<CoreSecurityEndpointsOptions>(Configuration.GetSection(CoreSecurityEndpointsOptions.CoreSecurityEndpoints));
             services.Configure<OAuthClientDetailsOptions>(Configuration.GetSection(OAuthClientDetailsOptions.OAuthClientDetails));
+
+            services.AddDistributedRedisCache(options => {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+                options.InstanceName = "[Security>UI]_";
+            });
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

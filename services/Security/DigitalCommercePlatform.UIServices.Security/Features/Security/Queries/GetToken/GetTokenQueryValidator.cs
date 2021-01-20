@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
         {
             RuleFor(p => p.Code).NotEmpty().WithMessage("{PropertyName} is required.").NotNull();
             RuleFor(p => p.RedirectUri).NotEmpty().WithMessage("{PropertyName} is required.").NotNull();
+            RuleFor(p => p.SessionId).NotEmpty().WithMessage("{PropertyName} is required.").NotNull();
         }
     }
 }

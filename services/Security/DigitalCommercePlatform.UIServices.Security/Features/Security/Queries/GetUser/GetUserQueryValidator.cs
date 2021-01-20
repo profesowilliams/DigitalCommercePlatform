@@ -8,7 +8,9 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
         public GetUserQueryValidator()
         {
             RuleFor(p => p.ApplicationName).NotEmpty().WithMessage("{PropertyName} is required.").NotNull();
-            RuleFor(p => p.Authorization).Must(ProperAuthorizationHeaderFormat).WithMessage("Authorization Header format should be: Bearer Value");
+            RuleFor(p => p.SessionId).NotEmpty().WithMessage("{PropertyName} is required.").NotNull();
+
+            //RuleFor(p => p.Authorization).Must(ProperAuthorizationHeaderFormat).WithMessage("Authorization Header format should be: Bearer Value");
         }
 
         private bool ProperAuthorizationHeaderFormat(string header)

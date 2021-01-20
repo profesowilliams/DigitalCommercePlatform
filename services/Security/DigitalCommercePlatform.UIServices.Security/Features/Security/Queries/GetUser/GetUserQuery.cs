@@ -5,13 +5,13 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
     public class GetUserQuery : IRequest<GetUserResponse>
     {
         public string ApplicationName { get; }
-        public string Authorization { get; }
+        public string SessionId { get; }
 
 
-        public GetUserQuery(string applicationName, string authorization)
+        public GetUserQuery(string applicationName, string sessionId)
         {
             ApplicationName = applicationName;
-            Authorization = authorization;
+            SessionId = sessionId;
         }
     }
 }

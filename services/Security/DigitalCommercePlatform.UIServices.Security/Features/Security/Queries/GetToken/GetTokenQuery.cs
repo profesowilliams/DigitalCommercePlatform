@@ -6,11 +6,14 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
     {
         public string Code { get; }
         public string RedirectUri { get; }
+        public string SessionId { get; }
 
-        public GetTokenQuery(string code, string redirectUri)
+
+        public GetTokenQuery(string code, string redirectUri,string sessionId)
         {
             Code = code;
             RedirectUri = redirectUri;
+            SessionId = sessionId;
         }
     }
 }

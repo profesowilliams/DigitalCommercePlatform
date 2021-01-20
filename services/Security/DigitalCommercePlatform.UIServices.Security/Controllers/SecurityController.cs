@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         [Route("GetUser/{applicationName}")]
         public async Task<IActionResult> GetUserAsync(GetUserRequest getUserRequest)
         {
-            var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.Authorization)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.SessionId)).ConfigureAwait(false);
 
             if (response.IsError)
             {
@@ -45,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         [Route("GetToken")]
         public async Task<IActionResult> GetTokenAsync([FromBody] GetTokenRequest getTokenRequest)
         {
-            var response = await Mediator.Send(new GetTokenQuery(getTokenRequest?.Code, getTokenRequest?.RedirectUri)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTokenQuery(getTokenRequest?.Code, getTokenRequest?.RedirectUri,getTokenRequest?.SessionId)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -59,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
                     : StatusCodes.Status500InternalServerError);
             }
 
-            return Ok(response);
+            return Ok();
         }
     }
 }

@@ -5,6 +5,7 @@ using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
@@ -16,18 +17,21 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly IMapper _mapper;
+        private readonly IDistributedCache _cache;
         private readonly string _coreSecurityUrl;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private const string AppSettingsNameForCoreSecurityUrl = "Core.Security.Url";
 
         public GetTokenQueryHandler(IOptions<AppSettings> appSettingsOptions, IOptions<OAuthClientDetailsOptions> oauthClientDetailsOptions,
-                                                        IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+                                                        IMiddleTierHttpClient middleTierHttpClient, IMapper mapper, IDistributedCache cache)
         {
             if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
             if (oauthClientDetailsOptions == null) { throw new ArgumentNullException(nameof(oauthClientDetailsOptions)); }
             if (middleTierHttpClient == null) { throw new ArgumentNullException(nameof(middleTierHttpClient)); }
             if (mapper == null) { throw new ArgumentNullException(nameof(mapper)); }
+            if (cache == null) { throw new ArgumentNullException(nameof(cache)); }
+
 
             _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(AppSettingsNameForCoreSecurityUrl) ?? throw new InvalidOperationException($"{AppSettingsNameForCoreSecurityUrl} is missing from AppSettings");
             _clientId = oauthClientDetailsOptions.Value?.ClientId ?? throw new InvalidOperationException("ClientId key/value is missing from AppSettings");
@@ -35,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
 
             _middleTierHttpClient = middleTierHttpClient;
             _mapper = mapper;
+            _cache = cache;
         }
 
         public async Task<GetTokenResponse> Handle(GetTokenQuery request, CancellationToken cancellationToken)
@@ -49,6 +54,16 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
             };
 
             var tokenDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest).ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(tokenDto.AccessToken))
+            {
+                var options = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTime.UtcNow + TimeSpan.FromSeconds(tokenDto.ExpiresIn)
+                };
+
+                await _cache.SetStringAsync(request?.SessionId, tokenDto.AccessToken, options, token: cancellationToken).ConfigureAwait(false);
+            }
 
             var tokenResponse = _mapper.Map<GetTokenResponse>(tokenDto);
 

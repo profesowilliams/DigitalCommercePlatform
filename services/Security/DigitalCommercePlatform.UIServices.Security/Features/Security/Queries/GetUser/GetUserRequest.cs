@@ -7,6 +7,6 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
         public string ApplicationName { get; set; }
 
         [FromHeader]
-        public string Authorization { get; set; }
+        public string SessionId { get; set; }
     }
 }
