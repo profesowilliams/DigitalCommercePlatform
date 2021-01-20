@@ -10,10 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder
+namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder
 {
     [ExcludeFromCodeCoverage]
-    public class FindSummaryOrder
+    public class FindOrder
     {
         public class Request : IRequest<Response>
         {
@@ -22,23 +22,23 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder
 
         public class Response
         {
-            public IEnumerable<SummaryModel> Data { get; set; }
             public long Count { get; set; }
-            public Response() { }
-            public Response(IEnumerable<SummaryModel> orders)
+            public IEnumerable<SalesOrderModel> Data { get; set; }
+            public Response(IEnumerable<SalesOrderModel> orders)
             {
-                Data = orders ?? throw new ArgumentNullException(nameof(orders));
+                Data = orders;
             }
         }
-
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<Handler> _logger;
+            //private readonly IMapper _mapper;
             private readonly string _AppOrderUrl;
 
             public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
+                //_mapper = mapper;
                 _client = client;
                 _logger = logger;
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
@@ -51,7 +51,8 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder
                 {
                     _logger.LogInformation($"UIService.Order.FindOrder");
                     var url = $"{_AppOrderUrl}/"
-                       .BuildQuery(request);
+                       .BuildQuery(request)
+                       ;
 
                     var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return data;

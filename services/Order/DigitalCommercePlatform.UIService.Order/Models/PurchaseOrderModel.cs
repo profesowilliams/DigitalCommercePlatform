@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIService.Order.Models
         [ExcludeFromCodeCoverage]
         [BsonDiscriminator("Order.Purchase")]
         [BsonIgnoreExtraElements]
-        public class Model : MongoDbEntityBase
+        public class PurchaseModel : MongoDbEntityBase
         {
             public Source Source { get; set; }
             public String Vendor { get; set; }
@@ -50,7 +50,7 @@ namespace DigitalCommercePlatform.UIService.Order.Models
             public DateTime? Created { get; set; }
             public DateTime? Updated { get; set; }
 
-            public Summary(Model pModel)
+            public Summary(PurchaseModel pModel)
             {
                 if (pModel == null)
                 {

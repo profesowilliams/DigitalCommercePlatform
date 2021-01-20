@@ -13,9 +13,9 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.GetOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.GetMultipleOrders;
+using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder;
 
 namespace DigitalCommercePlatform.UIService.Order.Controllers
 {

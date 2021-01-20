@@ -8,52 +8,53 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Order.Actions.Order.GetMultipleOrders
+namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
 {
     [ExcludeFromCodeCoverage]
-    public class GetMultipleOrders
+    public class GetOrder
     {
-        public class Request : IRequest<IEnumerable<SalesOrderModel>>
+        public class Request : IRequest<SalesOrderModel>
         {
-            public IReadOnlyList<string> Id { get; set; }
+            public string Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, IEnumerable<SalesOrderModel>>
+        public class Handler : IRequestHandler<Request, SalesOrderModel>
         {
             private readonly IMiddleTierHttpClient _client;
-            private readonly ILogger<GetMultipleOrders> _logger;
+            private readonly ILogger<GetOrder> _logger;
             private readonly string _AppOrderUrl;
 
 
-            public Handler(IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger)
+            public Handler(IMiddleTierHttpClient client, ILogger<GetOrder> logger )
             {
                 _client = client;
                 _logger = logger;
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
             }
 
-            public async Task<IEnumerable<SalesOrderModel>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<SalesOrderModel> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
+               try
                 {
                     _logger.LogInformation($"UIService.Order.GetOrder");
                     var url = $"{_AppOrderUrl}/"
                     .BuildQuery(request);
 
-                    var coreResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
-                    return coreResponse;
+                    var coreResponse = await _client.GetAsync<List<SalesOrderModel>>(url).ConfigureAwait(false);
+                    return coreResponse.FirstOrDefault();
                 }
-
+               
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at: " + nameof(GetOrder));
                     throw;
                 }
-            }
+            }    
         }
 
     }
