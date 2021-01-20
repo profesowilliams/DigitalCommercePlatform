@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.FindOrder
 {
+    [ExcludeFromCodeCoverage]
     public class FindSummaryOrder
     {
         public class Request : IRequest<Response>

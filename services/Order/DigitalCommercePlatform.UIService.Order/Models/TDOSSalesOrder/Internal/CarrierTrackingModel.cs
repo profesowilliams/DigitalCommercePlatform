@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class CarrierTrackingModel
     {
         public string Carrier { get; set; }

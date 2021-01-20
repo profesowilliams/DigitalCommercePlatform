@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.GetMultipleOrders
 {
+    [ExcludeFromCodeCoverage]
     public class GetMultipleOrders
     {
         public class Request : IRequest<IEnumerable<SalesOrderModel>>

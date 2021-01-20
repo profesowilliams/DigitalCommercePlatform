@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIService.Order.Dto.SalesOrder;
 using DigitalCommercePlatform.UIService.Order.DTO.SalesOrder.Internal;
 using DigitalCommercePlatform.UIService.Order.Model.SalesOrder.Internal;
@@ -8,6 +9,7 @@ using DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal;
 
 namespace DigitalCommercePlatform.UIService.Order.AutoMapper
 {
+    [ExcludeFromCodeCoverage]
     public class OrderProfile : Profile
     {
         public OrderProfile()

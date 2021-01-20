@@ -1,9 +1,11 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Models.TDOSSalesOrder
 {
+    [ExcludeFromCodeCoverage]
     public class OrderModel
     {
         public IdModel OrderId { get; set; }

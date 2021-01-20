@@ -5,9 +5,11 @@ using DigitalCommercePlatform.UIService.Order.Enums;
 using DigitalCommercePlatform.UIService.Order.Models.Invoice;
 using DigitalCommercePlatform.UIService.Order.Models.Invoice.Internal;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.AutoMapper
 {
+    [ExcludeFromCodeCoverage]
     public class InvoiceProfile : Profile
     {
         public InvoiceProfile()

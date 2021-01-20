@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.DTO
 {
+    [ExcludeFromCodeCoverage]
     public class PaginatedResponse<T> : Response<T>
     {
         public int PageNumber { get; set; }

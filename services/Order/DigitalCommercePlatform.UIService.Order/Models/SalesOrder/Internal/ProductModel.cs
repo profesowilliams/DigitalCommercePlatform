@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using DigitalCommercePlatform.UIService.Order.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class ProductModel
     {
         [JsonConverter(typeof(StringEnumConverter))]

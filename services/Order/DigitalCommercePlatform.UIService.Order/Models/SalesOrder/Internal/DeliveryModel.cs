@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Model.SalesOrder.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class DeliveryModel
     {
         public string ID { get; set; }

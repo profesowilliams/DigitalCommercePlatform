@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -18,6 +19,7 @@ using DigitalCommercePlatform.UIService.Order.Actions.Order.GetMultipleOrders;
 
 namespace DigitalCommercePlatform.UIService.Order.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
     public class OrderController : BaseUIServiceController

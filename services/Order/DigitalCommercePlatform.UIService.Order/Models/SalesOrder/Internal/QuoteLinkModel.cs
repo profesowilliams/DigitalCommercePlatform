@@ -1,8 +1,10 @@
 ﻿using DigitalFoundation.Common.MongoDb.Models;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class QuoteLinkModel : Source //Sync with Quote.Source
     {
         public string Revision { get; set; }
