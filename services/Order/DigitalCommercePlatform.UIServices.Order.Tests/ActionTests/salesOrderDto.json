@@ -1,0 +1,163 @@
+{
+  "source": {
+    "system": "2",
+    "salesOrg": "0100",
+    "id": "6027183640"
+  },
+  "endUserPO": "GD065911",
+  "customerPO": "395242077",
+  "poDate": "2019-09-09T00:00:00Z",
+  "contract": null,
+  "price": 0.00,
+  "contact": "XC3MG",
+  "currency": "USD",
+  "docType": "ZTPL",
+  "docCategory": "C",
+  "type": {
+    "id": " ",
+    "value": null
+  },
+  "level": {
+    "id": " ",
+    "value": "not specified"
+  },
+  "creator": "PR1_EDI_ECS",
+  "quote": null,
+  "status": 67,
+  "blockReason": 7,
+  "vendorSalesRep": null,
+  "vendorSalesAssociate": null,
+  "superSalesArea": {
+    "contact": {
+      "name": "DOUG HALBERT",
+      "phone": null,
+      "email": null
+    },
+    "id": "0030001190",
+    "name": "SCMS"
+  },
+  "salesArea": {
+    "contact": {
+      "name": "JAY FRAZE",
+      "phone": null,
+      "email": null
+    },
+    "id": "0030002915",
+    "name": "XEROX SA"
+  },
+  "salesTeam": {
+    "contact": {
+      "name": " ",
+      "phone": null,
+      "email": null
+    },
+    "id": "0030002916",
+    "name": "XEROX 3PL"
+  },
+  "reseller": {
+    "address": {
+      "id": null,
+      "name": null,
+      "contact": null,
+      "line1": "45 Glover Ave",
+      "line2": " ",
+      "line3": " ",
+      "city": "Norwalk",
+      "state": "CT",
+      "zip": "06850-1238",
+      "country": "US",
+      "phone": null,
+      "email": null
+    },
+    "contact": {
+      "name": "XEROX CORPORATION",
+      "phone": "800-323-7993",
+      "email": null
+    },
+    "id": "38072825",
+    "name": "XEROX CORPORATION"
+  },
+  "shipTo": {
+    "address": {
+      "id": null,
+      "name": null,
+      "contact": null,
+      "line1": "2305 LOUISVILLE RD",
+      "line2": "RM  -, FL  1",
+      "line3": " ",
+      "city": "SAVANNAH",
+      "state": "GA",
+      "zip": "31415",
+      "country": "US",
+      "phone": null,
+      "email": null
+    },
+    "contact": {
+      "name": "MX4320170 C43BA849",
+      "phone": "8039514372",
+      "email": null
+    },
+    "id": null,
+    "name": "US FOODS"
+  },
+  "confirmationStatus": 0,
+  "deliveryStatus": 67,
+  "items": [
+    {
+      "id": "100",
+      "parent": null,
+      "product": [],
+      "quantity": 0,
+      "confirmedQuantity": null,
+      "shippedQuantity": null,
+      "type": 0,
+      "totalPrice": null,
+      "unitPrice": null,
+      "costPrice": null,
+      "currency": null,
+      "contractNo": null,
+      "contractType": null,
+      "license": null,
+      "references": [],
+      "businessManager": null,
+      "director": null,
+      "divisionManager": null,
+      "endUser": null,
+      "confirmationStatus": 0,
+      "deliveryStatus": 0,
+      "status": null,
+      "blockReason": null,
+      "serials": [
+        "BD5383669"
+      ],
+      "shipments": [],
+      "invoices": [],
+      "agreements": [],
+      "deliveryNotes": [],
+      "purchaseOrder": [],
+      "updated": null,
+      "tdosSearchable": false,
+      "femPercent": 0,
+      "samPercent": 0,
+      "pomPercent": 0,
+      "nsmPercent": 0,
+      "bpcCode": null,
+      "backOrderIndicator": null,
+      "requestedDate": null,
+      "estimatedDeliveryDate": null,
+      "estimatedShipDate": null,
+      "shippingCondition": null,
+      "shippedFrom": null,
+      "purchaseRequisition": null,
+      "uniqueApprovalNumber": 0
+    }
+  ],
+  "created": "2019-09-09T12:10:14Z",
+  "updated": "2020-03-16T20:27:17.545Z",
+  "tdosSearchable": false,
+  "workflowId": null,
+  "payer": {
+    "id": "0038072825",
+    "name": "XEROX CORPORATION"
+  }
+}
