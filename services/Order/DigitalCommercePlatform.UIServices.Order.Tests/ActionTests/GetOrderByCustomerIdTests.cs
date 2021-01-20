@@ -8,13 +8,13 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
 {
-    public class FindOrderTests : HandlerTests<FindOrder.Handler>
+    public class GetOrderByCustomerIdTests : HandlerTests<GetOrderByCustomerId.Handler>
     {
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-mapper")]
+        [Fact(DisplayName = "Create Get Order by Customer Id with null-mapper")]
         public void CreateHandlerNullMapperTest()
         {
-            Action action = () => _ = new FindOrder.Handler(null,
+            Action action = () => _ = new GetOrderByCustomerId.Handler(null,
                 loggerMock.Object,
                 middleTierHttpClientMock.Object,
                 options);
@@ -23,10 +23,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-logger")]
+        [Fact(DisplayName = "Create Get Order by Customer Id with null-logger")]
         public void CreateHandlerNullLoggerTest()
         {
-            Action action = () => _ = new FindOrder.Handler(mapper,
+            Action action = () => _ = new GetOrderByCustomerId.Handler(mapper,
                 null,
                 middleTierHttpClientMock.Object,
                 options);
@@ -35,10 +35,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-httpclient")]
+        [Fact(DisplayName = "Create Get Order by Customer Id with null-httpclient")]
         public void CreateHandlerNullHttpClientTest()
         {
-            Action action = () => _ = new FindOrder.Handler(mapper,
+            Action action = () => _ = new GetOrderByCustomerId.Handler(mapper,
                 loggerMock.Object,
                 null,
                 options);
@@ -47,10 +47,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-appOptions")]
+        [Fact(DisplayName = "Create Get Order by Customer Id with null-appOptions")]
         public void CreateHandlerNullAppOptionsTest()
         {
-            Action action = () => _ = new FindOrder.Handler(mapper,
+            Action action = () => _ = new GetOrderByCustomerId.Handler(mapper,
                 loggerMock.Object,
                 middleTierHttpClientMock.Object,
                 null);
@@ -59,10 +59,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order Test with Invalid AppSettings")]
+        [Fact(DisplayName = "Create Get Order by Customer Id with Invalid AppSettings")]
         public void CreateHandlerAppSettingEmptyTest()
         {
-            Action action = () => _ = new FindOrder.Handler(mapper,
+            Action action = () => _ = new GetOrderByCustomerId.Handler(mapper,
                 loggerMock.Object,
                 middleTierHttpClientMock.Object,
                 new Mock<IOptions<AppSettings>>().Object);
@@ -71,10 +71,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Set Object")]
-        [Fact(DisplayName = "Create Find Order Test")]
+        [Fact(DisplayName = "Create Get Order by Customer Id Test")]
         public void CreateHandlerSuccessfullTest()
         {
-            var handler = new FindOrder.Handler(mapper,
+            var handler = new GetOrderByCustomerId.Handler(mapper,
                 loggerMock.Object,
                 middleTierHttpClientMock.Object,
                 options);
