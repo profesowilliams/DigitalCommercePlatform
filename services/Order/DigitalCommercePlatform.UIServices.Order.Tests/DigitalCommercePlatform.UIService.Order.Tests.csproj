@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -17,10 +17,8 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
-<<<<<<< HEAD
-=======
   <ItemGroup>
-    <ProjectReference Include="..\DigitalCommercePlatform.UiServices.Order\DigitalCommercePlatform.UIServices.Order.csproj" />
+    <ProjectReference Include="..\DigitalCommercePlatform.UIService.Order\DigitalCommercePlatform.UIService.Order.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,5 +27,4 @@
     </None>
   </ItemGroup>
 
->>>>>>> e631954398ab2d75e41517d255a08cf6f4f7e12e
 </Project>

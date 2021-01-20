@@ -1,9 +1,9 @@
-﻿using DigitalCommercePlatform.UIServices.Order.Dto.SalesOrder.Internal;
-using DigitalCommercePlatform.UIServices.Order.Models.SalesOrder.Internal;
+﻿using DigitalCommercePlatform.UIService.Order.DTO.SalesOrder.Internal;
+using DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal;
 using FluentAssertions;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Order.Tests.AutoMapperTests
+namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
 {
     public class AgreementModelMappingTests : MappingTests
     {

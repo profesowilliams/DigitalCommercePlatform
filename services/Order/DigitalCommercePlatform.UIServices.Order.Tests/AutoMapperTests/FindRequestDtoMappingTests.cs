@@ -1,11 +1,11 @@
-﻿using DigitalCommercePlatform.UIServices.Order.Dto.SalesOrder;
-using DigitalCommercePlatform.UIServices.Order.Enums;
-using DigitalCommercePlatform.UIServices.Order.Models.SalesOrder;
+﻿using DigitalCommercePlatform.UIService.Order.Dto.SalesOrder;
+using DigitalCommercePlatform.UIService.Order.Enums;
+using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using FluentAssertions;
 using System;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Order.Tests.AutoMapperTests
+namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
 {
     public class FindRequestDtoMappingTests : MappingTests
     {
