@@ -11,17 +11,18 @@
   }
  .li, [role=tab] {
    padding: 0 1rem;
-   color: red;
+  //  color: #00B1E2;
    border-bottom: transparent 3px solid;
    &:hover {
-     border-bottom: red 3px solid;
+     border-bottom: #00B1E2 3px solid;
    }
+   min-height: 30px;
  }
   .cmp-tabs {}
   .cmp-tabs__tablist {}
   .cmp-tabs__tab {}
   .cmp-tabs__tab--active {
-    border-bottom: red 3px solid;
+    border-bottom: #00B1E2 3px solid;
   }
   .cmp-tabs__tabpanel {
     padding: 2rem 0;
