@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="3.50.67" />
-    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="3.50.67" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="3.50.145" />
+    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="3.50.145" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Flurl" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.10" />
@@ -27,5 +27,4 @@
   <ItemGroup>
     <ProjectReference Include="..\DigitalCommercePlatform.UIService.Product\DigitalCommercePlatform.UIService.Product.csproj" />
   </ItemGroup>
-
 </Project>
