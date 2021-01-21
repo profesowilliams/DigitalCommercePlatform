@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [HttpGet]
         [Route("GetQuoteSummaryList")]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
+        public static async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var quote1 = new QuoteSummaryResponse()
@@ -107,13 +107,13 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             return options;
         }
     }
-}
-public class JsonStringResult : ContentResult
-{
-    public JsonStringResult(string json)
+
+    public class JsonStringResult : ContentResult
     {
-        Content = json;
-        ContentType = "application/json";
+        public JsonStringResult(string json)
+        {
+            Content = json;
+            ContentType = "application/json";
+        }
     }
 }
-
