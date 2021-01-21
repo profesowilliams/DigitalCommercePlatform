@@ -14,7 +14,11 @@
     limitations under the License.
 */-->
 <sly data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html">
-    <sly data-sly-call="${clientlib.css @ categories='techdata.base'}">
+	<sly data-sly-call="${clientlib.css @ categories='techdata.base'}"> </sly>
+
+	<sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}" />
 </sly>
 
-<sly data-sly-resource="${'contexthub' @ resourceType='granite/contexthub/components/contexthub'}"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
+<script src="https://kit.fontawesome.com/e1e12a4c06.js" crossorigin="anonymous"></script>
