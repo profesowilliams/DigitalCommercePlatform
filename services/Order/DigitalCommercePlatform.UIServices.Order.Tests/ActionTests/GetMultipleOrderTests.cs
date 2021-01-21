@@ -38,7 +38,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
                 GetLoggerMock<GetMultipleOrders>().Object);
 
             handler.Should().NotBeNull();
-            var result = typeof(GetMultipleOrders.Handler).GetFieldAccessor(handler, "_AppOrderUrl", out Type type);
+            var result = typeof(GetMultipleOrders.Handler).GetFieldAccessor(handler, "_appOrderUrl", out Type type);
 
             type.Should().NotBeNull().And.Be(typeof(string));
             result.Should().NotBeNull().And.BeAssignableTo<string>();
