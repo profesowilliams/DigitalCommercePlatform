@@ -50,11 +50,19 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
                 try
                 {
                     _logger.LogInformation($"UIService.Order.FindOrder");
+
+                    //------------Need to implement passing the headers to the client-------------------------
+                    //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
+                    //_client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+                    //_client.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+                    //_client.DefaultRequestHeaders.Add("Site", "NA");
+                    //_client.DefaultRequestHeaders.Add("Consumer", "NA");
+
                     var url = $"{_appOrderUrl}/"
                        .BuildQuery(request);
 
-                    var AppResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
-                    return AppResponse;
+                    var appResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
+                    return appResponse;
 
                 }
                 catch (Exception ex)

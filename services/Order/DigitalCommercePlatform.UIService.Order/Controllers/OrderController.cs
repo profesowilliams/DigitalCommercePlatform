@@ -3,7 +3,6 @@ using MediatR;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
@@ -42,13 +41,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
         [Route("id")]
         public async Task<SalesOrderModel> GetAsync(string id)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-
             var response = await Mediator.Send(new GetOrder.Request { Id = id }).ConfigureAwait(false);
             return response;
         }
@@ -59,12 +51,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
         [Route("")]
         public async Task<IEnumerable<SalesOrderModel>> GetMultiple([FromQuery(Name = "id")] List<string> id)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
             var response = await Mediator.Send(new GetMultipleOrders.Request()
             {
                 Id = id
@@ -77,12 +63,7 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
         [Route("Find")]
         public async Task<IActionResult> SearchAsync([FromQuery] FindRequestModel search)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
+           
             if (search == null)
             {
                 throw new ArgumentNullException(nameof(search));

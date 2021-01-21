@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Settings;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
 using System.Diagnostics.CodeAnalysis;
+using DigitalFoundation.Common.Extensions;
+using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
 {
     [ExcludeFromCodeCoverage]
-    public class GetOrder
+    public class GetOrder 
     {
         public class Request : IRequest<SalesOrderModel>
         {
@@ -42,11 +39,20 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
                try
                 {
                     _logger.LogInformation($"UIService.Order.GetOrder");
+                   
+                    //------------Need to implement passing the headers to the client-------------------------
+                    //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
+                    //_client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+                    //_client.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+                    //_client.DefaultRequestHeaders.Add("Site", "NA");
+                    //_client.DefaultRequestHeaders.Add("Consumer", "NA");
+
+                   
                     var url = $"{_appOrderUrl}/"
                     .BuildQuery(request);
 
-                    var AppResponse = await _client.GetAsync<List<SalesOrderModel>>(url).ConfigureAwait(false);
-                    return AppResponse.FirstOrDefault();
+                    var appResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
+                    return appResponse.FirstOrDefault();
                 }
                
                 catch (Exception ex)
