@@ -1,16 +1,13 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
+﻿using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder
 {
@@ -28,11 +25,12 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
             private readonly ILogger<GetMultipleOrders> _logger;
             private readonly string _AppOrderUrl;
 
-
             public Handler(IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger)
             {
-                _client = client;
-                _logger = logger;
+                _client = client ?? throw new ArgumentNullException(nameof(client));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+                //TODO : Could be better to move URL-value into appsettings.json
                 _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
             }
 
@@ -47,7 +45,6 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
                     var coreResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
                     return coreResponse;
                 }
-
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at: " + nameof(GetMultipleOrders));
@@ -55,6 +52,5 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
                 }
             }
         }
-
     }
 }

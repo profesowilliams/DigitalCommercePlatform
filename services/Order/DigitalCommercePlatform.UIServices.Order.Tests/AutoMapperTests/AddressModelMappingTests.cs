@@ -5,7 +5,7 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
 {
-    public class AddressModelMappingTests : MappingTests
+    public class AddressModelMappingTests : BaseTest
     {
         [Trait("Category", "Get Object")]
         [Trait("Category", "Data Mapping")]
@@ -13,20 +13,10 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
         [MemberData(nameof(GetAddressDto))]
         public void AddressModelSuccessfullMapTest(AddressDto source)
         {
-            var target = mapper.Map<AddressDto>(source);
+            var target = GetMapper().Map<AddressModel>(source);
 
-            target.Should().NotBeNull().And.NotBeAssignableTo<AddressModel>();
-            target.Contact.Should().BeEquivalentTo(source.Contact);
-            target.City.Should().BeEquivalentTo(source.City);
-            target.Country.Should().BeEquivalentTo(source.Country);
-            target.Email.Should().BeEquivalentTo(source.Email);
-            target.ID.Should().BeEquivalentTo(source.ID);
-            target.Line1.Should().BeEquivalentTo(source.Line1);
-            target.Line2.Should().BeEquivalentTo(source.Line2);
-            target.Line3.Should().BeEquivalentTo(source.Line3);
-            target.Name.Should().BeEquivalentTo(source.Name);
-            target.Phone.Should().BeEquivalentTo(source.Phone);
-            target.ZIP.Should().BeEquivalentTo(source.ZIP);
+            target.Should().NotBeNull().And.BeAssignableTo<AddressModel>();
+            AddressModelTest(source, target);
         }
 
         public static TheoryData<AddressDto> GetAddressDto()
@@ -42,6 +32,27 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
                     ID = "10909",
                     Line1 = "12/7890 Street 1",
                     Name = "Lukaš",
+                    Phone = "+420 451 657 90",
+                    ZIP = "13000"
+                },
+                new AddressDto
+                {
+                    Contact = "Lukaš Páměk",
+                    Country = "Czech",
+                    Email = "test@hotdog.cz",
+                    ID = "10909",
+                    Line1 = "12/7890 Street 1",
+                    Name = "Lukaš"
+                },
+                new AddressDto
+                {
+                    City = "Prague",
+                    Contact = "Lukaš Páměk",
+                    Country = "Czech",
+                    Email = null,
+                    ID = "10909",
+                    Line1 = string.Empty,
+                    Name = null,
                     Phone = "+420 451 657 90",
                     ZIP = "13000"
                 }

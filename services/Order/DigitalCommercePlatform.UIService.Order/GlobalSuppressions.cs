@@ -5,7 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible")]
+//[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible")]
 [assembly: SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
 [assembly: SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
 [assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods")]

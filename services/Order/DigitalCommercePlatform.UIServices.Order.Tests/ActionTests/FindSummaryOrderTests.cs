@@ -6,13 +6,13 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
 {
-    public class FindOrderTests : BaseTest
+    public class FindSummaryOrderTests : BaseTest
     {
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-logger")]
+        [Fact(DisplayName = "Create Find Summary Order with null-logger")]
         public void CreateHandlerNullMapperTest()
         {
-            Action action = () => _ = new FindOrder.Handler(
+            Action action = () => _ = new FindSummaryOrder.Handler(
                 GetMiddleTierHttpClientMock().Object,
                 null);
 
@@ -20,25 +20,25 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
         }
 
         [Trait("Category", "Exception Test")]
-        [Fact(DisplayName = "Create Find Order with null-httpclient")]
+        [Fact(DisplayName = "Create Find FindSummaryOrder Order with null-httpclient")]
         public void CreateHandlerNullHttpClientTest()
         {
-            Action action = () => _ = new FindOrder.Handler(null,
-                GetLoggerMock<FindOrder.Handler>().Object);
+            Action action = () => _ = new FindSummaryOrder.Handler(null,
+                GetLoggerMock<FindSummaryOrder.Handler>().Object);
 
             action.Should().Throw<ArgumentNullException>("client");
         }
 
         [Trait("Category", "Set Object")]
-        [Fact(DisplayName = "Create Find Order Test")]
+        [Fact(DisplayName = "Create Find FindSummaryOrder Order Test")]
         public void CreateHandlerSuccessfullTest()
         {
-            var handler = new FindOrder.Handler(
+            var handler = new FindSummaryOrder.Handler(
                 GetMiddleTierHttpClientMock().Object,
-                GetLoggerMock<FindOrder.Handler>().Object);
+                GetLoggerMock<FindSummaryOrder.Handler>().Object);
 
             handler.Should().NotBeNull();
-            var result = typeof(FindOrder.Handler).GetFieldAccessor(handler, "_AppOrderUrl", out Type type);
+            var result = typeof(FindSummaryOrder.Handler).GetFieldAccessor(handler, "_AppOrderUrl", out Type type);
 
             type.Should().NotBeNull().And.Be(typeof(string));
             result.Should().NotBeNull().And.BeAssignableTo<string>();
