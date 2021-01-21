@@ -29,8 +29,8 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
 
             public Handler(IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger)
             {
-                _client = client;
-                _logger = logger;
+                _client = client ?? throw new ArgumentNullException(nameof(client));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
             }
 

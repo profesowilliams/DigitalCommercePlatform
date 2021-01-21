@@ -36,9 +36,8 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
 
             public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
-                //_mapper = mapper;
-                _client = client;
-                _logger = logger;
+                _client = client ?? throw new ArgumentNullException(nameof(client));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
             }
 
@@ -57,8 +56,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
                     //_client.DefaultRequestHeaders.Add("Consumer", "NA");
 
                     var url = $"{_appOrderUrl}/"
-                       .BuildQuery(request)
-                       ;
+                       .BuildQuery(request);
 
                     var appResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return appResponse;

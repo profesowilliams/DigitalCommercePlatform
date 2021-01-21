@@ -39,8 +39,8 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
 
             public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
-                _client = client;
-                _logger = logger;
+                _client = client ?? throw new ArgumentNullException(nameof(client));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
             }
 
