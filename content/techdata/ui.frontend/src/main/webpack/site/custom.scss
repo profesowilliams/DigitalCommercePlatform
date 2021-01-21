@@ -1,0 +1,50 @@
+
+//== Font
+
+$font-family:           "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-size:             16px;
+$font-height:           1.5;
+
+//== Color
+
+// Normal mode
+$color-foreground:      #202020;
+$color-background:      #ECECEC;
+$color-link:            #2020E0;
+
+// Dark mode
+$color-foreground-dark: invert($color-foreground);
+$color-background-dark: invert($color-background);
+$color-link-dark:       invert($color-link);
+
+html,
+body {
+    margin: 0;
+    font-size:   $font-size;
+    font-family: $font-family;
+    line-height: $font-height;
+    color:       $color-foreground;
+    background:  $color-background;
+
+    @media (prefers-color-scheme: dark) {
+        color:       $color-foreground-dark;
+        background:  $color-background-dark;
+    }
+}
+
+
+a {
+    color: $color-link;
+
+    @media (prefers-color-scheme: dark) {
+        color: $color-link-dark;
+    }
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font: inherit;
+}
