@@ -33,15 +33,14 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<Handler> _logger;
-            //private readonly IMapper _mapper;
-            private readonly string _AppOrderUrl;
+            private readonly string _appOrderUrl;
 
             public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
                 //_mapper = mapper;
                 _client = client;
                 _logger = logger;
-                _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
+                _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -50,12 +49,12 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
                 try
                 {
                     _logger.LogInformation($"UIService.Order.FindOrder");
-                    var url = $"{_AppOrderUrl}/"
+                    var url = $"{_appOrderUrl}/"
                        .BuildQuery(request)
                        ;
 
-                    var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
-                    return data;
+                    var AppResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
+                    return AppResponse;
 
                 }
                 catch (Exception ex)

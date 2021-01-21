@@ -1,16 +1,14 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Settings;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
 using System.Diagnostics.CodeAnalysis;
+using DigitalFoundation.Common.Extensions;
+using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
+
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder
 {
@@ -26,14 +24,14 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<GetMultipleOrders> _logger;
-            private readonly string _AppOrderUrl;
+            private readonly string _appOrderUrl;
 
 
             public Handler(IMiddleTierHttpClient client, ILogger<GetMultipleOrders> logger)
             {
                 _client = client;
                 _logger = logger;
-                _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
+                _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
             }
 
             public async Task<IEnumerable<SalesOrderModel>> Handle(Request request, CancellationToken cancellationToken)
@@ -41,11 +39,11 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
                 try
                 {
                     _logger.LogInformation($"UIService.Order.GetOrder");
-                    var url = $"{_AppOrderUrl}/"
+                    var url = $"{_appOrderUrl}/"
                     .BuildQuery(request);
 
-                    var coreResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
-                    return coreResponse;
+                    var AppResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
+                    return AppResponse;
                 }
 
                 catch (Exception ex)

@@ -27,14 +27,14 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<GetOrder> _logger;
-            private readonly string _AppOrderUrl;
+            private readonly string _appOrderUrl;
 
 
             public Handler(IMiddleTierHttpClient client, ILogger<GetOrder> logger )
             {
                 _client = client;
                 _logger = logger;
-                _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
+                _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1";
             }
 
             public async Task<SalesOrderModel> Handle(Request request, CancellationToken cancellationToken)
@@ -42,11 +42,11 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
                try
                 {
                     _logger.LogInformation($"UIService.Order.GetOrder");
-                    var url = $"{_AppOrderUrl}/"
+                    var url = $"{_appOrderUrl}/"
                     .BuildQuery(request);
 
-                    var coreResponse = await _client.GetAsync<List<SalesOrderModel>>(url).ConfigureAwait(false);
-                    return coreResponse.FirstOrDefault();
+                    var AppResponse = await _client.GetAsync<List<SalesOrderModel>>(url).ConfigureAwait(false);
+                    return AppResponse.FirstOrDefault();
                 }
                
                 catch (Exception ex)
