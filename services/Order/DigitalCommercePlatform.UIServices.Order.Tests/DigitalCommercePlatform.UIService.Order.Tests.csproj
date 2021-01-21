@@ -21,10 +21,4 @@
     <ProjectReference Include="..\DigitalCommercePlatform.UIService.Order\DigitalCommercePlatform.UIService.Order.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="ActionTests\salesOrderDto.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

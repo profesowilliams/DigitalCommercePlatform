@@ -12,7 +12,6 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Automapper
             //Arrange
             var configuration = new MapperConfiguration(config =>
             {
-                //config.AddProfile(new PriceProfile());
                 config.AddProfile(new ProductProfile());
                 //config.AddProfile(new ProductSummaryProfile());
                 //config.AddProfile(new StockProfile());

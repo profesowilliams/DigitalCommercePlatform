@@ -16,35 +16,35 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
             action.Should().Throw<ArgumentNullException>("Model");
         }
 
-        //[Trait("Category", "Set Object")]
-        //[Theory]
-        //[MemberData(nameof(GetModelExtension))]
-        //public void SummarySuccessfullCreatingTest(Model source)
-        //{
-        //    var target = new Summary(source);
+        [Trait("Category", "Set Object")]
+        [Theory]
+        [MemberData(nameof(GetModelExtension))]
+        public void SummarySuccessfullCreatingTest(PurchaseModel source)
+        {
+            var target = new Summary(source);
 
-        //    target.Should().NotBeNull();
-        //    target.Source.Should().NotBeNull().And.BeAssignableTo<Source>();
-        //}
+            target.Should().NotBeNull();
+            target.Source.Should().NotBeNull().And.BeAssignableTo<Source>();
+        }
 
-        //public static TheoryData<Model> GetModelExtension()
-        //{
-        //    return new TheoryData<Model>
-        //    {
-        //        new Model
-        //        {
-        //            Created = DateTime.Now,
-        //            Updated = DateTime.Now,
-        //            Source = new Source
-        //            {
-        //                ID = "12300090",
-        //                SalesOrg = "DataSourceExtensions",
-        //                System = "Testing"
-        //            },
-        //            Vendor = "Unit testing",
-        //            Items = null
-        //        }
-        //    };
-        //}
+        public static TheoryData<PurchaseModel> GetModelExtension()
+        {
+            return new TheoryData<PurchaseModel>
+            {
+                new PurchaseModel
+                {
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                    Source = new Source
+                    {
+                        ID = "12300090",
+                        SalesOrg = "DataSourceExtensions",
+                        System = "Testing"
+                    },
+                    Vendor = "Unit testing",
+                    Items = null
+                }
+            };
+        }
     }
 }

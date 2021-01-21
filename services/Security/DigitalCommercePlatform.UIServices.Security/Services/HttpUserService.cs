@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Services
             _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(AppSettingsNameForCoreSecurityUrl) ?? throw new InvalidOperationException($"{AppSettingsNameForCoreSecurityUrl} is missing from AppSettings");
             _coreSecurityValidateEndpointUrl = coreSecurityEndpointsOptions.Value?.Validate ?? throw new InvalidOperationException("Validate key/value is missing from AppSettings");
         }
+
         public async Task<CoreUserDto> GetUserAsync(string applicationName, string token)
         {
             var requestUrl = _coreSecurityUrl.AppendPathSegment(_coreSecurityValidateEndpointUrl).AppendPathSegment(applicationName);
@@ -34,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Services
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl);
             var client = _clientFactory.CreateClient("CoreSecurityClient");
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token); 
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await client.SendAsync(httpRequestMessage).ConfigureAwait(false);
             var coreUserDto = await response.Content.ReadAsAsync<CoreUserDto>().ConfigureAwait(false);

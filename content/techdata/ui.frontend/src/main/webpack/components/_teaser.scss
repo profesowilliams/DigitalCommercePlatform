@@ -7,3 +7,159 @@
 .cmp-teaser__description {}
 .cmp-teaser__action-container {}
 .cmp-teaser__action-link {}
+
+
+/* TEMP TEASER */
+/* TEMP TEASER */
+.cmp-teaser {
+}
+
+.cmp-teaser__image {
+}
+.cmp-teaser__content {
+}
+.cmp-teaser__title {
+}
+.cmp-teaser__title-link {
+}
+.cmp-teaser__description {
+}
+.cmp-teaser__action-container {
+}
+.cmp-teaser__action-link {
+}
+
+.hero-style-1 {
+  position: relative;
+  height: 31.25rem;
+  overflow: hidden;
+  .cmp-teaser {
+  }
+
+  .cmp-teaser__image {
+  }
+  .cmp-image__image {
+    height: 31.25rem;
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+    padding-top: 3.125rem;
+    padding-bottom: 3.125rem;
+    padding-left: 7.375rem;
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    color: #fff;
+    text-shadow: 0 0 0.1rem #919599;
+  }
+
+  .cmp-teaser__pretitle {
+    font-size: 3.125rem;
+  }
+
+  .cmp-teaser__title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-left: 12.125rem;
+  }
+
+  .cmp-teaser__title-link {
+  }
+  .cmp-teaser__description {
+    margin-left: 2.125rem;
+    font-size: 4.375rem;
+  }
+  .cmp-teaser__action-container {
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+.hero-style-2 {
+  position: relative;
+  height: 31.25rem;
+  overflow: hidden;
+  .cmp-teaser {
+  }
+  .cmp-teaser__image {
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+
+    padding-top: 6rem;
+    padding-bottom: 3.125rem;
+    padding-left: 2.188rem;
+    box-sizing: border-box;
+    color: #53565a;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+
+  .cmp-teaser__pretitle {
+    font-size: 3.125rem;
+  }
+
+  .cmp-teaser__title {
+    font-size: 2.813rem;
+    font-weight: 700;
+  }
+
+  .cmp-teaser__title-link {
+  }
+  .cmp-teaser__description {
+    font-size: 1.375rem;
+    width: 34.25rem;
+  }
+  .cmp-teaser__action-container {
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+.hero-style-3 {
+  position: relative;
+  height: 31.25rem;
+  overflow: hidden;
+  .cmp-teaser {
+  }
+  .cmp-teaser__image {
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+    padding-top: 4.875rem;
+    padding-bottom: 3.125rem;
+    padding-left: 3.75rem;
+    box-sizing: border-box;
+    color: #53565a;
+    align-content: center;
+    color: #fff;
+    text-shadow: 0 0 0.063rem #919599;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+
+  .cmp-teaser__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .cmp-teaser__title-link {
+  }
+  .cmp-teaser__description {
+    font-size: 1.375srem;
+    width: 42.875rem;
+  }
+  .cmp-teaser__action-container {
+    width: 14.125rem;
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+.hero-style-4 {
+}
+
+/* END OF TEMP TEASER*/

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
 {
-    public class AgreementModelMappingTests : MappingTests
+    public class AgreementModelMappingTests : BaseTest
     {
         [Trait("Category", "Get Object")]
         [Trait("Category", "Data Mapping")]
@@ -13,12 +13,10 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
         [MemberData(nameof(GetDto))]
         public void AgreementModelSuccessfullMapTest(AgreementDto source)
         {
-            var target = mapper.Map<AgreementDto>(source);
+            var target = GetMapper().Map<AgreementModel>(source);
 
-            target.Should().NotBeNull().And.NotBeAssignableTo<AgreementModel>();
-            target.SelectionFlag.Should().BeEquivalentTo(source.SelectionFlag);
-            target.VendorID.Should().BeEquivalentTo(source.VendorID);
-            target.ID.Should().BeEquivalentTo(source.ID);
+            target.Should().NotBeNull().And.BeAssignableTo<AgreementModel>();
+            AgreementModelTest(source, target);
         }
 
         public static TheoryData<AgreementDto> GetDto()
@@ -33,7 +31,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
                 },
                 new AgreementDto
                 {
-                    ID = "10910",
+                    ID = null,
                     SelectionFlag = "ReadOnly",
                     VendorID = "12345"
                 },
@@ -41,6 +39,10 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
                 {
                     ID = "10000",
                     SelectionFlag = "Admin",
+                    VendorID = string.Empty
+                },
+                new AgreementDto
+                {
                     VendorID = string.Empty
                 }
             };

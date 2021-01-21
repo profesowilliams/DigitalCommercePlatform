@@ -31,15 +31,15 @@ namespace DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S3875:\"operator==\" should not be overloaded on reference types", Justification = "<Pending>")]
         public static bool operator ==(QuoteLinkModel pLeft, QuoteLinkModel pRight)
         {
-            if (object.ReferenceEquals(pLeft, null))
-                return object.ReferenceEquals(pRight, null);
+            if (pLeft is null)
+                return pRight is null;
             return pLeft.Equals(pRight);
         }
 
         public static bool operator !=(QuoteLinkModel pLeft, QuoteLinkModel pRight)
         {
-            if (object.ReferenceEquals(pLeft, null))
-                return object.ReferenceEquals(pRight, null);
+            if (pLeft is null)
+                return !(pRight is null);
             return !pLeft.Equals(pRight);
         }
 

@@ -1,4 +1,4 @@
-package com.techdata.platform.core.models;
+package com.techdata.core.models;
  
 import javax.inject.Inject;
 import org.apache.sling.api.resource.Resource;
