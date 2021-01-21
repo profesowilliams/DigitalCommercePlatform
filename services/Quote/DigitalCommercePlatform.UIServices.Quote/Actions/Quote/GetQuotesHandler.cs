@@ -40,17 +40,11 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetQuotesHandler : IRequestHandler<GetQuotesRequest, GetQuotesResponse>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        //private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        //private readonly IMapper _mapper;
 
         public GetQuotesHandler(IHttpClientFactory httpClientFactory) //IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
         {
-            //if (middleTierHttpClient == null) { throw new ArgumentNullException(nameof(middleTierHttpClient)); }
-            //if (mapper == null) { throw new ArgumentNullException(nameof(mapper)); }
             if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
-            //_middleTierHttpClient = middleTierHttpClient;
-            //_mapper = mapper;
             _httpClientFactory = httpClientFactory;
         }
 

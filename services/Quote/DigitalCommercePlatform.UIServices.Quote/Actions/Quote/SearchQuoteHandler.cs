@@ -37,18 +37,12 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
     public class SearchQuotesHandler : IRequestHandler<SearchQuotesRequest, SearchQuotesResponse>
     {
-        //private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        //private readonly IMapper _mapper;
         private readonly IHttpClientFactory _httpClientFactory;
 
         public SearchQuotesHandler(IHttpClientFactory httpClientFactory) //IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
         {
-            //if (middleTierHttpClient == null) { throw new ArgumentNullException(nameof(middleTierHttpClient)); }
-            //if (mapper == null) { throw new ArgumentNullException(nameof(mapper)); }
             if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
-            //_middleTierHttpClient = middleTierHttpClient;
-            //_mapper = mapper;
             _httpClientFactory = httpClientFactory;
         }
 
