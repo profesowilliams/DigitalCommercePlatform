@@ -1,16 +1,16 @@
-﻿using DigitalCommercePlatform.UIService.Order.DTO.SalesOrder.Internal;
+﻿using DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal;
 using FluentAssertions;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIService.Order.Tests.Models
 {
-    public class QuoteLinkDtoTests
+    public class QuoteLinkModelTests
     {
-        private readonly QuoteLinkDto _source;
+        private readonly QuoteLinkModel _source;
 
-        public QuoteLinkDtoTests()
+        public QuoteLinkModelTests()
         {
-            _source = new QuoteLinkDto
+            _source = new QuoteLinkModel
             {
                 Group = "Group",
                 ID = "45",
@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
         }
 
         [Trait("Category", "Model Test")]
-        [Theory(DisplayName = "QuoteLinkDto Equals Test")]
+        [Theory(DisplayName = "QuoteLinkModel Equals Test")]
         [InlineData("Group", "45", "Request", "Revision", "AB", "Subrevision", "App.Order", "App.Quote", true, "")]
         [InlineData("Group", "5", "Request", "Revision", "AB", "Subrevision", "App.Order", "App.Quote", false, "ID is different")]
         [InlineData("Group", "45", "Request", "Revision", "AB", "Subrevision", "App.Card", "App.Quote", false, "System is different")]
@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
         [InlineData("Group", "45", "Request", "Revi", "AB", "Subrevision", "App.Order", "App.Quote", false, "Revision is different")]
         [InlineData("Group", "45", "Request", "Revision", "AB", "Sub", "App.Order", "App.Quote", false, "Subrevision is different")]
         [InlineData("Group", "45", "Request", "Revision", "AB", "Subrevision", "App.Order", "App.Order", false, "Target System is different")]
-        public void QuoteLinkDtoEqualsTest(string group,
+        public void QuoteLinkModelEqualsTest(string group,
             string id,
             string request,
             string revision,
@@ -44,7 +44,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
             bool expected,
             string errormsg)
         {
-            var target = new QuoteLinkDto
+            var target = new QuoteLinkModel
             {
                 Revision = revision,
                 Group = group,
@@ -61,10 +61,10 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
         }
 
         [Trait("Category", "Model Test")]
-        [Fact(DisplayName = "QuoteLinkDto Test == ")]
-        public void QuoteLinkDtoEqualsOperatorTest()
+        [Fact(DisplayName = "QuoteLinkModel Test == ")]
+        public void QuoteLinkModelEqualsOperatorTest()
         {
-            var target = new QuoteLinkDto
+            var target = new QuoteLinkModel
             {
                 Revision = _source.Revision,
                 Group = _source.Group,
@@ -88,10 +88,10 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.Models
         }
 
         [Trait("Category", "Model Test")]
-        [Fact(DisplayName = "QuoteLinkDto Test != ")]
+        [Fact(DisplayName = "QuoteLinkModel Test != ")]
         public void QuoteLinkDtoUnequalsOperatorTest()
         {
-            var target = new QuoteLinkDto
+            var target = new QuoteLinkModel
             {
                 Revision = _source.Revision,
                 Group = _source.Group,
