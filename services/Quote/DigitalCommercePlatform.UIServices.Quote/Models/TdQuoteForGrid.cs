@@ -2,7 +2,7 @@
 
 namespace DigitalCommercePlatform.UIServices.Quote.Models
 {
-    public class QuoteSummaryModel
+    public class TdQuoteForGrid
     {
         public string TdQuoteId { get; set; }
         public string MyQuoteReference { get; set; }

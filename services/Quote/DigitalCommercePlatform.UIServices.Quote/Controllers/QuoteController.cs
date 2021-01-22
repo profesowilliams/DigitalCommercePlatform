@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -90,6 +91,90 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
                 return Ok(response);
             }
 
+        }
+
+        [HttpGet]
+        [Route("GetTdQuotesForGrid")]
+        public async Task<IActionResult> GetTdQuotesForGrid(string creator)
+        {
+            var response = await Mediator.Send(new GetTdQuotesForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
+            }
+            dynamic result = JObject.Parse(response.Content);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetDealsForGrid")]
+        public async Task<IActionResult> GetDealsForGrid(string creator)
+        {
+            var response = await Mediator.Send(new GetDealsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
+            }
+            dynamic result = JObject.Parse(response.Content);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetConfigsForGrid")]
+        public async Task<IActionResult> GetConfigsForGrid(string creator)
+        {
+            var response = await Mediator.Send(new GetConfigsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
+            }
+            dynamic result = JObject.Parse(response.Content);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetRenewalsForGrid")]
+        public async Task<IActionResult> GetRenewalsForGrid(string creator)
+        {
+            var response = await Mediator.Send(new GetRenewalsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
+            }
+            dynamic result = JObject.Parse(response.Content);
+            return Ok(result);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Quote
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services.AddMvc().AddNewtonsoftJson();
         }
     }
 }
