@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -23,7 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
     public class QuoteController : BaseUIServiceController
     {
         //private readonly ILogger<QuoteController> _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
 
         public QuoteController(
             IMediator mediator,
@@ -32,13 +30,11 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             IOptions<AppSettings> options,
             ISiteSettings siteSettings,
             IHttpClientFactory httpClientFactory
-            //IHttpContextAccessor httpContextAccessor,
-            //IUserIdentity userIdentity,
+
             )
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
-            //_logger = loggerFactory.BeginScope<QuoteController>();
-            _httpClientFactory = httpClientFactory;
+
         }
 
         /// <summary>
@@ -48,21 +44,16 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Get(string id, [FromQuery] bool details = true)
         {
-            var response = await Mediator.Send(new GetQuoteRequest(id, details, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuoteHandler.Request(id, details, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
-
-            if (response.IsError)
+            else
             {
-                return StatusCode(response.ErrorCode == "unauthorized"
-                    ? StatusCodes.Status401Unauthorized
-                    : StatusCodes.Status500InternalServerError);
+                return Ok(response);
             }
-            dynamic result = JObject.Parse(response.Content);
-            return Ok(result);
         }
 
         [HttpGet]
@@ -70,42 +61,34 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<IActionResult> GetByIds(
             [FromQuery(Name = "id")] List<string> ids, bool details = true)
         {
-            var response = await Mediator.Send(new GetQuotesRequest(ids, details, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
-
-            if (response.IsError)
+            else
             {
-                return StatusCode(response.ErrorCode == "unauthorized"
-                    ? StatusCodes.Status401Unauthorized
-                    : StatusCodes.Status500InternalServerError);
+                return Ok(response);
             }
-            dynamic result = JObject.Parse(response.Content);
-            return Ok(result);
+
+
         }
 
         [HttpGet]
         [Route("Find")]
         public async Task<IActionResult> Search([FromQuery] FindModel search)
         {
-            var response = await Mediator.Send(new SearchQuotesRequest(search, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new SearchQuoteHandler.Request(search)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
-
-            if (response.IsError)
+            else
             {
-                return StatusCode(response.ErrorCode == "unauthorized"
-                    ? StatusCodes.Status401Unauthorized
-                    : StatusCodes.Status500InternalServerError);
+                return Ok(response);
             }
-            dynamic result = JObject.Parse(response.Content);
-            return Ok(result);
 
         }
     }
