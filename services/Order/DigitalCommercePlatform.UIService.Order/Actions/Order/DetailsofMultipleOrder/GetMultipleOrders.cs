@@ -8,7 +8,7 @@ using DigitalFoundation.Common.Client;
 using System.Diagnostics.CodeAnalysis;
 using DigitalFoundation.Common.Extensions;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
-
+using FluentValidation;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder
 {
@@ -59,6 +59,12 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
                 }
             }
         }
-
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.Id).NotNull().NotEmpty();
+            }
+        }
     }
 }

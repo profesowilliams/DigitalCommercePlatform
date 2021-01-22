@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -66,6 +67,25 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
                     _logger.LogError(ex, "Exception at: " + nameof(FindOrder));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(r => r).Cascade(CascadeMode.Stop).NotNull()
+                .ChildRules(re =>
+                re.RuleFor(r => r.SearchQuery).Cascade(CascadeMode.Stop).NotNull()
+                .ChildRules(request =>
+                {
+                    request.RuleFor(r => r.Page).GreaterThanOrEqualTo(0);
+                    request.RuleFor(r => r.PageSize).GreaterThan(0);
+                    request.RuleFor(r => r.CreatedFrom).LessThan(DateTime.Now)
+                        .WithMessage($"{nameof(Request.SearchQuery.CreatedFrom)} can't be in the future.");
+
+                    request.RuleFor(r => r.CreatedTo).LessThanOrEqualTo(DateTime.Now)
+                        .WithMessage($"{nameof(Request.SearchQuery.CreatedTo)} can't be in the future.");
+                }));
             }
         }
     }
