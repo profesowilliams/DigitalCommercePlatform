@@ -1,6 +1,4 @@
-﻿//using DigitalCommercePlatform.UIService.Product.Models.Stock;
-
-namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
+﻿namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
 {
     public class PurchasingGroupModel
     {

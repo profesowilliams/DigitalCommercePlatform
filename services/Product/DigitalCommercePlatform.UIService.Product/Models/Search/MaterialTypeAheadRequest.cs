@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIService.Product.Models.Search
+﻿namespace DigitalCommercePlatform.UIService.Product.Models.Search
 {
 	public class MaterialTypeAheadRequest
 	{

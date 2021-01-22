@@ -1,5 +1,4 @@
 using MediatR;
-using System;
 
 namespace DigitalCommercePlatform.UIService.Product.Models.Search
 {

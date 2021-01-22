@@ -1,8 +1,10 @@
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace DigitalCommercePlatform.UIServices.Quote
 {
@@ -17,6 +19,8 @@ namespace DigitalCommercePlatform.UIServices.Quote
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
         }
     }
 }

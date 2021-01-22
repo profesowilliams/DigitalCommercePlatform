@@ -1,6 +1,3 @@
-using DigitalFoundation.Core.Models.DTO.Common;
-using System.Collections.Generic;
-
 namespace DigitalCommercePlatform.UIService.Product.Models.Search
 {
     public class TypeAheadResponse 

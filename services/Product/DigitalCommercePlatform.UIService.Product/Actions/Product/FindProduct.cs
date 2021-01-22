@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
-using DigitalFoundation.Core.Models.DTO.Common;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Core.Models.DTO.Common;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {

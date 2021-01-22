@@ -3,7 +3,6 @@ using DigitalCommercePlatform.UIService.Product.Models.Summary;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,9 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
+    [ExcludeFromCodeCoverage]
     public class GetProductSummaryMultiple
     {
         public class Request : IRequest<GetProductSummaryMultipleResponse>
@@ -61,42 +62,10 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                 }
                 catch (Exception ex)
                 {
-                    if (ex is RemoteServerHttpException)
-                    {
-                        var remoteEx = ex as RemoteServerHttpException;
-                        if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                        {
-                            return null;
-                        }
-                    }
-
                     _logger.LogError(ex, $"Error getting product data in {nameof(GetProductSummaryMultiple)}");
                     throw;
                 }
-
-                //    var products = _mapper.Map<IEnumerable<SummaryModel>>(coreResponse);
-
-                //    return new GetProductSummaryMultipleResponse(products);
-                //}
-                //catch (Exception ex)
-                //{
-                //    _logger.LogError(ex, "Exception at: " + nameof(GetProductSummaryMultiple));
-                //    throw;
-                //}
             }
         }
-
-        //public class Validator : AbstractValidator<Request>
-        //{
-        //    public Validator()
-        //    {
-        //        SetRules();
-        //    }
-
-        //    private void SetRules()
-        //    {
-        //        RuleFor(r => r.Id).NotEmpty();
-        //    }
-        //}
     }
 }

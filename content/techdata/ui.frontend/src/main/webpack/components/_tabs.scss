@@ -4,3 +4,31 @@
 .cmp-tabs__tab--active {}
 .cmp-tabs__tabpanel {}
 .cmp-tabs__tabpanel--active {}
+
+.top-nav {
+  .nav {
+    border: none;
+  }
+ .li, [role=tab] {
+   padding: 0 1rem;
+   font-size: .9rem;
+  //  color: #00B1E2;
+   border-bottom: transparent 3px solid;
+   &:hover {
+     border-bottom: #00B1E2 3px solid;
+   }
+   min-height: 30px;
+ }
+  .cmp-tabs {}
+  .cmp-tabs__tablist {}
+  .cmp-tabs__tab {}
+  .cmp-tabs__tab--active {
+    border-bottom: #00B1E2 3px solid;
+  }
+  .cmp-tabs__tabpanel {
+    padding: 2rem 0;
+  }
+  .cmp-tabs__tabpanel--active {
+    display: block;
+  }
+}

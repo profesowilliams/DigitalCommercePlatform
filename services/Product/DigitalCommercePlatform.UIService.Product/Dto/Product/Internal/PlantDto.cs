@@ -1,5 +1,9 @@
-﻿namespace DigitalCommercePlatform.UIService.Product.Dto.Product.Internal
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Product.Dto.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class PlantDto
     {
         public string Id { get; set; }
@@ -17,5 +21,6 @@
         public MaterialProfileDto MaterialProfile { get; set; }
         public PlantSpecificMaterialStatusDto PlantSpecificMaterialStatus { get; set; }
         public PurchasingGroupDto PurchasingGroup { get; set; }
+        public IEnumerable<IndicatorDto> Indicators { get; set; }
     }
 }

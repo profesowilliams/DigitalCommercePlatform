@@ -1,6 +1,6 @@
 ﻿namespace DigitalCommercePlatform.UIService.Product.Models.Search
 {
-    public class MaterialTypeAheadResponse
+	public class MaterialTypeAheadResponse
 	{
 		public bool HasResults { get { return Suggestions?.Length > 0; } } 
 		public MaterialTypeAheadSuggestion[] Suggestions { get; set; }

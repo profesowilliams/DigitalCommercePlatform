@@ -14,8 +14,14 @@ namespace DigitalCommercePlatform.UIService.Product.Models.Find
         public string CustomerPartNumber { get; set; }
         public string SalesOrganization { get; set; }
         public string[] MaterialStatus { get; set; }
-        public string Territory { get; set; }
+        public string[] Territories { get; set; }
         public string Description { get; set; }
         public string System { get; set; }
+        public ComparisonOperator ComparisonOperator { get; set; }
+    }
+    public enum ComparisonOperator
+    {
+        Equals,
+        StartsWith
     }
 }

@@ -11,9 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
+    [ExcludeFromCodeCoverage]
     public class GetProductDetailMultiple
     {
         public class Request : IRequest<GetProductDetailMultipleResponse>
@@ -36,9 +38,9 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
             private readonly ILogger<GetProductDetailMultiple> _logger;
             private readonly string _AppProductUrl;
             private readonly IMapper _mapper;
-           
 
             public Handler(IMapper mapper, IMiddleTierHttpClient client, ILogger<GetProductDetailMultiple> logger, IOptions<AppSettings> options)
+
             {
                 _client = client;
                 _logger = logger;
@@ -51,6 +53,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                 try
                 {
                     _logger.LogInformation($"UIService.Product.GetProductDetailMultiple");
+
                     var url = $"{_AppProductUrl}/"
                     .BuildQuery(request);
 

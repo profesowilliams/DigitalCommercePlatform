@@ -1,7 +1,11 @@
-﻿using DigitalCommercePlatform.UIService.Product.Models.Stock;
+﻿using DigitalCommercePlatform.UIService.Product.Dto.Product.Internal;
+using DigitalCommercePlatform.UIService.Product.Models.Stock;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class PlantModel
     {
         public string Id { get; set; }
@@ -20,5 +24,6 @@ namespace DigitalCommercePlatform.UIService.Product.Models.Product.Internal
         public PlantSpecificMaterialStatusModel PlantSpecificMaterialStatus { get; set; }
         public PurchasingGroupModel PurchasingGroup { get; set; }
         public LocationStockModel Stock { get; set; }
+        public IEnumerable<IndicatorDto> Indicators { get; set; }
     }
 }

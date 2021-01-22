@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Search;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Extensions;
+using DigitalCommercePlatform.UIService.Product.Models.Search;
+
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product.Search
 {
@@ -44,20 +44,9 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.Search
                 }
                 catch (Exception ex)
                 {
-                    if (ex is RemoteServerHttpException)
-                    {
-                        var remoteEx = ex as RemoteServerHttpException;
-                        if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                        {
-                            return null;
-                        }
-                    }
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindProduct)}");
                     throw;
                 }
-
-
-
             }
         }
     }

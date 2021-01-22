@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,9 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product
 {
+    [ExcludeFromCodeCoverage]
     public sealed class FindSummary
     {
         public class Request : IRequest<Response>
@@ -68,15 +69,6 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product
                 }
                 catch (Exception ex)
                 {
-                    if (ex is RemoteServerHttpException)
-                    {
-                        var remoteEx = ex as RemoteServerHttpException;
-                        if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                        {
-                            return null;
-                        }
-                    }
-
                     _logger.LogError(ex, $"Error getting product data in {nameof(FindSummary)}");
                     throw;
                 }
