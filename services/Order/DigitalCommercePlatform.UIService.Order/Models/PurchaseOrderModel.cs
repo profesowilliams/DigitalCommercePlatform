@@ -3,13 +3,11 @@ using DigitalFoundation.Common.MongoDb.Models;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Order.Models
 {
     public sealed class PurchaseOrderModel
     {
-        [ExcludeFromCodeCoverage]
         public class Item
         {
             public string ID { get; set; }
@@ -30,7 +28,6 @@ namespace DigitalCommercePlatform.UIService.Order.Models
             public String Line { get; set; }
         }
 
-        [ExcludeFromCodeCoverage]
         [BsonDiscriminator("Order.Purchase")]
         [BsonIgnoreExtraElements]
         public class PurchaseModel : MongoDbEntityBase
@@ -42,7 +39,6 @@ namespace DigitalCommercePlatform.UIService.Order.Models
             public DateTime? Updated { get; set; }
         }
 
-        [ExcludeFromCodeCoverage]
         public class Summary
         {
             public Source Source { get; set; }
@@ -63,7 +59,6 @@ namespace DigitalCommercePlatform.UIService.Order.Models
             }
         }
 
-        [ExcludeFromCodeCoverage]
         public class FindModel
         {
             public DateTime? CreatedFrom { get; set; }

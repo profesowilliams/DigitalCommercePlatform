@@ -628,6 +628,7 @@
           <configuration>
                                                 
             
+            <skipValidation>true</skipValidation>
             <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
             <skipValidation>true</skipValidation>
                                             

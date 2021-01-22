@@ -1,23 +1,30 @@
 .dp-separator {
   width: auto;
+  hr{
+    height: 1px !important;
+  }
   &--light-blue{
     .cmp-separator__horizontal-rule{
       color: #00B1E2;
+      border: #00B1E2 solid 1px;
     }
   }
   &--dark-blue{
     .cmp-separator__horizontal-rule{
       color: #000C21;
+      border: #000C21 solid 1px;
     }
   }
   &--gray{
     .cmp-separator__horizontal-rule{
       color: #979797;
+      border: #979797 solid 1px;
     }
   }
   &--white{
     .cmp-separator__horizontal-rule{
       color: #FFFFFF;
+      border: #FFFFFF solid 1px;
     }
   }
 

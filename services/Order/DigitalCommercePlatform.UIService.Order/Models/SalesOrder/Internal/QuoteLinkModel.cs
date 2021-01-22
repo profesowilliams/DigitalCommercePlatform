@@ -22,13 +22,11 @@ namespace DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal
             return base.ToString() + $"{TargetSystem ?? ""}.{Revision ?? ""}.{SubRevision ?? ""}.{Group ?? ""}.{Request ?? ""}";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S3249:Classes directly extending \"object\" should not call \"base\" in \"GetHashCode\" or \"Equals\"", Justification = "<Pending>")]
         public override bool Equals(object obj)
         {
             return (obj is Source && base.Equals(obj) && Revision == ((QuoteLinkModel)obj).Revision && SubRevision == ((QuoteLinkModel)obj).SubRevision && Group == ((QuoteLinkModel)obj).Group && TargetSystem == ((QuoteLinkModel)obj).TargetSystem);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S3875:\"operator==\" should not be overloaded on reference types", Justification = "<Pending>")]
         public static bool operator ==(QuoteLinkModel pLeft, QuoteLinkModel pRight)
         {
             if (pLeft is null)
@@ -43,7 +41,6 @@ namespace DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal
             return !pLeft.Equals(pRight);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public override int GetHashCode()
         {
             return ToString().GetHashCode();

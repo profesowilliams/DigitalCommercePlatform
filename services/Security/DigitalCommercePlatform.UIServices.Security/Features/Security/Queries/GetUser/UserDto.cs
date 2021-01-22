@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DigitalCommercePlatform.UIServices.Security.Models
+namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetUser
 {
-    public class User
+    public class UserDto
     {
         public string ID { get; set; }
         public string FirstName { get; set; }
@@ -13,5 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Models
         public IEnumerable<string> Customers { get; set; }
         public IEnumerable<string> Roles { get; set; }
         public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+        public int ExpiresInSeconds { get; set; }
     }
 }

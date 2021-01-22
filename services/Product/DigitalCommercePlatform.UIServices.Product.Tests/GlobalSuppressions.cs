@@ -5,6 +5,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Blocker Code Smell", "S2699:Tests should include assertions")]
-[assembly: SuppressMessage("Info Code Smell", "S1135:Track uses of \"TODO\" tags")]
-[assembly: SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out")]
+[assembly: SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
+[assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays")]
+[assembly: SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
+[assembly: SuppressMessage("Design", "CA1062:Validate arguments of public methods")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible")]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix")]
+[assembly: SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
+[assembly: SuppressMessage("Naming", "CA1056: URI properties should not be strings")]
