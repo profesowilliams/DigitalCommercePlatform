@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder
 {
-    [ExcludeFromCodeCoverage]
-    public class GetMultipleOrders
+    public sealed class GetMultipleOrders
     {
         public class Request : IRequest<IEnumerable<SalesOrderModel>>
         {

@@ -1,21 +1,22 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder;
+using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder;
-using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Order.Controllers
 {
@@ -25,6 +26,7 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
     public class OrderController : BaseUIServiceController
     {
         private readonly IHttpClientFactory _httpClientFactory;
+
         public OrderController(
             IMediator mediator,
             ILogger<OrderController> logger,
@@ -34,10 +36,9 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
             IHttpClientFactory httpClientFactory)
             : base(mediator, logger, context, settings, siteSettings)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
-       
         [HttpGet]
         [Route("id")]
         public async Task<SalesOrderModel> GetAsync(string id)
@@ -52,8 +53,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
             var response = await Mediator.Send(new GetOrder.Request { Id = id }).ConfigureAwait(false);
             return response;
         }
-
-
 
         [HttpGet]
         [Route("")]
@@ -72,7 +71,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
             return response;
         }
 
-
         [HttpGet]
         [Route("Find")]
         public async Task<IActionResult> SearchAsync([FromQuery] FindRequestModel search)
@@ -83,11 +81,8 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
             httpClient.DefaultRequestHeaders.Add("Site", "NA");
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-            if (search == null)
-            {
-                throw new ArgumentNullException(nameof(search));
-            }
-            if (search.Details)
+
+            if (ObjectExtensions.PassThrowNonNull(search).Details)
             {
                 var findResponse = await Mediator.Send(new FindOrder.Request { SearchQuery = search }).ConfigureAwait(false);
 
@@ -105,8 +100,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
                 else
                     return Ok(findSummaryResponse);
             }
-            
-
         }
     }
 }
