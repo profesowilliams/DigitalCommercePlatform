@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Product.Controllers
 {
@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
     public class ProductController : BaseUIServiceController
     {
         private readonly IHttpClientFactory _httpClientFactory;
+
         public ProductController(
             IMediator mediator,
             ILogger<ProductController> logger,
@@ -33,10 +34,10 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-        
+
         [HttpGet]
         [Route("id")]
-        public async Task<ActionResult<object>> Get( string id, [FromQuery] bool details = true)
+        public async Task<ActionResult<object>> Get(string id, [FromQuery] bool details = true)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
@@ -46,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
             if (details)
             {
-                var response = await _mediator.Send(new GetProductDetailMultiple.Request { Id = new List<string> { id }, Details = details }).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductDetailMultiple.Request { Id = new List<string> { id }, Details = details }).ConfigureAwait(false);
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
                 else
@@ -54,14 +55,12 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             }
             else
             {
-                var response = await _mediator.Send(new GetProductSummaryMultiple.Request { Id = new List<string> { id }, Details = details }).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductSummaryMultiple.Request { Id = new List<string> { id }, Details = details }).ConfigureAwait(false);
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
                 else
                     return Ok(response);
             }
-            
-            
         }
 
         [HttpGet]
@@ -76,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
             if (details)
             {
-                var response = await _mediator.Send(new GetProductDetailMultiple.Request { Id = id, Details = details }).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductDetailMultiple.Request { Id = id, Details = details }).ConfigureAwait(false);
 
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
@@ -85,17 +84,14 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             }
             else
             {
-                var response = await _mediator.Send(new GetProductSummaryMultiple.Request { Id = id, Details = details }).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductSummaryMultiple.Request { Id = id, Details = details }).ConfigureAwait(false);
 
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
                 else
                     return Ok(response);
             }
-
-              
         }
-
 
         /// <summary>
         /// Find
@@ -118,7 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
             if (details)
             {
-                var response = await _mediator.Send(new FindProduct.Request { Query = query, WithPaginationInfo = withPaginationInfo, Page = page ?? 1, PageSize = pageSize ?? 10 }).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindProduct.Request { Query = query, WithPaginationInfo = withPaginationInfo, Page = page ?? 1, PageSize = pageSize ?? 10 }).ConfigureAwait(false);
 
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
@@ -127,22 +123,21 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
             }
             else
             {
-                var response = await _mediator.Send(new FindSummary.Request { Query = query, WithPaginationInfo = withPaginationInfo, Page = page ?? 1, PageSize = pageSize ?? 10 }).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindSummary.Request { Query = query, WithPaginationInfo = withPaginationInfo, Page = page ?? 1, PageSize = pageSize ?? 10 }).ConfigureAwait(false);
 
                 if (response?.ReturnObject == null || !response.ReturnObject.Any())
                     return NotFound();
                 else
                     return Ok(response);
-            }           
+            }
         }
 
         [HttpGet]
         [Route("Search")]
-        public async Task<IActionResult> Search(string keyword, string searchApplication="SHOP")
+        public async Task<IActionResult> Search(string keyword, string searchApplication = "SHOP")
         {
-            var response = await _mediator.Send(new TypeAheadRequest { Keyword = keyword , SearchApplication = searchApplication }).ConfigureAwait(false);
+            var response = await Mediator.Send(new TypeAheadRequest { Keyword = keyword, SearchApplication = searchApplication }).ConfigureAwait(false);
             return Ok(response);
         }
-
     }
 }

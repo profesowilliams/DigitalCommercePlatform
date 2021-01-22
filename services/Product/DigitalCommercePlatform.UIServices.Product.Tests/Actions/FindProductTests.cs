@@ -1,227 +1,140 @@
-﻿//using AutoMapper;
-//using DigitalCommercePlatform.UIService.Product.Actions.Product;
-//using DigitalCommercePlatform.UIService.Product.Automapper;
-//using DigitalCommercePlatform.UIService.Product.Dto.Product;
-//using DigitalCommercePlatform.UIService.Product.Dto.Stock;
-//using DigitalCommercePlatform.UIService.Product.Models.Find;
-//using DigitalCommercePlatform.UIService.Product.Models.Product;
-//using DigitalFoundation.Common.Client;
-//using DigitalFoundation.Common.Settings;
-//using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
-//using DigitalFoundation.Common.TestUtilities;
-//using FluentAssertions;
-//using FluentValidation.TestHelper;
-//using Microsoft.Extensions.Options;
-//using Moq;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading;
-//using System.Threading.Tasks;
-//using Xunit;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIService.Product.Actions.Product;
+using DigitalCommercePlatform.UIService.Product.Automapper;
+using DigitalCommercePlatform.UIService.Product.Dto.Product;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
+using Microsoft.Extensions.Options;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
-//{
-//    public class FindProductTests
-//    {
-//        private readonly FakeLogger<FindProduct.Handler> _logger;
-//        private readonly IMapper _mapper;
-//        private readonly Mock<IMiddleTierHttpClient> _httpClient;
-//        private readonly Mock<IOptions<AppSettings>> _options;
+namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
+{
+    public class FindProductTests
+    {
+        private readonly FakeLogger<FindProduct.Handler> _logger;
+        private readonly IMapper _mapper;
+        private readonly Mock<IMiddleTierHttpClient> _httpClient;
+        private readonly Mock<IOptions<AppSettings>> _options;
 
-//        public FindProductTests()
-//        {
-//            _logger = new FakeLogger<FindProduct.Handler>();
-//            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
-//            _httpClient = new Mock<IMiddleTierHttpClient>();
-//            _options = new Mock<IOptions<AppSettings>>();
-//            var settings = new AppSettings();
-//            settings.Configure(new Dictionary<string, string> { { "Core.Product.Url", "http://core" }, { "Core.Stock.Url", "http://stock" } });
-//            _options.Setup(x => x.Value).Returns(settings);
-//        }
+        public FindProductTests()
+        {
+            _logger = new FakeLogger<FindProduct.Handler>();
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
+            _httpClient = new Mock<IMiddleTierHttpClient>();
+            _options = new Mock<IOptions<AppSettings>>();
+            var settings = new AppSettings();
+            settings.Configure(new Dictionary<string, string> { { "Core.Product.Url", "http://core" }, { "Core.Stock.Url", "http://stock" } });
+            _options.Setup(x => x.Value).Returns(settings);
+        }
 
-//        [Theory]
-//        [AutoDomainData]
-//        public async Task FindProduct_RequestWithPagination_CallCoreForDataAndCount(IEnumerable<ProductDto> productDtos)
-//        {
-//            //arrange
-//            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = true };
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        [AutoDomainData]
+        public async Task FindProduct_RequestWithPagination_CallCoreForDataAndCount(bool withPaginationInfo)
+        {
+            // Arrange
+            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = withPaginationInfo };
 
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ReturnsAsync(productDtos);
-//            _httpClient.Setup(x => x.GetAsync<long>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ReturnsAsync(1);
+            _httpClient.Setup(x => x.GetAsync<FindProduct.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                       .ReturnsAsync(new FindProduct.Response());
 
-//            var expected = _mapper.Map<IEnumerable<ProductModel>>(productDtos);
+            var sut = GetHandler();
 
-//            var sut = GetHandler();
-//            //act
-//            var result = await sut.Handle(request, new CancellationToken()).ConfigureAwait(false);
+            // Act
+            _ = await sut.Handle(request, new CancellationToken()).ConfigureAwait(false);
 
-//            //assert
-//            _httpClient.Verify(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.Contains("MaterialNumber=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("page=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("pagesize=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("details=true", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.StartsWith("http://core/find?", StringComparison.InvariantCultureIgnoreCase)),
-//                                                                        It.IsAny<IEnumerable<object>>(),
-//                                                                        It.IsAny<IDictionary<string, object>>()), Times.Once);
+            // Assert
+            _httpClient.Verify(x => x.GetAsync<FindProduct.Response>(It.Is<string>(
 
-//            _httpClient.Verify(x => x.GetAsync<long>(It.Is<string>(x => x.Contains("MaterialNumber=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("page=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("pagesize=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.StartsWith("http://core/count?", StringComparison.InvariantCultureIgnoreCase)),
-//                                                                        It.IsAny<IEnumerable<object>>(),
-//                                                                        It.IsAny<IDictionary<string, object>>()), Times.Once);
+                x => x.Contains("MaterialNumber=1", StringComparison.InvariantCultureIgnoreCase)
+                            && x.Contains("page=1", StringComparison.InvariantCultureIgnoreCase)
+                            && x.Contains("pagesize=1", StringComparison.InvariantCultureIgnoreCase)
+                            && x.Contains($"WithPaginationInfo={withPaginationInfo}", StringComparison.InvariantCultureIgnoreCase)),
+                                                                        It.IsAny<IEnumerable<object>>(),
+                                                                        It.IsAny<IDictionary<string, object>>()), Times.Once);
+        }
 
-//            result.TotalRecords.Should().Be(1);
-//            result.ReturnObject.Should().BeEquivalentTo(expected);
-//        }
+        [Fact]
+        public async Task FindProduct_ReturnsEmptyStockDataWhenStockCoreThrowsNotFoundException()
+        {
+            var data = new FindProduct.Response(new List<Models.Product.ProductModel>() {
+                new Models.Product.ProductModel {
+                    Name = "Test",
+                    MaterialType = "1",
+                    Plants = new List<PlantModel>()
+                }
+            });
 
-//        [Theory]
-//        [AutoDomainData]
-//        public async Task FindProduct_RequestWithoutPagination_CallCoreOnlyForData(IEnumerable<ProductDto> productDtos)
-//        {
-//            //arrange
-//            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
+            // Arrange
+            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
 
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ReturnsAsync(productDtos);
+            _httpClient.Setup(x => x.GetAsync<FindProduct.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                        .ReturnsAsync(data);
 
-//            var expected = _mapper.Map<IEnumerable<ProductModel>>(productDtos);
+            var sut = GetHandler();
 
-//            var sut = GetHandler();
-//            //act
-//            var result = await sut.Handle(request, new CancellationToken()).ConfigureAwait(false);
+            // Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
 
-//            //assert
-//            _httpClient.Verify(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.Contains("MaterialNumber=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("page=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("pagesize=1", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.Contains("details=true", StringComparison.InvariantCultureIgnoreCase)
-//                                                                                         && x.StartsWith("http://core/find?", StringComparison.InvariantCultureIgnoreCase)),
-//                                                                        It.IsAny<IEnumerable<object>>(),
-//                                                                        It.IsAny<IDictionary<string, object>>()), Times.Once);
+            // Assert
+            result.ReturnObject.Should().HaveCount(data.ReturnObject.Count());
+            result.ReturnObject.Any(x => x.Plants.Any(p => p.Stock != null)).Should().BeFalse();
+        }
 
-//            _httpClient.Verify(x => x.GetAsync<long>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Never);
+        [Fact]
+        public async Task FindProduct_ReturnsNull_WhenNotFoundReturnedFromCore()
+        {
+            // Arrange
+            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
 
-//            result.TotalRecords.Should().BeNull();
-//            result.ReturnObject.Should().BeEquivalentTo(expected);
-//        }
+            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                        .ThrowsAsync(RemoteServerHttpException.WithMessageDetailsAndStatusCode("test", System.Net.HttpStatusCode.NotFound, null));
 
-//        [Theory]
-//        [AutoDomainData(nameof(GetExceptions))]
-//        public void FindProduct_ThrowsException_WhenStockCoreThrowsExceptionOtherThanNotFound(Exception exception, IEnumerable<ProductDto> productDtos)
-//        {
-//            //arrange
-//            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
+            var sut = GetHandler();
 
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ReturnsAsync(productDtos);
+            // Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
 
-//            _httpClient.Setup(x => x.GetAsync<List<StockDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>())).Throws(exception);
+            // Assert
+            result.Should().BeNull();
+        }
 
-//            var sut = GetHandler();
-//            //act and assert
-//            Assert.ThrowsAsync<Exception>(async () => await sut.Handle(request, new CancellationToken()).ConfigureAwait(false));
-//            Assert.Contains(_logger.GetMessages(), l => l.Contains($"Error getting stock data for ids: "));
-//        }
+        [Theory]
+        [AutoDomainData(nameof(GetExceptions))]
+        public void FindProduct_ThrowException_WhenExceptionOtherThanNotFoundReturnedFromCore(Exception exception, FindProduct.Request request)
+        {
+            // Arrange
+            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                        .ThrowsAsync(exception);
 
-//        [Theory]
-//        [AutoDomainData]
-//        public async Task FindProduct_ReturnsEmptyStockDataWhenStockCoreThrowsNotFoundException(IEnumerable<ProductDto> productDtos)
-//        {
-//            //arrange
-//            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
+            var sut = GetHandler();
 
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ReturnsAsync(productDtos);
+            // Act
+            var response = sut.Handle(request, default).ConfigureAwait(false).GetAwaiter().GetResult();
 
-//            _httpClient.Setup(x => x.GetAsync<List<StockDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>())).Throws(RemoteServerHttpException.WithMessageDetailsAndStatusCode("test", System.Net.HttpStatusCode.NotFound, null));
+            // Assert
+            response.Should().BeNull();
+        }
 
-//            var sut = GetHandler();
+        private FindProduct.Handler GetHandler() => new FindProduct.Handler(_mapper, _httpClient.Object, _logger);
 
-//            //act
-//            var result = await sut.Handle(request, default).ConfigureAwait(false);
-
-//            //act and assert
-//            result.ReturnObject.Should().HaveCount(productDtos.Count());
-//            result.ReturnObject.Any(x => x.Plants.Any(p => p.Stock != null)).Should().BeFalse();
-//        }
-
-//        [Fact]
-//        public async Task FindProduct_ReturnsNull_WhenNotFoundReturnedFromCore()
-//        {
-//            //arrange
-//            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
-
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ThrowsAsync(RemoteServerHttpException.WithMessageDetailsAndStatusCode("test", System.Net.HttpStatusCode.NotFound, null));
-
-//            var sut = GetHandler();
-
-//            //act
-//            var result = await sut.Handle(request, default);
-
-//            //act and assert
-//            result.Should().BeNull();
-//        }
-
-//        [Theory]
-//        [AutoDomainData(nameof(GetExceptions))]
-//        public void FindProduct_ThrowException_WhenExceptionOtherThanNotFoundReturnedFromCore(Exception exception, FindProduct.Request request)
-//        {
-//            //arrange
-//            _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-//                        .ThrowsAsync(exception);
-
-//            var sut = GetHandler();
-
-//            //act
-//            Func<Task> act = async () => { await sut.Handle(request, default); };
-
-//            //act and assert
-//            act.Should().Throw<Exception>();
-//            _logger.GetMessages().Any(x => x.Contains("Error getting product data in")).Should().BeTrue();
-//        }
-
-//        [Fact]
-//        public void Validator_ValidatFalse_WhenNotValidRequest()
-//        {
-//            //arrange
-//            var sut = new FindProduct.Validator();
-
-//            //act
-//            var result = sut.TestValidate(new FindProduct.Request { Page = -1, PageSize = -1, Query = null });
-
-//            //assert
-//            result.ShouldHaveValidationErrorFor(x => x.Page);
-//            result.ShouldHaveValidationErrorFor(x => x.PageSize);
-//            result.ShouldHaveValidationErrorFor(x => x.Query);
-//        }
-
-//        [Fact]
-//        public void Validator_ValidatTrue_WhenValidRequest()
-//        {
-//            //arrange
-//            var sut = new FindProduct.Validator();
-
-//            //act
-//            var result = sut.TestValidate(new FindProduct.Request { Page = 1, PageSize = 1, Query = new FindProductModel() });
-
-//            //assert
-//            result.ShouldNotHaveValidationErrorFor(x => x.Page);
-//            result.ShouldNotHaveValidationErrorFor(x => x.PageSize);
-//            result.ShouldNotHaveValidationErrorFor(x => x.Query);
-//        }
-
-//        private FindProduct.Handler GetHandler() => new FindProduct.Handler(_mapper, _httpClient.Object, _logger, _options.Object);
-
-//        public static List<object[]> GetExceptions =>
-//            new List<object[]>
-//            {
-//                new object[]{RemoteServerHttpException.WithMessageDetailsAndStatusCode("test",System.Net.HttpStatusCode.BadGateway, null)},
-//                new object[]{new Exception("test")},
-//            };
-//    }
-//}
+        public static List<object[]> GetExceptions =>
+            new List<object[]>
+            {
+                new object[]{RemoteServerHttpException.WithMessageDetailsAndStatusCode("test",System.Net.HttpStatusCode.BadGateway, null)},
+                new object[]{new Exception("test")},
+            };
+    }
+}

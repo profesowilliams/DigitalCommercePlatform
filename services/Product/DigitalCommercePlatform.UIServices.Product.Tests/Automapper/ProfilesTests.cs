@@ -13,8 +13,8 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Automapper
             var configuration = new MapperConfiguration(config =>
             {
                 config.AddProfile(new ProductProfile());
-                //config.AddProfile(new ProductSummaryProfile());
-                //config.AddProfile(new StockProfile());
+                config.AddProfile(new ProductSummaryProfile());
+                config.AddProfile(new StockProfile());
             });
 
             //Act - Assert
