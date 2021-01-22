@@ -46,9 +46,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipl
                     //_client.DefaultRequestHeaders.Add("Site", "NA");
                     //_client.DefaultRequestHeaders.Add("Consumer", "NA");
 
-
-                    var url = $"{_appOrderUrl}/"
-                    .BuildQuery(request);
+                    var url = _appOrderUrl.BuildQuery(request);
 
                     var appResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
                     return appResponse;

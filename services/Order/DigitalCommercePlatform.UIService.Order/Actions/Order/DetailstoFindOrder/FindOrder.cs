@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
             private readonly ILogger<Handler> _logger;
             private readonly string _appOrderUrl;
 
-            public Handler( IMiddleTierHttpClient client, ILogger<Handler> logger)
+            public Handler(IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
                 _client = client ?? throw new ArgumentNullException(nameof(client));
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -55,8 +55,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
                     //_client.DefaultRequestHeaders.Add("Site", "NA");
                     //_client.DefaultRequestHeaders.Add("Consumer", "NA");
 
-                    var url = $"{_appOrderUrl}/"
-                       .BuildQuery(request);
+                    var url = _appOrderUrl.BuildQuery(request);
 
                     var appResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
                     return appResponse;

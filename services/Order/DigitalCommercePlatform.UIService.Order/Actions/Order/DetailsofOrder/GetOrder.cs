@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
                try
                 {
                     _logger.LogInformation($"UIService.Order.GetOrder");
-                   
+
                     //------------Need to implement passing the headers to the client-------------------------
                     //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
                     //_client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
@@ -47,9 +47,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder
                     //_client.DefaultRequestHeaders.Add("Site", "NA");
                     //_client.DefaultRequestHeaders.Add("Consumer", "NA");
 
-                   
-                    var url = $"{_appOrderUrl}/"
-                    .BuildQuery(request);
+                    var url = _appOrderUrl.BuildQuery(request);
 
                     var appResponse = await _client.GetAsync<IEnumerable<SalesOrderModel>>(url).ConfigureAwait(false);
                     return appResponse.FirstOrDefault();
