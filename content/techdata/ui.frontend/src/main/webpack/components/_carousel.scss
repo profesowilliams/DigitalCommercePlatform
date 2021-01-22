@@ -29,6 +29,7 @@
     //d-flex font-12
     display: flex;
     font-size: .75rem;
+    align-items: center;
   }
   .dp-carousel__nav-label{
     color: #D6D6D6!important;
@@ -47,10 +48,13 @@
       background-color: #048FC8;
       transition: width .3s;
     }
+    &:focus{
+      outline: 0 none;
+    }
   }
-  .dp-carousel__nav-dots{
-    display: none;
-  }
+  // .dp-carousel__nav-dots{
+  //   display: none;
+  // }
   .dp-carousel__nav-label-separator{
     //text-white py-1
     color: #D6D6D6;
@@ -114,7 +118,7 @@
       .dp-carousel__nav-label{
         color: #04588e!important;
       }
-      .dp-carousel__nav-dot{
+      &.dp-carousel__nav-use-dots .dp-carousel__nav-label{
         background-color: #04588e!important;
       }
     }
@@ -192,10 +196,30 @@
   }
   //select navigation
   &.dp-carousel__nav-use-dots{
-    .dp-carousel__nav-dots{
-      display: flex;
+    // .dp-carousel__nav-dots{
+    //   display: flex;
+    // }
+    // .dp-carousel__nav-labels{
+    //   display: none;
+    // }
+    .dp-carousel__nav-label{
+      &::before{
+        display: none;
+      }
+      font-size: 0;
+      opacity: .7;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-sizing: border-box;
+      margin: 0 .4rem;
+      &.cmp-carousel__indicator--active,
+      &:hover{
+        opacity: 1;
+      }
     }
-    .dp-carousel__nav-labels{
+    .dp-carousel__nav-label-separator{
       display: none;
     }
   }
@@ -206,6 +230,7 @@
   &:hover{
     color: #fff;
     background-color: transparent;
+    opacity: 1;
     &::before{
       width: 100%;
     }
