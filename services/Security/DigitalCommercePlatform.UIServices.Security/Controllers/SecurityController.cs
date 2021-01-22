@@ -1,9 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Security.AppServices;
-using DigitalCommercePlatform.UIServices.Security.Requests;
+﻿using DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetToken;
+using DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetUser;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -22,39 +23,43 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         }
 
         [HttpGet]
-        [Route("GetUser")]
-        public async Task<IActionResult> GetUserAsync(UserAndTokenRequest userAndTokenRequest)
+        [Route("GetUser/{applicationName}")]
+        public async Task<IActionResult> GetUserAsync(GetUserRequest getUserRequest)
         {
-            var userAndTokenResponse = await Mediator.Send(new GetUserQuery(userAndTokenRequest?.ApplicationName, userAndTokenRequest?.SessionId)).ConfigureAwait(false);
-            return StatusCode((int)userAndTokenResponse.HttpStatusCode, userAndTokenResponse);
+            var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.SessionId));
+
+            if (response.IsError && response.ErrorCode == "forbidden")
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, response);
+            }
+
+            return Ok(response);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpPost]
-        [Route("signin")]
-        public async Task<IActionResult> GetTokenAsync([FromBody]GetTokenRequest getTokenRequest)
+        [Route("GetToken")]
+        public async Task<IActionResult> GetTokenAsync([FromBody] GetTokenRequest getTokenRequest)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var tokenResponse = await _mediator.Send(new LoginCommand("","")).ConfigureAwait(false);
-#pragma warning restore CS0618 // Type or member is obsolete
-            return Ok(tokenResponse);
+            var response = await Mediator.Send(new GetTokenQuery(getTokenRequest?.Code, getTokenRequest?.RedirectUri,getTokenRequest?.SessionId));
+
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
         }
     }
 }
