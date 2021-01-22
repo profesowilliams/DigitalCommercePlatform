@@ -1,0 +1,28 @@
+{
+  "returnObject": [
+    {
+      "configId": "FZ107558045DL",
+      "created": "10/07/2019",
+      "vendor": "Cisco",
+      "configName": "Odio dignissimos Ducimus qui",
+      "endUserName": "CDW Logistics Inc",
+      "tdQuoteId": ""
+    },
+    {
+      "configId": "JE107347075XZ",
+      "created": "10/07/2019",
+      "vendor": "HPE",
+      "configName": "blanditiis Voluptatum deleniti Nexus",
+      "endUserName": "Davidson Russel Holdings",
+      "tdQuoteId": ""
+    },
+    {
+      "configId": "GN107413162RS",
+      "created": "10/07/2019",
+      "vendor": "Dell",
+      "configName": "3k",
+      "endUserName": "Los Angeles Public Works",
+      "tdQuoteId": "1234567890AB"
+    }
+  ]
+}
