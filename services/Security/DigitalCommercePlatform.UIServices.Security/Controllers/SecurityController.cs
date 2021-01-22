@@ -26,16 +26,16 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         [Route("GetUser/{applicationName}")]
         public async Task<IActionResult> GetUserAsync(GetUserRequest getUserRequest)
         {
-            var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.SessionId)).ConfigureAwait(false);
-
-            if (response.IsError)
-            {
-                return StatusCode(StatusCodes.Status401Unauthorized, response);
-            }
+            var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.SessionId));
 
             if (response.IsError && response.ErrorCode == "forbidden")
             {
                 return StatusCode(StatusCodes.Status403Forbidden, response);
+            }
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, response);
             }
 
             return Ok(response);
@@ -45,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         [Route("GetToken")]
         public async Task<IActionResult> GetTokenAsync([FromBody] GetTokenRequest getTokenRequest)
         {
-            var response = await Mediator.Send(new GetTokenQuery(getTokenRequest?.Code, getTokenRequest?.RedirectUri,getTokenRequest?.SessionId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTokenQuery(getTokenRequest?.Code, getTokenRequest?.RedirectUri,getTokenRequest?.SessionId));
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {

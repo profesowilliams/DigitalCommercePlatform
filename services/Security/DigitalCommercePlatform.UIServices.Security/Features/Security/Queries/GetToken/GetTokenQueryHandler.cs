@@ -21,25 +21,20 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
         private readonly string _coreSecurityUrl;
         private readonly string _clientId;
         private readonly string _clientSecret;
-        private const string AppSettingsNameForCoreSecurityUrl = "Core.Security.Url";
 
         public GetTokenQueryHandler(IOptions<AppSettings> appSettingsOptions, IOptions<OAuthClientDetailsOptions> oauthClientDetailsOptions,
                                                         IMiddleTierHttpClient middleTierHttpClient, IMapper mapper, IDistributedCache cache)
         {
             if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
             if (oauthClientDetailsOptions == null) { throw new ArgumentNullException(nameof(oauthClientDetailsOptions)); }
-            if (middleTierHttpClient == null) { throw new ArgumentNullException(nameof(middleTierHttpClient)); }
-            if (mapper == null) { throw new ArgumentNullException(nameof(mapper)); }
-            if (cache == null) { throw new ArgumentNullException(nameof(cache)); }
 
-
-            _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(AppSettingsNameForCoreSecurityUrl) ?? throw new InvalidOperationException($"{AppSettingsNameForCoreSecurityUrl} is missing from AppSettings");
+            _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
             _clientId = oauthClientDetailsOptions.Value?.ClientId ?? throw new InvalidOperationException("ClientId key/value is missing from AppSettings");
             _clientSecret = oauthClientDetailsOptions.Value?.ClientSecret ?? throw new InvalidOperationException("ClientSecret key/value is missing from AppSettings");
 
-            _middleTierHttpClient = middleTierHttpClient;
-            _mapper = mapper;
-            _cache = cache;
+            _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<GetTokenResponse> Handle(GetTokenQuery request, CancellationToken cancellationToken)
@@ -53,20 +48,19 @@ namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.
                 RedirectUri = new Uri(request?.RedirectUri)
             };
 
-            var tokenDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest).ConfigureAwait(false);
+            var tokenDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
 
-            if (!string.IsNullOrEmpty(tokenDto.AccessToken))
+            if (!string.IsNullOrEmpty(tokenDto?.AccessToken))
             {
                 var options = new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.UtcNow + TimeSpan.FromSeconds(tokenDto.ExpiresIn)
                 };
 
-                await _cache.SetStringAsync(request?.SessionId, tokenDto.AccessToken, options, token: cancellationToken).ConfigureAwait(false);
+                await _cache.SetStringAsync(request?.SessionId, tokenDto.AccessToken, options, token: cancellationToken);
             }
 
             var tokenResponse = _mapper.Map<GetTokenResponse>(tokenDto);
-
             return tokenResponse;
         }
     }
