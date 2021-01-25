@@ -1,1 +1,13 @@
 .cmp-container {}
+
+
+.cmp-container {
+  &--max-1400 {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  &--max-1600 {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+}
