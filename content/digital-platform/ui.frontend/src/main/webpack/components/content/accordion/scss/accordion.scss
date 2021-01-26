@@ -18,6 +18,7 @@
             font-size: .75rem;
             font-weight: 500;
             border: none;
+            background-color: transparent;
         }
         .cmp-accordion__button[aria-expanded="false"]::after{
             content: '\A0 \A0 \25BA';
