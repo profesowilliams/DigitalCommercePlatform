@@ -12,6 +12,10 @@
 
 .dp-dropdown {
 
+  .cmp-form-options__label {
+    display: none;
+  }
+
   select.cmp-form-options__field--drop-down {
 
       display: block;
