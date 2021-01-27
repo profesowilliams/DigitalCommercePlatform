@@ -167,7 +167,7 @@
 
 .dp-teaser{
   &__card{
-      padding-top: 8rem;
+      padding: 2.55rem 0.55rem;
       .cmp-teaser{
           position: relative;
           display: flex;
@@ -179,19 +179,22 @@
           border-width: 2px;
           border-radius: 0;
           border-color: #EAEAEA ;
+          &:hover{
+            box-shadow: 0 0 6px #00b1e2;
+          }
       }
       .cmp-teaser__content{
           display: flex;
           flex-direction: column-reverse;
-          h2{
-              text-align: center;
-              padding-top: 1.5rem;
-              padding-bottom: 1.5rem;
-              font-size: 1.3125rem;
-              margin-top: 0;
-
-          }
       }
+      .cmp-teaser__title{
+        text-align: center;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        font-size: 1.3125rem;
+        margin-top: 0;
+
+    }
       .cmp-teaser__image{
           img{
               border-radius: 50%;
@@ -218,19 +221,9 @@
               word-wrap: break-word;
           }
       }
-      .cmp-teaser__pretitle{
-          text-align: center;
-          padding-top: 1.5rem;
-          padding-bottom: 1.5rem;
-
-          p{
-              font-size: 1.3125rem ;
-              margin-top: 0;
-              margin-bottom: 1rem;
-          }
-      }
   }
   &__card-image--rounded{
+      padding: 8.55rem 0.55rem;
       .cmp-teaser__image{
           img{
 
