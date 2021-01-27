@@ -207,10 +207,11 @@
       &::before{
         display: none;
       }
-      font-size: 0;
+      font-size: 0!important;
       opacity: .7;
       width: 10px;
       height: 10px;
+      color: transparent!important;
       background-color: #fff;
       border-radius: 50%;
       box-sizing: border-box;
