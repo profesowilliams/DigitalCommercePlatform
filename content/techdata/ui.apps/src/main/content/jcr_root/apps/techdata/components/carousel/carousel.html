@@ -41,9 +41,3 @@
 
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
   data-sly-call="${template.placeholder @ isEmpty=!resource.children}"></sly>
-<div data-sly-test="${wcmmode.edit && carousel.items.size < 1}" class="alert alert-primary">
-  <!--/* Customize title and text to provide instructions for developers */-->
-  <h4>Developer Mode Only</h4>
-  <p>Carousel. This component may be limited by polices to follow design rules.</p>
-  <p>If you need a different functionality please contact support.</p>
-</div>
