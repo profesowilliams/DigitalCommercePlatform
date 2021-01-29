@@ -150,25 +150,29 @@
     // }
   }
 }
-.dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav-label{
-  &::before{
-    display: none;
-  }
-  font-size: 0;
-  opacity: .7;
-  width: 10px;
-  height: 10px;
-  color: transparent;
-  background-color: #fff;
-  border-radius: 50%;
-  box-sizing: border-box;
-  margin: 0 .4rem;
-  
-  &.cmp-carousel__indicator--active,
-  &:hover{
-    color: #fff;
+.dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
+  position: absolute;
+  bottom: 10px;
+  .dp-carousel__nav-label{
+    &::before{
+      display: none;
+    }
+    font-size: 0;
+    opacity: .7;
+    width: 10px;
+    height: 10px;
+    color: transparent;
     background-color: #fff;
-    opacity: 1;
+    border-radius: 50%;
+    box-sizing: border-box;
+    margin: 0 .4rem;
+    
+    &.cmp-carousel__indicator--active,
+    &:hover{
+      color: #fff;
+      background-color: #fff;
+      opacity: 1;
+    }
   }
 }
 .dp-carousel__nav-label-separator{
