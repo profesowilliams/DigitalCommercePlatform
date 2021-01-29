@@ -15,7 +15,8 @@
   //  color: #00B1E2;
    border-bottom: transparent 3px solid;
    &:active, &:hover, &:focus {
-     border: none;
+     border: none !important;
+     outline: none;
    }
    &:hover {
      border-bottom: #00B1E2 3px solid;
