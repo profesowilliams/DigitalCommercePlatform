@@ -12,6 +12,12 @@
 
 .dp-dropdown {
 
+  .cmp-form-options .cmp-form-options--drop-down {
+    border: none !important;
+    padding: 0;
+
+  }
+
   .cmp-form-options__label {
     display: none;
   }
