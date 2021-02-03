@@ -55,28 +55,36 @@
   }
 
   .cmp-teaser__pretitle {
+    font-family: "Open Sans", sans-serif;
     font-size: 3.125rem;
   }
 
   .cmp-teaser__title {
+    display: flex;
+    font-family: "Open Sans", sans-serif;
     font-size: 1.875rem;
     font-weight: 700;
     margin-left: 12.125rem;
   }
 
   .cmp-teaser__title-link {
+    font-family: "Open Sans", sans-serif;
   }
   .cmp-teaser__description {
+    font-family: "Open Sans", sans-serif;
     margin-left: 2.125rem;
     font-size: 4.375rem;
   }
   .cmp-teaser__action-container {
+    font-family: "Open Sans", sans-serif;
   }
   .cmp-teaser__action-link {
+    font-family: "Open Sans", sans-serif;
   }
 }
 
 .hero-style-2 {
+  font-family: "Open Sans", sans-serif;
   position: relative;
   height: 31.25rem;
   overflow: hidden;
@@ -86,12 +94,11 @@
   }
   .cmp-teaser__content {
     font-family: "Open Sans", sans-serif;
-
     padding-top: 6rem;
     padding-bottom: 3.125rem;
     padding-left: 2.188rem;
     box-sizing: border-box;
-    color: #53565a;
+    color: #7c8388;
     position: absolute;
     width: 100%;
     top: 0;
@@ -99,18 +106,21 @@
 
   .cmp-teaser__pretitle {
     font-size: 3.125rem;
+    font-family: "Open Sans", sans-serif;
   }
 
   .cmp-teaser__title {
+    display: flex;
     font-size: 2.813rem;
-    font-weight: 700;
+    font-family: "Open Sans", sans-serif;
   }
 
   .cmp-teaser__title-link {
   }
   .cmp-teaser__description {
     font-size: 1.375rem;
-    width: 34.25rem;
+    width: 42%;
+    font-family: "Open Sans", sans-serif;
   }
   .cmp-teaser__action-container {
   }
@@ -119,6 +129,7 @@
 }
 
 .hero-style-3 {
+  font-family: "Open Sans", sans-serif;
   position: relative;
   height: 31.25rem;
   overflow: hidden;
@@ -142,17 +153,21 @@
   }
 
   .cmp-teaser__title {
+    display: flex;
+    font-family: "Open Sans", sans-serif;
     font-size: 2.5rem;
-    font-weight: 700;
   }
 
   .cmp-teaser__title-link {
+    font-family: "Open Sans", sans-serif;
   }
   .cmp-teaser__description {
-    font-size: 1.375srem;
-    width: 42.875rem;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.375rem;
+    width: 42%;
   }
   .cmp-teaser__action-container {
+    font-family: "Open Sans", sans-serif;
     width: 14.125rem;
   }
   .cmp-teaser__action-link {
@@ -161,6 +176,7 @@
 
 .hero-style-4 {
 }
+
 
 /* END OF TEMP TEASER*/
 
