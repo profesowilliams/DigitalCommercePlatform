@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<IActionResult> GetByIds(
             [FromQuery(Name = "id")] List<string> ids, bool details = true)
         {
-            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("Find")]
         public async Task<IActionResult> Search([FromQuery] FindModel search)
         {
-            var response = await Mediator.Send(new SearchQuoteHandler.Request(search)).ConfigureAwait(false);
+            var response = await Mediator.Send(new SearchQuoteHandler.Request(search, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
