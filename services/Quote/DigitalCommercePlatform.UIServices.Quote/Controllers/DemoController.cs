@@ -118,8 +118,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             using (var reader = System.IO.File.OpenText(filename))
             {
                 var fileContent = await reader.ReadToEndAsync();
-                var result = new GetTdQuotesForGridResponse(fileContent);
-                dynamic response = JObject.Parse(result.Content);
+                dynamic response = JObject.Parse(fileContent);
                 return Ok(response);
             }
         }

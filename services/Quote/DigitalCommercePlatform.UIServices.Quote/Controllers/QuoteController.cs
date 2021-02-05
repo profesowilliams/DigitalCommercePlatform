@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("GetTdQuotesForGrid")]
         public async Task<IActionResult> GetTdQuotesForGrid(string creator)
         {
-            var response = await Mediator.Send(new GetTdQuotesForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(creator, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -110,8 +110,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
                     ? StatusCodes.Status401Unauthorized
                     : StatusCodes.Status500InternalServerError);
             }
-            dynamic result = JObject.Parse(response.Content);
-            return Ok(result);
+            return Ok(response.Content);
         }
 
         [HttpGet]
