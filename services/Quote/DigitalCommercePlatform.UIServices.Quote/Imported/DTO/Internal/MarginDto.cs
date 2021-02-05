@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalFoundation.Core.Services.Quote.DTO.Internal
+namespace DigitalFoundation.App.Services.Quote.DTO.Internal
 {
     [ExcludeFromCodeCoverage]
     public class MarginDto

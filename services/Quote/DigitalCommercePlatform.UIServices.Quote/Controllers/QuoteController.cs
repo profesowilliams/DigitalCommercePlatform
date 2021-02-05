@@ -1,5 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
-using DigitalFoundation.AppServices.Quote.Models;
+using DigitalFoundation.App.Services.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;

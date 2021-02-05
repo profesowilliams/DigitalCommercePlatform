@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DigitalFoundation.AppServices.Quote.Models.Quote;
+using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using MediatR;
