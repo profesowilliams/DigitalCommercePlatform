@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalFoundation.AppServices.Quote.Models;
 using System.IO;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
