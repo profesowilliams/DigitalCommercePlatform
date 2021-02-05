@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
+﻿using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,25 +17,21 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
-    [Route("/v{apiVersion}")]
+    [Route("/v{apiVersion}/demo")]
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
     public class DemoController : BaseUIServiceController
     {
-        //private readonly ILogger<QuoteController> _logger;
-
         public DemoController(
             IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
             IOptions<AppSettings> options,
             ISiteSettings siteSettings
-            //IHttpContextAccessor httpContextAccessor,
-            //IUserIdentity userIdentity,
             )
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
-            //_logger = loggerFactory.BeginScope<QuoteController>();
         }
+
         [HttpGet]
         [Route("testQuoteAPI")]
         public string Test([FromQuery] string name)
@@ -42,28 +40,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         }
 
         [HttpGet]
-        [Route("getQuotes")]
-        public JsonStringResult GetQuotes([FromQuery] string countryCode)
-        {
-            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\Data\TDQuotes.json";
-            string content = System.IO.File.ReadAllText(filename);
-            return new JsonStringResult(content);
-        }
-        public class JsonStringResult : ContentResult
-        {
-            public JsonStringResult(string json)
-            {
-                Content = json;
-                ContentType = "application/json";
-            }
-        }
-
-        [HttpGet]
         [Route("GetQuoteSummaryList")]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public static async Task<IEnumerable<QuoteSummaryResponse>> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        public static IEnumerable<QuoteSummaryResponse> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
         {
             var quote1 = new QuoteSummaryResponse()
             {
@@ -86,17 +64,65 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("GetDealsForGrid")]
+        public async Task<IActionResult> GetDealsForGrid(string creator)
+        {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\Demo\Deals.json";
+            using (var reader = System.IO.File.OpenText(filename))
+            {
+                var fileContent = await reader.ReadToEndAsync();
+                var result = new GetDealsForGridResponse(fileContent);
+                dynamic response = JObject.Parse(result.Content);
+                return Ok(response);
+            }
+        }
 
-        //[httpget]
-        //[route("getquote")]
-        //public async task<responsedto<list<quotedto>>> getquote(string id)
-        //{
-        //    var jsonresult = await this.get(id);
+        [HttpGet]
+        [Route("GetConfigsForGrid")]
+        public async Task<IActionResult> GetConfigsForGrid(string creator)
+        {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\Demo\Configs.json";
+            using (var reader = System.IO.File.OpenText(filename))
+            {
+                var fileContent = await reader.ReadToEndAsync();
+                var result = new GetConfigsForGridResponse(fileContent);
+                dynamic response = JObject.Parse(result.Content);
+                return Ok(response);
+            }
+        }
 
-        //    var quote = jsonserializer.deserialize<responsedto<list<quotedto>>>(jsonresult.content, getjsonserializeroptions());
+        [HttpGet]
+        [Route("GetRenewalsForGrid")]
+        public async Task<IActionResult> GetRenewalsForGrid(string creator)
+        {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\Demo\Renewals.json";
+            using (var reader = System.IO.File.OpenText(filename))
+            {
+                var fileContent = await reader.ReadToEndAsync();
+                var result = new GetRenewalsForGridResponse(fileContent);
+                dynamic response = JObject.Parse(result.Content);
+                return Ok(response);
+            }
+        }
 
-        //    return quote;
-        //}
+        [HttpGet]
+        [Route("GetTdQuotesForGrid")]
+        public async Task<IActionResult> GetTdQuotesForGrid(string creator)
+        {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\Demo\TDQuotes.json";
+            using (var reader = System.IO.File.OpenText(filename))
+            {
+                var fileContent = await reader.ReadToEndAsync();
+                var result = new GetTdQuotesForGridResponse(fileContent);
+                dynamic response = JObject.Parse(result.Content);
+                return Ok(response);
+            }
+        }
 
         private static JsonSerializerOptions GetJsonSerializerOptions()
         {

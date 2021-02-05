@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public async Task<GetTdQuotesForGridResponse> Handle(GetTdQuotesForGridRequest request, CancellationToken cancellationToken)
         {
             string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\Data\TDQuotes.json";
+            string filename = dir + @"\Demo\TDQuotes.json";
             using (var reader = File.OpenText(filename))
             {
                 var fileContent = await reader.ReadToEndAsync();
