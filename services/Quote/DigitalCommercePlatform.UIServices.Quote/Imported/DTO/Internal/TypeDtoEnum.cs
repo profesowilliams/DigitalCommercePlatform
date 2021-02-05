@@ -1,4 +1,4 @@
-﻿namespace DigitalFoundation.Core.Services.Quote.DTO.Internal
+﻿namespace DigitalFoundation.App.Services.Quote.DTO.Internal
 {
     public enum TypeDtoEnum
     {

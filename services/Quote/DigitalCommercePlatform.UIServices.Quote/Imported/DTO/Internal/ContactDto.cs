@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalFoundation.Core.Publishers.Quote.Internal
+namespace DigitalFoundation.App.Services.Quote.DTO.Internal
 {
     [ExcludeFromCodeCoverage]
     public class ContactDto

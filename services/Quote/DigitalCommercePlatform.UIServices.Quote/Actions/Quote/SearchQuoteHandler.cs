@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using DigitalFoundation.Common.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
-using DigitalFoundation.AppServices.Quote.Models;
-using DigitalFoundation.AppServices.Quote.Models.Quote;
+using DigitalFoundation.App.Services.Quote.Models;
+using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Core.Models.DTO.Common;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
