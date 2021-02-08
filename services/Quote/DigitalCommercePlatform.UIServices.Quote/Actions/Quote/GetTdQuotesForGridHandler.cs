@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Quote.Models;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Core.Models.DTO.Common;
@@ -6,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -30,12 +32,12 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Response
         {
-            public PaginatedResponse<IEnumerable<QuoteModel>> Content { get; set; }
+            public PaginatedResponse<IEnumerable<TdQuoteForGrid>> Content { get; set; }
 
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
 
-            public Response(PaginatedResponse<IEnumerable<QuoteModel>> model)
+            public Response(PaginatedResponse<IEnumerable<TdQuoteForGrid>> model)
             {
                 Content = model;
             }
@@ -43,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Handler : IRequestHandler<Request, Response>
         {
+            private readonly IMapper _mapper;
             private readonly IMiddleTierHttpClient _client;
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
@@ -53,6 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
+                _mapper = mapper;
                 _client = client;
                 _httpClientFactory = httpClientFactory;
                 _logger = logger;
@@ -80,8 +84,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var data = JsonSerializer.Deserialize<PaginatedResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
-                    var result = new Response(data);
+                    var quotes = JsonSerializer.Deserialize<PaginatedResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
+
+                    var quotesOutput = _mapper.Map<PaginatedResponse<IEnumerable<TdQuoteForGrid>>>(quotes);
+                    var result = new Response(quotesOutput);
                     return result;
                 }
                 catch (Exception ex)
