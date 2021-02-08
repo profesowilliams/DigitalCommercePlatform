@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIService.Order.DTO.SalesOrder.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Order.DTO.SalesOrder.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class AgreementDto
     {
         public string ID { get; set; }

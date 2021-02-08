@@ -6,6 +6,9 @@ using DigitalCommercePlatform.UIService.Order.Model.SalesOrder.Internal;
 using DigitalCommercePlatform.UIService.Order.Models;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder.Internal;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
+using DigitalCommercePlatform.UIService.Order.Services;
 
 namespace DigitalCommercePlatform.UIService.Order.AutoMapper
 {
@@ -14,7 +17,7 @@ namespace DigitalCommercePlatform.UIService.Order.AutoMapper
     {
         public OrderProfile()
         {
-            CreateMap<AddressDto, AddressModel>();
+            CreateMap<DTO.SalesOrder.Internal.AddressDto, AddressModel>();
             CreateMap<AgreementDto, AgreementModel>();
             CreateMap<DeliveryDto, DeliveryModel>();
             CreateMap<EndUserReferenceDto, EndUserReferenceModel>();
@@ -35,6 +38,23 @@ namespace DigitalCommercePlatform.UIService.Order.AutoMapper
             CreateMap<SummaryDto, SummaryModel>();
 
             CreateMap<FindRequestModel, FindRequestDto>();
+
+
+            CreateMap<OrderDto, OrderResponse>()
+                .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Name))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom<CustomPriceResolver>());
+
+            CreateMap<ItemModelDto, OrderLineResponse>();
+        }
+    }
+
+    public class CustomPriceResolver : IValueResolver<OrderDto, OrderResponse, string>
+    {
+        public string Resolve(OrderDto source, OrderResponse destination, string destMember, ResolutionContext context)
+        {
+            return $"{source.Price} {source.Currency}";
         }
     }
 
