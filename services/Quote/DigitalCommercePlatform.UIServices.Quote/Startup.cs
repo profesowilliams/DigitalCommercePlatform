@@ -1,3 +1,4 @@
+using AutoMapper;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using MediatR;
@@ -20,7 +21,8 @@ namespace DigitalCommercePlatform.UIServices.Quote
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services.AddAutoMapper(typeof(Startup));
+            services.AddMvc().AddNewtonsoftJson();
         }
     }
 }

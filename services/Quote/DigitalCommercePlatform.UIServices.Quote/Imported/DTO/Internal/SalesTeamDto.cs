@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalFoundation.Core.Publishers.Quote.Internal
+namespace DigitalFoundation.App.Services.Quote.DTO.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SalesTeamDto : Core.Services.Quote.DTO.Internal.PartnerDto
+    public class SalesTeamDto
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public ContactDto Contact { get; set; }
     }
 }

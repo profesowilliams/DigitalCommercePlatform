@@ -15,18 +15,19 @@
       .cmp-accordion__button{
           color: white;
           font-size: .75rem;
-          font-weight: 500;
+          font-weight: 700;
           border: none;
+          background-color: transparent;
       }
       .cmp-accordion__button[aria-expanded="false"]::after{
           content: '\A0 \A0 \25BA';
-          font-size: .313rem;
-          vertical-align: 15%;
+          font-size: .0.375rem;
+          vertical-align: auto;
       }
       .cmp-accordion__button[aria-expanded="true"]::after{
           content: '\A0 \A0 \25BC';
-          font-size: .313rem;
-          vertical-align: 15%;
+          font-size: .0.375rem;
+          vertical-align: auto;
       }
 
       &-padding{

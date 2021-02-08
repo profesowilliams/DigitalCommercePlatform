@@ -41,14 +41,6 @@
               text-align: right;
           }
       }
-
-      &-font{
-          &-bold{
-              .dp-title__text{
-                  font-weight: bold;
-              }
-          }
-      }
   }
 
   &__link{
@@ -56,12 +48,15 @@
   }
 
   &__plus-sign{
-      position: relative;
-      background-color: #00B1E2;
-      color: #ffff;
-      padding: 0px 3px 0px 3px;
-      font-size: 1.188rem;
-      vertical-align: top;
+    position: absolute;
+    background-color: #00B1E2;
+    color: #ffff;
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1rem;
+    vertical-align: top;
+    text-align: center;
+    margin-left: .5rem;
 
       &-white-on-blue{
           .dp-title__plus-sign{
