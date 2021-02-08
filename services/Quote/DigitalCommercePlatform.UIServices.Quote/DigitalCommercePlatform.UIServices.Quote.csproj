@@ -23,10 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapper\" />
     <Folder Include="DTO\Request\" />
     <Folder Include="Helpers\" />
-    <Folder Include="AutoMapper\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

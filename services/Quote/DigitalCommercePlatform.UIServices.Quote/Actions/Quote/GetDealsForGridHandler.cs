@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public async Task<GetDealsForGridResponse> Handle(GetDealsForGridRequest request, CancellationToken cancellationToken)
         {
             string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\Data\Deals.json";
+            string filename = dir + @"\Demo\Deals.json";
             using (var reader = File.OpenText(filename))
             {
                 var fileContent = await reader.ReadToEndAsync();
