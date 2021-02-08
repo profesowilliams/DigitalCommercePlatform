@@ -10,25 +10,21 @@
     <Compile Remove="Actions\Product\**" />
     <Compile Remove="Helpers\**" />
     <Compile Remove="HttpClients\**" />
-    <Compile Remove="Services\**" />
     <Compile Remove="Service\**" />
     <Compile Remove="Validators\**" />
     <Content Remove="Actions\Product\**" />
     <Content Remove="Helpers\**" />
     <Content Remove="HttpClients\**" />
-    <Content Remove="Services\**" />
     <Content Remove="Service\**" />
     <Content Remove="Validators\**" />
     <EmbeddedResource Remove="Actions\Product\**" />
     <EmbeddedResource Remove="Helpers\**" />
     <EmbeddedResource Remove="HttpClients\**" />
-    <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="Service\**" />
     <EmbeddedResource Remove="Validators\**" />
     <None Remove="Actions\Product\**" />
     <None Remove="Helpers\**" />
     <None Remove="HttpClients\**" />
-    <None Remove="Services\**" />
     <None Remove="Service\**" />
     <None Remove="Validators\**" />
   </ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder;
 using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder;
 using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
@@ -74,6 +76,28 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
                 else
                     return Ok(findSummaryResponse);
             }
+        }
+
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersAsync([FromQuery] string orderBy)
+        {
+            var ordersResponse = await Mediator.Send(new GetOrdersQuery(orderBy));
+            return Ok(ordersResponse);
+        }
+
+        [HttpGet]
+        [Route("orders/{id}/lines")]
+        public async Task<ActionResult<IEnumerable<OrderLineResponse>>> GetOrderLinesAsync([FromRoute] string id)
+        {
+            var orderLinesResponse = await Mediator.Send(new GetOrderLinesQuery(id));
+
+            if (orderLinesResponse == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(orderLinesResponse);
         }
     }
 }
