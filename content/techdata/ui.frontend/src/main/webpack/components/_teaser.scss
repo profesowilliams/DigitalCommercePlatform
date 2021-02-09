@@ -184,6 +184,7 @@
 .dp-teaser{
   &__card{
       padding: 2.55rem 0.55rem;
+      
       .cmp-teaser{
           position: relative;
           display: flex;
@@ -209,7 +210,10 @@
         padding-bottom: 1.5rem;
         font-size: 1.3125rem;
         margin-top: 0;
-
+        .cmp-teaser__title-link{
+          text-decoration: none;
+          color: #000C21;
+        }
     }
       .cmp-teaser__image{
           img{
