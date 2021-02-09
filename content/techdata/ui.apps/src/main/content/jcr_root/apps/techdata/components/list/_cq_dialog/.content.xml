@@ -16,6 +16,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:orderBefore="linkItems"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldDescription="Handle the content type for each item."
                                                 fieldLabel="Type"
                                                 name="./itemType">
                                                 <items jcr:primaryType="nt:unstructured">
@@ -25,7 +26,7 @@
                                                         value="item"/>
                                                     <article
                                                         jcr:primaryType="nt:unstructured"
-                                                        text="Article"
+                                                        text="Item with image"
                                                         value="article"/>
                                                 </items>
                                             </itemType>
