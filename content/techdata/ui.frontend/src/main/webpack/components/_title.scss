@@ -5,6 +5,7 @@
 .dp-title{
   &__text{
       color: #000C21;
+      font-weight: 300;
       &--gray{
           .dp-title__text, .dp-title__link{
               color: #5D6165 !important;
@@ -41,6 +42,14 @@
               text-align: right;
           }
       }
+
+        &-font{
+            &-bold{
+                .dp-title__text{
+                    font-weight: 700;
+                }
+            }
+        }    
   }
 
   &__link{
