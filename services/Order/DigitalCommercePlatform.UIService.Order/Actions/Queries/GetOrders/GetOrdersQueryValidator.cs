@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIService.Order.Services;
+﻿using DigitalCommercePlatform.UIService.Order.Services.Contracts;
 using FluentValidation;
 using System;
 

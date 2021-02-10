@@ -1,7 +1,8 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIService.Order.Services.Contracts;
+using System;
 using System.Collections.Generic;
 
-namespace DigitalCommercePlatform.UIService.Order.Services
+namespace DigitalCommercePlatform.UIService.Order.Services.Implementations
 {
     public class SortingService : ISortingService
     {
@@ -32,9 +33,9 @@ namespace DigitalCommercePlatform.UIService.Order.Services
 
         public (string sortingProperty, bool sortAscending) GetSortingParameters(string sortingValue)
         {
-            if(string.IsNullOrWhiteSpace(sortingValue))
+            if (string.IsNullOrWhiteSpace(sortingValue))
             {
-                return ("ID", true);
+                return ("CREATED", true);
             }
 
             var propertyNameWithoutSortingType = GetPropertyName(sortingValue);
@@ -42,7 +43,7 @@ namespace DigitalCommercePlatform.UIService.Order.Services
 
             bool sortDescending = sortingValue.Trim().EndsWith(" desc", StringComparison.OrdinalIgnoreCase);
             bool sortAscending = !sortDescending;
-            
+
             return (sortingProperty, sortAscending);
         }
 
@@ -55,7 +56,7 @@ namespace DigitalCommercePlatform.UIService.Order.Services
         private string GetPropertyName(string sortingValue)
         {
             var sortingValueAfterTrim = sortingValue.Trim();
-            var indexOfFirstSpace = sortingValueAfterTrim.IndexOf(" ",StringComparison.OrdinalIgnoreCase);
+            var indexOfFirstSpace = sortingValueAfterTrim.IndexOf(" ", StringComparison.OrdinalIgnoreCase);
             var propertyNameWithoutSortingType = indexOfFirstSpace == -1 ? sortingValueAfterTrim : sortingValueAfterTrim.Remove(indexOfFirstSpace);
             return propertyNameWithoutSortingType;
         }

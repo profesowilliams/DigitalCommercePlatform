@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.Services;
+using DigitalCommercePlatform.UIService.Order.Services.Contracts;
 using MediatR;
 using System;
 using System.Collections.Generic;

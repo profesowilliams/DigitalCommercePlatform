@@ -1,4 +1,5 @@
-using DigitalCommercePlatform.UIService.Order.Services;
+using DigitalCommercePlatform.UIService.Order.Services.Contracts;
+using DigitalCommercePlatform.UIService.Order.Services.Implementations;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using Microsoft.AspNetCore.Builder;

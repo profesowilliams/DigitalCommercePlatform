@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIService.Order.Services
+﻿namespace DigitalCommercePlatform.UIService.Order.Models.Order
 {
     public enum Status { UNDEFINED = 0, OPEN = 'A', PROCESSING = 'B', COMPLETED = 'C', MAY_NOT_OCCUR = ' ' };
 }
