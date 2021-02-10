@@ -213,6 +213,7 @@
         .cmp-teaser__title-link{
           text-decoration: none;
           color: #000C21;
+          line-height: 1.5rem;
         }
     }
       .cmp-teaser__image{
@@ -234,11 +235,13 @@
           padding-left: 1.5rem;
 
           p{
-              font-size: 0.8125rem ;
+              color: #676C71;
+              font-size: 0.875rem ;
               font-weight: 300;
               margin-top: 0;
               margin-bottom: 1rem;
               word-wrap: break-word;
+              line-height: 1.188rem;
           }
       }
   }
