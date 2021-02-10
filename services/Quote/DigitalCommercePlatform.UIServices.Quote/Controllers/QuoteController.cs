@@ -1,5 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
-using DigitalFoundation.AppServices.Quote.Models;
+using DigitalFoundation.App.Services.Quote.Models;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public async Task<IActionResult> GetByIds(
             [FromQuery(Name = "id")] List<string> ids, bool details = true)
         {
-            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("Find")]
         public async Task<IActionResult> Search([FromQuery] FindModel search)
         {
-            var response = await Mediator.Send(new SearchQuoteHandler.Request(search)).ConfigureAwait(false);
+            var response = await Mediator.Send(new SearchQuoteHandler.Request(search, Context.AccessToken)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -95,9 +95,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         [HttpGet]
         [Route("GetTdQuotesForGrid")]
-        public async Task<IActionResult> GetTdQuotesForGrid(string creator)
+        public async Task<IActionResult> GetTdQuotesForGrid(string createdBy, string sortBy, bool sortAscending)
         {
-            var response = await Mediator.Send(new GetTdQuotesForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(Context.AccessToken, createdBy, sortBy, sortAscending)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -110,8 +110,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
                     ? StatusCodes.Status401Unauthorized
                     : StatusCodes.Status500InternalServerError);
             }
-            dynamic result = JObject.Parse(response.Content);
-            return Ok(result);
+            return Ok(response.Content);
         }
 
         [HttpGet]

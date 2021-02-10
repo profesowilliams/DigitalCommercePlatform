@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder
 {
     [ExcludeFromCodeCoverage]
-    public sealed class FindOrder
+    public class FindOrder
     {
         public class Request : IRequest<Response>
         {
@@ -23,48 +24,68 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrd
         {
             public long Count { get; set; }
             public IEnumerable<SalesOrderModel> Data { get; set; }
-
             public Response(IEnumerable<SalesOrderModel> orders)
             {
                 Data = orders;
             }
         }
-
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IMiddleTierHttpClient _client;
             private readonly ILogger<Handler> _logger;
-
-            //private readonly IMapper _mapper;
-            private readonly string _AppOrderUrl;
+            private readonly string _appOrderUrl;
 
             public Handler(IMiddleTierHttpClient client, ILogger<Handler> logger)
             {
-                //_mapper = mapper;
                 _client = client ?? throw new ArgumentNullException(nameof(client));
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-                //TODO : Could be better to move URL-value into appsettings.json
-                _AppOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
+                _appOrderUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/Find";
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+
                 try
                 {
                     _logger.LogInformation($"UIService.Order.FindOrder");
-                    var url = $"{_AppOrderUrl}/"
-                       .BuildQuery(request)
-                       ;
 
-                    var data = await _client.GetAsync<Response>(url).ConfigureAwait(false);
-                    return data;
+                    //------------Need to implement passing the headers to the client-------------------------
+                    //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
+                    //_client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
+                    //_client.DefaultRequestHeaders.Add("Accept-Language", "en-us");
+                    //_client.DefaultRequestHeaders.Add("Site", "NA");
+                    //_client.DefaultRequestHeaders.Add("Consumer", "NA");
+
+                    var url = _appOrderUrl.BuildQuery(request);
+
+                    var appResponse = await _client.GetAsync<Response>(url).ConfigureAwait(false);
+                    return appResponse;
+
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at: " + nameof(FindOrder));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(r => r).Cascade(CascadeMode.Stop).NotNull()
+                .ChildRules(re =>
+                re.RuleFor(r => r.SearchQuery).Cascade(CascadeMode.Stop).NotNull()
+                .ChildRules(request =>
+                {
+                    request.RuleFor(r => r.Page).GreaterThanOrEqualTo(0);
+                    request.RuleFor(r => r.PageSize).GreaterThan(0);
+                    request.RuleFor(r => r.CreatedFrom).LessThan(DateTime.Now)
+                        .WithMessage($"{nameof(Request.SearchQuery.CreatedFrom)} can't be in the future.");
+
+                    request.RuleFor(r => r.CreatedTo).LessThanOrEqualTo(DateTime.Now)
+                        .WithMessage($"{nameof(Request.SearchQuery.CreatedTo)} can't be in the future.");
+                }));
             }
         }
     }

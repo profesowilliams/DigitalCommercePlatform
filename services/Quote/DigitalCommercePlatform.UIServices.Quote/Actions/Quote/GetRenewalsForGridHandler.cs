@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalFoundation.AppServices.Quote.Models;
 using System.IO;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
@@ -50,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public async Task<GetRenewalsForGridResponse> Handle(GetRenewalsForGridRequest request, CancellationToken cancellationToken)
         {
             string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\Data\Renewals.json";
+            string filename = dir + @"\Demo\Renewals.json";
             using (var reader = File.OpenText(filename))
             {
                 var fileContent = await reader.ReadToEndAsync();

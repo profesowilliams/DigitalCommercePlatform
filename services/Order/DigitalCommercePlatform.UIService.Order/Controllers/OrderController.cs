@@ -1,6 +1,8 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofMultipleOrder;
 using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailsofOrder;
 using DigitalCommercePlatform.UIService.Order.Actions.Order.DetailstoFindOrder;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders;
 using DigitalCommercePlatform.UIService.Order.Models.SalesOrder;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
@@ -10,12 +12,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Order.Controllers
@@ -25,31 +24,21 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
     [Route("v{version:apiVersion}")]
     public class OrderController : BaseUIServiceController
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
+        
         public OrderController(
             IMediator mediator,
             ILogger<OrderController> logger,
             IContext context,
             IOptions<AppSettings> settings,
-            ISiteSettings siteSettings,
-            IHttpClientFactory httpClientFactory)
+            ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)
         {
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
         [HttpGet]
         [Route("id")]
         public async Task<SalesOrderModel> GetAsync(string id)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-
             var response = await Mediator.Send(new GetOrder.Request { Id = id }).ConfigureAwait(false);
             return response;
         }
@@ -58,12 +47,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
         [Route("")]
         public async Task<IEnumerable<SalesOrderModel>> GetMultiple([FromQuery(Name = "id")] List<string> id)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
             var response = await Mediator.Send(new GetMultipleOrders.Request()
             {
                 Id = id
@@ -75,13 +58,6 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
         [Route("Find")]
         public async Task<IActionResult> SearchAsync([FromQuery] FindRequestModel search)
         {
-            HttpClient httpClient = _httpClientFactory.CreateClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Context.AccessToken);
-            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-            httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-            httpClient.DefaultRequestHeaders.Add("Site", "NA");
-            httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-
             if (ObjectExtensions.PassThrowNonNull(search).Details)
             {
                 var findResponse = await Mediator.Send(new FindOrder.Request { SearchQuery = search }).ConfigureAwait(false);
@@ -100,6 +76,28 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
                 else
                     return Ok(findSummaryResponse);
             }
+        }
+
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersAsync([FromQuery] string orderBy)
+        {
+            var ordersResponse = await Mediator.Send(new GetOrdersQuery(orderBy));
+            return Ok(ordersResponse);
+        }
+
+        [HttpGet]
+        [Route("orders/{id}/lines")]
+        public async Task<ActionResult<IEnumerable<OrderLineResponse>>> GetOrderLinesAsync([FromRoute] string id)
+        {
+            var orderLinesResponse = await Mediator.Send(new GetOrderLinesQuery(id));
+
+            if (orderLinesResponse == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(orderLinesResponse);
         }
     }
 }

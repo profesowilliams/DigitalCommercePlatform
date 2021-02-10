@@ -1,0 +1,31 @@
+{
+  "returnObject": [
+    {
+      "tdQuoteId": "OB107314032YE",
+      "myQuoteReference": "CDW Logistics Inc",
+      "endUserName": "CDW Logistics Inc",
+      "dealId": "41256154",
+      "quoteValue": "1,104,811.50 GBP",
+      "quoteCreationDate": "2019-10-07",
+      "quoteExpirationDate": "2019-12-07"
+    },
+    {
+      "tdQuoteId": "JE107347075XZ",
+      "myQuoteReference": "Davidson Russell Holdings",
+      "endUserName": "Davidson Russell Holdings",
+      "dealId": "41256154",
+      "quoteValue": "906,754.19 GBP",
+      "quoteCreationDate": "2019-10-07",
+      "quoteExpirationDate": "2019-12-07"
+    },
+    {
+      "tdQuoteId": "GN107413162RS",
+      "myQuoteReference": "Los Angeles Public Works",
+      "endUserName": "Los Angeles Public Works",
+      "dealId": "JE107347075XZ",
+      "quoteValue": "10,420.00 GBP",
+      "quoteCreationDate": "2019-10-08",
+      "quoteExpirationDate": "2019-12-08"
+    }
+  ]
+}

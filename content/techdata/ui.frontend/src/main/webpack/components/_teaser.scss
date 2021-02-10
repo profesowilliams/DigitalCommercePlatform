@@ -272,23 +272,81 @@
 			padding-right: 1.5rem;
 			padding-left: 1.5rem;
 
-			p {
-				font-size: 0.8125rem;
-				font-weight: 300;
-				margin-top: 0;
-				margin-bottom: 1rem;
-				word-wrap: break-word;
-			}
-		}
-	}
-	&__card-image--rounded {
-		padding: 8.55rem 0.55rem;
-		.cmp-teaser__image {
-			img {
-				border: 1.2rem solid #020b20;
-				width: 16rem;
-				height: 16rem;
-			}
-		}
-	}
+.dp-teaser{
+  &__card{
+      padding: 2.55rem 0.55rem;
+
+      .cmp-teaser{
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          background-color: #fff;
+          background-clip: border-box;
+          border: 1px solid #dee2e6;
+          border-width: 2px;
+          border-radius: 0;
+          border-color: #EAEAEA ;
+          &:hover{
+            box-shadow: 0 0 6px #00b1e2;
+          }
+      }
+      .cmp-teaser__content{
+          display: flex;
+          flex-direction: column-reverse;
+      }
+      .cmp-teaser__title{
+        text-align: center;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        font-size: 1.3125rem;
+        margin-top: 0;
+        .cmp-teaser__title-link{
+          text-decoration: none;
+          color: #000C21;
+          line-height: 1.5rem;
+        }
+    }
+      .cmp-teaser__image{
+          img{
+              border-radius: 50%;
+              width: 6.625rem;
+              height: 6.625rem;
+              position: relative;
+              left: 50%;
+              top: 0;
+              transform: translateX(-50%) translateY(-50%);
+          }
+      }
+      .cmp-teaser__description{
+          flex: 1 1 auto;
+          padding: 1rem 1rem;
+          padding-top: 0;
+          padding-right: 1.5rem;
+          padding-left: 1.5rem;
+
+          p{
+              color: #676C71;
+              font-size: 0.875rem ;
+              font-weight: 300;
+              margin-top: 0;
+              margin-bottom: 1rem;
+              word-wrap: break-word;
+              line-height: 1.188rem;
+          }
+      }
+  }
+  &__card-image--rounded{
+      padding: 8.55rem 0.55rem;
+      .cmp-teaser__image{
+          img{
+
+              border: 1.2rem solid #020B20;
+              width: 16rem;
+              height: 16rem;
+
+          }
+      }
+  }
 }
+

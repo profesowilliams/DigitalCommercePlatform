@@ -16,6 +16,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:orderBefore="linkItems"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldDescription="Handle the content type for each item."
                                                 fieldLabel="Type"
                                                 name="./itemType">
                                                 <items jcr:primaryType="nt:unstructured">
@@ -25,7 +26,7 @@
                                                         value="item"/>
                                                     <article
                                                         jcr:primaryType="nt:unstructured"
-                                                        text="Article"
+                                                        text="Item with image"
                                                         value="article"/>
                                                 </items>
                                             </itemType>
@@ -35,30 +36,6 @@
                             </columns>
                         </items>
                     </itemSettings>
-                    <styles
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Styles"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <customClassesList
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                emptyText=""
-                                fieldDescription="Custom classes for the List."
-                                fieldLabel="customClassesList"
-                                name="./customClassesList"
-                                required="{Boolean}false"/>
-                            <customClassesItem
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                emptyText=""
-                                fieldDescription="Custom classes for the Items."
-                                fieldLabel="customClassesItem"
-                                name="./customClassesItem"
-                                required="{Boolean}false"/>
-                        </items>
-                    </styles>
                 </items>
             </tabs>
         </items>
