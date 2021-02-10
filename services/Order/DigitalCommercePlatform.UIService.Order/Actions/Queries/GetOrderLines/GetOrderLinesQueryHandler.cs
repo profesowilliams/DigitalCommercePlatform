@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.Services;
+using DigitalCommercePlatform.UIService.Order.Services.Contracts;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines
                 return null;
             }
 
-            var orderLinesResponse = _mapper.Map<IEnumerable<OrderLineResponse>>(order.Items);
+            var orderLinesResponse = _mapper.Map<IEnumerable<OrderLineResponse>>(order.Items); 
             return orderLinesResponse;
         }
     }

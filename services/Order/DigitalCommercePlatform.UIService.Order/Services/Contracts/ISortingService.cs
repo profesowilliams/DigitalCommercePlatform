@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIService.Order.Services
+﻿namespace DigitalCommercePlatform.UIService.Order.Services.Contracts
 {
     public interface ISortingService
     {
