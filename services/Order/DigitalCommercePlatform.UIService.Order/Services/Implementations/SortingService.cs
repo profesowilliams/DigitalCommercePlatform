@@ -39,6 +39,12 @@ namespace DigitalCommercePlatform.UIService.Order.Services.Implementations
             }
 
             var propertyNameWithoutSortingType = GetPropertyName(sortingValue);
+
+            if (!_propertiesMapping.ContainsKey(propertyNameWithoutSortingType))
+            {
+                return ("CREATED", true);
+            }
+
             var sortingProperty = _propertiesMapping[propertyNameWithoutSortingType];
 
             bool sortDescending = sortingValue.Trim().EndsWith(" desc", StringComparison.OrdinalIgnoreCase);
