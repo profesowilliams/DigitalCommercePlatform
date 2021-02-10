@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Quote.Models;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Core.Models.DTO.Common;
+using Flurl;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,13 +21,17 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     {
         public class Request : IRequest<Response>
         {
-            public string CreatedBy { get; }
             public string AccessToken { get; }
+            public string CreatedBy { get; }
+            public string SortBy { get; }
+            public bool SortAscending { get; }
 
-            public Request(string createdBy, string accessToken)
+            public Request(string accessToken, string createdBy, string sortBy, bool sortAscending)
             {
-                CreatedBy = createdBy;
                 AccessToken = accessToken;
+                CreatedBy = createdBy;
+                SortBy = sortBy;
+                SortAscending = sortAscending;
             }
         }
 
@@ -73,7 +78,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
                     httpClient.DefaultRequestHeaders.Add("Site", "NA");
                     httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-                    var url = _appQuoteUrl + "find?createdBy=" + request.CreatedBy;
+                    var url = _appQuoteUrl
+                        .AppendPathSegment("find")
+                        .SetQueryParams(new
+                        {
+                            createdBy = request.CreatedBy,
+                            sortBy = request.SortBy,
+                            sortAscending = request.SortAscending,
+                        });
+
                     var httpRequest = new HttpRequestMessage()
                     {
                         RequestUri = new Uri(url),

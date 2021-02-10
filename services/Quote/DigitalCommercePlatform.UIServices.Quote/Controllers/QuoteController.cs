@@ -95,9 +95,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         [HttpGet]
         [Route("GetTdQuotesForGrid")]
-        public async Task<IActionResult> GetTdQuotesForGrid(string creator)
+        public async Task<IActionResult> GetTdQuotesForGrid(string createdBy, string sortBy, bool sortAscending)
         {
-            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(Context.AccessToken, createdBy, sortBy, sortAscending)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
