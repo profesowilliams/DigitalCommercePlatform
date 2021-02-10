@@ -1,5 +1,4 @@
 ﻿using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
-using DigitalCommercePlatform.UIServices.Quote.DTO.Response;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -37,31 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         public string Test([FromQuery] string name)
         {
             return "Welcome " + name + " !";
-        }
-
-        [HttpGet]
-        [Route("GetQuoteSummaryList")]
-        public static IEnumerable<QuoteSummaryResponse> GetQuoteSummaryList(string id, [FromQuery] bool details = true)
-        {
-            var quote1 = new QuoteSummaryResponse()
-            {
-                QuoteId = "123456",
-                EndUserName = "John Doe",
-                VendorReference = "ACME Corporation"
-            };
-            var quote2 = new QuoteSummaryResponse()
-            {
-                QuoteId = "8888888",
-                EndUserName = "Steve W.",
-                VendorReference = "At home"
-            };
-            var result = new List<QuoteSummaryResponse>()
-            {
-
-            };
-            result.Add(quote1);
-            result.Add(quote2);
-            return result;
         }
 
         [HttpGet]
