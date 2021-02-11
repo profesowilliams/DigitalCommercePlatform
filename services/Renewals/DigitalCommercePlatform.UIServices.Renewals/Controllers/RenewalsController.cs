@@ -38,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Controllers
 
 
         [HttpPost]
-        [Route("renewals/Find")]
+        [Route("Find")]
         public async Task<ActionResult> GetRenewals([FromBody] Models.FindModel criteria)
         {            
             var data = new GetMultipleRenewals.Request { Criteria = criteria };
@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Controllers
         }
 
         [HttpGet]
-        [Route("renewals/summary")]
+        [Route("summary")]
         public async Task<ActionResult> Getsummary([FromQuery] string days)
         {
             var data = new GetRenewalsSummary.Request { Criteria = days };
