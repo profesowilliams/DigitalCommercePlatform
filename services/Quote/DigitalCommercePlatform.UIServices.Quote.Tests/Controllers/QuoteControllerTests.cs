@@ -1,13 +1,4 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
+﻿using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Quote.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -19,6 +10,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
@@ -113,6 +110,23 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
 
             //assert
             _mockMediator.Verify(x => x.Send(It.IsAny<GetQuoteHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTdQuotesForGrid_ReturnsData(GetTdQuotesForGridHandler.Response expected)
+        {
+            //arrange
+            _mockMediator.Setup(x => x.Send(It.IsAny<GetTdQuotesForGridHandler.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
+            using var sut = GetController();
+
+            //act
+            _ = await sut.GetTdQuotesForGrid("NKALRA", "Created", false).ConfigureAwait(false);
+
+            //assert
+            _mockMediator.Verify(x => x.Send(It.IsAny<GetTdQuotesForGridHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         private QuoteController GetController()
