@@ -10,7 +10,8 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Models
         public string RenewalId { get; set; }
         public string VendorName { get; set; }
         public string RenewalNumber { get; set; }
-        public string ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
+        public string ExpirationDateToString { get; set; }
         public string QuoteNumber { get; set; }
         public int Quantity { get; set; }
         public Double Price { get; set; }

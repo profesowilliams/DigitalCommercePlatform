@@ -25,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
 
         public async Task<RenewalsDto> GetRenewalsAsync(GetMultipleRenewals.Request request)
         {
+            
             // Revisit when Renewal AppService is Ready
             //var url = _applicationServiceReturnUrl.AppendPathSegment("Find");
             //var getReturnsHttpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
@@ -41,12 +42,13 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
                 objRenewal = new Renewal();
                 var randomNumber = Convert.ToString(GetRandomNumber(10, 60));
                 var quantity = GetRandomNumber(1, 10);
-                var expirationDate = i > 9 ? i % 2 == 0 ? 3 : 0 : 0;
+                var expirationDate = i > 9 ? i % 2 == 0 ? GetRandomNumber(10, 100) : 0 : 0;
                 var price = GetRandomNumber(1, 50) + (i % 2 == 0 ? 0.35 : 0.75);
                 objRenewal.RenewalId = "R12345" + randomNumber;
                 objRenewal.VendorName = i % 2 == 0 ? "DELL" : "CISCO";
                 objRenewal.RenewalNumber = "RW58691" + randomNumber; ;
-                objRenewal.ExpirationDate = DateTime.Now.AddDays(expirationDate).ToShortDateString();
+                objRenewal.ExpirationDate = DateTime.Now.AddDays(expirationDate);
+                objRenewal.ExpirationDateToString = DateTime.Now.AddDays(expirationDate).ToShortDateString();
                 objRenewal.QuoteNumber = i % 3 == 0 ? "" : "Q40100930" + randomNumber;
                 objRenewal.Quantity = quantity;
                 objRenewal.Price = price;
@@ -74,6 +76,39 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
 
             return objReponse;
         }
+        /// <summary>
+        /// Need to revisit once we have app service call is ready
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public async Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(string criteria)
+        {
+            var findRequest = new FindModel
+            {
+                AuthToken = "",
+                CustomerId = "00380000",
+                UserId = "50546",
+                SortBy = "ExpirationDate"
+            };
+            var request = new GetMultipleRenewals.Request
+            {
+                Criteria = findRequest
+            };
+            var response = new RenewalsSummaryModel();
+            var apiResponse = await GetRenewalsAsync(request);
+
+            if (apiResponse.ListOfRenewals.Count > 0)
+            {
+                // read days from criteria once AEM(client) starts calling api 
+                response.ThirtyDays = apiResponse.ListOfRenewals.Where(x => x.ExpirationDate >= DateTime.Now.AddDays(30)).Count();
+                response.Today = apiResponse.ListOfRenewals.Where(x => x.ExpirationDate >= DateTime.Now.AddDays(1)).Count();
+                response.NinetyDays = apiResponse.ListOfRenewals.Where(x => x.ExpirationDate >= DateTime.Now.AddDays(90)).Count();
+                response.SixtyDays = apiResponse.ListOfRenewals.Where(x => x.ExpirationDate >= DateTime.Now.AddDays(60)).Count();
+            }
+
+            return response;
+        }
+
         public async Task<RenewalsDto> GetRenewalByIdAsync(string id)
         {
             throw new NotImplementedException();
@@ -83,6 +118,5 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
         {
             return getrandom.Next(min, max);
         }
-
     }
 }

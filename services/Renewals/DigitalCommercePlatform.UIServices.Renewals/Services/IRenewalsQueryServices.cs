@@ -11,5 +11,6 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
     {
         Task<RenewalsDto> GetRenewalByIdAsync(string id);
         Task<RenewalsDto> GetRenewalsAsync(GetMultipleRenewals.Request request);
+        Task <RenewalsSummaryModel> GetRenewalsSummaryAsync(string criteria);
     }
 }
