@@ -29,11 +29,13 @@
         <sly data-sly-test.isActive="${tab.name == tabs.activeItem}"/>
         <li role="tab"
             id="${tab.id}-tab"
+            data-sly-use.tabs="com.adobe.cq.wcm.core.components.models.Tabs"
+            data-sly-use.tabuse="${'tabicons.js' @ count=tabList.count}"
             class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
             aria-controls="${tab.id}-tabpanel"
             tabindex="${isActive ? '0' : '-1'}"
-            data-cmp-hook-tabs="tab">${tab.title} <img src="/content/dam/techdata/tech-data-dot-com/global/site/header-and-footer/Logo_TechData.png"   />
-            <sly data-sly-resource="${ './tabicons/item' @ resourceType='/apps/techdata/components/image', appendPath=tabsList.count}" />
+            data-cmp-hook-tabs="tab">${tab.title}
+            <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
         </li>
     </ol>
     <div data-sly-repeat.item="${tabs.items}"
