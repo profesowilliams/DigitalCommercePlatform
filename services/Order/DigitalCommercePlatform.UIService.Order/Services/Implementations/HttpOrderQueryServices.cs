@@ -30,7 +30,6 @@ namespace DigitalCommercePlatform.UIService.Order.Services.Implementations
             var getOrderByIdRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
 
             var apiOrdersClient = _clientFactory.CreateClient("apiServiceClient");
-            apiOrdersClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006DleOHWgGlAEPfewi4Krv2uIC"); // in future from Redis
 
             var getOrderByIdHttpResponse = await apiOrdersClient.SendAsync(getOrderByIdRequestMessage);
             getOrderByIdHttpResponse.EnsureSuccessStatusCode();
@@ -52,7 +51,6 @@ namespace DigitalCommercePlatform.UIService.Order.Services.Implementations
             var getOrdersHttpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
 
             var apiOrdersClient = _clientFactory.CreateClient("apiServiceClient");
-            apiOrdersClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006DleOHWgGlAEPfewi4Krv2uIC");
 
             var getOrdersHttpResponse = await apiOrdersClient.SendAsync(getOrdersHttpRequestMessage);
             getOrdersHttpResponse.EnsureSuccessStatusCode();

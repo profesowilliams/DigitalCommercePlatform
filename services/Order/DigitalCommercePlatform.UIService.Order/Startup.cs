@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIService.Order
                 options.Headers.Add("Accept-Language");
                 options.Headers.Add("Site");
                 options.Headers.Add("Consumer");
+                options.Headers.Add("Authorization");
             });
 
             services.AddTransient<IOrderQueryServices, HttpOrderQueryServices>();
