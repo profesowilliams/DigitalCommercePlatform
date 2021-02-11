@@ -1,0 +1,88 @@
+﻿using DigitalCommercePlatform.UIServices.Renewals.Actions.GetRenewals;
+using DigitalCommercePlatform.UIServices.Renewals.Models;
+using DigitalFoundation.Common.Extensions;
+using Flurl;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
+namespace DigitalCommercePlatform.UIServices.Renewals.Services
+{
+    public class HttpRenewalsQueryServices : IRenewalsQueryServices
+    {
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly string _applicationServiceReturnUrl;
+        private static readonly Random getrandom = new Random();
+        public HttpRenewalsQueryServices(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+            _applicationServiceReturnUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-renewals/v1/";
+        }
+
+
+        public async Task<RenewalsDto> GetRenewalsAsync(GetMultipleRenewals.Request request)
+        {
+            // Revisit when Renewal AppService is Ready
+            //var url = _applicationServiceReturnUrl.AppendPathSegment("Find");
+            //var getReturnsHttpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            //var apiReturnsClient = _clientFactory.CreateClient("apiServiceClient");
+            //var getOrdersHttpResponse = await apiReturnsClient.SendAsync(getReturnsHttpRequestMessage);
+            //var returnsDto = await getOrdersHttpResponse.Content.ReadAsAsync<RenewalsDto>();
+
+            var objRenewal = new Renewal();
+            var lstRenewals = new List<Renewal>();
+            Random rnd = new Random();
+
+            for (int i = 0; i < 30; i++)
+            {
+                objRenewal = new Renewal();
+                var randomNumber = Convert.ToString(GetRandomNumber(10, 60));
+                var quantity = GetRandomNumber(1, 10);
+                var expirationDate = i > 9 ? i % 2 == 0 ? 3 : 0 : 0;
+                var price = GetRandomNumber(1, 50) + (i % 2 == 0 ? 0.35 : 0.75);
+                objRenewal.RenewalId = "R12345" + randomNumber;
+                objRenewal.VendorName = i % 2 == 0 ? "DELL" : "CISCO";
+                objRenewal.RenewalNumber = "RW58691" + randomNumber; ;
+                objRenewal.ExpirationDate = DateTime.Now.AddDays(expirationDate).ToShortDateString();
+                objRenewal.QuoteNumber = i % 3 == 0 ? "" : "Q40100930" + randomNumber;
+                objRenewal.Quantity = quantity;
+                objRenewal.Price = price;
+                objRenewal.TotalPrice = price * (quantity + (i % 2 == 0 ? 0.35 : 0.75));
+                objRenewal.EndUserName = i % 2 == 0 ? "JACKSON COUNTY COURTHOUSE" : "WESTFIELD BANK";
+                objRenewal.ContractNumber = i % 2 == 0 ? "JAC150" + randomNumber : "WEST250" + quantity;
+                objRenewal.TDPartNumber = "131323" + randomNumber;
+                objRenewal.PartDescription = i % 2 == 0 ? "Dell Latitude 5520-15.6' - Core i7 1185G7 - vPro - 16 GB RAM -512 GB SSD" : "Cisco MXA UCS C220 M3 Rack Server for Cisco Show and Share Enterprise";
+                objRenewal.CreatedTime = DateTime.Now.AddDays(i * -10);
+                objRenewal.UpdatedTime = DateTime.Now.AddDays(i * -5);
+                objRenewal.Action = !string.IsNullOrWhiteSpace(objRenewal.QuoteNumber) ? "Update" : ""; // update or create Quote
+
+                lstRenewals.Add(objRenewal);
+            }
+
+            var objReponse = new RenewalsDto
+            {
+                ListOfRenewals = lstRenewals,
+                TotalRecords = lstRenewals.Count(),
+                SortBy = "ExpirationDate",
+                SortDirection = "Asc",
+                PageSize = 25,
+                CurrentPage = 10,
+            };
+
+            return objReponse;
+        }
+        public async Task<RenewalsDto> GetRenewalByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static int GetRandomNumber(int min, int max)
+        {
+            return getrandom.Next(min, max);
+        }
+
+    }
+}
