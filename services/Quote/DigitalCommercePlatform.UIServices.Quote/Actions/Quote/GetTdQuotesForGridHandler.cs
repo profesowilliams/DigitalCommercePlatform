@@ -52,6 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         {
             private readonly IMapper _mapper;
             private readonly IMiddleTierHttpClient _client;
+            // TODO: IMiddleTierHttpClient is not fully implemented yet, so we are using IHttpClientFactory in the meantime
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
 
