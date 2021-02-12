@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DigitalCommercePlatform.UIService.Catalog\DigitalCommercePlatform.UIService.Catalog.csproj" />
+    <ProjectReference Include="..\DigitalCommercePlatform.UIService.Catalogue\DigitalCommercePlatform.UIService.Catalogue.csproj" />
   </ItemGroup>
 
 </Project>

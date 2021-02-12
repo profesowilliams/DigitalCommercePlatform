@@ -1,0 +1,126 @@
+﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System.Collections.Generic;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Extensions;
+using DigitalCommercePlatform.UIService.Browse.Model.Customer;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
+
+
+namespace DigitalCommercePlatform.UIServices.Browse.Services
+{
+    public class HttpBrowseService : IBrowseService
+    {
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly string _coreCartURL;
+        private readonly string _appCustomerURL;
+        private readonly string _appCatalogURL;
+
+        public HttpBrowseService(IHttpClientFactory clientFactory, IMiddleTierHttpClient httpClient)
+        {
+            _clientFactory = clientFactory;
+            _coreCartURL = "http://Core-Cart/v1/";
+            _appCustomerURL = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
+            _appCatalogURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1/";
+        }
+
+        public async Task<GetHeaderResponse> GetHeader(GetHeaderRequest request)
+        {
+            var customerRequest = new GetCustomerRequest(request.customerId);
+            var cartRequest = new GetCartRequest(request.userId,request.customerId);
+            var catalogueRequest = new GetCatalogueRequest(request.catalogueCriteria);
+
+            var cartResponse = await GetCartDetails(cartRequest); 
+            var customerDetailsResponse = await GetCustomerDetails(customerRequest);
+            var catalogueDetailsResponse = await GetCatalogueDetails(catalogueRequest);
+
+
+            var getHeaderResponse = new GetHeaderResponse
+            {
+                CartId = cartResponse.CartId,
+                CartItemCount = cartResponse.CartItemCount,
+                CustomerId = customerDetailsResponse.FirstOrDefault().Source.ID,
+                CustomerName = customerDetailsResponse.FirstOrDefault().Name,
+                UserId = "12345", //Hardcoded now , in future it will come from the UI Security service
+                UserName = "Techdata User", //Hardcoded now , in future it will come from the UI Security service
+                CatalogHierarchies = catalogueDetailsResponse.CatalogHierarchies.ToList(),
+            };
+
+            return getHeaderResponse;
+
+        }
+        public async Task<GetCatalogueResponse> GetCatalogueDetails(GetCatalogueRequest request)
+        {
+            var CatalogueURL = _appCatalogURL.BuildQuery(request);
+            try
+            {
+                var getCatalogueByCategory = new HttpRequestMessage(HttpMethod.Get, CatalogueURL);
+
+                var apiCatalogueClient = _clientFactory.CreateClient("apiServiceClient");
+                apiCatalogueClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006AnRnjOu0K1OdDRIh9nxx9Min");
+
+                var getCatalogueHttpResponse = await apiCatalogueClient.SendAsync(getCatalogueByCategory);
+                getCatalogueHttpResponse.EnsureSuccessStatusCode();
+
+                var getCatalogueIdResponse = await getCatalogueHttpResponse.Content.ReadAsAsync<GetCatalogueResponse>();
+                return getCatalogueIdResponse;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerRequest request)
+        {
+            var CustomerURL = _appCustomerURL.BuildQuery(request);
+
+            try
+            {
+                var getCustomerRequestMessage = new HttpRequestMessage(HttpMethod.Get, CustomerURL);
+
+                var apiCustomerClient = _clientFactory.CreateClient("apiServiceClient");
+                apiCustomerClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006uljz3AUhG1ymtEh849N9Ym6O"); 
+
+                var getOCustomerHttpResponse = await apiCustomerClient.SendAsync(getCustomerRequestMessage);
+                getOCustomerHttpResponse.EnsureSuccessStatusCode();
+
+                var getCustomerResponse = await getOCustomerHttpResponse.Content.ReadAsAsync<IEnumerable<CustomerModel>>();
+                return getCustomerResponse;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+
+       
+
+        public Task<GetCartResponse> GetCartDetails(GetCartRequest request)
+        {
+            var CartURL=_coreCartURL.BuildQuery(request);
+            try
+            {
+                Random rnd = new Random();
+                var v1 = new GetCartResponse
+                {
+                    CartId = "1",//Hardcoded now , in future it will come from the UI Security service
+                    CartItemCount = rnd.Next(1,40)//Hardcoded now , in future it will come from the UI Security service
+                };
+                return Task.FromResult(v1);                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }   
+        }
+    }
+}
+

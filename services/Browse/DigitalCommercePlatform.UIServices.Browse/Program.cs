@@ -1,3 +1,4 @@
+using DigitalCommercePlatform.UIService.Browse;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Logging;
 using Microsoft.AspNetCore;

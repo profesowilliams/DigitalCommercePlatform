@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Catalog", "DigitalCommercePlatform.UIService.Catalog\DigitalCommercePlatform.UIService.Catalog.csproj", "{AF90DC33-2C0D-4B2D-8BB3-66DB73F08B63}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4ED988AF-0A32-4F77-B69B-F33126D46F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Catalog.IntegrationTests", "DigitalCommercePlatform.UIServices.Catalog.IntegrationTests\DigitalCommercePlatform.UIServices.Catalog.IntegrationTests.csproj", "{1B2FDF23-8BE7-4577-A53C-95A97255CA7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Catalog.IntegrationTests", "DigitalCommercePlatform.UIServices.Catalog.IntegrationTests\DigitalCommercePlatform.UIServices.Catalog.IntegrationTests.csproj", "{1B2FDF23-8BE7-4577-A53C-95A97255CA7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalCommercePlatform.UIServices.Catalog.Tests", "DigitalCommercePlatform.UIServices.Catalog.Tests\DigitalCommercePlatform.UIServices.Catalog.Tests.csproj", "{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Catalog.Tests", "DigitalCommercePlatform.UIServices.Catalog.Tests\DigitalCommercePlatform.UIServices.Catalog.Tests.csproj", "{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Catalogue", "DigitalCommercePlatform.UIService.Catalogue\DigitalCommercePlatform.UIService.Catalogue.csproj", "{74B7D608-91D8-433A-A0A6-67156CDA6A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF90DC33-2C0D-4B2D-8BB3-66DB73F08B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF90DC33-2C0D-4B2D-8BB3-66DB73F08B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF90DC33-2C0D-4B2D-8BB3-66DB73F08B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF90DC33-2C0D-4B2D-8BB3-66DB73F08B63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B2FDF23-8BE7-4577-A53C-95A97255CA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B2FDF23-8BE7-4577-A53C-95A97255CA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B2FDF23-8BE7-4577-A53C-95A97255CA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,6 +25,10 @@ Global
 		{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B7D608-91D8-433A-A0A6-67156CDA6A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B7D608-91D8-433A-A0A6-67156CDA6A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B7D608-91D8-433A-A0A6-67156CDA6A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B7D608-91D8-433A-A0A6-67156CDA6A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
