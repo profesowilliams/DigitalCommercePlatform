@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using Microsoft.Extensions.Logging;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 {
@@ -13,11 +14,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
     {
         private readonly IBrowseService _customerRepositoryServices;
         private readonly IMapper _mapper;
-
-        public GetCustomerHandler(IBrowseService customerRepositoryServices, IMapper mapper)
+        private readonly ILogger<GetCustomerHandler> _logger;
+        public GetCustomerHandler(IBrowseService customerRepositoryServices, 
+            IMapper mapper,
+            ILogger<GetCustomerHandler> logger)
         {
             _customerRepositoryServices = customerRepositoryServices;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<GetCustomerResponse> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
@@ -30,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(GetCustomerHandler));
                 throw ex;
             }
           

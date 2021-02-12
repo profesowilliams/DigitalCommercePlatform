@@ -28,12 +28,14 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
             services.AddHeaderPropagation(options =>
             {
+                options.Headers.Add("Authorization");
                 options.Headers.Add("Accept-Language");
                 options.Headers.Add("Site");
                 options.Headers.Add("Consumer");
             });
 
             services.AddTransient<IBrowseService, HttpBrowseService>();
+            services.AddSingleton<ICachingServicec, CachingService>();
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)

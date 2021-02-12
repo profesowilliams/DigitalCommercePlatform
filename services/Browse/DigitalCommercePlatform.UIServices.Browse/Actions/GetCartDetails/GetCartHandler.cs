@@ -4,6 +4,7 @@ using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using Microsoft.Extensions.Logging;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
@@ -11,11 +12,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
     {
         private readonly IBrowseService _cartRepositoryServices;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetCartHandler> _logger;
 
-        public GetCartHandler(IBrowseService cartRepositoryServices, IMapper mapper)
+        public GetCartHandler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<GetCartHandler> logger)
         {
             _cartRepositoryServices = cartRepositoryServices;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<GetCartResponse> Handle(GetCartRequest request, CancellationToken cancellationToken)
@@ -28,6 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
                 throw ex;
             }
         }

@@ -11,7 +11,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
-
+using Microsoft.Extensions.Logging;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -21,9 +21,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _coreCartURL;
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
-
-        public HttpBrowseService(IHttpClientFactory clientFactory, IMiddleTierHttpClient httpClient)
+        private readonly ILogger<HttpBrowseService> _logger;
+        private readonly ICachingServicec _cachingService;
+        public HttpBrowseService(IHttpClientFactory clientFactory, 
+            IMiddleTierHttpClient httpClient,
+            ICachingServicec cachingService,
+            ILogger<HttpBrowseService> logger)
         {
+            _cachingService = cachingService;
+            _logger = logger;
             _clientFactory = clientFactory;
             _coreCartURL = "http://Core-Cart/v1/";
             _appCustomerURL = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
@@ -32,27 +38,36 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<GetHeaderResponse> GetHeader(GetHeaderRequest request)
         {
-            var customerRequest = new GetCustomerRequest(request.customerId);
-            var cartRequest = new GetCartRequest(request.userId,request.customerId);
-            var catalogueRequest = new GetCatalogueRequest(request.catalogueCriteria);
-
-            var cartResponse = await GetCartDetails(cartRequest); 
-            var customerDetailsResponse = await GetCustomerDetails(customerRequest);
-            var catalogueDetailsResponse = await GetCatalogueDetails(catalogueRequest);
-
-
-            var getHeaderResponse = new GetHeaderResponse
+            try
             {
-                CartId = cartResponse.CartId,
-                CartItemCount = cartResponse.CartItemCount,
-                CustomerId = customerDetailsResponse.FirstOrDefault().Source.ID,
-                CustomerName = customerDetailsResponse.FirstOrDefault().Name,
-                UserId = "12345", //Hardcoded now , in future it will come from the UI Security service
-                UserName = "Techdata User", //Hardcoded now , in future it will come from the UI Security service
-                CatalogHierarchies = catalogueDetailsResponse.CatalogHierarchies.ToList(),
-            };
+                var customerRequest = new GetCustomerRequest(request.customerId);
+                var cartRequest = new GetCartRequest(request.userId, request.customerId);
+                var catalogueRequest = new GetCatalogueRequest(request.catalogueCriteria);
 
-            return getHeaderResponse;
+                var cartResponse = await GetCartDetails(cartRequest);
+                var customerDetailsResponse = await GetCustomerDetails(customerRequest);
+                var catalogueDetailsResponse = await GetCatalogueDetails(catalogueRequest);
+
+
+                var getHeaderResponse = new GetHeaderResponse
+                {
+                    CartId = cartResponse.CartId,
+                    CartItemCount = cartResponse.CartItemCount,
+                    CustomerId = customerDetailsResponse.FirstOrDefault().Source.ID,
+                    CustomerName = customerDetailsResponse.FirstOrDefault().Name,
+                    UserId = "12345", //Hardcoded now , in future it will come from the UI Security service
+                    UserName = "Techdata User", //Hardcoded now , in future it will come from the UI Security service
+                    CatalogHierarchies = catalogueDetailsResponse.CatalogHierarchies.ToList(),
+                };
+
+                return getHeaderResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting HttpBrowseService GetHeader : " + nameof(HttpBrowseService));
+                throw ex;
+            }
+            
 
         }
         public async Task<GetCatalogueResponse> GetCatalogueDetails(GetCatalogueRequest request)
@@ -60,19 +75,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var CatalogueURL = _appCatalogURL.BuildQuery(request);
             try
             {
-                var getCatalogueByCategory = new HttpRequestMessage(HttpMethod.Get, CatalogueURL);
+                var getCatalogueResponse = await _cachingService.GetCatalogueFromCache(request.Id);
+                if (getCatalogueResponse == null)
+                {
+                    var getCatalogueByCategory = new HttpRequestMessage(HttpMethod.Get, CatalogueURL);
 
-                var apiCatalogueClient = _clientFactory.CreateClient("apiServiceClient");
-                apiCatalogueClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006AnRnjOu0K1OdDRIh9nxx9Min");
+                    var apiCatalogueClient = _clientFactory.CreateClient("apiServiceClient");
 
-                var getCatalogueHttpResponse = await apiCatalogueClient.SendAsync(getCatalogueByCategory);
-                getCatalogueHttpResponse.EnsureSuccessStatusCode();
+                    var getCatalogueHttpResponse = await apiCatalogueClient.SendAsync(getCatalogueByCategory);
+                    getCatalogueHttpResponse.EnsureSuccessStatusCode();
 
-                var getCatalogueIdResponse = await getCatalogueHttpResponse.Content.ReadAsAsync<GetCatalogueResponse>();
-                return getCatalogueIdResponse;
+                    getCatalogueResponse = await getCatalogueHttpResponse.Content.ReadAsAsync<GetCatalogueResponse>();
+                    // set cache 
+                    await _cachingService.SetCatalogueCache(getCatalogueResponse, request.Id);
+                }
+                return getCatalogueResponse;
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCatalogueDetails : " + nameof(HttpBrowseService));
                 throw ex;
             }
         }
@@ -86,7 +107,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var getCustomerRequestMessage = new HttpRequestMessage(HttpMethod.Get, CustomerURL);
 
                 var apiCustomerClient = _clientFactory.CreateClient("apiServiceClient");
-                apiCustomerClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "0006uljz3AUhG1ymtEh849N9Ym6O"); 
 
                 var getOCustomerHttpResponse = await apiCustomerClient.SendAsync(getCustomerRequestMessage);
                 getOCustomerHttpResponse.EnsureSuccessStatusCode();
@@ -96,6 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpBrowseService));
                 throw ex;
             }
            
@@ -111,13 +132,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 Random rnd = new Random();
                 var v1 = new GetCartResponse
                 {
-                    CartId = "1",//Hardcoded now , in future it will come from the UI Security service
-                    CartItemCount = rnd.Next(1,40)//Hardcoded now , in future it will come from the UI Security service
+                    CartId = "1",//Hardcoded now , in future it will come from the app service
+                    CartItemCount = rnd.Next(1,40)//Hardcoded now , in future it will come from the app service
                 };
-                return Task.FromResult(v1);                
+                return Task.FromResult(v1);              
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(HttpBrowseService));
                 throw ex;
             }   
         }

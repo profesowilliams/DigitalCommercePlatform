@@ -42,17 +42,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("cartDetails")]
-        public async Task<ActionResult<GetCartResponse>> GetCartDetails(string UserId, string CustomerId)
+        public async Task<ActionResult<GetCartResponse>> GetCartDetails(string userId, string customerId)
         {
-            var response = await Mediator.Send(new GetCartRequest(UserId, CustomerId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetCartRequest(userId, customerId)).ConfigureAwait(false);
             return response;
         }
 
         [HttpGet]
         [Route("catalogueDetails")]
-        public async Task<ActionResult<GetCatalogueResponse>> GetCatalogue(string Id)
+        public async Task<ActionResult<GetCatalogueResponse>> GetCatalogue(string id)
         {
-            var response = await Mediator.Send(new GetCatalogueRequest(Id)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetCatalogueRequest(id)).ConfigureAwait(false);
             return response;
         }
 
