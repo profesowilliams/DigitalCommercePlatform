@@ -36,6 +36,12 @@
             font-size: 0.7rem;
             letter-spacing: 0;
             line-height: 0.875rem;
+            
+            & ul{
+                list-style: none;
+                padding-left: .375rem;
+            }
+            
       }
       .cmp-accordion__panel {
           margin-bottom: 1.375rem;
