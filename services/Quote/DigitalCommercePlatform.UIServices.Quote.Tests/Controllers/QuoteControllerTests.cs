@@ -123,7 +123,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             using var sut = GetController();
 
             //act
-            _ = await sut.GetTdQuotesForGrid("NKALRA", "Created", false).ConfigureAwait(false);
+            _ = await sut.GetTdQuotesForGrid("NKALRA", "Created", false, null, null, null).ConfigureAwait(false);
 
             //assert
             _mockMediator.Verify(x => x.Send(It.IsAny<GetTdQuotesForGridHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);

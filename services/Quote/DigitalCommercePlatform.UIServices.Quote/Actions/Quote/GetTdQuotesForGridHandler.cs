@@ -24,14 +24,20 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             public string AccessToken { get; }
             public string CreatedBy { get; }
             public string SortBy { get; }
-            public bool SortAscending { get; }
+            public bool? SortAscending { get; }
+            public int? PageSize { get; }
+            public int? PageNumber { get; }
+            public bool? WithPaginationInfo { get; }
 
-            public Request(string accessToken, string createdBy, string sortBy, bool sortAscending)
+            public Request(string accessToken, string createdBy, string sortBy, bool? sortAscending, int? pageSize, int? pageNumber, bool? withPaginationInfo)
             {
                 AccessToken = accessToken;
                 CreatedBy = createdBy;
                 SortBy = sortBy;
                 SortAscending = sortAscending;
+                PageSize = pageSize;
+                PageNumber = pageNumber;
+                WithPaginationInfo = withPaginationInfo;
             }
         }
 
@@ -86,6 +92,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                             createdBy = request.CreatedBy,
                             sortBy = request.SortBy,
                             sortAscending = request.SortAscending,
+                            page = request.PageNumber,
+                            PageSize = request.PageSize,
+                            WithPaginationInfo = request.WithPaginationInfo,
                         });
 
                     var httpRequest = new HttpRequestMessage()
