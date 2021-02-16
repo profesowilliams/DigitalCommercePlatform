@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Renewals.Actions.GetRenewals;
+using DigitalCommercePlatform.UIServices.Renewals.Actions.GetSummary;
 using DigitalCommercePlatform.UIServices.Renewals.Controllers;
 using DigitalCommercePlatform.UIServices.Renewals.Models;
 using DigitalFoundation.Common.Contexts;
@@ -20,7 +21,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Renewals.Tests.ActionTests
+namespace DigitalCommercePlatform.UIServices.Renewals.Tests.Controllers
 {
     
     public class GetMultipleRenewalsTest 
@@ -51,57 +52,44 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Tests.ActionTests
             _mockHttpClient = new Mock<IHttpClientFactory>();
         }
 
-        [Fact]
-        public void QuoteController_AuthCheck()
-        {
-            //Acc
-            var controllerInfo = typeof(RenewalsController).GetTypeInfo();
-            //Act
-            var authorizeAttribute = controllerInfo.GetCustomAttribute<AuthorizeAttribute>();
-            var annonymousAttribute = controllerInfo.GetCustomAttribute<AllowAnonymousAttribute>();
-
-            //Assert
-            authorizeAttribute.Should().NotBeNull();
-            annonymousAttribute.Should().BeNull();
-        }
-
-        [Fact]
-        public void AllMethods_AuthCheck()
-        {
-            //Acc
-            var methods = typeof(RenewalsController).GetTypeInfo().GetMethods();
-
-            foreach (var m in methods)
-            {
-                //Act
-                var annonymousAttribute = m.GetCustomAttribute<AllowAnonymousAttribute>();
-                //Assert
-                annonymousAttribute.Should().BeNull();
-            }
-        }
-
         [Theory]
-        [AutoDomainData]
-        public async Task GetRenewals(Actions.GetRenewals.GetMultipleRenewals.Response expected)
+        [AutoMoqData]
+        public async Task GetRenewals(GetMultipleRenewals.Response expected)
         {
-            //arrange
-            _mockMediator.Setup(x => x.Send(It.IsAny<GetMultipleRenewals.Request>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expected);
 
-            using var sut = GetController();
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetMultipleRenewals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
 
+            var controller = GetController();
             var criteria = new Models.FindModel
             {
                 CustomerId = "00380000",
                 UserId = "50546",
                 SortBy = "ExpirationDate",
             };
-            var data = new GetMultipleRenewals.Request { Criteria = criteria };
-            //act
-            _ = await sut.GetRenewals(criteria).ConfigureAwait(false);
+           
+            var result = await controller.GetRenewals(criteria).ConfigureAwait(false);
 
-            //assert
-            _mockMediator.Verify(x => x.Send(It.Is<GetMultipleRenewals.Request>(x=> x.Criteria.CustomerId == data.Criteria.CustomerId ), It.IsAny<CancellationToken>()), Times.Once);
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetSummary(GetRenewalsSummary.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetRenewalsSummary.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.Getsummary("0,30,60,90").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
         }
 
         private RenewalsController GetController()

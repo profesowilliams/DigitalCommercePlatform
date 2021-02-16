@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.IntegrationTests
                         .MatchContains($"AppSetting/{serviceName}")
                         .Returns(Defaults.GetAppSettings()
                             .Extend("Core.Security.Url", "fakeUrl")
-                            .Extend("Core.Order.Url", "http://order") //change Order to Core.Renewals.Url once readt
+                            .Extend("Core.Order.Url", "http://order") //change Order to Core.Renewals.Url once site created
                             )
                         .MatchContains($"/Data/{serviceName}")
                         .Returns(new Dictionary<string, string>() { { string.Empty, string.Empty } })
