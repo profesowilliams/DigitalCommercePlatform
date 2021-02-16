@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Quote
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/health/heartbeat";
+        protected override string HealthCheckEndpoint => "http://app-quote/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
