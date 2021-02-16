@@ -11,39 +11,33 @@
 }
 
 .dp-text{
-  p{
+  color: #5D6165;
+  p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
     font-size: 1rem;
-    color: #5D6165;
   }
   &--xsmall{
-    p{
+    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
       font-size: 0.7rem;
     }
   }
   &--small{
-    p{
+    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
       font-size: 0.875rem;
     }
   }
   &--big{
-    p{
+    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
       font-size: 1.25rem;
     }
   }
   &--white{
-    p{
-      color: #fff;
-    }
+    color: #fff;
   }
   &--light-blue{
-    p{
-      color: #00B1E2;
-    }
+    color: #00B1E2;
   }
   &--dark-blue{
-    p{
-      color: #000C21;
-    }
+    color: #000C21;
   }
   &--align-center{
     text-align: center;
