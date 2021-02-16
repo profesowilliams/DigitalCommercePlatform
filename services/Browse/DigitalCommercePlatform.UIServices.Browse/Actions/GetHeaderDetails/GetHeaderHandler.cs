@@ -1,41 +1,73 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.Services;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using System;
+using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Browse.Services;
+using DigitalCommercePlatform.UIService.Browse.Models.Catalogue;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
 {
-    public class GetHeaderHandler :IRequestHandler<GetHeaderRequest, GetHeaderResponse>
+    [ExcludeFromCodeCoverage]
+    public sealed class GetHeaderHandler
     {
-        private readonly IBrowseService _headerRepositoryServices;
-        private readonly IMapper _mapper;
-        private readonly ILogger<GetHeaderHandler> _logger;
-        public GetHeaderHandler(IBrowseService headerRepositoryServices, 
-            IMapper mapper, 
-            ILogger<GetHeaderHandler> logger)
+        public class GetHeaderRequest : IRequest<GetHeaderResponse>
         {
-            _headerRepositoryServices = headerRepositoryServices;
-            _logger = logger;
-            _mapper = mapper;
-        }
+            public string customerId { get; set; }
+            public string userId { get; set; }
+            public string catalogueCriteria { get; set; }
 
-        public async Task<GetHeaderResponse> Handle(GetHeaderRequest request, CancellationToken cancellationToken)
+            public GetHeaderRequest(string CustomerId, string UserId, string CatalogueCriteria)
+            {
+                customerId = CustomerId;
+                userId = UserId;
+                catalogueCriteria = CatalogueCriteria;
+            }
+        }
+        public class GetHeaderResponse
         {
-            try
+            public string UserId { get; set; }
+            public string UserName { get; set; }
+            public string CustomerId { get; set; }
+            public string CustomerName { get; set; }
+            public string CartId { get; set; }
+            public int CartItemCount { get; set; }
+            public List<CatalogHierarchyModel> CatalogHierarchies { get; set; }
+
+        }
+        public class Handler : IRequestHandler<GetHeaderRequest, GetHeaderResponse>
+        {
+            private readonly IBrowseService _headerRepositoryServices;
+            private readonly IMapper _mapper;
+            private readonly ILogger<GetHeaderHandler> _logger;
+            public Handler(IBrowseService headerRepositoryServices,
+                IMapper mapper,
+                ILogger<GetHeaderHandler> logger)
             {
-                var headerDetails = await _headerRepositoryServices.GetHeader(request);
-                var geteaderhResponse = _mapper.Map<GetHeaderResponse>(headerDetails);
-                return geteaderhResponse;
+                _headerRepositoryServices = headerRepositoryServices;
+                _logger = logger;
+                _mapper = mapper;
             }
-            catch (Exception ex)
+
+            public async Task<GetHeaderResponse> Handle(GetHeaderRequest request, CancellationToken cancellationToken)
             {
-                _logger.LogError(ex, "Exception at GetHeaderHandler : " + nameof(GetHeaderHandler));
-                throw;
+                try
+                {
+                    var headerDetails = await _headerRepositoryServices.GetHeader(request);
+                    var geteaderhResponse = _mapper.Map<GetHeaderResponse>(headerDetails);
+                    return geteaderhResponse;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at GetHeaderHandler : " + nameof(GetHeaderHandler));
+                    throw;
+                }
+
             }
-           
         }
     }
+    
 }

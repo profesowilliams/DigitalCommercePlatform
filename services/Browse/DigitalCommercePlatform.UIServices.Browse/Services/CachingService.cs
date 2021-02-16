@@ -3,9 +3,11 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
+    [ExcludeFromCodeCoverage]
     public class CachingService : ICachingServicec
     {
         // keep it simpele, if additonal cahing is required write generic method
@@ -16,9 +18,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _cache = cache;
             _logger = logger;
         }
-        public Task<GetCatalogueResponse> GetCatalogueFromCache(string cacheKey)
+        public Task<GetCatalogueHandler.GetCatalogueResponse> GetCatalogueFromCache(string cacheKey)
         {
-            var catalogue = new GetCatalogueResponse();
+            var catalogue = new GetCatalogueHandler.GetCatalogueResponse();
 
             try
             {
@@ -32,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return Task.FromResult(catalogue);
         }
 
-        public Task<bool> SetCatalogueCache(GetCatalogueResponse catalogue, string cacheKey)
+        public Task<bool> SetCatalogueCache(GetCatalogueHandler.GetCatalogueResponse catalogue, string cacheKey)
         {
             try
             {

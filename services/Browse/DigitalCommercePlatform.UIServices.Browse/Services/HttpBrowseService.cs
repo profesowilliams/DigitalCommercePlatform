@@ -12,6 +12,10 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
 using Microsoft.Extensions.Logging;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails.GetCatalogueHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {

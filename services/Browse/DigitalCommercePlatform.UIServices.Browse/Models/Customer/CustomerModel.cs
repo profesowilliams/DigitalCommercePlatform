@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIService.Browse.Model.Customer
         public List<CreditModel> Credit { get; set; }
         public DateTime? Updated { get; set; }
 
-        public static explicit operator CustomerModel(GetCustomerResponse v)
+        public static explicit operator CustomerModel(GetCustomerHandler.GetCustomerResponse v)
         {
             throw new NotImplementedException();
         }

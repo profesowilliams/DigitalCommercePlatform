@@ -19,7 +19,7 @@ namespace DigitalCommercePlatform.UIService.Browse
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-Browse/health/heartbeat";
+        protected override string HealthCheckEndpoint => "http://app-catalog/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {

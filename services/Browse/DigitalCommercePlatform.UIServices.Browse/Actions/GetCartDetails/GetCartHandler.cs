@@ -3,36 +3,58 @@ using MediatR;
 using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.Services;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Browse.Services;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
-    public class GetCartHandler : IRequestHandler<GetCartRequest, GetCartResponse>
+    [ExcludeFromCodeCoverage]
+    public sealed class GetCartHandler
     {
-        private readonly IBrowseService _cartRepositoryServices;
-        private readonly IMapper _mapper;
-        private readonly ILogger<GetCartHandler> _logger;
-
-        public GetCartHandler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<GetCartHandler> logger)
+        public class GetCartRequest : IRequest<GetCartResponse>
         {
-            _cartRepositoryServices = cartRepositoryServices;
-            _mapper = mapper;
-            _logger = logger;
+            public string userId { get; set; }
+            public string customerId { get; set; }
+
+            public GetCartRequest(string CustomerId, string UserId)
+            {
+                userId = UserId;
+                customerId = CustomerId;
+            }
         }
 
-        public async Task<GetCartResponse> Handle(GetCartRequest request, CancellationToken cancellationToken)
+        public class GetCartResponse
         {
-            try
+            public string CartId { get; set; }
+            public int CartItemCount { get; set; }
+        }
+        public class Handler : IRequestHandler<GetCartRequest, GetCartResponse>
+        {
+            private readonly IBrowseService _cartRepositoryServices;
+            private readonly IMapper _mapper;
+            private readonly ILogger<GetCartHandler> _logger;
+
+            public Handler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<GetCartHandler> logger)
             {
-                var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
-                var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-                return getcartResponse;
+                _cartRepositoryServices = cartRepositoryServices;
+                _mapper = mapper;
+                _logger = logger;
             }
-            catch (Exception ex)
+
+            public async Task<GetCartResponse> Handle(GetCartRequest request, CancellationToken cancellationToken)
             {
-                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
-                throw ex;
+                try
+                {
+                    var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
+                    var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
+                    return getcartResponse;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
+                    throw ex;
+                }
             }
         }
     }

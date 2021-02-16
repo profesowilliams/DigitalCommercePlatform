@@ -3,52 +3,69 @@ using MediatR;
 using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.Services;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Browse.Services;
+using DigitalCommercePlatform.UIService.Browse.Models.Catalogue;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails
 {
-    public class GetCatalogueHandler : IRequestHandler<GetCatalogueRequest, GetCatalogueResponse>
+    [ExcludeFromCodeCoverage]
+    public sealed class GetCatalogueHandler
     {
-        private readonly IBrowseService _catalogueRepositoryService;
-        private readonly IMapper _mapper;
-        private readonly ICachingServicec _cachingService;
-        private readonly ILogger<GetCatalogueHandler> _logger;
-
-        public GetCatalogueHandler(IBrowseService catalogueRepositoryServices,
-            IMapper mapper,
-            ICachingServicec cachingService,
-            ILogger<GetCatalogueHandler> logger
-            )
+        public class GetCatalogueRequest : IRequest<GetCatalogueResponse>
         {
-            _catalogueRepositoryService = catalogueRepositoryServices;
-            _mapper = mapper;
-            _cachingService = cachingService;
-            _logger = logger;
+            public string Id { get; set; }
+
+            public GetCatalogueRequest(string catalogueId)
+            {
+                Id = catalogueId;
+            }
         }
-
-        public async Task<GetCatalogueResponse> Handle(GetCatalogueRequest request, CancellationToken cancellationToken)
+        public class GetCatalogueResponse
         {
-            try
-            {
-                var getCatalogueResponse = new GetCatalogueResponse();
-                //get catalog from cache 
-                getCatalogueResponse = await _cachingService.GetCatalogueFromCache(request.Id);
+            public IEnumerable<CatalogHierarchyModel> CatalogHierarchies { get; set; }
+        }
+        public class Handler : IRequestHandler<GetCatalogueRequest, GetCatalogueResponse>
+        {
+            private readonly IBrowseService _catalogueRepositoryService;
+            private readonly IMapper _mapper;
+            private readonly ICachingServicec _cachingService;
+            private readonly ILogger<Handler> _logger;
 
-                if (getCatalogueResponse == null)
+            public Handler(IBrowseService catalogueRepositoryServices, IMapper mapper, ICachingServicec cachingService, ILogger<Handler> logger)
+            {
+                _catalogueRepositoryService = catalogueRepositoryServices;
+                _mapper = mapper;
+                _cachingService = cachingService;
+                _logger = logger;
+            }
+
+            public async Task<GetCatalogueResponse> Handle(GetCatalogueRequest request, CancellationToken cancellationToken)
+            {
+                try
                 {
-                    var CatalogueDetails = await _catalogueRepositoryService.GetCatalogueDetails(request);
-                    getCatalogueResponse = _mapper.Map<GetCatalogueResponse>(CatalogueDetails);                    
+                    var getCatalogueResponse = new GetCatalogueResponse();
+                    //get catalog from cache 
+                    getCatalogueResponse = await _cachingService.GetCatalogueFromCache(request.Id);
+
+                    if (getCatalogueResponse == null)
+                    {
+                        var CatalogueDetails = await _catalogueRepositoryService.GetCatalogueDetails(request);
+                        getCatalogueResponse = _mapper.Map<GetCatalogueResponse>(CatalogueDetails);
+                    }
+                    return getCatalogueResponse;
                 }
-                return getCatalogueResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at getting Catalogue : " + nameof(GetCatalogueHandler));
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at getting Catalogue : " + nameof(GetCatalogueHandler));
 
-                throw ex;
-            }
+                    throw ex;
+                }
 
+            }
         }
     }
+    
 }
