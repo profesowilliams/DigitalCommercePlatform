@@ -25,21 +25,18 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
 
         public async Task<RenewalsDto> GetRenewalsAsync(GetMultipleRenewals.Request request)
         {
-            
+
             // Revisit when Renewal AppService is Ready
             //var url = _applicationServiceReturnUrl.AppendPathSegment("Find");
             //var getReturnsHttpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
             //var apiReturnsClient = _clientFactory.CreateClient("apiServiceClient");
             //var getOrdersHttpResponse = await apiReturnsClient.SendAsync(getReturnsHttpRequestMessage);
             //var returnsDto = await getOrdersHttpResponse.Content.ReadAsAsync<RenewalsDto>();
-
-            var objRenewal = new Renewal();
             var lstRenewals = new List<Renewal>();
-            Random rnd = new Random();
 
             for (int i = 0; i < 30; i++)
             {
-                objRenewal = new Renewal();
+                Renewal objRenewal = new Renewal();
                 var randomNumber = Convert.ToString(GetRandomNumber(10, 60));
                 var quantity = GetRandomNumber(1, 10);
                 var expirationDate = i > 9 ? i % 2 == 0 ? GetRandomNumber(10, 100) : 0 : 0;
@@ -74,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
                 CurrentPage = 10,
             };
 
-            return objReponse;
+            return await Task.FromResult(objReponse);
         }
         /// <summary>
         /// Need to revisit once we have app service call is ready
@@ -106,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
                 response.SixtyDays = apiResponse.ListOfRenewals.Where(x => x.ExpirationDate >= DateTime.Now.AddDays(60)).Count();
             }
 
-            return response;
+            return await Task.FromResult(response);
         }
 
         public async Task<RenewalsDto> GetRenewalByIdAsync(string id)

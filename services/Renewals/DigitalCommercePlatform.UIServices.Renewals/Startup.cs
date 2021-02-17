@@ -1,15 +1,12 @@
 using DigitalCommercePlatform.UIServices.Renewals.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.HeaderPropagation;
-using System.Reflection;
 
 namespace DigitalCommercePlatform.UIServices.Renewals
 {
