@@ -2,7 +2,7 @@
 using DigitalCommercePlatform.UIService.Product.Dto.Stock.Internal;
 using DigitalCommercePlatform.UIService.Product.Models.Stock;
 
-namespace DigitalCommercePlatform.UIService.Product.Automapper
+namespace DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings
 {
     public class StockProfile : Profile
     {

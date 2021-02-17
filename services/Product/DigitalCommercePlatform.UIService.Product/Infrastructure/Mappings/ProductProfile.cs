@@ -8,7 +8,7 @@ using DigitalCommercePlatform.UIService.Product.Models.Product;
 using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
 
 
-namespace DigitalCommercePlatform.UIService.Product.Automapper
+namespace DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings
 {
     [ExcludeFromCodeCoverage]
     public class ProductProfile : Profile

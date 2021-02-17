@@ -4,7 +4,7 @@ using DigitalCommercePlatform.UIService.Product.Dto.Summary.Internal;
 using DigitalCommercePlatform.UIService.Product.Models.Summary;
 using DigitalCommercePlatform.UIService.Product.Models.Summary.Internal;
 
-namespace DigitalCommercePlatform.UIService.Product.Automapper
+namespace DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings
 {
     public class ProductSummaryProfile : Profile
     {

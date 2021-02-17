@@ -18,9 +18,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using static DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct;
-using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetailMultiple;
-using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductSummaryMultiple;
+//using static DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct1;
+//using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetailMultiple;
+//using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductSummaryMultiple;
 
 namespace DigitalCommercePlatform.UIService.Product.IntegrationTests
 {

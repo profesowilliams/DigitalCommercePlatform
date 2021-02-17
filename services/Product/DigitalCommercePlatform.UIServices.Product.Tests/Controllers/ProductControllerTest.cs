@@ -1,32 +1,45 @@
-﻿using DigitalCommercePlatform.UIServices.Product.Controllers;
+﻿using DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct;
+using DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummarySearch;
+using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetails;
+using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductSummary;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
+using DigitalCommercePlatform.UIService.Product.Models.Summary;
+using DigitalCommercePlatform.UIServices.Product.Controllers;
+using DigitalCommercePlatform.UIServices.Product.Tests;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 {
-    public class ProductControllerTest
+
+public class ProductControllerTest
     {
-        private readonly Mock<IContext> _context;
-        private readonly Mock<IMediator> _mediator;
-        private readonly Mock<ILogger<ProductController>> _logger;
-        private readonly Mock<IOptions<AppSettings>> _optionsMock;
-        private readonly Mock<ISiteSettings> _settings;
+        private readonly Mock<IMediator> _mockMediator;
+        private readonly Mock<ILogger<ProductController>> _mockLoggerFactory;
+        private readonly Mock<IContext> _mockContext;
+        private readonly Mock<IOptions<AppSettings>> _mockOptions;
+        private readonly Mock<ISiteSettings> _mockSiteSettings;
+
 
         public ProductControllerTest()
         {
-            _mediator = new Mock<IMediator>();
-            _context = new Mock<IContext>();
-            _context.SetupGet(x => x.Language).Returns("en-us");
-            _logger = new Mock<ILogger<ProductController>>();
+            _mockMediator = new Mock<IMediator>();
+            _mockContext = new Mock<IContext>();
+            _mockContext.SetupGet(x => x.Language).Returns("en-us");
+            _mockLoggerFactory = new Mock<ILogger<ProductController>>();
             var appSettingsDict = new Dictionary<string, string>()
             {
                 { "localizationlist", "en-US" },
@@ -38,38 +51,116 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             var appSettingOptions = new Mock<IOptions<AppSettings>>();
             appSettingOptions.Setup(s => s.Value).Returns(appSettings);
-            _optionsMock = appSettingOptions;
+            _mockOptions = appSettingOptions;
 
-            _settings = new Mock<ISiteSettings>();
+            _mockSiteSettings = new Mock<ISiteSettings>();
         }
 
-        [Fact]
-        public void Controller_AuthCheck()
+        private ProductController GetController()
         {
-            //Arrange
-            var methodInfo = typeof(ProductController).GetTypeInfo();
-
-            //Act
-            var anonymousAttribute = methodInfo.GetCustomAttribute<AllowAnonymousAttribute>();
-
-            // Change this when auth attribute will be added to ProductController
-            anonymousAttribute.Should().BeNull();
+            return new ProductController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
+                _mockOptions.Object, _mockSiteSettings.Object);
         }
 
-        [Fact]
-        public void Method_Request_AuthCheck()
+        [Theory]
+        [AutoMoqData]
+        public async Task FindProductdetials(FindProductHandler.GetProductResponse expected)
         {
-            //Arrange
-            var methodInfo = typeof(ProductController).GetTypeInfo().GetMethods();
-
-            //Act
-            foreach (var m in methodInfo)
+            var detailsInput = new FindProductModel()
             {
-                var anonymousAttribute = m.GetCustomAttribute<AllowAnonymousAttribute>();
+                MaterialNumber = new string[] { "123" },
+                OldMaterialNumber = new string[] { "123" },
+                Manufacturer = new string[] { "123" },
+                MfrPartNumber = new string[] { "123" },
+                UPC = new string[] { "123" },
+                CustomerNumber = "123",
+                CustomerPartNumber = "123",
+                SalesOrganization = "123",
+                MaterialStatus = new string[] { "123" },
+                Territories = new string[] { "123" },
+                Description = "123"
+            };
 
-                // Change this when auth attribute will be added to ProductController
-                anonymousAttribute.Should().BeNull();
-            }
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<FindProductHandler.GetProductRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.FindProduct(detailsInput, true,1,10,true).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
         }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task FindSummarydetials(FindSummaryHandler.FindSummaryResponse expected)
+        {
+            var summaryInput = new FindProductModel()
+            {
+                MaterialNumber = new string[] { "123" },
+                OldMaterialNumber = new string[] { "123" },
+                Manufacturer = new string[] { "123" },
+                MfrPartNumber = new string[] { "123" },
+                UPC = new string[] { "123" },
+                CustomerNumber = "123",
+                CustomerPartNumber = "123",
+                SalesOrganization = "123",
+                MaterialStatus = new string[] { "123" },
+                Territories = new string[] { "123" },
+                Description = "123"
+            };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<FindSummaryHandler.FindSummaryRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.FindProduct(summaryInput, true, 1, 10,false).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetProductdetials(GetProductDetailsHandler.GetProductDetailsResponse expected)
+        {
+            var data = new List<string> { "123" };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductDetailsHandler.GetProductDetailsRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.Get(data, true).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetProductSummary(GetProductSummaryHandler.GetProductSummaryResponse expected)
+        {
+            var data = new List<string> { "123" };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductSummaryHandler.GetProductSummaryRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.Get(data, false).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
     }
 }
