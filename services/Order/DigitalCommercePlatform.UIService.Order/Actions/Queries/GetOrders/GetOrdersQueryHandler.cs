@@ -31,7 +31,9 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders
             var orderResponse = new OrderResponse
             {
                 Items = ordersDto,
-                TotalItems = orders?.Count
+                TotalItems = orders?.Count,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize
             };
 
             return orderResponse;
