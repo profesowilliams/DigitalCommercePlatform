@@ -33,11 +33,6 @@
     <Compile Remove="Automapper\ProductProfile.cs" />
     <Compile Remove="Automapper\ProductSummaryProfile.cs" />
     <Compile Remove="Automapper\StockProfile.cs" />
-    <Compile Remove="Exceptions\InvalidCatalogException.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="DigitalCommercePlatform.UIService.Order.sln" />
   </ItemGroup>
 
   <ItemGroup>
