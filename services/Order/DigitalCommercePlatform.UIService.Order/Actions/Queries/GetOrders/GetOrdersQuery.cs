@@ -6,13 +6,13 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders
     {
         public string OrderBy { get; }
         public int PageNumber { get; }
-        public int PageSize { get; }
+        public int PageSize { get; } 
 
         public GetOrdersQuery(string orderBy,int pageNumber,int pageSize)
         {
             OrderBy = orderBy;
             PageNumber = pageNumber;
-            PageSize = pageSize;
+            PageSize = pageSize == 0 ? 25 : pageSize;
         }
     }
 }
