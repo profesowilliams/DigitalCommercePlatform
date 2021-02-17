@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIServices.Renewals.Actions.Abstract
+﻿namespace DigitalCommercePlatform.UIServices.Renewals.Actions.Abstract
 {
     public abstract class ResponseBase<T>
     {

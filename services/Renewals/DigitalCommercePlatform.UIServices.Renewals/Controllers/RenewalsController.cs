@@ -4,13 +4,10 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 

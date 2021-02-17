@@ -1,8 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Renewals.Actions.GetRenewals;
 using DigitalCommercePlatform.UIServices.Renewals.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewals.Services
