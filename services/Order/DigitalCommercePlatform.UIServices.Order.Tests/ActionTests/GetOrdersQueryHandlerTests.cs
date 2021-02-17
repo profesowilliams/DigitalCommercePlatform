@@ -68,11 +68,11 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
 
             var ordersContainer = new OrdersContainer { Data = new List<OrderModel>() { orderModel } };
 
-            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<string>(), It.IsAny<bool>())).ReturnsAsync(ordersContainer);
+            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(ordersContainer);
             var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object,sortingServiceMock.Object, GetMapper());
 
-            var result = await sut.Handle(new GetOrdersQuery("id"), CancellationToken.None);
-            result.Should().NotBeNull().And.BeAssignableTo<IEnumerable<OrderResponse>>();
+            var result = await sut.Handle(new GetOrdersQuery("id",1,1), CancellationToken.None);
+            result.Should().NotBeNull().And.BeAssignableTo<OrderResponse>();
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders
 {
-    public class GetOrdersQuery : IRequest<IEnumerable<OrderResponse>>
+    public class GetOrdersQuery : IRequest<OrderResponse>
     {
         public string OrderBy { get; }
+        public int PageNumber { get; }
+        public int PageSize { get; }
 
-        public GetOrdersQuery(string orderBy)
+        public GetOrdersQuery(string orderBy,int pageNumber,int pageSize)
         {
             OrderBy = orderBy;
+            PageNumber = pageNumber;
+            PageSize = pageSize;
         }
     }
 }

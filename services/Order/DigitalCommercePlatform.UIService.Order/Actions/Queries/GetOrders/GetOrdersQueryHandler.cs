@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders
 {
-    public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, IEnumerable<OrderResponse>>
+    public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, OrderResponse>
     {
         private readonly IOrderQueryServices _orderQueryServices;
         private readonly ISortingService _sortingService;
@@ -21,13 +21,20 @@ namespace DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<OrderResponse>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
+        public async Task<OrderResponse> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
             (string sortingProperty, bool sortAscending) = _sortingService.GetSortingParameters(request.OrderBy);
 
-            var orders = await _orderQueryServices.GetOrdersAsync(sortingProperty, sortAscending);
-            var ordersResponse = _mapper.Map<IEnumerable<OrderResponse>>(orders?.Data);
-            return ordersResponse;
+            var orders = await _orderQueryServices.GetOrdersAsync(sortingProperty, sortAscending,request.PageNumber,request.PageSize);
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders?.Data);
+
+            var orderResponse = new OrderResponse
+            {
+                Items = ordersDto,
+                TotalItems = orders?.Count
+            };
+
+            return orderResponse;
         }
     }
 }

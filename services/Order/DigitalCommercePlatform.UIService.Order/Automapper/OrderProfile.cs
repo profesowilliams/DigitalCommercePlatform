@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIService.Order.AutoMapper
             CreateMap<FindRequestModel, FindRequestDto>();
 
 
-            CreateMap<OrderModel, OrderResponse>()
+            CreateMap<OrderModel, OrderDto>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
@@ -52,9 +52,9 @@ namespace DigitalCommercePlatform.UIService.Order.AutoMapper
         }
     }
 
-    public class OrderPriceResolver : IValueResolver<OrderModel, OrderResponse, string>
+    public class OrderPriceResolver : IValueResolver<OrderModel, OrderDto, string>
     {
-        public string Resolve(OrderModel source, OrderResponse destination, string destMember, ResolutionContext context)
+        public string Resolve(OrderModel source, OrderDto destination, string destMember, ResolutionContext context)
         {
             return $"{source.Price} {source.Currency}";
         }
