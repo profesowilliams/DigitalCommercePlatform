@@ -80,9 +80,9 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
 
         [HttpGet]
         [Route("orders")]
-        public async Task<ActionResult<IEnumerable<OrderResponse>>> GetOrdersAsync([FromQuery] string orderBy)
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersAsync([FromQuery] string orderBy,int pageNumber, int pageSize)
         {
-            var ordersResponse = await Mediator.Send(new GetOrdersQuery(orderBy));
+            var ordersResponse = await Mediator.Send(new GetOrdersQuery(orderBy,pageNumber,pageSize));
             return Ok(ordersResponse);
         }
 

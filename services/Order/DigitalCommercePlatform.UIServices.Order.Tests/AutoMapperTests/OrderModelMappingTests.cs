@@ -14,9 +14,9 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
         [MemberData(nameof(GetModel))]
         public void OrderModelSuccessfullMapTest(OrderModel source)
         {
-            var target = GetMapper().Map<OrderResponse>(source);
+            var target = GetMapper().Map<OrderDto>(source);
 
-            target.Should().NotBeNull().And.BeAssignableTo<OrderResponse>();
+            target.Should().NotBeNull().And.BeAssignableTo<OrderDto>();
 
             target.Created.Should().NotBeNull().And.Be(source.Created);
             target.Status.Should().NotBeNullOrEmpty().And.Be(source.Status.ToString());
