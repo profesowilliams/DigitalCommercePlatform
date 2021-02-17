@@ -1,17 +1,18 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
-using DigitalCommercePlatform.UIService.Product.Models.Product;
-using DigitalCommercePlatform.UIServices.Product.Services;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Product.Services;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using DigitalCommercePlatform.UIService.Product.Models.Product;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct
 {
+    [ExcludeFromCodeCoverage]
     public class FindProductHandler
     {
         public class GetProductRequest : IRequest<GetProductResponse>
@@ -66,7 +67,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
-                    throw ex;
+                    throw ;
                 }
 
             }

@@ -1,16 +1,10 @@
-﻿using DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummarySearch;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetails;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductSummary;
-using DigitalCommercePlatform.UIServices.Product.Services;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using DigitalFoundation.Common.Client;
+using System.Diagnostics.CodeAnalysis;
+using DigitalFoundation.Common.Extensions;
 using static DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct.FindProductHandler;
 using static DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummarySearch.FindSummaryHandler;
 using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetails.GetProductDetailsHandler;
@@ -18,6 +12,7 @@ using static DigitalCommercePlatform.UIService.Product.Actions.Product.GetProduc
 
 namespace DigitalCommercePlatform.UIServices.Product.Services
 {
+    [ExcludeFromCodeCoverage]
     public class HttpProductService : IProductService
     {
         private readonly IHttpClientFactory _clientFactory;

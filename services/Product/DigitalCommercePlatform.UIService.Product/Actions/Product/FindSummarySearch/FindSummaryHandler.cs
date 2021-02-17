@@ -1,18 +1,19 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
-using DigitalCommercePlatform.UIService.Product.Models.Summary;
-using DigitalCommercePlatform.UIServices.Product.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
+﻿using System;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+using DigitalFoundation.Core.Models.DTO.Common;
+using DigitalCommercePlatform.UIServices.Product.Services;
+using DigitalCommercePlatform.UIService.Product.Models.Find;
+using DigitalCommercePlatform.UIService.Product.Models.Summary;
 
 namespace DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummarySearch
 {
+    [ExcludeFromCodeCoverage]
     public class FindSummaryHandler
     {
         public class FindSummaryRequest : IRequest<FindSummaryResponse>

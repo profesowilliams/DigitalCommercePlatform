@@ -1,12 +1,14 @@
-﻿using FluentValidation;
-using MediatR;
-using System.Collections.Generic;
+﻿using MediatR;
 using System.Linq;
+using FluentValidation;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Product.Validators
 {
+    [ExcludeFromCodeCoverage]
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     {
