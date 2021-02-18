@@ -28,17 +28,5 @@ namespace DigitalCommercePlatform.UIService.Customer
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(typeof(Startup));
         }
-
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            base.ConfigureServices(services);
-        //    services
-        //        .AddMvc()
-        //        .AddFluentValidation(config =>
-        //        {
-        //            config.RegisterValidatorsFromAssemblyContaining<Validator>();
-        //        })
-        //;
-        }
     }
 }
