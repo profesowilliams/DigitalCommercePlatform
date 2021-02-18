@@ -22,3 +22,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Critical Code Smell", "S4487:Unread \"private\" fields should be removed")]
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter")]
 [assembly: SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
+[assembly: SuppressMessage("Naming", "CA1715:Identifiers should have correct prefix", Justification = "<Pending>", Scope = "member", Target = "~M:DigitalCommercePlatform.UIService.Customer.Actions.Abstracts.HandlerBase`1.GetAsync``1(System.Uri,System.String,System.Threading.CancellationToken)~System.Threading.Tasks.Task{``0}")]
