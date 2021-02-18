@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Enums\**" />
+    <Content Remove="Models\Enums\**" />
+    <EmbeddedResource Remove="Models\Enums\**" />
+    <None Remove="Models\Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-customer-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>	
 
@@ -39,7 +46,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
+    <Folder Include="Actions\Customer\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 
