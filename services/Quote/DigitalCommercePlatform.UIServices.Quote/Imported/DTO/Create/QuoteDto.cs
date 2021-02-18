@@ -10,8 +10,8 @@ namespace DigitalFoundation.App.Services.Quote.DTO
     {
         public DateTime Published { get; set; }
         public SourceDto Source { get; set; }
-        public decimal Revision { get; set; }
-        public decimal SubRevision { get; set; }
+        public int Revision { get; set; }
+        public int SubRevision { get; set; }
         public string Description { get; set; }
         public string ActiveFlag { get; set; }
         public string Request { get; set; }

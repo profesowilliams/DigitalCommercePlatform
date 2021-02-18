@@ -17,6 +17,8 @@ namespace DigitalFoundation.App.Services.Quote.DTO
         public string CreatedBy { get; set; }
         public string SalesTeamId { get; set; }
         public string SalesTeamName { get; set; }
+        public string SalesAreaName { get; set; }
+        public string SuperSalesAreaName { get; set; }
         public string QuoteType { get; set; }
         public string Manufacturer { get; set; }
         public string OrderId { get; set; }
@@ -27,8 +29,8 @@ namespace DigitalFoundation.App.Services.Quote.DTO
         public string EndUserName { get; set; }
         public string CustomerPO { get; set; }
         public string EndUserPO { get; set; }
-        public decimal RevenueMaxThreshold { get; set; }
-        public decimal RevenueMinThreshold { get; set; }
+        public decimal? RevenueMaxThreshold { get; set; }
+        public decimal? RevenueMinThreshold { get; set; }
         public string TDUAN { get; set; }
         public string VendorAgreement { get; set; }
         public string WorkflowId { get; set; }
@@ -42,10 +44,12 @@ namespace DigitalFoundation.App.Services.Quote.DTO
         public string DivisionManagerName { get; set; }
         public string VendorSalesAssociate { get; set; }
         public string VendorSalesRep { get; set; }
+        public string Description { get; set; }
         public string SortBy { get; set; }
         public bool SortAscending { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 25;
+        public bool WithPaginationInfo { get; set; }
         public bool Details { get; set; }
     }
 }

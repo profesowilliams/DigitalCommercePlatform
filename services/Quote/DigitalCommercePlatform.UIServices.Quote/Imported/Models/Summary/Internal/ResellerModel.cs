@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalFoundation.App.Services.Quote.Models.Summary.Internal
 {
@@ -7,7 +8,7 @@ namespace DigitalFoundation.App.Services.Quote.Models.Summary.Internal
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public ContactModel Contact { get; set; }
+        public IEnumerable<ContactModel> Contact { get; set; }
         public AddressModel Address { get; set; }
     }
 }
