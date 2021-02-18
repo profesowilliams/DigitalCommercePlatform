@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Product.Actions.Product;
-using DigitalCommercePlatform.UIService.Product.Automapper;
+using DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIService.Product.Dto.Product;
 using DigitalCommercePlatform.UIService.Product.Models.Find;
 using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
@@ -22,14 +22,14 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
 {
     public class FindProductTests
     {
-        private readonly FakeLogger<FindProduct.Handler> _logger;
+        private readonly FakeLogger<FindProduct1.Handler> _logger;
         private readonly IMapper _mapper;
         private readonly Mock<IMiddleTierHttpClient> _httpClient;
         private readonly Mock<IOptions<AppSettings>> _options;
 
         public FindProductTests()
         {
-            _logger = new FakeLogger<FindProduct.Handler>();
+            _logger = new FakeLogger<FindProduct1.Handler>();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
             _httpClient = new Mock<IMiddleTierHttpClient>();
             _options = new Mock<IOptions<AppSettings>>();
@@ -45,10 +45,10 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
         public async Task FindProduct_RequestWithPagination_CallCoreForDataAndCount(bool withPaginationInfo)
         {
             // Arrange
-            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = withPaginationInfo };
+            var request = new FindProduct1.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = withPaginationInfo };
 
-            _httpClient.Setup(x => x.GetAsync<FindProduct.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-                       .ReturnsAsync(new FindProduct.Response());
+            _httpClient.Setup(x => x.GetAsync<FindProduct1.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                       .ReturnsAsync(new FindProduct1.Response());
 
             var sut = GetHandler();
 
@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
             _ = await sut.Handle(request, new CancellationToken()).ConfigureAwait(false);
 
             // Assert
-            _httpClient.Verify(x => x.GetAsync<FindProduct.Response>(It.Is<string>(
+            _httpClient.Verify(x => x.GetAsync<FindProduct1.Response>(It.Is<string>(
 
                 x => x.Contains("MaterialNumber=1", StringComparison.InvariantCultureIgnoreCase)
                             && x.Contains("page=1", StringComparison.InvariantCultureIgnoreCase)
@@ -69,7 +69,7 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
         [Fact]
         public async Task FindProduct_ReturnsEmptyStockDataWhenStockCoreThrowsNotFoundException()
         {
-            var data = new FindProduct.Response(new List<Models.Product.ProductModel>() {
+            var data = new FindProduct1.Response(new List<Models.Product.ProductModel>() {
                 new Models.Product.ProductModel {
                     Name = "Test",
                     MaterialType = "1",
@@ -78,9 +78,9 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
             });
 
             // Arrange
-            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
+            var request = new FindProduct1.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
 
-            _httpClient.Setup(x => x.GetAsync<FindProduct.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+            _httpClient.Setup(x => x.GetAsync<FindProduct1.Response>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
                         .ReturnsAsync(data);
 
             var sut = GetHandler();
@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
         public async Task FindProduct_ReturnsNull_WhenNotFoundReturnedFromCore()
         {
             // Arrange
-            var request = new FindProduct.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
+            var request = new FindProduct1.Request { Page = 1, PageSize = 10, Query = new FindProductModel { MaterialNumber = new string[] { "1" } }, WithPaginationInfo = false };
 
             _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
                         .ThrowsAsync(RemoteServerHttpException.WithMessageDetailsAndStatusCode("test", System.Net.HttpStatusCode.NotFound, null));
@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
 
         [Theory]
         [AutoDomainData(nameof(GetExceptions))]
-        public void FindProduct_ThrowException_WhenExceptionOtherThanNotFoundReturnedFromCore(Exception exception, FindProduct.Request request)
+        public void FindProduct_ThrowException_WhenExceptionOtherThanNotFoundReturnedFromCore(Exception exception, FindProduct1.Request request)
         {
             // Arrange
             _httpClient.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
@@ -128,7 +128,7 @@ namespace DigitalCommercePlatform.UIService.Product.Tests.Actions
             response.Should().BeNull();
         }
 
-        private FindProduct.Handler GetHandler() => new FindProduct.Handler(_mapper, _httpClient.Object, _logger);
+        private FindProduct1.Handler GetHandler() => new FindProduct1.Handler(_mapper, _httpClient.Object, _logger);
 
         public static List<object[]> GetExceptions =>
             new List<object[]>

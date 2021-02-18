@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Product.Automapper;
+using DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIService.Product.Tests.Automapper
