@@ -3,6 +3,7 @@ using DigitalFoundation.Common.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIService.Customer.Actions.Abstracts
 {
+    [ExcludeFromCodeCoverage]
     public abstract class HandlerBase<T> where T : class
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;

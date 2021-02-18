@@ -5,9 +5,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Customer.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}/{controller}")]
