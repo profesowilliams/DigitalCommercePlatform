@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
+using DigitalFoundation.App.Services.Quote.Models;
+using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalFoundation.Common.Extensions;
-using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using DigitalFoundation.App.Services.Quote.Models;
-using DigitalFoundation.App.Services.Quote.Models.Quote;
-using DigitalFoundation.Core.Models.DTO.Common;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 {
