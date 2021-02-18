@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIService.Customer.Actions.Abstracts
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Customer.Actions.Abstracts
 {
+    [ExcludeFromCodeCoverage]
     public abstract class ResponseBase<T>
     {
         public T Content { get; set; }
