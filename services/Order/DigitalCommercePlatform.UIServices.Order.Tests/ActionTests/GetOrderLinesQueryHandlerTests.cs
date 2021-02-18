@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
                 Currency = "CAD",
                 DocType = "ZOR",
                 Price = 1856.20M,
-                ShipTo = new Address { Name = "sharvari bhandare" },
+                ShipTo = new AddressModel { Name = "sharvari bhandare" },
                 Source = new Source { ID = "726935" },
                 Status = Status.PROCESSING,
                 Items = new List<Item>()
