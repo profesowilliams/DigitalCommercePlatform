@@ -2,6 +2,7 @@
 using MediatR;
 using AutoMapper;
 using System.Threading;
+using FluentValidation;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
@@ -48,12 +49,12 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummaryS
 
         public class Handler : IRequestHandler<FindSummaryRequest, FindSummaryResponse>
         {
-            private readonly IProductService _customerRepositoryServices;
+            private readonly IProductService _productRepositoryServices;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
-            public Handler(IProductService customerRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IProductService productRepositoryServices, IMapper mapper, ILogger<Handler> logger)
             {
-                _customerRepositoryServices = customerRepositoryServices;
+                _productRepositoryServices = productRepositoryServices;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -62,20 +63,24 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummaryS
             {
                 try
                 {
-                    var productDetails = await _customerRepositoryServices.FindSummarydetials(request).ConfigureAwait(false);
+                    var productDetails = await _productRepositoryServices.FindSummarydetials(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<FindSummaryResponse>(productDetails);
                     return getProductResponse;
-
-                    //var customerDetails = await _customerRepositoryServices.FindProductdet();
-                    //var getCustomerResponse = _mapper.Map<IEnumerable<GetProductResponse>>(customerDetails)?.FirstOrDefault();
-                    //return getCustomerResponse;
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
                     throw ;
                 }
-
+            }
+        }
+        public class Validator : AbstractValidator<FindSummaryRequest>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Query).NotEmpty();
+                RuleFor(x => x.Page).GreaterThan(0);
+                RuleFor(x => x.PageSize).GreaterThan(0);
             }
         }
     }

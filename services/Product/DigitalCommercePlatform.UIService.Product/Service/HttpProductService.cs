@@ -26,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Services
             _appProductURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1/";
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
         public async Task<GetProductResponse> FindProductdetials(GetProductRequest request)
         {
             var ProductURL = _appProductURL + "Find";
@@ -46,12 +45,11 @@ namespace DigitalCommercePlatform.UIServices.Product.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpProductService));
+                _logger.LogError(ex, "Exception at getting HttpProductService FindProductdetials : " + nameof(HttpProductService));
                 throw ;
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
         public async Task<FindSummaryResponse> FindSummarydetials(FindSummaryRequest request)
         {
             var ProductURL = _appProductURL + "Find";
@@ -71,12 +69,11 @@ namespace DigitalCommercePlatform.UIServices.Product.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpProductService));
+                _logger.LogError(ex, "Exception at getting HttpProductService FindSummarydetials : " + nameof(HttpProductService));
                 throw ;
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
         public async Task<GetProductDetailsResponse> GetProductdetials(GetProductDetailsRequest request)
         {
                 var ProductURL = _appProductURL.BuildQuery(request);
@@ -95,12 +92,11 @@ namespace DigitalCommercePlatform.UIServices.Product.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpProductService));
+                    _logger.LogError(ex, "Exception at getting HttpProductService GetProductdetials : " + nameof(HttpProductService));
                     throw ;
                 }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "<Pending>")]
         public async Task<GetProductSummaryResponse> GetProductSummary(GetProductSummaryRequest request)
         {
             var ProductURL = _appProductURL.BuildQuery(request);
@@ -119,7 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpProductService));
+                _logger.LogError(ex, "Exception at getting HttpProductService GetProductSummary : " + nameof(HttpProductService));
                 throw ;
             }
         }

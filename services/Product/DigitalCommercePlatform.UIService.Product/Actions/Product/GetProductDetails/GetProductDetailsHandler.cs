@@ -2,6 +2,7 @@
 using MediatR;
 using AutoMapper;
 using System.Threading;
+using FluentValidation;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
@@ -41,12 +42,12 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDe
 
         public class Handler : IRequestHandler<GetProductDetailsRequest, GetProductDetailsResponse>
         {
-            private readonly IProductService _customerRepositoryServices;
+            private readonly IProductService _productRepositoryServices;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
-            public Handler(IProductService customerRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IProductService productRepositoryServices, IMapper mapper, ILogger<Handler> logger)
             {
-                _customerRepositoryServices = customerRepositoryServices;
+                _productRepositoryServices = productRepositoryServices;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -55,7 +56,7 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDe
             {
                 try
                 {
-                    var productDetails = await _customerRepositoryServices.GetProductdetials(request).ConfigureAwait(false);
+                    var productDetails = await _productRepositoryServices.GetProductdetials(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<GetProductDetailsResponse>(productDetails);
                     return getProductResponse;
                 }
@@ -65,6 +66,18 @@ namespace DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDe
                     throw ;
                 }
 
+            }
+        }
+        public class Validator : AbstractValidator<GetProductDetailsRequest>
+        {
+            public Validator()
+            {
+                SetRules();
+            }
+
+            private void SetRules()
+            {
+                RuleFor(r => r.Id).NotEmpty();
             }
         }
     }

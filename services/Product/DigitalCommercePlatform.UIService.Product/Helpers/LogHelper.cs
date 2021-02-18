@@ -26,8 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Helpers
             // No endpoint, so not a health check endpoint
             return false;
         }
-
-        [SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public static LogEventLevel ExcludeHealthChecks(HttpContext ctx, double _, Exception ex)
         {
             if (ex != null || ctx.Response.StatusCode > 499)
