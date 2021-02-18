@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Actions\Customer\" />
+    <Folder Include="Actions\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
