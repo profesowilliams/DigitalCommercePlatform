@@ -31,8 +31,8 @@ namespace DigitalFoundation.App.Services.Quote.Models
         public string EndUserName { get; set; }
         public string CustomerPO { get; set; }
         public string EndUserPO { get; set; }
-        public decimal RevenueMaxThreshold { get; set; }
-        public decimal RevenueMinThreshold { get; set; }
+        public decimal? RevenueMaxThreshold { get; set; }
+        public decimal? RevenueMinThreshold { get; set; }
         public string TDUAN { get; set; }
         public string VendorAgreement { get; set; }
         public string WorkflowId { get; set; }
