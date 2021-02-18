@@ -1,8 +1,10 @@
 ﻿using DigitalFoundation.App.Services.Quote.Models.Find.Internal;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalFoundation.App.Services.Quote.DTO
 {
+    [ExcludeFromCodeCoverage]
     public class FindQuoteDto
     {
         public string Id { get; set; }
