@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
                 Currency = "CAD",
                 DocType = "ZOR",
                 Price = 1856.20M,
-                ShipTo = new Address { Name = "sharvari bhandare" },
+                ShipTo = new AddressModel { Name = "sharvari bhandare" },
                 Source = new Source { ID = "726935" },
                 Status = Status.PROCESSING,
                 Items = new List<Item>()
@@ -73,6 +73,46 @@ namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
 
             var result = await sut.Handle(new GetOrdersQuery("id",1,1), CancellationToken.None);
             result.Should().NotBeNull().And.BeAssignableTo<OrderResponse>();
+        }
+
+        [Fact(DisplayName = "Response contains paging information")]
+        public async Task ResponseContainsPagingInformation()
+        {
+            var orderQueryServiceMock = new Mock<IOrderQueryServices>();
+            var sortingServiceMock = new Mock<ISortingService>();
+
+            var orderModel = new OrderModel
+            {
+                Created = new DateTime(2020, 12, 28),
+                Currency = "CAD",
+                DocType = "ZOR",
+                Price = 1856.20M,
+                ShipTo = new AddressModel { Name = "sharvari bhandare" },
+                Source = new Source { ID = "726935" },
+                Status = Status.PROCESSING,
+                Items = new List<Item>()
+                {
+                    new Item { ID = "1" },
+                    new Item { ID = "2" }
+                }
+            };
+
+            int totalItems = 505;
+            int pageSize = 4;
+            int pageNumber = 1;
+
+            var ordersContainer = new OrdersContainer { Data = new List<OrderModel>() { orderModel } , Count = totalItems };
+
+            
+
+            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(ordersContainer);
+            var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object, sortingServiceMock.Object, GetMapper());
+
+            var result = await sut.Handle(new GetOrdersQuery("id", pageNumber, pageSize), CancellationToken.None);
+
+            Assert.Equal(totalItems, result.TotalItems);
+            Assert.Equal(pageSize, result.PageSize);
+            Assert.Equal(pageNumber, result.PageNumber);
         }
     }
 }

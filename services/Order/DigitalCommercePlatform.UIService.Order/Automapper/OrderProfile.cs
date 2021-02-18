@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
 using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetSingleOrder;
 using DigitalCommercePlatform.UIService.Order.Models.Order;
 
 namespace DigitalCommercePlatform.UIService.Order.AutoMapper
@@ -18,6 +19,14 @@ namespace DigitalCommercePlatform.UIService.Order.AutoMapper
             CreateMap<Item, OrderLineResponse>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
 
+            CreateMap<AddressDetails, AddressDto>();
+            CreateMap<OrderModel, SingleOrderResponse>()
+                .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
+                .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Name))
+                .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
+                .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
+                .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
+                .ForPath(dest => dest.Customer, opt => opt.MapFrom(src => src.ShipTo.Name));
         }
     }
 
