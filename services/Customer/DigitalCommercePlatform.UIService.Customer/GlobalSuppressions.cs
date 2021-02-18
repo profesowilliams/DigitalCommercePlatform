@@ -23,3 +23,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter")]
 [assembly: SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
 [assembly: SuppressMessage("Naming", "CA1715:Identifiers should have correct prefix", Justification = "<Pending>", Scope = "member", Target = "~M:DigitalCommercePlatform.UIService.Customer.Actions.Abstracts.HandlerBase`1.GetAsync``1(System.Uri,System.String,System.Threading.CancellationToken)~System.Threading.Tasks.Task{``0}")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible")]
