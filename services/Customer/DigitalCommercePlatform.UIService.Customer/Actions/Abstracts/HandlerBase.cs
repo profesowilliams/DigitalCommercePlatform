@@ -21,11 +21,19 @@ namespace DigitalCommercePlatform.UIService.Customer.Actions.Abstracts
         protected IOptions<AppSettings> Options { get; set; }
         protected IHttpClientFactory HttpClientFactory { get; set; }
 
+        protected string CoreCustomerUrl { get; private set; }
+
         protected HandlerBase(IMiddleTierHttpClient client,
                            ILoggerFactory loggerFactory,
                            IOptions<AppSettings> options,
                            IHttpClientFactory httpClientFactory)
         {
+            //TODO: move it to static constructor
+            const string key = "Core.Customer.Url";
+            CoreCustomerUrl = options?.Value?.TryGetSetting(key);
+            if (CoreCustomerUrl is null)
+                throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
+
             if (client == null)
                 throw new ArgumentNullException(nameof(client));
             else

@@ -45,20 +45,12 @@ namespace DigitalCommercePlatform.UIService.Customer.Actions
 
         public class Handler : HandlerBase<ConfigGet>, IRequestHandler<Request, Response>
         {
-            //TODO: move to appsettings
-            //private readonly string CoreConfigUrl;
-            //private const string _appServiceGetConfigUrl = "https://eastus-sit-service.dc.tdebusiness.cloud/app-config/v1";
-
             public Handler(IMiddleTierHttpClient client,
                            ILoggerFactory loggerFactory,
                            IOptions<AppSettings> options,
                            IHttpClientFactory httpClientFactory)
                 : base(client, loggerFactory, options, httpClientFactory)
             {
-                //TODO: move it to static constructor
-                //const string key = "Core.Config.Url";
-                //CoreConfigUrl = options?.Value?.TryGetSetting(key);
-                //if (CoreConfigUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)

@@ -36,7 +36,6 @@ namespace DigitalCommercePlatform.UIService.Customer.Actions
 
         public class Handler : HandlerBase<CustomerGet>, IRequestHandler<Request, Response>
         {
-            private readonly string CoreCustomerUrl;
             private const string _appServiceGetCustomerUrl = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
 
             public Handler(IMiddleTierHttpClient client,
@@ -45,10 +44,6 @@ namespace DigitalCommercePlatform.UIService.Customer.Actions
                            IHttpClientFactory httpClientFactory)
                 : base(client, loggerFactory, options, httpClientFactory)
             {
-                //TODO: move it to static constructor
-                const string key = "Core.Customer.Url";
-                CoreCustomerUrl = options?.Value?.TryGetSetting(key);
-                if (CoreCustomerUrl is null) throw new InvalidOperationException($"{key} is missing from {nameof(IOptions<AppSettings>)}");
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
