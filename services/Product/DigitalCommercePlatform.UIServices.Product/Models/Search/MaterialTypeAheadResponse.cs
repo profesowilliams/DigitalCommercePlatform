@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Models.Search
 		public bool HasResults { get { return Suggestions?.Length > 0; } } 
 		public MaterialTypeAheadSuggestion[] Suggestions { get; set; }
 	}
+	[ExcludeFromCodeCoverage]
 	public class MaterialTypeAheadSuggestion
 	{
 		public string ManufacturerNumber { get; set; }

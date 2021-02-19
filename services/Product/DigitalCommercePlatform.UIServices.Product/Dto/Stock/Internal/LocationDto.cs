@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Dto.Stock.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Dto.Stock.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class LocationDto
     {
         /// <summary>

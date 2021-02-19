@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Models.Search
         public TypeAheadSuggestionRefinementTypes RefinementType { get; set; }
         
     }
-
+    [ExcludeFromCodeCoverage]
     public class TypeAheadSuggestionRefinementV2
     {
         public string Description { get; set; }

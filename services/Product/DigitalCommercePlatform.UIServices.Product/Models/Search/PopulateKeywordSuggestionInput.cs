@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Models.Search
         public int MaximumHistoryDays { get; set; }
         public int MinimumRank { get; set; }
     }
-
+    [ExcludeFromCodeCoverage]
     public class PopulateKeywordRefinementSuggestionInput
     {
         public string SearchApplication { get; set; }
