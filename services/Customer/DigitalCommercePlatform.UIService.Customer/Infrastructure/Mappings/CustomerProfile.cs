@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer;
-using DigitalCommercePlatform.UIService.Customer.Models.Dtos;
+﻿using AutoMapper;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIService.Customer.Infrastructure.Mappings
 {
+    [ExcludeFromCodeCoverage]
     public class CustomerProfile : Profile
     {
         public CustomerProfile()
         {
-            CreateMap<CustomerModel, GetCustomerDto>();
 
         }
     }
