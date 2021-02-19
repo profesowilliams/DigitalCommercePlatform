@@ -21,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Actions.Abstract
             _httpClientFactory = httpClientFactory;
         }
 
-        protected async Task<U> GetAsync<U>(string url, string token, CancellationToken cancellationToken)
+        protected async Task<T> GetAsync<T>(string url, string token, CancellationToken cancellationToken)
         {
             // this is temp code once DF team exposes the clitent we need to replace this code.
             HttpClient httpClient = _httpClientFactory.CreateClient();
@@ -41,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Product.Actions.Abstract
             HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<U>(responseBody, serializerOptions);
+            var data = JsonSerializer.Deserialize<T>(responseBody, serializerOptions);
             return data;
         }
     }
