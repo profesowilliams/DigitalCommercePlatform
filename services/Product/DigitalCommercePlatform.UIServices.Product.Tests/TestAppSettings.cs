@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 
-namespace DigitalCommercePlatform.UIService.Product.Tests
+namespace DigitalCommercePlatform.UIServices.Product.Tests
 {
     public class TestAppSettings : IOptions<AppSettings>
     {
