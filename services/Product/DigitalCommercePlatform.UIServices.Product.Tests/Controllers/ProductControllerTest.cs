@@ -1,10 +1,10 @@
-﻿using DigitalCommercePlatform.UIService.Product.Actions.Product.FindProduct;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.FindSummarySearch;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductDetails;
-using DigitalCommercePlatform.UIService.Product.Actions.Product.GetProductSummary;
-using DigitalCommercePlatform.UIService.Product.Models.Find;
-using DigitalCommercePlatform.UIService.Product.Models.Product.Internal;
-using DigitalCommercePlatform.UIService.Product.Models.Summary;
+﻿using DigitalCommercePlatform.UIServices.Product.Actions.Product.FindProduct;
+using DigitalCommercePlatform.UIServices.Product.Actions.Product.FindSummarySearch;
+using DigitalCommercePlatform.UIServices.Product.Actions.Product.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Product.Actions.Product.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Product.Models.Find;
+using DigitalCommercePlatform.UIServices.Product.Models.Product.Internal;
+using DigitalCommercePlatform.UIServices.Product.Models.Summary;
 using DigitalCommercePlatform.UIServices.Product.Controllers;
 using DigitalCommercePlatform.UIServices.Product.Tests;
 using DigitalFoundation.Common.Contexts;

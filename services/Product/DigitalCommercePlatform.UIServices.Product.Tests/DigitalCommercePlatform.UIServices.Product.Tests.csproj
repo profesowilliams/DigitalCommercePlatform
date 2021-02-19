@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DigitalCommercePlatform.UIService.Product\DigitalCommercePlatform.UIService.Product.csproj" />
+    <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Product\DigitalCommercePlatform.UIServices.Product.csproj" />
   </ItemGroup>
 
 </Project>
