@@ -1,8 +1,10 @@
 ﻿using DigitalCommercePlatform.UIServices.Product.Dto.Summary.Internal;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Product.Dto.Summary
 {
+    [ExcludeFromCodeCoverage]
     public class SummaryDto
     {
         public SourceDto Source { get; set; }

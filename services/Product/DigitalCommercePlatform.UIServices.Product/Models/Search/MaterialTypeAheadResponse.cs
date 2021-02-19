@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Models.Search
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Models.Search
 {
+	[ExcludeFromCodeCoverage]
 	public class MaterialTypeAheadResponse
 	{
 		public bool HasResults { get { return Suggestions?.Length > 0; } } 

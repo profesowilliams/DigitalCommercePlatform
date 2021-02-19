@@ -4,6 +4,7 @@ using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalCommercePlatform.UIServices.Product.Models.Search;
@@ -11,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Product.Models.Search;
 
 namespace DigitalCommercePlatform.UIServices.Product.Actions.Product.Search
 {
+    [ExcludeFromCodeCoverage]
     public sealed class Search
     {
         public class Handler : IRequestHandler<TypeAheadRequest, TypeAheadResponse>

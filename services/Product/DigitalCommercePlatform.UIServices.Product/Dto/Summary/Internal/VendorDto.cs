@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Dto.Summary.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Dto.Summary.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class VendorDto
     {
         public string Id { get; set; }

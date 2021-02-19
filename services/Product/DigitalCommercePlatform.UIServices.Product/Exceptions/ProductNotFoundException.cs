@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Product.Exceptions
 {
+    [ExcludeFromCodeCoverage]
     public class ProductNotFoundException : Exception
     {
         public ProductNotFoundException()

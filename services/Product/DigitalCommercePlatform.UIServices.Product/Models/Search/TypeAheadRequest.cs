@@ -1,7 +1,9 @@
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Product.Models.Search
 {
+    [ExcludeFromCodeCoverage]
     public class TypeAheadRequest : IRequest<TypeAheadResponse>
     {
         public string SearchApplication { get; set; }

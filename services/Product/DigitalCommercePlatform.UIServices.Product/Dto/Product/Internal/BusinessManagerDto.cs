@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Dto.Product.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Dto.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class BusinessManagerDto
     {
         public string Id { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Models.Search
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Models.Search
 {
+	[ExcludeFromCodeCoverage]
 	public class MaterialTypeAheadRequest
 	{
 		public int MaxResults { get; set; }
