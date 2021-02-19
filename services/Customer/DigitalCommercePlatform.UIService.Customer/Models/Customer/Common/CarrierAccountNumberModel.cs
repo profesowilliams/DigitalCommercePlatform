@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIService.Customer.Models.Customer.Common
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Customer.Models.Customer.Common
 {
+    [ExcludeFromCodeCoverage]
     public class CarrierAccountNumberModel
     {
         public string CustomerName { get; set; }
