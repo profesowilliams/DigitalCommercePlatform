@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIService.Customer.Actions.Abstracts;
+using DigitalCommercePlatform.UIService.Customer.Models.Customer;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;

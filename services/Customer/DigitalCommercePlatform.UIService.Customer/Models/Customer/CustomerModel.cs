@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer.Common;
+﻿using DigitalCommercePlatform.UIService.Customer.Models.Customer.Common;
 using DigitalFoundation.Common.MongoDb.Models;
 using System;
 using System.Collections.Generic;

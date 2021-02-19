@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIService.Customer.Models.Customer.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer.Common
+namespace DigitalCommercePlatform.UIService.Customer.Models.Customer.Common
 {
     public class SalesStructureModel
     {

@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer.Common
+namespace DigitalCommercePlatform.UIService.Customer.Models.Customer.Common
 {
     [ExcludeFromCodeCoverage]
     public class SourceRelModel

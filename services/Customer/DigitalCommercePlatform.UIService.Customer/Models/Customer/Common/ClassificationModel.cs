@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIService.Customer.Models.AppServices.Customer.Common
+﻿namespace DigitalCommercePlatform.UIService.Customer.Models.Customer.Common
 {
     public class ClassificationModel
     {
