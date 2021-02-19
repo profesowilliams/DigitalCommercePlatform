@@ -1,6 +1,6 @@
-﻿using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
-using DigitalCommercePlatform.UIService.Order.Models.Order;
-using DigitalCommercePlatform.UIService.Order.Services.Contracts;
+﻿using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Order.Models.Order;
+using DigitalCommercePlatform.UIServices.Order.Services.Contracts;
 using FluentAssertions;
 using Moq;
 using System;
@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIService.Order.Tests.ActionTests
+namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
 {
     public class GetOrderLinesQueryHandlerTests : BaseTest
     {

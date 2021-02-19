@@ -1,7 +1,7 @@
-﻿using DigitalCommercePlatform.UIService.Order.Services.Implementations;
+﻿using DigitalCommercePlatform.UIServices.Order.Services.Implementations;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIService.Order.Tests.Services
+namespace DigitalCommercePlatform.UIServices.Order.Tests.Services
 {
     public class SortingServiceTests
     {
