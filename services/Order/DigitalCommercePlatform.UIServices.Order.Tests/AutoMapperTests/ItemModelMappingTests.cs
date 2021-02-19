@@ -1,10 +1,10 @@
-﻿using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
-using DigitalCommercePlatform.UIService.Order.Models.Order;
+﻿using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIService.Order.Tests.AutoMapperTests
+namespace DigitalCommercePlatform.UIServices.Order.Tests.AutoMapperTests
 {
     public class ItemModelMappingTests : BaseTest
     {

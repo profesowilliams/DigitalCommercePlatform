@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Order.AutoMapper;
+using DigitalCommercePlatform.UIServices.Order.AutoMapper;
 
-namespace DigitalCommercePlatform.UIService.Order.Tests
+namespace DigitalCommercePlatform.UIServices.Order.Tests
 {
     public class BaseTest
     {
