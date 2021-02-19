@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -38,14 +39,14 @@ namespace DigitalCommercePlatform.UIServices.Customer.Controllers
             return Ok(response);
         }
 
-        //[HttpGet]
-        //[Route("")]
-        //public async Task<ActionResult<CustomerGetByIds.Response>> GetByIds([FromQuery(Name = "id")] IEnumerable<string> ids)
-        //{
-        //    var request = new CustomerGetByIds.Request(ids, Context.AccessToken);
-        //    var response = await Mediator.Send(request);
-        //    return Ok(response);
-        //}
+        [HttpGet]
+        [Route("")]
+        public async Task<ActionResult<CustomerGetById.Response>> GetById([FromQuery(Name = "id")] IEnumerable<string> ids)
+        {
+            var request = new CustomerGetById.Request(ids, Context.AccessToken);
+            var response = await Mediator.Send(request);
+            return Ok(response);
+        }
 
         [HttpPost]
         [Route("find")]
