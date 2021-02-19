@@ -17,16 +17,13 @@ namespace DigitalCommercePlatform.UIServices.Product
 
         public static void Main(string[] args)
         {
-            //Read Configuration from appSettings
             _config = new ConfigurationBuilder()
-                //pull initial log settings from appsettings
                 .AddJsonFile("appsettings.json")
-                //Override appsettings with commandline args e.g  /Serilog:MinimumLevel:Default=Warning
                 .AddCommandLine(args)
                 .AddEnvironmentVariables()
                 .Build();
 
-            //Early Initialize Logger (needed for app startup failures)
+           
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(_config)
                 .CreateLogger();
