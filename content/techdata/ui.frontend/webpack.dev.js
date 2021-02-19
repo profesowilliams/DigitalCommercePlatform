@@ -78,7 +78,15 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'image-standard-cmp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
-            })
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/carousel/carousel.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
+            })          
         ],
         devServer: {
             inline: true,
