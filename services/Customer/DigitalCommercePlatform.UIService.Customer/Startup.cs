@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIService.Customer
     [ExcludeFromCodeCoverage]
     public class Startup : BaseAppServiceStartup
     {
-        protected override string HealthCheckEndpoint => "https://service.dit.df.svc.us.tdworldwide.com/app-customer/health/heartbeat";
+        protected override string HealthCheckEndpoint => "http://app-customer/health/heartbeat";
 
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
