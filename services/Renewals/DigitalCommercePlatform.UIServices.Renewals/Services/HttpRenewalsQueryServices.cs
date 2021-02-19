@@ -1,12 +1,9 @@
 ﻿using DigitalCommercePlatform.UIServices.Renewals.Actions.GetRenewals;
 using DigitalCommercePlatform.UIServices.Renewals.Models;
-using DigitalFoundation.Common.Extensions;
-using Flurl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewals.Services
@@ -14,7 +11,9 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
     public class HttpRenewalsQueryServices : IRenewalsQueryServices
     {
         private readonly IHttpClientFactory _clientFactory;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _applicationServiceReturnUrl;
+#pragma warning restore CS0414 // The field is assigned but its value is never used
         private static readonly Random getrandom = new Random();
         public HttpRenewalsQueryServices(IHttpClientFactory clientFactory)
         {
@@ -43,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
                 var price = GetRandomNumber(1, 50) + (i % 2 == 0 ? 0.35 : 0.75);
                 objRenewal.RenewalId = "R12345" + randomNumber;
                 objRenewal.VendorName = i % 2 == 0 ? "DELL" : "CISCO";
-                objRenewal.RenewalNumber = "RW58691" + randomNumber; ;
+                objRenewal.RenewalNumber = "RW58691" + randomNumber;
                 objRenewal.ExpirationDate = DateTime.Now.AddDays(expirationDate);
                 objRenewal.ExpirationDateToString = DateTime.Now.AddDays(expirationDate).ToShortDateString();
                 objRenewal.QuoteNumber = i % 3 == 0 ? "" : "Q40100930" + randomNumber;
@@ -106,7 +105,9 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
             return await Task.FromResult(response);
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<RenewalsDto> GetRenewalByIdAsync(string id)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();
         }
