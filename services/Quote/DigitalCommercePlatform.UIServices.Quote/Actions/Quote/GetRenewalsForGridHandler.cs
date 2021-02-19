@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using DigitalFoundation.Common.Client;
-using MediatR;
+﻿using MediatR;
 using System;
+using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 {

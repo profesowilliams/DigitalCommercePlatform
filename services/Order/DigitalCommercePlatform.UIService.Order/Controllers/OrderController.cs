@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrderLines;
 using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetOrders;
+using DigitalCommercePlatform.UIService.Order.Actions.Queries.GetSingleOrder;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -43,6 +44,20 @@ namespace DigitalCommercePlatform.UIService.Order.Controllers
             }
 
             return Ok(orderLinesResponse);
+        }
+
+        [HttpGet]
+        [Route("orders/{id}/details")]
+        public async Task<ActionResult<SingleOrderResponse>> GetSingleOrderAsync([FromRoute] string id)
+        {
+            var orderResponse = await Mediator.Send(new GetSingleOrderQuery(id));
+
+            if (orderResponse == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(orderResponse);
         }
     }
 }

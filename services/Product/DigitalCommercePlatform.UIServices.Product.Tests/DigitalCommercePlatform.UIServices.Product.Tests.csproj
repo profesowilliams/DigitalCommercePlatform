@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Actions\**" />
+    <Compile Remove="Automapper\**" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="Actions\**" />
+    <EmbeddedResource Remove="Automapper\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Actions\**" />
+    <None Remove="Automapper\**" />
+    <None Remove="Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
 

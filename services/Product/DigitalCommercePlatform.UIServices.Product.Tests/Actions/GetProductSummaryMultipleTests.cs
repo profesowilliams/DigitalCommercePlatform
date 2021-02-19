@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Product.Actions.Product;
-using DigitalCommercePlatform.UIService.Product.Automapper;
+using DigitalCommercePlatform.UIService.Product.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIService.Product.Models.Summary;
 using DigitalCommercePlatform.UIService.Product.Tests.Helpers;
 using DigitalFoundation.Common.Client;

@@ -26,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Helpers
             // No endpoint, so not a health check endpoint
             return false;
         }
-
         public static LogEventLevel ExcludeHealthChecks(HttpContext ctx, double _, Exception ex)
         {
             if (ex != null || ctx.Response.StatusCode > 499)
