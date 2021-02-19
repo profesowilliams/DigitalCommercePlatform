@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Product.Models.Product.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Product.Models.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class HAZMATModel
     {
         public string Id { get; set; }
