@@ -1,2 +1,5 @@
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-dependencies
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-dcp-app-dependencies
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-dcp-components
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-techdata-dcp-app
