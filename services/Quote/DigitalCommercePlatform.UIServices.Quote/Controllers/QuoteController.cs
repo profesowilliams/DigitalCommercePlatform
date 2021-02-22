@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -95,9 +96,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         [HttpGet]
         [Route("GetTdQuotesForGrid")]
-        public async Task<IActionResult> GetTdQuotesForGrid(string createdBy, string sortBy, bool? sortAscending, int? pageSize, int? pageNumber, bool? withPaginationInfo)
+        public async Task<IActionResult> GetTdQuotesForGrid(string createdBy, string quoteIdFilter = null, string configIdFilter = null, DateTime ? quoteCreationDateFilter = null, DateTime? quoteExpirationDateFilter = null, string sortBy = null, bool? sortAscending = null, int? pageSize = null, int? pageNumber = null, bool? withPaginationInfo = null)
         {
-            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(Context.AccessToken, createdBy, sortBy, sortAscending, pageSize, pageNumber, withPaginationInfo)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetTdQuotesForGridHandler.Request(Context.AccessToken, createdBy, quoteIdFilter, configIdFilter, quoteCreationDateFilter, quoteExpirationDateFilter, sortBy, sortAscending, pageSize, pageNumber, withPaginationInfo)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {

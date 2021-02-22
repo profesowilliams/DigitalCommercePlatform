@@ -22,16 +22,24 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         {
             public string AccessToken { get; }
             public string CreatedBy { get; }
+            public string QuoteIdFilter { get; }
+            public string ConfigIdFilter { get; }
+            public DateTime? QuoteCreationDateFilter { get; }
+            public DateTime? QuoteExpirationDateFilter { get; }
             public string SortBy { get; }
             public bool? SortAscending { get; }
             public int? PageSize { get; }
             public int? PageNumber { get; }
             public bool? WithPaginationInfo { get; }
 
-            public Request(string accessToken, string createdBy, string sortBy, bool? sortAscending, int? pageSize, int? pageNumber, bool? withPaginationInfo)
+            public Request(string accessToken, string createdBy, string quoteIdFilter = null, string configIdFilter = null, DateTime? quoteCreationDateFilter = null, DateTime? quoteExpirationDateFilter = null, string sortBy = null, bool? sortAscending = null, int? pageSize = null, int? pageNumber = null, bool? withPaginationInfo = null)
             {
                 AccessToken = accessToken;
                 CreatedBy = createdBy;
+                QuoteIdFilter = quoteIdFilter;
+                ConfigIdFilter = configIdFilter;
+                QuoteCreationDateFilter = quoteCreationDateFilter;
+                QuoteExpirationDateFilter = quoteExpirationDateFilter;
                 SortBy = sortBy;
                 SortAscending = sortAscending;
                 PageSize = pageSize;
@@ -92,8 +100,13 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                             sortBy = request.SortBy,
                             sortAscending = request.SortAscending,
                             page = request.PageNumber,
-                            PageSize = request.PageSize,
-                            WithPaginationInfo = request.WithPaginationInfo,
+                            pageSize = request.PageSize,
+                            withPaginationInfo = request.WithPaginationInfo,
+                            // Filters
+                            id = request.QuoteIdFilter,
+                            // ??? = request.ConfigIdFilter, // TODO: I'm not able to find which field allows me to filter by ConfigId in App-Quote
+                            createdTo = request.QuoteCreationDateFilter,
+                            expiresTo = request.QuoteExpirationDateFilter,
                         });
 
                     var httpRequest = new HttpRequestMessage()
