@@ -63,6 +63,10 @@ module.exports = env => {
                 filename: 'social-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'image-demo',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html')
+            }),
         ],
         devServer: {
             inline: true,
