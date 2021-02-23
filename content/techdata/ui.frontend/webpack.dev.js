@@ -67,6 +67,18 @@ module.exports = env => {
                 filename: 'image-demo',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'image-caption-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-caption.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-linked-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-linked.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-standard-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
+            })
         ],
         devServer: {
             inline: true,
