@@ -7,10 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.102" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.16.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Actions\" />
+    <Folder Include="Controllers\Config\Get\" />
+    <Folder Include="Controllers\Customer\Find\" />
+    <Folder Include="Controllers\Customer\Get\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalCommercePlatform.UIService.Customer\DigitalCommercePlatform.UIService.Customer.csproj" />
+    <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Customer\DigitalCommercePlatform.UIServices.Customer.csproj" />
   </ItemGroup>
 
 </Project>
