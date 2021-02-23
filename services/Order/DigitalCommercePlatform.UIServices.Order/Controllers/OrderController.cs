@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetSingleOrder;
-using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Models.Requests;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
