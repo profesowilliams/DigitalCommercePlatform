@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetSingleOrder
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetSingleOrder
 {
+    [ExcludeFromCodeCoverage]
     public class LineDto
     {
         public string Id { get; set; }

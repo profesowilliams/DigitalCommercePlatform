@@ -1,8 +1,11 @@
 ﻿using MediatR;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders
 {
+    [ExcludeFromCodeCoverage]
+
     public class GetOrdersQuery : IRequest<OrderResponse>
     {
         public string Id { get; }
