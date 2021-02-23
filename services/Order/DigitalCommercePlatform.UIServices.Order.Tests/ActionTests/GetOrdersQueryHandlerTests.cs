@@ -68,10 +68,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
 
             var ordersContainer = new OrdersContainer { Data = new List<OrderModel>() { orderModel } };
 
-            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(ordersContainer);
+            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<SearchCriteria>())).ReturnsAsync(ordersContainer);
             var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object,sortingServiceMock.Object, GetMapper());
 
-            var result = await sut.Handle(new GetOrdersQuery("id",1,1), CancellationToken.None);
+            var result = await sut.Handle(new GetOrdersQuery("id","",DateTime.Now,DateTime.Now,"",1,1), CancellationToken.None);
             result.Should().NotBeNull().And.BeAssignableTo<OrderResponse>();
         }
 
@@ -105,10 +105,10 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
 
             
 
-            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(ordersContainer);
+            orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<SearchCriteria>())).ReturnsAsync(ordersContainer);
             var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object, sortingServiceMock.Object, GetMapper());
 
-            var result = await sut.Handle(new GetOrdersQuery("id", pageNumber, pageSize), CancellationToken.None);
+            var result = await sut.Handle(new GetOrdersQuery("id", "", DateTime.Now, DateTime.Now, "", pageNumber, pageSize), CancellationToken.None);
 
             Assert.Equal(totalItems, result.TotalItems);
             Assert.Equal(pageSize, result.PageSize);

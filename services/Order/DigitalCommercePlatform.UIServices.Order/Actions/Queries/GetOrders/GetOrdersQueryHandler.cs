@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Services.Contracts;
 using MediatR;
 using System;
@@ -25,7 +26,21 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders
         {
             (string sortingProperty, bool sortAscending) = _sortingService.GetSortingParameters(request.OrderBy);
 
-            var orders = await _orderQueryServices.GetOrdersAsync(sortingProperty, sortAscending,request.PageNumber,request.PageSize);
+
+            var orderParameters = new SearchCriteria
+            {
+                Id = request.Id,
+                CustomerPO = request.CustomerPO,
+                CreatedFrom = request.CreatedFrom,
+                CreatedTo = request.CreatedTo,
+                OrderBy = sortingProperty,
+                SortAscending = sortAscending,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize,
+            };
+
+
+            var orders = await _orderQueryServices.GetOrdersAsync(orderParameters);
             var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders?.Data);
 
             var orderResponse = new OrderResponse

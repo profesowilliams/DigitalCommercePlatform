@@ -38,15 +38,19 @@ namespace DigitalCommercePlatform.UIServices.Order.Services.Implementations
             return getOrderByIdResponse?.FirstOrDefault();
         }
 
-        public async Task<OrdersContainer> GetOrdersAsync(string orderBy, bool sortAscending, int pageNumber, int pageSize)
+        public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
         {
             var url = _applicationServiceOrderUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
                         {
-                            SortAscending = sortAscending.ToString(),
-                            Sort = orderBy,
-                            PageSize = pageSize,
-                            Page = pageNumber,
+                            orderParameters.Id,
+                            orderParameters.CustomerPO,
+                            orderParameters.CreatedFrom,
+                            orderParameters.CreatedTo,
+                            Sort = orderParameters.OrderBy,
+                            SortAscending = orderParameters.SortAscending.ToString(),
+                            orderParameters.PageSize,
+                            Page = orderParameters.PageNumber,
                             WithPaginationInfo = true,
                             Details = true
                         });

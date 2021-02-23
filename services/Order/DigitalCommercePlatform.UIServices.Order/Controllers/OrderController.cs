@@ -1,6 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetSingleOrder;
+using DigitalCommercePlatform.UIServices.Order.Models.Order;
+using DigitalCommercePlatform.UIServices.Order.Models.Requests;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -26,9 +28,12 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
 
         [HttpGet]
         [Route("orders")]
-        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersAsync([FromQuery] string orderBy,int pageNumber, int pageSize)
+        public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersAsync([FromQuery] GetOrdersRequest getOrdersRequest)
         {
-            var ordersResponse = await Mediator.Send(new GetOrdersQuery(orderBy,pageNumber,pageSize));
+            var getOrdersQuery = new GetOrdersQuery(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo, 
+                                        getOrdersRequest.OrderBy, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
+
+            var ordersResponse = await Mediator.Send(getOrdersQuery);
             return Ok(ordersResponse);
         }
 
