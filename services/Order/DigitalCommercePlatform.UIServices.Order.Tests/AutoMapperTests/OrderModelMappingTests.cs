@@ -51,6 +51,15 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.AutoMapperTests
 
 
             target.Customer.Should().NotBeNullOrEmpty().And.Be(source.ShipTo.Name);
+
+            target.Lines.Count.Should().Be(source.Items.Count);
+            target.Lines[0].Currency.Should().NotBeNullOrEmpty().And.Be(source.Items[0].Currency);
+            target.Lines[0].Description.Should().NotBeNullOrEmpty().And.Be(source.Items[0].Product[0].Name);
+            target.Lines[0].Id.Should().NotBeNullOrEmpty().And.Be(source.Items[0].ID);
+            target.Lines[0].Parent.Should().NotBeNullOrEmpty().And.Be(source.Items[0].Parent);
+            target.Lines[0].Quantity.Should().Be(source.Items[0].Quantity);
+            target.Lines[0].TotalPrice.Should().NotBeNull().And.Be(source.Items[0].TotalPrice);
+            target.Lines[0].UnitPrice.Should().NotBeNull().And.Be(source.Items[0].UnitPrice);
         }
 
         public static TheoryData<OrderModel> GetModel()
@@ -77,7 +86,42 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.AutoMapperTests
                         }
                     },
                     Source = new Source { ID = "726935" },
-                    Status = Status.PROCESSING
+                    Status = Status.PROCESSING,
+                    Items = new System.Collections.Generic.List<Item>
+                    {
+                        new Item
+                        {
+                            ID = "1",
+                            Currency = "USD",
+                            Parent = "11",
+                            Quantity = 24,
+                            TotalPrice = 5,
+                            UnitPrice = 24,
+                            Product = new System.Collections.Generic.List<Product>
+                            {
+                                new Product
+                                {
+                                    Name = "Phone"
+                                }
+                            }
+                        },
+                        new Item
+                        {
+                            ID = "11",
+                            Currency = "USD",
+                            Parent = "111",
+                            Quantity = 244,
+                            TotalPrice = 55,
+                            UnitPrice = 244,
+                            Product = new System.Collections.Generic.List<Product>
+                            {
+                                new Product
+                                {
+                                    Name = "Tablet"
+                                }
+                            }
+                        }
+                    }
                 }
             };
         }
