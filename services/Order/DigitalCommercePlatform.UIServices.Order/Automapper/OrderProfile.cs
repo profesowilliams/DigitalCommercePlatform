@@ -13,6 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             CreateMap<OrderModel, OrderDto>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
+                .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>());
 
@@ -20,8 +21,11 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
 
             CreateMap<AddressDetails, AddressDto>();
+            CreateMap<Item, LineDto>()
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
             CreateMap<OrderModel, SingleOrderResponse>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
+                .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
                 .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
