@@ -1,20 +1,12 @@
-﻿using DigitalCommercePlatform.UIServices.Security.Infrastructure;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Security.Messages;
-using DigitalFoundation.Common.Settings;
-using Flurl;
-using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
-using System;
+﻿using MediatR;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetUser
 {
+    [ExcludeFromCodeCoverage]
     public class GetUserAndTokenQueryHandler : IRequestHandler<GetUserQuery, GetUserResponse>
     {
         //private readonly IHttpClientFactory _clientFactory;

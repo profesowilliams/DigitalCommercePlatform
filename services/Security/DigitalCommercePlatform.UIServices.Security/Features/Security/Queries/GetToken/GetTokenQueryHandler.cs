@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Security.Infrastructure;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Security.Messages;
-using DigitalFoundation.Common.Security.SecurityServiceClient;
-using DigitalFoundation.Common.Settings;
-using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
-using System;
+﻿using MediatR;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;

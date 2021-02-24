@@ -1,8 +1,9 @@
 ﻿using DigitalCommercePlatform.UIServices.Security.Models;
-using DigitalFoundation.Common.Security.Messages;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetUser
 {
+    [ExcludeFromCodeCoverage]
     public class GetUserResponse
     {
         public User User { get; set; }
