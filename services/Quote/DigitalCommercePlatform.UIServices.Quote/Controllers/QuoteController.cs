@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
-    //[ApiController] // This line is commented to make the /health endpoint work
+    [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
     [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
