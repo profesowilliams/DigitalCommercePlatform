@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Security.Controllers
         {
             var response = await Mediator.Send(new GetUserQuery(getUserRequest?.ApplicationName, getUserRequest?.SessionId));
 
+            // this is a dummy service for now
             //if (response.IsError && response.ErrorCode == "forbidden")
             //{
             //    return StatusCode(StatusCodes.Status403Forbidden, response);
