@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Security.Models
 {
+    [ExcludeFromCodeCoverage]
+
     public class User
     {
         public string ID { get; set; }

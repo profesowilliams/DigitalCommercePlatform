@@ -9,11 +9,14 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetToken
 {
+    [ExcludeFromCodeCoverage]
+
     public class GetTokenQueryHandler : IRequestHandler<GetTokenQuery, GetTokenResponse>
     {
         //private readonly IMiddleTierHttpClient _middleTierHttpClient;

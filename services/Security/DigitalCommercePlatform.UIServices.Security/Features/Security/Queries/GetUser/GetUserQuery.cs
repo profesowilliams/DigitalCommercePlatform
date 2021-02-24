@@ -1,7 +1,10 @@
 ﻿using MediatR;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetUser
 {
+    [ExcludeFromCodeCoverage]
+
     public class GetUserQuery : IRequest<GetUserResponse>
     {
         public string ApplicationName { get; }

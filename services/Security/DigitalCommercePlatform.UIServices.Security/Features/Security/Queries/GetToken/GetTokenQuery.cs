@@ -1,7 +1,10 @@
 ﻿using MediatR;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Security.Features.Security.Queries.GetToken
 {
+    [ExcludeFromCodeCoverage]
+
     public class GetTokenQuery : IRequest<GetTokenResponse>
     {
         public string Code { get; }

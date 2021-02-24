@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Security.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
     public class SecurityController : BaseUIServiceController
