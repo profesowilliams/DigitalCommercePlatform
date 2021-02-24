@@ -5,5 +5,7 @@
         public string Code { get; set; }
         public string RedirectUri { get; set; }
         public string SessionId { get; set; }
+        public bool WithUserData { get; set; }
+
     }
 }
