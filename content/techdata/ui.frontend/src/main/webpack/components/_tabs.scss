@@ -4,6 +4,7 @@
 .cmp-tabs__tab--active {}
 .cmp-tabs__tabpanel {}
 .cmp-tabs__tabpanel--active {}
+.cmp-tabs__tabpanel--text {}
 
 .top-nav {
   .nav {
@@ -36,3 +37,14 @@
     display: block;
   }
 }
+.cmp-tabs__tabpanel--text {
+    height: 36px;
+    width: 133px;
+    color: #FFFFFF;
+    font-family: "Open Sans";
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 16px;
+    text-align: center;
+}
+
