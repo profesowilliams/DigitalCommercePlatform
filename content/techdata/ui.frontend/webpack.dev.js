@@ -1,6 +1,6 @@
-const merge             = require('webpack-merge');
-const common            = require('./webpack.common.js');
-const path              = require('path');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackHookPlugin = require('webpack-hook-plugin');
 
@@ -33,7 +33,27 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'teaser-demo-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser-demo/teaser-demo.html')
-            }),          
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'form-options-checkbox',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/checkbox.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'form-options-drop-down',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/drop-down.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'form-options-multi-select-drop-down',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/multi-select-drop-down.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'form-options-radio-button',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/radio-button.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'form-options-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html')
+            }),
         ],
         devServer: {
             inline: true,
