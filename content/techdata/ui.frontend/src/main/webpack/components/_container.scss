@@ -5,18 +5,21 @@
 
   float: unset !important;
 
-  &--max-1400 {
-    max-width: 1400px;
-    margin: 0 auto !important;
-  }
-
   &--max-1440 {
     max-width: $container-max-width;
     margin: 0 auto !important;
+    float: unset !important;
+  }
+
+  &--max-1400 {
+    max-width: 1400px;
+    margin: 0 auto !important;
+    float: unset !important;
   }
 
   &--max-1600 {
     max-width: 1600px;
     margin: 0 auto !important;
+    float: unset !important;
   }
 }
