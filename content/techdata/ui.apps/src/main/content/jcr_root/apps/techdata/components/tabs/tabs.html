@@ -34,7 +34,7 @@
             class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
             aria-controls="${tab.id}-tabpanel"
             tabindex="${isActive ? '0' : '-1'}"
-            data-cmp-hook-tabs="tab">${tab.title}
+            data-cmp-hook-tabs="tab"><p class="cmp-tabs__tabpanel--text">${tab.title}</p>
             <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
         </li>
     </ol>
