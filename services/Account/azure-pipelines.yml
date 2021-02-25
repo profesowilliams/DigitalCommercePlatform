@@ -14,7 +14,7 @@ pool:
 extends:
   template: pullrequest-template-v2.yml@DCP
   parameters:
-          projectSources: 'services/Browse/DigitalCommercePlatform.UIServices.Browse.sln'
-          unitTestSources: 'services/Browse/DigitalCommercePlatform.UIServices.Browse.*/*Tests.csproj'
-          projectKey: 'DC-DF-Browse-UI'
-          projectName: 'DC-DF-Browse-UI'          
+          projectSources: 'services/Account/DigitalCommercePlatform.UIServices.Account.sln'
+          unitTestSources: 'services/Account/DigitalCommercePlatform.UIServices.Account.*/*Tests.csproj'
+          projectKey: 'DC-DF-Account-UI'
+          projectName: 'DC-DF-Account-UI'          
