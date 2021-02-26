@@ -32,7 +32,7 @@
     <!-- ====================================================================== -->
     <artifactId>techdata.ui.frontend</artifactId>
     <packaging>pom</packaging>
-    <name>Tech Data - UI Frontend</name>
+    <name>Tech Data - UI Angular Frontend</name>
 
 
     <!-- ====================================================================== -->

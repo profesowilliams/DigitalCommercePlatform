@@ -6,6 +6,7 @@
     "start": "ng serve --open --proxy-config ./proxy.conf.json",
     "build": "ng lint && ng build && clientlib",
     "build:production": "ng lint && ng build --prod && clientlib",
+    "build:prod-no-lint": "ng build --prod && clientlib",
     "test": "ng test",
     "sync": "aemsync -d -w ../ui.apps/src/main/content"
   },
