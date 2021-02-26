@@ -119,7 +119,7 @@
                     <version>1.7.6</version>
                     <configuration>
                         <nodeVersion>${nodeVersion}</nodeVersion>
-                        <npmVersion>${npmVersion}}</npmVersion>
+                        <npmVersion>${npmVersion}</npmVersion>
                     </configuration>
                     <executions>
                         <execution>
