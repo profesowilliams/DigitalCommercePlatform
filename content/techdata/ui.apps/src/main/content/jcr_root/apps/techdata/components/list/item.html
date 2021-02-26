@@ -14,12 +14,10 @@ item.html
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-  <template data-sly-template.item="${@ list, item}">
-	<article data-sly-use.tmpl="${'list.js' @ item=item}">
+<template data-sly-template.item="${@ list, item}">
+    <article>
         <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
-        <sly data-sly-test=${tmpl.imagePath}>
-        	<img class="cmp-list__item-thumbnail" src=${tmpl.imagePath}>
-        </sly>
+
             <span class="cmp-list__item-title">${item.title}</span>
             <span data-sly-test="${list.showModificationDate}"
                   class="cmp-list__item-date">${list.dateFormatString @format=item.lastModified}</span>
@@ -28,8 +26,11 @@ item.html
     </article>
 </template>
 <template data-sly-template.article="${@ list, item}">
-    <article>
+    <article  data-sly-use.tmpl="${'list.js' @ item=item}">
         <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+            <sly data-sly-test=${tmpl.imagePath}>
+                <img class="cmp-list__item-thumbnail" src=${tmpl.imagePath}>
+            </sly>
             <span class="cmp-list__item-title">${item.title}</span>
             <span data-sly-test="${list.showModificationDate}"
                   class="cmp-list__item-date">${list.dateFormatString @format=item.lastModified}</span>
