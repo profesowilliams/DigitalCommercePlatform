@@ -30,7 +30,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>techdata.ui.frontend</artifactId>
+    <artifactId>techdata.ui.frontend-angular</artifactId>
     <packaging>pom</packaging>
     <name>Tech Data - UI Angular Frontend</name>
 
