@@ -7,7 +7,7 @@
     "build": "ng lint && ng build && clientlib",
     "build:production": "ng lint && ng build --prod && clientlib",
     "build:prod-no-lint": "ng build --prod && clientlib",
-    "test": "ng test",
+    "test": "",
     "sync": "aemsync -d -w ../ui.apps/src/main/content"
   },
   "dependencies": {
@@ -33,8 +33,8 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.12",
-    "@angular/cli": "~9.1.12",
+    "@angular-devkit/build-angular": "^0.901.15",
+    "@angular/cli": "^9.1.15",
     "@angular/compiler-cli": "~9.1.12",
     "@angular/language-service": "~9.1.12",
     "@babel/compat-data": "~7.8.0",

@@ -54,6 +54,7 @@
         <componentGroupName>Tech Data</componentGroupName>
         <npmVersion>6.14.8</npmVersion>
         <nodeVersion>v14.5.0</nodeVersion>
+        <build.environment>:prod-no-lint</build.environment>
     </properties>
 
     <build>
