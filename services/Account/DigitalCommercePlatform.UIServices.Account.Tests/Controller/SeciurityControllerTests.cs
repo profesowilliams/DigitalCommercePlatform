@@ -8,15 +8,14 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
-    [TestClass]
     public class SeciurityControllerTests
     {
         private readonly Mock<IContext> _context;
@@ -26,10 +25,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         private readonly Mock<ISiteSettings> _siteSettings;
         public SeciurityControllerTests()
         {
+            var appSettingsDict = new Dictionary<string, string>()
+            {
+                { "localizationlist", "en-US" },
+                { "SalesOrg", "WW_ORG" }
+            };
+            var appSettings = new AppSettings();
+            appSettings.Configure(appSettingsDict);
             _context = new Mock<IContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<SecurityController>>();
             _optionsMock = new Mock<IOptions<AppSettings>>();
+            _optionsMock.Setup(s => s.Value).Returns(appSettings);
             _siteSettings = new Mock<ISiteSettings>();
         }
 
