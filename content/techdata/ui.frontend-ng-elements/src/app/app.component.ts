@@ -49,13 +49,14 @@ export class AppComponent implements OnInit {
 
   constructor(injector: Injector, public popup: PopupService, private dataService: DataCallService) {
     // Convert `PopupComponent` to a custom element.
+    console.log("inside app component constructor");
     ModelManager.initialize().then(this.updateData);
 
-    const PopupElement = createCustomElement(PopupComponent, {injector});
-    const ChartElement = createCustomElement(ChartCompComponent, {injector});
-    // Register the custom element with the browser.
-    customElements.define('popup-element', PopupElement);
-    customElements.define('chart-element', ChartElement);
+    // const PopupElement = createCustomElement(PopupComponent, {injector});
+    // const ChartElement = createCustomElement(ChartCompComponent, {injector});
+    // // Register the custom element with the browser.
+    // customElements.define('popup-element', PopupElement);
+    // customElements.define('chart-element', ChartElement);
   }
 
   private updateData = pageModel => {
@@ -87,46 +88,44 @@ export class AppComponent implements OnInit {
   }
 
 
-
-
   // implement OnInit's `ngOnInit` method
   ngOnInit() {
-    console.log("AppComponent oninit");
-    let components = document.querySelectorAll("div[data-component]");
-
-    for (let i = 0; i < components.length; i++) {
-      let componentName = components[i].getAttribute("data-component");
-      console.log ("componentName " + componentName);
-
-      let elementTag = componentMapping[componentName]["componentSelector"];
-      let currentComponent = componentMapping[componentName]["componentType"];
-
-      console.log ("Mapping Name  " + elementTag);
-      const popupEl: NgElement & WithProperties<typeof currentComponent> = document.createElement(elementTag) as any;
-      // Listen to the close event
-      popupEl.addEventListener('closed', () => document.body.removeChild(popupEl));
-      // Set the message
-
-      // Add to the DOM
-      components[i].appendChild(popupEl);
-    }
-
-  //  chart component oninit
-    this.dataService.getData(this.OnLoadCustomerData).subscribe(data => {
-      console.log(data.data,"OnLoadCustomerData");
-      let apiData = JSON.parse(JSON.stringify(data.data));
-      this.chart1data = apiData;
-    });
-    this.dataService.getData(this.OnloadSalesData).subscribe(data => {
-      let apiData = JSON.parse(JSON.stringify(data.data));
-      this.chart2data = apiData;
-    });
-    this.dataService.getData(this.OnloadProductionData).subscribe(data => {
-      let apiData = JSON.parse(JSON.stringify(data.data));
-      // console.log(data.data, "OnloadProductionData");
-      this.chart3data = apiData;
-    });
-
+  //   console.log("AppComponent oninit");
+  //   let components = document.querySelectorAll("div[data-component]");
+  //
+  //   for (let i = 0; i < components.length; i++) {
+  //     let componentName = components[i].getAttribute("data-component");
+  //     console.log ("componentName " + componentName);
+  //
+  //     let elementTag = componentMapping[componentName]["componentSelector"];
+  //     let currentComponent = componentMapping[componentName]["componentType"];
+  //
+  //     console.log ("Mapping Name  " + elementTag);
+  //     const popupEl: NgElement & WithProperties<typeof currentComponent> = document.createElement(elementTag) as any;
+  //     // Listen to the close event
+  //     popupEl.addEventListener('closed', () => document.body.removeChild(popupEl));
+  //     // Set the message
+  //
+  //     // Add to the DOM
+  //     components[i].appendChild(popupEl);
+  //   }
+  //
+  // //  chart component oninit
+  //   this.dataService.getData(this.OnLoadCustomerData).subscribe(data => {
+  //     console.log(data.data,"OnLoadCustomerData");
+  //     let apiData = JSON.parse(JSON.stringify(data.data));
+  //     this.chart1data = apiData;
+  //   });
+  //   this.dataService.getData(this.OnloadSalesData).subscribe(data => {
+  //     let apiData = JSON.parse(JSON.stringify(data.data));
+  //     this.chart2data = apiData;
+  //   });
+  //   this.dataService.getData(this.OnloadProductionData).subscribe(data => {
+  //     let apiData = JSON.parse(JSON.stringify(data.data));
+  //     // console.log(data.data, "OnloadProductionData");
+  //     this.chart3data = apiData;
+  //   });
+  //
   }
 }
 
