@@ -27,8 +27,9 @@
     <modules>
         <module>all</module>
         <module>core</module>
-        <module>ui.frontend-ng</module>
         <module>ui.frontend</module>
+        <module>ui.dcp-frontend-components</module>
+        <module>ui.dcp-frontend-app</module>
         <module>ui.apps</module>
         <module>ui.apps.structure</module>
         <module>ui.config</module>
@@ -52,9 +53,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <componentGroupName>Tech Data</componentGroupName>
-        <npmVersion>6.14.8</npmVersion>
-        <nodeVersion>v14.5.0</nodeVersion>
-        <build.environment>:prod-no-lint</build.environment>
     </properties>
 
     <build>
@@ -119,8 +117,8 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.7.6</version>
                     <configuration>
-                        <nodeVersion>${nodeVersion}</nodeVersion>
-                        <npmVersion>${npmVersion}</npmVersion>
+                        <nodeVersion>v10.13.0</nodeVersion>
+                        <npmVersion>6.9.0</npmVersion>
                     </configuration>
                     <executions>
                         <execution>
