@@ -5,10 +5,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
+    [ApiController]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}")]
     public class QuoteController : BaseUIServiceController
     {
         public QuoteController(IMediator mediator,

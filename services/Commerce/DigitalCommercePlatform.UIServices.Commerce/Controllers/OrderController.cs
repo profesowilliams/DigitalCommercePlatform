@@ -14,6 +14,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
+    [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
     public class OrderController : BaseUIServiceController
