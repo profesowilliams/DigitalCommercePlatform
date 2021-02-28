@@ -1,15 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { DataCallService } from 'src/app/services/data-call.service';
+import {ChartDataModel} from './chart-config-data.model'
 
 @Component({
   selector: 'app-chart-comp',
   templateUrl: './chart-comp.component.html',
   styleUrls: ['./chart-comp.component.css']
 })
-export class ChartCompComponent implements OnInit {
+export class ChartCompComponent implements AfterViewInit {
   items: any;
   itemsOrder: any;
   path: any;
+  dataConfig = new ChartDataModel()
+
+  @ViewChild("baseChart1") componentViewEl;
 
   chart1data: Array<any>;
   chart2data: Array<any>;
@@ -27,10 +31,10 @@ export class ChartCompComponent implements OnInit {
 
   apiData;
 
+  url = ""
   public doughnutChartLabels = ['Unquoted', 'Quoted', 'Old'];
   public doughnutChartData:Array<any> = [100,100,100];
   public doughnutChartType = 'doughnut';
-  // public doughnutChartColor = ['rgb(54,192,225)', 'rgb(255,191,50)', 'rgb(0,13,34)'];
   public chartColors: Array<any> = [
     { // all colors in order
       backgroundColor: ['#36c0e1', '#ffbf32', '#000d22']
@@ -39,40 +43,54 @@ export class ChartCompComponent implements OnInit {
 
   @Input() dataOnClick:Array<any>;
 
-  constructor(private dataService: DataCallService) { }
+  constructor(private dataService: DataCallService) {
 
-  ngOnChanges(){
-    console.log(this.doughnutChartData, "console 1");
-    if(this.dataOnClick){
-      this.doughnutChartData = this.dataOnClick;
+  }
+
+  init() : void {
+    console.log("init from within chart component")
+    let componentEl = this.componentViewEl.nativeElement.closest("[data-component]")
+    let configJson = componentEl.getAttribute("data-cmp-config");
+    let initialJson = JSON.parse(configJson)
+    this.dataConfig.data = initialJson;
+    console.log(this.dataConfig)
+    this.url = this.dataConfig.data["xdm:text"]
+  }
+
+  ngAfterViewInit(): void {
+    console.log("on view init")
+    this.init()
+    this.loadChart()
+  }
+
+  loadChart()
+  {
+
+    if(this.dataConfig.data.refreshOnLoad) {
+      this.dataService.getDataOnClick(this.url).subscribe(data => {
+        console.log(data)
+        let apiData = JSON.parse(JSON.stringify(data.data));
+        console.log(apiData)
+        this.doughnutChartData = apiData
+      })
     }
-    console.log(this.doughnutChartData, "console 2");
-  }
-  ngOnInit() {
-
   }
 
-  getDataOnClick(chartNumber){
-    if (chartNumber == 'customerData'){
-      this.getClickDataFromService(chartNumber, this.OnClickCustomerData)
-    }else if(chartNumber == 'salesData'){
-      this.getClickDataFromService(chartNumber, this.OnClickSalesData)
-    }else if(chartNumber == 'prodData'){
-      this.getClickDataFromService(chartNumber, this.OnClickProductionData)
+  getClickDataFromService(){
+
+    if (this.url) {
+      this.dataService.getDataOnClick(this.url).subscribe(data => {
+        console.log(data)
+        let apiData = JSON.parse(JSON.stringify(data.data));
+        console.log(apiData)
+        this.doughnutChartData = apiData
+      })
+    }else{
+      console.error("url not found in config")
     }
+
   }
-  getClickDataFromService(chartNumber, url){
-    this.dataService.getDataOnClick(url).subscribe(data => {
-      let apiData = JSON.parse(JSON.stringify(data.data));
-      if (chartNumber == 'customerData'){
-        this.chart1data = apiData;
-      }else if(chartNumber == 'salesData'){
-        this.chart2data = apiData;
-      }else if(chartNumber == 'prodData'){
-        this.chart3data = apiData;
-      }
-    })
-  }
+
 }
 
 

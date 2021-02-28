@@ -45,7 +45,7 @@ module.exports = {
     categories: ['techdata.angular.elements'],
     serializationFormat: 'xml',
     cssProcessor: ['default:none', 'min:none'],
-    jsProcessor: ['default:none', 'min:none'],
+    jsProcessor: ['default:none', 'min:gcc'],
     assets: {
       // Copy entrypoint scripts and stylesheets into the respective ClientLib
       // directories (in the order they are in the entrypoints arrays)

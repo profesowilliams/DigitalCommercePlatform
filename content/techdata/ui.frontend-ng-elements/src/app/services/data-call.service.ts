@@ -21,8 +21,11 @@ export class DataCallService {
   }
   
   getDataOnClick(url){
-    console.log("getDataOnClick");
-    return this.http.get<ApiDataModel>(url);
+    console.log("getDataOnClick from within data call service service");
+    console.log("url is "+ url +" from within data call service service");
+    let x = this.http.get<ApiDataModel>(url);
+    console.log(x);
+    return x;
   }
 }
 

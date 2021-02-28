@@ -5,7 +5,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import {createCustomElement, NgElement, WithProperties} from '@angular/elements';
 
 
-import { AppComponent } from './app.component';
 import { PopupComponent } from './components/popup.component';
 import { PopupService } from './components/popup.service';
 import {ChartCompComponent} from "./components/chart-comp/chart-comp.component";
@@ -38,7 +37,7 @@ const componentMapping = {
     HttpClientModule,
     ChartsModule],
   providers: [PopupService, HttpClient, ModelManagerService, { provide: APP_BASE_HREF, useValue: '/' }],
-  declarations: [AppComponent, PopupComponent, ChartCompComponent],
+  declarations: [PopupComponent, ChartCompComponent],
   // bootstrap: [AppComponent],
   entryComponents: [PopupComponent, ChartCompComponent],
 })
@@ -75,10 +74,8 @@ export class AppModule {
 
         console.log ("Mapping Name  " + elementTag);
         const popupEl: NgElement & WithProperties<typeof currentComponent> = document.createElement(elementTag) as any;
-        // Listen to the close event
-        popupEl.addEventListener('closed', () => document.body.removeChild(popupEl));
-        // Set the message
 
+        console.log(popupEl)
         // Add to the DOM
         components[i].appendChild(popupEl);
     }
@@ -86,7 +83,6 @@ export class AppModule {
 
   constructor(injector: Injector, public popup: PopupService, private dataService: DataCallService) {
     // Convert `PopupComponent` to a custom element.
-    ModelManager.initialize().then(this.updateData);
     console.log("inside app module constructor");
 
     const PopupElement = createCustomElement(PopupComponent, {injector});
@@ -94,38 +90,7 @@ export class AppModule {
     // Register the custom element with the browser.
     customElements.define('popup-element', PopupElement);
     customElements.define('chart-element', ChartElement);
-
-
   }
-
-  private updateData = pageModel => {
-    this.path = pageModel[Constants.PATH_PROP];
-    this.items = pageModel[Constants.ITEMS_PROP];
-    this.itemsOrder = pageModel[Constants.ITEMS_ORDER_PROP];
-  }
-
-  getDataOnClick(chartNumber){
-    if (chartNumber == 'customerData'){
-      this.getClickDataFromService(chartNumber, this.OnClickCustomerData)
-    }else if(chartNumber == 'salesData'){
-      this.getClickDataFromService(chartNumber, this.OnClickSalesData)
-    }else if(chartNumber == 'prodData'){
-      this.getClickDataFromService(chartNumber, this.OnClickProductionData)
-    }
-  }
-  getClickDataFromService(chartNumber, url){
-    this.dataService.getDataOnClick(url).subscribe(data => {
-      let apiData = JSON.parse(JSON.stringify(data.data));
-      if (chartNumber == 'customerData'){
-        this.chart1data = apiData;
-      }else if(chartNumber == 'salesData'){
-        this.chart2data = apiData;
-      }else if(chartNumber == 'prodData'){
-        this.chart3data = apiData;
-      }
-    })
-  }
-
 }
 
 
