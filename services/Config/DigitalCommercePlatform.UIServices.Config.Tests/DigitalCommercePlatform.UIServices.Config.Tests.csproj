@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controller\" />
+    <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Config\DigitalCommercePlatform.UIServices.Config.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIServices.Account.Config.Abstract
+﻿namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
 {
     public abstract class ResponseBase<T>
     {

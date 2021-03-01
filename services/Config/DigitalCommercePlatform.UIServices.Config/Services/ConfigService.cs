@@ -1,11 +1,7 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations;
-using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
-using DigitalFoundation.Common.Extensions;
-using Flurl;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -49,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 ListOfConfigurations = lstConfigurations,
                 TotalRecords = lstConfigurations.Count(),
                 SortBy = request.SortBy,
-                SortDirection = request.SortDirection,
+                SortDirection = "desc", // fix this
                 PageSize = 25,
                 CurrentPage = 10,
             };

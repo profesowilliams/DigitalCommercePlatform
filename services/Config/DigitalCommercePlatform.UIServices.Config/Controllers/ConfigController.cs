@@ -13,12 +13,16 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
 {
+    [ApiController]
+    [ApiVersion("1")]
+    [Route("/v{apiVersion}")]
     public class ConfigController : BaseUIServiceController
     {
-        public ConfigController(IMediator mediator,
-            IOptions<AppSettings> options,
+        public ConfigController(
+            IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
+            IOptions<AppSettings> options,           
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {

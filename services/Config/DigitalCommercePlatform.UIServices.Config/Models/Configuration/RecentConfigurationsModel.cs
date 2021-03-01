@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class RecentConfigurationsModel
     {
         public List<Configuration> ListOfConfigurations { get; set; }

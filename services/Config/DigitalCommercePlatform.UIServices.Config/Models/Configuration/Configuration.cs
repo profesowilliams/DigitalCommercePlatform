@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configuration
 {
+    [ExcludeFromCodeCoverage]
     public class Configuration
     {        
         public string ConfigId { get; set; }
