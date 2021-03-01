@@ -1,0 +1,253 @@
+@import 'variables';
+
+@font-face {
+	font-family: '#{$icomoon-font-family}';
+	src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?tdqsyz') format('truetype'),
+		url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?tdqsyz') format('woff'),
+		url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?tdqsyz##{$icomoon-font-family}') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+@font-face {
+	font-family: '#{$fontawsome-font-family}';
+	src: url('#{$fontawsome-font-path}/fa-regular-400.ttf?tdqsyz') format('truetype'),
+		url('#{$fontawsome-font-path}/fa-regular-400.woff?tdqsyz') format('woff'),
+		url('#{$fontawsome-font-path}/fa-regular-400.svg?tdqsyz#fa-regular-400') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+.fas {
+	font-family: '#{$fontawsome-font-family}' !important;
+}
+.icon {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: '#{$icomoon-font-family}' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-recenter .path1 {
+	&:before {
+		content: $icon-recenter-path1;
+		color: rgb(0, 169, 231);
+	}
+}
+.icon-recenter .path2 {
+	&:before {
+		content: $icon-recenter-path2;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-recenter .path3 {
+	&:before {
+		content: $icon-recenter-path3;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-recenter .path4 {
+	&:before {
+		content: $icon-recenter-path4;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-location-marker .path1 {
+	&:before {
+		content: $icon-location-marker-path1;
+		color: rgb(189, 0, 23);
+	}
+}
+.icon-location-marker .path2 {
+	&:before {
+		content: $icon-location-marker-path2;
+		margin-left: -0.8369140625em;
+		color: rgb(255, 255, 255);
+	}
+}
+.icon-location-marker .path3 {
+	&:before {
+		content: $icon-location-marker-path3;
+		margin-left: -0.8369140625em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-location-marker .path4 {
+	&:before {
+		content: $icon-location-marker-path4;
+		margin-left: -0.8369140625em;
+		color: rgb(0, 0, 0);
+		opacity: 0.102;
+	}
+}
+.icon-location-marker .path5 {
+	&:before {
+		content: $icon-location-marker-path5;
+		margin-left: -0.8369140625em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-filter .path1 {
+	&:before {
+		content: $icon-filter-path1;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-filter .path2 {
+	&:before {
+		content: $icon-filter-path2;
+		margin-left: -1em;
+		color: rgb(0, 169, 231);
+	}
+}
+.icon-filter .path3 {
+	&:before {
+		content: $icon-filter-path3;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-filter .path4 {
+	&:before {
+		content: $icon-filter-path4;
+		margin-left: -1em;
+		color: rgb(0, 169, 231);
+	}
+}
+.icon-filter .path5 {
+	&:before {
+		content: $icon-filter-path5;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-filter .path6 {
+	&:before {
+		content: $icon-filter-path6;
+		margin-left: -1em;
+		color: rgb(0, 169, 231);
+	}
+}
+.icon-locate {
+	&:before {
+		content: $icon-locate;
+		color: #000;
+	}
+}
+.icon-open-link {
+	&:before {
+		content: $icon-open-link;
+	}
+}
+.icon-play {
+	&:before {
+		content: $icon-play;
+	}
+}
+.icon-pause {
+	&:before {
+		content: $icon-pause;
+	}
+}
+.icon-my-account .path1 {
+	&:before {
+		content: $icon-my-account-path1;
+		color: rgb(0, 169, 231);
+	}
+}
+.icon-my-account .path2 {
+	&:before {
+		content: $icon-my-account-path2;
+		margin-left: -1em;
+		color: rgb(255, 200, 54);
+	}
+}
+.icon-my-account .path3 {
+	&:before {
+		content: $icon-my-account-path3;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-my-account .path4 {
+	&:before {
+		content: $icon-my-account-path4;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-my-account .path5 {
+	&:before {
+		content: $icon-my-account-path5;
+		margin-left: -1em;
+		color: rgb(255, 255, 255);
+	}
+}
+.icon-my-account .path6 {
+	&:before {
+		content: $icon-my-account-path6;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-my-account .path7 {
+	&:before {
+		content: $icon-my-account-path7;
+		margin-left: -1em;
+		color: rgb(96, 96, 91);
+	}
+}
+.icon-close {
+	&:before {
+		content: $icon-close;
+	}
+}
+.icon-location {
+	&:before {
+		content: $icon-location;
+	}
+}
+.icon-Search {
+	&:before {
+		content: $icon-Search;
+		color: #60605b;
+	}
+}
+.icon-hamburger {
+	&:before {
+		content: $icon-hamburger;
+	}
+}
+.icon-minus {
+	&:before {
+		content: $icon-minus;
+	}
+}
+.icon-check {
+	&:before {
+		content: $icon-check;
+	}
+}
+.icon-plus {
+	&:before {
+		content: $icon-plus;
+	}
+}
+.icon-arrow-down {
+	&:before {
+		content: $icon-arrow-down;
+	}
+}
