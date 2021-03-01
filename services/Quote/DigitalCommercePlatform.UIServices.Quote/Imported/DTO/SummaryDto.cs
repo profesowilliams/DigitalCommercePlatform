@@ -19,6 +19,7 @@ namespace DigitalFoundation.App.Services.Quote.DTO
         public decimal Price { get; set; }
         public string Currency { get; set; }
         public string DocumentType { get; set; }
+        public string QuoteType { get; set; }
         public TypeDto Type { get; set; }
         public LevelDto Level { get; set; }
         public string Creator { get; set; }

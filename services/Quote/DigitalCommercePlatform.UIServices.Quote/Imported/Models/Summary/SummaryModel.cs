@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalFoundation.App.Services.Quote.Models.Summary
 {
     [ExcludeFromCodeCoverage]
-    public class SummaryModel 
+    public class SummaryModel
     {
         public SourceModel Source { get; set; }
         public decimal Revision { get; set; }
@@ -19,6 +19,7 @@ namespace DigitalFoundation.App.Services.Quote.Models.Summary
         public decimal Price { get; set; }
         public string Currency { get; set; }
         public string DocumentType { get; set; }
+        public string QuoteType { get; set; }
         public TypeModel Type { get; set; }
         public LevelModel Level { get; set; }
         public string Creator { get; set; }
