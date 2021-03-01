@@ -12,7 +12,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public class HttpAccountService : IAccountService
     {
         private readonly IHttpClientFactory _clientFactory;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _coreSecurityServiceUrl;
+#pragma warning restore CS0414
         public HttpAccountService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
@@ -32,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 {
                     Message = "Login successful",
                     IsValidUser = true
-                }); ;
+                });
             }
 
             var result = new AuthenticateModel
