@@ -1,19 +1,19 @@
 import React from 'react';
-import Chartcomp from "../customer-widegt/customer";
+import Chartcomp from "../customer-widget/customer";
 import axios from "axios";
+import {nanoid} from "nanoid";
 
 class Chart extends React.Component {
 
     state = {
-        name:'MY CONFIGURATIONS',
-        customer: [],
-        sales:[],
-        production:[]
+        name:'My React Chart',
+        customer: []
     }
 
-    chnageNmae = () => {
+
+    changeName = () => {
         this.setState({
-            name:'Othert Name'
+            name:'Other Name'
         })
     }
 
@@ -28,32 +28,31 @@ class Chart extends React.Component {
             });
     }
 
-    changecustomerApi = (url, id) => {
-        // this.fetchApi('https://api.npoint.io/333c60f461e85093f106', 'customer');
-        this.fetchApi('./customerdata.json', 'customer');
+    updateData = (url, id) => {
+        this.fetchApi('https://api.npoint.io/333c60f461e85093f106', 'customer');
+        // this.fetchApi('./customerdata.json', 'customer');
     }
-    changesalesApi = (url, id) => {
-        this.fetchApi('https://api.npoint.io/333c60f461e85093f106', 'sales');
-    }
-    changeproductionApi = (url, id) => {
-        this.fetchApi('https://api.npoint.io/333c60f461e85093f106', 'production');
-    }
-
 
     componentDidMount(){
+
         this.fetchApi('https://api.npoint.io/4c82d3e004a8a98766a0', 'customer');
-        this.fetchApi('https://api.npoint.io/4c82d3e004a8a98766a0', 'sales');
-        this.fetchApi('https://api.npoint.io/4c82d3e004a8a98766a0', 'production');
+
     }
 
     render() {
         const {customer, sales, production} = this.state;
+        console.log("render")
+        let compProps = JSON.parse(this.props.componentProp)
+        console.log(compProps)
+        console.log(compProps.name)
+        let uniqueId= nanoid()
         return (
                 <div className="Chart">
                 <ul>
                     <li>
-                        {customer && customer.length ? <Chartcomp data={customer} id="customer" /> :'loading'}
-                        <button onClick={this.changecustomerApi}>Change Customer Data</button>
+                        <h1>{compProps.name}</h1>
+                        {customer && customer.length ? <Chartcomp data={customer} id={uniqueId} /> :'loading'}
+                        <button onClick={this.updateData}>Change Customer Data</button>
                     </li>
                 </ul>
                 </div>

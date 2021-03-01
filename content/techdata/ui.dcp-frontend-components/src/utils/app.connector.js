@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactContentRenderer from 'react-dom';
+import { nanoid } from 'nanoid';
 
 class AppConnector {
     constructor(componentProps, element) {
@@ -7,19 +8,25 @@ class AppConnector {
         var _self = this;
         this.components = [];
         this.componentProps = componentProps;
+        console.log(this.componentProps)
 
         import (`../components/${this.componentProps.component}/${this.componentProps.component}`)
         .then(component => {
                 _self.loadComponent(component.default, element);
             })
             .catch(error => {
-                log.error(`${_self.componentProps.component} Component not found`);
+                console.error(`${_self.componentProps.component} Component not found`);
             });
     }
 
     loadComponent(componentRef, element) {
+        console.log("load components")
+        console.log(componentRef)
+        console.log(" component props")
+        console.log(this.componentProp)
         let Component = componentRef; // Captilize is mandatory for the variable 'Component'
-        ReactContentRenderer.render(<Component componentProp = {this.componentProps} />, element);
+        let randomKey = nanoid()
+        ReactContentRenderer.render(<Component key={randomKey} componentProp = {this.componentProps.config} />, element);
 	}
 }
 

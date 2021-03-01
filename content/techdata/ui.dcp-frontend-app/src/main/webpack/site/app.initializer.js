@@ -59,6 +59,8 @@ class AppInitializer {
 
         Array.prototype.forEach.call(componentReferences, function (element) {
             const componentProps = element.dataset;
+            console.log("componentProps")
+            console.log(componentProps)
 
             if ('react' === (componentProps.cmpType && componentProps.cmpType.toLowerCase())) {
                 // Initialize React Component

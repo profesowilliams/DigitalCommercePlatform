@@ -4,7 +4,7 @@
 // import Twofun from './comptwo';
 import React from 'react';
 import axios from 'axios';
-import Chartcomp from '../customer-widegt/customer';
+import Chartcomp from '../customer-widget/customer';
 
 class App extends React.Component {
 
