@@ -1,0 +1,36 @@
+.cmp-container {
+    &--fixed > .cmp-container {
+        margin: 0 auto;
+        max-width: rem(1170px);
+        overflow: hidden;
+        @include media("<lg") {
+            margin: rem(0 20px);
+        }
+    }
+
+    &--padding > .cmp-container {
+        @include media(">=lg") {
+            .aem-Grid {
+                margin-left: rem(-8px);
+                margin-right: rem(-8px);
+                width: auto;
+                > .aem-GridColumn {
+                    padding-left: rem(8px);
+                    padding-right: rem(8px);
+                }
+            }
+        }
+
+        @include media("<lg") {
+            .aem-Grid {
+                margin-left: rem(-4px);
+                margin-right: rem(-4px);
+                width: auto;
+                > .aem-GridColumn {
+                    padding-left: rem(4px);
+                    padding-right: rem(4px);
+                }
+            }
+        }
+    }
+}

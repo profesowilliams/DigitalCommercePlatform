@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Speedee";
+    src: url($font-primary-path + "/Speedee-Regular.eot");
+    src: url($font-primary-path + "/Speedee-Regular.eot?#iefix") format("embedded-opentype"),
+        url($font-primary-path + "/Speedee-Regular.woff2") format("woff2"),
+        url($font-primary-path + "/Speedee-Regular.woff") format("woff"),
+        url($font-primary-path + "/Speedee-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Speedee";
+    src: url($font-primary-path + "/Speedee-Light.eot");
+    src: url($font-primary-path + "/Speedee-Light.eot?#iefix") format("embedded-opentype"),
+        url($font-primary-path + "/Speedee-Light.woff2") format("woff2"),
+        url($font-primary-path + "/Speedee-Light.woff") format("woff"),
+        url($font-primary-path + "/Speedee-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
