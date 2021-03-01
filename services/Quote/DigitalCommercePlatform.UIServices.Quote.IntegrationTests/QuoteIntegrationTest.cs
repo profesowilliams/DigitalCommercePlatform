@@ -1,4 +1,5 @@
 using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
+using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
@@ -78,7 +79,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 response.StatusCode.Should().Be(HttpStatusCode.OK);
             }
 
-
             [Theory]
             [InlineData("v1/?id=123")]
             public async Task App_GetMultiple_ReturnsData(string input)
@@ -104,9 +104,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
             public async Task App_Find_ReturnsData(string input)
             {
                 // Arrange
-                var result = new PaginatedResponse<IEnumerable<QuoteModel>>()
+                var result = new FindResponse<IEnumerable<QuoteModel>>()
                 {
-                    ReturnObject = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
+                    Data = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
                 };
                 using var scope = fixture.CreateChildScope();
                 scope.OverrideClient<IMiddleTierHttpClient>()
@@ -124,24 +124,20 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 response.StatusCode.Should().Be(HttpStatusCode.OK);
             }
 
-
             [Theory]
             [InlineData("v1/Find?Id=123")]
             public async Task App_FindWithoutDetails_ReturnsData(string input)
             {
                 // Arrange
-                var result = new PaginatedResponse<IEnumerable<QuoteModel>>()
+                var result = new FindResponse<IEnumerable<QuoteModel>>()
                 {
-                    ReturnObject = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
+                    Data = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
                 };
                 using var scope = fixture.CreateChildScope();
                 scope.OverrideClient<IMiddleTierHttpClient>()
                     .ForHttpMethod(HttpMethod.Get)
                     .MatchContains("Find")
-                    .Returns<SearchQuoteHandler.Response>(r =>
-                    {
-                        return new SearchQuoteHandler.Response(result);
-                    });
+                    .Returns(result);
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
                 var url = new Uri(client.BaseAddress + input);
@@ -150,7 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 var response = await client.RunTest<SearchQuoteHandler.Response>(c => c.GetAsync(url), HttpStatusCode.OK).ConfigureAwait(false);
 
                 // Assert
-                response.Content.Should().BeAssignableTo<PaginatedResponse<IEnumerable<QuoteModel>>>();
+                response.Content.Data.Should().HaveCount(1);
                 response.ErrorCode.Should().BeNullOrEmpty();
             }
         }
