@@ -71,7 +71,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             var getOrdersHttpResponse = await apiOrdersClient.SendAsync(getOrdersHttpRequestMessage);
             getOrdersHttpResponse.EnsureSuccessStatusCode();
-
             var findOrdersDto = await getOrdersHttpResponse.Content.ReadAsAsync<OrdersContainer>();
             return findOrdersDto;
         }

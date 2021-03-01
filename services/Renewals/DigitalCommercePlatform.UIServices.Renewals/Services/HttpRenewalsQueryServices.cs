@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Renewals.Services
         }
 
         public static int GetRandomNumber(int min, int max)
-        {
+        {            
             return getrandom.Next(min, max);
         }
     }
