@@ -79,7 +79,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 response.StatusCode.Should().Be(HttpStatusCode.OK);
             }
 
-
             [Theory]
             [InlineData("v1/?id=123")]
             public async Task App_GetMultiple_ReturnsData(string input)
@@ -125,7 +124,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 response.StatusCode.Should().Be(HttpStatusCode.OK);
             }
 
-
             [Theory]
             [InlineData("v1/Find?Id=123")]
             public async Task App_FindWithoutDetails_ReturnsData(string input)
@@ -139,10 +137,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 scope.OverrideClient<IMiddleTierHttpClient>()
                     .ForHttpMethod(HttpMethod.Get)
                     .MatchContains("Find")
-                    .Returns<SearchQuoteHandler.Response>(r =>
-                    {
-                        return new SearchQuoteHandler.Response(result);
-                    });
+                    .Returns(result);
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
                 var url = new Uri(client.BaseAddress + input);
@@ -151,7 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                 var response = await client.RunTest<SearchQuoteHandler.Response>(c => c.GetAsync(url), HttpStatusCode.OK).ConfigureAwait(false);
 
                 // Assert
-                response.Content.Should().BeAssignableTo<PaginatedResponse<IEnumerable<QuoteModel>>>();
+                response.Content.Data.Should().HaveCount(1);
                 response.ErrorCode.Should().BeNullOrEmpty();
             }
         }
