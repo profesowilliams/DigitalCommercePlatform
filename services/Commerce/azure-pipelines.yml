@@ -3,16 +3,13 @@ resources:
     - repository: DCP
       type: git
       name: 'WW Digital Commerce/DigitalCommercePlatform'
-      
 
 trigger: none
 
 pool:
   name: 'CLW'
 
-workspace:
-  clean: all
-  
+
 extends:
   template: pullrequest-template-v2.yml@DCP
   parameters:
