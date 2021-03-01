@@ -1,4 +1,5 @@
 using DigitalCommercePlatform.UIServices.Quote.Actions.Quote;
+using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
@@ -104,9 +105,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
             public async Task App_Find_ReturnsData(string input)
             {
                 // Arrange
-                var result = new PaginatedResponse<IEnumerable<QuoteModel>>()
+                var result = new FindResponse<IEnumerable<QuoteModel>>()
                 {
-                    ReturnObject = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
+                    Data = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
                 };
                 using var scope = fixture.CreateChildScope();
                 scope.OverrideClient<IMiddleTierHttpClient>()
@@ -130,9 +131,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
             public async Task App_FindWithoutDetails_ReturnsData(string input)
             {
                 // Arrange
-                var result = new PaginatedResponse<IEnumerable<QuoteModel>>()
+                var result = new FindResponse<IEnumerable<QuoteModel>>()
                 {
-                    ReturnObject = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
+                    Data = new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } }
                 };
                 using var scope = fixture.CreateChildScope();
                 scope.OverrideClient<IMiddleTierHttpClient>()

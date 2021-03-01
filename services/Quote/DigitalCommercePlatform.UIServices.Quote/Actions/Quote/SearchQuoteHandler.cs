@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
@@ -31,12 +32,12 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Response
         {
-            public PaginatedResponse<IEnumerable<QuoteModel>> Content { get; set; }
+            public FindResponse<IEnumerable<QuoteModel>> Content { get; set; }
 
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
 
-            public Response(PaginatedResponse<IEnumerable<QuoteModel>> model)
+            public Response(FindResponse<IEnumerable<QuoteModel>> model)
             {
                 Content = model;
             }
@@ -82,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var data = JsonSerializer.Deserialize<PaginatedResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
+                    var data = JsonSerializer.Deserialize<FindResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
                     var result = new Response(data);
                     return result;
                 }
