@@ -7,7 +7,8 @@
     "build": "ng lint && ng build && clientlib",
     "build:production": "ng lint && ng build --prod && clientlib",
     "build:prod-no-lint": "ng build --prod && clientlib",
-    "test": "ng test",
+    "test": "",
+    "original-test": "ng test",
     "sync": "aemsync -d -w ../ui.apps/src/main/content"
   },
   "dependencies": {
