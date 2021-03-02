@@ -8,7 +8,7 @@ resources:
 trigger: none
 
 schedules:
-- cron: "53 * * * *"
+- cron: "0 0 * * *"
   displayName: 'Daily night build'
   branches:
     include:
