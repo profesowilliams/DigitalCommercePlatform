@@ -4,9 +4,10 @@ resources:
       type: git
       name: 'WW Digital Commerce/DigitalCommercePlatform'
       
+trigger: none
 
 schedules:
-- cron: "0 25 * * *"
+- cron: "25 0 * * *"
   displayName: 'Daily night build'
   branches:
     include:
