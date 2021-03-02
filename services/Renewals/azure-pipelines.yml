@@ -6,7 +6,7 @@ resources:
       
 
 schedules:
-- cron: "0 45 * * *"
+- cron: "45 0 * * *"
   displayName: 'Daily night build'
   branches:
     include:
