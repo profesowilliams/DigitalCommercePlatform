@@ -31,6 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders
             {
                 Id = request.Id,
                 CustomerPO = request.CustomerPO,
+                Manufacturer = request.Manufacturer,
                 CreatedFrom = request.CreatedFrom,
                 CreatedTo = request.CreatedTo,
                 OrderBy = sortingProperty,

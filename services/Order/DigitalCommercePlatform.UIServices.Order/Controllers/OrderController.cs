@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
         [Route("orders")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersAsync([FromQuery] GetOrdersRequest getOrdersRequest)
         {
-            var getOrdersQuery = new GetOrdersQuery(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo, 
+            var getOrdersQuery = new GetOrdersQuery(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor, getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo, 
                                         getOrdersRequest.OrderBy, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
 
             var ordersResponse = await Mediator.Send(getOrdersQuery);

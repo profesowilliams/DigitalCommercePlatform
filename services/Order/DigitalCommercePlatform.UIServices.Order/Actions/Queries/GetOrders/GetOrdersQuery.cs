@@ -10,16 +10,19 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders
     {
         public string Id { get; }
         public string CustomerPO { get; }
+        public string Manufacturer { get; }
+
         public DateTime? CreatedFrom { get; }
         public DateTime? CreatedTo { get; }
         public string OrderBy { get; }
         public int PageNumber { get; }
         public int PageSize { get; }
 
-        public GetOrdersQuery(string id, string customerPO,DateTime? createdFrom, DateTime? createdTo,string orderBy, int pageNumber, int pageSize)
+        public GetOrdersQuery(string id, string customerPO,string manufacturer,DateTime? createdFrom, DateTime? createdTo,string orderBy, int pageNumber, int pageSize)
         {
             Id = id;
             CustomerPO = customerPO;
+            Manufacturer = manufacturer;
             CreatedFrom = createdFrom;
             CreatedTo = createdTo;
             OrderBy = orderBy;
