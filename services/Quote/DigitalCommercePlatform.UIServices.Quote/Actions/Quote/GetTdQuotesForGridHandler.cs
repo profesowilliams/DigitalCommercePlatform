@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Quote.Models;
+using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
-using DigitalFoundation.Core.Models.DTO.Common;
 using Flurl;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -42,12 +42,12 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Response
         {
-            public PaginatedResponse<IEnumerable<TdQuoteForGrid>> Content { get; set; }
+            public FindResponse<IEnumerable<TdQuoteForGrid>> Content { get; set; }
 
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
 
-            public Response(PaginatedResponse<IEnumerable<TdQuoteForGrid>> model)
+            public Response(FindResponse<IEnumerable<TdQuoteForGrid>> model)
             {
                 Content = model;
             }
@@ -106,9 +106,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
                     response.EnsureSuccessStatusCode();
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    var quotes = JsonSerializer.Deserialize<PaginatedResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
+                    var quotes = JsonSerializer.Deserialize<FindResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
 
-                    var quotesOutput = _mapper.Map<PaginatedResponse<IEnumerable<TdQuoteForGrid>>>(quotes);
+                    var quotesOutput = _mapper.Map<FindResponse<IEnumerable<TdQuoteForGrid>>>(quotes);
                     var result = new Response(quotesOutput);
                     return result;
                 }
