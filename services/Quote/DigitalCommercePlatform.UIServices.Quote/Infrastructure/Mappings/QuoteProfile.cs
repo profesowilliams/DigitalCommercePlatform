@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Quote.Models;
+using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
-using DigitalFoundation.Core.Models.DTO.Common;
 using System.Collections.Generic;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Infrastructure.Mappings
@@ -19,7 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Infrastructure.Mappings
                 //.ForMember(destination => destination.QuoteCreationDate, opts => opts.MapFrom(source => source.Created))
                 //.ForMember(destination => destination.QuoteExpirationDate, opts => opts.MapFrom(source => source.Expiry))
             ;
-            CreateMap<PaginatedResponse<IEnumerable<QuoteModel>>, PaginatedResponse<IEnumerable<TdQuoteForGrid>>>();
+            CreateMap<FindResponse<IEnumerable<QuoteModel>>, FindResponse<IEnumerable<TdQuoteForGrid>>>();
         }
     }
 }
