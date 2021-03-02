@@ -5,7 +5,12 @@ resources:
       name: 'WW Digital Commerce/DigitalCommercePlatform'
       
 
-trigger: none
+schedules:
+- cron: "0 45 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
 
 pool:
   name: 'CLW'
