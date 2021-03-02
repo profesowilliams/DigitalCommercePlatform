@@ -18,16 +18,16 @@ const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, 'dist');
 const CLIENTLIB_DIR = path.join(
-  __dirname,
-  '..',
-  'ui.apps',
-  'src',
-  'main',
-  'content',
-  'jcr_root',
-  'apps',
-  'techdata',
-  'clientlibs'
+    __dirname,
+    '..',
+    'ui.apps',
+    'src',
+    'main',
+    'content',
+    'jcr_root',
+    'apps',
+    'techdata',
+    'clientlibs'
 );
 
 const libsBaseConfig = {
@@ -46,7 +46,6 @@ module.exports = {
       ...libsBaseConfig,
       name: 'clientlib-dependencies',
       categories: ['techdata.dependencies'],
-      dependencies:['techdata.grid', 'techdata.scene7.dynamicmedia'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
@@ -64,58 +63,26 @@ module.exports = {
     },
     {
       ...libsBaseConfig,
-      name: 'clientlib-site-global',
-      categories: ['techdata.site.global'],
+      name: 'clientlib-site',
+      categories: ['techdata.site'],
       dependencies: ['techdata.dependencies'],
-      embed: ['core.wcm.components.accordion.v1','core.wcm.components.tabs.v1','core.wcm.components.carousel.v1',
-      'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
-      'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
-      'techdata.grid'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
         js: {
-          cwd: 'clientlib-site-global',
+          cwd: 'clientlib-site',
           files: ['**/*.js'],
           flatten: false
         },
         css: {
-          cwd: 'clientlib-site-global/css',
+          cwd: 'clientlib-site',
           files: ['**/*.css'],
           flatten: false
         },
 
         // Copy all other files into the `resources` ClientLib directory
         resources: {
-          cwd: 'clientlib-site-global/resources',
-          files: ['**/*.*'],
-          flatten: false,
-          ignore: ['**/*.js', '**/*.css']
-        }
-      }
-    },
-    {
-      ...libsBaseConfig,
-      name: 'clientlib-site-us',
-      categories: ['techdata.site.us'],
-      dependencies: ['techdata.dependencies', 'techdata.site.global'],
-      assets: {
-        // Copy entrypoint scripts and stylesheets into the respective ClientLib
-        // directories
-        js: {
-          cwd: 'clientlib-site-us',
-          files: ['**/*.js'],
-          flatten: false
-        },
-        css: {
-          cwd: 'clientlib-site-us/css',
-          files: ['**/*.css'],
-          flatten: false
-        },
-
-        // Copy all other files into the `resources` ClientLib directory
-        resources: {
-          cwd: 'clientlib-site-us/resources',
+          cwd: 'clientlib-site',
           files: ['**/*.*'],
           flatten: false,
           ignore: ['**/*.js', '**/*.css']
