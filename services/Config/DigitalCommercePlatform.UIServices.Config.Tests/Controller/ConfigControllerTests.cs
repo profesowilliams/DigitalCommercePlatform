@@ -24,7 +24,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         private readonly Mock<ILogger<BaseUIServiceController>> _mockLoggerFactory;
         private readonly Mock<IContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
-        private readonly Mock<IHttpClientFactory> _mockHttpClient;
         public ConfigControllerTests()
         {
             var appSettingsDict = new Dictionary<string, string>()

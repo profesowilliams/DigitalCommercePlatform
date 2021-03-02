@@ -13,14 +13,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public class ConfigService : IConfigService
     {
         private static readonly Random getrandom = new Random();
-        private readonly IHttpClientFactory _clientFactory;
+        //private readonly IHttpClientFactory _clientFactory;
         //private readonly string _appOrderServiceUrl;
-        private readonly string _appQuoteServiceUrl;
+        //private readonly string _appQuoteServiceUrl;
         public ConfigService(IHttpClientFactory clientFactory)
         {
-            _clientFactory = clientFactory;
-            //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
-            _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
+           //_clientFactory = clientFactory;
+           //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
+           // _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
         }
         public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
         {
