@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Product
         {
         }
 
-        protected override string HealthCheckEndpoint => "https://app-Product/health/heartbeat";
+        protected override string HealthCheckEndpoint => "http://app-product/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
