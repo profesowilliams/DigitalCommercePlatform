@@ -4,6 +4,7 @@ resources:
       type: git
       name: 'WW Digital Commerce/DigitalCommercePlatform'
       
+trigger: none
 
 schedules:
 - cron: "25 0 * * *"
