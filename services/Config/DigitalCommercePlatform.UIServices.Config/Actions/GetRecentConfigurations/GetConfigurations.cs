@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetConfigurations
     {
         public class Request : IRequest<Response>
