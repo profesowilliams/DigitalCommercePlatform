@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDeal;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -54,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var criteria = new Models.Configuration.FindModel
+            var criteria = new Models.Configurations.FindModel
             {
                 CustomerId = "00380000",
                 UserId = "50546",
@@ -66,6 +67,31 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             result.Should().NotBeNull();
         }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetDeals(GetDeals.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var criteria = new Models.Deals.FindModel
+            {
+                CustomerId = "00380000",
+                UserId = "50546",
+                SortBy = "createdOn",
+                //SortDirection = "createdOn",
+            };
+
+            var result = await controller.GetDeals(criteria).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
         private ConfigController GetController()
         {
             return new ConfigController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,

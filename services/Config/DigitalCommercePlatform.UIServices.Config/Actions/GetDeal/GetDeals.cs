@@ -1,45 +1,44 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations
+namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDeal
 {
-    public sealed class GetConfigurations
+    public class GetDeals
     {
         public class Request : IRequest<Response>
         {
             public FindModel Criteria { get; set; }
         }
-
         public class Response
         {
-            public RecentConfigurationsModel Content { get; }
+            public RecentDealsModel Content { get; }
 
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
 
-            public Response(RecentConfigurationsModel records)
+            public Response(RecentDealsModel records)
             {
                 Content = records;
             }
         }
 
-        public class GetConfigurationsHandler : IRequestHandler<Request, Response>
+        public class GetDealssHandler : IRequestHandler<Request, Response>
         {
             private readonly IConfigService _configServiceQueryService;
             private readonly IMapper _mapper;
 
-            public GetConfigurationsHandler(IConfigService commerceQueryService, IMapper mapper)
+            public GetDealssHandler(IConfigService commerceQueryService, IMapper mapper)
             {
                 _configServiceQueryService = commerceQueryService;
                 _mapper = mapper;
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                RecentDealsModel response = await _configServiceQueryService.GetDeals(request.Criteria);
 
                 return new Response(response);
             }

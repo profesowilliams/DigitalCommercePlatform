@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -21,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
             _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
         }
-        public async Task<RecentConfigurationsModel> GetConfigurations(FindModel request)
+        public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
         {
             var lstConfigurations = new List<Configuration>();
             for (int i = 0; i < 30; i++)
@@ -55,6 +56,35 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
+        }
+
+        public async Task<Models.Deals.RecentDealsModel> GetDeals(Models.Deals.FindModel request)
+        {
+            var lstDeals = new List<Deal>();
+            for (int i = 0; i < 30; i++)
+            {
+                Deal objDeal = new Deal();
+                var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
+                objDeal.DealId = "Dummy-Deals : " + randomNumber;                
+                objDeal.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
+                objDeal.TdQuoteId = i < 2 ? "" : objDeal.Vendor != "Dell" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
+                objDeal.Description = i % 2 == 0 ? objDeal.DealId + "-" + Convert.ToString(GetRandomNumber(20000000, 50000000)) : "Deal from - " + objDeal.Vendor;               
+                objDeal.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
+                objDeal.Action = string.IsNullOrWhiteSpace(objDeal.TdQuoteId) ? "Create Quote" : "Update Quote";
+                objDeal.CreatedOn = DateTime.Now.AddDays(i * -5);
+                lstDeals.Add(objDeal);
+            }
+
+            var objReponse = new RecentDealsModel
+            {
+                ListOfDeals = lstDeals,
+                TotalRecords = lstDeals.Count(),
+                SortBy = request.SortBy,
+                SortDirection = "desc", // fix this
+                PageSize = 25,
+                CurrentPage = 10,
+            };
+            return await Task.FromResult(objReponse);
         }
     }
 }
