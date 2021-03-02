@@ -1,44 +1,45 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDeal
+namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations
 {
-    public class GetDeals
+    public sealed class GetConfigurations
     {
         public class Request : IRequest<Response>
         {
             public FindModel Criteria { get; set; }
         }
+
         public class Response
         {
-            public RecentDealsModel Content { get; }
+            public RecentConfigurationsModel Content { get; }
 
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
 
-            public Response(RecentDealsModel records)
+            public Response(RecentConfigurationsModel records)
             {
                 Content = records;
             }
         }
 
-        public class GetDealssHandler : IRequestHandler<Request, Response>
+        public class GetConfigurationsHandler : IRequestHandler<Request, Response>
         {
             private readonly IConfigService _configServiceQueryService;
             private readonly IMapper _mapper;
 
-            public GetDealssHandler(IConfigService commerceQueryService, IMapper mapper)
+            public GetConfigurationsHandler(IConfigService commerceQueryService, IMapper mapper)
             {
                 _configServiceQueryService = commerceQueryService;
                 _mapper = mapper;
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                RecentDealsModel response = await _configServiceQueryService.GetDeals(request.Criteria);
+                RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
 
                 return new Response(response);
             }

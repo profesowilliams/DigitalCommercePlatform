@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Actions\GetConfiguration\" />
-    <Folder Include="Actions\GetDeals\" />
+    <Folder Include="Actions\GetDeal\" />
     <Folder Include="Infrastructure\Mappings\Configurations\" />
     <Folder Include="Infrastructure\Mappings\Deals\" />
     <Folder Include="Infrastructure\Mappings\Quotes\" />

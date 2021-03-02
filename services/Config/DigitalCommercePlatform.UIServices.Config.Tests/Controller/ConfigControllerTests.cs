@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetDeal;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
