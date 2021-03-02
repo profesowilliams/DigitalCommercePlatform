@@ -29,8 +29,13 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
         [Route("orders")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersAsync([FromQuery] GetOrdersRequest getOrdersRequest)
         {
-            var getOrdersQuery = new GetOrdersQuery(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor, getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo, 
-                                        getOrdersRequest.OrderBy, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
+            var filtering = new FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor, 
+                getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
+
+            var paging = new PagingDto(getOrdersRequest.OrderBy, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
+            
+
+            var getOrdersQuery = new GetOrdersQuery(filtering,paging);
 
             var ordersResponse = await Mediator.Send(getOrdersQuery);
             return Ok(ordersResponse);
