@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
     public class OrderController : BaseUIServiceController
