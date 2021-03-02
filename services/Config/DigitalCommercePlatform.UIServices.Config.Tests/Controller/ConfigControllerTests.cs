@@ -10,13 +10,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 {
+    [ExcludeFromCodeCoverage]
     public class ConfigControllerTests
     {
         private readonly Mock<IMediator> _mockMediator;
