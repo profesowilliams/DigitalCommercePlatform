@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            if (response.IsError || response.ErrorCode == "possible_invalid_code")
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -50,9 +50,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            if (response.IsError || response.ErrorCode == "possible_invalid_code")
             {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
             else
             {

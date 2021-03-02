@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,9 +42,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                if (request.Criteria != null)
+                {
+                    RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                    return new Response(response);
+                }
+                else
+                {
+                    var response = new Response(null);
+                    response.ErrorCode = "possible_invalid_code"; // fix this
+                    response.IsError = true;
+                    return response;
+                }
 
-                return new Response(response);
             }
         }
     }

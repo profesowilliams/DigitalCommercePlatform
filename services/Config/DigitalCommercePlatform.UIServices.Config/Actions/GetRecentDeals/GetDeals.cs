@@ -40,9 +40,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                RecentDealsModel response = await _configServiceQueryService.GetDeals(request.Criteria);
 
-                return new Response(response);
+                if (request.Criteria != null)
+                {
+                    RecentDealsModel response = await _configServiceQueryService.GetDeals(request.Criteria);
+                    return new Response(response);
+                }
+                else
+                {
+                    var response = new Response(null);
+                    response.ErrorCode = "possible_invalid_code"; // fix this
+                    response.IsError = true;
+                    return response;
+                }
             }
         }
     }

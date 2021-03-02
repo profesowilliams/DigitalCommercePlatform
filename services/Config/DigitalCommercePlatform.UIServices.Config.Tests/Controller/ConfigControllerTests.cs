@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -90,6 +91,38 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
 
             result.Should().NotBeNull();
+        }
+        
+        [Theory]
+        [AutoMoqData]
+        public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetConfigurations.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetConfigurations(null).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+        [Theory]
+        [AutoMoqData]
+        public async Task GetDeals_BadRequest(GetDeals.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetDeals(null).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.BadRequest);
         }
 
         private ConfigController GetController()
