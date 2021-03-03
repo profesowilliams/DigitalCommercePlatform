@@ -1,6 +1,0 @@
-.mb-responsive-100-50 {
-    margin-bottom: rem(50px);
-    @include media(">=lg") {
-        margin-bottom: rem(100px);
-    }
-}
