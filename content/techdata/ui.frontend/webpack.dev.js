@@ -53,6 +53,15 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'form-options-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html')
+
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'social.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/social/social.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'social-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html')
             }),
         ],
         devServer: {
