@@ -34,8 +34,14 @@
             class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
             aria-controls="${tab.id}-tabpanel"
             tabindex="${isActive ? '0' : '-1'}"
-            data-cmp-hook-tabs="tab"><p class="cmp-tabs__tabpanel--text">${tab.title}</p>
-            <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+            data-cmp-hook-tabs="tab">
+            <sly data-sly-test="${!properties.tabIcon}">
+                ${tab.title}
+            </sly>
+            <sly data-sly-test="${properties.tabIcon}">
+                <p class="cmp-tabs__tabpanel--text">${tab.title}</p>
+                <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+            </sly>
         </li>
     </ol>
     <div data-sly-repeat.item="${tabs.items}"
