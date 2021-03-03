@@ -1,0 +1,6 @@
+<sly data-sly-use.model="com.techdata.core.models.SocialLinksModel">
+  <sly data-sly-list.item="${model.socialLinkList}">
+    <img src="${item.iconUrl}"/>
+    <a href="${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank' : '_self'}">${item.platformName}</a>
+  </sly>
+</sly>
