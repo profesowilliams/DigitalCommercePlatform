@@ -11,3 +11,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays")]
 [assembly: SuppressMessage("Design", "CA1002:Do not expose generic lists")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible")]
+[assembly: SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]

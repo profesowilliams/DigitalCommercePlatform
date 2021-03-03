@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using DigitalCommercePlatform.UIService.Catalogue.Models.Internal;
+using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIService.Catalog.Models.Internal;
 
-namespace DigitalCommercePlatform.UIService.Catalogue.Models
+namespace DigitalCommercePlatform.UIService.Catalog.Models
 {
+    [ExcludeFromCodeCoverage]
     public class CatalogHierarchyModel
     {
         public SourceModel Source { get; set; }

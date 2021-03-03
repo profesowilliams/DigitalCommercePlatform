@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Catalog.Tests", "DigitalCommercePlatform.UIServices.Catalog.Tests\DigitalCommercePlatform.UIServices.Catalog.Tests.csproj", "{1BDEE6FA-F0D2-4B0A-B949-F6DE5B2F9E09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIService.Catalogue", "DigitalCommercePlatform.UIService.Catalogue\DigitalCommercePlatform.UIService.Catalogue.csproj", "{74B7D608-91D8-433A-A0A6-67156CDA6A50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalCommercePlatform.UIServices.Catalog", "DigitalCommercePlatform.UIServices.Catalog\DigitalCommercePlatform.UIServices.Catalog.csproj", "{74B7D608-91D8-433A-A0A6-67156CDA6A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

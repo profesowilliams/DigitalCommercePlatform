@@ -1,31 +1,24 @@
-﻿using DigitalCommercePlatform.UIService.Catalogue.Actions.Catalogue;
-using DigitalCommercePlatform.UIService.Catalogue.Models;
+﻿using DigitalCommercePlatform.UIService.Catalog.Actions;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIService.Catalogue.Controllers
+namespace DigitalCommercePlatform.UIService.Catalog.Controllers
 {
-    [ExcludeFromCodeCoverage]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
-    public class CatalogueController : BaseUIServiceController
+    public class CatalogController : BaseUIServiceController
     {
-        public CatalogueController(
+        public CatalogController(
             IMediator mediator,
-            ILogger<CatalogueController> logger,
+            ILogger<CatalogController> logger,
             IContext context,
             IOptions<AppSettings> settings,
             ISiteSettings siteSettings)

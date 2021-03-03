@@ -1,10 +1,11 @@
-﻿using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Settings;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Moq;
+﻿using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIService.Catalog.Controllers;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
+using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Catalog.Tests.Controllers
@@ -12,26 +13,34 @@ namespace DigitalCommercePlatform.UIServices.Catalog.Tests.Controllers
     public class CatalogControllerTest
     {
         [Fact]
-        public void TestTestMethod()
+        public void CatalogController_HasAuthorizeAttribute()
         {
-            // Arrange
-            var mockMediator = new Mock<IMediator>();
-            var mockOptions = new Mock<IOptions<AppSettings>>();
-            var mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
-            var mockContext = new Mock<IContext>();
-            var mockSiteSettings = new Mock<ISiteSettings>();
+            //Arrange
+            var controllerInfo = typeof(CatalogController).GetTypeInfo();
 
-            //var _sut = new CatalogController(mockMediator.Object,
-            //    mockOptions.Object,
-            //    mockLoggerFactory.Object,
-            //    mockContext.Object,
-                
-            //    mockSiteSettings.Object);
-           // var nameToTest = "YourName";
-            //// Act
-           // var result = _sut.Test(nameToTest);
-           // // Assert
-            //Assert.Contains(nameToTest, result);
+            //Act
+            var authorizeAttribute = controllerInfo.GetCustomAttribute<AuthorizeAttribute>();
+            var anonymousAttribute = controllerInfo.GetCustomAttribute<AllowAnonymousAttribute>();
+
+            //Assert
+            authorizeAttribute.Should().NotBeNull();
+            authorizeAttribute.AuthenticationSchemes.Should().Be("SessionIdHeaderScheme");
+            anonymousAttribute.Should().BeNull();
+        }
+
+        [Fact]
+        public void AllMethodsAuthCheck()
+        {
+            //Arrange
+            var methods = typeof(CatalogController).GetTypeInfo().GetMethods();
+
+            foreach (var m in methods)
+            {
+                //Act
+                var anonymousAttribute = m.GetCustomAttribute<AllowAnonymousAttribute>();
+                //Assert
+                anonymousAttribute.Should().BeNull();
+            }
         }
     }
 }

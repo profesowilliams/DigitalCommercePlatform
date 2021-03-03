@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>DigitalCommercePlatform.UIService.Catalogue</AssemblyName>
-    <RootNamespace>DigitalCommercePlatform.UIService.Catalogue</RootNamespace>
+    <AssemblyName>DigitalCommercePlatform.UIService.Catalog</AssemblyName>
+    <RootNamespace>DigitalCommercePlatform.UIService.Catalog</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,13 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="DigitalCommercePlatform.UIService.Catalogue.sln" />
+    <None Include="DigitalCommercePlatform.UIService.Catalog.sln" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.159" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.159" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.159" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.203" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.203" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.203" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="3.1.10" />
@@ -68,6 +68,4 @@
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
-
-
 </Project>

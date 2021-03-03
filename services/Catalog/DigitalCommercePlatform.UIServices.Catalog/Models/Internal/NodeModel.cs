@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Catalogue.Models.Internal
+namespace DigitalCommercePlatform.UIService.Catalog.Models.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class NodeModel
     {
         public string ID { get; set; }

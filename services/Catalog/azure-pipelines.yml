@@ -21,7 +21,7 @@ pool:
 extends:
   template: pullrequest-template-v2.yml@DCP
   parameters:
-          projectSources: 'services/Catalog/DigitalCommercePlatform.UIService.Catalog.sln'
+          projectSources: 'services/Catalog/DigitalCommercePlatform.UIServices.Catalog.sln'
           unitTestSources: 'services/Catalog/DigitalCommercePlatform.UIServices.Catalog.*/*Tests.csproj'
           projectKey: 'DC-DF-Catalog-UI'
           projectName: 'DC-DF-Catalog-UI'          
