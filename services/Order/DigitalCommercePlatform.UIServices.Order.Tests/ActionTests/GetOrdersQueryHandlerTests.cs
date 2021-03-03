@@ -71,7 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
             orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<SearchCriteria>())).ReturnsAsync(ordersContainer);
             var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object,sortingServiceMock.Object, GetMapper());
 
-            var result = await sut.Handle(new GetOrdersQuery("id","",DateTime.Now,DateTime.Now,"",1,1), CancellationToken.None);
+
+            var filtering = new FilteringDto("id", "", "", DateTime.Now, DateTime.Now);
+
+            var paging = new PagingDto("", 1, 1);
+
+            var result = await sut.Handle(new GetOrdersQuery(filtering,paging), CancellationToken.None);
             result.Should().NotBeNull().And.BeAssignableTo<OrderResponse>();
         }
 
@@ -98,8 +103,8 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
             };
 
             int totalItems = 505;
-            int pageSize = 4;
             int pageNumber = 1;
+            int pageSize = 4;
 
             var ordersContainer = new OrdersContainer { Data = new List<OrderModel>() { orderModel } , Count = totalItems };
 
@@ -108,7 +113,11 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.ActionTests
             orderQueryServiceMock.Setup(x => x.GetOrdersAsync(It.IsAny<SearchCriteria>())).ReturnsAsync(ordersContainer);
             var sut = new GetOrdersQueryHandler(orderQueryServiceMock.Object, sortingServiceMock.Object, GetMapper());
 
-            var result = await sut.Handle(new GetOrdersQuery("id", "", DateTime.Now, DateTime.Now, "", pageNumber, pageSize), CancellationToken.None);
+            var filtering = new FilteringDto("id", "", "", DateTime.Now, DateTime.Now);
+
+            var paging = new PagingDto("", pageNumber, pageSize);
+
+            var result = await sut.Handle(new GetOrdersQuery(filtering,paging), CancellationToken.None);
 
             Assert.Equal(totalItems, result.TotalItems);
             Assert.Equal(pageSize, result.PageSize);
