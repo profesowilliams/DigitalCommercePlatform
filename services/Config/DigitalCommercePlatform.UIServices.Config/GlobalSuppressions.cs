@@ -30,3 +30,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
 [assembly: SuppressMessage("Design", "CA1056:URI-like properties should not be strings")]
 [assembly: SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
+[assembly: SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high")]

@@ -14,7 +14,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private static readonly Random getrandom = new Random();
         private readonly IHttpClientFactory _clientFactory;
         //private readonly string _appOrderServiceUrl;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appQuoteServiceUrl;
+#pragma warning restore CS0414
         public ConfigService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
