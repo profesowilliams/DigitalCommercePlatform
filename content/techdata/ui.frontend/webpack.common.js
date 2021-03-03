@@ -1,11 +1,11 @@
 'use strict';
-
-const path                    = require('path');
-const webpack                 = require('webpack');
-const MiniCssExtractPlugin    = require('mini-css-extract-plugin');
-const TSConfigPathsPlugin     = require('tsconfig-paths-webpack-plugin');
-const CopyWebpackPlugin       = require('copy-webpack-plugin');
-const { CleanWebpackPlugin }  = require('clean-webpack-plugin');
+//test commit
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const SOURCE_ROOT = __dirname + '/src/main/webpack';
 
@@ -17,11 +17,17 @@ module.exports = {
         })]
     },
     entry: {
+        us: SOURCE_ROOT + '/international/us/main.ts',
+        global: SOURCE_ROOT + '/global/main.js',
         site: SOURCE_ROOT + '/site/main.ts'
     },
     output: {
         filename: (chunkData) => {
-            return chunkData.chunk.name === 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
+            console.log("chunk data");
+            console.log(chunkData);
+            console.log(chunkData.chunk.name);
+            return `clientlib-site-${chunkData.chunk.name}/[name].js`;
+            // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
         },
         path: path.resolve(__dirname, 'dist')
     },
@@ -51,8 +57,16 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'eslint-loader',
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-typescript']
+                }
             },
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint-loader',
+            // },
             {
                 test: /\.scss$/,
                 use: [
@@ -93,10 +107,10 @@ module.exports = {
         new CleanWebpackPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'clientlib-[name]/[name].css'
+            filename: 'clientlib-site-[name]/css/[name].css'
         }),
         new CopyWebpackPlugin([
-            { from: path.resolve(__dirname, SOURCE_ROOT + '/resources'), to: './clientlib-site/' }
+            { from: path.resolve(__dirname, SOURCE_ROOT + '/resources'), to: './clientlib-site-global/resources' }
         ])
     ],
     stats: {
