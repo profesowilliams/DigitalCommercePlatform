@@ -195,6 +195,10 @@ module.exports = env => {
                 filename: 'article-list-noheader-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'teaser-hero.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-hero.html')
+            }),
         ],
         devServer: {
             inline: true,

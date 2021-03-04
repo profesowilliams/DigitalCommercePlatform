@@ -202,3 +202,304 @@ $teaser-headings-mobile: (
         }
     }
 }
+
+
+/* TEMP TEASER */
+.cmp-teaser {
+}
+
+.cmp-teaser__image {
+}
+.cmp-teaser__content {
+}
+.cmp-teaser__title {
+}
+.cmp-teaser__title-link {
+}
+.cmp-teaser__description {
+}
+.cmp-teaser__action-container {
+}
+.cmp-teaser__action-link {
+}
+
+.cmp-container--full {
+  max-width: 1440px;
+}
+
+.cmp-container--fixed {
+  max-width: 1440px;
+}
+
+/* hero 1 */
+.hero-style-1 {
+  position: relative;
+  height: 31.25rem;
+    background-image: url('https://source.unsplash.com/yjRWmDk3_g4');
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    background-size: cover;
+  overflow: hidden;
+  .cmp-teaser {
+  }
+
+  .cmp-teaser__image {
+  }
+  .cmp-image__image {
+    height: 31.25rem;
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+    padding-top: 3.125rem;
+    padding-bottom: 3.125rem;
+    padding-left: 7.375rem;
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    color: #fff;
+    text-shadow: 0 0 0.1rem #919599;
+  }
+
+  .cmp-teaser__pretitle {
+    font-family: "Open Sans", sans-serif;
+    font-size: 3.125rem;
+  }
+
+  .cmp-teaser__title {
+    display: flex;
+    font-family: "Open Sans", sans-serif;
+    margin: 2.7rem 0;
+    margin-left: 2.125rem;
+    font-size: 4.375rem;
+    position: relative;
+    top: 35px;
+    font-weight: 600;
+  }
+
+  .cmp-teaser__title-link {
+    font-family: "Open Sans", sans-serif;
+    text-decoration: none;
+    color: #ffffff;
+
+    &.cmp-buttons__plus {
+      width: 1.563rem;
+      height: 1.563rem;
+      font-size: 2rem;
+      margin: 0.75rem 0 0 0.75rem;
+      position: relative;
+      &.blue {
+        background-color: #00b1e2;
+        color: #ffffff;
+        &:before {
+          content: "+";
+          position: absolute;
+          top: 50%;
+          left: 12%;
+          line-height: 0;
+        }
+      }
+      &.white {
+        background-color: #ffffff;
+        color: #00b1e2;
+        &:before {
+          content: "+";
+          position: absolute;
+          top: 50%;
+          left: 12%;
+          line-height: 0;
+        }
+      }
+    }
+  }
+  .cmp-teaser__description {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.875rem;
+    margin-left: 12.125rem;
+    position: relative;
+    top: -90px;
+  }
+  .cmp-teaser__action-container {
+    font-family: "Open Sans", sans-serif;
+  }
+  .cmp-teaser__action-link {
+    font-family: "Open Sans", sans-serif;
+  }
+}
+
+/* end hero 1 */
+
+/* hero 2 */
+.hero-style-2 {
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  height: 31.25rem;
+    background-image: url('https://source.unsplash.com/s7nlaF3kefg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    background-size: cover;
+  overflow: hidden;
+  .cmp-teaser {
+  }
+  .cmp-teaser__image {
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+    padding-top: 6rem;
+    padding-bottom: 3.125rem;
+    padding-left: 2.188rem;
+    box-sizing: border-box;
+    color: #7c8388;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+
+  .cmp-teaser__pretitle {
+    font-size: 3.125rem;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .cmp-teaser__title {
+    display: flex;
+    font-size: 2.5rem;
+    margin: .5rem 0;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+  }
+
+  .cmp-teaser__title-link {
+  }
+  .cmp-teaser__description {
+    font-size: 1.375rem;
+    width: 42%;
+    font-family: "Open Sans", sans-serif;
+    p{
+      margin: 0;
+    }
+  }
+  .cmp-teaser__action-container {
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+/* end hero 2 */
+
+/* hero 3 */
+
+.hero-style-3 {
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  height: 31.25rem;
+    background-image: url('https://source.unsplash.com/i_JUAdanGH0');
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    background-size: cover;
+    overflow: hidden;
+
+  .cmp-teaser {
+  }
+  .cmp-teaser__image {
+  }
+  .cmp-teaser__content {
+    font-family: "Open Sans", sans-serif;
+    padding-top: 4.875rem;
+    padding-bottom: 3.125rem;
+    padding-left: 3.75rem;
+    box-sizing: border-box;
+    color: #53565a;
+    align-content: center;
+    color: #fff;
+    text-shadow: 0 0 0.063rem #919599;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+  .cmp-teaser__title {
+    display: flex;
+    font-family: "Open Sans", sans-serif;
+    font-size: 2.5rem;
+    margin: .5rem 0;
+    font-weight: 400;
+  }
+  .cmp-teaser__title-link {
+    font-family: "Open Sans", sans-serif;
+  }
+  .cmp-teaser__description {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.375rem;
+    width: 42%;
+  }
+  .cmp-teaser__action-container {
+    font-family: "Open Sans", sans-serif;
+    width: 14.125rem;
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+/* end hero 3 */
+
+/* hero 4 */
+.hero-style-4 {
+
+  .cmp-teaser {
+    background-image: url('https://source.unsplash.com/PhYq704ffdA');
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    background-size: cover;
+    overflow: hidden;
+  }
+
+  .cmp-teaser__image {
+
+  }
+  .cmp-teaser__content {
+    padding-top: 8.563rem;
+    padding-bottom: 5rem;
+    display: flex;
+  }
+  .cmp-teaser__title {
+    //width: 33.125rem;
+    width: 50%;
+    color: #ffffff;
+    font-family: "Open Sans", sans-serif;
+    text-shadow: 0 0 0.063rem #919599;
+    font-size: 2rem;
+    letter-spacing: 0;
+    line-height: 43px;
+    text-align: right;
+    padding-right: 4.438rem;
+    border-right: 1px solid #979797;
+    box-sizing: border-box;
+  }
+  .cmp-teaser__title-link {
+  }
+  .cmp-teaser__description {
+    //width: 38.5rem;
+    width: 50%;
+    color: #ffffff;
+    text-shadow: 0 0 0.063rem #919599;
+    font-family: "Open Sans", sans-serif;
+    font-weight: normal;
+    font-size: 1rem;
+    letter-spacing: 0;
+    line-height: 22px;
+    padding-left: 3.438rem;
+    padding-right: 3.438rem;
+    margin: 0;
+  }
+  .cmp-teaser__action-container {
+  }
+  .cmp-teaser__action-link {
+  }
+}
+
+/* end hero 4 */
+
+/* END OF TEMP TEASER*/
