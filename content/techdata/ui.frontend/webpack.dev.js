@@ -199,6 +199,15 @@ module.exports = env => {
                 filename: 'teaser-hero.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-hero.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'text.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'text-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
+
+            }),
         ],
         devServer: {
             inline: true,
