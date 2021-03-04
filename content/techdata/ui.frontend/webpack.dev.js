@@ -131,6 +131,46 @@ module.exports = env => {
                 filename: 'accordion-nested-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-nested.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'list.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/list.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-brand-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/brand.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-menu-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/menu.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-fixed-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-fixed.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-search-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-search.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-tags-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-tags.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-order-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-order.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-maxitems-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-maxitems.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'list-with-link-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
+            }),
         ],
         devServer: {
             inline: true,

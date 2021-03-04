@@ -8,26 +8,27 @@
         line-height: normal;
         color: get-color("brand-white");
         font-family: "Open Sans";
-    }
-    .cmp-link-list li:not(:last-child) {
-        border-right: rem(1px) solid get-color("brand-white");
-      }
-    .cmp-link-list__item {
-        padding: 0 rem(10px);
-        > article{
-            display: flex;
+        
+        li:not(:last-child) {
+            border-right: rem(1px) solid get-color("brand-white");
         }
-    }
-    
-    .cmp-image{
-        margin-right: rem(4px);
-    }
-    
-    .cmp-image__image{
-        width: rem(14.4px);
-    }
-    
-    .cmp-link-list__item-title {
-        padding-top: rem(2px);
+        .cmp-link-list__item {
+            padding: 0 rem(10px);
+            > article{
+                display: flex;
+            }
+        }
+        
+        .cmp-image{
+            margin-right: rem(4px);
+        }
+        
+        .cmp-image__image{
+            width: rem(14.4px);
+        }
+        
+        .cmp-link-list__item-title {
+            padding-top: rem(2px);
+        }
     }
 }
