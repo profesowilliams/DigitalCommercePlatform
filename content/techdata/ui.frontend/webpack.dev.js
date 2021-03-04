@@ -103,6 +103,34 @@ module.exports = env => {
                 filename: 'link-list-comp',
                     template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-footer.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/accordion-footer.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-footer-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-footer.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-sample-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-sample.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-expanded-item-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-expanded-items-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-single-expansion-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-nested-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-nested.html')
+            }),
         ],
         devServer: {
             inline: true,
