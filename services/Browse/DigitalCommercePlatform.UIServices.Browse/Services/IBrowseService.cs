@@ -5,6 +5,10 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.Ge
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails.GetCatalogueHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -17,5 +21,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         public Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerRequest request);
 
         public Task<GetHeaderResponse> GetHeader(GetHeaderRequest request);
+
+        Task<GetProductResponse> FindProductdetials(GetProductRequest request);
+        Task<FindSummaryResponse> FindSummarydetials(FindSummaryRequest request);
+        Task<GetProductDetailsResponse> GetProductdetials(GetProductDetailsRequest request);
+        Task<GetProductSummaryResponse> GetProductSummary(GetProductSummaryRequest request);
     }
 }

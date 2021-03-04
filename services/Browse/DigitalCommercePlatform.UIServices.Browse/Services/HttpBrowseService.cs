@@ -2,20 +2,19 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
-using Microsoft.Extensions.Logging;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails.GetCatalogueHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails.GetCatalogueHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -25,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _coreCartURL;
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
+        private readonly string _appProductURL;
         private readonly ILogger<HttpBrowseService> _logger;
         private readonly ICachingServicec _cachingService;
         public HttpBrowseService(IHttpClientFactory clientFactory, 
@@ -38,6 +38,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _coreCartURL = "http://Core-Cart/v1/";
             _appCustomerURL = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
             _appCatalogURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1/";
+            //_appProductURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1/";
+            _appProductURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1/";
         }
 
         public async Task<GetHeaderResponse> GetHeader(GetHeaderRequest request)
@@ -146,6 +148,100 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(HttpBrowseService));
                 throw ex;
             }   
+        }
+        //-------------------------------------------------------------------------------------------Product Service---------------------------------------------------------------------------
+        public async Task<GetProductResponse> FindProductdetials(GetProductRequest request)
+        {
+            var ProductURL = _appProductURL + "Find";
+            ProductURL = ProductURL.BuildQuery(request);
+
+            try
+            {
+                var getProductRequestMessage = new HttpRequestMessage(HttpMethod.Get, ProductURL);
+
+                var apiProductClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var getProductHttpResponse = await apiProductClient.SendAsync(getProductRequestMessage).ConfigureAwait(false);
+                getProductHttpResponse.EnsureSuccessStatusCode();
+
+                var getProductResponse = await getProductHttpResponse.Content.ReadAsAsync<GetProductResponse>().ConfigureAwait(false);
+                return getProductResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting HttpProductService FindProductdetials : " + nameof(HttpBrowseService));
+                throw;
+            }
+        }
+
+        public async Task<FindSummaryResponse> FindSummarydetials(FindSummaryRequest request)
+        {
+            var ProductURL = _appProductURL + "Find";
+            ProductURL = ProductURL.BuildQuery(request);
+
+            try
+            {
+                var getProductSummaryRequestMessage = new HttpRequestMessage(HttpMethod.Get, ProductURL);
+
+                var apiProductSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var getProductSummaryHttpResponse = await apiProductSummaryClient.SendAsync(getProductSummaryRequestMessage).ConfigureAwait(false);
+                getProductSummaryHttpResponse.EnsureSuccessStatusCode();
+
+                var getProductResponse = await getProductSummaryHttpResponse.Content.ReadAsAsync<FindSummaryResponse>().ConfigureAwait(false);
+                return getProductResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting HttpProductService FindSummarydetials : " + nameof(HttpBrowseService));
+                throw;
+            }
+        }
+
+        public async Task<GetProductDetailsResponse> GetProductdetials(GetProductDetailsRequest request)
+        {
+            var ProductURL = _appProductURL.BuildQuery(request);
+
+            try
+            {
+                var getProductSummaryRequestMessage = new HttpRequestMessage(HttpMethod.Get, ProductURL);
+
+                var apiProductSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var getProductSummaryHttpResponse = await apiProductSummaryClient.SendAsync(getProductSummaryRequestMessage).ConfigureAwait(false);
+                getProductSummaryHttpResponse.EnsureSuccessStatusCode();
+
+                var getProductResponse = await getProductSummaryHttpResponse.Content.ReadAsAsync<GetProductDetailsResponse>().ConfigureAwait(false);
+                return getProductResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting HttpProductService GetProductdetials : " + nameof(HttpBrowseService));
+                throw;
+            }
+        }
+
+        public async Task<GetProductSummaryResponse> GetProductSummary(GetProductSummaryRequest request)
+        {
+            var ProductURL = _appProductURL.BuildQuery(request);
+
+            try
+            {
+                var getProductSummaryRequestMessage = new HttpRequestMessage(HttpMethod.Get, ProductURL);
+
+                var apiProductSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var getProductSummaryHttpResponse = await apiProductSummaryClient.SendAsync(getProductSummaryRequestMessage).ConfigureAwait(false);
+                getProductSummaryHttpResponse.EnsureSuccessStatusCode();
+
+                var getProductResponse = await getProductSummaryHttpResponse.Content.ReadAsAsync<GetProductSummaryResponse>().ConfigureAwait(false);
+                return getProductResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting HttpProductService GetProductSummary : " + nameof(HttpBrowseService));
+                throw;
+            }
         }
     }
 }
