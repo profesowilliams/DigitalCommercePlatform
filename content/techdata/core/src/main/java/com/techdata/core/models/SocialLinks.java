@@ -26,13 +26,13 @@ public class SocialLinks {
     @ChildResource
     private Resource socialLinks;
 
-    private List<SocialLinks> socialLinkList = new ArrayList<>();
+    private List<SocialLinkItem> socialLinkList = new ArrayList<>();
 
     @PostConstruct
     protected void initModel() {
         if (socialLinks != null) {
             for (Resource item : socialLinks.getChildren()) {
-                SocialLinks socialLink =  item.adaptTo(SocialLinks.class);
+                SocialLinkItem socialLink =  item.adaptTo(SocialLinkItem.class);
                 socialLinkList.add(socialLink);
             }
         }
