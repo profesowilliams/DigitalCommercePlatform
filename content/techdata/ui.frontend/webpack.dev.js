@@ -86,7 +86,15 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'carousel-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
-            })          
+            }),
+            new HtmlWebpackPlugin({          
+                filename: 'separator-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'separator.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html')
+            }),          
         ],
         devServer: {
             inline: true,
