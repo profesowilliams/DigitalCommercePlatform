@@ -33,21 +33,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             public bool? WithPaginationInfo { get; set; }
 
             public Request() { }
-
-            public Request(string accessToken, string createdBy, string quoteIdFilter = null, string configIdFilter = null, DateTime? quoteCreationDateFilter = null, DateTime? quoteExpirationDateFilter = null, string sortBy = null, bool? sortAscending = null, int? pageSize = null, int? pageNumber = null, bool? withPaginationInfo = null)
-            {
-                AccessToken = accessToken;
-                CreatedBy = createdBy;
-                QuoteIdFilter = quoteIdFilter;
-                ConfigIdFilter = configIdFilter;
-                QuoteCreationDateFilter = quoteCreationDateFilter;
-                QuoteExpirationDateFilter = quoteExpirationDateFilter;
-                SortBy = sortBy;
-                SortAscending = sortAscending;
-                PageSize = pageSize;
-                PageNumber = pageNumber;
-                WithPaginationInfo = withPaginationInfo;
-            }
         }
 
         public class Response
