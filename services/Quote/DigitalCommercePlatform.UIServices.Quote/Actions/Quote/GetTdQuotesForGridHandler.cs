@@ -20,17 +20,19 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     {
         public class Request : IRequest<Response>
         {
-            public string AccessToken { get; }
-            public string CreatedBy { get; }
-            public string QuoteIdFilter { get; }
-            public string ConfigIdFilter { get; }
-            public DateTime? QuoteCreationDateFilter { get; }
-            public DateTime? QuoteExpirationDateFilter { get; }
-            public string SortBy { get; }
-            public bool? SortAscending { get; }
-            public int? PageSize { get; }
-            public int? PageNumber { get; }
-            public bool? WithPaginationInfo { get; }
+            public string AccessToken { get; set; }
+            public string CreatedBy { get; set; }
+            public string QuoteIdFilter { get; set; }
+            public string ConfigIdFilter { get; set; }
+            public DateTime? QuoteCreationDateFilter { get; set; }
+            public DateTime? QuoteExpirationDateFilter { get; set; }
+            public string SortBy { get; set; }
+            public bool? SortAscending { get; set; }
+            public int? PageSize { get; set; }
+            public int? PageNumber { get; set; }
+            public bool? WithPaginationInfo { get; set; }
+
+            public Request() { }
 
             public Request(string accessToken, string createdBy, string quoteIdFilter = null, string configIdFilter = null, DateTime? quoteCreationDateFilter = null, DateTime? quoteExpirationDateFilter = null, string sortBy = null, bool? sortAscending = null, int? pageSize = null, int? pageNumber = null, bool? withPaginationInfo = null)
             {
@@ -104,7 +106,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                             withPaginationInfo = request.WithPaginationInfo,
                             // Filters
                             id = request.QuoteIdFilter,
-                            // ??? = request.ConfigIdFilter, // TODO: I'm not able to find which field allows me to filter by ConfigId in App-Quote
+                            // ??? = request.ConfigIdFilter, // JH: I'm not able to find which field allows me to filter by ConfigId in App-Quote
                             createdTo = request.QuoteCreationDateFilter,
                             expiresTo = request.QuoteExpirationDateFilter,
                         });
