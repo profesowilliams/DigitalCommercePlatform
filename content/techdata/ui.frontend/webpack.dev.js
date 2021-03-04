@@ -57,10 +57,51 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'form-options-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html')
+
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'social.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/social/social.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'social-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-demo',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-caption-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-caption.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-linked-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-linked.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-standard-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/carousel/carousel.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
+            }),
+            new HtmlWebpackPlugin({          
+                filename: 'separator-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'separator.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html')
             }),
             new HtmlWebpackPlugin({
                 filename: 'link-list-comp',
-                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
+                    template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
             }),
         ],
         devServer: {

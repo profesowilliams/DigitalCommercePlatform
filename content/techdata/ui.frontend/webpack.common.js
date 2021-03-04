@@ -100,6 +100,14 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(sass|css)$/,
+                use: ['style-loader','css-loader','sass-loader']
+            },
+            {
+                test: /\.(svg|eot|woff|woff2|ttf)$/,
+                use: ['file-loader']
             }
         ]
     },

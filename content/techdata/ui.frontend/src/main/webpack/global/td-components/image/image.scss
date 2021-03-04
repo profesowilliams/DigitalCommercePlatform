@@ -1,0 +1,9 @@
+.cmp-image {
+	margin: 0;
+	&--spacing-header {
+		padding: rem(17px) rem(20px) rem(16px) rem(10px);
+	}
+	&--spacing-footer {
+		padding: rem(6px) 0 rem(8px);
+	}
+}
