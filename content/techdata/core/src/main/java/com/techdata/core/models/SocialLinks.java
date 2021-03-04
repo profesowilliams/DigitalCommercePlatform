@@ -19,32 +19,20 @@ import java.util.List;
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 @Getter
 @Setter
-public class SocialLinksModel {
+public class SocialLinks {
 
-    protected static final Logger log = LoggerFactory.getLogger(SocialLinksModel.class);
+    protected static final Logger log = LoggerFactory.getLogger(SocialLinks.class);
 
     @ChildResource
     private Resource socialLinks;
 
-    @ValueMapValue
-    private String platformName;
-
-    @ValueMapValue
-    private String linkUrl;
-
-    @ValueMapValue
-    private String iconUrl;
-
-    @ValueMapValue
-    private String linkTarget;
-
-    private List<SocialLinksModel> socialLinkList = new ArrayList<>();
+    private List<SocialLinks> socialLinkList = new ArrayList<>();
 
     @PostConstruct
     protected void initModel() {
         if (socialLinks != null) {
             for (Resource item : socialLinks.getChildren()) {
-                SocialLinksModel socialLink =  item.adaptTo(SocialLinksModel.class);
+                SocialLinks socialLink =  item.adaptTo(SocialLinks.class);
                 socialLinkList.add(socialLink);
             }
         }
