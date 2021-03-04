@@ -1,9 +1,26 @@
 <sly data-sly-use.model="com.techdata.core.models.SocialLinks"
-     data-sly-use.templates="core/wcm/components/commons/v1/templates.html">
-  <sly data-sly-list.item="${model.socialLinkList}">
-    <sly data-sly-test.hasContent="${model.socialLinkList && (item.platformName || item.linkUrl || item.iconUrl || item.linkTarget)}" data-sly-unwrap/>
-    <img src="${item.iconUrl}"/>
-    <a href="${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank' : '_self'}">${item.platformName}</a>
-  </sly>
+     data-sly-test.hasContent="${model.socialLinkList ? model.socialLinkList.size > 0 : false}">
+    <div data-sly-test=${hasContent} class="sharing cmp-social">
+      <sly data-sly-list.item="${model.socialLinkList}">
+        <a
+                data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
+                class="bg-social"
+                title="${item.platformName}"
+                data-pin-do="buttonPin"
+                data-pin-count="beside"
+                data-pin-save="true"
+                data-pin-media="${item.iconUrl}"
+                href="${item.linkUrl}"
+                target="${item.linkTarget == 'true' ? '_blank' : '_self'}"
+        >
+            <img
+                    data-sly-unwrap="${!(item.platformName || item.iconUrl)}"
+                    src="${item.iconUrl}"
+                    alt="${item.platformName}"
+            />
+        </a>
+      </sly>
+    </div>
 </sly>
-<sly data-sly-call="${templates.placeholder @ isEmpty=!hasContent}"></sly>
+<sly data-sly-use.placeholderTemplates="core/wcm/components/commons/v1/templates.html"
+     data-sly-call="${placeholderTemplates.placeholder @ isEmpty=!hasContent}"></sly>
