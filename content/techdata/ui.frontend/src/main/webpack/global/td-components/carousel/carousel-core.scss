@@ -1,0 +1,49 @@
+// @cmp-carousel-indicator-size: 10px;
+// @cmp-carousel-indicator-gap: 14px;
+
+// .cmp-carousel__content {
+//     position: relative;
+// }
+
+// .cmp-carousel__item {
+//     display: none;
+
+//     &--active {
+//         display: block;
+//     }
+// }
+
+// .cmp-carousel__action {
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+// }
+
+// .cmp-carousel__indicators {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: center;
+//     margin: 0;
+//     padding: 0;
+
+//     list-style: none;
+// }
+
+// .cmp-carousel__indicator {
+//     position: relative;
+
+//     flex: 0 1 auto;
+//     width: @cmp-carousel-indicator-size;
+//     height: @cmp-carousel-indicator-size;
+//     margin: 0 @cmp-carousel-indicator-gap/2;
+//     border-radius: 50%;
+
+//     font-size: 0;
+//     text-indent: -3000px;
+
+//     background-color: rgba(0, 0, 0, .5);
+
+//     &--active {
+//         background-color: rgba(0, 0, 0, .8);
+//     }
+// }

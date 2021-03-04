@@ -1,0 +1,174 @@
+.dp-carousel{
+    position: relative;
+  &.dp-carousel__navigation--hero1{
+    //default
+    .dp-carousel__nav{
+      justify-content: flex-end;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      padding: rem(8px) rem(24px);
+      box-sizing: border-box;
+      //m-0 px-4 py-2 position-absolute w-100 bottom-0
+    }
+    .dp-carousel__nav-labels{
+      //d-flex font-12
+      display: flex;
+      align-items: center;
+    }
+    .dp-carousel__nav-label{
+      font-size: .75rem;
+      cursor: pointer;
+      color: get-color(secondary-light-grey)!important;
+      //text-decoration-none position-relative mx-3 py-1
+      padding: rem(4px) 0;
+      margin: 0 rem(16px);
+      position: relative;
+      text-decoration: none;
+      &::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: rem(2px);
+        width: 0;
+        background-color: get-color(brand-nav-blue);
+        transition: width .3s;
+        display: block;
+      }
+      &:focus{
+        outline: 0 none;
+      }
+      &.cmp-carousel__indicator--active,
+      &:hover{
+        color: get-color(brand-white);
+        background-color: transparent;
+        opacity: 1;
+        &::before{
+          width: 100%;
+        }
+      }
+    }
+    // .dp-carousel__nav-dots{
+    //   display: none;
+    // }
+    .dp-carousel__nav-label-separator{
+      //text-white py-1
+      color: get-color(secondary-light-grey);
+      padding: rem(4px) 0;
+      position: absolute;
+      left: rem(-20px);
+      top: 0;
+      display: inline-block;
+    }
+  } //end navigation hero class 
+  
+  &.dp-carousel__alert--hero1{
+    .dp-carousel__alert{
+      //px-4 py-3 mt-1 position-absolute w-100
+      padding: rem(16px) rem(24px);
+      position: absolute;
+      width: 100%;
+      bottom: rem(47px);
+      left: 0;
+      &::before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: get-color(brand-white);
+        opacity: .40;
+      }
+    }
+    .dp-carousel__alert-container{
+      display: flex;
+      align-items: center;
+    }
+    .dp-carousel__alert-text{
+      //col position-relative h5 m-0 text-shadow-1
+      flex: 1 0 0%;
+      position: relative;
+      font-size: rem(22px);
+      font-weight: 500;
+      color: get-color(brand-white);
+      text-shadow: 0 rem(2px) rem(4px) rgba(0,0,0,0.5);
+  
+    }
+    .dp-carousel__alert-buttons{
+      //col-md-auto d-flex align-items-end position-relative
+      flex: 0 0 auto;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+    }
+    .dp-carousel__alert-button{
+      //text-uppercase btn btn-light rounded-0 font-weight-bold mr-4
+      background-color: get-color(brand-white);
+      color: get-color(brand-button-blue);
+      border: 0 none;
+      text-decoration: none;
+      vertical-align: middle;
+      padding: rem(4.8px) rem(12px);
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-right: rem(24px);
+    }
+    .dp-carousel__alert-button-color{
+      color: get-color(brand-light-blue);
+    }
+  }
+  //nav items styles
+  //nav alignment
+  //alert alignment
+  //alert background color
+  //alert background opacity
+  //alert text color
+  //select navigation
+  &.dp-carousel__nav-use-dots{
+    // .dp-carousel__nav-dots{
+    //   display: flex;
+    // }
+    // .dp-carousel__nav-labels{
+    //   display: none;
+    // }
+  }
+}
+.dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
+  position: absolute;
+  bottom: 10px;
+  .dp-carousel__nav-label{
+    &::before{
+      display: none;
+    }
+    font-size: 0;
+    opacity: .7;
+    width: rem(10px);
+    height: rem(10px);
+    color: transparent;
+    background-color: get-color(brand-white);
+    border-radius: 50%;
+    box-sizing: border-box;
+    margin: 0 rem(6.4px);
+    
+    &.cmp-carousel__indicator--active,
+    &:hover{
+      color: get-color(brand-white);
+      background-color: get-color(brand-white);
+      opacity: 1;
+    }
+  }
+}
+.dp-carousel__nav-label-separator{
+  display: none;
+}
+
+// .dp-carousel__nav-dot{
+//   background-color: #fff!important;
+//   width: 7px!important;
+//   height: 7px!important;
+//   border: 0 none;
+//   border-radius: 50%;
+//   opacity: .6!important;
+// }

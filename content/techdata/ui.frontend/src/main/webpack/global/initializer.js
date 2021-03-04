@@ -1,5 +1,6 @@
 import Teaser from './td-components/teaser/teaser';
 import TeaserDemo from './td-components/teaser-demo/teaser-demo';
+import LinkList from './td-components/link-list/link-list';
 
 export function Initializer() {
 
@@ -15,6 +16,10 @@ Initializer.prototype.getRoutes = () => ([
     {
         module: TeaserDemo,
         componentId: 'teaser-demo'
+    },
+    {
+        module: LinkList,
+        componentId: 'link-list'
     }
 ]);
 

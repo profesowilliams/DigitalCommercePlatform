@@ -1,4 +1,6 @@
 import "../../../../node_modules/@fortawesome/fontawesome-free/js/fontawesome"
+import "../../../../node_modules/@fortawesome/fontawesome-free/css/all.css"
+import "../../../../node_modules/@fortawesome/fontawesome-free/js/all"
 import "regenerator-runtime/runtime.js";
 import $ from 'jquery'
 

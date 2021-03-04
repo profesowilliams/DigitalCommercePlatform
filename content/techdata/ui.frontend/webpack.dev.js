@@ -27,6 +27,10 @@ module.exports = env => {
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-demo.html')
             }),
             new HtmlWebpackPlugin({
+                filename: 'link-list.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/link-list.html')
+            }),
+            new HtmlWebpackPlugin({
                 filename: 'teaser-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser/teaser.html')
             }),
@@ -78,7 +82,55 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'image-standard-cmp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
-            })
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/carousel/carousel.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'carousel-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
+            }),
+            new HtmlWebpackPlugin({          
+                filename: 'separator-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'separator.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'link-list-comp',
+                    template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-footer.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/accordion-footer.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-footer-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-footer.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-sample-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-sample.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-expanded-item-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-expanded-items-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-single-expansion-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'accordion-nested-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-nested.html')
+            }),
         ],
         devServer: {
             inline: true,

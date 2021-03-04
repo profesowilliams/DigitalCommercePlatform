@@ -15,23 +15,26 @@ $font-family: 'Speedee', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, He
 
 //== Techdata Color Palette
 $color-palette: (
-	'brand-black': #000000,
-	'brand-primary-text': #ffbc0d,
-	'brand-secondary-text': #d90007,
-	'brand-white': #ffffff,
-	'brand-blue': #000c21,
-	'secondary-link-blue': #006bae,
-	'secondary-dark-grey': #6f6f6f,
-	'secondary-grey': #adadad,
-	'secondary-light-grey': #d6d6d6,
-	'secondary-ivory': #f9f9f9,
-	'accessible-accent-gold': #c08b00,
-	'accessible-accent-grey': #959595,
-	'tertiary-light-green': #a9c141,
-	'tertiary-dark-blue': #103c82,
-	'tertiary-light-blue': #56afd1,
-	'tertiary-fuschia': #9a0a4d,
-	'tertiary-beige': #b69a81,
+    "brand-black":  #000000,
+    "brand-primary-text":  #ffbc0d,
+    "brand-secondary-text": #d90007,
+    "brand-white": #ffffff,
+    "brand-blue": #000c21,
+    "secondary-link-blue": #006bae,
+    "secondary-dark-grey": #6f6f6f,
+    "secondary-grey": #adadad,
+    "secondary-light-grey": #d6d6d6,
+    "secondary-ivory": #f9f9f9,
+    "accessible-accent-gold": #c08b00,
+    "accessible-accent-grey": #959595,
+    "tertiary-light-green": #a9c141,
+    "tertiary-dark-blue": #103c82,
+    "tertiary-light-blue": #56afd1,
+    "tertiary-fuschia": #9a0a4d,
+    "tertiary-beige": #b69a81,
+    "brand-light-blue": #00B1E2,
+    "brand-button-blue": #00558C,
+    "brand-nav-blue": #048FC8
 );
 
 $container-max-width: 1170px;
