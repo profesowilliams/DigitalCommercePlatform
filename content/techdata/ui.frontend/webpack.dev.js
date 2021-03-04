@@ -27,6 +27,10 @@ module.exports = env => {
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-demo.html')
             }),
             new HtmlWebpackPlugin({
+                filename: 'link-list.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/link-list.html')
+            }),
+            new HtmlWebpackPlugin({
                 filename: 'teaser-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser/teaser.html')
             }),
@@ -94,7 +98,11 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'separator.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html')
-            }),          
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'link-list-comp',
+                    template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
+            }),
         ],
         devServer: {
             inline: true,
