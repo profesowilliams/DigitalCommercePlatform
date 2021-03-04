@@ -53,7 +53,32 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'form-options-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html')
+
             }),
+            new HtmlWebpackPlugin({
+                filename: 'social.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/social/social.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'social-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-demo',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-caption-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-caption.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-linked-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-linked.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'image-standard-cmp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
+            })
         ],
         devServer: {
             inline: true,
