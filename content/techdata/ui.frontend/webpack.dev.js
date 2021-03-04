@@ -171,6 +171,30 @@ module.exports = env => {
                 filename: 'list-with-link-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-page.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-fixed-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-fixed-width.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-notitle-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-title.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-nolink-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-link.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'article-list-noheader-comp',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html')
+            }),
         ],
         devServer: {
             inline: true,
