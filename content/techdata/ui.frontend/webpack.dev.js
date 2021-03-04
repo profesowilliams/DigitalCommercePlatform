@@ -136,6 +136,10 @@ module.exports = env => {
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/list.html')
             }),
             new HtmlWebpackPlugin({
+                filename: 'tabs.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs.html')
+            }),
+            new HtmlWebpackPlugin({
                 filename: 'list-brand-comp',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/brand.html')
             }),
@@ -207,6 +211,22 @@ module.exports = env => {
                 filename: 'text-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
 
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'tabs-comp.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'tabs-content.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-content.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'tabs-nested.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-nested.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'tabs-default-active.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-default-active.html')
             }),
         ],
         devServer: {
