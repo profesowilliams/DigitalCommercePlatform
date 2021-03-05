@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             _mockMediator = new Mock<IMediator>();
             _mockOptions = new Mock<IOptions<AppSettings>>();
             _mockOptions.Setup(s => s.Value).Returns(appSettings);
-           
+
             _mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
             _mockContext = new Mock<IContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
@@ -89,7 +89,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             var ids = new List<string> { "1", "2", "3" };
 
             //act
-            _= await sut.GetByIds(ids).ConfigureAwait(false);
+            _ = await sut.GetByIds(ids).ConfigureAwait(false);
 
             //assert
             _mockMediator.Verify(x => x.Send(It.Is<GetQuotesHandler.Request>(x => x.Ids.Count == ids.Intersect(x.Ids).Count()), It.IsAny<CancellationToken>()), Times.Once);
@@ -106,7 +106,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             using var sut = GetController();
 
             //act
-            _= await sut.Get("1", false).ConfigureAwait(false);
+            _ = await sut.Get("1", false).ConfigureAwait(false);
 
             //assert
             _mockMediator.Verify(x => x.Send(It.IsAny<GetQuoteHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -121,9 +121,14 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
                 .ReturnsAsync(expected);
 
             using var sut = GetController();
-
+            var request = new GetTdQuotesForGridHandler.Request
+            {
+                CreatedBy = "NKALRA",
+                SortBy = "Created",
+                SortAscending = false,
+            };
             //act
-            _ = await sut.GetTdQuotesForGrid("NKALRA", "Created", false, null, null, null).ConfigureAwait(false);
+            _ = await sut.GetTdQuotesForGrid(request).ConfigureAwait(false);
 
             //assert
             _mockMediator.Verify(x => x.Send(It.IsAny<GetTdQuotesForGridHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -131,8 +136,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
 
         private QuoteController GetController()
         {
-            return new QuoteController(_mockMediator.Object,_mockLoggerFactory.Object,_mockContext.Object, 
-                _mockOptions.Object,_mockSiteSettings.Object,_mockHttpClient.Object);
+            return new QuoteController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
+                _mockOptions.Object, _mockSiteSettings.Object, _mockHttpClient.Object);
         }
     }
 }
