@@ -149,7 +149,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 throw ex;
             }   
         }
-        //-------------------------------------------------------------------------------------------Product Service---------------------------------------------------------------------------
+
+
         public async Task<GetProductResponse> FindProductdetials(GetProductRequest request)
         {
             var ProductURL = _appProductURL + "Find";
