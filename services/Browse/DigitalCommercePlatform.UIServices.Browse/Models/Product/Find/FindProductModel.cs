@@ -17,11 +17,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Find
         public string[] Territories { get; set; }
         public string Description { get; set; }
         public string System { get; set; }
-        public ComparisonOperator ComparisonOperator { get; set; }
-    }
-    public enum ComparisonOperator
-    {
-        Equals,
-        StartsWith
+
     }
 }

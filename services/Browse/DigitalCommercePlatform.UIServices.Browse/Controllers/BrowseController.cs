@@ -86,7 +86,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("product/summary")]
-        public async Task<IActionResult> FindProduct(FindProductModel query, [FromQuery] bool details = true)
+        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query ,[FromQuery] bool details = true)
         {
             if (details)
             {
