@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
@@ -18,6 +19,7 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
+    [ExcludeFromCodeCoverage]
     public class HttpBrowseService : IBrowseService
     {
         private readonly IHttpClientFactory _clientFactory;

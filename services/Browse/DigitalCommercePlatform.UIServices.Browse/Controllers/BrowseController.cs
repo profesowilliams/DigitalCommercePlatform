@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using System.Diagnostics.CodeAnalysis;
 using DigitalFoundation.Common.Http.Controller;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
@@ -22,7 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
-    
+    [ExcludeFromCodeCoverage]
+
     public class BrowseController : BaseUIServiceController
     {
         public BrowseController(
