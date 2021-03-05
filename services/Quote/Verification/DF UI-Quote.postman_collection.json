@@ -76,7 +76,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006BmfQBF2WYEkn64yVk90Tbaex",
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
 						"type": "text"
 					},
 					{
@@ -133,7 +133,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 0006BmfQBF2WYEkn64yVk90Tbaex"
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
 					},
 					{
 						"key": "Site",
@@ -198,7 +198,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006BmfQBF2WYEkn64yVk90Tbaex",
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
 						"type": "text"
 					},
 					{
@@ -222,7 +222,7 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/Find?id=121713701",
+					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/Find?id=4009483294",
 					"protocol": "https",
 					"host": [
 						"eastus-dit-ui-service",
@@ -238,7 +238,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "121713701"
+							"value": "4009483294"
 						}
 					]
 				}
@@ -261,7 +261,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 0006BmfQBF2WYEkn64yVk90Tbaex"
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
 					},
 					{
 						"key": "Site",
@@ -284,7 +284,7 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/GetTdQuotesForGrid?createdBy=NKALRA&sortBy=Created&sortAscending=false",
+					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/GetTdQuotesForGrid?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false",
 					"protocol": "https",
 					"host": [
 						"eastus-dit-ui-service",
@@ -300,7 +300,7 @@
 					"query": [
 						{
 							"key": "createdBy",
-							"value": "NKALRA"
+							"value": "BTQ_SALES"
 						},
 						{
 							"key": "sortBy",
@@ -312,13 +312,235 @@
 						},
 						{
 							"key": "pageSize",
-							"value": "10",
+							"value": "3",
 							"disabled": true
 						},
 						{
 							"key": "pageNumber",
 							"value": "2",
 							"disabled": true
+						},
+						{
+							"key": "withPaginationInfo",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "quoteIdFilter",
+							"value": "4009852813",
+							"disabled": true
+						},
+						{
+							"key": "configId",
+							"value": "unknown",
+							"disabled": true
+						},
+						{
+							"key": "quoteCreationDateFilter",
+							"value": "2021-02-28",
+							"disabled": true
+						},
+						{
+							"key": "quoteExpirationDateFilter",
+							"value": "2021-02-28",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APP-Quote - Get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "35345345-Browse",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/4009852813",
+					"protocol": "https",
+					"host": [
+						"eastus-dit-service",
+						"dc",
+						"tdebusiness",
+						"cloud"
+					],
+					"path": [
+						"app-quote",
+						"v1",
+						"4009852813"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APP-Quote - GetByIds",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"type": "text",
+						"value": "en-us"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
+					},
+					{
+						"key": "Site",
+						"type": "text",
+						"value": "NA"
+					},
+					{
+						"key": "Consumer",
+						"type": "text",
+						"value": "NA"
+					},
+					{
+						"key": "TraceId",
+						"type": "text",
+						"value": "35345345-Browse"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/?id=121721682&id=121721688",
+					"protocol": "https",
+					"host": [
+						"eastus-dit-service",
+						"dc",
+						"tdebusiness",
+						"cloud"
+					],
+					"path": [
+						"app-quote",
+						"v1",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "121721682"
+						},
+						{
+							"key": "id",
+							"value": "121721688"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APP-Quote - Search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "35345345-Browse",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/Find?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false",
+					"protocol": "https",
+					"host": [
+						"eastus-dit-service",
+						"dc",
+						"tdebusiness",
+						"cloud"
+					],
+					"path": [
+						"app-quote",
+						"v1",
+						"Find"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "121713701",
+							"disabled": true
+						},
+						{
+							"key": "createdBy",
+							"value": "BTQ_SALES"
+						},
+						{
+							"key": "sortBy",
+							"value": "Created"
+						},
+						{
+							"key": "sortAscending",
+							"value": "false"
 						},
 						{
 							"key": "withPaginationInfo",

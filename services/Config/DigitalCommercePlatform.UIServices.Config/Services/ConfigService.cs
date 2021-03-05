@@ -1,0 +1,62 @@
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace DigitalCommercePlatform.UIServices.Config.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class ConfigService : IConfigService
+    {
+        private static readonly Random getrandom = new Random();
+        private readonly IHttpClientFactory _clientFactory;
+        //private readonly string _appOrderServiceUrl;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
+        private readonly string _appQuoteServiceUrl;
+#pragma warning restore CS0414
+        public ConfigService(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+            //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
+            _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
+        }
+        public async Task<RecentConfigurationsModel> GetConfigurations(FindModel request)
+        {
+            var lstConfigurations = new List<Configuration>();
+            for (int i = 0; i < 30; i++)
+            {
+                Configuration objConfiguration = new Configuration();
+                var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
+                objConfiguration.ConfigId = "Dummy-Configuration : " + randomNumber;
+                objConfiguration.ConfigurationType = i % 2 == 0 ? "Cart" :  i % 5 == 0 ? "Favorite" : "Vendor Quote";
+                objConfiguration.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
+                objConfiguration.TdQuoteId = i < 2 ? "" : objConfiguration.ConfigurationType != "Vendor Quote" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
+                objConfiguration.VendorQuoteId = i > 2   ? "" : objConfiguration.ConfigurationType == "Vendor Quote" ? Convert.ToString(GetRandomNumber(50000000, 90000000))+ "VQ" : "";
+                objConfiguration.ConfigName = i % 2 == 0 ? "HP Config " : i % 5 == 0 ? "Dell Config" : "";
+                objConfiguration.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
+                objConfiguration.Action = string.IsNullOrWhiteSpace(objConfiguration.VendorQuoteId) && string.IsNullOrWhiteSpace(objConfiguration.TdQuoteId)  ? "Create Quote" : "Update Quote";
+                objConfiguration.CreatedOn = DateTime.Now.AddDays(i * -5);
+                lstConfigurations.Add(objConfiguration);
+            }
+
+            var objReponse = new RecentConfigurationsModel
+            {
+                ListOfConfigurations = lstConfigurations,
+                TotalRecords = lstConfigurations.Count(),
+                SortBy = request.SortBy,
+                SortDirection = "desc", // fix this
+                PageSize = 25,
+                CurrentPage = 10,
+            };
+            return await Task.FromResult(objReponse);
+        }
+
+        public static int GetRandomNumber(int min, int max)
+        {
+            return getrandom.Next(min, max);
+        }
+    }
+}

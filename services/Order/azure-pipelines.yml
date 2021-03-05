@@ -4,8 +4,14 @@ resources:
       type: git
       name: 'WW Digital Commerce/DigitalCommercePlatform'
       
-
 trigger: none
+
+schedules:
+- cron: "30 0 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
 
 pool:
   name: 'CLW'

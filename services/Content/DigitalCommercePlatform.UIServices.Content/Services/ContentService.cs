@@ -14,8 +14,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly string _coreCartURL;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
+#pragma warning restore CS0414
         private readonly ILogger<ContentService> _logger;
         public ContentService(IHttpClientFactory clientFactory,
             IMiddleTierHttpClient httpClient,

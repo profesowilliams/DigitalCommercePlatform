@@ -16,7 +16,6 @@
 <div data-sly-use.tabs="com.adobe.cq.wcm.core.components.models.Tabs"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
      id="${tabs.id}"
-
      class="cmp-tabs"
      data-cmp-is="tabs"
      data-cmp-data-layer="${tabs.data.json}">
@@ -26,7 +25,7 @@
         class="cmp-tabs__tablist"
         aria-label="${tabs.accessibilityLabel}"
         aria-multiselectable="false">
-        <sly data-sly-test.isActive="${tab.name == tabs.activeItem}"/>
+        <sly data-sly-test.isActive="${tab.name == tabs.activeItem}" />
         <li role="tab"
             id="${tab.id}-tab"
             data-sly-use.tabs="com.adobe.cq.wcm.core.components.models.Tabs"
@@ -34,8 +33,16 @@
             class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
             aria-controls="${tab.id}-tabpanel"
             tabindex="${isActive ? '0' : '-1'}"
-            data-cmp-hook-tabs="tab"><p class="cmp-tabs__tabpanel--text">${tab.title}</p>
-            <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+            data-cmp-hook-tabs="tab">
+            <sly data-sly-test="${!properties.tabIcon}">
+                ${tab.title}
+            </sly>
+            <sly data-sly-test="${properties.tabIcon}">
+                <p class="cmp-tabs__tabpanel--text">${tab.title}</p>
+                <span class="cmp-tabs__tab-image">
+                    <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+                </span>
+            </sly>
         </li>
     </ol>
     <div data-sly-repeat.item="${tabs.items}"

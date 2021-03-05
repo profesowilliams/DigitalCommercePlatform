@@ -18,16 +18,16 @@ const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, 'dist');
 const CLIENTLIB_DIR = path.join(
-  __dirname,
-  '..',
-  'ui.apps',
-  'src',
-  'main',
-  'content',
-  'jcr_root',
-  'apps',
-  'techdata',
-  'clientlibs'
+    __dirname,
+    '..',
+    'ui.apps',
+    'src',
+    'main',
+    'content',
+    'jcr_root',
+    'apps',
+    'techdata',
+    'clientlibs'
 );
 
 const libsBaseConfig = {
@@ -64,13 +64,41 @@ module.exports = {
     },
     {
       ...libsBaseConfig,
+      name: 'clientlib-site',
+      categories: ['techdata.site'],
+      dependencies: ['techdata.dependencies'],
+      assets: {
+        // Copy entrypoint scripts and stylesheets into the respective ClientLib
+        // directories
+        js: {
+          cwd: 'clientlib-site-site',
+          files: ['**/*.js'],
+          flatten: false
+        },
+        css: {
+          cwd: 'clientlib-site-site/css',
+          files: ['**/*.css'],
+          flatten: false
+        },
+
+        // Copy all other files into the `resources` ClientLib directory
+        resources: {
+          cwd: 'clientlib-site-site/resources',
+          files: ['**/*.*'],
+          flatten: false,
+          ignore: ['**/*.js', '**/*.css']
+        }
+      }
+    },
+    {
+      ...libsBaseConfig,
       name: 'clientlib-site-global',
       categories: ['techdata.site.global'],
       dependencies: ['techdata.dependencies'],
       embed: ['core.wcm.components.accordion.v1','core.wcm.components.tabs.v1','core.wcm.components.carousel.v1',
-      'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
-      'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
-      'techdata.grid'],
+        'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
+        'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
+        'techdata.grid'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories

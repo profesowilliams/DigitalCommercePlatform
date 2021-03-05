@@ -1,3 +1,5 @@
+@import './../teaser/teaser.scss';
+
 .cmp-teaser-demo {
     // Add "cmp-teaser--solution" class for solution Variation
     &--solution {
@@ -150,3 +152,4 @@ $teaser-headings-mobile: (
         }
     }
 }
+

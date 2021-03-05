@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetOrders;
 using DigitalCommercePlatform.UIServices.Order.Actions.Queries.GetSingleOrder;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 {
@@ -15,6 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
                 .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
+                .ForMember(dest => dest.Vendor, opt => opt.MapFrom<OrderVendorResolver>())
                 .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>());
 
             CreateMap<Item, OrderLineResponse>()
@@ -39,6 +41,17 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
         public string Resolve(OrderModel source, OrderDto destination, string destMember, ResolutionContext context)
         {
             return $"{source.Price} {source.Currency}";
+        }
+    }
+
+    public class OrderVendorResolver : IValueResolver<OrderModel, OrderDto, string>
+    {
+        public string Resolve(OrderModel source, OrderDto destination, string destMember, ResolutionContext context)
+        {
+            var theFirstItem = source?.Items?.FirstOrDefault();
+            var theFirstProduct = theFirstItem?.Product?.FirstOrDefault();
+            var description = theFirstProduct?.Manufacturer ?? string.Empty;
+            return description;
         }
     }
 }

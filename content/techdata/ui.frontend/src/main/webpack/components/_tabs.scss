@@ -4,6 +4,7 @@
 .cmp-tabs__tab--active {}
 .cmp-tabs__tabpanel {}
 .cmp-tabs__tabpanel--active {}
+.cmp-tabs__tabpanel--text {}
 
 .top-nav {
   .nav {
@@ -36,3 +37,52 @@
     display: block;
   }
 }
+
+.tab-icon {
+    .cmp-tabs__tablist {
+        margin-bottom: 4rem;
+    }
+
+    .cmp-tabs__tab {
+        text-align: center;
+        padding: 0 .5rem;
+        border-bottom: 0;
+        font-size: 1rem;
+        color: #fff;
+
+        .cmp-tabs__tab-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 7.5rem;
+            height: 7.5rem;
+            border-radius: 50%;
+            border: 6px solid transparent;
+            padding: 1.5rem;
+            margin-top: .9rem;
+            transition: border-color .3s;
+        }
+
+        &.cmp-tabs__tab--active, &:hover, &:active {
+            outline: 0 none;
+
+
+
+            .cmp-tabs__tab-image {
+                border-color: #cfcaca;
+            }
+        }
+    }
+}
+
+.cmp-tabs__tabpanel--text {
+    height: 36px;
+    width: 133px;
+    color: #FFFFFF;
+    font-family: "Open Sans";
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 16px;
+    text-align: center;
+}
+

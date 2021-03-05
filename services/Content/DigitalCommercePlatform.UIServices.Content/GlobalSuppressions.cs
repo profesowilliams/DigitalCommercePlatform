@@ -29,4 +29,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA1801:Review unused parameters")]
 [assembly: SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
 [assembly: SuppressMessage("Design", "CA1056:URI-like properties should not be strings")]
-
+[assembly: SuppressMessage("Minor Code Smell", "S1481:Unused local variables should be removed")]

@@ -45,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Services.Implementations
                         {
                             orderParameters.Id,
                             orderParameters.CustomerPO,
+                            orderParameters.Manufacturer,
                             orderParameters.CreatedFrom,
                             orderParameters.CreatedTo,
                             Sort = orderParameters.OrderBy,

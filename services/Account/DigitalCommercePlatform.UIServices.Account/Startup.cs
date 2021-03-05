@@ -21,8 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-
-
             services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
             services.AddHeaderPropagation(options =>
             {

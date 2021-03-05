@@ -18,11 +18,14 @@ module.exports = {
     },
     entry: {
         us: SOURCE_ROOT + '/international/us/main.ts',
-        global: SOURCE_ROOT + '/global/main.js'
+        global: SOURCE_ROOT + '/global/main.js',
+        site: SOURCE_ROOT + '/site/main.ts'
     },
     output: {
         filename: (chunkData) => {
-
+            console.log("chunk data");
+            console.log(chunkData);
+            console.log(chunkData.chunk.name);
             return `clientlib-site-${chunkData.chunk.name}/[name].js`;
             // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
         },
@@ -97,6 +100,14 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(sass|css)$/,
+                use: ['style-loader','css-loader','sass-loader']
+            },
+            {
+                test: /\.(svg|eot|woff|woff2|ttf)$/,
+                use: ['file-loader']
             }
         ]
     },
