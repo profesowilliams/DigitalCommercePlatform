@@ -48,7 +48,6 @@
         padding: 0 .5rem;
         border-bottom: 0;
         font-size: 1rem;
-        color: #fff;
 
         .cmp-tabs__tab-image {
             display: flex;
@@ -78,11 +77,26 @@
 .cmp-tabs__tabpanel--text {
     height: 36px;
     width: 133px;
-    color: #FFFFFF;
+    
     font-family: "Open Sans";
     font-size: 16px;
     letter-spacing: 0;
     line-height: 16px;
     text-align: center;
+}
+
+
+
+.cmp-text__white {
+    &.cmp-tabs__tabpanel--text, cmp-tabs__tab, cmp-tabs__tab--active {
+        color: #FFFFFF;
+    }
+}
+
+.tab-center {
+    .cmp-tabs {
+        display: flex;
+        justify-content: center;
+    }
 }
 
