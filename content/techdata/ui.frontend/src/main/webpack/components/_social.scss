@@ -1,10 +1,10 @@
 .cmp-social {
 	display: flex;
 	a {
-		background-color: get-color(brand-white);
-		width: rem(28.58px);
-		height: rem(28.58px);
-		margin-right: rem(16.44px);
+		background-color: #fff;
+		width: 1.78625rem;
+		height: 1.78625rem;
+		margin-right: 1.0275rem;
 		border-radius: 50%;
 		&:last-child {
 			margin-right: unset;
