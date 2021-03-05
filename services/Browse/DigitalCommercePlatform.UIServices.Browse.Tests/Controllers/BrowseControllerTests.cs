@@ -3,7 +3,10 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using FluentAssertions;
@@ -113,6 +116,105 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var controller = GetController();
 
             var result = await controller.GetHeader("1", "0038048612", "FCS").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+        [Theory]
+        [AutoMoqData]
+        public async Task FindProductdetials(FindProductHandler.GetProductResponse expected)
+        {
+            var detailsInput = new FindProductModel()
+            {
+                MaterialNumber = new string[] { "123" },
+                OldMaterialNumber = new string[] { "123" },
+                Manufacturer = new string[] { "123" },
+                MfrPartNumber = new string[] { "123" },
+                UPC = new string[] { "123" },
+                CustomerNumber = "123",
+                CustomerPartNumber = "123",
+                SalesOrganization = "123",
+                MaterialStatus = new string[] { "123" },
+                Territories = new string[] { "123" },
+                Description = "123"
+            };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<FindProductHandler.GetProductRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.FindProduct(detailsInput, true).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task FindSummarydetials(FindSummaryHandler.FindSummaryResponse expected)
+        {
+            var summaryInput = new FindProductModel()
+            {
+                MaterialNumber = new string[] { "123" },
+                OldMaterialNumber = new string[] { "123" },
+                Manufacturer = new string[] { "123" },
+                MfrPartNumber = new string[] { "123" },
+                UPC = new string[] { "123" },
+                CustomerNumber = "123",
+                CustomerPartNumber = "123",
+                SalesOrganization = "123",
+                MaterialStatus = new string[] { "123" },
+                Territories = new string[] { "123" },
+                Description = "123"
+            };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<FindSummaryHandler.FindSummaryRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.FindProduct(summaryInput, false).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetProductdetials(GetProductDetailsHandler.GetProductDetailsResponse expected)
+        {
+            var data = new List<string> { "123" };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductDetailsHandler.GetProductDetailsRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetProduct(data, true).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetProductSummary(GetProductSummaryHandler.GetProductSummaryResponse expected)
+        {
+            var data = new List<string> { "123" };
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductSummaryHandler.GetProductSummaryRequest>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetProduct(data, false).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
