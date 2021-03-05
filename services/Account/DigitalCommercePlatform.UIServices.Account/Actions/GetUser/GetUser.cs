@@ -32,7 +32,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
             {
                 UserDetails = details;
             }
-
         }
 
         public class GetUserQueryHandler : IRequestHandler<Request, Response>
@@ -45,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
                 _accountQueryService = accountQueryService;
                 _mapper = mapper;
             }
+
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userDto = await _accountQueryService.GetUserAsync(request);

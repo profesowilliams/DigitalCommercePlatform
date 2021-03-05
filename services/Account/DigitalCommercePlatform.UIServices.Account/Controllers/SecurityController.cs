@@ -5,6 +5,7 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class SecurityController : BaseUIServiceController
     {
         public SecurityController(IMediator mediator,
@@ -28,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         [Route("getUser")]
         public async Task<IActionResult> GetUserAsync(string applicationName, string sessionId)
         {
-            var response = await Mediator.Send(new GetUser.Request(applicationName, sessionId)).ConfigureAwait(false); 
+            var response = await Mediator.Send(new GetUser.Request(applicationName, sessionId)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "forbidden")
             {

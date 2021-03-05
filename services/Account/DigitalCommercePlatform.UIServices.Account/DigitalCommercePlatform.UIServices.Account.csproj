@@ -6,22 +6,22 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-	<NoWarn>1591</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-account-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.162" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.162" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.162" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.206" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.206" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.206" />
     <PackageReference Include="Flurl" Version="3.0.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -35,6 +35,4 @@
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
   </ItemGroup>
-
-
 </Project>

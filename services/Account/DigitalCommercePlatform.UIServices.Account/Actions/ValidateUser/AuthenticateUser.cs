@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
     {
         public class Request : IRequest<Response>
         {
-            public Authenticate Criteria {get;set;}
+            public Authenticate Criteria { get; set; }
         }
 
         public class Response
@@ -21,15 +21,16 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
             public User User { get; set; }
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
+
             public Response(AuthenticateModel result)
             {
                 Message = result.Message;
                 IsValidUser = result.IsValidUser;
                 User = result.User;
-                IsError = result.IsValidUser == true ? false : true;
+                IsError = !result.IsValidUser;
             }
-
         }
+
         public class AuthenticateUserQueryHandler : IRequestHandler<Request, Response>
         {
             private readonly IAccountService _accountQueryService;
@@ -40,6 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 _accountQueryService = accountQueryService;
                 _mapper = mapper;
             }
+
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var response = await _accountQueryService.AuthenticateUserAsync(request);
