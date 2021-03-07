@@ -13,14 +13,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public class ConfigService : IConfigService
     {
         private static readonly Random getrandom = new Random();
-        //private readonly IHttpClientFactory _clientFactory;
+        private readonly IHttpClientFactory _clientFactory;
         //private readonly string _appOrderServiceUrl;
-        //private readonly string _appQuoteServiceUrl;
+#pragma warning disable CS0414 // The field is assigned but its value is never used
+        private readonly string _appQuoteServiceUrl;
+#pragma warning restore CS0414
         public ConfigService(IHttpClientFactory clientFactory)
         {
-           //_clientFactory = clientFactory;
-           //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
-           // _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
+            _clientFactory = clientFactory;
+            //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
+            _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";
         }
         public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
         {
@@ -30,13 +32,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 Configuration objConfiguration = new Configuration();
                 var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
                 objConfiguration.ConfigId = "Dummy-Configuration : " + randomNumber;
-                objConfiguration.ConfigurationType = i % 2 == 0 ? "Cart" :  i % 5 == 0 ? "Favorite" : "Vendor Quote";
+                objConfiguration.ConfigurationType = i % 2 == 0 ? "Cart" : i % 5 == 0 ? "Favorite" : "Vendor Quote";
                 objConfiguration.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
                 objConfiguration.TdQuoteId = i < 2 ? "" : objConfiguration.ConfigurationType != "Vendor Quote" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
-                objConfiguration.VendorQuoteId = i > 2   ? "" : objConfiguration.ConfigurationType == "Vendor Quote" ? Convert.ToString(GetRandomNumber(50000000, 90000000))+ "VQ" : "";
+                objConfiguration.VendorQuoteId = i > 2 ? "" : objConfiguration.ConfigurationType == "Vendor Quote" ? Convert.ToString(GetRandomNumber(50000000, 90000000)) + "VQ" : "";
                 objConfiguration.ConfigName = i % 2 == 0 ? "HP Config " : i % 5 == 0 ? "Dell Config" : "";
                 objConfiguration.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
-                objConfiguration.Action = string.IsNullOrWhiteSpace(objConfiguration.VendorQuoteId) && string.IsNullOrWhiteSpace(objConfiguration.TdQuoteId)  ? "Create Quote" : "Update Quote";
+                objConfiguration.Action = string.IsNullOrWhiteSpace(objConfiguration.VendorQuoteId) && string.IsNullOrWhiteSpace(objConfiguration.TdQuoteId) ? "Create Quote" : "Update Quote";
                 objConfiguration.CreatedOn = DateTime.Now.AddDays(i * -5);
                 lstConfigurations.Add(objConfiguration);
             }
@@ -52,12 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             };
             return await Task.FromResult(objReponse);
         }
-
-        public static int GetRandomNumber(int min, int max)
-        {
-            return getrandom.Next(min, max);
-        }
-
         public async Task<Models.Deals.RecentDealsModel> GetDeals(Models.Deals.FindModel request)
         {
             var lstDeals = new List<Deal>();
@@ -65,10 +61,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 Deal objDeal = new Deal();
                 var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
-                objDeal.DealId = "Dummy-Deals : " + randomNumber;                
+                objDeal.DealId = "Dummy-Deals : " + randomNumber;
                 objDeal.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
                 objDeal.TdQuoteId = i < 2 ? "" : objDeal.Vendor != "Dell" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
-                objDeal.Description = i % 2 == 0 ? objDeal.DealId + "-" + Convert.ToString(GetRandomNumber(20000000, 50000000)) : "Deal from - " + objDeal.Vendor;               
+                objDeal.Description = i % 2 == 0 ? objDeal.DealId + "-" + Convert.ToString(GetRandomNumber(20000000, 50000000)) : "Deal from - " + objDeal.Vendor;
                 objDeal.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
                 objDeal.Action = string.IsNullOrWhiteSpace(objDeal.TdQuoteId) ? "Create Quote" : "Update Quote";
                 objDeal.CreatedOn = DateTime.Now.AddDays(i * -5);
@@ -85,6 +81,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 CurrentPage = 10,
             };
             return await Task.FromResult(objReponse);
+        }
+
+        public static int GetRandomNumber(int min, int max)
+        {
+            return getrandom.Next(min, max);
         }
     }
 }
