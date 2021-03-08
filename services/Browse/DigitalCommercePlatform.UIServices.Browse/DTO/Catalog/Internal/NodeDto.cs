@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalogue.Internal
+namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalog.Internal
 {
     [ExcludeFromCodeCoverage]
     public class NodeDto

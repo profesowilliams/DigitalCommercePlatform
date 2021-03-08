@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogueDetails;
+﻿using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,39 +8,42 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
     [ExcludeFromCodeCoverage]
-    public class CachingService : ICachingServicec
+    public class CachingService : ICachingService
     {
         // keep it simpele, if additonal cahing is required write generic method
-        private IMemoryCache _cache;
+        private readonly IMemoryCache _cache;
+
         private readonly ILogger<CachingService> _logger;
+
         public CachingService(IMemoryCache cache, ILogger<CachingService> logger)
         {
             _cache = cache;
             _logger = logger;
         }
-        public Task<GetCatalogueHandler.GetCatalogueResponse> GetCatalogueFromCache(string cacheKey)
-        {
-            var catalogue = new GetCatalogueHandler.GetCatalogueResponse();
 
+        public Task<GetCatalogHandler.GetCatalogResponse> GetCatalogFromCache(string cacheKey)
+        {
+            GetCatalogHandler.GetCatalogResponse catalog;
             try
             {
-                if (_cache.TryGetValue(cacheKey, out catalogue))          
-                    return Task.FromResult(catalogue);
+                if (_cache.TryGetValue(cacheKey, out catalog))
+                    return Task.FromResult(catalog);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at getting Cataloge Cahing : " + nameof(CachingService));
+                catalog = new GetCatalogHandler.GetCatalogResponse();
             }
-            return Task.FromResult(catalogue);
+            return Task.FromResult(catalog);
         }
 
-        public Task<bool> SetCatalogueCache(GetCatalogueHandler.GetCatalogueResponse catalogue, string cacheKey)
+        public Task<bool> SetCatalogCache(GetCatalogHandler.GetCatalogResponse Catalog, string cacheKey)
         {
             try
             {
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetAbsoluteExpiration(TimeSpan.FromMinutes(720)); // expires every 12 hours
-                _cache.Set(cacheKey, catalogue, cacheEntryOptions);
+                _cache.Set(cacheKey, Catalog, cacheEntryOptions);
                 return Task.FromResult(true);
             }
             catch (Exception ex)
@@ -49,7 +52,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
 
             return Task.FromResult(false);
-
         }
     }
 }

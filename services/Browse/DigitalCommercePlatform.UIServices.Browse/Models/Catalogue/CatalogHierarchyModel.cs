@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalogue.Internal;
+using DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal;
 
-namespace DigitalCommercePlatform.UIService.Browse.Models.Catalogue
+namespace DigitalCommercePlatform.UIService.Browse.Models.Catalog
 {
     public class CatalogHierarchyModel
     {

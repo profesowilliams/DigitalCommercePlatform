@@ -1,27 +1,25 @@
-﻿using System;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
-using AutoMapper;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Browse.Services;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
-    [ExcludeFromCodeCoverage]
-    public sealed class GetCartHandler
+    public static class GetCartHandler
     {
         public class GetCartRequest : IRequest<GetCartResponse>
         {
-            public string userId { get; set; }
-            public string customerId { get; set; }
-
-            public GetCartRequest(string CustomerId, string UserId)
+            public GetCartRequest(string userId, string customerId)
             {
-                userId = UserId;
-                customerId = CustomerId;
+                UserId = userId;
+                CustomerId = customerId;
             }
+
+            public string UserId { get; set; }
+            public string CustomerId { get; set; }
         }
 
         public class GetCartResponse
@@ -29,13 +27,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             public string CartId { get; set; }
             public int CartItemCount { get; set; }
         }
+
         public class Handler : IRequestHandler<GetCartRequest, GetCartResponse>
         {
             private readonly IBrowseService _cartRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<GetCartHandler> _logger;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<GetCartHandler> logger)
+            public Handler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<Handler> logger)
             {
                 _cartRepositoryServices = cartRepositoryServices;
                 _mapper = mapper;

@@ -1,27 +1,25 @@
-﻿using System;
-using MediatR;
-using AutoMapper;
-using System.Threading;
-using FluentValidation;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
-using DigitalFoundation.Core.Models.DTO.Common;
-using DigitalCommercePlatform.UIServices.Browse.Services;
+﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using DigitalCommercePlatform.UIServices.Browse.Services;
+using DigitalFoundation.Core.Models.DTO.Common;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
-    [ExcludeFromCodeCoverage]
-    public class GetProductSummaryHandler
+    public static class GetProductSummaryHandler
     {
         public class GetProductSummaryRequest : IRequest<GetProductSummaryResponse>
         {
-            public List<string> Id { get; set; }
+            public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
 
-            public GetProductSummaryRequest(List<string> id, bool details)
+            public GetProductSummaryRequest(IReadOnlyCollection<string> id, bool details)
             {
                 Id = id;
                 Details = details;
@@ -42,10 +40,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
         public class Handler : IRequestHandler<GetProductSummaryRequest, GetProductSummaryResponse>
         {
-
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
+
             public Handler(IBrowseService productRepositoryServices, IMapper mapper, ILogger<Handler> logger)
             {
                 _productRepositoryServices = productRepositoryServices;
@@ -64,11 +62,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
-                    throw ;
+                    throw;
                 }
-
             }
         }
+
         public class Validator : AbstractValidator<GetProductSummaryRequest>
         {
             public Validator()

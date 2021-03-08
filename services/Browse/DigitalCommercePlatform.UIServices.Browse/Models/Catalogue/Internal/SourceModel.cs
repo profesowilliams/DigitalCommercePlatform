@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIService.Browse.Models.Catalogue.Internal
+﻿namespace DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal
 {
     public class SourceModel
     {
