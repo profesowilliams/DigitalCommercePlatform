@@ -91,7 +91,11 @@ module.exports = env => {
                 filename: 'carousel-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
             }),
-            new HtmlWebpackPlugin({          
+            new HtmlWebpackPlugin({
+                filename: 'carousel-demo-page.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo-page.html')
+            }),
+            new HtmlWebpackPlugin({
                 filename: 'separator-demo.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html')
             }),
@@ -138,6 +142,10 @@ module.exports = env => {
             new HtmlWebpackPlugin({
                 filename: 'tabs.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs.html')
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'tabs-demo.html',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs-demo.html')
             }),
             new HtmlWebpackPlugin({
                 filename: 'list-brand-comp',
