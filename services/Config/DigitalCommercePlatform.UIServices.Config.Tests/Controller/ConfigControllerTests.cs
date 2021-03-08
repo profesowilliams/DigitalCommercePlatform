@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -9,13 +10,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 {
+    [ExcludeFromCodeCoverage]
     public class ConfigControllerTests
     {
         private readonly Mock<IMediator> _mockMediator;
@@ -23,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         private readonly Mock<ILogger<BaseUIServiceController>> _mockLoggerFactory;
         private readonly Mock<IContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
-        private readonly Mock<IHttpClientFactory> _mockHttpClient;
         public ConfigControllerTests()
         {
             var appSettingsDict = new Dictionary<string, string>()
@@ -54,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var criteria = new Models.Configuration.FindModel
+            var criteria = new Models.Configurations.FindModel
             {
                 CustomerId = "00380000",
                 UserId = "50546",
@@ -66,6 +68,63 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             result.Should().NotBeNull();
         }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetDeals(GetDeals.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var criteria = new Models.Deals.FindModel
+            {
+                CustomerId = "00380000",
+                UserId = "50546",
+                SortBy = "createdOn",
+                //SortDirection = "createdOn",
+            };
+
+            var result = await controller.GetDeals(criteria).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+        
+        [Theory]
+        [AutoMoqData]
+        public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetConfigurations.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetConfigurations(null).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+        [Theory]
+        [AutoMoqData]
+        public async Task GetDeals_BadRequest(GetDeals.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetDeals(null).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
         private ConfigController GetController()
         {
             return new ConfigController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,

@@ -1,6 +1,8 @@
 ﻿
-using DigitalCommercePlatform.UIServices.Config.Actions.GetConfigurations;
-using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -28,14 +30,29 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
         }
         [HttpPost]
-        [Route("Find")]
-        public async Task<ActionResult> GetConfigurations([FromBody] FindModel criteria)
+        [Route("configurations/find")]
+        public async Task<ActionResult> GetConfigurations([FromBody] Models.Configurations.FindModel criteria)
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            if (response.IsError || response.ErrorCode == "possible_invalid_code")
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+            else
+            {
+                return Ok(response);
+            }
+        }
+        [HttpPost]
+        [Route("deals/find")]
+        public async Task<ActionResult> GetDeals([FromBody] Models.Deals.FindModel criteria)
+        {
+            var data = new GetDeals.Request { Criteria = criteria };
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            if (response.IsError || response.ErrorCode == "possible_invalid_code")
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
             }
             else
             {

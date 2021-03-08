@@ -1,10 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Configuration;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
     public interface IConfigService
     {
-        Task<RecentConfigurationsModel> GetConfigurations(FindModel request);
+        Task<Models.Configurations.RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request);
+        Task<Models.Deals.RecentDealsModel> GetDeals(Models.Deals.FindModel request);
     }
 }

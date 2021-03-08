@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Models.Configuration
+namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
 {
     [ExcludeFromCodeCoverage]
     public class Configuration
