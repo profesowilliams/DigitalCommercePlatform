@@ -1,5 +1,4 @@
 ﻿using AutoFixture.Xunit2;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
