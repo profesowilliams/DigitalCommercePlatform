@@ -12,7 +12,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
         private readonly Mock<ILogger<BaseUIServiceController>> _mockLoggerFactory;
         private readonly Mock<IContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
-        private readonly Mock<IHttpClientFactory> _mockHttpClient;
         public QuoteControllerTests()
         {
             var appSettingsDict = new Dictionary<string, string>()
@@ -45,7 +43,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
             _mockContext = new Mock<IContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
             _mockSiteSettings = new Mock<ISiteSettings>();
-            _mockHttpClient = new Mock<IHttpClientFactory>();
         }
 
 
@@ -137,7 +134,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
         private QuoteController GetController()
         {
             return new QuoteController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
-                _mockOptions.Object, _mockSiteSettings.Object, _mockHttpClient.Object);
+                _mockOptions.Object, _mockSiteSettings.Object);
         }
     }
 }

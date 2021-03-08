@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
@@ -29,9 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
             IOptions<AppSettings> options,
-            ISiteSettings siteSettings,
-            IHttpClientFactory httpClientFactory
-
+            ISiteSettings siteSettings
             )
             : base(mediator, loggerFactory, context, options, siteSettings)
         {

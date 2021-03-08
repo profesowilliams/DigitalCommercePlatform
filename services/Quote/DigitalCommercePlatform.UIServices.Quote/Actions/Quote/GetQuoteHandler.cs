@@ -45,18 +45,18 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IMiddleTierHttpClient _client;
+            private readonly IMiddleTierHttpClient _httpClient;
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
             {
-                if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
+                if (httpClient == null) { throw new ArgumentNullException(nameof(httpClient)); }
 
-                _client = client;
+                _httpClient = httpClient;
                 _httpClientFactory = httpClientFactory;
                 _logger = logger;
                 _appSettings = appSettings;
@@ -67,28 +67,11 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 try
                 {
-                    HttpClient httpClient = _httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.AccessToken);
-                    httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-                    httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-                    httpClient.DefaultRequestHeaders.Add("Site", "NA");
-                    httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-
                     var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
                     var url = baseUrl + "/" + request.Id;
-                    var httpRequest = new HttpRequestMessage()
-                    {
-                        RequestUri = new Uri(url),
-                        Method = HttpMethod.Get,
-                    };
-                    var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
-
-                    HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var data = JsonSerializer.Deserialize<QuoteModel>(responseBody, serializerOptions);
-                    var result = new Response(data);
-                    return result;
+                    var result = await _httpClient.GetAsync<QuoteModel>(url);
+                    var response = new Response(result);
+                    return response;
                 }
                 catch (Exception ex)
                 {
