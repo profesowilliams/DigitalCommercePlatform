@@ -67,6 +67,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         }
 
         [Theory]
+        [InlineData("v1/header/get?userId=us51&customerId=cust51")]
+        public async Task GetHeader(string input)
+        {
+            using var scope = fixture.CreateChildScope();
+            scope.OverrideClient<object>()
+                .MatchContains("app-customer")
+                .Returns(() => new List<CustomerModel>() { new CustomerModel() { Source = new DigitalFoundation.Common.MongoDb.Models.Source() } })
+                .MatchContains("app-catalog")
+                .Returns(() => new GetCatalogResponse() { CatalogHierarchies = new List<CatalogHierarchyModel>() { new CatalogHierarchyModel() } });
+            var client = fixture.CreateClient().SetDefaultHeaders();
+            var response = await client.RunTest<GetHeaderResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            response.Should().NotBeNull();
+        }
+
+        [Theory]
         [InlineData("v1/cart/get?userId=us51&customerId=cust51")]
         public async Task GetCartDetails(string input)
         {

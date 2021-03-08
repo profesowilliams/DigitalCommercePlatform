@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public Task<GetCatalogHandler.GetCatalogResponse> GetCatalogFromCache(string cacheKey)
         {
-            GetCatalogHandler.GetCatalogResponse catalog;
+            GetCatalogHandler.GetCatalogResponse catalog = null;
             try
             {
                 if (_cache.TryGetValue(cacheKey, out catalog))
@@ -32,7 +32,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at getting Cataloge Cahing : " + nameof(CachingService));
-                catalog = new GetCatalogHandler.GetCatalogResponse();
             }
             return Task.FromResult(catalog);
         }
