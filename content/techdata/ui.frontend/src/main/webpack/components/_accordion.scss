@@ -12,6 +12,7 @@
 
 .dp-accordion {
   &__footer{
+    background-color: #000C21;
       .cmp-accordion__button{
           color: white;
           font-size: .75rem;
@@ -56,6 +57,25 @@
     .cmp-list__item-link{
         text-decoration: none;
         color: #FFFFFF;
+    }
+  }
+
+  &__expanded {
+    .cmp-accordion__button {
+      padding: 0 1.5rem 0 1.125rem;
+      cursor: pointer;
+    }
+    .cmp-accordion__button[aria-expanded="false"]::after{
+      content: '+';
+      font-size: 1.25rem;
+      position: absolute;
+      right: 1.6875rem;
+    }
+    .cmp-accordion__button[aria-expanded="true"]::after{
+      content: '-';
+      font-size: 1.25rem;
+      position: absolute;
+      right: 1.9375rem;
     }
   }
 }
