@@ -88,17 +88,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("product/summary")]
-        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query ,[FromQuery] bool details = true)
+        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query )
         {
-            if (details)
+            if (query.details)
             {
 
-                var response = await Mediator.Send(new GetProductRequest(query, details)).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductRequest(query)).ConfigureAwait(false);
                 return Ok(response);
             }
             else
             {
-                var response = await Mediator.Send(new FindSummaryRequest(query, details)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindSummaryRequest(query)).ConfigureAwait(false);
                 return Ok(response);
             }
         }

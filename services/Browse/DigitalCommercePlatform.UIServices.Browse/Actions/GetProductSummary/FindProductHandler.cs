@@ -19,12 +19,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
         public class GetProductRequest : IRequest<GetProductResponse>
         {
             public FindProductModel Query { get; set; }
-            public bool Details { get; set; }
 
-            public GetProductRequest(FindProductModel query,bool details)
+            public GetProductRequest(FindProductModel query)
             {
                 Query = query;
-                Details = details;
             }
         }
         public class GetProductResponse

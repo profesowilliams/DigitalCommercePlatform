@@ -9,6 +9,8 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -22,8 +24,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public Task<GetHeaderResponse> GetHeader(GetHeaderRequest request);
 
-        Task<GetProductResponse> FindProductdetials(GetProductRequest request);
-        Task<FindSummaryResponse> FindSummarydetials(FindSummaryRequest request);
+        Task<IEnumerable<ProductModel>> FindProductdetials(GetProductRequest request);
+        Task<IEnumerable<SummaryModel>> FindSummarydetials(FindSummaryRequest request);
         Task<GetProductDetailsResponse> GetProductdetials(GetProductDetailsRequest request);
         Task<GetProductSummaryResponse> GetProductSummary(GetProductSummaryRequest request);
     }

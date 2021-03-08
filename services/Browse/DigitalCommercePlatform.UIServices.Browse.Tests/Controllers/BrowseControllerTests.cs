@@ -145,7 +145,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             var controller = GetController();
 
-            var result = await controller.FindProduct(detailsInput, true).ConfigureAwait(false);
+            var result = await controller.FindProduct(detailsInput).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -176,7 +176,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             var controller = GetController();
 
-            var result = await controller.FindProduct(summaryInput, false).ConfigureAwait(false);
+            var result = await controller.FindProduct(summaryInput).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

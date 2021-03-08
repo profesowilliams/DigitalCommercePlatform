@@ -16,23 +16,25 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
     [ExcludeFromCodeCoverage]
-    public class HttpBrowseService : IBrowseService
+    public class BrowseService : IBrowseService
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly string _coreCartURL;
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _appProductURL;
-        private readonly ILogger<HttpBrowseService> _logger;
+        private readonly ILogger<BrowseService> _logger;
         private readonly ICachingServicec _cachingService;
-        public HttpBrowseService(IHttpClientFactory clientFactory, 
+        public BrowseService(IHttpClientFactory clientFactory, 
             IMiddleTierHttpClient httpClient,
             ICachingServicec cachingService,
-            ILogger<HttpBrowseService> logger)
+            ILogger<BrowseService> logger)
         {
             _cachingService = cachingService;
             _logger = logger;
@@ -72,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetHeader : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService GetHeader : " + nameof(BrowseService));
                 throw ex;
             }
             
@@ -101,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCatalogueDetails : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService GetCatalogueDetails : " + nameof(BrowseService));
                 throw ex;
             }
         }
@@ -124,7 +126,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpBrowseService GetCustomerDetails : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService GetCustomerDetails : " + nameof(BrowseService));
                 throw ex;
             }
            
@@ -147,13 +149,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(BrowseService));
                 throw ex;
             }   
         }
 
 
-        public async Task<GetProductResponse> FindProductdetials(GetProductRequest request)
+        public async Task<IEnumerable<ProductModel>> FindProductdetials(GetProductRequest request)
         {
             var ProductURL = _appProductURL + "Find";
             ProductURL = ProductURL.BuildQuery(request);
@@ -167,17 +169,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var getProductHttpResponse = await apiProductClient.SendAsync(getProductRequestMessage).ConfigureAwait(false);
                 getProductHttpResponse.EnsureSuccessStatusCode();
 
-                var getProductResponse = await getProductHttpResponse.Content.ReadAsAsync<GetProductResponse>().ConfigureAwait(false);
+                var getProductResponse = await getProductHttpResponse.Content.ReadAsAsync<IEnumerable<ProductModel>>().ConfigureAwait(false);
                 return getProductResponse;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpProductService FindProductdetials : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService FindProductdetials : " + nameof(BrowseService));
                 throw;
             }
         }
 
-        public async Task<FindSummaryResponse> FindSummarydetials(FindSummaryRequest request)
+        public async Task<IEnumerable<SummaryModel>> FindSummarydetials(FindSummaryRequest request)
         {
             var ProductURL = _appProductURL + "Find";
             ProductURL = ProductURL.BuildQuery(request);
@@ -191,12 +193,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var getProductSummaryHttpResponse = await apiProductSummaryClient.SendAsync(getProductSummaryRequestMessage).ConfigureAwait(false);
                 getProductSummaryHttpResponse.EnsureSuccessStatusCode();
 
-                var getProductResponse = await getProductSummaryHttpResponse.Content.ReadAsAsync<FindSummaryResponse>().ConfigureAwait(false);
+                var getProductResponse = await getProductSummaryHttpResponse.Content.ReadAsAsync<IEnumerable<SummaryModel>>().ConfigureAwait(false);
                 return getProductResponse;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpProductService FindSummarydetials : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService FindSummarydetials : " + nameof(BrowseService));
                 throw;
             }
         }
@@ -219,7 +221,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpProductService GetProductdetials : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService GetProductdetials : " + nameof(BrowseService));
                 throw;
             }
         }
@@ -242,7 +244,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception at getting HttpProductService GetProductSummary : " + nameof(HttpBrowseService));
+                _logger.LogError(ex, "Exception at getting BrowseService GetProductSummary : " + nameof(BrowseService));
                 throw;
             }
         }
