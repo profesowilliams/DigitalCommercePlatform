@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
 {
     [ExcludeFromCodeCoverage]
-    public class GetDeals
+    public sealed class GetDeals
     {
         public class Request : IRequest<Response>
         {
