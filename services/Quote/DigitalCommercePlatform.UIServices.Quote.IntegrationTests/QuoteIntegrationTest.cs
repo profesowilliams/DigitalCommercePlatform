@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                         .Returns(Defaults.GetAppSettings()
                             .Extend("Core.Security.Url", "fakeUrl")
                             .Extend("Core.Quote.Url", "http://quote")
+                            .Extend("App.Quote.Url", "http://app-quote/v1")
                             )
                         .MatchContains($"/Data/{serviceName}")
                         .Returns(new Dictionary<string, string>() { { string.Empty, string.Empty } })
