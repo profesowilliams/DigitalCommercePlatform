@@ -30,7 +30,7 @@ namespace DigitalCommercePlatform.UIService.Browse
                 options.Headers.Add("Consumer");
             });
 
-            services.AddTransient<IBrowseService, HttpBrowseService>();
+            services.AddTransient<IBrowseService, BrowseService>();
             services.AddSingleton<ICachingService, CachingService>();
         }
 

@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.GetUserAsync("DCP", "555000sq");
+            var result = await controller.GetUserAsync("DCP", "555000sq").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -74,21 +75,56 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public void SecurityController_HasAuthorizeAttribute()
+        [Theory]
+        [AutoDomainData]
+        public async Task AuthenticateUser_BadRequest([Frozen] Mock<IMediator> mediator,
+            [Greedy] SecurityController controller,
+            AuthenticateUser.Response expected)
         {
-            //Arrange
-            var controllerInfo = typeof(SecurityController).GetTypeInfo();
 
-            //Act
-            var authorizeAttribute = controllerInfo.GetCustomAttribute<AuthorizeAttribute>();
-            var anonymousAttribute = controllerInfo.GetCustomAttribute<AllowAnonymousAttribute>();
+            mediator.Setup(x => x.Send(
+                      It.IsAny<AuthenticateUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+            var result = await controller.Authenticate(null).ConfigureAwait(false);
 
-            //Assert
-            authorizeAttribute.Should().NotBeNull();
-            authorizeAttribute.AuthenticationSchemes.Should().Be("SessionIdHeaderScheme");
-            anonymousAttribute.Should().BeNull();
+            result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetUser_BadRequest(GetUser.Response expected,
+            [Frozen] Mock<IMediator> mediator,
+            [Set(nameof(GetAppSettings))]
+            [Greedy] SecurityController controller)
+        {
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<GetUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+
+            var result = await controller.GetUserAsync(null, null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        //[Fact]
+        //public void SecurityController_HasAuthorizeAttribute()
+        //{
+        //    //Arrange
+        //    var controllerInfo = typeof(SecurityController).GetTypeInfo();
+
+        //    //Act
+        //    var authorizeAttribute = controllerInfo.GetCustomAttribute<AuthorizeAttribute>();
+        //    var anonymousAttribute = controllerInfo.GetCustomAttribute<AllowAnonymousAttribute>();
+
+        //    //Assert
+        //    authorizeAttribute.Should().NotBeNull();
+        //    authorizeAttribute.AuthenticationSchemes.Should().Be("SessionIdHeaderScheme");
+        //    anonymousAttribute.Should().BeNull();
+        //}
 
         [Fact]
         public void AllMethodsAuthCheck()

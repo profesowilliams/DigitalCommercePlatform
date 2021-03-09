@@ -18,5 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Find
         public IEnumerable<string> Territories { get; set; }
         public string Description { get; set; }
         public string System { get; set; }
+        public bool Details { get; set; } = true;
     }
 }

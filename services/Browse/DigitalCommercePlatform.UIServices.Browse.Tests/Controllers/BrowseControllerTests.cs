@@ -103,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task FindProductdetials(
+        public async Task FindProductDetails(
             [Frozen]Mock<IMediator> mockMediator,
             [Greedy]BrowseController controller,
             FindProductHandler.GetProductResponse expected,
@@ -114,14 +114,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.FindProduct(model, true).ConfigureAwait(false);
+            var result = await controller.FindProduct(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task FindSummarydetials(
+        public async Task FindSummaryDetails(
             [Frozen]Mock<IMediator> mockMediator,
             [Greedy]BrowseController controller,
             FindSummaryHandler.FindSummaryResponse expected,
@@ -132,14 +132,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.FindProduct(model, false).ConfigureAwait(false);
+            var result = await controller.FindProduct(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductdetials(
+        public async Task GetProductDetails(
             [Frozen]Mock<IMediator> mockMediator,
             [Greedy]BrowseController controller,
             GetProductDetailsHandler.GetProductDetailsResponse expected)

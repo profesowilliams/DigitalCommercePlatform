@@ -1,6 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -9,16 +13,20 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
     [ExcludeFromCodeCoverage]
-    public class HttpAccountService : IAccountService
+    public class AccountService : IAccountService
     {
         private readonly IHttpClientFactory _clientFactory;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _coreSecurityServiceUrl;
+        private readonly string _configurationsServiceUrl;
+        private readonly string _dealsServiceUrl;
 #pragma warning restore CS0414
-        public HttpAccountService(IHttpClientFactory clientFactory)
+        public AccountService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
             _coreSecurityServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/core-security/v1/";
+            _configurationsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app_configurations/v1/";
+            _dealsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
         }
 
         /// <summary>
@@ -68,6 +76,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(result);
         }
 
+        public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
+        {
+            var response = new ConfigurationsSummaryModel
+            {
+                Quoted = 14,
+                UnQuoted = 30,
+                OldConfigurations = 25
+            };
+            return await Task.FromResult(response);
+
+        }
+        public async Task<DealsSummaryModel> GetDealsSummaryAsync(GetDealsSummary.Request request)
+        {
+            var response = new DealsSummaryModel
+            {
+                TwoDays = 5,
+                SevenDays = 10,
+                FourteenDays = 25
+            };
+            return await Task.FromResult(response);
+        }
+
         /// <summary>
         /// return dummy data, call core service once core security service is ready
         /// </summary>
@@ -77,27 +107,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var userResponse = new User
             {
-                    ID = "531517",
-                    FirstName = "RODNEY",
-                    LastName = "GICKER",
-                    Name = "RODNEY GICKER",
-                    Email = "RODNEY.GICKER@TECHDATA.COM",
-                    Phone = "727-539-7429",
-                    Customers = new List<string>()
+                ID = "531517",
+                FirstName = "RODNEY",
+                LastName = "GICKER",
+                Name = "RODNEY GICKER",
+                Email = "RODNEY.GICKER@TECHDATA.COM",
+                Phone = "727-539-7429",
+                Customers = new List<string>()
                     {
                         "0038048612",
                         "0038066560",
                         "0038066556",
                         "0038054253"
                     },
-                    Roles = new List<string>()
+                Roles = new List<string>()
                     {
                         "Administrator",
                         "Customer Service Representative",
                         "Marketer",
                         "Website owner"
                     }
-                
+
             };
             return await Task.FromResult(userResponse);
         }

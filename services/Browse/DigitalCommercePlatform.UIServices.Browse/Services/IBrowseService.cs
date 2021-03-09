@@ -9,22 +9,24 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
     public interface IBrowseService
     {
-        public Task<GetCartResponse> GetCartDetails(GetCartRequest request);
+        Task<GetCartResponse> GetCartDetails(GetCartRequest request);
 
-        public Task<GetCatalogResponse> GetCatalogDetails(GetCatalogRequest request);
+        Task<GetCatalogResponse> GetCatalogDetails(GetCatalogRequest request);
 
-        public Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerRequest request);
+        Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerRequest request);
 
-        public Task<GetHeaderResponse> GetHeader(GetHeaderRequest request);
+        Task<GetHeaderResponse> GetHeader(GetHeaderRequest request);
 
-        Task<GetProductResponse> FindProductDetails(GetProductRequest request);
+        Task<IEnumerable<ProductModel>> FindProductDetails(GetProductRequest request);
 
-        Task<FindSummaryResponse> FindSummaryDetails(FindSummaryRequest request);
+        Task<IEnumerable<SummaryModel>> FindSummaryDetails(FindSummaryRequest request);
 
         Task<GetProductDetailsResponse> GetProductDetails(GetProductDetailsRequest request);
 

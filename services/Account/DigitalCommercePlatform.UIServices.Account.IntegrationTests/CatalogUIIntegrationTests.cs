@@ -1,3 +1,4 @@
+using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
@@ -12,14 +13,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
-using DigitalCommercePlatform.UIServices.Account.Models;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
-using DigitalFoundation.Common.TestUtilities;
-using DigitalCommercePlatform.UIServices.Account.Services;
-using Moq;
 
 namespace DigitalCommercePlatform.UIServices.Account.IntegrationTests
 {
@@ -65,17 +58,17 @@ namespace DigitalCommercePlatform.UIServices.Account.IntegrationTests
             response.Should().NotBeNull();
         }
 
-        [Theory]
-        [AutoDomainData]
-        public async Task UI_GetUser_Login_ReturnsData(Authenticate authenticate)
-        {
-            var input = "/login";
-            var client = fixture.CreateClient().SetDefaultHeaders();
+        //[Theory]
+        //[AutoDomainData]
+        //public async Task UI_GetUser_Login_ReturnsData(Authenticate authenticate)
+        //{
+        //    var input = "/login";
+        //    var client = fixture.CreateClient().SetDefaultHeaders();
 
-            using var content = new StringContent(JsonConvert.SerializeObject(authenticate), Encoding.UTF8, "application/json");
-            var response = await client.RunTest<GetUser.Response>(
-                c => c.PostAsync(new Uri(input, UriKind.Relative), content)).ConfigureAwait(false);
-            response.Should().NotBeNull();
-        }
+        //    using var content = new StringContent(JsonConvert.SerializeObject(authenticate), Encoding.UTF8, "application/json");
+        //    var response = await client.RunTest<GetUser.Response>(
+        //        c => c.PostAsync(new Uri(input, UriKind.Relative), content)).ConfigureAwait(false);
+        //    response.Should().NotBeNull();
+        //}
     }
 }

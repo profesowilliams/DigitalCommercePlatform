@@ -18,25 +18,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
         public class FindSummaryRequest : IRequest<FindSummaryResponse>
         {
             public FindProductModel Query { get; set; }
-            public bool Details { get; set; }
 
-            public FindSummaryRequest(FindProductModel query, bool details)
+            public FindSummaryRequest(FindProductModel query)
             {
                 Query = query;
-                Details = details;
             }
         }
 
         public class FindSummaryResponse : PaginatedResponse<IEnumerable<SummaryModel>>
         {
-            public FindSummaryResponse()
-            {
-            }
-
-            public FindSummaryResponse(IEnumerable<SummaryModel> response)
-            {
-                ReturnObject = response;
-            }
+            public IEnumerable<SummaryModel> SummaryModels { get; set; }
         }
 
         public class Handler : IRequestHandler<FindSummaryRequest, FindSummaryResponse>
