@@ -70,8 +70,15 @@
 		}
 	}
 	&__card-image--rounded {
-		padding: rem(137px) rem(9px);
+		padding: rem(137px) rem(9px) rem(20px);
+    .cmp-teaser{
+      min-height: rem(400px);
+    }
+    .cmp-teaser__description{
+      text-align: center;
+    }
 		.cmp-teaser__image {
+      margin-bottom: rem(156px);
 			img {
 				border: rem(19px) solid get-color(brand-blue);
 				width: rem(256px);
