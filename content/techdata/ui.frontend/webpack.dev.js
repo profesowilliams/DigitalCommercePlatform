@@ -251,6 +251,10 @@ module.exports = (env) => {
 				filename: 'signin',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in-demo-page.html')
 			}),
+			new HtmlWebpackPlugin({
+				filename: 'teaser-cards1.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-cards1.html')
+			}),
 		],
 		devServer: {
 			inline: true,
