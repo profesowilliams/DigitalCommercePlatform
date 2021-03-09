@@ -74,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     httpClient.DefaultRequestHeaders.Add("Site", "NA");
                     httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
 
-                    var baseUrl = _appSettings.Value.TryGetSetting(_appQuoteKey);
+                    var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
                     var url = baseUrl + "/" + request.Id;
                     var httpRequest = new HttpRequestMessage()
                     {
