@@ -1,14 +1,18 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
+
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -20,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _coreSecurityServiceUrl;
         private readonly string _configurationsServiceUrl;
         private readonly string _dealsServiceUrl;
+        private static readonly Random getrandom = new Random();
 #pragma warning restore CS0414
         public AccountService(IHttpClientFactory clientFactory)
         {
@@ -130,6 +135,42 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             };
             return await Task.FromResult(userResponse);
+        }
+        public async Task<CartModel> GetCartDetails(GetCartDetails.GetCartRequest request)
+        {
+            var SaveCartDetails = new List<SavedCartLine>();
+            for (int i = 0; i < 30; i++)
+            {
+                SavedCartLine newSavedCart = new SavedCartLine();
+                var randomNumber = GetRandomNumber(10, 60);
+                var quantity = GetRandomNumber(1, 10);
+                newSavedCart.Id = 531517;
+                newSavedCart.LineNumber = randomNumber;
+                newSavedCart.MaterialId = "Deatils of Material ID";
+                newSavedCart.ParentLineNumber = randomNumber;
+                newSavedCart.Quantity = quantity;
+                newSavedCart.BestPrice = "Best price in quantity";
+                newSavedCart.MSRP = "MSRP";
+                newSavedCart.MaterialNumber = randomNumber.ToString();
+                SaveCartDetails.Add(newSavedCart);
+            }
+
+            var savedCartResponse = new CartModel
+            {
+
+                SavedCarts = new Models.Carts.SavedCarts
+                {
+                    Id = 531517,
+                    Name = "RODNEY",
+                    LineCount = 2,
+                    details = SaveCartDetails
+                }
+            };
+            return await Task.FromResult(savedCartResponse);
+        }
+        public static int GetRandomNumber(int min, int max)
+        {
+            return getrandom.Next(min, max);
         }
     }
 }

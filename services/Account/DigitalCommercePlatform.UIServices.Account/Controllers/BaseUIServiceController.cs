@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart.GetCartDetails;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
@@ -51,6 +52,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             }
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("SavedCart")]
+        public async Task<ActionResult<GetCartResponse>> GetCartDetails(string Id)
+        {
+            var response = await Mediator.Send(new GetCartRequest(Id)).ConfigureAwait(false);
+            return response;
         }
     }
 }

@@ -110,6 +110,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
 
+        [Theory]
+        [AutoDomainData]
+        public async Task GetCartDetails(GetConfigurationsSummary.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetConfigurationsSummary.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetCartDetails("1234").ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
         private DashBoardController GetController()
         {
             return new DashBoardController(_mediator.Object, _optionsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
