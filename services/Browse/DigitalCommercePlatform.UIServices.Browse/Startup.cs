@@ -1,14 +1,12 @@
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace DigitalCommercePlatform.UIService.Browse
 {
@@ -23,8 +21,6 @@ namespace DigitalCommercePlatform.UIService.Browse
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
-
             services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
             services.AddHeaderPropagation(options =>
             {
@@ -35,7 +31,7 @@ namespace DigitalCommercePlatform.UIService.Browse
             });
 
             services.AddTransient<IBrowseService, BrowseService>();
-            services.AddSingleton<ICachingServicec, CachingService>();
+            services.AddSingleton<ICachingService, CachingService>();
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)

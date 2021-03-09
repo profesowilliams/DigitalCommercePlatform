@@ -4,9 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 using MongoDB.Bson.Serialization.Attributes;
 using DigitalFoundation.Common.MongoDb.Models;
 using DigitalFoundation.Common.MongoDb.Entities;
-using DigitalCommercePlatform.UIService.Browse.DTO.Catalogue.Internal;
+using DigitalCommercePlatform.UIService.Browse.DTO.Catalog.Internal;
 
-namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalogue
+namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalog
 {
     [ExcludeFromCodeCoverage]
     [BsonDiscriminator("Catalog.Hierarchy")]

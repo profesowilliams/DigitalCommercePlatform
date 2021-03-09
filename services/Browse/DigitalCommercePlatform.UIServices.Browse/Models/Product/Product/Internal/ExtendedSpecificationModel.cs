@@ -8,12 +8,5 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     {
         public string GroupName { get; set; }
         public IEnumerable<AttributeModel> Attributes { get; set; }
-
-        public class AttributeModel
-        {
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public string Value { get; set; }
-        }
     }
 }

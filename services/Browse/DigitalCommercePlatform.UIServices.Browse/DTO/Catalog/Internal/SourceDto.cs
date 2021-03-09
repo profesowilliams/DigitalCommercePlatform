@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalogue.Internal
+﻿namespace DigitalCommercePlatform.UIService.Browse.DTO.Catalog.Internal
 {
     public class SourceDto
     {

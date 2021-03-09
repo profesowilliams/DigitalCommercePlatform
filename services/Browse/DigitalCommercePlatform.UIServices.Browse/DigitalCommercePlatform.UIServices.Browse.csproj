@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-	<NoWarn>1591</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,8 +25,8 @@
   <ItemGroup>
     <Compile Remove="Actions\GetCartDetails\GetCartRequest.cs" />
     <Compile Remove="Actions\GetCartDetails\GetCartResponse.cs" />
-    <Compile Remove="Actions\GetCatalogueDetails\GetCatalogueRequest.cs" />
-    <Compile Remove="Actions\GetCatalogueDetails\GetCatalogueResponse.cs" />
+    <Compile Remove="Actions\GetCatalogDetails\GetCatalogueRequest.cs" />
+    <Compile Remove="Actions\GetCatalogDetails\GetCatalogueResponse.cs" />
     <Compile Remove="Actions\GetCustomerDetails\GetCustomerRequest.cs" />
     <Compile Remove="Actions\GetCustomerDetails\GetCustomerResponse.cs" />
     <Compile Remove="Actions\GetHeaderDetails\GetHeader.cs" />
@@ -46,8 +46,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Logging\" />
-    <Folder Include="Models\Product\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,9 +53,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="3.50.162" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.162" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.162" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.207" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.207" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.207" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
     <PackageReference Include="Flurl" Version="3.0.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -71,6 +69,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.0.0" />
     <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-
 </Project>

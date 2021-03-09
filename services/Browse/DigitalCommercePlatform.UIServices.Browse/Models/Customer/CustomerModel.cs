@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
-using DigitalFoundation.Common.MongoDb.Models;
+﻿using DigitalFoundation.Common.MongoDb.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,15 +13,15 @@ namespace DigitalCommercePlatform.UIService.Browse.Model.Customer
     public class CustomerModel
     {
         public Source Source { get; set; }
-        public List<SourceRelModel> SourceRel { get; set; }
+        public IEnumerable<SourceRelModel> SourceRel { get; set; }
         public string Name { get; set; }
         public bool IsMaster { get; set; }
         public bool IsTechSelect { get; set; }
         public SalesStructureModel SalesStructure { get; set; }
-        public List<AddressModel> Addresses { get; set; }
+        public IEnumerable<AddressModel> Addresses { get; set; }
         public string Type { get; set; }
-        public List<SalesDivisionModel> SalesDivision { get; set; }
-        public List<CompanyModel> Companies { get; set; }
+        public IEnumerable<SalesDivisionModel> SalesDivision { get; set; }
+        public IEnumerable<CompanyModel> Companies { get; set; }
         public string DefaultCurrency { get; set; }
         public string EcomDiscountGroup { get; set; }
         public string LegalBlock { get; set; }
@@ -31,17 +30,12 @@ namespace DigitalCommercePlatform.UIService.Browse.Model.Customer
         public string CentralOrderBlock { get; set; }
         public string FpsFlag { get; set; }
         public string DeliveryBlock { get; set; }
-        public List<FloorplannerModel> Floorplanners { get; set; }
-        public List<FreightModel> Freight { get; set; }
-        public List<ClassificationModel> Classifications { get; set; }
-        public List<TaxCertificateModel> TaxCertificates { get; set; }
-        public List<CarrierAccountNumberModel> CarrierAccountNumbers { get; set; }
-        public List<CreditModel> Credit { get; set; }
+        public IEnumerable<FloorplannerModel> Floorplanners { get; set; }
+        public IEnumerable<FreightModel> Freight { get; set; }
+        public IEnumerable<ClassificationModel> Classifications { get; set; }
+        public IEnumerable<TaxCertificateModel> TaxCertificates { get; set; }
+        public IEnumerable<CarrierAccountNumberModel> CarrierAccountNumbers { get; set; }
+        public IEnumerable<CreditModel> Credit { get; set; }
         public DateTime? Updated { get; set; }
-
-        public static explicit operator CustomerModel(GetCustomerHandler.GetCustomerResponse v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
