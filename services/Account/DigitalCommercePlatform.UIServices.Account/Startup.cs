@@ -30,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Account
                 options.Headers.Add("Consumer");
             });
 
-            services.AddTransient<IAccountService, HttpAccountService>();
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)

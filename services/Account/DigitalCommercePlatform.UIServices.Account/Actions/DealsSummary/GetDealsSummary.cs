@@ -1,55 +1,49 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
+namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
 {
     [ExcludeFromCodeCoverage]
-    public sealed class AuthenticateUser
+    public sealed class GetDealsSummary
     {
         public class Request : IRequest<Response>
         {
-            public Authenticate Criteria { get; set; }
+            public string Criteria { get; set; }
         }
 
         public class Response
         {
-            public string Message { get; set; }
-            public bool IsValidUser { get; internal set; }
-            public User User { get; set; }
+            public DealsSummaryModel Summary { get; set; }
             public virtual bool IsError { get; set; }
             public string ErrorCode { get; set; }
+            public string ErrorDescription { get; set; }
 
-            public Response(AuthenticateModel result)
+            public Response(DealsSummaryModel summary)
             {
-                Message = result.Message;
-                IsValidUser = result.IsValidUser;
-                User = result.User;
-                IsError = !result.IsValidUser;
+                Summary = summary;
             }
         }
 
-        public class AuthenticateUserQueryHandler : IRequestHandler<Request, Response>
+        public class DealsSummaryQueryHandler : IRequestHandler<Request, Response>
         {
             private readonly IAccountService _accountQueryService;
             private readonly IMapper _mapper;
 
-            public AuthenticateUserQueryHandler(IAccountService accountQueryService, IMapper mapper)
+            public DealsSummaryQueryHandler(IAccountService accountQueryService, IMapper mapper)
             {
                 _accountQueryService = accountQueryService;
                 _mapper = mapper;
             }
-
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-
-                if (request.Criteria == null)
+                if (request.Criteria != null)
                 {
-                    var response = await _accountQueryService.AuthenticateUserAsync(request);
+                    var response = await _accountQueryService.GetDealsSummaryAsync(request);
                     return new Response(response);
                 }
                 else
@@ -59,6 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                     response.IsError = true;
                     return response;
                 }
+
             }
         }
     }

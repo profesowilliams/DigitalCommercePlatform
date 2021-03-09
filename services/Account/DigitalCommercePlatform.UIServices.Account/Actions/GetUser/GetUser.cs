@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetUser
     {
         public class Request : IRequest<Response>
@@ -47,8 +49,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var userDto = await _accountQueryService.GetUserAsync(request);
-                return new Response(userDto);
+
+                if (!string.IsNullOrWhiteSpace(request.SessionId))
+                {
+                    var userDto = await _accountQueryService.GetUserAsync(request);
+                    return new Response(userDto);
+                }
+                else
+                {
+                    var response = new Response(null);
+                    response.ErrorCode = "forbidden"; // fix this
+                    response.IsError = true;
+                    return response;
+                }
             }
         }
     }
