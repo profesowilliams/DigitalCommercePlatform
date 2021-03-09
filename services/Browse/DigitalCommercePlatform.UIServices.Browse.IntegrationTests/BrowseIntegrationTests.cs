@@ -2,6 +2,8 @@
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities;
@@ -149,11 +151,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         [AutoDomainData]
         public async Task FindProductWithDetails(FindProductModel model)
         {
-            var input = "v1/product/summary".BuildQuery(model).SetQueryParam("details", true);
+            model.Details = true;
+            var input = "v1/product/summary".BuildQuery(model);
             using var scope = fixture.CreateChildScope();
             scope.OverrideClient<object>()
                 .MatchContains("find")
-                .Returns<GetProductResponse>();
+                .Returns<IEnumerable<ProductModel>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
             var response = await client.RunTest<GetProductResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
@@ -163,11 +166,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         [AutoDomainData]
         public async Task FindProduct(FindProductModel model)
         {
-            var input = "v1/product/summary".BuildQuery(model).SetQueryParam("details", false);
+            model.Details = false;
+            var input = "v1/product/summary".BuildQuery(model);
             using var scope = fixture.CreateChildScope();
             scope.OverrideClient<object>()
                 .MatchContains("find")
-                .Returns<FindSummaryResponse>();
+                .Returns<IEnumerable<SummaryModel>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
             var response = await client.RunTest<FindSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
