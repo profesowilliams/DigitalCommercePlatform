@@ -82,78 +82,103 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<QuoteDetailModel> GetOrderQuote(DetailsOfOrderQuote.Request request)
         {
-            var LineDetails = new List<Line>();
-            for (int i = 0; i < 30; i++)
+            try
             {
-                Line newSavedCart = new Line();
-                var randomNumber = GetRandomNumber(10, 60);
+                var LineDetails = new List<Line>();
+                for (int i = 0; i < 3; i++)
+                {
+                    Line newSavedCart = new Line();
+                    var randomNumber = GetRandomNumber(10, 60);
 
-                newSavedCart.Id = "IN000000" + randomNumber;
-                newSavedCart.Parent = "TR123YU66" + randomNumber;
-                newSavedCart.Quantity = randomNumber;
-                newSavedCart.TotalPrice = randomNumber;
-                newSavedCart.MSRP = randomNumber;
-                newSavedCart.UnitPrice = randomNumber;
-                newSavedCart.Currency = "USD";
-                newSavedCart.Invoice = "";
-                newSavedCart.Description = "";
-                LineDetails.Add(newSavedCart);
-            }
+                    newSavedCart.Id = "IN000000" + randomNumber;
+                    newSavedCart.Parent = "TR123YU66" + randomNumber;
+                    newSavedCart.Quantity = randomNumber;
+                    newSavedCart.TotalPrice = randomNumber;
+                    newSavedCart.MSRP = randomNumber;
+                    newSavedCart.UnitPrice = randomNumber;
+                    newSavedCart.Currency = "USD";
+                    newSavedCart.Invoice = "IHT128763K0987";
+                    newSavedCart.Description = "Description of the Product is very good";
+                    newSavedCart.ShortDescription = "Product Description";
+                    newSavedCart.MFRNumber = "PUT9845011123";
+                    newSavedCart.TDNumber = "ITW398765243";
+                    newSavedCart.UPCNumber = "924378465";
+                    newSavedCart.UnitListPrice = "2489.00";
+                    newSavedCart.ExtendedPrice = "2349.00";
+                    newSavedCart.Availability = randomNumber.ToString();
+                    newSavedCart.RebateValue = randomNumber.ToString();
+                    newSavedCart.URLProductImage = "https://Product/Image";
+                    newSavedCart.URLProductSpecs = "https://Product/details";
+                    LineDetails.Add(newSavedCart);
+                }
 
-            
-            var savedCartResponse = new QuoteDetailModel
-            {
-               
-                QuoteDetails = new QuoteDetails
+                var shipTo = new Address()
+                {
+                    Name = "Sis Margaret's Inc",
+                    Line1 = "Wade Wilson",
+                    Line2 = "9071",
+                    Line3 = "Santa Monica Blvd",
+                    City = "West Hollywood",
+                    State = "CA",
+                    Zip = "90069",
+                    Country = "United States",
+                    Email = "dpool@sismargarets.com",
+                };
+                var endUser = new Address()
+                {
+                    Name = "Stark Enterprises",
+                    Line1 = "Tony Stark",
+                    Line2 = "10880 ",
+                    Line3 = "Malibu Point",
+                    City = "Malibu",
+                    State = "CA",
+                    Zip = "90069",
+                    Country = "United States",
+                    Email = "dpool@sismargarets.com",
+                };
+                var generalInfo = new DetailsForGenInfo()
+                {
+                    ConfigId = "12345!",
+                    DealId = "hello",
+                    Tier = "hello",
+                    Reference = "",
+                };
+                var quoteNumber = "TIW777" + GetRandomNumber(10000, 60000);
+                var orderNumber = "NQL33390" + GetRandomNumber(10000, 60000);
+                var poNumber = "PO" + GetRandomNumber(10000, 60000);
+                var endUserNumber = "EPO" + GetRandomNumber(10000, 60000);
+
+                var savedCartResponse = new QuoteDetailModel
                 {
 
-                    ShipTo =
-                        {
-                            Name = "Sis Margaret's Inc",
-                            Line1 = "Wade Wilson",
-                            Line2 = "9071",
-                            Line3 = "Santa Monica Blvd",
-                            City = "West Hollywood",
-                            State = "CA",
-                            Zip = "90069",
-                            Country = "United States",
-                            Email = "dpool@sismargarets.com",
-                        },
-                    EndUser =
-                        {
-                            Name = "Stark Enterprises",
-                            Line1 = "Tony Stark",
-                            Line2 = "10880 ",
-                            Line3 = "Malibu Point",
-                            City = "Malibu",
-                            State = "CA",
-                            Zip = "90069",
-                            Country = "United States",
-                            Email = "dpool@sismargarets.com",
-                        },
-                    GeneralInfo =
-                        {
-                            ConfigId = "12345!",
-                            DealId = "hello",
-                            Tier = "hello",
-                            Reference = "",
-                        },
-                    Notes = "Descrption of Internal Notes",
-                    Details= LineDetails,
-                    QuoteNumber = "TIW777" + GetRandomNumber(10000, 60000),
-                    OrderNumber = "NQL33390" + GetRandomNumber(10000, 60000),
-                    PONumber = "PO" + GetRandomNumber(10000, 60000),
-                    EndUserPO = "EPO" + GetRandomNumber(10000, 60000),
-                    PODate = "12/04/2020"
+                    QuoteDetails = new QuoteDetails
+                    {
 
-        }
-            };
-            return await Task.FromResult(savedCartResponse);
+                        ShipTo = shipTo,
+                        EndUser = endUser,
+                        GeneralInfo = generalInfo,
+                        Notes = "Descrption of Internal Notes",
+                        QuoteNumber = quoteNumber,
+                        OrderNumber = orderNumber,
+                        PONumber = poNumber,
+                        EndUserPO = endUserNumber,
+                        PODate = "12/04/2020",
+                        Details = LineDetails,
+                       
+                    }
+                };
+                return await Task.FromResult(savedCartResponse);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
         }
-    }
     }
 }

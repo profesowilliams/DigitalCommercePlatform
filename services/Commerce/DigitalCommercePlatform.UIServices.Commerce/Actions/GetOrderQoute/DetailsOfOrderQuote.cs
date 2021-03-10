@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,33 +18,41 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             public string UserId { get; set; }
             public string ProductId { get; set; }
 
-            public Request(string UserId, bool ProductId, string accessToken)
+            public Request(string userId, string productId)
             {
-                userId = UserId;
-                productId = ProductId;
+                UserId = userId;
+                ProductId = productId;
             }
         }
 
         public class Response
         {
-            public QuoteDetailModel QuoteDetailModel { get; set; }
+            public QuoteDetails QuoteDetails { get; set; }
         }
-        public class GetQuoteHandler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, Response>
         {
             private readonly ICommerceService _quoteService;
             private readonly IMapper _mapper;
+            private readonly ILogger<Handler> _logger;
 
-            public GetQuoteHandler(ICommerceService quoteService, IMapper mapper)
+            public Handler(ICommerceService quoteService, IMapper mapper, ILogger<Handler> logger)
             {
                 _quoteService = quoteService;
                 _mapper = mapper;
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var userDto = await _quoteService.GetQuote(request.Id);
-                throw new NotImplementedException();
-
-                //return new Response(userDto);
+                try
+                {
+                    var cartDetails = await _quoteService.GetOrderQuote(request);
+                    var getcartResponse = _mapper.Map<Response>(cartDetails);
+                    return getcartResponse;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(DetailsOfOrderQuote));
+                    throw;
+                }
             }
         }
     }

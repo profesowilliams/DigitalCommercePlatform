@@ -21,10 +21,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string MFRNumber { get; set; }
         public string TDNumber { get; set; }
         public string UPCNumber { get; set; }
-        public double UnitListPrice { get; set; }
-        public double ExtendedPrice { get; set; }
+        public string UnitListPrice { get; set; }
+        public string ExtendedPrice { get; set; }
         public string Availability { get; set; }
-        public double RebateValue { get; set; }
+        public string RebateValue { get; set; }
         public string URLProductImage { get; set; }
         public string URLProductSpecs { get; set; }
 

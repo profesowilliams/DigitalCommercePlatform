@@ -1,6 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Controllers;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
+using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -56,6 +58,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             var controller = GetController();
 
             var result = controller.GetQuote("645665656565");
+
+            result.Should().NotBeNull();
+        }
+
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetOrderDetailsInQuoteAsync(DetailsOfOrderQuote.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<DetailsOfOrderQuote.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetOrderDetailsInQuoteAsync("1234","1234").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
