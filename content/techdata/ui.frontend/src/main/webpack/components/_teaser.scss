@@ -300,3 +300,31 @@
 		}
 	}
 }
+
+
+.cmp-buttons__plus {
+	position: absolute;
+	background-color: #00B1E2;
+	color: #ffff;
+	width: 1.2rem;
+	height: 1.2rem;
+	font-size: 1rem;
+	line-height: 1.2rem;
+	text-align: center;
+	margin-left: .5rem;
+
+	&-white {
+		.dp-title__plus-sign {
+			color: #ffff !important;
+			background-color: #00B1E2;
+		}
+	}
+
+	&-blue {
+		.dp-title__plus-sign {
+			color: #00B1E2 !important;
+			background-color: #ffff;
+		}
+	}
+}
+
