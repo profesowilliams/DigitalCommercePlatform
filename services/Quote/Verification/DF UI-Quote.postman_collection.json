@@ -76,7 +76,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W",
 						"type": "text"
 					},
 					{
@@ -100,10 +100,10 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/121721710",
+					"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-quote/v1/121721710",
 					"protocol": "https",
 					"host": [
-						"eastus-dit-ui-service",
+						"eastus-dit-ui",
 						"dc",
 						"tdebusiness",
 						"cloud"
@@ -133,7 +133,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W"
 					},
 					{
 						"key": "Site",
@@ -156,10 +156,10 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/?id=121721682&id=121721688",
+					"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-quote/v1/?id=121721682&id=121721688",
 					"protocol": "https",
 					"host": [
-						"eastus-dit-ui-service",
+						"eastus-dit-ui",
 						"dc",
 						"tdebusiness",
 						"cloud"
@@ -198,7 +198,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W",
 						"type": "text"
 					},
 					{
@@ -222,10 +222,10 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/Find?id=4009483294",
+					"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-quote/v1/Find?id=4009483294",
 					"protocol": "https",
 					"host": [
-						"eastus-dit-ui-service",
+						"eastus-dit-ui",
 						"dc",
 						"tdebusiness",
 						"cloud"
@@ -261,7 +261,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W"
 					},
 					{
 						"key": "Site",
@@ -284,10 +284,10 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-ui-service.dc.tdebusiness.cloud/ui-quote/v1/GetTdQuotesForGrid?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false",
+					"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-quote/v1/GetTdQuotesForGrid?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false&quoteIdFilter=4009852813&configId=unknown&quoteCreationDateFilter=2021-02-28&quoteExpirationDateFilter=2021-02-28",
 					"protocol": "https",
 					"host": [
-						"eastus-dit-ui-service",
+						"eastus-dit-ui",
 						"dc",
 						"tdebusiness",
 						"cloud"
@@ -327,23 +327,19 @@
 						},
 						{
 							"key": "quoteIdFilter",
-							"value": "4009852813",
-							"disabled": true
+							"value": "4009852813"
 						},
 						{
 							"key": "configId",
-							"value": "unknown",
-							"disabled": true
+							"value": "unknown"
 						},
 						{
 							"key": "quoteCreationDateFilter",
-							"value": "2021-02-28",
-							"disabled": true
+							"value": "2021-02-28"
 						},
 						{
 							"key": "quoteExpirationDateFilter",
-							"value": "2021-02-28",
-							"disabled": true
+							"value": "2021-02-28"
 						}
 					]
 				}
@@ -365,7 +361,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W",
 						"type": "text"
 					},
 					{
@@ -422,7 +418,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS"
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W"
 					},
 					{
 						"key": "Site",
@@ -487,7 +483,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 0006wZ5NeSQKmRj6rSvMMU52z6YS",
+						"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W",
 						"type": "text"
 					},
 					{
@@ -511,7 +507,7 @@
 					"urlencoded": []
 				},
 				"url": {
-					"raw": "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/Find?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false",
+					"raw": "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/Find?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false&withPaginationInfo=true",
 					"protocol": "https",
 					"host": [
 						"eastus-dit-service",
@@ -544,8 +540,7 @@
 						},
 						{
 							"key": "withPaginationInfo",
-							"value": "true",
-							"disabled": true
+							"value": "true"
 						}
 					]
 				}
