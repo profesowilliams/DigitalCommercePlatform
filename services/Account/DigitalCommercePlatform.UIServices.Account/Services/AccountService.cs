@@ -1,12 +1,16 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
+using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -41,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         /// <returns></returns>
         public async Task<AuthenticateModel> AuthenticateUserAsync(AuthenticateUser.Request request)
         {
-            
+
 
             var result = new AuthenticateModel
             {
@@ -129,7 +133,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
             return await Task.FromResult(userResponse);
         }
-        public async Task<CartModel> GetCartDetails(GetCartDetails.GetCartRequest request)
+        public async Task<CartModel> GetCartDetailsAsync(GetCartDetails.GetCartRequest request)
         {
             var SaveCartDetails = new List<SavedCartLine>();
             for (int i = 0; i < 30; i++)
@@ -164,6 +168,60 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
+        }
+
+        public async Task<ActionItemsModel> GetActionItemsSummaryAsync(GetActionItems.Request request)
+        {
+            var actionItems = new ActionItemsModel
+            {
+                ExpiringDeals = GetRandomNumber(0, 4),
+                NewOpportunities = GetRandomNumber(1, 8),
+                OrdersBlocked = GetRandomNumber(10, 20)
+
+            };
+            return await Task.FromResult(actionItems);
+        }
+
+        public async Task<ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
+        {
+            var openItems = new List<OpenResellerItems>();
+            for (int i = 0; i < 4; i++)
+            {
+                OpenResellerItems openItem = new OpenResellerItems();
+                var randomNumber = GetRandomNumber(100, 600);
+                openItem.Sequence = i + 1;
+                openItem.EndUserName = "End User " + randomNumber.ToString();
+                openItem.Amount = "$" + randomNumber * 100;
+                openItems.Add(openItem);
+            }
+
+            var response = new ActiveOpenConfigurationsModel
+            {
+                TopOpenQuotes = openItems
+
+            };
+            return await Task.FromResult(response);
+        }
+
+        public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
+        {
+            var openItems = new List<OpenResellerItems>();
+            for (int i = 0; i < 4; i++)
+            {
+                OpenResellerItems openItem = new OpenResellerItems();
+                var randomNumber = GetRandomNumber(100, 600);
+                openItem.Sequence = i + 1;
+                openItem.EndUserName = "End User " + randomNumber.ToString();
+                openItem.Amount = "$" + randomNumber * 100;
+                openItems.Add(openItem);
+            }
+
+            var response = new ActiveOpenQuotesModel
+            {
+                TopOpenQuotes = openItems
+
+            };
+            return await Task.FromResult(response);
         }
     }
 }
