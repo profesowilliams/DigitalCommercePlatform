@@ -41,14 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         /// <returns></returns>
         public async Task<AuthenticateModel> AuthenticateUserAsync(AuthenticateUser.Request request)
         {
-            if (!request.Criteria.WithUserData.HasValue || !request.Criteria.WithUserData.Value)
-            {
-                return await Task.FromResult(new AuthenticateModel()
-                {
-                    Message = "Login successful",
-                    IsValidUser = true
-                });
-            }
+            
 
             var result = new AuthenticateModel
             {

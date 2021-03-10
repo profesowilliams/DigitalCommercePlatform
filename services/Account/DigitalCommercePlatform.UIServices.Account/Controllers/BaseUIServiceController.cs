@@ -13,7 +13,9 @@ using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCa
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
+    [ApiController]
+    [ApiVersion("1")]
+    [Route("/v{apiVersion}")]
     public class DashBoardController : BaseUIServiceController
     {
         public DashBoardController(IMediator mediator,
@@ -55,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [HttpGet]
-        [Route("SavedCart")]
+        [Route("savedCarts")]
         public async Task<ActionResult<GetCartResponse>> GetCartDetails(string Id)
         {
             var response = await Mediator.Send(new GetCartRequest(Id)).ConfigureAwait(false);

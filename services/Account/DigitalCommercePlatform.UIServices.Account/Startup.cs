@@ -1,3 +1,4 @@
+using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
@@ -11,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Account
 {
     [ExcludeFromCodeCoverage]
-    public class Startup : BaseAppServiceStartup
+    public class Startup : BaseUIServiceStartup
     {
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
@@ -21,6 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<OAuthClientDetailsOptions>(Configuration.GetSection(OAuthClientDetailsOptions.OAuthClientDetails));
+
             services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
             services.AddHeaderPropagation(options =>
             {
