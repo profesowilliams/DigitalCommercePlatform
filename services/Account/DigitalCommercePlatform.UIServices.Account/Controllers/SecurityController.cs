@@ -35,14 +35,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new GetUser.Request(applicationName)).ConfigureAwait(false);
 
-            if (response.IsError && response.ErrorCode == "forbidden")
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, response);
-            }
-
             if (response.IsError)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, response);
+                return StatusCode(StatusCodes.Status400BadRequest, response);
             }
 
             return Ok(response);
@@ -56,17 +51,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var response = await Mediator.Send(new AuthenticateUser.Request(authenticateBodyRequest?.Code, authenticateBodyRequest?.RedirectUri, authenticateBodyRequest?.ApplicationName,
                authenticateHeaderRequest?.TraceId, authenticateHeaderRequest?.Language, authenticateHeaderRequest?.Consumer, authenticateHeaderRequest?.SessionId));
 
-            if (response.IsError && response.ErrorCode == "possible_invalid_code")
+            if (response.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
 
-            if (response.IsError)
-            {
-                return StatusCode(response.ErrorCode == "unauthorized"
-                    ? StatusCodes.Status401Unauthorized
-                    : StatusCodes.Status500InternalServerError);
-            }
+            
 
             return Ok();
         }
