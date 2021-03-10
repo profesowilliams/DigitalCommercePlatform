@@ -3,9 +3,11 @@ using DigitalCommercePlatform.UIServices.Quote.Models;
 using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Settings;
 using Flurl;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -55,10 +57,11 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             // TODO: IMiddleTierHttpClient is not fully implemented yet, so we are using IHttpClientFactory in the meantime
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
+            private readonly IOptions<AppSettings> _appSettings;
 
-            private readonly string _appQuoteUrl;
+            private readonly string _appQuoteKey;
 
-            public Handler(IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
             {
                 if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
@@ -66,7 +69,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                 _client = client;
                 _httpClientFactory = httpClientFactory;
                 _logger = logger;
-                _appQuoteUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";
+                _appSettings = appSettings;
+                _appQuoteKey = "App.Quote.Url";
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -79,7 +83,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                     httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
                     httpClient.DefaultRequestHeaders.Add("Site", "NA");
                     httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-                    var url = _appQuoteUrl
+                    var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
+                    var url = baseUrl
                         .AppendPathSegment("find")
                         .SetQueryParams(new
                         {
