@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIServices.Account.Models
+﻿namespace DigitalCommercePlatform.UIServices.Account.Models
 {
     public class ActionItemsModel
     {

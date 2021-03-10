@@ -187,10 +187,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var openItems = new List<OpenResellerItems>();
             for (int i = 0; i < 4; i++)
             {
-                i = i++;
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
-                openItem.Sequence = i;
+                openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = "$" + randomNumber * 100;
                 openItems.Add(openItem);
@@ -199,7 +198,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var response = new ActiveOpenConfigurationsModel
             {
                 TopOpenQuotes = openItems
-                
+
             };
             return await Task.FromResult(response);
         }
@@ -212,7 +211,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 i = i++;
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
-                openItem.Sequence = i;
+                openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = "$" + randomNumber * 100;
                 openItems.Add(openItem);
