@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Models;
-using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Cache.UI;
+using DigitalFoundation.Common.Security.SecurityServiceClient;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -14,54 +15,42 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
         public class Request : IRequest<Response>
         {
             public string ApplicationName { get; }
-            public string SessionId { get; }
 
-            public Request(string applicationName, string sessionId)
+            public Request(string applicationName)
             {
                 ApplicationName = applicationName;
-                SessionId = sessionId;
             }
         }
 
         public class Response
         {
+            public User User { get; set; }
             public virtual bool IsError { get; set; }
+            public int ExpiresIn { get; set; }
             public string ErrorCode { get; set; }
-            public string Message { get; set; }
-            public User UserDetails { get; set; }
-
-            public Response(User details)
-            {
-                UserDetails = details;
-            }
+            public SecurityResponseErrorType ErrorType { get; set; }
+            public string ErrorDescription { get; set; }
         }
 
         public class GetUserQueryHandler : IRequestHandler<Request, Response>
         {
-            private readonly IAccountService _accountQueryService;
+            private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
             private readonly IMapper _mapper;
 
-            public GetUserQueryHandler(IAccountService accountQueryService, IMapper mapper)
+            public GetUserQueryHandler(ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper)
             {
-                _accountQueryService = accountQueryService;
+                _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
                 _mapper = mapper;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
 
-                if (!string.IsNullOrWhiteSpace(request.SessionId))
-                {
-                    var userDto = await _accountQueryService.GetUserAsync(request);
-                    return new Response(userDto);
-                }
-                else
-                {
-                    var response = new Response(null);
-                    response.ErrorCode = "forbidden"; // fix this
-                    response.IsError = true;
-                    return response;
-                }
+                var user = _mapper.Map<User>(userFromCache);
+                var response = new Response { User = user };
+                return await Task.FromResult(response);
+
             }
         }
     }

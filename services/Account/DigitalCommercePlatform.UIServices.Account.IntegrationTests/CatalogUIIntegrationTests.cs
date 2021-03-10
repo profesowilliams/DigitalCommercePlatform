@@ -48,15 +48,15 @@ namespace DigitalCommercePlatform.UIServices.Account.IntegrationTests
             TestOutput.Output = output;
         }
 
-        [Theory]
-        [InlineData("/getUser?applicationName=appName&sessionId=4491")]
-        public async Task UI_GetUser_ReturnsData(string input)
-        {
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetUser.Response>(
-                c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
-            response.Should().NotBeNull();
-        }
+        //[Theory]
+        //[InlineData("/v1/GetUser/adobeEM")]
+        //public async Task UI_GetUser_ReturnsData(string input)
+        //{
+        //    var client = fixture.CreateClient().SetDefaultHeaders();
+        //    var response = await client.RunTest<GetUser.Response>(
+        //        c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
+        //    response.Should().NotBeNull();
+        //}
 
         //[Theory]
         //[AutoDomainData]

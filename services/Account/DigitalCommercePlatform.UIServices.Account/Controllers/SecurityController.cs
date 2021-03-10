@@ -14,7 +14,10 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
+    [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
+    [ApiVersion("1.0")]
+    [Route("/v{apiVersion}")]
     public class SecurityController : BaseUIServiceController
     {
         public SecurityController(IMediator mediator,
@@ -27,10 +30,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [HttpGet]
-        [Route("getUser")]
-        public async Task<IActionResult> GetUserAsync(string applicationName, string sessionId)
+        [Route("GetUser/{applicationName}")]
+        public async Task<IActionResult> GetUserAsync([FromRoute] string applicationName)
         {
-            var response = await Mediator.Send(new GetUser.Request(applicationName, sessionId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetUser.Request(applicationName)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "forbidden")
             {
@@ -45,24 +48,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Authenticate([FromBody] Authenticate request)
+        public async Task<IActionResult> Authenticate(AuthenticateBodyRequest authenticateBodyRequest, [FromHeader] AuthenticateHeaderRequest authenticateHeaderRequest)
         {
-            var data = new AuthenticateUser.Request { Criteria = request };
-            var response = await Mediator.Send(data).ConfigureAwait(false);
+            var response = await Mediator.Send(new AuthenticateUser.Request(authenticateBodyRequest?.Code, authenticateBodyRequest?.RedirectUri, authenticateBodyRequest?.ApplicationName,
+               authenticateHeaderRequest?.TraceId, authenticateHeaderRequest?.Language, authenticateHeaderRequest?.Consumer, authenticateHeaderRequest?.SessionId));
 
-            if (response.IsError && response.ErrorCode == "forbidden")
+            if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
-                return StatusCode(StatusCodes.Status403Forbidden, response);
+                return StatusCode(StatusCodes.Status400BadRequest, response);
             }
 
             if (response.IsError)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, response);
+                return StatusCode(response.ErrorCode == "unauthorized"
+                    ? StatusCodes.Status401Unauthorized
+                    : StatusCodes.Status500InternalServerError);
             }
 
-            return Ok(response);
+            return Ok();
         }
     }
 }
