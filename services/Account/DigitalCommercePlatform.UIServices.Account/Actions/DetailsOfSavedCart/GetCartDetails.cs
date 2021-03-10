@@ -46,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
             {
                 try
                 {
-                    var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
+                    var cartDetails = await _cartRepositoryServices.GetCartDetailsAsync(request);
                     var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
 
                     return getcartResponse;

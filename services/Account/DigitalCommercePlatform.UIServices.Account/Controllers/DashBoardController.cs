@@ -1,5 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -55,6 +58,52 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("getActionItems")]
+        public async Task<IActionResult> GetActionItems([FromQuery] string criteria)
+        {
+            var request = new GetActionItems.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("getTopQuotes")]
+        public async Task<IActionResult> GetTopQuotes([FromQuery] string criteria)
+        {
+            var request = new GetTopQuotes.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("getTopConfigurations")]
+        public async Task<IActionResult> GetTopConfigurations([FromQuery] string criteria)
+        {
+            var request = new GetTopConfigurations.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
 
         [HttpGet]
         [Route("savedCarts")]

@@ -1,5 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -123,6 +126,107 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetCartDetails("1234").ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetActionItems(GetActionItems.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetActionItems.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetActionItems("1").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetActionItems_BadRequest(GetActionItems.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetActionItems.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetActionItems(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopConfigurations(GetTopConfigurations.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetTopConfigurations.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopConfigurations("5").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopConfigurations_BadRequest(GetTopConfigurations.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetTopConfigurations.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopConfigurations(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopQuotes(GetTopQuotes.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetTopQuotes.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopQuotes("5").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopQuotes_BadRequest(GetTopQuotes.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetTopQuotes.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopQuotes(null).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
