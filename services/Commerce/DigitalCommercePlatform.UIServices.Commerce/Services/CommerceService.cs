@@ -82,8 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<QuoteDetailModel> GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Request request)
         {
-            try
-            {
+           
                 var LineDetails = new List<Line>();
                 for (int i = 0; i < 3; i++)
                 {
@@ -169,12 +168,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 return await Task.FromResult(savedCartResponse);
 
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            
         }
         public static int GetRandomNumber(int min, int max)
         {

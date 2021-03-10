@@ -39,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             {
                 _quoteService = quoteService;
                 _mapper = mapper;
+                _logger = logger;
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
