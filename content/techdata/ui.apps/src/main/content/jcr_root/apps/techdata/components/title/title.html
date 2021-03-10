@@ -29,11 +29,11 @@
 			class="dp-title__link"
 			href="${title.linkURL}"
 			data-cmp-clickable="${title.data ? true : false}"
-			>${text}</a
-		>
+			>${text}
 		<span data-sly-test="${title.linkURL}" class="dp-title__plus-sign">
 			+
 		</span>
+		</a>
 	</h1>
 </div>
 <sly data-sly-call="${template.placeholder @ isEmpty=!text, classAppend='cmp-title'}"></sly>
