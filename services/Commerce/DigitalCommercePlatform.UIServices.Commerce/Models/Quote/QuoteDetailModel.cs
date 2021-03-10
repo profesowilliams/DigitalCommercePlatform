@@ -13,8 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public Address EndUser { get; set; }
         public DetailsForGenInfo GeneralInfo { get; set; }
         public string Notes { get; set; }
-        public Line Details { get; set; }
-        public ProductDetailsForQuote Products { get; set; }
+        public List<Line> Details { get; set; }
         public string QuoteNumber { get; set; }
         public string OrderNumber { get; set; }
         public string PONumber { get; set; }

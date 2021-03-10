@@ -10,13 +10,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal
             public string Name { get; set; }
             public string Class { get; set; }
             public string ShortDescription { get; set; }
-            public string MFRNum { get; set; }
-            public string TDNum { get; set; }
-            public string UPCNum { get; set; }
-            public string PartNum { get; set; }
+            public string MFRNumber { get; set; }
+            public string TDNumber { get; set; }
+            public string UPCNumber { get; set; }
+            public string PartNumber { get; set; }
             public string SupplierPartNum { get; set; }
             public string Description { get; set; }
-            public int Qty { get; set; }
+            public int Quantity { get; set; }
             public double UnitPrice { get; set; }
             public double UnitListPrice { get; set; }
             public double RebateValue { get; set; }

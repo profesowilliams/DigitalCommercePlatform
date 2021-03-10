@@ -16,6 +16,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string Currency { get; set; }
         public string Invoice { get; set; }
         public string Description { get; set; }
+        //added details
+        public string ShortDescription { get; set; }
+        public string MFRNumber { get; set; }
+        public string TDNumber { get; set; }
+        public string UPCNumber { get; set; }
+        public double UnitListPrice { get; set; }
+        public double ExtendedPrice { get; set; }
+        public string Availability { get; set; }
+        public double RebateValue { get; set; }
+        public string URLProductImage { get; set; }
+        public string URLProductSpecs { get; set; }
 
     }
 }
