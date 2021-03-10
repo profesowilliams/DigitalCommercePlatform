@@ -208,7 +208,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var openItems = new List<OpenResellerItems>();
             for (int i = 0; i < 4; i++)
             {
-                i = i++;
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
                 openItem.Sequence = i + 1;
