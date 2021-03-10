@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetTopConfigurations
     {
         public class Request : IRequest<Response>

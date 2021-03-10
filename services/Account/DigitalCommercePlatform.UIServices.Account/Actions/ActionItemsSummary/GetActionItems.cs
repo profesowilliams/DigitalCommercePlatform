@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetActionItems
     {
         public class Request : IRequest<Response>
