@@ -4,14 +4,14 @@ using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
 {
-    public class DetailsOfOrderQuote
+    [ExcludeFromCodeCoverage]
+    public class DetailsOfSavedCartsQuote
     {
         public class Request : IRequest<Response>
         {
@@ -44,13 +44,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             {
                 try
                 {
-                    var cartDetails = await _quoteService.GetOrderQuote(request);
+                    var cartDetails = await _quoteService.GetCartDetailsInQuote(request);
                     var getcartResponse = _mapper.Map<Response>(cartDetails);
                     return getcartResponse;
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(DetailsOfOrderQuote));
+                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(DetailsOfSavedCartsQuote));
                     throw;
                 }
             }

@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return findOrdersDto;
         }
 
-        public async Task<QuoteDetailModel> GetOrderQuote(DetailsOfOrderQuote.Request request)
+        public async Task<QuoteDetailModel> GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Request request)
         {
             try
             {

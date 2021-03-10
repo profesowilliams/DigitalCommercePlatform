@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.Http.Controller;
-using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfOrderQuote;
+using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -33,8 +33,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("getOrderDetailsInQuote")]
-        public async Task<ActionResult<Response>> GetOrderDetailsInQuoteAsync(string userId,string productId)
+        [Route("getSavedCartDetailsInQuote")]
+        public async Task<ActionResult<Response>> GetCartDetailsInQuote(string userId,string productId)
         {
             var response = await Mediator.Send(new Request(userId, productId)).ConfigureAwait(false);
             return response;

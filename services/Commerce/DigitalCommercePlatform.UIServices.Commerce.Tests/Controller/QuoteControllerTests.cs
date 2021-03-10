@@ -66,17 +66,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetOrderDetailsInQuoteAsync(DetailsOfOrderQuote.Response expected)
+        public async Task GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Response expected)
         {
 
             _mediator.Setup(x => x.Send(
-                      It.IsAny<DetailsOfOrderQuote.Request>(),
+                      It.IsAny<DetailsOfSavedCartsQuote.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
             var controller = GetController();
 
-            var result = await controller.GetOrderDetailsInQuoteAsync("1234","1234").ConfigureAwait(false);
+            var result = await controller.GetCartDetailsInQuote("1234","1234").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
