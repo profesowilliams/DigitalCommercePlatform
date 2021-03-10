@@ -1,8 +1,10 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
 {
+    [ExcludeFromCodeCoverage]
     public class QuoteDetailModel
     {
        public QuoteDetails QuoteDetails { get; set; }
