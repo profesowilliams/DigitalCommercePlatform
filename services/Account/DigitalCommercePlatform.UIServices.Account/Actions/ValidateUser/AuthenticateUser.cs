@@ -93,8 +93,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-                _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
-                _context = context;
+                _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
+                _context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
