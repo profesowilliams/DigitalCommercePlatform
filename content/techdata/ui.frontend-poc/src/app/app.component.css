@@ -1,0 +1,27 @@
+ul{
+    display: inline-block;
+    width: 800px;
+    list-style: none;
+    display: flex;
+}
+li{
+/* width: 200px; */
+text-align: center;
+}
+.compName {
+    border: 1px solid gray;
+    padding: 10px;
+    text-align: left;
+    margin: 20px 20px 0px 20px;
+    width: 900px;
+    background-color: midnightblue;
+    color: white;
+    font-weight: bold;
+}
+.btn-simple {
+    background-color: rgb(51,62,77);
+    padding: 10px;
+    margin: 10px;
+    color: #FFFFFF;
+    border: 1px solid rgb(51,62,77);
+}
