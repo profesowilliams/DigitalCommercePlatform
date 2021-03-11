@@ -4,7 +4,9 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Settings;
 using Flurl;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -21,11 +23,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly string _appOrderServiceUrl;
         //private readonly string _appQuoteServiceUrl;
         private static readonly Random getrandom = new Random();
-        public CommerceService(IHttpClientFactory clientFactory)
+        public CommerceService(IHttpClientFactory clientFactory, IOptions<AppSettings> options)
         {
             _clientFactory = clientFactory;
-            _appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
-            //_appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";            
+            _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
+            //_appQuoteServiceUrl=options?.Value.GetSetting("App.Quote.Url");      
         }
 
         public async Task<OrderModel> GetOrderByIdAsync(string id)

@@ -6,6 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DigitalFoundation.Common.Settings;
+using Microsoft.Extensions.Options;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -18,11 +20,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appQuoteServiceUrl;
 #pragma warning restore CS0414
-        public ConfigService(IHttpClientFactory clientFactory)
+        public ConfigService(IHttpClientFactory clientFactory, IOptions<AppSettings> options)
         {
             _clientFactory = clientFactory;
-            //_appOrderServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
-            _appQuoteServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1/";
+            //_appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
+            _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
         }
         public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
         {
