@@ -2,14 +2,13 @@
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetRenewalsSummary
     {
         public class Request : IRequest<Response>

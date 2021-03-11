@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models.Renewals
 {
+    [ExcludeFromCodeCoverage]
     public class RenewalsSummaryModel
     {
         public int NinetyDays { get; set; }
