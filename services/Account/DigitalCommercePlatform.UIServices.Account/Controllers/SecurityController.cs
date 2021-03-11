@@ -56,9 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
 
-            
-
-            return Ok(response);
+            return Ok();
         }
     }
 }
