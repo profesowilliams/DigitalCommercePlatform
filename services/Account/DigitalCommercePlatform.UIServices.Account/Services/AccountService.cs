@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
@@ -11,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
+using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -222,6 +224,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             };
             return await Task.FromResult(response);
+        }
+
+        public async Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
+        {
+            var renewals = new RenewalsSummaryModel
+            {
+                NinetyDays = GetRandomNumber(0, 4),
+                SixtyDays = GetRandomNumber(1, 8),
+                ThirtyDays = GetRandomNumber(10, 20),
+                Today = GetRandomNumber(0, 15),
+            };
+            return await Task.FromResult(renewals);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
@@ -230,6 +231,42 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetRenewals(GetRenewalsSummary.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetRenewalsSummary.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetRenewals("5").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetRenewals_BadRequest(GetRenewalsSummary.Response expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetRenewalsSummary.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetRenewals(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
 
         private DashBoardController GetController()
         {
