@@ -73,51 +73,46 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
         public class AuthenticateUserQueryHandler : IRequestHandler<Request, Response>
         {
-            //private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
-            //private readonly IUIContext _context;
+            private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
+            private readonly IUIContext _context;
             private readonly IMiddleTierHttpClient _middleTierHttpClient;
             private readonly IMapper _mapper;
             private readonly string _coreSecurityUrl;
-            private readonly string _clientId;
-            private readonly string _clientSecret;
 
-            public AuthenticateUserQueryHandler(/*IUIContext context, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider,*/ IOptions<AppSettings> appSettingsOptions,
-            IOptions<OAuthClientDetailsOptions> oauthClientDetailsOptions, IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+            public AuthenticateUserQueryHandler(IUIContext context, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IOptions<AppSettings> appSettingsOptions,
+                 IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
             {
                 if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
-                if (oauthClientDetailsOptions == null) { throw new ArgumentNullException(nameof(oauthClientDetailsOptions)); }
 
                 _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
-                _clientId = oauthClientDetailsOptions.Value?.ClientId ?? throw new InvalidOperationException("ClientId key/value is missing from AppSettings");
-                _clientSecret = oauthClientDetailsOptions.Value?.ClientSecret ?? throw new InvalidOperationException("ClientSecret key/value is missing from AppSettings");
 
                 _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-                //_sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
-                //_context = context ?? throw new ArgumentNullException(nameof(context));
+                _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
+                _context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                
+
                 var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
                 {
                     Address = _coreSecurityUrl,
-                    ClientId = _clientId,
-                    ClientSecret = _clientSecret,
+                    ClientId = "ecom.apps.web.aem.dit",
+                    ClientSecret = "mVzaL03EDRQCVqooXHxpdzhwFEa8XBKCfPToPT8WdAE4wh6QTc21RVZYOKPS0JTW",
                     Code = request?.Code,
                     RedirectUri = new Uri(request?.RedirectUri)
                 };
 
-                //_context.SetTraceId(request?.TraceId);
-                //_context.SetLanguage(request?.Language);
-                //_context.SetConsumer(request?.Consumer);
+                _context.SetTraceId(request?.TraceId);
+                _context.SetLanguage(request?.Language);
+                _context.SetConsumer(request?.Consumer);
 
                 var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
 
                 if (!string.IsNullOrEmpty(tokenResponseDto?.AccessToken))
                 {
-                    //_context.SetAccessToken(tokenResponseDto?.AccessToken);
+                    _context.SetAccessToken(tokenResponseDto?.AccessToken);
 
                     var user = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
                     {
@@ -125,14 +120,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                         ApplicationName = request?.ApplicationName
                     });
 
-                    //_sessionIdBasedCacheProvider.Put("User", user?.User);
+                    _sessionIdBasedCacheProvider.Put("User", user?.User);
                 }
 
                 var tokenResponse = _mapper.Map<Response>(tokenResponseDto);
                 return tokenResponse;
-              
-
-               
             }
         }
     }
