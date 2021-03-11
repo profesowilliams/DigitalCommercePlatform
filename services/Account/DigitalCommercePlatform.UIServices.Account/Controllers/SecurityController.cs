@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
             
 
-            return Ok();
+            return Ok(response);
         }
     }
 }
