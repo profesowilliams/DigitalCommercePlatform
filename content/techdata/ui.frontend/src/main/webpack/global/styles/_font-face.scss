@@ -21,3 +21,10 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: "Open Sans";
+    src: url($font-primary-path + "/OpenSans-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
