@@ -14,8 +14,5 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
         public string Phone { get; set; }
         public IEnumerable<string> Customers { get; set; }
         public IEnumerable<string> Roles { get; set; }
-        public string AccessToken { get; set; }
-        public string RefreshToken { get; set; }
-        public int ExpiresInSeconds { get; set; }
     }
 }
