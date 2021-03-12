@@ -118,7 +118,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                     return new Response { IsError = true };
                 }
 
-                _sessionIdBasedCacheProvider.Put("User", userResponseDto.User);
+                _sessionIdBasedCacheProvider.Put("User", userResponseDto.User, 86400);
 
                 var tokenResponse = _mapper.Map<Response>(userResponseDto);
                 return tokenResponse;
