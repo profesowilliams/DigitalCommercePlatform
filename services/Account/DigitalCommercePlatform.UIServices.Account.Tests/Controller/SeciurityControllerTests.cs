@@ -1,5 +1,6 @@
 using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -113,6 +114,40 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
             var result = await controller.Authenticate(null, null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task LogoutUser_BadRequest([Frozen] Mock<IMediator> mediator,
+            [Greedy] SecurityController controller,
+            LogoutUser.Response expected)
+        {
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<LogoutUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+            var result = await controller.Logout(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task LogoutUser_OkRequest([Frozen] Mock<IMediator> mediator,
+            [Greedy] SecurityController controller,
+            LogoutUser.Response expected)
+        {
+            expected.IsError = false;
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<LogoutUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+            var result = await controller.Logout(null).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }
