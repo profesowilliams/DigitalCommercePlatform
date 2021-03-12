@@ -44,16 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
         public class Response
         {
-            public string AccessToken { get; set; }
-            public string RefreshToken { get; set; }
-            public string IdentityToken { get; set; }
-            public string TokenType { get; set; }
-            public int ExpiresIn { get; set; }
             public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-            public SecurityResponseErrorType ErrorType { get; set; }
-            public string ErrorDescription { get; set; }
-            public string Message { get; set; }
             public User User { get; set; }
         }
 
@@ -94,7 +85,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-
                 var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
                 {
                     Address = _coreSecurityUrl,
@@ -110,20 +100,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
 
-                if (!string.IsNullOrEmpty(tokenResponseDto?.AccessToken))
+                if (string.IsNullOrEmpty(tokenResponseDto?.AccessToken))
                 {
-                    _context.SetAccessToken(tokenResponseDto?.AccessToken);
-
-                    var user = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
-                    {
-                        Address = _coreSecurityUrl,
-                        ApplicationName = request?.ApplicationName
-                    });
-
-                    _sessionIdBasedCacheProvider.Put("User", user?.User);
+                    return new Response { IsError = true };
                 }
 
-                var tokenResponse = _mapper.Map<Response>(tokenResponseDto);
+                _context.SetAccessToken(tokenResponseDto.AccessToken);
+
+                var userResponseDto = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
+                {
+                    Address = _coreSecurityUrl,
+                    ApplicationName = request?.ApplicationName
+                });
+
+                if (userResponseDto?.User == null)
+                {
+                    return new Response { IsError = true };
+                }
+
+                _sessionIdBasedCacheProvider.Put("User", userResponseDto.User, 86400);
+
+                var tokenResponse = _mapper.Map<Response>(userResponseDto);
                 return tokenResponse;
             }
         }
