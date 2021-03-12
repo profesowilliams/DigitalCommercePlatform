@@ -33,10 +33,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("getSavedCartDetailsInQuote")]
-        public async Task<ActionResult<Response>> GetCartDetailsInQuote(string userId,string productId)
+        [Route("quote/create/{savedCartId}")]
+        public async Task<ActionResult<Response>> GetCartDetailsInQuote(string cartId)
         {
-            var response = await Mediator.Send(new Request(userId, productId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
             return response;
         }
     }

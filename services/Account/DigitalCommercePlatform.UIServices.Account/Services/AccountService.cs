@@ -15,6 +15,8 @@ using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using System;
 using System.Collections.Generic;
+using DigitalFoundation.Common.Settings;
+using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -32,12 +34,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _dealsServiceUrl;
         private static readonly Random getrandom = new Random();
 #pragma warning restore CS0414
-        public AccountService(IHttpClientFactory clientFactory)
+        public AccountService(IHttpClientFactory clientFactory, IOptions<AppSettings> options)
         {
             _clientFactory = clientFactory;
             _coreSecurityServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/core-security/v1/";
             _configurationsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app_configurations/v1/";
-            _dealsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
+            _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
         }
 
         /// <summary>

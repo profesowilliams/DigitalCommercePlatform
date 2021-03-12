@@ -11,8 +11,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
     {
         public SecurityProfile()
         {
-            CreateMap<ClientLoginCodeTokenResponseModel, AuthenticateUser.Response>();
             CreateMap<DigitalFoundation.Common.Models.User, User>();
+            CreateMap<ValidateUserResponseModel, AuthenticateUser.Response>();
         }
     }
 }

@@ -102,6 +102,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
+        public async Task AuthenticateUser_OkRequest([Frozen] Mock<IMediator> mediator,
+            [Greedy] SecurityController controller,
+            AuthenticateUser.Response expected)
+        {
+            expected.IsError = false;
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<AuthenticateUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+            var result = await controller.Authenticate(null, null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task GetUser_BadRequest(GetUser.Response expected,
             [Frozen] Mock<IMediator> mediator,
             [Set(nameof(GetAppSettings))]
@@ -117,6 +134,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetUser_OkRequest(GetUser.Response expected,
+            [Frozen] Mock<IMediator> mediator,
+            [Set(nameof(GetAppSettings))]
+            [Greedy] SecurityController controller)
+        {
+
+            expected.IsError = false;
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<GetUser.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+
+            var result = await controller.GetUserAsync(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
         }
 
         //[Fact]

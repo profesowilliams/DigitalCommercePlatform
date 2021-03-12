@@ -24,12 +24,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
 
         public class Response
         {
-            public User User { get; set; }
             public virtual bool IsError { get; set; }
-            public int ExpiresIn { get; set; }
-            public string ErrorCode { get; set; }
-            public SecurityResponseErrorType ErrorType { get; set; }
-            public string ErrorDescription { get; set; }
+            public User User { get; set; }
         }
 
         public class GetUserQueryHandler : IRequestHandler<Request, Response>
