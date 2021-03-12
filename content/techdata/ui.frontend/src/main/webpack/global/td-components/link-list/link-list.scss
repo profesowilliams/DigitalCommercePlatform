@@ -6,11 +6,11 @@
         font-size: rem(10px);
         letter-spacing: 0;
         line-height: normal;
-        color: get-color("brand-white");
-        font-family: "Open Sans";
+        color: get-color(brand-white);
+        font-family: $open-sans;
         
         li:not(:last-child) {
-            border-right: rem(1px) solid get-color("brand-white");
+            border-right: rem(1px) solid get-color(brand-white);
         }
         .cmp-link-list__item {
             padding: 0 rem(10px);
