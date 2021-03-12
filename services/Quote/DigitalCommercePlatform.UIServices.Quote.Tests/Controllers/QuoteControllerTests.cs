@@ -101,9 +101,13 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
                 .ReturnsAsync(expected);
 
             using var sut = GetController();
-
+            var request = new GetQuoteHandler.Request
+            {
+                Id = "1",
+                Details=  false,
+            };
             //act
-            _ = await sut.Get("1", false).ConfigureAwait(false);
+            _ = await sut.Get(request).ConfigureAwait(false);
 
             //assert
             _mockMediator.Verify(x => x.Send(It.IsAny<GetQuoteHandler.Request>(), It.IsAny<CancellationToken>()), Times.Once);

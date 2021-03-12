@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Quote.Infrastructure;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,15 +19,14 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     {
         public class Request : IRequest<Response>
         {
-            public string Id { get; }
-            public bool Details { get; }
-            public string AccessToken { get; }
-
-            public Request(string id, bool details, string accessToken)
+            [FromRoute]
+            public string Id { get; set; }
+            [FromQuery]
+            public bool Details { get; set; }
+            public RequestHeaders Headers { get; set; }
+            public Request()
             {
-                Id = id;
-                Details = details;
-                AccessToken = accessToken;
+                Headers = new RequestHeaders();
             }
         }
 
@@ -49,13 +49,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
+            private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
             {
                 if (httpClient == null) { throw new ArgumentNullException(nameof(httpClient)); }
 
+                _context = context;
                 _httpClient = httpClient;
                 _httpClientFactory = httpClientFactory;
                 _logger = logger;
@@ -67,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 try
                 {
+                    _context.SetContextFromRequest(request.Headers);
                     var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
                     var url = baseUrl + "/" + request.Id;
                     var result = await _httpClient.GetAsync<QuoteModel>(url);

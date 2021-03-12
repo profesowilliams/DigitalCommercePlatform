@@ -12,13 +12,14 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Quote.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
-    [Authorize(AuthenticationSchemes = "UserIdentityValidationScheme")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class QuoteController : BaseUIServiceController
     {
         //private readonly ILogger<QuoteController> _logger;
@@ -40,9 +41,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         /// </summary>
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> Get(string id, [FromQuery] bool details = true)
+        public async Task<IActionResult> Get([FromQuery] GetQuoteHandler.Request request)
         {
-            var response = await Mediator.Send(new GetQuoteHandler.Request(id, details, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
