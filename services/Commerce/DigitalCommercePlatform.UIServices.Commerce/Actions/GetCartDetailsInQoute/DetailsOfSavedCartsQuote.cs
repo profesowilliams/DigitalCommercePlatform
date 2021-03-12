@@ -15,13 +15,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
     {
         public class Request : IRequest<Response>
         {
-            public string UserId { get; set; }
-            public string ProductId { get; set; }
+            public string CartId { get; set; }
 
-            public Request(string userId, string productId)
+            public Request(string cartId)
             {
-                UserId = userId;
-                ProductId = productId;
+                CartId = cartId;
             }
         }
 
