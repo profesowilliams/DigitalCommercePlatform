@@ -1,8 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
-import axios from 'axios';
 
-class Chartcomp extends React.Component {
+class DoughNutDiagram extends React.Component {
 
 getData = () => {
 
@@ -59,6 +58,4 @@ componentDidUpdate(){
   }
 }
 
-export default React.memo(Chartcomp);
-
-// return <div className="chartjs-wrapper"><canvas ref={canvas} className="chartjs"></canvas></div>;
+export default React.memo(DoughNutDiagram);

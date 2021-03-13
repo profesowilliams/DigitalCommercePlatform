@@ -1,5 +1,5 @@
 import React from 'react';
-import Chartcomp from "../customer-widget/customer";
+import DoughnutDiagram from "../DoughnutDiagram/DoughnutDiagram";
 import axios from "axios";
 import {nanoid} from "nanoid";
 
@@ -30,7 +30,6 @@ class Chart extends React.Component {
 
     updateData = (url, id) => {
         this.fetchApi('https://api.npoint.io/333c60f461e85093f106', 'customer');
-        // this.fetchApi('./customerdata.json', 'customer');
     }
 
     componentDidMount(){
@@ -51,7 +50,7 @@ class Chart extends React.Component {
                 <ul>
                     <li>
                         <h1>{compProps.name}</h1>
-                        {customer && customer.length ? <Chartcomp data={customer} id={uniqueId} /> :'loading'}
+                        {customer && customer.length ? <DoughnutDiagram data={customer} id={uniqueId} /> :'loading'}
                         <button onClick={this.updateData}>Change Customer Data</button>
                     </li>
                 </ul>

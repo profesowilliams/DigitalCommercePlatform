@@ -10,7 +10,7 @@ class AppConnector {
         this.componentProps = componentProps;
         console.log(this.componentProps)
 
-        import (`../components/${this.componentProps.component}/${this.componentProps.component}`)
+        import (`../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}`)
         .then(component => {
                 _self.loadComponent(component.default, element);
             })
