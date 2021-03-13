@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="text/javascript" src="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.js"></script>
     <link rel="stylesheet" href="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.css" type="text/css" />
+    <link rel="stylesheet" href="http://localhost:9000/bundle.css" type="text/css" />
 </head>
 <body class="page basicpage">
 <div class="root container responsivegrid">
@@ -20,28 +21,7 @@
                     >
                         <div id="container-c92b3ef9df" class="cmp-container">
                             <div class="aem-Grid aem-Grid--2 aem-Grid--default--2 aem-Grid--phone--12">
-                                <div class="hero-title title aem-GridColumn aem-GridColumn--default--2">
-                                    <div
-                                            data-cmp-data-layer='{"hero-title-ce3b569e11":{"@type":"techdata/components/content/hero-title","repo:modifyDate":"2020-11-24T10:05:10Z","dc:title":"McCafé® Coffee"}}'
-                                            class="cmp-title"
-                                    >
-                                        <h1 class="cmp-title__text">Social Component</h1>
-                                    </div>
-                                </div>
-                                <div class="title aem-GridColumn aem-GridColumn--default--2">
-                                    <div
-                                            data-cmp-data-layer='{"title-4ab05cb686":{"@type":"techdata/components/content/title","repo:modifyDate":"2020-11-10T12:35:07Z","dc:title":"2 Column Teaser Layout"}}'
-                                            id="title-4ab05cb686"
-                                            class="cmp-title"
-                                    >
-                                        <h1 class="cmp-title__text">Social</h1>
-                                    </div>
-                                </div>
-                                <div
-                                        class="aem-GridColumn--default--none aem-GridColumn--phone--none aem-GridColumn aem-GridColumn--default--1 aem-GridColumn--phone--1"
-                                >
-                                    <%= require('html-loader!./partials/chart/chart.html') %>
-                                </div>
+                                <%= require('html-loader!./partials/chart/chart.html') %>
                             </div>
                         </div>
                     </div>
