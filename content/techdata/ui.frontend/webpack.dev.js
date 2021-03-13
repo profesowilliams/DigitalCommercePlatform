@@ -236,12 +236,16 @@ module.exports = env => {
                 filename: 'tabs-default-active.html',
                 template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-default-active.html')
             }),
+            new HtmlWebpackPlugin({
+                filename: 'chart',
+                template: path.resolve(__dirname, SOURCE_ROOT + '/static/chart-demo.html')
+            }),
         ],
         devServer: {
             inline: true,
             proxy: [{
                 context: ['/content', '/etc.clientlibs'],
-                target: 'http://localhost:4502',
+                target: 'http://localhost:5502',
             }],
             writeToDisk,
             liveReload: !writeToDisk
