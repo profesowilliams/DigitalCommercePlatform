@@ -1,3 +1,10 @@
+.Chart ul{
+  display: flex;
+  list-style: none;
+  width: 900px;
+  padding: 10px;
+  margin: 0 20px 20px 20px;
+}
 .Chart {
   text-align: center;
   /* width: 300px; */
@@ -16,16 +23,16 @@
   color: #FFFFFF;
   border: 1px solid #000000;
 }
-.Chart .compName{
-    border: 1px solid gray;
-    padding: 10px;
-    text-align: left;
-    margin: 20px 20px 0px 20px;
-    width: 900px;
-    background-color: midnightblue;
-    color: white;
-    font-weight: bold;
-}
+//.Chart .compName{
+//    border: 1px solid gray;
+//    padding: 10px;
+//    text-align: left;
+//    margin: 20px 20px 0px 20px;
+//    width: 900px;
+//    background-color: midnightblue;
+//    color: white;
+//    font-weight: bold;
+//}
 .Chart .compFooter{
   border: 1px solid gray;
   padding: 10px;
@@ -35,23 +42,13 @@
   background-color:lightcyan;
   color: white;
   font-weight: bold;
-  display: none;
+  //display: none;
 }
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-/* .App .chartjs-wrapper{
-  width: 300px;
-  height: 300px;
-} */
-.Chart ul{
-  display: flex;
-  list-style: none;
-  width: 900px;
-  padding: 10px;
-  margin: 0 20px 20px 20px;
-}
+//.App-logo {
+//  height: 40vmin;
+//  pointer-events: none;
+//}
+
 .Chart ul li{
   /* display: inline; */
   /* width: 20%;
@@ -64,26 +61,26 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+//.App-header {
+//  background-color: #282c34;
+//  min-height: 100vh;
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//  justify-content: center;
+//  font-size: calc(10px + 2vmin);
+//  color: white;
+//}
+//
+//.App-link {
+//  color: #61dafb;
+//}
+//
+//@keyframes App-logo-spin {
+//  from {
+//    transform: rotate(0deg);
+//  }
+//  to {
+//    transform: rotate(360deg);
+//  }
+//}
