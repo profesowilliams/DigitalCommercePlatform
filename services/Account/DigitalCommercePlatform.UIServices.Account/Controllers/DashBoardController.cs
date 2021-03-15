@@ -8,6 +8,7 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,7 +19,8 @@ using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCa
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
     [ApiController]
-    [ApiVersion("1")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
+    [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
     public class DashBoardController : BaseUIServiceController
     {
