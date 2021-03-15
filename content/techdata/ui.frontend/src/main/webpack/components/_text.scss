@@ -9,3 +9,51 @@
   color: get-color(text-mid-gray);
   box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue)!important;
 }
+
+.dp-text--white {
+    p {
+        color: #fff;
+    }
+}
+
+.dp-text--light-blue {
+    p {
+        color: #00b1e2;
+    }
+}
+
+.dp-text--dark-blue {
+    p {
+        color: #000c21;
+    }
+}
+
+.dp-text--xsmall {
+    p {
+        font-size: .6875rem;
+    }
+}
+
+.dp-text--small {
+    p {
+        font-size: .8125rem;
+    }
+}
+
+.dp-text--big  {
+  p{
+        font-size: 1.25rem;
+        }
+}
+
+.dp-text--align-center {
+    p{
+    text-align: center;
+    }
+}
+
+.dp-text--align-right {
+    p{
+    text-align: right;
+    }
+}
