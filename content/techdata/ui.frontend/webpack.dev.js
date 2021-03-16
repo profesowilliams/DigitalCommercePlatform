@@ -257,7 +257,7 @@ module.exports = (env) => {
 			proxy: [
 				{
 					context: ['/content', '/etc.clientlibs'],
-					target: 'http://localhost:5502',
+					target: 'http://localhost:4502',
 				},
 			],
 			writeToDisk,
