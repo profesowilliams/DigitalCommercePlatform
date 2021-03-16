@@ -1,49 +1,14 @@
+@import './../../../variables';
+@import './../../../../site/variables';
+
 .cmp-text {}
 .cmp-text__paragraph {}
 
 
-.dp-aem-alert{
-  border: 1px solid #048FC8;
-  padding: 2rem;
-  background-color: #fff;
-  color: #53565A;
-  box-shadow: 0px 0px 5px 0px #048FC8!important;
-}
-
-
-.dp-text{
-  color: #5D6165;
-  p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
-    font-size: 1rem;
-  }
-  &--xsmall{
-    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
-      font-size: 0.7rem;
-    }
-  }
-  &--small{
-    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
-      font-size: 0.875rem;
-    }
-  }
-  &--big{
-    p,span,div,ul,ol,li,a,i,blockquote,table,td,th{
-      font-size: 1.25rem;
-    }
-  }
-  &--white{
-    color: #fff;
-  }
-  &--light-blue{
-    color: #00B1E2;
-  }
-  &--dark-blue{
-    color: #000C21;
-  }
-  &--align-center{
-    text-align: center;
-  }
-  &--align-right{
-    text-align: right;
-  }
+.cmp-aem-alert{
+  border: rem(1px) solid get-color(td-primary-blue);
+  padding: rem(32px);
+  background-color: get-color(brand-white);
+  color: get-color(text-mid-gray);
+  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue)!important;
 }

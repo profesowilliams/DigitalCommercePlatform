@@ -1,12 +1,14 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,7 +19,8 @@ using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCa
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
     [ApiController]
-    [ApiVersion("1")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
+    [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
     public class DashBoardController : BaseUIServiceController
     {
@@ -111,6 +114,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new GetCartRequest(Id)).ConfigureAwait(false);
             return response;
+        }
+
+        [HttpPost]
+        [Route("getRenewals")]
+        public async Task<IActionResult> GetRenewals([FromQuery] string criteria)
+        {
+            var request = new GetRenewalsSummary.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
         }
     }
 }

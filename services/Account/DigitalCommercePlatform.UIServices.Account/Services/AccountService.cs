@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
+using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -9,12 +10,16 @@ using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
+using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
+using DigitalFoundation.Common.Settings;
+using Flurl;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -23,30 +28,30 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     {
         private readonly IHttpClientFactory _clientFactory;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
-        private readonly string _coreSecurityServiceUrl;
         private readonly string _configurationsServiceUrl;
         private readonly string _dealsServiceUrl;
+        private readonly string _quoteServiceURL;
+        private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
 #pragma warning restore CS0414
-        public AccountService(IHttpClientFactory clientFactory)
+        public AccountService(IHttpClientFactory clientFactory, IOptions<AppSettings> options, ILogger<AccountService> logger)
         {
+            _logger = logger;
             _clientFactory = clientFactory;
-            _coreSecurityServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/core-security/v1/";
-            _configurationsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app_configurations/v1/";
-            _dealsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
+            _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
+            _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
+            _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
         }
-
-       
 
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
-            var response = new ConfigurationsSummaryModel
-            {
-                Quoted = 14,
-                UnQuoted = 30,
-                OldConfigurations = 25
-            };
-            return await Task.FromResult(response);
+                       var response = new ConfigurationsSummaryModel
+                {
+                    Quoted = 14,
+                    UnQuoted = 30,
+                    OldConfigurations = 25
+                };
+                return await Task.FromResult(response);
 
         }
         public async Task<DealsSummaryModel> GetDealsSummaryAsync(GetDealsSummary.Request request)
@@ -60,7 +65,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-        
         public async Task<CartModel> GetCartDetailsAsync(GetCartDetails.GetCartRequest request)
         {
             var SaveCartDetails = new List<SavedCartLine>();
@@ -133,6 +137,34 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
+            try
+            {
+                //Returning dummy data for now as App-Service is not yet ready 
+                var url = _quoteServiceURL
+                        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
+                        .SetQueryParams(new
+                        {
+
+                        });
+
+                //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+
+                //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+
+                //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
+                //response.EnsureSuccessStatusCode();
+
+                //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
+                // return getQuoteResponse;
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
+                throw ex;
+            }
+
             var openItems = new List<OpenResellerItems>();
             for (int i = 0; i < 4; i++)
             {
@@ -150,6 +182,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             };
             return await Task.FromResult(response);
+        }
+
+        public async Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
+        {
+            var renewals = new RenewalsSummaryModel
+            {
+                NinetyDays = GetRandomNumber(0, 4),
+                SixtyDays = GetRandomNumber(1, 8),
+                ThirtyDays = GetRandomNumber(10, 20),
+                Today = GetRandomNumber(0, 15),
+            };
+            return await Task.FromResult(renewals);
         }
     }
 }

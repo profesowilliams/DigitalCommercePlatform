@@ -6,6 +6,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DigitalFoundation.Common.Settings;
+using Microsoft.Extensions.Options;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
 {
@@ -21,14 +23,15 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         private readonly ILogger<ContentService> _logger;
         public ContentService(IHttpClientFactory clientFactory,
             IMiddleTierHttpClient httpClient,
-            ILogger<ContentService> logger)
+            ILogger<ContentService> logger, IOptions<AppSettings> options)
         {
             _logger = logger;
             _clientFactory = clientFactory;
-            _coreCartURL = "http://Core-Cart/v1/";
-            _appCustomerURL = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
-            _appCatalogURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1/";
+            _coreCartURL = options?.Value.GetSetting("Core.Cart.Url");
+            _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
+            _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
         }
+        
         public Task<GetCart.Response> GetCartDetails(GetCart.Request request)
         {
             var CartURL = _coreCartURL.BuildQuery(request);

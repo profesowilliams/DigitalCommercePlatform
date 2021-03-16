@@ -71,6 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                     .Returns<QuoteModel>(r => new QuoteModel() { Creator = "2", EndUserPO = "test" });
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
+                client.DefaultRequestHeaders.Add("TraceId", Guid.NewGuid().ToString());
                 var url = new Uri(client.BaseAddress + input);
 
                 // Act

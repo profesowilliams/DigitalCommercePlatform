@@ -10,7 +10,7 @@ using System.Reflection;
 namespace DigitalCommercePlatform.UIServices.Quote
 {
     [ExcludeFromCodeCoverage]
-    public class Startup : BaseAppServiceStartup
+    public class Startup : BaseUIServiceStartup
     {
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
