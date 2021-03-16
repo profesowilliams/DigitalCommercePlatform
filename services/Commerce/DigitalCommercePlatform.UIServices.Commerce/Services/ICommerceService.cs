@@ -1,5 +1,7 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 
@@ -12,5 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<OrderModel> GetOrderByIdAsync(string id);
         Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters);
         Task<QuoteDetailModel> GetCartDetailsInQuote(Request request);
+        Task<IEnumerable<QuoteDetailModel>> GetQuotesDetails(GetQuotes.Request request);
     }
 }

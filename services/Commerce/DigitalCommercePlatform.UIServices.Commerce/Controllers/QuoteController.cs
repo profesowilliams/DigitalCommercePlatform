@@ -7,6 +7,8 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.Http.Controller;
 using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -24,6 +26,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         {
         }
 
+
+
+
         [HttpGet]
         [Route("quote")]
         public IActionResult GetQuote(string quoteId)
@@ -37,6 +42,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public async Task<ActionResult<Response>> GetCartDetailsInQuote(string cartId)
         {
             var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
+            return response;
+        }
+
+        [HttpGet]
+        [Route("quotes/Find")]
+        public async Task<ActionResult<GetQuotes.Response>> GetRecentQuotesAsync([FromQuery] FindModel request)
+        {
+
+            var response = await Mediator.Send(new GetQuotes.Request(request)).ConfigureAwait(false);
             return response;
         }
     }

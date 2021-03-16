@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
@@ -6,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -21,13 +23,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly string _appOrderServiceUrl;
-        //private readonly string _appQuoteServiceUrl;
+        private readonly string _appQuoteServiceUrl;
+        private readonly ILogger<CommerceService> _logger;
         private static readonly Random getrandom = new Random();
-        public CommerceService(IHttpClientFactory clientFactory, IOptions<AppSettings> options)
+        public CommerceService(IHttpClientFactory clientFactory, IOptions<AppSettings> options, ILogger<CommerceService> logger)
         {
             _clientFactory = clientFactory;
+            _logger = logger;
             _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
-            //_appQuoteServiceUrl=options?.Value.GetSetting("App.Quote.Url");      
+            _appQuoteServiceUrl=options?.Value.GetSetting("App.Quote.Url");      
         }
 
         public async Task<OrderModel> GetOrderByIdAsync(string id)
@@ -174,6 +178,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
+        }
+
+        public async Task<IEnumerable<QuoteDetailModel>> GetQuotesDetails(GetQuotes.Request request)
+        {
+            var QuoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+
+            try
+            {
+                using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, QuoteURL);
+
+                var apiQuoteClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var Response = await apiQuoteClient.SendAsync(getQuoteRequestMessage);
+                Response.EnsureSuccessStatusCode();
+
+                var getQuoteResponse = await Response.Content.ReadAsAsync<IEnumerable<QuoteDetailModel>>();
+                return getQuoteResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetQuotesDetails)}: {nameof(CommerceService)}");
+                throw ex;
+            }
         }
     }
 }
