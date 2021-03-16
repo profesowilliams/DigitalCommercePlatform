@@ -31,7 +31,7 @@
     <!-- ====================================================================== -->
     <!-- P R O J E C T  D E S C R I P T I O N                                   -->
     <!-- ====================================================================== -->
-    <artifactId>ui.dcp-frontend-components</artifactId>
+    <artifactId>ui.react.frontend</artifactId>
     <packaging>pom</packaging>
     <name>TechData Component Library - React</name>
 
