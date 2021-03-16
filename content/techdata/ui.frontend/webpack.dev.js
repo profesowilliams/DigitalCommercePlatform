@@ -141,115 +141,115 @@ module.exports = (env) => {
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-nested-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-nested.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-nested.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/list.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/list.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/tabs-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-brand-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/brand.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/brand.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-menu-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/menu.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/menu.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-fixed-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-fixed.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-fixed.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-search-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-search.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-search.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-tags-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-tags.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-tags.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-order-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-order.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-order.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-maxitems-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-maxitems.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-maxitems.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'list-with-link-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-page.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-fixed-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-fixed-width.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-fixed-width.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-notitle-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-title.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-title.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-nolink-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-link.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-link.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'article-list-noheader-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-hero.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-hero.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-hero.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'text.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'text-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-comp.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-content.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-content.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-content.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-nested.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-nested.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-nested.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-default-active.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-default-active.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs-default-active.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'chart',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/chart-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/chart-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'signin',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in-demo-page.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in-demo-page.html')
 			}),
 		],
 		devServer: {
