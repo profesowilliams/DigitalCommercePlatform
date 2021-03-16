@@ -5,7 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
 {
-    [ExcludeFromCodeCoverage]
+   [ExcludeFromCodeCoverage]
+
+    public class QuoteFindModel
+    {
+        public QuoteModel QuoteModel { get; set; }
+    }
+
+
     public class QuoteModel 
     {
         public DateTime Published { get; set; }

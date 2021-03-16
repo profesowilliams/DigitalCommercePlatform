@@ -9,6 +9,8 @@ using DigitalFoundation.Common.Http.Controller;
 using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
+using System.Collections.Generic;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -46,12 +48,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quotes/Find")]
-        public async Task<ActionResult<GetQuotes.Response>> GetRecentQuotesAsync([FromQuery] FindModel request)
+        [Route("quotes/get")]
+        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id, [FromQuery] bool details = true)
         {
+            var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
+            return Ok(response);
+        }
 
-            var response = await Mediator.Send(new GetQuotes.Request(request)).ConfigureAwait(false);
-            return response;
+        [HttpGet]
+        [Route("quotes/Find")]
+        public async Task<IActionResult> FindProduct([FromQuery] FindModel query)
+        {
+           
+                var response = await Mediator.Send(new GetQuotes.Request(query)).ConfigureAwait(false);
+                return Ok(response);
         }
     }
 }

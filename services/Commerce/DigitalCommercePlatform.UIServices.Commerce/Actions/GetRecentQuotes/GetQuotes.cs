@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -14,19 +15,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
 {
     public class GetQuotes
     {
-        public class Request : IRequest<Response>
+        public class Request:IRequest<Response>
         {
-            public FindModel Search { get; set; }
-           
-            public Request(FindModel search)
+            public FindModel Query { get; set; }
+
+            public Request(FindModel query)
             {
-                Search = search;
+                Query = query;
             }
         }
-
         public class Response
         {
-            public RecentQuotesModel Content { get; set; }
+            public IEnumerable<RecentQuotesModel> RecentQuotes { get; set; }
+            //public FindResponse<IEnumerable<QuoteModel>> Data { get; set; }
             public int? TotalItems { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
@@ -35,24 +36,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
             public string ErrorDescription { get; set; }
 
         }
-       
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request,Response>
         {
-            private readonly ISortingService _sortingService;
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(ICommerceService commerceQueryService,ISortingService sortingService,IMapper mapper)
+            public Handler(ICommerceService commerceQueryService, IMapper mapper, ILogger<Handler> logger)
             {
-                _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));
-                _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
-                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _commerceQueryService = commerceQueryService;
+                _mapper = mapper;
+                _logger = logger;
             }
+
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var quotes = await _commerceQueryService.GetQuotesDetails(request).ConfigureAwait(false);
-                var quotesResponse = _mapper.Map<Response>(quotes);
-                return quotesResponse;
+                try
+                {
+                    var quoteDetails = await _commerceQueryService.FindQuoteDetails(request).ConfigureAwait(false);
+                    var getProductResponse = _mapper.Map<Response>(quoteDetails);
+                    return getProductResponse;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
+                    throw;
+                }
             }
         }
     }

@@ -16,6 +16,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
@@ -49,10 +51,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getOrderByIdResponse?.FirstOrDefault();
         }
 
-
-        public Task<string> GetQuote(string Id)
+        
+        public async Task<Models.Quote.Quote.QuoteModel> GetQuote(GetQuote.Request request)
         {
-            throw new NotImplementedException();
+            var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
+            try
+            {
+                var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, quoteURL);
+                var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+
+                var response = await apiQuoteSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<Models.Quote.Quote.QuoteModel>>().ConfigureAwait(false);
+                return getQuoteResponse.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(FindQuoteDetails)}: {nameof(CommerceService)}");
+                throw;
+            }
         }
 
         public Task<string> GetQuotes(string Id)
@@ -181,27 +199,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<Models.Quote.Quote.QuoteModel> GetQuotesDetails(GetQuotes.Request request)
+        public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(GetQuotes.Request request)
         {
-            var QuoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+            var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
             try
             {
-                using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, QuoteURL);
+                var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, quoteURL);
+                var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
 
-                var apiQuoteClient = _clientFactory.CreateClient("apiServiceClient");
+                var response = await apiQuoteSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
 
-                var Response = await apiQuoteClient.SendAsync(getQuoteRequestMessage);
-                Response.EnsureSuccessStatusCode();
-
-                var getQuoteResponse = await Response.Content.ReadAsAsync<Models.Quote.Quote.QuoteModel>();
+                var getQuoteResponse = await response.Content.ReadAsAsync<FindResponse<IEnumerable<QuoteModel>>>().ConfigureAwait(false);
                 return getQuoteResponse;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetQuotesDetails)}: {nameof(CommerceService)}");
-                throw ex;
+                _logger.LogError(ex, $"Exception at getting {nameof(FindQuoteDetails)}: {nameof(CommerceService)}");
+                throw;
             }
         }
+
+        
     }
 }
