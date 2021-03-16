@@ -1,0 +1,12 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal
+{
+    [ExcludeFromCodeCoverage]
+    public class MarginModel
+    {
+        public MarginType TypeMargin { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Percent { get; set; }
+    }
+}

@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
@@ -180,7 +181,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<IEnumerable<QuoteDetailModel>> GetQuotesDetails(GetQuotes.Request request)
+        public async Task<Models.Quote.Quote.QuoteModel> GetQuotesDetails(GetQuotes.Request request)
         {
             var QuoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -193,7 +194,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 var Response = await apiQuoteClient.SendAsync(getQuoteRequestMessage);
                 Response.EnsureSuccessStatusCode();
 
-                var getQuoteResponse = await Response.Content.ReadAsAsync<IEnumerable<QuoteDetailModel>>();
+                var getQuoteResponse = await Response.Content.ReadAsAsync<Models.Quote.Quote.QuoteModel>();
                 return getQuoteResponse;
             }
             catch (Exception ex)

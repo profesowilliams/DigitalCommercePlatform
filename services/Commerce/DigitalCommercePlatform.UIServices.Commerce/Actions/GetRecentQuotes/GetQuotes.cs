@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
 
         public class Response
         {
-            public IEnumerable<RecentQuotesModel> Content { get; set; }
+            public RecentQuotesModel Content { get; set; }
             public int? TotalItems { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
@@ -50,13 +50,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
             }
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-               
-
-                var orders = await _commerceQueryService.GetQuotesDetails(request);
-                var ordersDto = _mapper.Map<IEnumerable<Response>>(orders);
-
-                
-                return ordersDto.FirstOrDefault();
+                var quotes = await _commerceQueryService.GetQuotesDetails(request).ConfigureAwait(false);
+                var quotesResponse = _mapper.Map<Response>(quotes);
+                return quotesResponse;
             }
         }
     }
