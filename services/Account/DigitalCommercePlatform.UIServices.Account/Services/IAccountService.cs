@@ -19,8 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 {
     public interface IAccountService
     {
-        Task<User> GetUserAsync(GetUser.Request request);
-        Task<AuthenticateModel> AuthenticateUserAsync(AuthenticateUser.Request request);
         Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request);
         Task<DealsSummaryModel> GetDealsSummaryAsync(GetDealsSummary.Request request);
         Task<CartModel> GetCartDetailsAsync(GetCartRequest request);
