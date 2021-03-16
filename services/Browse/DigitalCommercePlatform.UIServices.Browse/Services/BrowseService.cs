@@ -1,8 +1,13 @@
 ﻿using DigitalCommercePlatform.UIService.Browse.Model.Customer;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,11 +19,10 @@ using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
+    [ExcludeFromCodeCoverage]
     public class BrowseService : IBrowseService
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -31,15 +35,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public BrowseService(IHttpClientFactory clientFactory,
             ICachingService cachingService,
-            ILogger<BrowseService> logger)
+            ILogger<BrowseService> logger, IOptions<AppSettings> options)
         {
             _cachingService = cachingService;
             _logger = logger;
             _clientFactory = clientFactory;
-            _coreCartURL = "http://Core-Cart/v1/";
-            _appCustomerURL = "https://eastus-sit-service.dc.tdebusiness.cloud/app-customer/v1";
-            _appCatalogURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1/";
-            _appProductURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1/";
+            _coreCartURL = options?.Value.GetSetting("Core.Cart.Url");
+            _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
+            _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
+            _appProductURL = options?.Value.GetSetting("App.Product.Url");
         }
 
         public async Task<GetHeaderResponse> GetHeader(GetHeaderRequest request)
