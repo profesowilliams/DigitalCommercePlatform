@@ -2,10 +2,8 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
-using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
@@ -38,45 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _dealsServiceUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1/";
         }
 
-        /// <summary>
-        /// Call core service once DF is done
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public async Task<AuthenticateModel> AuthenticateUserAsync(AuthenticateUser.Request request)
-        {
-
-
-            var result = new AuthenticateModel
-            {
-                IsValidUser = true,
-                Message = "Login successful",
-                User = new Models.User
-                {
-                    ID = "531517",
-                    FirstName = "RODNEY",
-                    LastName = "GICKER",
-                    Name = "RODNEY GICKER",
-                    Email = "RODNEY.GICKER@TECHDATA.COM",
-                    Phone = "727-539-7429",
-                    Customers = new List<string>()
-                    {
-                        "0038048612",
-                        "0038066560",
-                        "0038066556",
-                        "0038054253"
-                    },
-                    Roles = new List<string>()
-                    {
-                        "Administrator",
-                        "Customer Service Representative",
-                        "Marketer",
-                        "Website owner"
-                    }
-                }
-            };
-            return await Task.FromResult(result);
-        }
+       
 
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
@@ -100,39 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-        /// <summary>
-        /// return dummy data, call core service once core security service is ready
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public async Task<User> GetUserAsync(GetUser.Request request)
-        {
-            var userResponse = new User
-            {
-                ID = "531517",
-                FirstName = "RODNEY",
-                LastName = "GICKER",
-                Name = "RODNEY GICKER",
-                Email = "RODNEY.GICKER@TECHDATA.COM",
-                Phone = "727-539-7429",
-                Customers = new List<string>()
-                    {
-                        "0038048612",
-                        "0038066560",
-                        "0038066556",
-                        "0038054253"
-                    },
-                Roles = new List<string>()
-                    {
-                        "Administrator",
-                        "Customer Service Representative",
-                        "Marketer",
-                        "Website owner"
-                    }
-
-            };
-            return await Task.FromResult(userResponse);
-        }
+        
         public async Task<CartModel> GetCartDetailsAsync(GetCartDetails.GetCartRequest request)
         {
             var SaveCartDetails = new List<SavedCartLine>();
