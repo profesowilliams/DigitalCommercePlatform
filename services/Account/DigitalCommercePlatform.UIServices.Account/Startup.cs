@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Account
             });
 
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ISecurityService, SecurityService>();
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
