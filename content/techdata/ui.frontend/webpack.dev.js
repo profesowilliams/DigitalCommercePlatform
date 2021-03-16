@@ -16,107 +16,107 @@ module.exports = (env) => {
 		plugins: [
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/index.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/index.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'link-list.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/link-list.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/link-list.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser/teaser.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser/teaser.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-demo-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser-demo/teaser-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/teaser-demo/teaser-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'form-options-checkbox',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/checkbox.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/checkbox.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'form-options-drop-down',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/drop-down.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/drop-down.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'form-options-multi-select-drop-down',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/multi-select-drop-down.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/multi-select-drop-down.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'form-options-radio-button',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/radio-button.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/form-options/radio-button.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'form-options-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/form-options-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'social.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/social/social.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/social/social.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'social-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/social.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'image-demo',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/image-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'image-caption-cmp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-caption.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-caption.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'image-linked-cmp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-linked.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-linked.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'image-standard-cmp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/image/image-standard.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'carousel-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/carousel/carousel.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/carousel/carousel.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'carousel-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'carousel-demo-page.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo-page.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/carousel-demo-page.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'separator-demo.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/separator-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'separator.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/separator/separator.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'link-list-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/link-list/link-list.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-footer.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/accordion-footer.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/accordion-footer.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-footer-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-footer.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-footer.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-sample-comp',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-sample.html'),
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-sample.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-expanded-item-comp',
