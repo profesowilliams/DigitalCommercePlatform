@@ -76,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                     return new Response { IsError = true };
                 }
 
-                var user = await _securityService.GetUser(accessToken, request.ApplicationName);
+                var user = await _securityService.GetUser(accessToken, request.ApplicationName, request.TraceId, request.Language, request.Consumer);
 
                 if (user == null)
                 {

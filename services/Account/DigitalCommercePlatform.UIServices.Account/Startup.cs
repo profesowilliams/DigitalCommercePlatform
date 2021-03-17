@@ -1,4 +1,3 @@
-using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
@@ -22,22 +21,12 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
-            services.AddHeaderPropagation(options =>
-            {
-                options.Headers.Add("Authorization");
-                options.Headers.Add("Accept-Language");
-                options.Headers.Add("Site");
-                options.Headers.Add("Consumer");
-            });
-
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHeaderPropagation();
             base.ConfigureMiddleSection(app, env);
         }
 
