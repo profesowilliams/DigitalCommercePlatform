@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Infrastructure
 {
+    [ExcludeFromCodeCoverage]
     public class RequestHeaders
     {
         [FromHeader]

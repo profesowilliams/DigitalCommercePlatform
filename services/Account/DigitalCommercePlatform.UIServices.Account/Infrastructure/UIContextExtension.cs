@@ -1,7 +1,9 @@
 ﻿using DigitalFoundation.Common.Contexts;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Infrastructure
 {
+    [ExcludeFromCodeCoverage]
     public static class UIContextExtension
     {
         public static void SetContextFromRequest(this IUIContext context, RequestHeaders headers)
