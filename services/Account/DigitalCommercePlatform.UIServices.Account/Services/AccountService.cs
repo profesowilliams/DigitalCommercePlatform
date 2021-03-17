@@ -18,7 +18,6 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -26,18 +25,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     [ExcludeFromCodeCoverage]
     public class AccountService : IAccountService
     {
-        private readonly IHttpClientFactory _clientFactory;
-#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _configurationsServiceUrl;
         private readonly string _dealsServiceUrl;
         private readonly string _quoteServiceURL;
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
-#pragma warning restore CS0414
-        public AccountService(IHttpClientFactory clientFactory, IOptions<AppSettings> options, ILogger<AccountService> logger)
+
+        public AccountService(IOptions<AppSettings> options, ILogger<AccountService> logger)
         {
             _logger = logger;
-            _clientFactory = clientFactory;
             _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
             _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");

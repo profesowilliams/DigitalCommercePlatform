@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure;
-using DigitalCommercePlatform.UIServices.Account.Models;
+﻿using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Security.Messages;
-using DigitalFoundation.Common.Security.SecurityServiceClient;
-using DigitalFoundation.Common.Settings;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -64,64 +57,36 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
         public class AuthenticateUserQueryHandler : IRequestHandler<Request, Response>
         {
+            private readonly ISecurityService _securityService;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
-            private readonly IUIContext _context;
-            private readonly IMiddleTierHttpClient _middleTierHttpClient;
-            private readonly IMapper _mapper;
-            private readonly string _coreSecurityUrl;
+            
 
-            public AuthenticateUserQueryHandler(IUIContext context, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IOptions<AppSettings> appSettingsOptions,
-                 IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider)
             {
-                if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
-
-                _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
-
-                _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
-                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
-                _context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
-                {
-                    Address = _coreSecurityUrl,
-                    ClientId = "ecom.apps.web.aem.dit",
-                    ClientSecret = "mVzaL03EDRQCVqooXHxpdzhwFEa8XBKCfPToPT8WdAE4wh6QTc21RVZYOKPS0JTW",
-                    Code = request?.Code,
-                    RedirectUri = new Uri(request?.RedirectUri)
-                };
+                var accessToken = await _securityService.GetToken(request.Code, request.RedirectUri, request.TraceId, request.Language, request.Consumer);
 
-                _context.SetTraceId(request?.TraceId);
-                _context.SetLanguage(request?.Language);
-                _context.SetConsumer(request?.Consumer);
-
-                var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
-
-                if (string.IsNullOrEmpty(tokenResponseDto?.AccessToken))
+                if (string.IsNullOrEmpty(accessToken))
                 {
                     return new Response { IsError = true };
                 }
 
-                _context.SetAccessToken(tokenResponseDto.AccessToken);
+                var user = await _securityService.GetUser(accessToken, request.ApplicationName, request.TraceId, request.Language, request.Consumer);
 
-                var userResponseDto = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
-                {
-                    Address = _coreSecurityUrl,
-                    ApplicationName = request?.ApplicationName
-                });
-
-                if (userResponseDto?.User == null)
+                if (user == null)
                 {
                     return new Response { IsError = true };
                 }
 
-                _sessionIdBasedCacheProvider.Put("User", userResponseDto.User, 86400);
+                _sessionIdBasedCacheProvider.Put("User", user, 86400);
 
-                var tokenResponse = _mapper.Map<Response>(userResponseDto);
-                return tokenResponse;
+                var response = new Response { IsError = false, User = user };
+                return response;
             }
         }
     }

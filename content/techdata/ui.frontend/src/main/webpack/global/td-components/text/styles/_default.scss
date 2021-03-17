@@ -12,3 +12,12 @@
   color: get-color(text-mid-gray);
   box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue)!important;
 }
+
+.cmp-text-color {
+  &--onDark-theme {
+    color: get-color(brand-white);
+  }
+  &--onLight-theme {
+    color: get-color(text-light-gray);
+  }
+}

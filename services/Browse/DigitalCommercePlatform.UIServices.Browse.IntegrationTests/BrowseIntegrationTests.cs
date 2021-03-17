@@ -36,145 +36,145 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
 {
     public class UISetup : Setup
     {
-        public override void AddClients([NotNull]ITestHttpClientFactory factory, string serviceName)
-           => factory
-               .AddClient<ISimpleHttpClient>()
-                       .MatchContains($"AppSetting/{serviceName}")
-                       .Returns(Defaults.GetAppSettings())
-                       .MatchContains($"/Data/{serviceName}")
-                       .Returns<Dictionary<string, string>>()
-                       .MatchContains($"SiteSetting/{serviceName}")
-                       .Returns(Defaults.GetSiteSettings())
-                       .Build()
-                       .AddClient<IMiddleTierHttpClient>()
-                       .Build()
-                       .AddClient<HttpClient>(null, "apiServiceClient")
-                       .Build();
+    //    public override void AddClients([NotNull]ITestHttpClientFactory factory, string serviceName)
+    //       => factory
+    //           .AddClient<ISimpleHttpClient>()
+    //                   .MatchContains($"AppSetting/{serviceName}")
+    //                   .Returns(Defaults.GetAppSettings())
+    //                   .MatchContains($"/Data/{serviceName}")
+    //                   .Returns<Dictionary<string, string>>()
+    //                   .MatchContains($"SiteSetting/{serviceName}")
+    //                   .Returns(Defaults.GetSiteSettings())
+    //                   .Build()
+    //                   .AddClient<IMiddleTierHttpClient>()
+    //                   .Build()
+    //                   .AddClient<HttpClient>(null, "apiServiceClient")
+    //                   .Build();
 
-        public override void PostStartupConfigureServices(IServiceCollection serviceDescriptors)
-            => serviceDescriptors.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
-    }
+    //    public override void PostStartupConfigureServices(IServiceCollection serviceDescriptors)
+    //        => serviceDescriptors.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+    //}
 
-    public class UIFixture : TestServerFixture<Startup, UISetup>
-    { }
+    //public class UIFixture : TestServerFixture<Startup, UISetup>
+    //{ }
 
-    public class CatalogUIIntegrationTests : IClassFixture<UIFixture>
-    {
-        private readonly UIFixture fixture;
+    //public class CatalogUIIntegrationTests : IClassFixture<UIFixture>
+    //{
+    //    private readonly UIFixture fixture;
 
-        public CatalogUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
-        {
-            this.fixture = fixture;
-            TestOutput.Output = output;
-        }
+    //    public CatalogUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
+    //    {
+    //        this.fixture = fixture;
+    //        TestOutput.Output = output;
+    //    }
 
-        [Theory]
-        [InlineData("v1/header/get?userId=us51&customerId=cust51")]
-        public async Task GetHeader(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("app-customer")
-                .Returns(() => new List<CustomerModel>() { new CustomerModel() { Source = new DigitalFoundation.Common.MongoDb.Models.Source() } })
-                .MatchContains("app-catalog")
-                .Returns(() => new GetCatalogResponse() { CatalogHierarchies = new List<CatalogHierarchyModel>() { new CatalogHierarchyModel() } });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetHeaderResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/header/get?userId=us51&customerId=cust51")]
+    //    public async Task GetHeader(string input)
+    //    {
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("app-customer")
+    //            .Returns(() => new List<CustomerModel>() { new CustomerModel() { Source = new DigitalFoundation.Common.MongoDb.Models.Source() } })
+    //            .MatchContains("app-catalog")
+    //            .Returns(() => new GetCatalogResponse() { CatalogHierarchies = new List<CatalogHierarchyModel>() { new CatalogHierarchyModel() } });
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetHeaderResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [InlineData("v1/cart/get?userId=us51&customerId=cust51")]
-        public async Task GetCartDetails(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains(input)
-                .Returns<GetCartResponse>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetCartResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/cart/get?userId=us51&customerId=cust51")]
+    //    public async Task GetCartDetails(string input)
+    //    {
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains(input)
+    //            .Returns<GetCartResponse>();
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetCartResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [InlineData("v1/catalogue/get?id=14")]
-        public async Task GetCatalog(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("id=14")
-                .Returns(() => new GetCatalogResponse() { });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetCatalogResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/catalogue/get?id=14")]
+    //    public async Task GetCatalog(string input)
+    //    {
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("id=14")
+    //            .Returns(() => new GetCatalogResponse() { });
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetCatalogResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [InlineData("v1/customer/get?id=14")]
-        public async Task GetCustomer(string input)
-        {
-            fixture.CreateChildScope().OverrideClient<object>()
-                .MatchContains("id=14")
-                .Returns(() => new List<CustomerModel>() { new CustomerModel() });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetCustomerResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/customer/get?id=14")]
+    //    public async Task GetCustomer(string input)
+    //    {
+    //        fixture.CreateChildScope().OverrideClient<object>()
+    //            .MatchContains("id=14")
+    //            .Returns(() => new List<CustomerModel>() { new CustomerModel() });
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetCustomerResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [InlineData("v1/Product/get?id=13&details=true")]
-        public async Task GetProductWithDetails(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("id=13")
-                .Returns<GetProductDetailsResponse>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetProductDetailsResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/Product/get?id=13&details=true")]
+    //    public async Task GetProductWithDetails(string input)
+    //    {
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("id=13")
+    //            .Returns<GetProductDetailsResponse>();
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetProductDetailsResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [InlineData("v1/Product/get?id=13&details=false")]
-        public async Task GetProduct(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("id=13")
-                .Returns<GetProductSummaryResponse>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetProductSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [InlineData("v1/Product/get?id=13&details=false")]
+    //    public async Task GetProduct(string input)
+    //    {
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("id=13")
+    //            .Returns<GetProductSummaryResponse>();
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetProductSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [AutoDomainData]
-        public async Task FindProductWithDetails(FindProductModel model)
-        {
-            model.Details = true;
-            var input = "v1/product/summary".BuildQuery(model);
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("find")
-                .Returns<IEnumerable<ProductModel>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<GetProductResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [AutoDomainData]
+    //    public async Task FindProductWithDetails(FindProductModel model)
+    //    {
+    //        model.Details = true;
+    //        var input = "v1/product/summary".BuildQuery(model);
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("find")
+    //            .Returns<IEnumerable<ProductModel>>();
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<GetProductResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
 
-        [Theory]
-        [AutoDomainData]
-        public async Task FindProduct(FindProductModel model)
-        {
-            model.Details = false;
-            var input = "v1/product/summary".BuildQuery(model);
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("find")
-                .Returns<IEnumerable<SummaryModel>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<FindSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
+    //    [Theory]
+    //    [AutoDomainData]
+    //    public async Task FindProduct(FindProductModel model)
+    //    {
+    //        model.Details = false;
+    //        var input = "v1/product/summary".BuildQuery(model);
+    //        using var scope = fixture.CreateChildScope();
+    //        scope.OverrideClient<object>()
+    //            .MatchContains("find")
+    //            .Returns<IEnumerable<SummaryModel>>();
+    //        var client = fixture.CreateClient().SetDefaultHeaders();
+    //        var response = await client.RunTest<FindSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+    //        response.Should().NotBeNull();
+    //    }
     }
 }
