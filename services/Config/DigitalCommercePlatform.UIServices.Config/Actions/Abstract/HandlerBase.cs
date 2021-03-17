@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
 {
+    [ExcludeFromCodeCoverage]
     public abstract class HandlerBase<T> where T : class
     {
         protected readonly ILogger _logger;
