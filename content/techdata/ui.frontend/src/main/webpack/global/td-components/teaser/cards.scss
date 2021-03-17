@@ -66,13 +66,18 @@
 				margin-bottom: rem(16px);
 				word-wrap: break-word;
 				line-height: rem(19px);
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 7;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 			}
 		}
 	}
 	&__card-image--rounded {
 		padding: rem(137px) rem(9px) rem(20px);
     .cmp-teaser{
-      min-height: rem(400px);
+      min-height: rem(410px);
     }
     .cmp-teaser__description{
       text-align: center;
