@@ -19,10 +19,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<QuoteModel, GetQuote.Response>()
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src));
 
-       
+            CreateMap<QuoteModel, RecentQuotesModel>()
+             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
+             //.ForMember(dest => dest.Reference, opt => opt.MapFrom(src => src.VendorReference))//Need to have reference
+             //.ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorReference))
+             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+             .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
+             .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
+             //.ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src))//Need to have reference
+             //.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src))//Need to have reference
+             //.ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src))//Need to have reference
+             //.ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => src))//Need to have reference
+             //.ForMember(dest => dest.CanUpdate, opt => opt.MapFrom(src => src))
+             //.ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => src))
+             ;
             CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotes.Response>()
                  .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src.Data))
-                //.ForPath(dest => dest.Data.Id, opt => opt.MapFrom(src => src.Data))
                 ;
             
         }
