@@ -20,8 +20,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src));
 
        
-            CreateMap< Models.Quote.FindResponse<IEnumerable<QuoteModel>>, GetQuotes.Response>()
-                 .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src))
+            CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotes.Response>()
+                 .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src.Data))
                 //.ForPath(dest => dest.Data.Id, opt => opt.MapFrom(src => src.Data))
                 ;
             

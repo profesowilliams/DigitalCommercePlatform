@@ -63,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 var response = await apiQuoteSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
-                var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<Models.Quote.Quote.QuoteModel>>().ConfigureAwait(false);
+                var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<QuoteModel>>().ConfigureAwait(false);
                 if (getQuoteResponse != null)
                     return getQuoteResponse.FirstOrDefault();
                 else
@@ -216,7 +216,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 response.EnsureSuccessStatusCode();
 
                 var getQuoteResponse = await response.Content.ReadAsAsync<FindResponse<IEnumerable<QuoteModel>>>().ConfigureAwait(false);
-                return getQuoteResponse;
+                return getQuoteResponse;//.FirstOrDefault();
             }
             catch (Exception ex)
             {

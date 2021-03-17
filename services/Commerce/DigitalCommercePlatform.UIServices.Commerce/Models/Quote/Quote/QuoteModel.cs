@@ -7,10 +7,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
 {
    [ExcludeFromCodeCoverage]
 
-    public class QuoteFindModel
-    {
-        public QuoteModel QuoteModel { get; set; }
-    }
+    //public class QuoteFindModel
+    //{
+    //    public QuoteModel QuoteModel { get; set; }
+    //}
 
 
     public class QuoteModel 

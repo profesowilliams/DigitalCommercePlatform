@@ -7,6 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
 {
     public class FindResponse<T>
     {
-        public T QuoteModel { get; set; }
+        public long? Count { get; set; }
+        public T Data { get; set; }
     }
 }
