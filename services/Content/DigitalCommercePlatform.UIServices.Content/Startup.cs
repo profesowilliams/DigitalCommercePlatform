@@ -21,23 +21,11 @@ namespace DigitalCommercePlatform.UIServices.Content
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-
-
-            services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
-            services.AddHeaderPropagation(options =>
-            {
-                options.Headers.Add("Authorization");
-                options.Headers.Add("Accept-Language");
-                options.Headers.Add("Site");
-                options.Headers.Add("Consumer");
-            });
-
             services.AddTransient<IContentService, ContentService>();           
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHeaderPropagation();
             base.ConfigureMiddleSection(app, env);
         }
 

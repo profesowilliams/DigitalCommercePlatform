@@ -43,17 +43,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 RedirectUri = new Uri(redirectUri)
             };
 
-            _context.SetTraceId(traceId);
-            _context.SetLanguage(language);
-            _context.SetConsumer(consumer);
+            _context.SetContext(consumer, language, traceId);
+            
 
             var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
             return tokenResponseDto?.AccessToken;
         }
 
-        public async Task<User> GetUser(string accessToken,string applicationName)
+        public async Task<User> GetUser(string accessToken,string applicationName, string traceId, string language, string consumer)
         {
-            _context.SetAccessToken(accessToken);
+            _context.SetContext(consumer, language, traceId, accessToken);
+
 
             var userResponseDto = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
             {

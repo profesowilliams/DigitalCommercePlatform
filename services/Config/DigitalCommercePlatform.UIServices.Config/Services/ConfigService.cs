@@ -15,14 +15,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public class ConfigService : IConfigService
     {
         private static readonly Random getrandom = new Random();
-        private readonly IHttpClientFactory _clientFactory;
         //private readonly string _appOrderServiceUrl;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appQuoteServiceUrl;
 #pragma warning restore CS0414
-        public ConfigService(IHttpClientFactory clientFactory, IOptions<AppSettings> options)
+        public ConfigService(IOptions<AppSettings> options)
         {
-            _clientFactory = clientFactory;
             //_appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
         }
