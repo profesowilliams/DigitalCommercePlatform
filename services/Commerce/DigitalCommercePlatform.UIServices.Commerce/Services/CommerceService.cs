@@ -64,7 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 response.EnsureSuccessStatusCode();
 
                 var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<Models.Quote.Quote.QuoteModel>>().ConfigureAwait(false);
-                return getQuoteResponse.FirstOrDefault();
+                if (getQuoteResponse != null)
+                    return getQuoteResponse.FirstOrDefault();
+                else
+                    return null; // fix this
+
             }
             catch (Exception ex)
             {
