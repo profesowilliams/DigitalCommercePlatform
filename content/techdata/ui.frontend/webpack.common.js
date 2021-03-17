@@ -23,9 +23,6 @@ module.exports = {
     },
     output: {
         filename: (chunkData) => {
-            console.log("chunk data");
-            console.log(chunkData);
-            console.log(chunkData.chunk.name);
             return `clientlib-site-${chunkData.chunk.name}/[name].js`;
             // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
         },

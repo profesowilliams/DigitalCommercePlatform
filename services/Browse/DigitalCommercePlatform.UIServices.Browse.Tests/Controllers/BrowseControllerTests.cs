@@ -36,8 +36,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetCartDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetCartHandler.GetCartResponse expected)
         {
             mockMediator.Setup(x => x.Send(
@@ -53,8 +53,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetCustomerDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetCustomerHandler.GetCustomerResponse expected)
         {
             mockMediator.Setup(x => x.Send(
@@ -70,8 +70,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetCatalogDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetCatalogHandler.GetCatalogResponse expected)
         {
             mockMediator.Setup(x => x.Send(
@@ -87,8 +87,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetHeaderDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetHeaderHandler.GetHeaderResponse expected)
         {
             mockMediator.Setup(x => x.Send(
@@ -104,8 +104,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task FindProductDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             FindProductHandler.GetProductResponse expected,
             FindProductModel model)
         {
@@ -122,8 +122,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task FindSummaryDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             FindSummaryHandler.FindSummaryResponse expected,
             FindProductModel model)
         {
@@ -140,8 +140,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetProductDetails(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetProductDetailsHandler.GetProductDetailsResponse expected)
         {
             var data = new List<string> { "123" };
@@ -159,8 +159,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         [Theory]
         [AutoDomainData]
         public async Task GetProductSummary(
-            [Frozen]Mock<IMediator> mockMediator,
-            [Greedy]BrowseController controller,
+            [Frozen] Mock<IMediator> mockMediator,
+            [Greedy] BrowseController controller,
             GetProductSummaryHandler.GetProductSummaryResponse expected)
         {
             var data = new List<string> { "123" };
