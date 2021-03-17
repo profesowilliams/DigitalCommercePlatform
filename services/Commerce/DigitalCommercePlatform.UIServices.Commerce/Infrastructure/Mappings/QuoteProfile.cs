@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 using System.Collections.Generic;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
@@ -21,8 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<QuoteModel, RecentQuotesModel>()
              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
-             //.ForMember(dest => dest.Reference, opt => opt.MapFrom(src => src.VendorReference))//Need to have reference
-             //.ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorReference))
+             .ForMember(dest => dest.Reference, opt => opt.MapFrom(src => src.VendorReference.FirstOrDefault().Value))//Need to have reference
+             .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorReference.FirstOrDefault().Type))
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
              .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
@@ -34,8 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              //.ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => src))
              ;
             CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotes.Response>()
-                 .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src.Data))
-                ;
+                 .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src.Data));
             
         }
 

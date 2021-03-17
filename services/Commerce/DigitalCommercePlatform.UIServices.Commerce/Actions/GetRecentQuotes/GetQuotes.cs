@@ -27,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
         public class Response
         {
             public IEnumerable<RecentQuotesModel> RecentQuotes { get; set; }
-            //public QuoteModel Data { get; set; }
             public int? TotalItems { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }

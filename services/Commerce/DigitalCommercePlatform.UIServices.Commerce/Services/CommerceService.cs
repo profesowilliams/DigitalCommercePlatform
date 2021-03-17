@@ -216,7 +216,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 response.EnsureSuccessStatusCode();
 
                 var getQuoteResponse = await response.Content.ReadAsAsync<FindResponse<IEnumerable<QuoteModel>>>().ConfigureAwait(false);
-                return getQuoteResponse;//.FirstOrDefault();
+                return getQuoteResponse;
             }
             catch (Exception ex)
             {
