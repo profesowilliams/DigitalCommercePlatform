@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure;
-using DigitalCommercePlatform.UIServices.Account.Models;
+﻿using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
 using DigitalFoundation.Common.Settings;
@@ -19,9 +18,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _coreSecurityUrl;
         private readonly IUIContext _context;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly IMapper _mapper;
 
-        public SecurityService(IOptions<AppSettings> appSettingsOptions, IUIContext context, IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+        public SecurityService(IOptions<AppSettings> appSettingsOptions, IUIContext context, IMiddleTierHttpClient middleTierHttpClient)
         {
             if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
             _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? 
@@ -29,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<string> GetToken(string code, string redirectUri, string traceId, string language, string consumer)
@@ -61,9 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 ApplicationName = applicationName
             });
 
-            var user = _mapper.Map<User>(userResponseDto?.User);
-
-            return user;
+            return userResponseDto?.User;
         }
     }
 }

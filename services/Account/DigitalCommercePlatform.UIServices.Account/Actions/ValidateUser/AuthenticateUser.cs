@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
 using FluentValidation;
@@ -59,12 +60,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
         {
             private readonly ISecurityService _securityService;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
-            
+            private readonly IMapper _mapper;
 
-            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider)
+
+
+            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper)
             {
                 _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -85,7 +89,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 _sessionIdBasedCacheProvider.Put("User", user, 86400);
 
-                var response = new Response { IsError = false, User = user };
+                var userDto = _mapper.Map<User>(user);
+
+                var response = new Response { IsError = false, User = userDto };
                 return response;
             }
         }
