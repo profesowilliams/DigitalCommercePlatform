@@ -59,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("quotes/Find")]
-        public async Task<IActionResult> FindProduct([FromQuery] FindModel query)
+        public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)
         {
            
                 var response = await Mediator.Send(new FindQuotesForGrid.Request(query)).ConfigureAwait(false);
