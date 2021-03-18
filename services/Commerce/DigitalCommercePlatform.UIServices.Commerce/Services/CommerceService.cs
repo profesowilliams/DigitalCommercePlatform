@@ -18,6 +18,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {

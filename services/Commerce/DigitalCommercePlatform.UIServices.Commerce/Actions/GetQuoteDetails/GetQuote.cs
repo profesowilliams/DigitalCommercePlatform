@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Client;
@@ -24,10 +25,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
 
+            //public RequestHeaders Headers { get; set; }
+
             public Request(IReadOnlyCollection<string> id, bool details)
             {
                 Id = id;
                 Details = details;
+              // Headers = new RequestHeaders();
             }
         }
 
