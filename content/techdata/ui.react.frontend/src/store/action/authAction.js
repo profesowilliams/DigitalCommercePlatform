@@ -8,9 +8,11 @@ export const signInAsynAction = () => {
 		axios
 			.get(signInUrl)
 			.then((response) => {
-				console.log(response.data.user);
-				if (response.data.payload.WithUserData) {
+				// console.log(response.data.user);
+				console.log("response=====>", response);
+				if (!response.data.isError) {
 					dispatch(signInAction(response.data.user));
+					localStorage.setItem('user', JSON.stringify(response.data.user));
 				} else {
 					dispatch(erroWithCode());
 				}
