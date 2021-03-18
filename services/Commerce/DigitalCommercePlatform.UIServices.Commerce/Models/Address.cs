@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DigitalCommercePlatform.UIServices.Commerce.Models
+﻿namespace DigitalCommercePlatform.UIServices.Commerce.Models
 {
     public class Address
     {
