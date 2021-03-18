@@ -22,4 +22,13 @@
     margin: 0 auto !important;
     float: unset !important;
   }
+
+  &--fixed > .cmp-container {
+    margin: 0 auto;
+    max-width: 73.12rem;
+    overflow: hidden;
+    @media (min-width: 1024px) {
+      margin: 0 1.25rem;
+    }
+  }
 }
