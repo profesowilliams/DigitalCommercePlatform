@@ -61,19 +61,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
                 {
                     var getQuoteResponse = new Response();
                     var productDetails = await _commerceRepositoryServices.GetQuote(request).ConfigureAwait(false);
-                    if (productDetails == null)
+                    if (productDetails != null)
                     {
-                        getQuoteResponse.Details = null;
-                        getQuoteResponse.ErrorCode = "5000";
-                        getQuoteResponse.IsError = true;
-                        getQuoteResponse.ErrorDescription = "No records found"; // fix this
-                    }
-                    else {
 
                         getQuoteResponse = _mapper.Map<Response>(productDetails);
                         getQuoteResponse.IsError = false;
-                        getQuoteResponse.ErrorCode = string.Empty;
-
+                        getQuoteResponse.ErrorCode = "200";
+                    }
+                    else 
+                    {
+                        getQuoteResponse.Details = null;
+                        getQuoteResponse.ErrorCode = "400";
+                        getQuoteResponse.IsError = true;
+                        getQuoteResponse.ErrorDescription = "Bad Request"; 
                     }
                     return getQuoteResponse;
                 }
