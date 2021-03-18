@@ -1,7 +1,7 @@
 {
-    "name": "kf-react",
+    "name": "techdata-react",
     "version": "1.0.0",
-    "description": "KF React application",
+    "description": "TechData React application",
     "main": "index.js",
     "scripts": {
         "dev": "webpack -d --env dev --config ./webpack.dev.js && clientlib --verbose",
@@ -10,7 +10,7 @@
     },
     "keywords": [],
     "author": {
-        "name": "Kohler - Adobe"
+        "name": "Techdata"
     },
     "browserslist": [
         "last 1 version",
