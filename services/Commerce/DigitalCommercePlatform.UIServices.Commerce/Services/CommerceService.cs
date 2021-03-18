@@ -1,10 +1,11 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
@@ -16,11 +17,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Text.Json;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
@@ -206,7 +202,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(GetQuotes.Request request)
+        public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(FindQuotesForGrid.Request request)
         {
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 

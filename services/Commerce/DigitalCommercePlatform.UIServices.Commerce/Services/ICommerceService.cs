@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<OrderModel> GetOrderByIdAsync(string id);
         Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters);
         Task<QuoteDetailModel> GetCartDetailsInQuote(Request request);
-        Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(GetQuotes.Request request);
+        Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(FindQuotesForGrid.Request request);
 
     }
 }

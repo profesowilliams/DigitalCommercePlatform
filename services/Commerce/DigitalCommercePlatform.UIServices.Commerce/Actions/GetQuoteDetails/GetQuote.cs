@@ -1,23 +1,18 @@
 ﻿using AutoMapper;
-using Azure;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Client;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetQuote
     {
         public class Request : IRequest<Response>

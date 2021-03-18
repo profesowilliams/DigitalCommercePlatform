@@ -11,9 +11,11 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
@@ -60,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public async Task<IActionResult> FindProduct([FromQuery] FindModel query)
         {
            
-                var response = await Mediator.Send(new GetQuotes.Request(query)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindQuotesForGrid.Request(query)).ConfigureAwait(false);
                 return Ok(response);
         }
     }

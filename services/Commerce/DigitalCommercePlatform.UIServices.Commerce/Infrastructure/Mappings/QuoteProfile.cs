@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.CanUpdate, opt => opt.MapFrom(src => string.Join( "","true")))
              .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join( "","True")))
              ;
-            CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotes.Response>()
+            CreateMap<FindResponse<IEnumerable<QuoteModel>>, FindQuotesForGrid.Response>()
                  .ForMember(dest => dest.RecentQuotes, opt => opt.MapFrom(src => src.Data));
             
         }
