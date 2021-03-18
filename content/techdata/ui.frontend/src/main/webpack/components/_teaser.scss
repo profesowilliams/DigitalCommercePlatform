@@ -263,6 +263,7 @@
             padding-bottom: 1.5rem;
             font-size: 1.3125rem;
             margin-top: 0;
+            min-height: 110px;
 
             .cmp-teaser__title-link {
                 text-decoration: none;
@@ -298,6 +299,11 @@
                 margin-bottom: 1rem;
                 word-wrap: break-word;
                 line-height: 1.188rem;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 7;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
         }
     }

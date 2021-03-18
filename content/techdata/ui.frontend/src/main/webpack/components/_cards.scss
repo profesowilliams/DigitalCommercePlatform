@@ -2,7 +2,6 @@
 .dp-teaser-big {
   &__card {
     padding: 3.18rem 0.5rem;
-
     .cmp-teaser {
       position: relative;
       display: flex;
@@ -66,6 +65,11 @@
         margin-bottom:1rem;
         word-wrap: break-word;
         line-height: 1.18rem;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }
