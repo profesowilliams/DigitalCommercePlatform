@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models;
+﻿using DigitalFoundation.Common.Models;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
