@@ -5,7 +5,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
     public class RecentQuotesModel
     {
         public string Id { get; set; }
-        public string Reference { get; set; }
+        public string QuoteReference { get; set; }
         public string Vendor { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Expires { get; set; }
