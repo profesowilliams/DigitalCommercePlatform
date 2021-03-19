@@ -84,12 +84,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public async Task<DealsDetailModel> GetDealDetails(Models.Deals.FindModel request)
         {
-
-            var material = new MaterialInformation();
             var lstMaterials = new List<MaterialInformation>();
             for (int i = 1; i < 16; i++)
             {
-                material = new MaterialInformation();
+                MaterialInformation material = new MaterialInformation();
                 material.Allowance = i % 2 == 0 ? GetRandomNumber(50, 10000).ToString() + ".65" : GetRandomNumber(10, 40).ToString() + ".36";
                 material.AllowanceType = i % 2 == 0 ? "% OFF LIST PRICE" : i % 5 == 0 ? "$ OFF LIST PRICE" : "";
                 material.MaximumQuantityPerCustomer = GetRandomNumber(50, 1000);
