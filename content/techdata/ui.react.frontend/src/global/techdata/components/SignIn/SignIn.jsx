@@ -7,7 +7,6 @@ const FA = require('react-fontawesome');
 const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState({});
-	const [showIcon, setShoeIcon] = useState(true);
 	const [showSignIN, setShowSignIN] = useState(false);
 	const {auth} = useSelector((state) => {
 		return state;
@@ -19,50 +18,33 @@ const SignIn = (props) => {
 		cmpProps = JSON.parse(props.componentProp);
 	}
 
-	//useDispatch({type: 'SIGN_IN', payload: 'DATA'});
-
 	useEffect(() => {
-		console.log("auth------->", auth);
 		auth ? setUser(auth.user) : null;
-		console.log(user);
 	}, [auth]);
 
 	useEffect(() => {
 		localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
-		localStorage.setItem('signout', 'https://www.google.com');
-		routeChangeNew();
+		routeChange();
 	}, []);
 
-	useEffect(() => {
-
+	const showIcon = () => {
 		let search = window.location.search.split("=")[1];
 		let params = new URLSearchParams(search);
 		let foo = params.get('query');
-		// debugger;
 		if(search == '1234567890000'){
-setShoeIcon(true);
-			}
-			else{
-				setShoeIcon(false);
-			}
+			return <i className='fas fa-user-alt'></i>
+		}
+		else{
+			return <i className='far fa-user'></i>
+		}
+	}
 
-	}, []);
-
-	const onSignIn = () => {
-		localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
-		localStorage.setItem('signout', 'https://www.google.com');
-		dispatch(signInAsynAction());
-		setShowSignIN(true);
-	};
-
-	const routeChange = () =>{
+	const onSignIn = () =>{
 		let search = window.location.search.split("=")[1];
 		let params = new URLSearchParams(search);
 		let foo = params.get('query');
-		// debugger;
 		if(search == '1234567890000'){
 			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
-			localStorage.setItem('signout', 'https://www.google.com');
 			dispatch(signInAsynAction());
 			setShowSignIN(true);
 			document.querySelector('.cmp-sign-in-list').classList.toggle('active');
@@ -73,19 +55,16 @@ setShoeIcon(true);
   }
 
 
-	const routeChangeNew= () =>{
+	const routeChange= () =>{
 		let search = window.location.search.split("=")[1];
 		let params = new URLSearchParams(search);
 		let foo = params.get('query');
-		// debugger;
 		if(search == '1234567890000'){
 			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
-			localStorage.setItem('signout', 'https://www.google.com');
 			dispatch(signInAsynAction());
 			setShowSignIN(true);
 			}
   }
-
 
 	const onSignOut = () => {
 		// clearing out local storage
@@ -95,13 +74,13 @@ setShoeIcon(true);
 		setShowSignIN(false);
 		window.location.href="http://localhost:8080/signin"
 	};
+
 	return (
 		<div className='cmp-sign-in'>
 			<div className='cmp-sign-in-option'>
-				<button className='cmp-sign-in-button' onClick={routeChange}>
-					{showIcon? <i class="fas fa-user-alt"></i> : <i class="far fa-user"></i>}
+				<button className='cmp-sign-in-button' onClick={onSignIn}>
+					{showIcon()}
 					{user && showSignIN ? (user?.firstName) : 'Sign In'}
-					{/* {user && showSignIN ? <i className="fab fa-freebsd"></i> : <i className="far fa-grin-alt"></i>} */}
 				</button>
 				{user && showSignIN ? (
 					<div className='cmp-sign-in-list'>
