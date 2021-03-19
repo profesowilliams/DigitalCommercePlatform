@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1600, initial-scale=1.0">
+    <title>Express JS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <form name="passForm" id="passForm" method="post" action="/auth?redirect=http://localhost:3000/success">
+        <div class="row">
+            <h1>Login</h1>
+        </div>
+        <div class="row">
+            <label for="userid">Userid</label>
+            <input type="text" name="userid" id="userid" value="bru">
+        </div>
+
+        </div>
+        <div class="container">
+
+        <div class="container">
+            <div class="row row-1">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="pass">
+            </div>
+        </div>
+            <div class="container">
+                <div class="row row-1">
+                    <input type="submit"    id="submitBtn" />
+
+                </div>
+            </div>
+    </form>
+
+    <script src="js/main.js"></script>    
+</body>
+</html>
