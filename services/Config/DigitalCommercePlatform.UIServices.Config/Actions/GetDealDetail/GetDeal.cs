@@ -1,0 +1,59 @@
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Services;
+using MediatR;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
+{
+    [ExcludeFromCodeCoverage]
+    public sealed class GetDeal
+    {
+        public class Request : IRequest<Response>
+        {
+            public FindModel Criteria { get; set; }
+        }
+
+        public class Response
+        {
+            public DealsDetailModel Content { get; }
+            public virtual bool IsError { get; set; }
+            public string ErrorCode { get; set; }
+            public string ErrorDescription { get; set; }
+            public Response(DealsDetailModel records)
+            {
+                Content = records;
+            }
+        }
+
+        public class GetDealHandler : IRequestHandler<Request, Response>
+        {
+            private readonly IConfigService _configServiceQueryService;
+            private readonly IMapper _mapper;
+
+            public GetDealHandler(IConfigService commerceQueryService, IMapper mapper)
+            {
+                _configServiceQueryService = commerceQueryService;
+                _mapper = mapper;
+            }
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            {
+                if (request.Criteria.DealId != null)
+                {
+                    DealsDetailModel response = await _configServiceQueryService.GetDealDetails(request.Criteria);
+                    return new Response(response);
+                }
+                else
+                {
+                    var response = new Response(null);
+                    response.ErrorCode = "possible_invalid_code"; // fix this
+                    response.IsError = true;
+                    return response;
+                }
+
+            }
+        }
+    }
+}

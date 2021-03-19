@@ -1,9 +1,11 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -46,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         }
 
         [Theory]
-        [AutoMoqData]
+        [AutoDomainData]
         public async Task GetConfigurations(GetConfigurations.Response expected)
         {
 
@@ -70,7 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         }
 
         [Theory]
-        [AutoMoqData]
+        [AutoDomainData]
         public async Task GetDeals(GetDeals.Response expected)
         {
 
@@ -92,9 +94,33 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             result.Should().NotBeNull();
         }
-        
+
         [Theory]
-        [AutoMoqData]
+        [AutoDomainData]
+        public async Task GetDeal(GetDeal.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeal.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var criteria = new Models.Deals.FindModel
+            {
+                CustomerId = "00380000",
+                UserId = "50546",
+                SortBy = "TDPartNumber",
+                //SortDirection = "createdOn",
+            };
+
+            var result = await controller.GetDeal(criteria).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
         {
 
@@ -110,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().NotBeNull();
         }
         [Theory]
-        [AutoMoqData]
+        [AutoDomainData]
         public async Task GetDeals_BadRequest(GetDeals.Response expected)
         {
 
@@ -122,6 +148,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetDeals(null).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetDeal_BadRequest(GetDeal.Response expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetDeal.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetDeal(null).ConfigureAwait(false);
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
 
