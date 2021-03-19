@@ -8,6 +8,7 @@ const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState({});
 	const [showSignIN, setShowSignIN] = useState(false);
+	const configDataAEM = JSON.parse(props.componentProp);
 	const {auth} = useSelector((state) => {
 		return state;
 	});
@@ -80,7 +81,7 @@ const SignIn = (props) => {
 			<div className='cmp-sign-in-option'>
 				<button className='cmp-sign-in-button' onClick={onSignIn}>
 					{showIcon()}
-					{user && showSignIN ? (user?.firstName) : 'Sign In'}
+					{user && showSignIN ? (user?.firstName) : configDataAEM.dataLabel}
 				</button>
 				{user && showSignIN ? (
 					<div className='cmp-sign-in-list'>
