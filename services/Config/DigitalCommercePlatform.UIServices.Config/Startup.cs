@@ -24,10 +24,10 @@ namespace DigitalCommercePlatform.UIServices.Config
             services.AddTransient<IConfigService, ConfigService>();
         }
 
-        public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            base.ConfigureMiddleSection(app, env);
-        }
+        //public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
+        //{
+        //    base.ConfigureMiddleSection(app, env);
+        //}
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }

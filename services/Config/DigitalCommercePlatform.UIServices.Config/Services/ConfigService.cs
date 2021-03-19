@@ -107,6 +107,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             objResponse.VendorBidNumber = "3072898";
             objResponse.Reference = "0002989968";
             objResponse.ReferenceNumber = "028";
+            objResponse.TotalResultCount = lstMaterials.Count();
             objResponse.Prodcuts = lstMaterials;
             objResponse.InvalidTDPartNumbers = null;
             
