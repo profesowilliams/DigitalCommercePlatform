@@ -43,8 +43,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 if (request.Criteria != null)
                 {
-                    RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
-                    return new Response(response);
+                    RecentConfigurationsModel configurations = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                    var response = new Response(configurations);
+                    response.ErrorCode = ""; // fix this
+                    response.IsError = false;
+                    return response;                    
                 }
                 else
                 {

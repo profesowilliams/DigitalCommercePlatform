@@ -42,8 +42,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             {
                 if (request.Criteria.DealId != null)
                 {
-                    DealsDetailModel response = await _configServiceQueryService.GetDealDetails(request.Criteria);
-                    return new Response(response);
+                    DealsDetailModel deal = await _configServiceQueryService.GetDealDetails(request.Criteria);                   
+                    var response = new Response(deal);
+                    response.ErrorCode = ""; // fix this
+                    response.IsError = false;
+                    return response;
                 }
                 else
                 {

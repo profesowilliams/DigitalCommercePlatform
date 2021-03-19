@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
             IContext context,
-            IOptions<AppSettings> options,           
+            IOptions<AppSettings> options,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
@@ -33,14 +33,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError || response.ErrorCode == "possible_invalid_code")
+            if (response.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
-            else
-            {
-                return Ok(response);
-            }
+
+            return Ok(response);
+
         }
         [HttpPost]
         [Route("deals/find")]
@@ -48,14 +47,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError || response.ErrorCode == "possible_invalid_code")
+            if (response.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
-            else
-            {
-                return Ok(response);
-            }
+
+            return Ok(response);
+
         }
 
         [HttpPost]
@@ -64,14 +62,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeal.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError || response.ErrorCode == "possible_invalid_code")
+            if (response.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
-            else
-            {
-                return Ok(response);
-            }
+
+            return Ok(response);
+
         }
     }
 }

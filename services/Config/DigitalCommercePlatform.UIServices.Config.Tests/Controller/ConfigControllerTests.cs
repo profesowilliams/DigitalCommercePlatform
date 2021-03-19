@@ -135,7 +135,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                 CustomerId = "00380000",
                 UserId = "50546",
                 SortBy = "createdOn",
-                //SortDirection = "createdOn",
+                SortDirection = "desc",
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                 CustomerId = "00380000",
                 UserId = "50546",
                 SortBy = "TDPartNumber",
-                //SortDirection = "createdOn",
+                SortDirection = "desc",
             };
 
             var result = await controller.GetDeal(criteria).ConfigureAwait(false);
@@ -183,7 +183,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                 CustomerId = "00380000",
                 UserId = "50546",
                 SortBy = "TDPartNumber",
-                //SortDirection = "createdOn",
+                SortDirection = "desc",
             };
 
             var result = await controller.GetDeal(criteria).ConfigureAwait(false);
