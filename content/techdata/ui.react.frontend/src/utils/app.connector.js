@@ -38,7 +38,7 @@ class AppConnector {
 }
 
 window.initConfiguration = async () => {
-	console.log('inside initConfig');
+	// console.log('inside initConfig');
 	/* Get the Configuration from backend on initial load */
 	// await initConfig();
 

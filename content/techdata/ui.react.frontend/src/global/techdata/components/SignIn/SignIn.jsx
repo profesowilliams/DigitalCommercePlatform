@@ -6,98 +6,76 @@ const FA = require('react-fontawesome');
 
 const SignIn = (props) => {
 	const dispatch = useDispatch();
-	const [user, setUser] = useState({undefined});
+	const [user, setUser] = useState(null);
 	const [showSignIN, setShowSignIN] = useState(false);
 	const configDataAEM = JSON.parse(props.componentProp);
 	const {auth} = useSelector((state) => {
 		return state;
 	});
 	const codeQueryParam = "code";
-	const redirectQueryParam = "redirect";
+	// const redirectQueryParam = "redirect";
 
-	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.["authenticationURL"], configDataAEM.["uiServiceEndPoint"],  configDataAEM.["clientId"]];
+	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.authenticationURL, configDataAEM.uiServiceEndPoint, configDataAEM.clientId];
 
-	console.log(" authUrl = " + authUrl);
-	console.log("uiServiceEndPoint = "+ uiServiceEndPoint);
-	console.log("clientId = "+ clientId);
+	// console.log(" authUrl = " + authUrl);
+	// console.log("uiServiceEndPoint = "+ uiServiceEndPoint);
+	// console.log("clientId = "+ clientId);
 
 
 	useEffect(() => {
-		console.log("auth useeffect");
-		setUser(localStorage.getItem("user"));
+		setUser(JSON.parse(localStorage.getItem("user")));
 	}, [auth]);
 
 	useEffect(() => {
-		console.log("signin url  useeffect");
 		localStorage.setItem('signin', uiServiceEndPoint);
 		routeChange();
 	}, []);
 
 
 	const isAlreadySignedIn = () => {
-		console.log("inside isAlreadySignedIn")
-		if (user === undefined)
+		if (user === undefined || user === null)
 		{
-			console.log("!user === undefined");
 			return false;
 		}else {
-			console.log(user);
-			console.log("returning Object.keys(user).length === 0");
-			console.log(Object.keys(user).length === 0);
-			return !(Object.keys(user).length === 0);
+			console.log("6");
 		}
 	}
 
 	const showIcon = () => {
-
-		let search = window.location.search.split("=")[1];
-		let params = new URLSearchParams(search);
-		let code = params.get(codeQueryParam);
-
-		if (code) {
-		//	if the code is present, we need to sign-in
-			localStorage.setItem('signin', uiServiceEndPoint);
-			dispatch(signInAsynAction());
-			setShowSignIN(true);
-		} else if (isAlreadySignedIn())
-		{
-			setShowSignIN(true);
-			console.log("show fas fa-user-alt")
-			return <i className='fas fa-user-alt'></i>
-		}else{
-			console.log("show fas fa-user")
-			return <i className='far fa-user'></i>
+		if(window.location.search){
+			let search = window.location.search.split("=")[1];
+			let getCode = search.split("&")[0];
+			let params = new URLSearchParams(getCode);
+				if (getCode) {
+				return <i className='fas fa-user-alt'></i>
+				}
 		}
-
+		else{
+		return <i className='far fa-user'></i>
+		}
 	}
 
 	const constructSignInURL = () => {
 		let signInURL = "";
 		signInURL = signInURL + uiServiceEndPoint;
 		return signInURL;
-
 	}
 
 	const onSignIn = () =>{
-		console.log("first line in sign-in")
 		let redirectAuthUrl = constructAuthUrl();
-		if (isAlreadySignedIn()) {
+		if (user !== null) {
 			document.querySelector('.cmp-sign-in-list').classList.toggle('active');
 		} else {
-			console.log(constructAuthUrl());
 			window.location.href= redirectAuthUrl;
 		}
-
 	}
-
 
 	const constructAuthUrl = () =>{
 		let authUrlLocal = authUrl + "?redirect_uri=" + window.location.href;
 		authUrlLocal = authUrlLocal + "&client_id=" + clientId;
 		authUrlLocal = authUrlLocal + "&response_type=code";
 		authUrlLocal = authUrlLocal + "&pfidpadapterId=ShieldBaseAuthnAdaptor";
-		console.log("auth Url " + authUrlLocal);
-
+		// console.log("auth Url " + authUrlLocal);
 		return authUrlLocal;
 
 	}
@@ -126,9 +104,10 @@ const SignIn = (props) => {
 			<div className='cmp-sign-in-option'>
 				<button className='cmp-sign-in-button' onClick={onSignIn}>
 					{showIcon()}
-					{user && showSignIN ? (user?.firstName) : configDataAEM.label}
+					{/* <i className={`  ${user !== null ? 'fas fa-user-alt': 'far fa-user' } `}></i> */}
+					{user ? (user?.firstName) : configDataAEM.label}
 				</button>
-				{user && showSignIN ? (
+				{user ? (
 					<div className='cmp-sign-in-list'>
 						<p>
 							<span>MY EC ID: {(user?.id)}</span>
