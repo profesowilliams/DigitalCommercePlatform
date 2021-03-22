@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 {
    public class QuoteControllerTests
     {
-        private readonly Mock<IContext> _context;
+        private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<QuoteController>> _logger;
         private readonly Mock<IOptions<AppSettings>> _optionsMock;
@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             };
             var appSettings = new AppSettings();
             appSettings.Configure(appSettingsDict);
-            _context = new Mock<IContext>();
+            _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<QuoteController>>();
             _optionsMock = new Mock<IOptions<AppSettings>>();
@@ -61,7 +61,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = controller.GetQuote("645665656565");
+            var result = controller.GetQuote("645665656565", new Infrastructure.RequestHeaders());
 
             result.Should().NotBeNull();
         }
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
+            var result = await controller.GetCartDetailsInQuote("1234", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -96,7 +96,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var data = new List<string> { "123" };
             var controller = GetController();
-            var result = await controller.GetQuoteDetails(data, true).ConfigureAwait(false);
+            var result = await controller.GetQuoteDetails(data, new Infrastructure.RequestHeaders(), true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -157,7 +157,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
 
         var controller = GetController();
-            var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
+            var result = await controller.FindQuoteDetails(detailsInput, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

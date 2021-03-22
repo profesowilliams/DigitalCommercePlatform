@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
     {
         public string Id { get; set; }
         public string Reseller { get; set; }
+        public string Vendor { get; set; }
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
         public string OrderBy { get; set; }

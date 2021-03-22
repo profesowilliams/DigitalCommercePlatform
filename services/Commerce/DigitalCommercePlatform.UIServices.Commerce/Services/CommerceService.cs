@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
@@ -15,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -23,57 +23,34 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     [ExcludeFromCodeCoverage]
     public class CommerceService : ICommerceService
     {
-        private readonly IHttpClientFactory _clientFactory;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
+        private readonly ILogger<CommerceService> _logger;
         private readonly string _appOrderServiceUrl;
         private readonly string _appQuoteServiceUrl;
-        private readonly ILogger<CommerceService> _logger;
         private static readonly Random getrandom = new Random();
-        public CommerceService(IHttpClientFactory clientFactory, IOptions<AppSettings> options, ILogger<CommerceService> logger)
+
+        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger,IOptions<AppSettings> options)
         {
-            _clientFactory = clientFactory;
-            _logger = logger;
+            _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
-            _appQuoteServiceUrl=options?.Value.GetSetting("App.Quote.Url");      
+            _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
         }
 
         public async Task<OrderModel> GetOrderByIdAsync(string id)
         {
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
-            var getOrderByIdRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
-
-            var apiOrdersClient = _clientFactory.CreateClient("apiServiceClient");
-
-            var getOrderByIdHttpResponse = await apiOrdersClient.SendAsync(getOrderByIdRequestMessage);
-            getOrderByIdHttpResponse.EnsureSuccessStatusCode();
-
-            var getOrderByIdResponse = await getOrderByIdHttpResponse.Content.ReadAsAsync<List<OrderModel>>();
+            var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<OrderModel>>(url);
             return getOrderByIdResponse?.FirstOrDefault();
         }
 
         
-        public async Task<Models.Quote.Quote.QuoteModel> GetQuote(GetQuote.Request request)
+        public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
-            try
-            {
-                var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, quoteURL);
-                var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
 
-                var response = await apiQuoteSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
-
-                var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<QuoteModel>>().ConfigureAwait(false);
-                if (getQuoteResponse != null)
-                    return getQuoteResponse.FirstOrDefault();
-                else
-                    return null; // fix this
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(FindQuoteDetails)}: {nameof(CommerceService)}");
-                throw;
-            }
+            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
+            return getQuoteResponse?.FirstOrDefault();
         }
 
         public Task<string> GetQuotes(string Id)
@@ -88,6 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         {
                             orderParameters.Id,
                             orderParameters.CustomerPO,
+                            orderParameters.Manufacturer,
                             orderParameters.CreatedFrom,
                             orderParameters.CreatedTo,
                             Sort = orderParameters.OrderBy,
@@ -98,13 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Details = true
                         });
 
-            var getOrdersHttpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
-
-            var apiOrdersClient = _clientFactory.CreateClient("apiServiceClient");
-
-            var getOrdersHttpResponse = await apiOrdersClient.SendAsync(getOrdersHttpRequestMessage);
-            getOrdersHttpResponse.EnsureSuccessStatusCode();
-            var findOrdersDto = await getOrdersHttpResponse.Content.ReadAsAsync<OrdersContainer>();
+            var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
             return findOrdersDto;
         }
 
@@ -205,23 +177,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(FindQuotesForGrid.Request request)
         {
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
-
-            try
-            {
-                var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, quoteURL);
-                var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
-
-                var response = await apiQuoteSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
-
-                var getQuoteResponse = await response.Content.ReadAsAsync<FindResponse<IEnumerable<QuoteModel>>>().ConfigureAwait(false);
-                return getQuoteResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(FindQuoteDetails)}: {nameof(CommerceService)}");
-                throw;
-            }
+            var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
+            return getQuoteResponse;
         }
 
         
