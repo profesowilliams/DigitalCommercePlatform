@@ -34,9 +34,10 @@ app.post("/auth", function(req, res){
 
   let userid = req.body.userid;
   let password = req.body.password;
-  let redirect = req.query.redirect;
+  let redirect = req.query.redirect_uri;
 
   console.log("post submit");
+  console.log(req.query);
   console.log(req.body);
   console.log(userid);
   console.log(password);
