@@ -6,11 +6,13 @@ using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetOrders
     {
         public class Request : IRequest<Response>

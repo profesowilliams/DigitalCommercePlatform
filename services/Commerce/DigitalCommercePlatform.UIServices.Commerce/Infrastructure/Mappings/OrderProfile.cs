@@ -2,10 +2,13 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
+    [ExcludeFromCodeCoverage]
+
     public class OrderProfile : Profile
     {
         public OrderProfile()
