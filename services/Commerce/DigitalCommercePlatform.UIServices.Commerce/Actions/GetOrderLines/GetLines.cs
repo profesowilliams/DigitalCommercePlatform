@@ -41,7 +41,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
+
                 var orderLinesResponse = new Response();
+                
                 if (order == null)
                 {
                     orderLinesResponse = new Response
