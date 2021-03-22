@@ -1,13 +1,12 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalFoundation.Common.Settings;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using DigitalFoundation.Common.Settings;
-using Microsoft.Extensions.Options;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -43,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 lstConfigurations.Add(objConfiguration);
             }
 
-            var objReponse = new RecentConfigurationsModel
+            var objResponse = new RecentConfigurationsModel
             {
                 ListOfConfigurations = lstConfigurations,
                 TotalRecords = lstConfigurations.Count(),
@@ -52,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 PageSize = 25,
                 CurrentPage = 10,
             };
-            return await Task.FromResult(objReponse);
+            return await Task.FromResult(objResponse);
         }
         public async Task<Models.Deals.RecentDealsModel> GetDeals(Models.Deals.FindModel request)
         {
@@ -83,9 +82,42 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return await Task.FromResult(objReponse);
         }
 
+        public async Task<DealsDetailModel> GetDealDetails(Models.Deals.FindModel request)
+        {
+            var lstMaterials = new List<MaterialInformation>();
+            for (int i = 1; i < 16; i++)
+            {
+                MaterialInformation material = new MaterialInformation();
+                material.Allowance = i % 2 == 0 ? GetRandomNumber(50, 10000).ToString() + ".65" : GetRandomNumber(10, 40).ToString() + ".36";
+                material.AllowanceType = i % 2 == 0 ? "% OFF LIST PRICE" : i % 5 == 0 ? "$ OFF LIST PRICE" : "";
+                material.MaximumQuantityPerCustomer = GetRandomNumber(50, 1000);
+                material.RemainingQuantity = material.MaximumQuantityPerCustomer - GetRandomNumber(0, 25);
+                material.HasErrors = false;
+                material.MinimumQuantity = GetRandomNumber(0, 5).ToString();
+                material.MaximumQuantity = 2000;
+                material.Description = "ransition Networks Stand-Alone 10...";
+                material.VendorPartNumber = "SBFTF1011-105-NA";
+                material.TDPartNumber = "1227948" + i;
+                lstMaterials.Add(material);
+            }
+            var objResponse = new DealsDetailModel();
+
+            objResponse.EndUserName = "OPEN TO ALL END USERS";
+            objResponse.Vendor = "ERGOTRON INC";
+            objResponse.VendorBidNumber = "3072898";
+            objResponse.Reference = "0002989968";
+            objResponse.ReferenceNumber = "028";
+            objResponse.TotalResultCount = lstMaterials.Count();
+            objResponse.Prodcuts = lstMaterials;
+            objResponse.InvalidTDPartNumbers = null;
+            
+            return await Task.FromResult(objResponse);
+
+        }
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
         }
+
     }
 }
