@@ -192,22 +192,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         }
     
 
-        [Theory]
-        [AutoDomainData]
-        public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
-        {
+        //[Theory]
+        //[AutoDomainData]
+        //public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
+        //{
 
-            _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetConfigurations.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
+        //    _mockMediator.Setup(x => x.Send(
+        //               It.IsAny<GetConfigurations.Request>(),
+        //               It.IsAny<CancellationToken>()))
+        //           .ReturnsAsync(expected);
 
-            var controller = GetController();
+        //    var controller = GetController();
 
-            var result = await controller.GetConfigurations(null).ConfigureAwait(false);
+        //    var result = await controller.GetConfigurations(null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
-        }
+        //    result.Should().Equals(HttpStatusCode.BadRequest);
+        //}
         [Theory]
         [AutoDomainData]
         public async Task GetDeals_BadRequest(GetDeals.Response expected)
@@ -224,21 +224,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
 
-        [Theory]
-        [AutoDomainData]
-        public async Task GetDeal_BadRequest(GetDeal.Response expected)
-        {
+        //[Theory]
+        //[AutoDomainData]
+        //public async Task GetDeal_BadRequest(GetDeal.Response expected)
+        //{
 
-            _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetDeal.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
+        //    _mockMediator.Setup(x => x.Send(
+        //               It.IsAny<GetDeal.Request>(),
+        //               It.IsAny<CancellationToken>()))
+        //           .ReturnsAsync(expected);
 
-            var controller = GetController();
+        //    var controller = GetController();
 
-            var result = await controller.GetDeal(null).ConfigureAwait(false);
-            result.Should().Equals(HttpStatusCode.BadRequest);
-        }
+        //    var result = await controller.GetDeal(null).ConfigureAwait(false);
+        //    result.Should().Equals(HttpStatusCode.BadRequest);
+        //}
 
         private ConfigController GetController()
         {

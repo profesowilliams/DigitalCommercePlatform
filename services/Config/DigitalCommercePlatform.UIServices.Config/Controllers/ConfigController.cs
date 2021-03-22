@@ -33,10 +33,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
-            }
+            //if (response.IsError)
+            //{
+            //    return StatusCode(StatusCodes.Status400BadRequest, response);
+            //}
 
             return Ok(response);
 
@@ -47,10 +47,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
+            //if (response.IsError)
+            //{
+            //    return StatusCode(StatusCodes.Status400BadRequest);
+            //}
 
             return Ok(response);
 
@@ -62,10 +62,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeal.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            if (response.IsError)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
+            //if (response.IsError)
+            //{
+            //    return StatusCode(StatusCodes.Status400BadRequest);
+            //}
 
             return Ok(response);
 

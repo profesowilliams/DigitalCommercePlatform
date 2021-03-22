@@ -48,11 +48,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
                     response.IsError = false;
                     return response;
                 }
-                else
+                else // fix this once APP service is ready
                 {
                     var response = new Response(null);
-                    response.ErrorCode = "possible_invalid_code"; // fix this
-                    response.IsError = true;
+                    response.ErrorCode = ""; 
+                    response.IsError = false;
                     return response;
                 }
 
