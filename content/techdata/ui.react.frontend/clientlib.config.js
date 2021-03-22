@@ -6,9 +6,9 @@ module.exports = {
     clientLibRoot: "./../ui.apps/src/main/content/jcr_root/apps/techdata/clientlibs",
 
     libs: {
-        name: "clientlib-dcp-components",
+        name: "clientlib-react",
         allowProxy: true,
-        categories: ["td.react-dcp.components"],
+        categories: ["techdata.react"],
         serializationFormat: "xml",
         jsProcessor: ["min:gcc"],
         assets: {
