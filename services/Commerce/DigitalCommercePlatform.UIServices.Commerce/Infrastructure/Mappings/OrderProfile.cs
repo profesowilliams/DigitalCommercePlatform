@@ -8,7 +8,6 @@ using System.Linq;
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
     [ExcludeFromCodeCoverage]
-
     public class OrderProfile : Profile
     {
         public OrderProfile()
@@ -38,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class OrderPriceResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
     {
         public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
@@ -46,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class OrderVendorResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
     {
         public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
