@@ -6,11 +6,11 @@ import {Provider} from 'react-redux';
 
 class AppConnector {
 	constructor(componentProps, element) {
-		console.log('inside App Connector constructor');
+		// console.log('inside App Connector constructor');
 		var _self = this;
 		this.components = [];
 		this.componentProps = componentProps;
-		console.log(this.componentProps);
+		// console.log(this.componentProps);
 
 		import(`../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}`)
 			.then((component) => {
@@ -22,10 +22,10 @@ class AppConnector {
 	}
 
 	loadComponent(componentRef, element) {
-		console.log('load components');
-		console.log(componentRef);
-		console.log(' component props');
-		console.log(this.componentProp);
+		// console.log('load components');
+		// console.log(componentRef);
+		// console.log(' component props');
+		// console.log(this.componentProp);
 		let Component = componentRef; // Captilize is mandatory for the variable 'Component'
 		let randomKey = nanoid();
 		ReactContentRenderer.render(

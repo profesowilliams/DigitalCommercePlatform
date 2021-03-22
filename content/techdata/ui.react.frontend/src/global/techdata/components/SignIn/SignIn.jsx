@@ -7,7 +7,8 @@ const FA = require('react-fontawesome');
 const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState({});
-	const [showSignIN, setShowSignIN] = useState(true);
+	const [showSignIN, setShowSignIN] = useState(false);
+	const configDataAEM = JSON.parse(props.componentProp);
 	const {auth} = useSelector((state) => {
 		return state;
 	});
@@ -18,53 +19,85 @@ const SignIn = (props) => {
 		cmpProps = JSON.parse(props.componentProp);
 	}
 
-	//useDispatch({type: 'SIGN_IN', payload: 'DATA'});
-
 	useEffect(() => {
-		console.log(auth);
 		auth ? setUser(auth.user) : null;
-		console.log(user);
 	}, [auth]);
 
 	useEffect(() => {
-		localStorage.setItem('signin', 'https://api.npoint.io/4070e20470046901e130');
-		localStorage.setItem('signout', 'https://www.google.com');
+		localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
+		routeChange();
 	}, []);
 
-	const onSignIn = () => {
-		localStorage.setItem('signin', 'https://api.npoint.io/4070e20470046901e130');
-		localStorage.setItem('signout', 'https://www.google.com');
-		dispatch(signInAsynAction());
-		setShowSignIN(true);
-	};
+	const showIcon = () => {
+		let search = window.location.search.split("=")[1];
+		let params = new URLSearchParams(search);
+		let foo = params.get('query');
+		if(search == '1234567890000'){
+			return <i className='fas fa-user-alt'></i>
+		}
+		else{
+			return <i className='far fa-user'></i>
+		}
+	}
+
+	const onSignIn = () =>{
+		let search = window.location.search.split("=")[1];
+		let params = new URLSearchParams(search);
+		let foo = params.get('query');
+		if(search == '1234567890000'){
+			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
+			dispatch(signInAsynAction());
+			setShowSignIN(true);
+			document.querySelector('.cmp-sign-in-list').classList.toggle('active');
+			}
+			else{
+				window.location.href="http://localhost:3000/?redirect=http://localhost:8080/signin"
+			}
+  }
+
+
+	const routeChange= () =>{
+		let search = window.location.search.split("=")[1];
+		let params = new URLSearchParams(search);
+		let foo = params.get('query');
+		if(search == '1234567890000'){
+			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
+			dispatch(signInAsynAction());
+			setShowSignIN(true);
+			}
+  }
 
 	const onSignOut = () => {
 		// clearing out local storage
 		localStorage.removeItem('signin');
 		localStorage.removeItem('signout');
+		localStorage.removeItem('user');
 		setShowSignIN(false);
+		window.location.href="http://localhost:8080/signin"
 	};
+
 	return (
-		<div className='sign-in-container'>
-			<div>
-				<button onClick={onSignIn}>
-					<i class='fa fa-user' aria-hidden='true'></i>
-					{user && showSignIN ? JSON.stringify(user?.name) : 'Sign In'}
+		<div className='cmp-sign-in'>
+			<div className='cmp-sign-in-option'>
+				<button className='cmp-sign-in-button' onClick={onSignIn}>
+					{showIcon()}
+					{user && showSignIN ? (user?.firstName) : configDataAEM.dataLabel}
 				</button>
 				{user && showSignIN ? (
-					<div>
+					<div className='cmp-sign-in-list'>
 						<p>
-							<b>{JSON.stringify(user?.name)}</b>
+							<span>MY EC ID: {(user?.id)}</span>
 						</p>
-						<p>{JSON.stringify(user?.name)}</p>
-						<p>{JSON.stringify(user?.phone)}</p>
-						<p>{JSON.stringify(user?.email)}</p>
-						<button onClick={onSignOut}>
-							Sign Out<i class='fa fa-user-circle-o' aria-hidden='true'></i>
+						<p>{(user?.firstName)}</p>
+						<p>{(user?.lastName)}</p>
+						<p>{(user?.email)}</p>
+						<p>{(user?.phone)}</p>
+						<button className='cmp-sign-in-signout' onClick={onSignOut}>
+							Log Out
 						</button>
 					</div>
 				) : null}
-			</div>
+				</div>
 		</div>
 	);
 };
