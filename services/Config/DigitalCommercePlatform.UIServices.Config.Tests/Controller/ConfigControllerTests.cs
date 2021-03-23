@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
@@ -40,7 +41,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             _mockMediator = new Mock<IMediator>();
             _mockOptions = new Mock<IOptions<AppSettings>>();
             _mockOptions.Setup(s => s.Value).Returns(appSettings);
-
             _mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
             _mockContext = new Mock<IContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurations(GetConfigurations.Response expected)
+        public async Task GetConfigurations(ResponseBase<GetConfigurations.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -59,11 +59,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Configurations.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {                
                 SortBy = "createdOn",
-                //SortDirection = "createdOn",
+                SortAscending = false,
             };
 
             var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
@@ -73,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurations_OKResponse(GetConfigurations.Response expected)
+        public async Task GetConfigurations_OKResponse(ResponseBase<GetConfigurations.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -83,11 +81,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Configurations.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {                
                 SortBy = "createdOn",
-                //SortDirection = "createdOn",
+                SortAscending = false,
             };
 
             var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
@@ -97,7 +93,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeals(GetDeals.Response expected)
+        public async Task GetDeals(ResponseBase<GetDeals.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -107,11 +103,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {                
                 SortBy = "createdOn",
-                //SortDirection = "createdOn",
+                SortAscending = false,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -121,7 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeals_OKResponse(GetDeals.Response expected)
+        public async Task GetDeals_OKResponse(ResponseBase<GetDeals.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -131,11 +125,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {             
                 SortBy = "createdOn",
-                SortDirection = "desc",
+                SortAscending = false,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -145,7 +137,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeal(GetDeal.Response expected)
+        public async Task GetDeal(ResponseBase<GetDeal.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -155,11 +147,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {                
                 SortBy = "TDPartNumber",
-                SortDirection = "desc",
+                SortAscending = false,
             };
 
             var result = await controller.GetDeal(criteria).ConfigureAwait(false);
@@ -169,7 +159,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeal_OKResponse(GetDeal.Response expected)
+        public async Task GetDeal_OKResponse(ResponseBase<GetDeal.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -179,11 +169,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {
-                CustomerId = "00380000",
-                UserId = "50546",
+            {               
                 SortBy = "TDPartNumber",
-                SortDirection = "desc",
+                SortAscending = false,
             };
 
             var result = await controller.GetDeal(criteria).ConfigureAwait(false);
@@ -210,7 +198,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         //}
         [Theory]
         [AutoDomainData]
-        public async Task GetDeals_BadRequest(GetDeals.Response expected)
+        public async Task GetDeals_BadRequest(ResponseBase<GetDeals.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(

@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
+﻿namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract
 {
     public abstract class RequestBase
     {

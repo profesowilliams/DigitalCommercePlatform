@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
+namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract
 {
     public class ValidatorBase<T> : AbstractValidator<T> where T : RequestBase
     {

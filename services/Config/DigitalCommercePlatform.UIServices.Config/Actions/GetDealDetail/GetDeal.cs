@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,50 +14,45 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
     [ExcludeFromCodeCoverage]
     public sealed class GetDeal
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public FindModel Criteria { get; set; }
         }
 
         public class Response
         {
-            public DealsDetailModel Content { get; }
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-            public string ErrorDescription { get; set; }
-            public Response(DealsDetailModel records)
-            {
-                Content = records;
-            }
+            public DealsDetailModel Deals { get; internal set; }
         }
 
-        public class GetDealHandler : IRequestHandler<Request, Response>
+        public class GetDealHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IConfigService _configServiceQueryService;
             private readonly IMapper _mapper;
+            private readonly ILogger<GetDealHandler> _logger;
 
-            public GetDealHandler(IConfigService commerceQueryService, IMapper mapper)
+            public GetDealHandler(IConfigService commerceQueryService, 
+                IMapper mapper,
+                ILogger<GetDealHandler> logger)
             {
                 _configServiceQueryService = commerceQueryService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                if (request.Criteria.DealId != null)
+                try
                 {
-                    DealsDetailModel deal = await _configServiceQueryService.GetDealDetails(request.Criteria);                   
-                    var response = new Response(deal);
-                    response.ErrorCode = ""; // fix this
-                    response.IsError = false;
-                    return response;
+                    DealsDetailModel deal = await _configServiceQueryService.GetDealDetails(request.Criteria);
+                    var getDealResponse = _mapper.Map<Response>(deal);
+                    return new ResponseBase<Response> { Content = getDealResponse }; ;
+
                 }
-                else // fix this once APP service is ready
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = ""; 
-                    response.IsError = false;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting Deal  : " + nameof(GetDeal));
+                    throw;
                 }
+
 
             }
         }
