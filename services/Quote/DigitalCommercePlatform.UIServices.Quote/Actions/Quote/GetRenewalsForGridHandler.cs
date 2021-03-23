@@ -10,12 +10,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetRenewalsForGridRequest : IRequest<GetRenewalsForGridResponse>
     {
         public string Creator { get; }
-        public string AccessToken { get; }
 
-        public GetRenewalsForGridRequest(string creator, string accessToken)
+        public GetRenewalsForGridRequest(string creator)
         {
             Creator = creator;
-            AccessToken = accessToken;
         }
     }
 

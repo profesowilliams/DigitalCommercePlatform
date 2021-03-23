@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Quote.Infrastructure;
 using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -23,12 +24,16 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public class Request : IRequest<Response>
         {
             public FindModel Search { get; set; }
-            public string AccessToken { get; }
+            public RequestHeaders Headers { get; set; }
+            public Request()
+            {
+                Headers = new RequestHeaders();
+            }
 
-            public Request(FindModel search, string accessToken)
+            public Request(FindModel search, RequestHeaders headers)
             {
                 Search = search;
-                AccessToken = accessToken;
+                Headers = headers;
             }
         }
 
@@ -51,13 +56,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
+            private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
             {
                 if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
+                _context = context;
                 _client = client;
                 _httpClientFactory = httpClientFactory;
                 _logger = logger;
@@ -69,8 +76,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 try
                 {
+                    _context.SetContextFromRequest(request.Headers);
                     HttpClient httpClient = _httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.AccessToken);
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _context.AccessToken);
                     httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
                     httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
                     httpClient.DefaultRequestHeaders.Add("Site", "NA");

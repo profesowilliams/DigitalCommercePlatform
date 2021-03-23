@@ -10,12 +10,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetDealsForGridRequest : IRequest<GetDealsForGridResponse>
     {
         public string Creator { get; }
-        public string AccessToken { get; }
 
-        public GetDealsForGridRequest(string creator, string accessToken)
+        public GetDealsForGridRequest(string creator)
         {
             Creator = creator;
-            AccessToken = accessToken;
         }
     }
 

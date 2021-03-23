@@ -10,12 +10,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetConfigsForGridRequest : IRequest<GetConfigsForGridResponse>
     {
         public string Creator { get; }
-        public string AccessToken { get; }
 
-        public GetConfigsForGridRequest(string creator, string accessToken)
+        public GetConfigsForGridRequest(string creator)
         {
             Creator = creator;
-            AccessToken = accessToken;
         }
     }
 

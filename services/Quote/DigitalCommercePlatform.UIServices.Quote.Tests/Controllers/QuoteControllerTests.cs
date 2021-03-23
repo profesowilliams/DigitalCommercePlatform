@@ -83,13 +83,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Tests.Controllers
 
             using var sut = GetController();
 
-            var ids = new List<string> { "1", "2", "3" };
-
+            var request = new GetQuotesHandler.Request
+            {
+                Ids = new List<string> { "1", "2", "3" },
+            };
             //act
-            _ = await sut.GetByIds(ids).ConfigureAwait(false);
+            _ = await sut.GetByIds(request).ConfigureAwait(false);
 
             //assert
-            _mockMediator.Verify(x => x.Send(It.Is<GetQuotesHandler.Request>(x => x.Ids.Count == ids.Intersect(x.Ids).Count()), It.IsAny<CancellationToken>()), Times.Once);
+            _mockMediator.Verify(x => x.Send(It.Is<GetQuotesHandler.Request>(x => x.Ids.Count == request.Ids.Intersect(x.Ids).Count()), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Theory]
