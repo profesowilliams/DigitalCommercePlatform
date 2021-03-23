@@ -5,11 +5,13 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetOrder
     {
         public class Request : IRequest<ResponseBase<Response>>

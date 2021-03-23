@@ -5,11 +5,13 @@ using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetLines
     {
         public class Request : IRequest<ResponseBase<Response>>
