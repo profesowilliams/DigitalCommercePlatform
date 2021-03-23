@@ -44,8 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
                 {
                     DealsDetailModel deal = await _configService.GetDealDetails(request.Criteria);
                     var getDealResponse = _mapper.Map<Response>(deal);
-                    return new ResponseBase<Response> { Content = getDealResponse }; ;
-
+                    return new ResponseBase<Response> { Content = getDealResponse };
                 }
                 catch (Exception ex)
                 {

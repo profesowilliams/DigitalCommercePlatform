@@ -5,7 +5,6 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
