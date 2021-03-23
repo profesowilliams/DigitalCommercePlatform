@@ -1,23 +1,28 @@
 <sly data-sly-use.model="com.techdata.core.models.LinkList"
      data-sly-test.hasContent="${model.linkList ? model.linkList.size > 0 : false}">
     <div data-sly-test=${hasContent} class="cmp-list">
-        <sly data-sly-list.item="${model.linkList}">
-            <ul class="cmp-link-list">
-                <li class="cmp-link-list__item">
-                    <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
-                       title="${item.platformName}"
-                       href="${item.linkUrl}"
-                       target="${item.linkTarget == 'true' ? '_blank' : '_self'}">
+        <ul data-sly-list.item="${model.linkList}" class="cmp-link-list">
+
+
+            <li class="cmp-link-list__item">
+                <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
+                   title="${item.platformName}"
+                   href="${item.linkUrl}"
+                   target="${item.linkTarget == 'true' ? '_blank' : '_self'}">
+                    <article>
                         <div data-sly-test="${item.iconUrl}" class="cmp-image">
                             <img src="${item.iconUrl}" class="cmp-image__image" alt="${item.platformName}" title="${item.platformName}">
                         </div>
 
                         <span class="cmp-link-list__item-title">${item.platformName}</span>
-                    </a>
-                </li>
-            </ul>
+                    </article>
+                </a>
 
-        </sly>
+            </li>
+
+        </ul>
+
+
     </div>
 </sly>
 <sly data-sly-use.placeholderTemplates="core/wcm/components/commons/v1/templates.html"

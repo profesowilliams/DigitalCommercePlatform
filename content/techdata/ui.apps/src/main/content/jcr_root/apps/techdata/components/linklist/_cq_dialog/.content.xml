@@ -32,10 +32,10 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                             <items jcr:primaryType="nt:unstructured">
-                                                <platformName
+                                                <label
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Platform Name"
-                                                    fieldDescription="Enter  name."
+                                                    fieldLabel="Label"
+                                                    fieldDescription="Enter label"
                                                     jcr:primaryType="nt:unstructured"
                                                     name="./platformName" />
                                                 <linkUrl
@@ -48,7 +48,7 @@
                                                 <iconUrl
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                     fieldLabel="Icon"
-                                                    fieldDescription="Enter  icon"
+                                                    fieldDescription="Enter icon"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/dam/techdata"
                                                     name="./iconUrl" />
