@@ -6,9 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals
 {
+    [ExcludeFromCodeCoverage]
     public class DealProfile : Profile
-    {
-        [ExcludeFromCodeCoverage]
+    {       
         public DealProfile()
         {
             CreateMap<DealsDetailModel, GetDeal.Response>()

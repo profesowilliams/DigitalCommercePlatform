@@ -62,6 +62,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             {                
                 SortBy = "createdOn",
                 SortAscending = false,
+                ConfigurationId = string.Empty,
+                Market = string.Empty,
+                Vendor = string.Empty 
             };
 
             var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
