@@ -6,7 +6,6 @@ using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
 using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.Extensions.DependencyInjection;
@@ -93,6 +92,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                     .Returns<IEnumerable<QuoteModel>>(r => new List<QuoteModel>() { new QuoteModel() { Creator = "2", EndUserPO = "test" } });
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
+                client.DefaultRequestHeaders.Add("TraceId", Guid.NewGuid().ToString());
                 var url = new Uri(client.BaseAddress + input);
 
                 // Act
@@ -117,6 +117,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                     .Returns<SearchQuoteHandler.Response>(r => new SearchQuoteHandler.Response(result));
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
+                client.DefaultRequestHeaders.Add("TraceId", Guid.NewGuid().ToString());
                 var url = new Uri(client.BaseAddress + input);
 
                 // Act
@@ -142,6 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.IntegrationTests
                     .Returns(result);
 
                 var client = fixture.CreateClient().SetDefaultHeaders();
+                client.DefaultRequestHeaders.Add("TraceId", Guid.NewGuid().ToString());
                 var url = new Uri(client.BaseAddress + input);
 
                 // Act
