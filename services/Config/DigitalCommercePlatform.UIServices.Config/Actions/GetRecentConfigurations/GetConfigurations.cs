@@ -43,14 +43,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 if (request.Criteria != null)
                 {
-                    RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
-                    return new Response(response);
+                    RecentConfigurationsModel configurations = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                    var response = new Response(configurations);
+                    response.ErrorCode = ""; // fix this
+                    response.IsError = false;
+                    return response;                    
                 }
-                else
+                else // fix this once APP service is ready
                 {
                     var response = new Response(null);
-                    response.ErrorCode = "possible_invalid_code"; // fix this
-                    response.IsError = true;
+                    response.ErrorCode = "";
+                    response.IsError = false;
                     return response;
                 }
 

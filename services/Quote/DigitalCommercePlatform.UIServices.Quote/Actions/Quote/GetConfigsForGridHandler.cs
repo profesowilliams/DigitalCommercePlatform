@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +8,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetConfigsForGridRequest : IRequest<GetConfigsForGridResponse>
     {
         public string Creator { get; }
-        public string AccessToken { get; }
 
-        public GetConfigsForGridRequest(string creator, string accessToken)
+        public GetConfigsForGridRequest(string creator)
         {
             Creator = creator;
-            AccessToken = accessToken;
         }
     }
 
@@ -34,13 +30,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
     public class GetConfigsForGridHandler : IRequestHandler<GetConfigsForGridRequest, GetConfigsForGridResponse>
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public GetConfigsForGridHandler(IHttpClientFactory httpClientFactory) //IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+        public GetConfigsForGridHandler()
         {
-            if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
-
-            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<GetConfigsForGridResponse> Handle(GetConfigsForGridRequest request, CancellationToken cancellationToken)

@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Quote.Infrastructure;
 using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Core.Models.DTO.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,12 +21,16 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public class Request : IRequest<Response>
         {
             public FindModel Search { get; set; }
-            public string AccessToken { get; }
+            public RequestHeaders Headers { get; set; }
+            public Request()
+            {
+                Headers = new RequestHeaders();
+            }
 
-            public Request(FindModel search, string accessToken)
+            public Request(FindModel search, RequestHeaders headers)
             {
                 Search = search;
-                AccessToken = accessToken;
+                Headers = headers;
             }
         }
 
@@ -47,19 +49,19 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IMiddleTierHttpClient _client;
-            private readonly IHttpClientFactory _httpClientFactory;
+            private readonly IMiddleTierHttpClient _httpClient;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
+            private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
             {
-                if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
+                if (httpClient == null) { throw new ArgumentNullException(nameof(httpClient)); }
 
-                _client = client;
-                _httpClientFactory = httpClientFactory;
+                _context = context;
+                _httpClient = httpClient;
                 _logger = logger;
                 _appSettings = appSettings;
                 _appQuoteKey = "App.Quote.Url";
@@ -69,28 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 try
                 {
-                    HttpClient httpClient = _httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.AccessToken);
-                    httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-                    httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-                    httpClient.DefaultRequestHeaders.Add("Site", "NA");
-                    httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
-
+                    _context.SetContextFromRequest(request.Headers);
                     var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
                     var url = baseUrl + "/Find?id=" + request.Search.Id;
-                    var httpRequest = new HttpRequestMessage()
-                    {
-                        RequestUri = new Uri(url),
-                        Method = HttpMethod.Get,
-                    };
-                    var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
-
-                    HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var data = JsonSerializer.Deserialize<FindResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
-                    var result = new Response(data);
-                    return result;
+                    var result = await _httpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(url);
+                    var response = new Response(result);
+                    return response;
                 }
                 catch (Exception ex)
                 {

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,20 +45,18 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IMiddleTierHttpClient _httpClient;
-            private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
             private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
             {
                 if (httpClient == null) { throw new ArgumentNullException(nameof(httpClient)); }
 
                 _context = context;
                 _httpClient = httpClient;
-                _httpClientFactory = httpClientFactory;
                 _logger = logger;
                 _appSettings = appSettings;
                 _appQuoteKey = "App.Quote.Url";

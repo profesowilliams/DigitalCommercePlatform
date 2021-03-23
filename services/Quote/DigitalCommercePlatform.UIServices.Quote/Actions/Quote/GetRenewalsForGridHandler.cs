@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +8,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     public class GetRenewalsForGridRequest : IRequest<GetRenewalsForGridResponse>
     {
         public string Creator { get; }
-        public string AccessToken { get; }
 
-        public GetRenewalsForGridRequest(string creator, string accessToken)
+        public GetRenewalsForGridRequest(string creator)
         {
             Creator = creator;
-            AccessToken = accessToken;
         }
     }
 
@@ -34,13 +30,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
     public class GetRenewalsForGridHandler : IRequestHandler<GetRenewalsForGridRequest, GetRenewalsForGridResponse>
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public GetRenewalsForGridHandler(IHttpClientFactory httpClientFactory) //IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+        public GetRenewalsForGridHandler()
         {
-            if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
-
-            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<GetRenewalsForGridResponse> Handle(GetRenewalsForGridRequest request, CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
 ﻿using DigitalFoundation.Common.Contexts;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure
@@ -6,20 +7,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure
     [ExcludeFromCodeCoverage]
     public static class UIContextExtension
     {
-        public static void SetContextFromRequest(this IUIContext context, RequestHeaders headers)
+        public static void SetContextFromRequest(this IContext context, RequestHeaders headers)
         {
-            context.SetAccessToken(context?.User?.AccessToken);
-            context.SetConsumer(headers?.Consumer);
-            context.SetLanguage(headers?.Language);
-            context.SetTraceId(headers?.TraceId);
-        }
+            var uiContext = context as IUIContext;
 
-        public static void SetContext(this IUIContext context, string consumer, string language, string traceId, string accessToken = null)
-        {
-            context.SetConsumer(consumer);
-            context.SetLanguage(language);
-            context.SetTraceId(traceId);
-            context.SetAccessToken(accessToken);
+            if(uiContext == null)
+            {
+                throw new ArgumentException("Context is not of type IUIContext");
+            }
+
+            uiContext.SetAccessToken(uiContext?.User?.AccessToken);
+            uiContext.SetConsumer(headers?.Consumer);
+            uiContext.SetLanguage(headers?.Language);
+            uiContext.SetTraceId(headers?.TraceId);
         }
     }
 }

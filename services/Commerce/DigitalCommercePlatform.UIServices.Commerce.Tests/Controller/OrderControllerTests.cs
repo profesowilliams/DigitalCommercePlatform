@@ -20,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 {
     public class OrderControllerTests
     {
-        private readonly Mock<IContext> _context;
+        private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<OrderController>> _logger;
         private readonly Mock<IOptions<AppSettings>> _optionsMock;
@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             };
             var appSettings = new AppSettings();
             appSettings.Configure(appSettingsDict);
-            _context = new Mock<IContext>();
+            _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<OrderController>>();
             _optionsMock = new Mock<IOptions<AppSettings>>();
@@ -60,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderDetailsAsync("645665656565");
+            var result = await controller.GetOrderDetailsAsync("645665656565", new Infrastructure.RequestHeaders());
 
             result.Should().NotBeNull();
         }
@@ -87,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetRecentOrdersAsync(criteria);
+            var result = await controller.GetRecentOrdersAsync(criteria, new Infrastructure.RequestHeaders());
 
             result.Should().NotBeNull();
         }
@@ -104,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderLinesAsync("645665656565");
+            var result = await controller.GetOrderLinesAsync("645665656565", new Infrastructure.RequestHeaders());
 
             result.Should().NotBeNull();
         }

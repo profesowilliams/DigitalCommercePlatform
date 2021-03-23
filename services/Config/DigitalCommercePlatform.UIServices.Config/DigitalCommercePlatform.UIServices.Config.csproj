@@ -6,17 +6,30 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-	<NoWarn>1591</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-config-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
-  </ItemGroup>	
+  </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(PACKAGEVERSION)'!=''">
+      <PropertyGroup>
+        <AssemblyVersion>$(PACKAGEVERSION)</AssemblyVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <ItemGroup>
     <PackageReference Include="DigitalFoundation.Common" Version="3.50.199" />
@@ -36,12 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Actions\GetConfiguration\" />
-    <Folder Include="Actions\GetDeal\" />
+    <Folder Include="Actions\GetConfigurationDetail\" />
     <Folder Include="Infrastructure\Mappings\Configurations\" />
     <Folder Include="Infrastructure\Mappings\Deals\" />
     <Folder Include="Infrastructure\Mappings\Quotes\" />
   </ItemGroup>
-
-
 </Project>
