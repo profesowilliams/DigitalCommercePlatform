@@ -25,15 +25,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
 
         public class GetDealsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configServiceQueryService;
+            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
             private readonly ILogger<GetDealsHandler> _logger;
-            public GetDealsHandler(IConfigService commerceQueryService, 
+            public GetDealsHandler(IConfigService configService, 
                 IMapper mapper,
                 ILogger<GetDealsHandler> logger
                 )
             {
-                _configServiceQueryService = commerceQueryService;
+                _configService = configService;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
 
                 try
                 {
-                    RecentDealsModel deals = await _configServiceQueryService.GetDeals(request.Criteria);
+                    RecentDealsModel deals = await _configService.GetDeals(request.Criteria);
                     var recentDealResponse = _mapper.Map<Response>(deals);
                     return new ResponseBase<Response> { Content = recentDealResponse };
                 }

@@ -26,16 +26,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
 
         public class GetConfigurationsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configServiceQueryService;
+            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
             private readonly ILogger<GetConfigurationsHandler> _logger;
 
-            public GetConfigurationsHandler(IConfigService commerceQueryService, 
+            public GetConfigurationsHandler(IConfigService configService, 
                 IMapper mapper,
                 ILogger<GetConfigurationsHandler> logger
                 )
             {
-                _configServiceQueryService = commerceQueryService;
+                _configService = configService;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 try
                 {
-                    RecentConfigurationsModel configurations = await _configServiceQueryService.GetConfigurations(request.Criteria);
+                    RecentConfigurationsModel configurations = await _configService.GetConfigurations(request.Criteria);
                     var recentDealResponse = _mapper.Map<Response>(configurations);
                     return new ResponseBase<Response> { Content = recentDealResponse };
                 }

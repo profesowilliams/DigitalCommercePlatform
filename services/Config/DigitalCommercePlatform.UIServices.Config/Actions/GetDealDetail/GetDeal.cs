@@ -26,15 +26,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
 
         public class GetDealHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configServiceQueryService;
+            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
             private readonly ILogger<GetDealHandler> _logger;
 
-            public GetDealHandler(IConfigService commerceQueryService, 
+            public GetDealHandler(IConfigService configService, 
                 IMapper mapper,
                 ILogger<GetDealHandler> logger)
             {
-                _configServiceQueryService = commerceQueryService;
+                _configService = configService;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             {
                 try
                 {
-                    DealsDetailModel deal = await _configServiceQueryService.GetDealDetails(request.Criteria);
+                    DealsDetailModel deal = await _configService.GetDealDetails(request.Criteria);
                     var getDealResponse = _mapper.Map<Response>(deal);
                     return new ResponseBase<Response> { Content = getDealResponse }; ;
 
