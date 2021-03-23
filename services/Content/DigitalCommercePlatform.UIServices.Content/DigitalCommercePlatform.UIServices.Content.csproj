@@ -6,17 +6,30 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-	<NoWarn>1591</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<WarningLevel>4</WarningLevel>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-content-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
-  </ItemGroup>	
+  </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(PACKAGEVERSION)'!=''">
+      <PropertyGroup>
+        <AssemblyVersion>$(PACKAGEVERSION)</AssemblyVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <ItemGroup>
     <Folder Include="Infrastructure\Mappings\" />
@@ -39,6 +52,4 @@
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
   </ItemGroup>
-
-
 </Project>
