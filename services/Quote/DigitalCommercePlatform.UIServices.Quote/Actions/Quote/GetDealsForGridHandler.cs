@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,13 +30,8 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
 
     public class GetDealsForGridHandler : IRequestHandler<GetDealsForGridRequest, GetDealsForGridResponse>
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public GetDealsForGridHandler(IHttpClientFactory httpClientFactory) //IMiddleTierHttpClient middleTierHttpClient, IMapper mapper)
+        public GetDealsForGridHandler()
         {
-            if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
-
-            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<GetDealsForGridResponse> Handle(GetDealsForGridRequest request, CancellationToken cancellationToken)

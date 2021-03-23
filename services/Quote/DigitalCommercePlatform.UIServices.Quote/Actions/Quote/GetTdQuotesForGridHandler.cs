@@ -12,9 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -57,23 +54,20 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IMapper _mapper;
-            private readonly IMiddleTierHttpClient _client;
-            // TODO: IMiddleTierHttpClient is not fully implemented yet, so we are using IHttpClientFactory in the meantime
-            private readonly IHttpClientFactory _httpClientFactory;
+            private readonly IMiddleTierHttpClient _httpClient;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
             private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
             {
-                if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
+                if (httpClient == null) { throw new ArgumentNullException(nameof(httpClient)); }
 
                 _context = context;
                 _mapper = mapper;
-                _client = client;
-                _httpClientFactory = httpClientFactory;
+                _httpClient = httpClient;
                 _logger = logger;
                 _appSettings = appSettings;
                 _appQuoteKey = "App.Quote.Url";
@@ -84,12 +78,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                 try
                 {
                     _context.SetContextFromRequest(request.Headers);
-                    HttpClient httpClient = _httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _context.AccessToken);
-                    httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
-                    httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
-                    httpClient.DefaultRequestHeaders.Add("Site", "NA");
-                    httpClient.DefaultRequestHeaders.Add("Consumer", "NA");
                     var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
                     var url = baseUrl
                         .AppendPathSegment("find")
@@ -107,22 +95,10 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
                             createdTo = request.QuoteCreationDateFilter,
                             expiresTo = request.QuoteExpirationDateFilter,
                         });
-
-                    var httpRequest = new HttpRequestMessage()
-                    {
-                        RequestUri = new Uri(url),
-                        Method = HttpMethod.Get,
-                    };
-                    var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
-
-                    HttpResponseMessage response = await httpClient.SendAsync(httpRequest, cancellationToken);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var quotes = JsonSerializer.Deserialize<FindResponse<IEnumerable<QuoteModel>>>(responseBody, serializerOptions);
-
-                    var quotesOutput = _mapper.Map<FindResponse<IEnumerable<TdQuoteForGrid>>>(quotes);
-                    var result = new Response(quotesOutput);
-                    return result;
+                    var result = await _httpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(url);
+                    var quotesOutput = _mapper.Map<FindResponse<IEnumerable<TdQuoteForGrid>>>(result);
+                    var response = new Response(quotesOutput);
+                    return response;
                 }
                 catch (Exception ex)
                 {
