@@ -17,7 +17,7 @@
     },
     "DigitalCommercePlatform.UIServices.Browse": {
       "commandName": "Project",
-      "commandLineArgs": "-c debug --n=\"UI.Browse\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5602 --urls=\"http://localhost\"",
+      "commandLineArgs": "-c debug --n=\"UI.Browse\" --c=\"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-browse/\" --p=5602 --urls=\"http://localhost\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
