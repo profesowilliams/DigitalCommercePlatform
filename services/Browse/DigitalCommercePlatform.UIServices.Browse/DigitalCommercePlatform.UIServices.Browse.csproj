@@ -11,6 +11,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
+  <Choose>
+    <When Condition="'$(PACKAGEVERSION)'!=''">
+      <PropertyGroup>
+        <AssemblyVersion>$(PACKAGEVERSION)</AssemblyVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
   <ItemGroup>
     <Compile Remove="Actions\Browse\**" />
     <Compile Remove="Actions\GetMenuDetails\**" />
