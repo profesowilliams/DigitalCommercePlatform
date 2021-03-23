@@ -1,0 +1,36 @@
+.cmp-list {
+    .cmp-link-list {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        font-size: 0.625rem;
+        letter-spacing: 0;
+        line-height: normal;
+        color: #ffffff;
+        font-family: 'Roboto', sans-serif;
+
+        li:not(:last-child) {
+            border-right: 0.06rem solid #ffffff;
+        }
+
+        .cmp-link-list__item {
+            padding: 0 0.625rem;
+
+            .article {
+                display: flex;
+            }
+        }
+
+        .cmp-image {
+            margin-right: 0.25rem;
+        }
+
+        .cmp-image__image {
+            width: 0.9rem;
+        }
+
+        .cmp-link-list__item-title {
+            padding-top: 0.125rem;
+        }
+    }
+}

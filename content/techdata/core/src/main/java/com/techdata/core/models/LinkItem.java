@@ -14,9 +14,9 @@ import javax.inject.Inject;
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 @Getter
 @Setter
-public class SocialLinkItem {
+public class LinkItem {
 
-    protected static final Logger log = LoggerFactory.getLogger(SocialLinkItem.class);
+    protected static final Logger log = LoggerFactory.getLogger(LinkItem.class);
 
     @Inject
     private String platformName;
