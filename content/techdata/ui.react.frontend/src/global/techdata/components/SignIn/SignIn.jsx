@@ -24,13 +24,38 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem("user")));
+		console.log("useEffect");
 	}, [auth]);
 
 	useEffect(() => {
 		localStorage.setItem('signin', uiServiceEndPoint);
+		isCodePresent();
 		routeChange();
 	}, []);
 
+	const isCodePresent = () => {
+		let signInCode = null;
+		// SigIn Code Check from Local Storage
+		let codeFromLocalStorage = localStorage.getItem('signInCode');
+		if(codeFromLocalStorage){
+			console.log("params Local==>", codeFromLocalStorage);
+			signInCode = codeFromLocalStorage;
+		}
+		// SigIn Code Check from URL
+		if(window.location.search){
+			let search = window.location.search.split("=")[1];
+			let getCode = search.split("&")[0];
+			// let params = new URLSearchParams(getCode);
+			console.log("params==>", getCode);
+			localStorage.setItem('signInCode', getCode);
+			signInCode = getCode;
+		}
+		else{
+			console.log("No CODE present in URL");
+		}
+		console.log("signInCode ======>", signInCode);
+		return signInCode;
+	}
 
 	const isAlreadySignedIn = () => {
 		if (user === undefined || user === null)
@@ -42,16 +67,12 @@ const SignIn = (props) => {
 	}
 
 	const showIcon = () => {
-		if(window.location.search){
-			let search = window.location.search.split("=")[1];
-			let getCode = search.split("&")[0];
-			let params = new URLSearchParams(getCode);
-				if (getCode) {
-				return <i className='fas fa-user-alt'></i>
-				}
+		console.log("isCodePresent", isCodePresent);
+		if(isCodePresent()){
+			return <i className='fas fa-user-alt'></i>
 		}
 		else{
-		return <i className='far fa-user'></i>
+			return <i className='far fa-user'></i>
 		}
 	}
 
@@ -92,10 +113,13 @@ const SignIn = (props) => {
 
 	const onSignOut = () => {
 		// clearing out local storage
+		debugger;
 		localStorage.removeItem('signin');
 		localStorage.removeItem('signout');
 		localStorage.removeItem('user');
+		localStorage.removeItem('signInCode');
 		setShowSignIN(false);
+		showIcon();
 		window.location.href="http://localhost:8080/signin"
 	};
 
