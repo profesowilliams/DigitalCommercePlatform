@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
@@ -15,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
     [ExcludeFromCodeCoverage]
     public sealed class GetOrders
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; }
             public string CustomerPO { get; }
@@ -81,13 +82,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public int? TotalItems { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
-            public bool IsError { get; internal set; }
-            public string ErrorCode { get; internal set; }
 
             public IEnumerable<RecentOrdersModel> Orders { get; set; }
         }
 
-        public class GetOrderHandler : IRequestHandler<Request, Response>
+        public class GetOrderHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ISortingService _sortingService;
             private readonly ICommerceService _commerceQueryService;
@@ -101,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 (string sortingProperty, bool sortAscending) = _sortingService.GetSortingParameters(request.OrderBy);
 
@@ -128,7 +127,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize
                 };
-                return orderResponse;
+
+                return new ResponseBase<Response> { Content = orderResponse };
             }
         }
 

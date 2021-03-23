@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
@@ -50,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoMoqData]
-        public async Task GetOrderDetails(GetOrder.Response expected)
+        public async Task GetOrderDetails(ResponseBase<GetOrder.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -67,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoMoqData]
-        public async Task GetRecentOrders(GetOrders.Response expected)
+        public async Task GetRecentOrders(ResponseBase<GetOrders.Response> expected)
         {
             var criteria = new GetOrdersDto
             {
@@ -94,7 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoMoqData]
-        public async Task GetOrderLinesAsync(GetLines.Response expected)
+        public async Task GetOrderLinesAsync(ResponseBase<GetLines.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
