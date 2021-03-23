@@ -16,8 +16,8 @@
       }
     },
     "DigitalCommercePlatform.UIServices.Account": {
-      "commandName": "Project",
-      "commandLineArgs": "-c debug --n=\"UI.Account\" --c=\"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-account/\" --p=5601--urls=\"http://localhost\"",
+      "commandName": "Project",https://eastus-dit-service.dc.tdebusiness.cloud/core-config
+      "commandLineArgs": "-c debug --n=\"UI.Account\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5601--urls=\"http://localhost\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
