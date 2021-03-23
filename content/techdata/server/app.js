@@ -91,7 +91,7 @@ app.get("/masthead", function(req, res){
 app.post("/login", function(req, res){
 
   let code = req.body.code;
-  let redirectUrl = req.body.redirectUrl;
+  let redirectUrl = req.body.RedirectUri;
   let applicationName = req.body.applicationName;
 
   console.log("post submit");
@@ -129,7 +129,6 @@ app.post("/login", function(req, res){
     res.json(resJsonFail);
   }
 
-  res.json(resJson)
 });
 
 app.listen(port, () => {

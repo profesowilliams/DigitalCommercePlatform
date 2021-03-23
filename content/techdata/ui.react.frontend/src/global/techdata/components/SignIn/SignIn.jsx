@@ -17,10 +17,6 @@ const SignIn = (props) => {
 
 	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.authenticationURL, configDataAEM.uiServiceEndPoint, configDataAEM.clientId];
 
-	// console.log(" authUrl = " + authUrl);
-	// console.log("uiServiceEndPoint = "+ uiServiceEndPoint);
-	// console.log("clientId = "+ clientId);
-
 
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem("user")));
@@ -105,7 +101,7 @@ const SignIn = (props) => {
 		let params = new URLSearchParams(search);
 		let foo = params.get('query');
 		if(search == '1234567890000'){
-			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
+			localStorage.setItem('signin', constructSignInURL());
 			dispatch(signInAsynAction());
 			setShowSignIN(true);
 			}
@@ -120,7 +116,7 @@ const SignIn = (props) => {
 		localStorage.removeItem('signInCode');
 		setShowSignIN(false);
 		showIcon();
-		window.location.href="http://localhost:8080/signin"
+		window.location.href="/"
 	};
 
 	return (
