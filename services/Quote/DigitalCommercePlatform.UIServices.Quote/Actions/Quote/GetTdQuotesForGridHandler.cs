@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Quote.Infrastructure;
 using DigitalCommercePlatform.UIServices.Quote.Models;
 using DigitalFoundation.App.Services.Quote.DTO.Common;
 using DigitalFoundation.App.Services.Quote.Models.Quote;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using MediatR;
@@ -22,7 +24,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
     {
         public class Request : IRequest<Response>
         {
-            public string AccessToken { get; set; }
             public string CreatedBy { get; set; }
             public string QuoteIdFilter { get; set; }
             public string ConfigIdFilter { get; set; }
@@ -33,8 +34,11 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             public int? PageSize { get; set; }
             public int? PageNumber { get; set; }
             public bool? WithPaginationInfo { get; set; }
-
-            public Request() { }
+            public RequestHeaders Headers { get; set; }
+            public Request()
+            {
+                Headers = new RequestHeaders();
+            }
         }
 
         public class Response
@@ -58,13 +62,15 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly ILogger<Handler> _logger;
             private readonly IOptions<AppSettings> _appSettings;
+            private readonly IUIContext _context;
 
             private readonly string _appQuoteKey;
 
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
+            public Handler(IUIContext context, IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient client, IHttpClientFactory httpClientFactory, ILogger<Handler> logger)
             {
                 if (httpClientFactory == null) { throw new ArgumentNullException(nameof(httpClientFactory)); }
 
+                _context = context;
                 _mapper = mapper;
                 _client = client;
                 _httpClientFactory = httpClientFactory;
@@ -77,8 +83,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Actions.Quote
             {
                 try
                 {
+                    _context.SetContextFromRequest(request.Headers);
                     HttpClient httpClient = _httpClientFactory.CreateClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.AccessToken);
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _context.AccessToken);
                     httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
                     httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-us");
                     httpClient.DefaultRequestHeaders.Add("Site", "NA");

@@ -57,10 +57,9 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetByIds(
-            [FromQuery(Name = "id")] List<string> ids, bool details = true)
+        public async Task<IActionResult> GetByIds([FromQuery] GetQuotesHandler.Request request)
         {
-            var response = await Mediator.Send(new GetQuotesHandler.Request(ids, details, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -70,15 +69,13 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
             {
                 return Ok(response);
             }
-
-
         }
 
         [HttpGet]
         [Route("Find")]
-        public async Task<IActionResult> Search([FromQuery] FindModel search)
+        public async Task<IActionResult> Search([FromQuery] FindModel search, [FromHeader] RequestHeaders headers)
         {
-            var response = await Mediator.Send(new SearchQuoteHandler.Request(search, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new SearchQuoteHandler.Request(search, headers)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -95,7 +92,6 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("GetTdQuotesForGrid")]
         public async Task<IActionResult> GetTdQuotesForGrid([FromQuery] GetTdQuotesForGridHandler.Request request)
         {
-            request.AccessToken = Context.AccessToken;
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
@@ -116,7 +112,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("GetDealsForGrid")]
         public async Task<IActionResult> GetDealsForGrid(string creator)
         {
-            var response = await Mediator.Send(new GetDealsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetDealsForGridRequest(creator)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -137,7 +133,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("GetConfigsForGrid")]
         public async Task<IActionResult> GetConfigsForGrid(string creator)
         {
-            var response = await Mediator.Send(new GetConfigsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetConfigsForGridRequest(creator)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
@@ -158,7 +154,7 @@ namespace DigitalCommercePlatform.UIServices.Quote.Controllers
         [Route("GetRenewalsForGrid")]
         public async Task<IActionResult> GetRenewalsForGrid(string creator)
         {
-            var response = await Mediator.Send(new GetRenewalsForGridRequest(creator, Context.AccessToken)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetRenewalsForGridRequest(creator)).ConfigureAwait(false);
 
             if (response.IsError && response.ErrorCode == "possible_invalid_code")
             {
