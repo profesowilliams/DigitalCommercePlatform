@@ -1,0 +1,9 @@
+@import 'sign-in-out';
+
+
+.cmp-header {
+  color: get-color(header-links-blue);
+  &__links {
+    font-size: smaller;
+  }
+}

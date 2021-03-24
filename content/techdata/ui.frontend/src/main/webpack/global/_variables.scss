@@ -17,26 +17,26 @@ $open-sans: 'Roboto', sans-serif;
 
 //== Techdata Color Palette
 $color-palette: (
-	'brand-black': #000000,
-	'brand-primary-text': #ffbc0d,
-	'brand-secondary-text': #d90007,
-	'brand-white': #ffffff,
-	'brand-blue': #000c21,
-	'secondary-link-blue': #006bae,
-	'secondary-dark-grey': #6f6f6f,
-	'secondary-grey': #adadad,
-	'secondary-light-grey': #d6d6d6,
-	'secondary-ivory': #f9f9f9,
-	'accessible-accent-gold': #c08b00,
-	'accessible-accent-grey': #959595,
-	'tertiary-light-green': #a9c141,
-	'tertiary-dark-blue': #103c82,
-	'tertiary-light-blue': #56afd1,
-	'tertiary-fuschia': #9a0a4d,
-	'tertiary-beige': #b69a81,
-	'brand-light-blue': #00b1e2,
-	'brand-button-blue': #00558c,
-	'brand-nav-blue': #048fc8,
+    "brand-black":  #000000,
+    "brand-primary-text":  #ffbc0d,
+    "brand-secondary-text": #d90007,
+    "brand-white": #ffffff,
+    "brand-blue": #000c21,
+    "secondary-link-blue": #006bae,
+    "secondary-dark-grey": #6f6f6f,
+    "secondary-grey": #adadad,
+    "secondary-light-grey": #d6d6d6,
+    "secondary-ivory": #f9f9f9,
+    "accessible-accent-gold": #c08b00,
+    "accessible-accent-grey": #959595,
+    "tertiary-light-green": #a9c141,
+    "tertiary-dark-blue": #103c82,
+    "tertiary-light-blue": #56afd1,
+    "tertiary-fuchsia": #9a0a4d,
+    "tertiary-beige": #b69a81,
+    "brand-light-blue": #00B1E2,
+    "brand-button-blue": #00558C,
+    "brand-nav-blue": #048FC8,
 	'border-light-gray': #979797,
 	'text-shadow': #919599,
 	'text-light-gray': #7c8388,
@@ -46,6 +46,7 @@ $color-palette: (
 	'td-dim-blue': #153b51,
 	'td-dark-blue': #000c21,
 	'brand-light-gray': #eaeaea,
+	"header-links-blue": #21314D,
 );
 
 $white: #ffffff; // Default white
@@ -65,7 +66,6 @@ $gray-2: #979797;
 $gray-4: #d6d6d6;
 $gray-5: #f6f6f6;
 $gray-3: #c6c6c6;
-
 $container-max-width: 1170px;
 $container-padding: 64px;
 $breakpoints: (

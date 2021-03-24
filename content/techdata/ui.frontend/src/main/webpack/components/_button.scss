@@ -43,17 +43,20 @@
 	color: unset;
 	text-decoration: none;
 	background: none;
-	&:active {
+	&:active, &:focus {
 		outline: none;
 		border: none;
 	}
 }
 
-.cmp-button__text {
-	font-size: 0.875em;
-}
+// .cmp-button__text {
+// 	font-size: 0.875em;
+// 	&--sign-in-out {
+// 		font-size: smaller;
+// 	}
+// }
 
-.cmp-button__icon {
-	font-size: 1.25em;
-	color: #21314d;
-}
+// .cmp-button__icon {
+// 	font-size: 1.25em;
+// 	color: get-color(header-links-blue);
+// }

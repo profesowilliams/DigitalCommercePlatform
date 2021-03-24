@@ -223,6 +223,14 @@ module.exports = (env) => {
 				filename: 'text.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html')
 			}),
+		            new HtmlWebpackPlugin({
+		                filename: 'sign-in.html',
+		                template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in.html')
+		            }),
+		            new HtmlWebpackPlugin({
+		                filename: 'sign-out.html',
+		                template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-out.html')
+		            }),
 			new HtmlWebpackPlugin({
 				filename: 'text-demo.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
@@ -268,11 +276,6 @@ module.exports = (env) => {
 					target: 'http://localhost:4502',
 				},
 			],
-			headers: {
-				"Access-Control-Allow-Origin": "*",
-				"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-				"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-			},
 			writeToDisk,
 			liveReload: !writeToDisk,
 		},
