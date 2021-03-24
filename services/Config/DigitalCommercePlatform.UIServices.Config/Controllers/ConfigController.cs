@@ -1,10 +1,12 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,9 +14,11 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
 {
+    [SetContextFromHeader]
     [ApiController]
-    [ApiVersion("1")]
-    [Route("/v{apiVersion}")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
+    [ApiVersion("1.0")]
+    [Route("/v{api0Version}")]
     public class ConfigController : BaseUIServiceController
     {
         public ConfigController(
@@ -26,9 +30,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
         }
-        [HttpPost]
+        [HttpGet]
         [Route("configurations/find")]
-        public async Task<ActionResult> GetConfigurations([FromBody] Models.Configurations.FindModel criteria)
+        public async Task<ActionResult> GetConfigurations([FromQuery] Models.Configurations.FindModel criteria)
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
@@ -40,9 +44,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             return Ok(response);
 
         }
-        [HttpPost]
+        [HttpGet]
         [Route("deals/find")]
-        public async Task<ActionResult> GetDeals([FromBody] Models.Deals.FindModel criteria)
+        public async Task<ActionResult> GetDeals([FromQuery] Models.Deals.FindModel criteria)
         {
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
@@ -55,9 +59,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("deals/get")]
-        public async Task<ActionResult> GetDeal([FromBody] Models.Deals.FindModel criteria)
+        public async Task<ActionResult> GetDeal([FromQuery] Models.Deals.FindModel criteria)
         {
             var data = new GetDeal.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
