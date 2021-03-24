@@ -13,3 +13,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA2200:Rethrow to preserve stack details")]
 [assembly: SuppressMessage("Major Code Smell", "S3445:Exceptions should not be explicitly rethrown")]
 [assembly: SuppressMessage("Reliability", "CA2007:Consider calling ConfigureAwait on the awaited task")]
+[assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary.SummaryDetails.Data")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary.SummaryModel.shortDescription")]
