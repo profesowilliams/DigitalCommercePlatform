@@ -34,17 +34,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
         {
             var validationErrors = new Dictionary<string, string[]>();
 
-            if(!context.HttpContext.Request.Headers.TryGetValue("Accept-Language", out StringValues language))
+            if(!context.HttpContext.Request.Headers.TryGetValue("Accept-Language", out StringValues language) || string.IsNullOrWhiteSpace(language))
             {
                 validationErrors.Add("Accept-Language", new string[] { "The Accept-Language field is required." });
             }
 
-            if (!context.HttpContext.Request.Headers.TryGetValue("Consumer", out StringValues consumer))
+            if (!context.HttpContext.Request.Headers.TryGetValue("Consumer", out StringValues consumer) || string.IsNullOrWhiteSpace(consumer))
             {
                 validationErrors.Add("Consumer", new string[] { "The Consumer field is required." });
             }
 
-            if (!context.HttpContext.Request.Headers.TryGetValue("TraceId", out StringValues traceId))
+            if (!context.HttpContext.Request.Headers.TryGetValue("TraceId", out StringValues traceId) || string.IsNullOrWhiteSpace(traceId))
             {
                 validationErrors.Add("TraceId", new string[] { "The TraceId field is required." });
             }
