@@ -8,6 +8,7 @@ const encodedParams = new URLSearchParams();
 var bodyParser = require('body-parser');
 var dateFormat = require("dateformat");
 var now = new Date();
+var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 
 // View engine setup
 // app.set('view engine', 'html');
@@ -22,8 +23,32 @@ function checkCreds(user, pass)
 
 
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site');
+  res.header('Consumer', '*');
+  res.header('SessionId', '*');
+  res.header('Accept-Language', '*');
+  res.header('Site', '*');
+  res.header('TraceId', '*');
+
+
+  // "TraceId" : "NA",
+  //     "Site": "NA",
+  //     "Accept-Language" : "en-us",
+  //     "Consumer" : "NA",
+  //     "SessionId" : nanoid(16),
+  //     "Content-Type": "application/json"
+
+  //intercepts OPTIONS method
+  if ('OPTIONS' === req.method) {
+    //respond with 200
+    res.send(200);
+  }
+  else {
+    //move on
+    next();
+  }
 });
 
 app.use('/', express.static('public'));
@@ -50,7 +75,7 @@ app.post("/auth", function(req, res){
 
   if (checkCreds(userid, password))
   {
-    res.redirect(redirect + "?code=1234567890000");
+    res.redirect(redirect + "?code="+codeValue);
   }else{
     // res.send({"userid" : req.body.userid, "password" : req.body.password, auth : checkCreds(userid, password)})
     // res.render('<h1>error</h1>');
@@ -105,7 +130,7 @@ app.post("/login", function(req, res){
       "isError": false,
       "user": {
           "id": "516514",
-          "firstName": "DAYNA",
+          "firstName": "DAYNA bru",
           "lastName": "KARAPHILLIS",
           "name": "DAYNA KARAPHILLIS",
           "email": "SHI@cstenet.com",
@@ -122,13 +147,20 @@ app.post("/login", function(req, res){
     "user" : null
   }
 
-  if (code === "1234567890000")
+  if (code === codeValue)
   {
     res.json(resJsonSuccess)
   }else{
     res.json(resJsonFail);
   }
 
+});
+
+app.options("/*", function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.send(200);
 });
 
 app.listen(port, () => {

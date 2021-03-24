@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {signInAsynAction} from '../../../../store/action/authAction';
+import {getQueryStringValue} from "../../../../utils/utils";
 
 const FA = require('react-fontawesome');
 
 const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
+	const [loadCount, setLoadCount] = useState(0);
 	const [showSignIN, setShowSignIN] = useState(false);
 	const configDataAEM = JSON.parse(props.componentProp);
 	const {auth} = useSelector((state) => {
@@ -24,7 +26,7 @@ const SignIn = (props) => {
 	}, [auth]);
 
 	useEffect(() => {
-		localStorage.setItem('signin', uiServiceEndPoint);
+		localStorage.setItem('signin', constructSignInURL());
 		isCodePresent();
 		routeChange();
 	}, []);
@@ -39,8 +41,7 @@ const SignIn = (props) => {
 		}
 		// SigIn Code Check from URL
 		if(window.location.search){
-			let search = window.location.search.split("=")[1];
-			let getCode = search.split("&")[0];
+			let getCode = getQueryStringValue(codeQueryParam);
 			// let params = new URLSearchParams(getCode);
 			console.log("params==>", getCode);
 			localStorage.setItem('signInCode', getCode);
@@ -49,7 +50,6 @@ const SignIn = (props) => {
 		else{
 			console.log("No CODE present in URL");
 		}
-		console.log("signInCode ======>", signInCode);
 		return signInCode;
 	}
 
@@ -63,6 +63,8 @@ const SignIn = (props) => {
 	}
 
 	const showIcon = () => {
+		console.log("loadCount ",loadCount);
+		console.log("inside showIcon");
 		console.log("isCodePresent", isCodePresent);
 		if(isCodePresent()){
 			return <i className='fas fa-user-alt'></i>
@@ -97,14 +99,15 @@ const SignIn = (props) => {
 
 	}
 	const routeChange= () =>{
-		let search = window.location.search.split("=")[1];
-		let params = new URLSearchParams(search);
-		let foo = params.get('query');
-		if(search == '1234567890000'){
+		console.log("route change");
+		let params = getQueryStringValue(codeQueryParam);
+		if(params){
 			localStorage.setItem('signin', constructSignInURL());
 			dispatch(signInAsynAction());
 			setShowSignIN(true);
-			}
+			}else{
+			console.log("no query param in browser URL");
+		}
   }
 
 	const onSignOut = () => {
