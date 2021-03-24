@@ -1,7 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
     [ApiController]
+    [SetContextFromHeader]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
@@ -35,10 +36,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("order/{id}")]
-        public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id)
         {
-            Context.SetContextFromRequest(headers);
-
             var orderResponse = await Mediator.Send(new GetOrder.Request(id)).ConfigureAwait(false);
             if (orderResponse.Error.IsError)
             {
@@ -50,12 +49,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        
         [HttpGet]
         [Route("orders")]
-        public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
         {
-            Context.SetContextFromRequest(headers);
-
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
                 getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
 
@@ -77,10 +75,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("orderLines/{id}")]
-        public async Task<ActionResult> GetOrderLinesAsync([FromRoute] string id,[FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetOrderLinesAsync([FromRoute] string id)
         {
-            Context.SetContextFromRequest(headers);
-
             var orderLinesResponse = await Mediator.Send(new GetLines.Request(id)).ConfigureAwait(false);
             if (orderLinesResponse.Error.IsError)
             {

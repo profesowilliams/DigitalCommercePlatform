@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = controller.GetQuote("645665656565", new Infrastructure.RequestHeaders());
+            var result = controller.GetQuote("645665656565");
 
             result.Should().NotBeNull();
         }
@@ -81,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetailsInQuote("1234", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var data = new List<string> { "123" };
             var controller = GetController();
-            var result = await controller.GetQuoteDetails(data, new Infrastructure.RequestHeaders(), true).ConfigureAwait(false);
+            var result = await controller.GetQuoteDetails(data, true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -158,7 +158,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
 
         var controller = GetController();
-            var result = await controller.FindQuoteDetails(detailsInput, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
