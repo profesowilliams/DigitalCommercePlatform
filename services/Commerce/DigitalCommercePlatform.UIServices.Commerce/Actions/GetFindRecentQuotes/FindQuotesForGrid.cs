@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
@@ -15,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
     [ExcludeFromCodeCoverage]
     public class FindQuotesForGrid
     {
-        public class Request:IRequest<Response>
+        public class Request:IRequest<ResponseBase<Response>>
         {
             public FindModel Query { get; set; }
 
@@ -30,12 +31,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
             public int? TotalItems { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
-            public bool IsError { get; internal set; }
-            public string ErrorCode { get; internal set; }
-            public string ErrorDescription { get; set; }
-
         }
-        public class Handler : IRequestHandler<Request,Response>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
@@ -48,13 +45,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
                 _logger = logger;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var quoteDetails = await _commerceQueryService.FindQuoteDetails(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
-                    return getProductResponse;
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {

@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
@@ -61,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = controller.GetQuote("645665656565", new Infrastructure.RequestHeaders());
+            var result = controller.GetQuote("645665656565");
 
             result.Should().NotBeNull();
         }
@@ -70,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Response expected)
+        public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -80,14 +81,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetailsInQuote("1234", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetQuoteDetails(GetQuote.Response expected)
+        public async Task GetQuoteDetails(ResponseBase<GetQuote.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetQuote.Request>(),
@@ -96,14 +97,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var data = new List<string> { "123" };
             var controller = GetController();
-            var result = await controller.GetQuoteDetails(data, new Infrastructure.RequestHeaders(), true).ConfigureAwait(false);
+            var result = await controller.GetQuoteDetails(data, true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task FindQuoteDetails(FindQuotesForGrid.Response expected)
+        public async Task FindQuoteDetails(ResponseBase<FindQuotesForGrid.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<FindQuotesForGrid.Request>(),
@@ -157,7 +158,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
 
         var controller = GetController();
-            var result = await controller.FindQuoteDetails(detailsInput, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

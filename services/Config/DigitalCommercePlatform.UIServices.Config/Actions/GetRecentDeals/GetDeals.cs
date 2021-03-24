@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,51 +14,42 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
     [ExcludeFromCodeCoverage]
     public sealed class GetDeals
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public FindModel Criteria { get; set; }
         }
         public class Response
-        {
-            public RecentDealsModel Content { get; }
-
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-
-            public Response(RecentDealsModel records)
-            {
-                Content = records;
-            }
+        {            
+            public RecentDealsModel Deals { get; internal set; }
         }
 
-        public class GetDealssHandler : IRequestHandler<Request, Response>
+        public class GetDealsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configServiceQueryService;
+            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
-
-            public GetDealssHandler(IConfigService commerceQueryService, IMapper mapper)
+            private readonly ILogger<GetDealsHandler> _logger;
+            public GetDealsHandler(IConfigService configService, 
+                IMapper mapper,
+                ILogger<GetDealsHandler> logger
+                )
             {
-                _configServiceQueryService = commerceQueryService;
+                _configService = configService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
 
-                if (request.Criteria != null)
+                try
                 {
-                    RecentDealsModel deals = await _configServiceQueryService.GetDeals(request.Criteria);
-                    var response = new Response(deals);
-                    response.ErrorCode = ""; // fix this
-                    response.IsError = false;
-                    return response;
-                    
+                    RecentDealsModel deals = await _configService.GetDeals(request.Criteria);
+                    var recentDealResponse = _mapper.Map<Response>(deals);
+                    return new ResponseBase<Response> { Content = recentDealResponse };
                 }
-                else // fix this once APP service is ready
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = ""; 
-                    response.IsError = false;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting recent Deals for grid : " + nameof(GetDeals));
+                    throw;
                 }
             }
         }

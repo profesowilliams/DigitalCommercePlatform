@@ -14,10 +14,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
     [ExcludeFromCodeCoverage]
+    [SetContextFromHeader]
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
@@ -34,45 +36,34 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
 
-
-
         [HttpGet]
         [Route("quote")]
-        public IActionResult GetQuote(string quoteId, [FromHeader] RequestHeaders headers)
+        public IActionResult GetQuote(string quoteId)
         {
-            Context.SetContextFromRequest(headers);
-
             var response = "Quote Id : " + quoteId;
             return Ok(response);
         }
 
         [HttpGet]
         [Route("quote/create/{savedCartId}")]
-        public async Task<ActionResult<Response>> GetCartDetailsInQuote(string cartId, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetCartDetailsInQuote(string cartId)
         {
-            Context.SetContextFromRequest(headers);
-
             var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
-            return response;
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("quotes/get")]
-        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id, [FromHeader] RequestHeaders headers,[FromQuery] bool details = true)
+        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id,[FromQuery] bool details = true)
         {
-            Context.SetContextFromRequest(headers);
-
             var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
             return Ok(response);
         }
 
         [HttpGet]
-        [Route("quotes/Find")]
-        public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query, [FromHeader] RequestHeaders headers)
+        [Route("quotes/find")]
+        public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)
         {
-            Context.SetContextFromRequest(headers);
-
-
             var response = await Mediator.Send(new FindQuotesForGrid.Request(query)).ConfigureAwait(false);
                 return Ok(response);
         }

@@ -1,22 +1,23 @@
-﻿using DigitalFoundation.Common.Contexts;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
     [ApiController]
+    [SetContextFromHeader]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
@@ -32,14 +33,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         {
         }
 
+
         [HttpGet]
         [Route("order/{id}")]
-        public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id)
         {
-            Context.SetContextFromRequest(headers);
-
             var orderResponse = await Mediator.Send(new GetOrder.Request(id)).ConfigureAwait(false);
-            if (orderResponse.IsError && orderResponse.ErrorCode == "possible_invalid_code")
+            if (orderResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, orderResponse);
             }
@@ -49,12 +49,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        
         [HttpGet]
         [Route("orders")]
-        public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
         {
-            Context.SetContextFromRequest(headers);
-
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
                 getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
 
@@ -63,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var getOrdersQuery = new GetOrders.Request(filtering, paging);
 
             var ordersResponse = await Mediator.Send(getOrdersQuery).ConfigureAwait(false);
-            if (ordersResponse.IsError && ordersResponse.ErrorCode == "possible_invalid_code")
+            if (ordersResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ordersResponse);
             }
@@ -76,12 +75,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("orderLines/{id}")]
-        public async Task<ActionResult> GetOrderLinesAsync([FromRoute] string id,[FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetOrderLinesAsync([FromRoute] string id)
         {
-            Context.SetContextFromRequest(headers);
-
             var orderLinesResponse = await Mediator.Send(new GetLines.Request(id)).ConfigureAwait(false);
-            if (orderLinesResponse.IsError && orderLinesResponse.ErrorCode == "possible_invalid_code")
+            if (orderLinesResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, orderLinesResponse);
             }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using FluentValidation;
@@ -15,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
     [ExcludeFromCodeCoverage]
     public sealed class GetQuote
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
@@ -36,12 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
             //public int? TotalItems { get; set; }
             //public int PageNumber { get; set; }
             //public int PageSize { get; set; }
-            public bool IsError { get; internal set; }
-            public string ErrorCode { get; internal set; }
-            public string ErrorDescription { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceRepositoryServices;
             private readonly IMapper _mapper;
@@ -54,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
                 _logger = logger;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -64,17 +62,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails
                     {
 
                         getQuoteResponse = _mapper.Map<Response>(productDetails);
-                        getQuoteResponse.IsError = false;
-                        getQuoteResponse.ErrorCode = "200";
                     }
                     else 
                     {
                         getQuoteResponse.Details = null;
-                        getQuoteResponse.ErrorCode = "400";
-                        getQuoteResponse.IsError = true;
-                        getQuoteResponse.ErrorDescription = "Bad Request"; 
                     }
-                    return getQuoteResponse;
+                    return new ResponseBase<Response> { Content = getQuoteResponse };
                 }
                 catch (Exception ex)
                 {
