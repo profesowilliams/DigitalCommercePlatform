@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Config
 {
     [ExcludeFromCodeCoverage]
-    public class Startup : BaseAppServiceStartup
+    public class Startup : BaseUIServiceStartup
     {
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
@@ -21,12 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Config
         {
             services.AddTransient<IConfigService, ConfigService>();
         }
-
-        //public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
-        //{
-        //    base.ConfigureMiddleSection(app, env);
-        //}
-
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }
