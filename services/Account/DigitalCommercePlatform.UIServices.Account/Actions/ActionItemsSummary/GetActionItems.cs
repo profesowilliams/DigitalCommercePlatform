@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(ActionItemsSummaryQueryHandler));
+                    _logger.LogError(ex, "Exception at getting ActionItemsSummaryQueryHandler  : " + nameof(ActionItemsSummaryQueryHandler));
                     throw;
                 }
 

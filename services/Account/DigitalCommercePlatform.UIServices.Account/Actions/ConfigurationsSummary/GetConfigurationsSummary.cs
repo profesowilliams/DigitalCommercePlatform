@@ -25,15 +25,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
         }
         public class ConfigurationsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountQueryService;
+            private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<ConfigurationsSummaryQueryHandler> _logger;
-            public ConfigurationsSummaryQueryHandler(IAccountService accountQueryService,
+            public ConfigurationsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<ConfigurationsSummaryQueryHandler> logger
                 )
             {
-                _accountQueryService = accountQueryService;
+                _accountService = accountService;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -41,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
             {
                 try
                 {
-                    ConfigurationsSummaryModel configurations = await _accountQueryService.GetConfigurationsSummaryAsync(request);
+                    ConfigurationsSummaryModel configurations = await _accountService.GetConfigurationsSummaryAsync(request);
                     var getConfigurations = _mapper.Map<Response>(configurations);
                     return new ResponseBase<Response> { Content = getConfigurations };
                 }

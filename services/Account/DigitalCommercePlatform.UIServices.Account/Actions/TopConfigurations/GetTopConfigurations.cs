@@ -21,8 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
 
         public class Response
         {
-            public ActiveOpenConfigurationsModel Summary { get; set; }
-            
+            public ActiveOpenConfigurationsModel Summary { get; set; }            
         }
 
         public class GetTopConfigurationsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>

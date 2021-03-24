@@ -20,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
 
             public GetCartRequest(string UserId)
             {
-                userId = UserId;
+                userId = UserId; // fix this
             }
         }
 
@@ -30,15 +30,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
         }
         public class GetSavedCartsQueryHandler : IRequestHandler<GetCartRequest, ResponseBase<GetCartResponse>>
         {
-            private readonly IAccountService _cartRepositoryServices;
+            private readonly IAccountService _accountServices;
             private readonly IMapper _mapper;
             private readonly ILogger<GetSavedCartsQueryHandler> _logger;
 
-            public GetSavedCartsQueryHandler(IAccountService cartRepositoryServices, 
+            public GetSavedCartsQueryHandler(IAccountService accountServices, 
                 IMapper mapper, 
                 ILogger<GetSavedCartsQueryHandler> logger)
             {
-                _cartRepositoryServices = cartRepositoryServices;
+                _accountServices = accountServices;
                 _mapper = mapper;
                 _logger = logger;
             }
@@ -47,13 +47,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
             {
                 try
                 {
-                    var cartDetails = await _cartRepositoryServices.GetCartDetailsAsync(request);
+                    var cartDetails = await _accountServices.GetCartDetailsAsync(request);
                     var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
                     return new ResponseBase<GetCartResponse> { Content = getcartResponse };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting Cart at dashboard : " + nameof(GetCartDetails));
+                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartDetails));
                     throw;
                 }
             }
