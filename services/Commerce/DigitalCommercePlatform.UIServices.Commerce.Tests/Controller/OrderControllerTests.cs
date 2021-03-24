@@ -63,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderDetailsAsync("645665656565", new Infrastructure.RequestHeaders());
+            var result = await controller.GetOrderDetailsAsync("645665656565");
 
             result.Should().NotBeNull();
         }
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderDetailsAsync("645665656565", new Infrastructure.RequestHeaders()) as ObjectResult;
+            var result = await controller.GetOrderDetailsAsync("645665656565") as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 
@@ -109,7 +109,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetRecentOrdersAsync(criteria, new Infrastructure.RequestHeaders());
+            var result = await controller.GetRecentOrdersAsync(criteria);
 
             result.Should().NotBeNull();
         }
@@ -136,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetRecentOrdersAsync(criteria, new Infrastructure.RequestHeaders()) as ObjectResult;
+            var result = await controller.GetRecentOrdersAsync(criteria) as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 
@@ -156,7 +156,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderLinesAsync("645665656565", new Infrastructure.RequestHeaders());
+            var result = await controller.GetOrderLinesAsync("645665656565");
 
             result.Should().NotBeNull();
         }
@@ -174,7 +174,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetOrderLinesAsync("645665656565", new Infrastructure.RequestHeaders()) as ObjectResult;
+            var result = await controller.GetOrderLinesAsync("645665656565") as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 
