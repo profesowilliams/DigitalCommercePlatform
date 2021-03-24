@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,47 +14,43 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
     [ExcludeFromCodeCoverage]
     public sealed class GetTopConfigurations
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Criteria { get; set; }
         }
 
         public class Response
         {
-            public ActiveOpenConfigurationsModel Summary { get; set; }
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-            public string ErrorDescription { get; set; }
-
-            public Response(ActiveOpenConfigurationsModel summary)
-            {
-                Summary = summary;
-            }
+            public ActiveOpenConfigurationsModel Summary { get; set; }            
         }
 
-        public class GetTopConfigurationsQueryHandler : IRequestHandler<Request, Response>
+        public class GetTopConfigurationsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountQueryService;
+            private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
+            private readonly ILogger<GetTopConfigurationsQueryHandler> _logger;
 
-            public GetTopConfigurationsQueryHandler(IAccountService accountQueryService, IMapper mapper)
+            public GetTopConfigurationsQueryHandler(IAccountService accountService, 
+                IMapper mapper,
+                ILogger<GetTopConfigurationsQueryHandler> logger
+                )
             {
-                _accountQueryService = accountQueryService;
+                _accountService = accountService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                if (request.Criteria != null)
+                try
                 {
-                    var response = await _accountQueryService.GetTopConfigurationsAsync(request);
-                    return new Response(response);
+                    ActiveOpenConfigurationsModel configurations = await _accountService.GetTopConfigurationsAsync(request);
+                    var getConfigurations = _mapper.Map<Response>(configurations);
+                    return new ResponseBase<Response> { Content = getConfigurations };
                 }
-                else
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = "forbidden"; // fix this
-                    response.IsError = true;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(GetTopConfigurationsQueryHandler));
+                    throw;
                 }
 
             }

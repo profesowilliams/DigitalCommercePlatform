@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,47 +14,42 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
     [ExcludeFromCodeCoverage]
     public sealed class GetRenewalsSummary
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Criteria { get; set; }
         }
 
         public class Response
         {
-            public RenewalsSummaryModel Summary { get; set; }
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-            public string ErrorDescription { get; set; }
-
-            public Response(RenewalsSummaryModel summary)
-            {
-                Summary = summary;
-            }
+            public RenewalsSummaryModel Summary { get; set; }            
         }
 
-        public class RenewalsSummaryQueryHandler : IRequestHandler<Request, Response>
+        public class RenewalsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountQueryService;
+            private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
-
-            public RenewalsSummaryQueryHandler(IAccountService accountQueryService, IMapper mapper)
+            private readonly ILogger<RenewalsSummaryQueryHandler> _logger;
+            public RenewalsSummaryQueryHandler(IAccountService accountService, 
+                IMapper mapper,
+                ILogger<RenewalsSummaryQueryHandler> logger
+                )
             {
-                _accountQueryService = accountQueryService;
+                _accountService = accountService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                if (request.Criteria != null)
+                try
                 {
-                    var response = await _accountQueryService.GetRenewalsSummaryAsync(request);
-                    return new Response(response);
+                    RenewalsSummaryModel renewals = await _accountService.GetRenewalsSummaryAsync(request);
+                    var getConfigurations = _mapper.Map<Response>(renewals);
+                    return new ResponseBase<Response> { Content = getConfigurations };
                 }
-                else
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = "forbidden"; // fix this
-                    response.IsError = true;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(RenewalsSummaryQueryHandler));
+                    throw;
                 }
 
             }

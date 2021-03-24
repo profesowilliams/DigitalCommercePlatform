@@ -1,6 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -47,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurationsSummary(GetConfigurationsSummary.Response expected)
+        public async Task GetConfigurationsSummary(ResponseBase<GetConfigurationsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -65,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDealsSummary(GetDealsSummary.Response expected)
+        public async Task GetDealsSummary(ResponseBase<GetDealsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -82,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeals_BadRequest(GetDealsSummary.Response expected)
+        public async Task GetDeals_BadRequest(ResponseBase<GetDealsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -99,7 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurationsSummary_BadRequest(GetConfigurationsSummary.Response expected)
+        public async Task GetConfigurationsSummary_BadRequest(ResponseBase<GetConfigurationsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -116,11 +118,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetails(GetConfigurationsSummary.Response expected)
+        public async Task GetCartDetails(ResponseBase<GetCartDetails.GetCartResponse> expected)
         {
 
             _mediator.Setup(x => x.Send(
-                      It.IsAny<GetConfigurationsSummary.Request>(),
+                      It.IsAny<GetCartDetails.GetCartRequest>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
@@ -133,7 +135,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetActionItems(GetActionItems.Response expected)
+        public async Task GetActionItems(ResponseBase<GetActionItems.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -150,7 +152,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetActionItems_BadRequest(GetActionItems.Response expected)
+        public async Task GetActionItems_BadRequest(ResponseBase<GetActionItems.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -167,7 +169,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetTopConfigurations(GetTopConfigurations.Response expected)
+        public async Task GetTopConfigurations(ResponseBase<GetTopConfigurations.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -184,7 +186,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetTopConfigurations_BadRequest(GetTopConfigurations.Response expected)
+        public async Task GetTopConfigurations_BadRequest(ResponseBase<GetTopConfigurations.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -200,7 +202,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         }
         [Theory]
         [AutoDomainData]
-        public async Task GetTopQuotes(GetTopQuotes.Response expected)
+        public async Task GetTopQuotes(ResponseBase<GetTopQuotes.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -217,7 +219,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetTopQuotes_BadRequest(GetTopQuotes.Response expected)
+        public async Task GetTopQuotes_BadRequest(ResponseBase<GetTopQuotes.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -235,7 +237,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetRenewals(GetRenewalsSummary.Response expected)
+        public async Task GetRenewals(ResponseBase<GetRenewalsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -252,7 +254,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetRenewals_BadRequest(GetRenewalsSummary.Response expected)
+        public async Task GetRenewals_BadRequest(ResponseBase<GetRenewalsSummary.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
