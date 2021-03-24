@@ -8,11 +8,13 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -66,6 +68,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetOrderDetails_BadRequest(ResponseBase<GetOrder.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetOrder.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetOrderDetailsAsync("645665656565", new Infrastructure.RequestHeaders()) as ObjectResult;
+
+            var statusCode = (HttpStatusCode)result.StatusCode;
+
+            statusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
         [Theory]
         [AutoMoqData]
         public async Task GetRecentOrders(ResponseBase<GetOrders.Response> expected)
@@ -95,6 +116,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoMoqData]
+        public async Task GetRecentOrders_BadRequest(ResponseBase<GetOrders.Response> expected)
+        {
+            var criteria = new GetOrdersDto
+            {
+                Id = "I34534599",
+                Reseller = "SHI",
+                CreatedFrom = DateTime.Now.AddMonths(-6),
+                CreatedTo = DateTime.Now,
+                OrderBy = "Id",
+                SortAscending = false,
+                PageNumber = 1,
+                PageSize = 25,
+            };
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetOrders.Request>(),
+                               It.IsAny<CancellationToken>()))
+                           .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetRecentOrdersAsync(criteria, new Infrastructure.RequestHeaders()) as ObjectResult;
+
+            var statusCode = (HttpStatusCode)result.StatusCode;
+
+            statusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+
+        [Theory]
+        [AutoMoqData]
         public async Task GetOrderLinesAsync(ResponseBase<GetLines.Response> expected)
         {
 
@@ -108,6 +159,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             var result = await controller.GetOrderLinesAsync("645665656565", new Infrastructure.RequestHeaders());
 
             result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoMoqData]
+        public async Task GetOrderLinesAsync_BadRequest(ResponseBase<GetLines.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetLines.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetOrderLinesAsync("645665656565", new Infrastructure.RequestHeaders()) as ObjectResult;
+
+            var statusCode = (HttpStatusCode)result.StatusCode;
+
+            statusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }

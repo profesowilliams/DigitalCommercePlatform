@@ -67,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quotes/Find")]
+        [Route("quotes/find")]
         public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query, [FromHeader] RequestHeaders headers)
         {
             Context.SetContextFromRequest(headers);

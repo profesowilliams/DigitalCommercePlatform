@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         {
         }
 
+
         [HttpGet]
         [Route("order/{id}")]
         public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id, [FromHeader] RequestHeaders headers)
@@ -39,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             Context.SetContextFromRequest(headers);
 
             var orderResponse = await Mediator.Send(new GetOrder.Request(id)).ConfigureAwait(false);
-            if (orderResponse.ErrorInfo.IsError && orderResponse.ErrorInfo.Code == "possible_invalid_code")
+            if (orderResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, orderResponse);
             }
@@ -63,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var getOrdersQuery = new GetOrders.Request(filtering, paging);
 
             var ordersResponse = await Mediator.Send(getOrdersQuery).ConfigureAwait(false);
-            if (ordersResponse.ErrorInfo.IsError && ordersResponse.ErrorInfo.Code == "possible_invalid_code")
+            if (ordersResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, ordersResponse);
             }
@@ -81,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             Context.SetContextFromRequest(headers);
 
             var orderLinesResponse = await Mediator.Send(new GetLines.Request(id)).ConfigureAwait(false);
-            if (orderLinesResponse.ErrorInfo.IsError && orderLinesResponse.ErrorInfo.Code == "possible_invalid_code")
+            if (orderLinesResponse.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, orderLinesResponse);
             }

@@ -6,11 +6,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract
     public class ResponseBase<T>
     {
         public T Content { get; set; }
-        public ErrorInfo ErrorInfo { get; set; } = new ErrorInfo();
+        public ErrorInformation Error { get; set; } = new ErrorInformation();
     }
 
     [ExcludeFromCodeCoverage]
-    public class ErrorInfo
+    public class ErrorInformation
     {
         public string Code { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
