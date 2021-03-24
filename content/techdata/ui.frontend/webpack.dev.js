@@ -252,6 +252,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in-demo-page.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'signin-aem',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/signin/signin-aem.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'teaser-cards1.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-cards1.html')
 			}),
