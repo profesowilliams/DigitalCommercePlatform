@@ -3,16 +3,18 @@
 namespace DigitalCommercePlatform.UIServices.Account.Actions.Abstract
 {
     [ExcludeFromCodeCoverage]
-    public abstract class ResponseBase<T>
+    public class ResponseBase<T>
     {
         public T Content { get; set; }
+        public ErrorInformation Error { get; set; } = new ErrorInformation();
+    }
 
-        public virtual bool IsError { get; set; }
-        public string ErrorCode { get; set; }
+    [ExcludeFromCodeCoverage]
+    public class ErrorInformation
+    {
+        public string Code { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+        public bool IsError { get; set; }
 
-        public ResponseBase(T content)
-        {
-            Content = content;
-        }
     }
 }

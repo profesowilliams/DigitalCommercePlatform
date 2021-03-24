@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
     [ExcludeFromCodeCoverage]
     public sealed class GetActionItems
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Criteria { get; set; }
         }
@@ -19,39 +22,35 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
         public class Response
         {
             public ActionItemsModel Summary { get; set; }
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-            public string ErrorDescription { get; set; }
-
-            public Response(ActionItemsModel summary)
-            {
-                Summary = summary;
-            }
+            
         }
 
-        public class ActionItemsSummaryQueryHandler : IRequestHandler<Request, Response>
+        public class ActionItemsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountQueryService;
+            private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
-
-            public ActionItemsSummaryQueryHandler(IAccountService accountQueryService, IMapper mapper)
+            private readonly ILogger<ActionItemsSummaryQueryHandler> _logger;
+            public ActionItemsSummaryQueryHandler(IAccountService accountService, 
+                IMapper mapper,
+                ILogger<ActionItemsSummaryQueryHandler> logger
+                )
             {
-                _accountQueryService = accountQueryService;
+                _accountService = accountService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                if (request.Criteria != null)
+                try
                 {
-                    var response = await _accountQueryService.GetActionItemsSummaryAsync(request);
-                    return new Response(response);
+                    ActionItemsModel actionItems = await _accountService.GetActionItemsSummaryAsync(request);
+                    var getActionItems = _mapper.Map<Response>(actionItems);
+                    return new ResponseBase<Response> { Content = getActionItems };
                 }
-                else
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = "forbidden"; // fix this
-                    response.IsError = true;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(ActionItemsSummaryQueryHandler));
+                    throw;
                 }
 
             }

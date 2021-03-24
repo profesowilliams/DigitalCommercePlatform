@@ -7,13 +7,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
 {
     [ExcludeFromCodeCoverage]
     public static class GetCartDetails
     {
-        public class GetCartRequest : IRequest<GetCartResponse>
+        public class GetCartRequest : IRequest<ResponseBase<GetCartResponse>>
         {
             public string userId { get; set; }
 
@@ -26,34 +27,33 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
         public class GetCartResponse
         {
             public SavedCarts SavedCarts { get; set; }
-
-
         }
-        public class Handler : IRequestHandler<GetCartRequest, GetCartResponse>
+        public class GetSavedCartsQueryHandler : IRequestHandler<GetCartRequest, ResponseBase<GetCartResponse>>
         {
             private readonly IAccountService _cartRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
+            private readonly ILogger<GetSavedCartsQueryHandler> _logger;
 
-            public Handler(IAccountService cartRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            public GetSavedCartsQueryHandler(IAccountService cartRepositoryServices, 
+                IMapper mapper, 
+                ILogger<GetSavedCartsQueryHandler> logger)
             {
                 _cartRepositoryServices = cartRepositoryServices;
                 _mapper = mapper;
                 _logger = logger;
             }
 
-            public async Task<GetCartResponse> Handle(GetCartRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetCartResponse>> Handle(GetCartRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var cartDetails = await _cartRepositoryServices.GetCartDetailsAsync(request);
                     var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-
-                    return getcartResponse;
+                    return new ResponseBase<GetCartResponse> { Content = getcartResponse };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartDetails));
+                    _logger.LogError(ex, "Exception at getting Cart at dashboard : " + nameof(GetCartDetails));
                     throw;
                 }
             }

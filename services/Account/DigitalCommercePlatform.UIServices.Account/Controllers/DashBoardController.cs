@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetConfigurationsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetDealsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -69,7 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetActionItems.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -84,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetTopQuotes.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -99,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetTopConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
@@ -110,10 +110,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("savedCarts")]
-        public async Task<ActionResult<GetCartResponse>> GetCartDetails(string Id)
+        public async Task<IActionResult> GetCartDetails(string Id)
         {
             var response = await Mediator.Send(new GetCartRequest(Id)).ConfigureAwait(false);
-            return response;
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
         }
 
         [HttpPost]
@@ -123,7 +128,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var request = new GetRenewalsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
