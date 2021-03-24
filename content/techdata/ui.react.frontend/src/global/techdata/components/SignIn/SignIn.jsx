@@ -119,7 +119,7 @@ const SignIn = (props) => {
 		localStorage.removeItem('signInCode');
 		setShowSignIN(false);
 		showIcon();
-		window.location.href="/"
+		window.location.href="http://localhost:8080/signin"
 	};
 
 	return (
