@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using System.Collections.Generic;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
@@ -15,8 +16,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         {
             CreateMap<IEnumerable<ProductModel>, GetProductResponse>()
                 .ForMember(dest => dest.ReturnObject, opt => opt.MapFrom(src => src));
-            CreateMap<IEnumerable<SummaryModel>, FindSummaryResponse>()
+            CreateMap<SummaryDetails, FindSummaryResponse>()
                 .ForMember(dest => dest.SummaryModels, opt => opt.MapFrom(src => src));
+
+            CreateMap<SummaryModel, GetProductSummaryResponse>()
+                .ForPath(dest => dest.SummaryModel, opt => opt.MapFrom(src => src) );
 
         }
     }

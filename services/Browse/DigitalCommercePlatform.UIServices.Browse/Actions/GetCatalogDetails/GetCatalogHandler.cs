@@ -1,18 +1,21 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCatalogHandler
     {
-        public class GetCatalogRequest : IRequest<GetCatalogResponse>
+        public class GetCatalogRequest : IRequest<ResponseBase<GetCatalogResponse>>
         {
             public string Id { get; set; }
 
@@ -27,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
             public IEnumerable<CatalogHierarchyModel> CatalogHierarchies { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCatalogRequest, GetCatalogResponse>
+        public class Handler : IRequestHandler<GetCatalogRequest, ResponseBase<GetCatalogResponse>>
         {
             private readonly IBrowseService _CatalogRepositoryService;
             private readonly IMapper _mapper;
@@ -42,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                 _logger = logger;
             }
 
-            public async Task<GetCatalogResponse> Handle(GetCatalogRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetCatalogResponse>> Handle(GetCatalogRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -54,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                         var CatalogDetails = await _CatalogRepositoryService.GetCatalogDetails(request);
                         getCatalogResponse = _mapper.Map<GetCatalogResponse>(CatalogDetails);
                     }
-                    return getCatalogResponse;
+                    return new ResponseBase<GetCatalogResponse> { Content = getCatalogResponse };
                 }
                 catch (Exception ex)
                 {

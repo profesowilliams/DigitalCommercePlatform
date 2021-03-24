@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCartHandler
     {
-        public class GetCartRequest : IRequest<GetCartResponse>
+        public class GetCartRequest : IRequest<ResponseBase<GetCartResponse>>
         {
             public GetCartRequest(string userId, string customerId)
             {
@@ -28,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             public int CartItemCount { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCartRequest, GetCartResponse>
+        public class Handler : IRequestHandler<GetCartRequest, ResponseBase<GetCartResponse>>
         {
             private readonly IBrowseService _cartRepositoryServices;
             private readonly IMapper _mapper;
@@ -41,13 +44,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
                 _logger = logger;
             }
 
-            public async Task<GetCartResponse> Handle(GetCartRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetCartResponse>> Handle(GetCartRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
                     var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-                    return getcartResponse;
+                    return new ResponseBase<GetCartResponse> { Content=getcartResponse };
                 }
                 catch (Exception ex)
                 {

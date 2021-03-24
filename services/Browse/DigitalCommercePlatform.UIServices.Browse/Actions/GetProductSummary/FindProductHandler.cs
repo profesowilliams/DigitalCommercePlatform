@@ -1,26 +1,52 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 {
+    [ExcludeFromCodeCoverage]
     public static class FindProductHandler
     {
-        public class GetProductRequest : IRequest<GetProductResponse>
+        public class GetProductRequest : IRequest<ResponseBase<GetProductResponse>>
         {
-            public FindProductModel Query { get; set; }
+            public IEnumerable<string> MaterialNumber { get; set; }
+            public IEnumerable<string> OldMaterialNumber { get; set; }
+            public IEnumerable<string> Manufacturer { get; set; }
+            public IEnumerable<string> MfrPartNumber { get; set; }
+            public IEnumerable<string> UPC { get; set; }
+            public string CustomerNumber { get; set; }
+            public string CustomerPartNumber { get; set; }
+            public string SalesOrganization { get; set; }
+            public IEnumerable<string> MaterialStatus { get; set; }
+            public IEnumerable<string> Territories { get; set; }
+            public string Description { get; set; }
+            public string System { get; set; }
+            public bool Details { get; set; } = true;
 
             public GetProductRequest(FindProductModel query)
             {
-                Query = query;
+                MaterialNumber = query.MaterialNumber;
+                OldMaterialNumber = query.OldMaterialNumber;
+                Manufacturer = query.Manufacturer;
+                MfrPartNumber = query.MfrPartNumber;
+                UPC = query.UPC;
+                CustomerNumber = query.CustomerNumber;
+                CustomerPartNumber = query.CustomerPartNumber;
+                SalesOrganization = query.SalesOrganization;
+                MaterialStatus = query.MaterialStatus;
+                Territories = query.Territories;
+                Description = query.Description;
+                System = query.System;
+                Details = query.Details;
             }
         }
 
@@ -29,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public IEnumerable<ProductModel> ReturnObject { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetProductRequest, GetProductResponse>
+        public class Handler : IRequestHandler<GetProductRequest, ResponseBase<GetProductResponse>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -42,13 +68,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 _logger = logger;
             }
 
-            public async Task<GetProductResponse> Handle(GetProductRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetProductResponse>> Handle(GetProductRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.FindProductDetails(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<GetProductResponse>(productDetails);
-                    return getProductResponse;
+                    return new ResponseBase<GetProductResponse> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
@@ -58,12 +84,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             }
         }
 
-        public class Validator : AbstractValidator<GetProductRequest>
-        {
-            public Validator()
-            {
-                RuleFor(x => x.Query).NotEmpty();
-            }
-        }
+        
     }
 }

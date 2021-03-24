@@ -1,18 +1,21 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCustomerHandler
     {
-        public class GetCustomerRequest : IRequest<GetCustomerResponse>
+        public class GetCustomerRequest : IRequest<ResponseBase<GetCustomerResponse>>
         {
             public string Id { get; set; }
 
@@ -28,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
             public string Name { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCustomerRequest, GetCustomerResponse>
+        public class Handler : IRequestHandler<GetCustomerRequest, ResponseBase<GetCustomerResponse>>
         {
             private readonly IBrowseService _customerRepositoryServices;
             private readonly IMapper _mapper;
@@ -43,13 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
                 _logger = logger;
             }
 
-            public async Task<GetCustomerResponse> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetCustomerResponse>> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var customerDetails = await _customerRepositoryServices.GetCustomerDetails(request);
                     var getCustomerResponse = _mapper.Map<IEnumerable<GetCustomerResponse>>(customerDetails)?.FirstOrDefault();
-                    return getCustomerResponse;
+                    return new ResponseBase<GetCustomerResponse> { Content = getCustomerResponse };
                 }
                 catch (Exception ex)
                 {

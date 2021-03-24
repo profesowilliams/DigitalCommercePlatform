@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
@@ -7,10 +8,13 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,7 +25,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 {
     public class BrowseControllerTests
     {
-        public static AppSettings GetAppSettings()
+        private readonly Mock<IMediator> mockMediator;
+        private readonly Mock<IOptions<AppSettings>> mockOptions;
+        private readonly Mock<ILogger<BrowseController>> mockLoggerFactory;
+        private readonly Mock<IUIContext> mockContext;
+        private readonly Mock<ISiteSettings> mockSiteSettings;
+
+        public BrowseControllerTests()
         {
             var appSettingsDict = new Dictionary<string, string>()
             {
@@ -30,119 +40,117 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             };
             var appSettings = new AppSettings();
             appSettings.Configure(appSettingsDict);
-            return appSettings;
+            mockMediator = new Mock<IMediator>();
+            mockOptions = new Mock<IOptions<AppSettings>>();
+            mockOptions.Setup(s => s.Value).Returns(appSettings);
+
+            mockLoggerFactory = new Mock<ILogger<BrowseController>>();
+            mockContext = new Mock<IUIContext>();
+            mockContext.SetupGet(x => x.Language).Returns("en-us");
+            mockSiteSettings = new Mock<ISiteSettings>();
+        }
+        private BrowseController GetController()
+        {
+            return new BrowseController(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
+                mockOptions.Object, mockSiteSettings.Object);
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetCartHandler.GetCartResponse expected)
+        public async Task GetCartDetails(ResponseBase<GetCartHandler.GetCartResponse> expected)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetCartHandler.GetCartRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.GetCartDetails("12", "12").ConfigureAwait(false);
+           var controller = GetController();
+
+            var result = await controller.GetCartDetails("12", "12", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
+
+
         [Theory]
         [AutoDomainData]
-        public async Task GetCustomerDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetCustomerHandler.GetCustomerResponse expected)
+        public async Task GetCustomerDetails(ResponseBase<GetCustomerHandler.GetCustomerResponse> expected)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetCustomerHandler.GetCustomerRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.GetCustomer("0038048612").ConfigureAwait(false);
+            var controller = GetController();
+
+            var result = await controller.GetCustomer("0038048612",new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCatalogDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetCatalogHandler.GetCatalogResponse expected)
+        public async Task GetCatalogDetails(ResponseBase<GetCatalogHandler.GetCatalogResponse> expected)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetCatalogHandler.GetCatalogRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.GetCatalog("FCS").ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.GetCatalog("FCS", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetHeaderDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetHeaderHandler.GetHeaderResponse expected)
+        public async Task GetHeaderDetails(ResponseBase<GetHeaderHandler.GetHeaderResponse> expected)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetHeaderHandler.GetHeaderRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
-            var result = await controller.GetHeader("1", "0038048612", "FCS").ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.GetHeader("1", "0038048612", "FCS", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task FindProductDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            FindProductHandler.GetProductResponse expected,
+        public async Task FindProductDetails(ResponseBase<FindProductHandler.GetProductResponse> expected,
             FindProductModel model)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<FindProductHandler.GetProductRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
-            var result = await controller.FindProduct(model).ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.FindProduct(model, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task FindSummaryDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            FindSummaryHandler.FindSummaryResponse expected,
+        public async Task FindSummaryDetails(ResponseBase<FindSummaryHandler.FindSummaryResponse> expected,
             FindProductModel model)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<FindSummaryHandler.FindSummaryRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
-            var result = await controller.FindProduct(model).ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.FindProduct(model, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductDetails(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetProductDetailsHandler.GetProductDetailsResponse expected)
+        public async Task GetProductDetails(ResponseBase<GetProductDetailsHandler.GetProductDetailsResponse> expected)
         {
             var data = new List<string> { "123" };
 
@@ -150,18 +158,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<GetProductDetailsHandler.GetProductDetailsRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
-            var result = await controller.GetProduct(data, true).ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.GetProduct(data, new Infrastructure.RequestHeaders(), true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductSummary(
-            [Frozen] Mock<IMediator> mockMediator,
-            [Greedy] BrowseController controller,
-            GetProductSummaryHandler.GetProductSummaryResponse expected)
+        public async Task GetProductSummary(ResponseBase<GetProductSummaryHandler.GetProductSummaryResponse> expected)
         {
             var data = new List<string> { "123" };
 
@@ -169,8 +174,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<GetProductSummaryHandler.GetProductSummaryRequest>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
-            var result = await controller.GetProduct(data, false).ConfigureAwait(false);
+            var controller = GetController();
+            var result = await controller.GetProduct(data, new Infrastructure.RequestHeaders(), false).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

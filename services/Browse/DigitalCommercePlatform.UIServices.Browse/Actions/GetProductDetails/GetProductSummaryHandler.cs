@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetProductSummaryHandler
     {
-        public class GetProductSummaryRequest : IRequest<GetProductSummaryResponse>
+        public class GetProductSummaryRequest : IRequest<ResponseBase<GetProductSummaryResponse>>
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
@@ -26,19 +28,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        public class GetProductSummaryResponse : Response<IEnumerable<SummaryModel>>
+        public class GetProductSummaryResponse 
         {
-            public GetProductSummaryResponse()
-            {
-            }
-
-            public GetProductSummaryResponse(IEnumerable<SummaryModel> response)
-            {
-                ReturnObject = response;
-            }
+            public SummaryModel SummaryModel { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetProductSummaryRequest, GetProductSummaryResponse>
+        public class Handler : IRequestHandler<GetProductSummaryRequest, ResponseBase<GetProductSummaryResponse>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -51,13 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _logger = logger;
             }
 
-            public async Task<GetProductSummaryResponse> Handle(GetProductSummaryRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetProductSummaryResponse>> Handle(GetProductSummaryRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.GetProductSummary(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<GetProductSummaryResponse>(productDetails);
-                    return getProductResponse;
+                    return new ResponseBase<GetProductSummaryResponse> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {

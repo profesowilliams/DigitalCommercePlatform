@@ -2,15 +2,24 @@
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Abstract
 {
+    
     [ExcludeFromCodeCoverage]
-    public abstract class ResponseBase<T>
+    public class ResponseBase<T>
     {
         public T Content { get; set; }
-        public virtual bool IsError { get; set; }
-        public string ErrorCode { get; set; }
-        protected ResponseBase(T content)
-        {
-            Content = content;
-        }
+        public ErrorInformation Error { get; set; } = new ErrorInformation();
     }
+
+    [ExcludeFromCodeCoverage]
+    public class ErrorInformation
+    {
+        public string Code { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+        public bool IsError { get; set; }
+
+    }
+
+
+
+
 }

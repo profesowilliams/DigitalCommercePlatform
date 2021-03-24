@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Core.Models.DTO.Common;
@@ -7,14 +8,16 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetProductDetailsHandler
     {
-        public class GetProductDetailsRequest : IRequest<GetProductDetailsResponse>
+        public class GetProductDetailsRequest : IRequest<ResponseBase<GetProductDetailsResponse>>
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
@@ -38,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        public class Handler : IRequestHandler<GetProductDetailsRequest, GetProductDetailsResponse>
+        public class Handler : IRequestHandler<GetProductDetailsRequest, ResponseBase<GetProductDetailsResponse>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -51,13 +54,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _logger = logger;
             }
 
-            public async Task<GetProductDetailsResponse> Handle(GetProductDetailsRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<GetProductDetailsResponse>> Handle(GetProductDetailsRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<GetProductDetailsResponse>(productDetails);
-                    return getProductResponse;
+                    return new ResponseBase<GetProductDetailsResponse> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
