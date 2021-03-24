@@ -50,8 +50,6 @@
 
   <ItemGroup>
     <Folder Include="Actions\GetConfigurationDetail\" />
-    <Folder Include="Infrastructure\Mappings\Configurations\" />
-    <Folder Include="Infrastructure\Mappings\Deals\" />
     <Folder Include="Infrastructure\Mappings\Quotes\" />
   </ItemGroup>
 </Project>
