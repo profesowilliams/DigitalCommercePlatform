@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
            var controller = GetController();
 
-            var result = await controller.GetCartDetails("12", "12", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetCartDetails("12", "12").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -84,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             var controller = GetController();
 
-            var result = await controller.GetCustomer("0038048612",new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetCustomer("0038048612").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -99,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetCatalog("FCS", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetCatalog("FCS").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetHeader("1", "0038048612", "FCS", new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.GetHeader("1", "0038048612", "FCS").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -128,7 +128,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.FindProduct(model, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.FindProduct(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -143,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.FindProduct(model, new Infrastructure.RequestHeaders()).ConfigureAwait(false);
+            var result = await controller.FindProduct(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -159,7 +159,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetProduct(data, new Infrastructure.RequestHeaders(), true).ConfigureAwait(false);
+            var result = await controller.GetProduct(data, true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -175,7 +175,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetProduct(data, new Infrastructure.RequestHeaders(), false).ConfigureAwait(false);
+            var result = await controller.GetProduct(data, false).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
