@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
@@ -70,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Response expected)
+        public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -87,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetQuoteDetails(GetQuote.Response expected)
+        public async Task GetQuoteDetails(ResponseBase<GetQuote.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetQuote.Request>(),
@@ -103,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task FindQuoteDetails(FindQuotesForGrid.Response expected)
+        public async Task FindQuoteDetails(ResponseBase<FindQuotesForGrid.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<FindQuotesForGrid.Request>(),

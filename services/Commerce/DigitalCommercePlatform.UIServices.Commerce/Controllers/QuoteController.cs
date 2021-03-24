@@ -48,12 +48,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("quote/create/{savedCartId}")]
-        public async Task<ActionResult<Response>> GetCartDetailsInQuote(string cartId, [FromHeader] RequestHeaders headers)
+        public async Task<ActionResult> GetCartDetailsInQuote(string cartId, [FromHeader] RequestHeaders headers)
         {
             Context.SetContextFromRequest(headers);
 
             var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
-            return response;
+            return Ok(response);
         }
 
         [HttpGet]
@@ -67,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quotes/Find")]
+        [Route("quotes/find")]
         public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query, [FromHeader] RequestHeaders headers)
         {
             Context.SetContextFromRequest(headers);
