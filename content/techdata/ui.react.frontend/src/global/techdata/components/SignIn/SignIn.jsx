@@ -112,7 +112,6 @@ const SignIn = (props) => {
 
 	const onSignOut = () => {
 		// clearing out local storage
-		debugger;
 		localStorage.removeItem('signin');
 		localStorage.removeItem('signout');
 		localStorage.removeItem('user');
