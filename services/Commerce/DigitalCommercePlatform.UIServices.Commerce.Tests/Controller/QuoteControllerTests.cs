@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
@@ -68,16 +69,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
-        [Fact]
-        public void CreateQuoteTestNotNull()
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateQuoteTest(ResponseBase<CreateQuote.Response> expected)
         {
             // Arrange
+            _mediator.Setup(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
             var controller = GetController();
             var createModel = new CreateModel();
             // Act
-            var result = controller.Create(createModel);
+            var result = await controller.Create(createModel).ConfigureAwait(false);
             // Assert
-            result.Should().NotBeNull();
+            _mediator.Verify(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Theory]
