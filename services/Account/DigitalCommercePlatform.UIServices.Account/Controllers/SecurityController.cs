@@ -45,7 +45,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [AllowAnonymous]
-        [HttpOptions]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Authenticate(AuthenticateBodyRequest authenticateBodyRequest, [FromHeader] AuthenticateHeaderRequest authenticateHeaderRequest)
@@ -60,6 +59,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
             return Ok(response);
         }
+
+        [AllowAnonymous]
+        [HttpOptions("login")]
+        public IActionResult PreflightRoute()
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site");
+
+
+            return NoContent();
+        }
+
+
 
         [HttpPost]
         [Route("logout")]
