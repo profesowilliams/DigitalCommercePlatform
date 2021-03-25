@@ -45,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [AllowAnonymous]
+        [HttpOptions]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Authenticate(AuthenticateBodyRequest authenticateBodyRequest, [FromHeader] AuthenticateHeaderRequest authenticateHeaderRequest)
