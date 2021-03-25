@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
 using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
+using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
@@ -14,7 +15,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
     {
         public ProductProfile()
         {
-            CreateMap<IEnumerable<ProductModel>, GetProductResponse>()
+            CreateMap<IEnumerable<ProductModel>, GetProductDetailsResponse>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
+
+            CreateMap<ProductData, GetProductResponse>()
                 .ForMember(dest => dest.ReturnObject, opt => opt.MapFrom(src => src));
             CreateMap<SummaryDetails, FindSummaryResponse>()
                 .ForMember(dest => dest.SummaryModels, opt => opt.MapFrom(src => src));

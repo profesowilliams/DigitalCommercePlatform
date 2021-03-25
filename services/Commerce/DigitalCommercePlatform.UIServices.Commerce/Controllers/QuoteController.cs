@@ -15,6 +15,8 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -41,6 +43,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public IActionResult GetQuote(string quoteId)
         {
             var response = "Quote Id : " + quoteId;
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("quote/create")]
+        public async Task<IActionResult> Create([FromBody] CreateModel create)
+        {
+            var response = await Mediator.Send(new CreateQuote.Request(create)).ConfigureAwait(false);
             return Ok(response);
         }
 

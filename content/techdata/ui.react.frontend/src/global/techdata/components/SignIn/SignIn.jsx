@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {signInAsynAction} from '../../../../store/action/authAction';
+import {getQueryStringValue} from "../../../../utils/utils";
 
 const FA = require('react-fontawesome');
 
 const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
+	const [loadCount, setLoadCount] = useState(0);
 	const [showSignIN, setShowSignIN] = useState(false);
 	const configDataAEM = JSON.parse(props.componentProp);
 	const {auth} = useSelector((state) => {
@@ -17,20 +19,39 @@ const SignIn = (props) => {
 
 	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.authenticationURL, configDataAEM.uiServiceEndPoint, configDataAEM.clientId];
 
-	// console.log(" authUrl = " + authUrl);
-	// console.log("uiServiceEndPoint = "+ uiServiceEndPoint);
-	// console.log("clientId = "+ clientId);
-
 
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem("user")));
+		console.log("useEffect");
 	}, [auth]);
 
 	useEffect(() => {
-		localStorage.setItem('signin', uiServiceEndPoint);
+		localStorage.setItem('signin', constructSignInURL());
+		isCodePresent();
 		routeChange();
 	}, []);
 
+	const isCodePresent = () => {
+		let signInCode = null;
+		// SigIn Code Check from Local Storage
+		let codeFromLocalStorage = localStorage.getItem('signInCode');
+		if(codeFromLocalStorage){
+			console.log("params Local==>", codeFromLocalStorage);
+			signInCode = codeFromLocalStorage;
+		}
+		// SigIn Code Check from URL
+		if(window.location.search){
+			let getCode = getQueryStringValue(codeQueryParam);
+			// let params = new URLSearchParams(getCode);
+			console.log("params==>", getCode);
+			localStorage.setItem('signInCode', getCode);
+			signInCode = getCode;
+		}
+		else{
+			console.log("No CODE present in URL");
+		}
+		return signInCode;
+	}
 
 	const isAlreadySignedIn = () => {
 		if (user === undefined || user === null)
@@ -42,16 +63,14 @@ const SignIn = (props) => {
 	}
 
 	const showIcon = () => {
-		if(window.location.search){
-			let search = window.location.search.split("=")[1];
-			let getCode = search.split("&")[0];
-			let params = new URLSearchParams(getCode);
-				if (getCode) {
-				return <i className='fas fa-user-alt'></i>
-				}
+		console.log("loadCount ",loadCount);
+		console.log("inside showIcon");
+		console.log("isCodePresent", isCodePresent);
+		if(isCodePresent()){
+			return <i className='fas fa-user-alt'></i>
 		}
 		else{
-		return <i className='far fa-user'></i>
+			return <i className='far fa-user'></i>
 		}
 	}
 
@@ -80,14 +99,15 @@ const SignIn = (props) => {
 
 	}
 	const routeChange= () =>{
-		let search = window.location.search.split("=")[1];
-		let params = new URLSearchParams(search);
-		let foo = params.get('query');
-		if(search == '1234567890000'){
-			localStorage.setItem('signin', 'https://api.npoint.io/1b16a4437f6cb83338cf');
+		console.log("route change");
+		let params = getQueryStringValue(codeQueryParam);
+		if(params){
+			localStorage.setItem('signin', constructSignInURL());
 			dispatch(signInAsynAction());
 			setShowSignIN(true);
-			}
+			}else{
+			console.log("no query param in browser URL");
+		}
   }
 
 	const onSignOut = () => {
@@ -95,7 +115,9 @@ const SignIn = (props) => {
 		localStorage.removeItem('signin');
 		localStorage.removeItem('signout');
 		localStorage.removeItem('user');
+		localStorage.removeItem('signInCode');
 		setShowSignIN(false);
+		showIcon();
 		window.location.href="http://localhost:8080/signin"
 	};
 

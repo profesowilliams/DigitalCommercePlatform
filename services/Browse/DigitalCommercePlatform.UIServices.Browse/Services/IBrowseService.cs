@@ -24,11 +24,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         Task<GetHeaderResponse> GetHeader(GetHeaderRequest request);
 
-        Task<IEnumerable<ProductModel>> FindProductDetails(GetProductRequest request);
+        Task<ProductData> FindProductDetails(GetProductRequest request);
 
         Task<SummaryDetails> FindSummaryDetails(FindSummaryRequest request);
 
-        Task<GetProductDetailsResponse> GetProductDetails(GetProductDetailsRequest request);
+        Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsRequest request);
 
         Task<SummaryModel> GetProductSummary(GetProductSummaryRequest request);
     }
