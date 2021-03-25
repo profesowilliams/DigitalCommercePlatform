@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -29,16 +28,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        public class GetProductDetailsResponse : Response<IEnumerable<ProductModel>>
+        public class GetProductDetailsResponse
         {
-            public GetProductDetailsResponse()
-            {
-            }
-
-            public GetProductDetailsResponse(IEnumerable<ProductModel> response)
-            {
-                ReturnObject = response;
-            }
+            public IEnumerable<ProductModel> Data { get; set; }
         }
 
         public class Handler : IRequestHandler<GetProductDetailsRequest, ResponseBase<GetProductDetailsResponse>>

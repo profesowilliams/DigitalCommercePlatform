@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 
         public class GetProductResponse
         {
-            public IEnumerable<ProductModel> ReturnObject { get; set; }
+            public ProductData ReturnObject { get; set; }
         }
 
         public class Handler : IRequestHandler<GetProductRequest, ResponseBase<GetProductResponse>>
