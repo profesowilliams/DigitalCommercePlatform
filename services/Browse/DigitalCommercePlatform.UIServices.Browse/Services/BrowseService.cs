@@ -138,13 +138,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
         }
 
-        public async Task<IEnumerable<ProductModel>> FindProductDetails(GetProductRequest request)
+        public async Task<ProductData> FindProductDetails(GetProductRequest request)
         {
             var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
             try
             {
                 
-                var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductModel>>(ProductURL);
+                var getProductResponse = await _middleTierHttpClient.GetAsync<ProductData>(ProductURL);
                 return getProductResponse;
             }
             catch (Exception ex)
@@ -170,12 +170,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
         }
 
-        public async Task<GetProductDetailsResponse> GetProductDetails(GetProductDetailsRequest request)
+        public async Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsRequest request)
         {
             var ProductURL = _appProductURL.BuildQuery(request);
             try
             {
-                var getProductResponse = await _middleTierHttpClient.GetAsync<GetProductDetailsResponse>(ProductURL);
+                var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductModel>>(ProductURL);
                 return getProductResponse;
             }
             catch (Exception ex)
