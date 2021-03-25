@@ -8,11 +8,13 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote
 {
+    [ExcludeFromCodeCoverage]
     public sealed class CreateQuote
     {
         public class Request : IRequest<ResponseBase<Response>>
