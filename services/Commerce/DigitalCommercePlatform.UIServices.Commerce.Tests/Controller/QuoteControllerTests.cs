@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -67,7 +68,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
-
+        [Fact]
+        public void CreateQuoteTestNotNull()
+        {
+            // Arrange
+            var controller = GetController();
+            var createModel = new CreateModel();
+            // Act
+            var result = controller.Create(createModel);
+            // Assert
+            result.Should().NotBeNull();
+        }
 
         [Theory]
         [AutoDomainData]
