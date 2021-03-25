@@ -42,7 +42,7 @@ export const signInAsynAction = () => {
 		let code = localStorage.getItem("signInCode");
 		return {
 			"code": code,
-			"RedirectUri": window.location.protocol + "//" + window.location.hostname + "/" + window.location.pathname,
+			"RedirectUri": window.location.protocol + "//" + window.location.hostname  + window.location.pathname,
 			"applicationName": "AEM"
 		}
 	};
