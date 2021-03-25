@@ -16,14 +16,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public class SecurityService : ISecurityService
     {
         private readonly string _coreSecurityUrl;
+        private readonly string _clientId;
+        private readonly string _clientSecret;
         private readonly IUIContext _context;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
 
         public SecurityService(IOptions<AppSettings> appSettingsOptions, IUIContext context, IMiddleTierHttpClient middleTierHttpClient)
         {
             if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
+
             _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? 
                                                         throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
+
+            _clientId = appSettingsOptions.Value?.TryGetSetting(Globals.AemClientId) ??
+                                                        throw new InvalidOperationException($"{Globals.AemClientId} is missing from AppSettings");
+
+            _clientSecret = appSettingsOptions.Value?.TryGetSetting(Globals.AemClientSecret) ??
+                                                        throw new InvalidOperationException($"{Globals.AemClientSecret} is missing from AppSettings");
 
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
@@ -34,8 +43,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
             {
                 Address = _coreSecurityUrl,
-                ClientId = "ecom.apps.web.aem.dit",
-                ClientSecret = "mVzaL03EDRQCVqooXHxpdzhwFEa8XBKCfPToPT8WdAE4wh6QTc21RVZYOKPS0JTW",
+                ClientId = _clientId,
+                ClientSecret = _clientSecret,
                 Code = code,
                 RedirectUri = new Uri(redirectUri)
             };

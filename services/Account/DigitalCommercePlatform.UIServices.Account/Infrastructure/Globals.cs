@@ -7,5 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure
     public static class Globals
     {
         public const string CoreSecurityUrl = "Core.Security.Url";
+        public const string AemClientId = "Aem.ClientId";
+        public const string AemClientSecret = "Aem.ClientSecret";
     }
 }
