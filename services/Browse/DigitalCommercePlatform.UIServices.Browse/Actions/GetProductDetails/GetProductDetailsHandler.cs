@@ -29,17 +29,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        public class GetProductDetailsResponse //: Response<IEnumerable<ProductModel>>
+        public class GetProductDetailsResponse
         {
             public IEnumerable<ProductModel> Data { get; set; }
-            //public GetProductDetailsResponse()
-            //{
-            //}
-
-            //public GetProductDetailsResponse(IEnumerable<ProductModel> response)
-            //{
-            //    ReturnObject = response;
-            //}
         }
 
         public class Handler : IRequestHandler<GetProductDetailsRequest, ResponseBase<GetProductDetailsResponse>>
