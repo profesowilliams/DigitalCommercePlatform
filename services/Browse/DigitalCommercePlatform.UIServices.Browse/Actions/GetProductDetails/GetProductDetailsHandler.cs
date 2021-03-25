@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
