@@ -23,7 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string Manufacturer { get; }
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
-            public string OrderBy { get; }
+            public string SortBy { get; }
+            public bool? SortAscending { get; set; }
             public int PageNumber { get; }
             public int PageSize { get; }
 
@@ -34,7 +35,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 Manufacturer = filtering.Manufacturer;
                 CreatedFrom = filtering.CreatedFrom;
                 CreatedTo = filtering.CreatedTo;
-                OrderBy = paging.OrderBy;
+                SortBy = paging.SortBy;
+                SortAscending = paging.SortAscending;
                 PageNumber = paging.PageNumber;
                 PageSize = paging.PageSize == 0 ? 25 : paging.PageSize;
             }
@@ -43,14 +45,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class PagingDto
         {
-            public PagingDto(string orderBy, int pageNumber, int pageSize)
+            public PagingDto(string sortBy, bool? sortAscending, int pageNumber, int pageSize)
             {
-                OrderBy = orderBy;
+                SortBy = sortBy;
+                SortAscending = sortAscending;
                 PageNumber = pageNumber;
                 PageSize = pageSize;
             }
 
-            public string OrderBy { get; }
+            public string SortBy { get; set; }
+            public bool? SortAscending { get; set; }
             public int PageNumber { get; }
             public int PageSize { get; }
         }
@@ -102,7 +106,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                (string sortingProperty, bool sortAscending) = _sortingService.GetSortingParameters(request.OrderBy);
+                var sortingProperty = _sortingService.GetSortingProperty(request.SortBy);
+
+                bool sortAscendingByDefault = true;
 
                 var orderParameters = new SearchCriteria
                 {
@@ -111,8 +117,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     Manufacturer = request.Manufacturer,
                     CreatedFrom = request.CreatedFrom,
                     CreatedTo = request.CreatedTo,
-                    OrderBy = sortingProperty,
-                    SortAscending = sortAscending,
+                    SortBy = sortingProperty,
+                    SortAscending = request.SortAscending ?? sortAscendingByDefault,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize
                 };
@@ -141,7 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
 
                 var validProperties = _sortingService.GetValidProperties();
-                RuleFor(i => i.OrderBy).Must(IsPropertyValidForSorting).WithMessage(i => $"You can't sort by {i.OrderBy} property. Valid properties are: {validProperties}");
+                RuleFor(i => i.SortBy).Must(IsPropertyValidForSorting).WithMessage(i => $"You can't sort by {i.SortBy} property. Valid properties are: {validProperties}");
                 RuleFor(i => i.PageSize).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
                 RuleFor(i => i.PageNumber).GreaterThanOrEqualTo(0).WithMessage("PageNumber must be greater than or equal to 0.");
             }

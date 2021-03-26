@@ -1,9 +1,9 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalFoundation.Common.Client;
@@ -68,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             orderParameters.Manufacturer,
                             orderParameters.CreatedFrom,
                             orderParameters.CreatedTo,
-                            Sort = orderParameters.OrderBy,
+                            Sort = orderParameters.SortBy,
                             SortAscending = orderParameters.SortAscending.ToString(),
                             orderParameters.PageSize,
                             Page = orderParameters.PageNumber,
@@ -174,9 +174,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(FindQuotesForGrid.Request request)
+        public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query)
         {
-            var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+            var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
             return getQuoteResponse;
         }
