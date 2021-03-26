@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote
+namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 {
     [ExcludeFromCodeCoverage]
     public sealed class CreateQuote

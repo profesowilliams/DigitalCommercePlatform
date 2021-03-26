@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,10 +12,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
+namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 {
     [ExcludeFromCodeCoverage]
-    public class FindQuotesForGrid
+    public class FindQuotes
     {
         public class Request:IRequest<ResponseBase<Response>>
         {
@@ -25,13 +26,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
                 Query = query;
             }
         }
-        public class Response
+        public class Response : FindResponse<IEnumerable<QuoteModel>>
         {
-            public IEnumerable<RecentQuotesModel> RecentQuotes { get; set; }
-            public int? TotalItems { get; set; }
-            public int PageNumber { get; set; }
-            public int PageSize { get; set; }
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;
@@ -49,9 +47,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes
             {
                 try
                 {
-                    var quoteDetails = await _commerceQueryService.FindQuoteDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<Response>(quoteDetails);
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                    var result = await _commerceQueryService.FindQuotes(request.Query).ConfigureAwait(false);
+                    var response = _mapper.Map<Response>(result);
+                    return new ResponseBase<Response> { Content = response };
                 }
                 catch (Exception ex)
                 {
