@@ -8,6 +8,7 @@
         line-height: normal;
         color: #ffffff;
         font-family: 'Roboto', sans-serif;
+        padding-inline-start: 0;
 
         li:not(:last-child) {
             border-right: 0.06rem solid #ffffff;
@@ -18,7 +19,7 @@
 
             a {
                 text-decoration: none;
-                //color: #fff;
+                color: #fff;
 
                 article {
                     display: flex;
