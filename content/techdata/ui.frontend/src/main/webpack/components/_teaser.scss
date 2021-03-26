@@ -289,25 +289,24 @@
         }
 
         .cmp-teaser__description {
-            flex: 1 1 auto;
-            padding: 1rem 1rem;
-            padding-top: 0;
-            padding-right: 1.5rem;
-            padding-left: 1.5rem;
-
+            // flex: 1 1 auto;
+            padding: 0  1.5rem;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
             p {
                 color: #676c71;
-                font-size: 0.875rem;
+                font-size: 0.87rem;
                 font-weight: 300;
                 margin-top: 0;
-                margin-bottom: 1rem;
-                word-wrap: break-word;
-                line-height: 1.188rem;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 7;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+                margin-bottom:1rem;
+                line-height: 1.18rem;
+                -webkit-line-clamp: unset!important;
+                display: block!important;
+                overflow: unset!important;
             }
         }
     }
