@@ -68,5 +68,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             Assert.Equal("CREATED", sortingProperty);
         }
+
+        [Theory(DisplayName = "Sort by property that is matching to provided argument")]
+        [InlineData("Id", "ID")]
+        [InlineData("ShipTo", "SHIPTONAME")]
+        [InlineData("Created", "CREATED")]
+        [InlineData("Type", "ORDERTYPE")]
+        [InlineData("Price", "PRICE")]
+        [InlineData("Status", "ORDERSTATUS")]
+        public void SortByPropertyThatIsMatchingToProvidedArgument(string argument,string matchingValue)
+        {
+            var sut = new SortingService();
+
+            var sortingProperty = sut.GetSortingProperty(argument);
+
+            Assert.Equal(matchingValue, sortingProperty);
+        }
     }
 }
