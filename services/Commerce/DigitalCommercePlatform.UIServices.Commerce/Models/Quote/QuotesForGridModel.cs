@@ -2,7 +2,7 @@
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
 {
-    public class RecentQuotesModel
+    public class QuotesForGridModel
     {
         public string Id { get; set; }
         public string QuoteReference { get; set; }

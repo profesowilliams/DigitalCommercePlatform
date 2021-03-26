@@ -8,15 +8,12 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.Http.Controller;
 using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -25,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}")]
+    [Route("v{version:apiVersion}/quote")]
     public class QuoteController : BaseUIServiceController
     {
         public QuoteController(IMediator mediator,
@@ -39,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
 
         [HttpGet]
-        [Route("quote")]
+        [Route("")]
         public IActionResult GetQuote(string quoteId)
         {
             var response = "Quote Id : " + quoteId;
@@ -47,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpPost]
-        [Route("quote/create")]
+        [Route("create")]
         public async Task<IActionResult> Create([FromBody] CreateModel create)
         {
             var response = await Mediator.Send(new CreateQuote.Request(create)).ConfigureAwait(false);
@@ -55,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quote/create/{savedCartId}")]
+        [Route("create/{savedCartId}")]
         public async Task<ActionResult> GetCartDetailsInQuote(string cartId)
         {
             var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
@@ -63,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quotes/get")]
+        [Route("get")]
         public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id,[FromQuery] bool details = true)
         {
             var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
@@ -71,11 +68,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("quotes/find")]
+        [Route("find")]
         public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)
         {
-            var response = await Mediator.Send(new FindQuotesForGrid.Request(query)).ConfigureAwait(false);
+            var response = await Mediator.Send(new FindQuotes.Request(query)).ConfigureAwait(false);
                 return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("getQuotesForGrid")]
+        public async Task<IActionResult> GetQuotesForGrid([FromQuery] GetQuotesForGrid.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+            return Ok(response);
         }
     }
 }

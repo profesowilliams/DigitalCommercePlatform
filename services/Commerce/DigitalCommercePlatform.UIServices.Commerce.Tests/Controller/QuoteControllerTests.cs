@@ -1,9 +1,6 @@
-﻿using AutoFixture.Xunit2;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.CreateQuote;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
@@ -15,7 +12,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +19,7 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 {
-   public class QuoteControllerTests
+    public class QuoteControllerTests
     {
         private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
@@ -120,10 +116,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task FindQuoteDetails(ResponseBase<FindQuotesForGrid.Response> expected)
+        public async Task FindQuoteDetails(ResponseBase<GetQuotesForGrid.Response> expected)
         {
             _mediator.Setup(x => x.Send(
-                       It.IsAny<FindQuotesForGrid.Request>(),
+                       It.IsAny<GetQuotesForGrid.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
