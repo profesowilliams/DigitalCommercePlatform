@@ -4,6 +4,6 @@
     {
         bool IsPropertyValid(string sortingValue);
         string GetValidProperties();
-        (string sortingProperty, bool sortAscending) GetSortingParameters(string sortingValue);
+        string GetSortingProperty(string sortingValue);
     }
 }
