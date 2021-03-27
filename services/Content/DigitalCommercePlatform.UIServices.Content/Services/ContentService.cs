@@ -8,42 +8,44 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DigitalFoundation.Common.Settings;
 using Microsoft.Extensions.Options;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using Flurl;
+using DigitalCommercePlatform.UIServices.Content.Models;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
 {
     [ExcludeFromCodeCoverage]
     public class ContentService : IContentService
     {
-        private readonly IHttpClientFactory _clientFactory;
+        //private readonly IHttpClientFactory _clientFactory;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly string _coreCartURL;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
 #pragma warning restore CS0414
         private readonly ILogger<ContentService> _logger;
-        public ContentService(IHttpClientFactory clientFactory,
-            IMiddleTierHttpClient httpClient,
+        public ContentService(IMiddleTierHttpClient middleTierHttpClient,
             ILogger<ContentService> logger, IOptions<AppSettings> options)
         {
             _logger = logger;
-            _clientFactory = clientFactory;
-            _coreCartURL = options?.Value.GetSetting("Core.Cart.Url");
+            _middleTierHttpClient = middleTierHttpClient;
+            _coreCartURL = options?.Value.GetSetting("App.Cart.Url");
             _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
             _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
         }
         
-        public Task<GetCart.Response> GetCartDetails(GetCart.Request request)
+        public async Task<Rootobject> GetCartDetails(GetCart.Request request)
         {
-            var CartURL = _coreCartURL.BuildQuery(request);
+            var CartURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-cart/v2/";
+            CartURL=CartURL.AppendPathSegment(request.Id);
+                //"http://app-cart/v2/6027161385";
+                //_coreCartURL.AppendPathSegment(request.Id);
+                //.BuildQuery(request);
             try
             {
-                Random rnd = new Random();
-                var v1 = new GetCart.Response
-                {
-                    CartId = "1",//Hardcoded now , in future it will come from the app service
-                    CartItemCount = rnd.Next(1, 40)//Hardcoded now , in future it will come from the app service
-                };
-                return Task.FromResult(v1);
+                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<Rootobject>(CartURL);
+                return getCustomerDetailsResponse;
             }
             catch (Exception ex)
             {

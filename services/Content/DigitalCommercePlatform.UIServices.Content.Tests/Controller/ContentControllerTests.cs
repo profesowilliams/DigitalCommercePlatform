@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -48,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         }
         [Theory]
         [AutoMoqData]
-        public async Task GetCartDetails(GetCart.Response expected)
+        public async Task GetCartDetails(ResponseBase<GetCart.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -58,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetails("12", "12").ConfigureAwait(false);
+            var result = await controller.GetCartDetails("12").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

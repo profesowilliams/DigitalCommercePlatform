@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,27 +14,22 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails
 {
     public sealed class GetCart
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
-            public string userId { get; set; }
-            public string customerId { get; set; }
+            public string Id { get; set; }
 
-            public Request(string CustomerId, string UserId)
+            public Request(string id)
             {
-                userId = UserId;
-                customerId = CustomerId;
+                Id = id;
             }
         }
 
         public class Response
         {
-            public string CartId { get; set; }
-            public int CartItemCount { get; set; }
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
+            public Cart123 Cart{ get; set; }
         }
 
-        public class GetCartQueryHandler : IRequestHandler<Request, Response>
+        public class GetCartQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IContentService _contentService;
             private readonly IMapper _mapper;
@@ -45,13 +42,13 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails
                 _logger = logger;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var response = await _contentService.GetCartDetails(request);
-                    //var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-                    return response;
+                    var cartDetails = await _contentService.GetCartDetails(request);
+                    var getProductResponse = _mapper.Map<Response>(cartDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {

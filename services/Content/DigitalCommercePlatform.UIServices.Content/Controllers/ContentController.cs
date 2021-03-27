@@ -1,8 +1,10 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 {
     [ApiController]
     [ApiVersion("1")]
+    [SetContextFromHeader]
     [Route("/v{apiVersion}")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class ContentController : BaseUIServiceController
     {
         public ContentController(
@@ -27,19 +31,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         }
         [HttpGet]
         [Route("cart/get")]
-        public async Task<ActionResult<GetCart.Response>> GetCartDetails(string userId, string customerId)
+        public async Task<ActionResult<GetCart.Response>> GetCartDetails(string id)
         {
-            var response = await Mediator.Send(new GetCart.Request(userId, customerId)).ConfigureAwait(false);
-            if (response.IsError && response.ErrorCode == "forbidden")
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, response);
-            }
-
-            if (response.IsError)
-            {
-                return StatusCode(StatusCodes.Status401Unauthorized, response);
-            }
-
+            var response = await Mediator.Send(new GetCart.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
     }
