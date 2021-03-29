@@ -4,11 +4,13 @@ using DigitalCommercePlatform.UIServices.Content.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetCart
     {
         public class Request : IRequest<ResponseBase<Response>>

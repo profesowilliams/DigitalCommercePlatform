@@ -2,9 +2,11 @@
 using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Mappings
 {
+    [ExcludeFromCodeCoverage]
     public class CartProfile : Profile
     {
         public CartProfile()
