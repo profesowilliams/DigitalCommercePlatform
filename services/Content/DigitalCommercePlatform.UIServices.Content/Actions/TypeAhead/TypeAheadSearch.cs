@@ -1,15 +1,13 @@
-﻿using System;
-using MediatR;
-using AutoMapper;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalCommercePlatform.UIServices.Content.Services;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
 {

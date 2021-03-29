@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using static DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead.TypeAheadSearch;
 
 namespace DigitalCommercePlatform.UIServices.Content.Controllers
 {
