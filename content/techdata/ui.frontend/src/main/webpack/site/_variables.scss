@@ -99,9 +99,9 @@ $font-family-base:        $font-family-sans-serif;
 $font-size-base:          18px;
 $font-size-large:         24px;
 $font-size-xlarge:        48px;
-$font-size-medium:		  18px;
+$font-size-medium:		    18px;
 $font-size-small:         14px;
-$font-size-xsmall:		  12px;
+$font-size-xsmall:		    12px;
 
 $font-size-h1:            40px;
 $font-size-h2:            36px;
@@ -109,6 +109,11 @@ $font-size-h3:            24px;
 $font-size-h4:            16px;
 $font-size-h5:            14px;
 $font-size-h6:            10px;
+
+/*  FONT SIZE CUSTOM  */
+$font-size-custom-xsmall: rem(13px);
+
+/*  END of FONT SIZE CUSTOM  */
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.5;
