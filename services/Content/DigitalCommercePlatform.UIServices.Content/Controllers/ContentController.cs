@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<ActionResult<TypeAheadSearch.Response>> Search(string keyword, string searchApplication = "SHOP")
+        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string keyword, string searchApplication = "SHOP")
         {
             var response = await Mediator.Send(new TypeAheadSearch.Request(keyword, searchApplication)).ConfigureAwait(false);
             return Ok(response);
