@@ -1,15 +1,16 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using static DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead.TypeAheadSearch;
 
 namespace DigitalCommercePlatform.UIServices.Content.Controllers
 {
@@ -36,5 +37,14 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
             var response = await Mediator.Send(new GetCart.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("Search")]
+        public async Task<ActionResult<TypeAheadSearch.Response>> Search(string keyword, string searchApplication = "SHOP")
+        {
+            var response = await Mediator.Send(new TypeAheadSearch.Request(keyword, searchApplication)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
     }
 }
