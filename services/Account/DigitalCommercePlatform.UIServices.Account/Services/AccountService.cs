@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             UserSavedCartsModel savedCarts = new UserSavedCartsModel
             {
-                SavedCarts = carts,
+                Items = carts,
                 TotalNumberOfSavedCarts = carts.Count 
             };
             var savedCartResponse = new CartModel

@@ -21,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Carts
     [ExcludeFromCodeCoverage]
     public class UserSavedCartsModel
     {
-        public IList<SavedCart> SavedCarts { get; set; }
+        public IList<SavedCart> Items { get; set; }
         public int TotalNumberOfSavedCarts { get; internal set; }
        
     }
