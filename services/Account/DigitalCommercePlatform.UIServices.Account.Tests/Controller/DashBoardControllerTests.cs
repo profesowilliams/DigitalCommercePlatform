@@ -2,7 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -118,17 +118,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetails(ResponseBase<GetCartDetails.GetCartResponse> expected)
+        public async Task GetSavedCarts(ResponseBase<GetCartsList.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
-                      It.IsAny<GetCartDetails.GetCartRequest>(),
+                      It.IsAny<GetCartsList.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetails("1234").ConfigureAwait(false);
+            var result = await controller.GetSavedCartList(false,50).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -179,7 +179,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopConfigurations("5").ConfigureAwait(false);
+            var result = await controller.GetTopConfigurations(5).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -196,7 +196,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopConfigurations(null).ConfigureAwait(false);
+            var result = await controller.GetTopConfigurations(0).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -212,7 +212,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopQuotes("5").ConfigureAwait(false);
+            var result = await controller.GetTopQuotes(5).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -229,7 +229,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopQuotes(null).ConfigureAwait(false);
+            var result = await controller.GetTopQuotes(0).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

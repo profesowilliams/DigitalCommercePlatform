@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Criteria { get; set; }
+            public int? Top { get; set; }
         }
 
         public class Response
@@ -45,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
                 {
                     ActiveOpenConfigurationsModel configurations = await _accountService.GetTopConfigurationsAsync(request);
                     var getConfigurations = _mapper.Map<Response>(configurations);
+                    
                     return new ResponseBase<Response> { Content = getConfigurations };
                 }
                 catch (Exception ex)
@@ -54,6 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
                 }
 
             }
+
         }
     }
 }

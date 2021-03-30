@@ -9,26 +9,28 @@ using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 
-namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
+namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 {
     [ExcludeFromCodeCoverage]
-    public static class GetCartDetails
+    public static class GetCartsList
     {
-        public class GetCartRequest : IRequest<ResponseBase<GetCartResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
-            public string userId { get; set; }
+            public bool GetAll { get; set; } = true;
+            public int Count { get; set; } = 100;
 
-            public GetCartRequest(string UserId)
+            public Request(bool getAll, int count)
             {
-                userId = UserId; // fix this
+                GetAll = getAll; // fix this
+                Count = count;
             }
         }
 
-        public class GetCartResponse
+        public class Response
         {
-            public SavedCarts SavedCarts { get; set; }
+            public UserSavedCartsModel SavedCarts { get; internal set; }            
         }
-        public class GetSavedCartsQueryHandler : IRequestHandler<GetCartRequest, ResponseBase<GetCartResponse>>
+        public class GetSavedCartsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IAccountService _accountServices;
             private readonly IMapper _mapper;
@@ -43,17 +45,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<GetCartResponse>> Handle(GetCartRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var cartDetails = await _accountServices.GetCartDetailsAsync(request);
-                    var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-                    return new ResponseBase<GetCartResponse> { Content = getcartResponse };
+                    var cartDetails = await _accountServices.GetSavedCartListAsync(request);
+                    var getcartResponse = _mapper.Map<Response>(cartDetails);
+                    return new ResponseBase<Response> { Content = getcartResponse };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartDetails));
+                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartsList));
                     throw;
                 }
             }
