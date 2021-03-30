@@ -6,6 +6,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Configurations
     [ExcludeFromCodeCoverage]
     public class ActiveOpenConfigurationsModel
     {
-        public IList<OpenResellerItems> TopOpenConfigurations { get; set; }
+        public IList<OpenResellerItems> Items { get; set; }
     }
 }

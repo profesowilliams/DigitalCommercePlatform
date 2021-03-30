@@ -116,7 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             var response = new ActiveOpenConfigurationsModel
             {
-                TopOpenConfigurations = openItems
+                Items = openItems
 
             };
             return await Task.FromResult(response);
@@ -165,7 +165,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             var response = new ActiveOpenQuotesModel
             {
-                TopOpenQuotes = openItems
+                Items = openItems
             };
 
             return await Task.FromResult(response);

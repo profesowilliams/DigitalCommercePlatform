@@ -6,6 +6,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Quotes
     [ExcludeFromCodeCoverage]
     public class ActiveOpenQuotesModel
     {
-        public IList<OpenResellerItems> TopOpenQuotes { get; set; }
+        public IList<OpenResellerItems> Items { get; set; }
     }
 }
