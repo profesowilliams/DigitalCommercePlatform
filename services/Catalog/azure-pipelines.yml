@@ -6,13 +6,6 @@ resources:
       
 trigger: none
 
-schedules:
-- cron: "10 0 * * *"
-  displayName: 'Daily night build'
-  branches:
-    include:
-    - develop
-
 pool:
   name: 'CLW'
   workspace:

@@ -1,7 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -47,8 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
                 _mockOptions.Object, _mockSiteSettings.Object);
         }
         [Theory]
-        [AutoMoqData]
-        public async Task GetCartDetails(GetCart.Response expected)
+        [AutoDomainData]
+        public async Task GetCartDetails(ResponseBase<GetCart.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
@@ -58,7 +61,24 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetails("12", "12").ConfigureAwait(false);
+            var result = await controller.GetCartDetails("12").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task TypeAheadSearch(ResponseBase<TypeAheadSearch.Response> expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<TypeAheadSearch.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.TypeAheadSearch("12","SHOP").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

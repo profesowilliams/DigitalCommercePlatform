@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using System.Threading.Tasks;
 
 
@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 {
     public interface IContentService
     {
-        public Task<Actions.GetCartDetails.GetCart.Response> GetCartDetails(Actions.GetCartDetails.GetCart.Request request);
+        public Task<CartModel> GetCartDetails(GetCart.Request request);
+        public Task<TypeAheadSearch.Response> GetTypeAhead(TypeAheadSearch.Request request);
     }
 }
