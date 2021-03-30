@@ -10,7 +10,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
     {
         public CartProfile()
         {
-            CreateMap<CartModel, GetCartsList.Response>();
+            CreateMap<CartModel, GetCartsList.Response>()
+                .ForMember(dest => dest.SavedCarts, opt => opt.MapFrom(src => src.UserSavedCarts));
+
         }
     }
 }

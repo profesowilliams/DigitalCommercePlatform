@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
         public class Response
         {
-            public SavedCart SavedCarts { get; set; }
+            public UserSavedCartsModel SavedCarts { get; internal set; }            
         }
         public class GetSavedCartsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
