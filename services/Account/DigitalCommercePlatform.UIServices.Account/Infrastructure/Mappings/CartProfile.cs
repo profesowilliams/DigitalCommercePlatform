@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using System.Diagnostics.CodeAnalysis;
-using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart.GetCartDetails;
 
 namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
 {
@@ -10,7 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
     {
         public CartProfile()
         {
-            CreateMap<CartModel, GetCartResponse>();
+            CreateMap<CartModel, GetCartsList.Response>();
         }
     }
 }

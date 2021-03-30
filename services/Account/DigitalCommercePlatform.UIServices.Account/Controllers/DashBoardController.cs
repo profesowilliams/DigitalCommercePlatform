@@ -14,10 +14,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using static DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
+    [SetContextFromHeader]
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
@@ -33,10 +35,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
         }
         [HttpGet]
-        [Route("getConfigurationsSummary")]
+        [Route("configurationsSummary/get")]
         public async Task<IActionResult> GetConfigurationsSummary([FromQuery] string criteria)
         {
-            var request = new GetConfigurationsSummary.Request { Criteria = criteria };
+            GetConfigurationsSummary.Request request = new GetConfigurationsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -47,11 +49,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("getDealsSummary")]
+        [HttpGet]
+        [Route("dealsSummary/get")]
         public async Task<IActionResult> GetDealsSummary([FromQuery] string criteria)
         {
-            var request = new GetDealsSummary.Request { Criteria = criteria };
+            GetDealsSummary.Request request = new GetDealsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -62,11 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("getActionItems")]
+        [HttpGet]
+        [Route("actionItems/get")]
         public async Task<IActionResult> GetActionItems([FromQuery] string criteria)
         {
-            var request = new GetActionItems.Request { Criteria = criteria };
+            GetActionItems.Request request = new GetActionItems.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -77,11 +79,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("getTopQuotes")]
-        public async Task<IActionResult> GetTopQuotes([FromQuery] string criteria)
+        [HttpGet]
+        [Route("topQuotes/get")]
+        public async Task<IActionResult> GetTopQuotes([FromQuery] int top)
         {
-            var request = new GetTopQuotes.Request { Criteria = criteria };
+            var request = new GetTopQuotes.Request { Top = top };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -92,11 +94,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("getTopConfigurations")]
-        public async Task<IActionResult> GetTopConfigurations([FromQuery] string criteria)
+        [HttpGet]
+        [Route("topConfigurations/get")]
+        public async Task<IActionResult> GetTopConfigurations([FromQuery] int top)
         {
-            var request = new GetTopConfigurations.Request { Criteria = criteria };
+            var request = new GetTopConfigurations.Request { Top = top };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -109,10 +111,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
 
         [HttpGet]
-        [Route("savedCarts")]
-        public async Task<IActionResult> GetCartDetails(string Id)
+        [Route("savedCarts/get")]
+        public async Task<IActionResult> GetSavedCartList([FromQuery] bool getAll, int maximumSavedCarts)
         {
-            var response = await Mediator.Send(new GetCartRequest(Id)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetCartsList.Request(getAll, maximumSavedCarts)).ConfigureAwait(false);
             if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
@@ -121,8 +123,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("getRenewals")]
+        [HttpGet]
+        [Route("renewals/get")]
         public async Task<IActionResult> GetRenewals([FromQuery] string criteria)
         {
             var request = new GetRenewalsSummary.Request { Criteria = criteria };

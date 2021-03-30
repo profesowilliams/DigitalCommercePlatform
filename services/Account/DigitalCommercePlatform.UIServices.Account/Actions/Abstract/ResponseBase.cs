@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Abstract
     [ExcludeFromCodeCoverage]
     public class ErrorInformation
     {
-        public string Code { get; set; } = string.Empty;
+        public int Code { get; set; }
         public string Message { get; set; } = string.Empty;
         public bool IsError { get; set; }
 

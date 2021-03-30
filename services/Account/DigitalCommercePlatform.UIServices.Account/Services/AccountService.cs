@@ -1,7 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.DetailsOfSavedCart;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -61,35 +61,26 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-        public async Task<CartModel> GetCartDetailsAsync(GetCartDetails.GetCartRequest request)
+        public async Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request)
         {
-            var SaveCartDetails = new List<SavedCartLine>();
-            for (int i = 0; i < 30; i++)
-            {
-                SavedCartLine newSavedCart = new SavedCartLine();
-                var randomNumber = GetRandomNumber(10, 60);
-                var quantity = GetRandomNumber(1, 10);
-                newSavedCart.Id = 531517;
-                newSavedCart.LineNumber = randomNumber;
-                newSavedCart.MaterialId = "Deatils of Material ID";
-                newSavedCart.ParentLineNumber = randomNumber;
-                newSavedCart.Quantity = quantity;
-                newSavedCart.BestPrice = "Best price in quantity";
-                newSavedCart.MSRP = "MSRP";
-                newSavedCart.MaterialNumber = randomNumber.ToString();
-                SaveCartDetails.Add(newSavedCart);
-            }
 
+            var carts = new List<SavedCart>();
+            for (int i = 0; i < 20; i++)
+            {
+                SavedCart cart = new SavedCart();
+                var randomNumber = GetRandomNumber(1000, 6000);
+                cart.Id = randomNumber;
+                cart.Name = "CartId : " + randomNumber.ToString();                    
+                carts.Add(cart);
+            }
+            UserSavedCartsModel savedCarts = new UserSavedCartsModel
+            {
+                SavedCarts = carts,
+                TotalNumberOfSavedCarts = carts.Count 
+            };
             var savedCartResponse = new CartModel
             {
-
-                SavedCarts = new Models.Carts.SavedCarts
-                {
-                    Id = 531517,
-                    Name = "RODNEY",
-                    LineCount = 2,
-                    details = SaveCartDetails
-                }
+                UserSavedCarts = savedCarts                
             };
             return await Task.FromResult(savedCartResponse);
         }
@@ -125,7 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             var response = new ActiveOpenConfigurationsModel
             {
-                TopOpenQuotes = openItems
+                TopOpenConfigurations = openItems
 
             };
             return await Task.FromResult(response);
@@ -175,8 +166,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var response = new ActiveOpenQuotesModel
             {
                 TopOpenQuotes = openItems
-
             };
+
             return await Task.FromResult(response);
         }
 

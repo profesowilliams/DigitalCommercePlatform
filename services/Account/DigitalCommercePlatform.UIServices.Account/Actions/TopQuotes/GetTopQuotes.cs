@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Criteria { get; set; }
+            public int? Top { get; set; }
         }
 
         public class Response
