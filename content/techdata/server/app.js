@@ -130,8 +130,8 @@ app.post("/login", function(req, res){
       "isError": false,
       "user": {
           "id": "516514",
-          "firstName": "DAYNA bru",
-          "lastName": "KARAPHILLIS",
+          "firstName": "Dyana",
+          "lastName": "Karaphillis",
           "name": "DAYNA KARAPHILLIS",
           "email": "SHI@cstenet.com",
           "phone": "9999999971",

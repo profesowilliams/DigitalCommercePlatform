@@ -1,31 +1,37 @@
+import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
-import {randomCode} from '../../utils/randomCodeGenrator';
-import * as actionTypes from './actionType';
 import {nanoid} from "nanoid";
 
-export const signInAsynAction = () => {
-	let code = localStorage.getItem("signInCode");
-	const signInUrl = localStorage.getItem('signin');
-	console.log(`signin url is ${signInUrl}`);
-	// return (dispatch) => {
-	// 	axios
-	// 		.get(signInUrl)
-	// 		.then((response) => {
-	// 			// console.log(response.data.user);
-	// 			// console.log("response=====>", response);
-	// 			if (!response.data.isError) {
-	// 				dispatch(signInAction(response.data.user));
-	// 				localStorage.setItem('user', JSON.stringify(response.data.user));
-	// 			} else {
-	// 				dispatch(erroWithCode());
-	// 			}
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// };
+export const signInRequest = () => {
+	return {
+		type: SIGN_IN_REQUEST
+	};
+};
 
-	const  prepareSignInHeader = () => {
+export const signInResponse = userData => {
+	return {
+		type: SIGN_IN_RESPONSE,
+		payload: userData
+	};
+};
+
+export const signInError = () => {
+	return {
+		type: SIGN_IN_ERROR
+	};
+};
+
+export const signOutRequest = () => {
+  return {
+    type: SIGN_OUT_REQUEST
+  };
+};
+
+export const signInAsynAction = (apiUrl) => {
+  let code = localStorage.getItem("signInCode");
+	const signInUrl = apiUrl;
+
+  const  prepareSignInHeader = () => {
 		let code = localStorage.getItem("signInCode");
 		return {
 			"TraceId" : "NA",
@@ -37,8 +43,7 @@ export const signInAsynAction = () => {
 		}
 	};
 
-
-	const  prepareSignInBody = () => {
+  const  prepareSignInBody = () => {
 		let code = localStorage.getItem("signInCode");
 		return {
 			"code": code,
@@ -47,37 +52,18 @@ export const signInAsynAction = () => {
 		}
 	};
 
-	return (dispatch) => {
-		let headerJson = prepareSignInHeader();
-		let postData = prepareSignInBody();
-		console.log(headerJson);
-		console.log(postData);
-		axios
-			.post(signInUrl, postData, {headers:headerJson})
-			.then((response) => {
-
-				console.log(response.data.user);
-				console.log("response=====>", response);
-				if (!response.data.isError) {
-					dispatch(signInAction(response.data.user));
-					localStorage.setItem('user', JSON.stringify(response.data.user));
-				} else {
-					dispatch(erroWithCode());
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-};
-
-
-
-export const signInAction = (userData) => {
-	return {type: actionTypes.SIGN_IN, payload: userData};
-};
-
-export const erroWithCode = () => {
-	return {type: actionTypes.ERROR_WITH_CODE};
+  let headerJson = prepareSignInHeader();
+  let postData = prepareSignInBody();
+  return dispatch => {
+    dispatch(signInRequest());
+    axios
+    .post(signInUrl, postData, {headers:headerJson})
+      .then(response => {
+        dispatch(signInResponse(response.data.user));
+        localStorage.setItem('userData', JSON.stringify(response.data.user));
+      })
+      .catch(err => {
+        dispatch(signInError(err));
+      });
+  };
 };
