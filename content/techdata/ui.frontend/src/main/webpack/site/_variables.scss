@@ -99,9 +99,10 @@ $font-family-base:        $font-family-sans-serif;
 $font-size-base:          18px;
 $font-size-large:         24px;
 $font-size-xlarge:        48px;
-$font-size-medium:		    18px;
+$font-size-medium:		  18px;
 $font-size-small:         14px;
-$font-size-xsmall:		    12px;
+$font-size-xsmall:		  12px;
+$font-size-xxsmall:		  11px;
 
 $font-size-h1:            40px;
 $font-size-h2:            36px;
@@ -111,6 +112,9 @@ $font-size-h5:            14px;
 $font-size-h6:            10px;
 
 /*  FONT SIZE CUSTOM  */
+$font-size-custom-xlarge: rem(38px);
+$font-size-custom-large:  rem(25px);
+$font-size-custom-medium: rem(22px);
 $font-size-custom-xsmall: rem(13px);
 
 /*  END of FONT SIZE CUSTOM  */

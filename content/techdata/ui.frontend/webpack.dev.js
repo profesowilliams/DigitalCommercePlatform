@@ -223,14 +223,18 @@ module.exports = (env) => {
 				filename: 'text.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html')
 			}),
-		            new HtmlWebpackPlugin({
-		                filename: 'sign-in.html',
-		                template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in.html')
-		            }),
-		            new HtmlWebpackPlugin({
-		                filename: 'sign-out.html',
-		                template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-out.html')
-		            }),
+			new HtmlWebpackPlugin({
+				filename: 'my-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'sign-in.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'sign-out.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-out.html')
+			}),
 			new HtmlWebpackPlugin({
 				filename: 'text-demo.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
