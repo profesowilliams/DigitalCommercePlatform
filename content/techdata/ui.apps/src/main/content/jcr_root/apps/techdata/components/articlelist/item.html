@@ -26,7 +26,7 @@ item.html
     </article>
 </template>
 <template data-sly-template.article="${@ list, item}">
-    <article data-sly-use.tmpl="${'list.js' @ item=item}">
+    <article data-sly-use.tmpl="${'articlelist.js' @ item=item}">
         <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
             <sly data-sly-test=${tmpl.imagePath}>
                 <figure class="cmp-image__image-figure">
