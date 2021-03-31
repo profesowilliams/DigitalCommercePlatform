@@ -25,6 +25,8 @@ steps:
     SonarQube: 'DC-SonarQube'
     projectKey: ${{ parameters.projectKey }} 
     projectName: ${{ parameters.projectName }} 
+    extraProperties: |
+      sonar.ws.timeout=600     
     
 - task: DotNetCoreCLI@2
   displayName: 'Build Projects'
