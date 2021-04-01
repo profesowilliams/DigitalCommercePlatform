@@ -29,14 +29,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
             public Address ShipTo { get; set; }
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
-            public List<Line> Lines { get; set; }
+            public List<Line> Items { get; set; }
 
             public Response(OrderDetailModel data)
             {
                 ShipTo = data?.ShipTo;
                 PaymentDetails = data?.PaymentDetails;
                 Customer = data?.Reseller?.CompanyName;
-                Lines = data?.Lines;
+                Items = data?.Lines;
             }
         }
 

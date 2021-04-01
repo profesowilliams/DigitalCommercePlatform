@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
 
         public class Response
         {
-            public IEnumerable<Line> OrderLines { get; set; }
+            public IEnumerable<Line> Items { get; set; }
         }
         public class GetOrderLinesHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                 {
                     orderLinesResponse = new Response
                     {
-                        OrderLines = null
+                        Items = null
                     };
                 }
                 else
@@ -57,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                     var linesDto = _mapper.Map<IEnumerable<Line>>(order.Items);
                     orderLinesResponse = new Response
                     {
-                        OrderLines = linesDto
+                        Items = linesDto
                     };
                 }
                 

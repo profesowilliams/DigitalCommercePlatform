@@ -6,7 +6,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
     [ExcludeFromCodeCoverage]
     public class RecentDealsModel
     {
-        public List<Deal> ListOfDeals { get; set; }
+        public List<Deal> Items { get; set; }
         public int TotalRecords { get; set; }
         public string SortBy { get; set; } // columnName
         public string SortDirection { get; set; } // Ascending or Decnding

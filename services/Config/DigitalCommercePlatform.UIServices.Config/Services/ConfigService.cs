@@ -44,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             var objResponse = new RecentConfigurationsModel
             {
-                ListOfConfigurations = lstConfigurations,
+                Items = lstConfigurations,
                 TotalRecords = lstConfigurations.Count(),
                 SortBy = request.SortBy,
                 SortDirection = "desc", // fix this
@@ -72,7 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             var objReponse = new RecentDealsModel
             {
-                ListOfDeals = lstDeals,
+                Items = lstDeals,
                 TotalRecords = lstDeals.Count(),
                 SortBy = request.SortBy,
                 SortDirection = "desc", // fix this

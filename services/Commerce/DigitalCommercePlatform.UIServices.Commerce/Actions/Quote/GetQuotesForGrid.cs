@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         }
         public class Response
         {
-            public IEnumerable<QuotesForGridModel> Quotes { get; set; }
+            public IEnumerable<QuotesForGridModel> Items { get; set; }
             public long? Count { get; set; }
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>

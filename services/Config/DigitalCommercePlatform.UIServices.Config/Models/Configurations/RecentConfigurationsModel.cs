@@ -6,7 +6,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
     [ExcludeFromCodeCoverage]
     public class RecentConfigurationsModel
     {
-        public List<Configuration> ListOfConfigurations { get; set; }
+        public List<Configuration> Items { get; set; }
         public int TotalRecords { get; set; }
         public string SortBy { get; set; } // columnName
         public string SortDirection { get; set; } // Ascending or Decnding

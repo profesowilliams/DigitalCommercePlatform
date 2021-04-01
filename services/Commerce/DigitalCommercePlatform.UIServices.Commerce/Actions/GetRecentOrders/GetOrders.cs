@@ -87,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
 
-            public IEnumerable<RecentOrdersModel> Orders { get; set; }
+            public IEnumerable<RecentOrdersModel> Items { get; set; }
         }
 
         public class GetOrderHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -124,11 +124,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
-                var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Data);
+                var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Items);
 
                 var orderResponse = new Response
                 {
-                    Orders = ordersDto,
+                    Items = ordersDto,
                     TotalItems = orders?.Count,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize

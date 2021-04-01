@@ -7,6 +7,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
     public class OrdersContainer
     {
         public int Count { get; set; }
-        public IEnumerable<OrderModel> Data { get; set; }
+        public IEnumerable<OrderModel> Items { get; set; }
     }
 }
