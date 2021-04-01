@@ -16,6 +16,8 @@ using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
@@ -24,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
+    [ExcludeFromCodeCoverage]
     public class DashBoardController : BaseUIServiceController
     {
         public DashBoardController(IMediator mediator,
@@ -122,6 +125,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> GetRenewals([FromQuery] string criteria)
         {
             var request = new GetRenewalsSummary.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("MyQuote/get")]
+        public async Task<IActionResult> GetMyQuote([FromQuery] string criteria)
+        {
+            var request = new MyQuoteDashboard.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)

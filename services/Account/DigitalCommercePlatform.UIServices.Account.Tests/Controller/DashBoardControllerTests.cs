@@ -21,6 +21,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -270,6 +271,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetRenewals(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetMyQuote(ResponseBase<MyQuoteDashboard.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<MyQuoteDashboard.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetMyQuote("123").ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

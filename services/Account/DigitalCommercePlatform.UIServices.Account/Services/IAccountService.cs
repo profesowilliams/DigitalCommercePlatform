@@ -12,7 +12,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using System.Threading.Tasks;
-
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
         Task <ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
+        Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request);
         Task <ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request);
         Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria);
     }

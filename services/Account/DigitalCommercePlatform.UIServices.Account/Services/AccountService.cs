@@ -1,8 +1,9 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -18,8 +19,8 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -193,7 +194,29 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
             return await Task.FromResult(response);
         }
-
+        public async Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
+        {
+            try
+            {
+                var MyQuotes = new MyQuotes();
+                {
+                    var randomNumber = GetRandomNumber(100, 600);
+                    MyQuotes.QuoteToOrder = "5:2";
+                    MyQuotes.Open = GetRandomNumber(10, 60);
+                    MyQuotes.Converted = string.Format("{0:N2}", (randomNumber/100))+" %";
+                    MyQuotes.ActiveQuoteValue = (randomNumber * 350);
+                    MyQuotes.CurrencyCode = "USD";
+                    MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
+                }
+                return await Task.FromResult(MyQuotes);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
+                throw ex;
+            }
+            
+        }
         public async Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
         {
             var renewals = new RenewalsSummaryModel
@@ -205,5 +228,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
             return await Task.FromResult(renewals);
         }
+
+        
     }
 }
