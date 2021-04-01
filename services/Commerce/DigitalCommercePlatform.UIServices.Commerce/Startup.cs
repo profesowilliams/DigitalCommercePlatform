@@ -1,6 +1,8 @@
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -21,8 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce
         {
             services.AddTransient<ICommerceService, CommerceService>();
             services.AddTransient<ISortingService, SortingService>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
-
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
