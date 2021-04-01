@@ -1,8 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -39,14 +40,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
         }
 
+
+        private static List<OpenResellerItems> AddSequenceNumber(List<OpenResellerItems> openItems)
+        {
+            openItems = openItems.OrderByDescending(a => a.Amount)
+                .Select((a, index) => new OpenResellerItems
+                {
+                    Sequence = index + 1,
+                    EndUserName = a.EndUserName,
+                    Amount = a?.Amount,
+                    FormattedAmount = a.FormattedAmount,
+                    CurrencyCode = a.CurrencyCode
+                }).ToList();
+            return openItems;
+        }
+
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
                        var response = new ConfigurationsSummaryModel
                 {
                     Quoted = 14,
                     UnQuoted = 30,
-                    OldConfigurations = 25,
-                    CurrencyCode = "USD"
+                    OldConfigurations = 25
                 };
                 return await Task.FromResult(response);
 
@@ -109,20 +124,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
-                openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
-                openItem.Amount = "$" + randomNumber * 100;
+                openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
+
+            openItems = AddSequenceNumber(openItems);
 
             var response = new ActiveOpenConfigurationsModel
             {
                 Items = openItems
-
             };
             return await Task.FromResult(response);
         }
+
+
 
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
@@ -154,23 +172,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 throw ex;
             }
 
+            
             var openItems = new List<OpenResellerItems>();
             for (int i = 0; i < 4; i++)
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
-                openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
-                openItem.Amount = "$" + randomNumber * 100;
+                openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
+
+            openItems = AddSequenceNumber(openItems);
 
             var response = new ActiveOpenQuotesModel
             {
                 Items = openItems
             };
-
             return await Task.FromResult(response);
         }
 
