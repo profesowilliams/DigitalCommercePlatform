@@ -26,7 +26,7 @@ steps:
     projectKey: ${{ parameters.projectKey }} 
     projectName: ${{ parameters.projectName }} 
     extraProperties: |
-      sonar.ws.timeout=600     
+      sonar.ws.timeout=60
     
 - task: DotNetCoreCLI@2
   displayName: 'Build Projects'
