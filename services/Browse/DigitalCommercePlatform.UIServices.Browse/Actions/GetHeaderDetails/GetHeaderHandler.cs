@@ -15,13 +15,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
     [ExcludeFromCodeCoverage]
     public static class GetHeaderHandler
     {
-        public class GetHeaderRequest : IRequest<ResponseBase<GetHeaderResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string CustomerId { get; set; }
             public string UserId { get; set; }
             public string CatalogCriteria { get; set; }
 
-            public GetHeaderRequest(string customerId, string userId, string catalogCriteria)
+            public Request(string customerId, string userId, string catalogCriteria)
             {
                 CustomerId = customerId;
                 UserId = userId;
@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
             }
         }
 
-        public class GetHeaderResponse
+        public class Response
         {
             public string UserId { get; set; }
             public string UserName { get; set; }
@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
             public IReadOnlyCollection<CatalogHierarchyModel> CatalogHierarchies { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetHeaderRequest, ResponseBase<GetHeaderResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _headerRepositoryServices;
             private readonly IMapper _mapper;
@@ -55,13 +55,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
                 _mapper = mapper;
             }
 
-            public async Task<ResponseBase<GetHeaderResponse>> Handle(GetHeaderRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var headerDetails = await _headerRepositoryServices.GetHeader(request);
-                    var headerResponse = _mapper.Map<GetHeaderResponse>(headerDetails);
-                    return new ResponseBase<GetHeaderResponse> { Content = headerResponse };
+                    var headerResponse = _mapper.Map<Response>(headerDetails);
+                    return new ResponseBase<Response> { Content = headerResponse };
                 }
                 catch (Exception ex)
                 {

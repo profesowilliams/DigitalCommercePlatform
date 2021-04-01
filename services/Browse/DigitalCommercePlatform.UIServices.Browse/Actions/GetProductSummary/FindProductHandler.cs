@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
     [ExcludeFromCodeCoverage]
     public static class FindProductHandler
     {
-        public class GetProductRequest : IRequest<ResponseBase<GetProductResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public IEnumerable<string> MaterialNumber { get; set; }
             public IEnumerable<string> OldMaterialNumber { get; set; }
@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public string System { get; set; }
             public bool Details { get; set; } = true;
 
-            public GetProductRequest(FindProductModel query)
+            public Request(FindProductModel query)
             {
                 MaterialNumber = query.MaterialNumber;
                 OldMaterialNumber = query.OldMaterialNumber;
@@ -50,12 +50,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             }
         }
 
-        public class GetProductResponse
+        public class Response
         {
-            public ProductData ReturnObject { get; set; }
+            public ProductData Items { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetProductRequest, ResponseBase<GetProductResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -68,13 +68,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<GetProductResponse>> Handle(GetProductRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.FindProductDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<GetProductResponse>(productDetails);
-                    return new ResponseBase<GetProductResponse> { Content = getProductResponse };
+                    var getProductResponse = _mapper.Map<Response>(productDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {

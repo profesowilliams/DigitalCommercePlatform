@@ -13,9 +13,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
     [ExcludeFromCodeCoverage]
     public static class GetCartHandler
     {
-        public class GetCartRequest : IRequest<ResponseBase<GetCartResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
-            public GetCartRequest(string userId, string customerId)
+            public Request(string userId, string customerId)
             {
                 UserId = userId;
                 CustomerId = customerId;
@@ -25,13 +25,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             public string CustomerId { get; set; }
         }
 
-        public class GetCartResponse
+        public class Response
         {
             public string CartId { get; set; }
             public int CartItemCount { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCartRequest, ResponseBase<GetCartResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _cartRepositoryServices;
             private readonly IMapper _mapper;
@@ -44,13 +44,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<GetCartResponse>> Handle(GetCartRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
-                    var getcartResponse = _mapper.Map<GetCartResponse>(cartDetails);
-                    return new ResponseBase<GetCartResponse> { Content=getcartResponse };
+                    var getcartResponse = _mapper.Map<Response>(cartDetails);
+                    return new ResponseBase<Response> { Content=getcartResponse };
                 }
                 catch (Exception ex)
                 {

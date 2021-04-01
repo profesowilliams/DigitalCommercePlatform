@@ -57,10 +57,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetails(ResponseBase<GetCartHandler.GetCartResponse> expected)
+        public async Task GetCartDetails(ResponseBase<GetCartHandler.Response> expected)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCartHandler.GetCartRequest>(),
+                       It.IsAny<GetCartHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
@@ -75,10 +75,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCustomerDetails(ResponseBase<GetCustomerHandler.GetCustomerResponse> expected)
+        public async Task GetCustomerDetails(ResponseBase<GetCustomerHandler.Response> expected)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCustomerHandler.GetCustomerRequest>(),
+                       It.IsAny<GetCustomerHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
@@ -91,10 +91,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCatalogDetails(ResponseBase<GetCatalogHandler.GetCatalogResponse> expected)
+        public async Task GetCatalogDetails(ResponseBase<GetCatalogHandler.Response> expected)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCatalogHandler.GetCatalogRequest>(),
+                       It.IsAny<GetCatalogHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
@@ -106,10 +106,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetHeaderDetails(ResponseBase<GetHeaderHandler.GetHeaderResponse> expected)
+        public async Task GetHeaderDetails(ResponseBase<GetHeaderHandler.Response> expected)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetHeaderHandler.GetHeaderRequest>(),
+                       It.IsAny<GetHeaderHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
@@ -120,11 +120,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task FindProductDetails(ResponseBase<FindProductHandler.GetProductResponse> expected,
+        public async Task FindProductDetails(ResponseBase<FindProductHandler.Response> expected,
             FindProductModel model)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<FindProductHandler.GetProductRequest>(),
+                       It.IsAny<FindProductHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
@@ -135,11 +135,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task FindSummaryDetails(ResponseBase<FindSummaryHandler.FindSummaryResponse> expected,
+        public async Task FindSummaryDetails(ResponseBase<FindSummaryHandler.Response> expected,
             FindProductModel model)
         {
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<FindSummaryHandler.FindSummaryRequest>(),
+                       It.IsAny<FindSummaryHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
@@ -150,12 +150,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductDetails(ResponseBase<GetProductDetailsHandler.GetProductDetailsResponse> expected)
+        public async Task GetProductDetails(ResponseBase<GetProductDetailsHandler.Response> expected)
         {
             var data = new List<string> { "123" };
 
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetProductDetailsHandler.GetProductDetailsRequest>(),
+                       It.IsAny<GetProductDetailsHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
@@ -166,12 +166,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductSummary(ResponseBase<GetProductSummaryHandler.GetProductSummaryResponse> expected)
+        public async Task GetProductSummary(ResponseBase<GetProductSummaryHandler.Response> expected)
         {
             var data = new List<string> { "123" };
 
             mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetProductSummaryHandler.GetProductSummaryRequest>(),
+                       It.IsAny<GetProductSummaryHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();

@@ -15,23 +15,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
     [ExcludeFromCodeCoverage]
     public static class GetCustomerHandler
     {
-        public class GetCustomerRequest : IRequest<ResponseBase<GetCustomerResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
 
-            public GetCustomerRequest(string id)
+            public Request(string id)
             {
                 Id = id;
             }
         }
 
-        public class GetCustomerResponse
+        public class Response
         {
             public string ID { get; set; }
             public string Name { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCustomerRequest, ResponseBase<GetCustomerResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _customerRepositoryServices;
             private readonly IMapper _mapper;
@@ -46,13 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<GetCustomerResponse>> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var customerDetails = await _customerRepositoryServices.GetCustomerDetails(request);
-                    var getCustomerResponse = _mapper.Map<IEnumerable<GetCustomerResponse>>(customerDetails)?.FirstOrDefault();
-                    return new ResponseBase<GetCustomerResponse> { Content = getCustomerResponse };
+                    var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
+                    return new ResponseBase<Response> { Content = getCustomerResponse };
                 }
                 catch (Exception ex)
                 {

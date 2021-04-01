@@ -16,24 +16,24 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
     [ExcludeFromCodeCoverage]
     public static class GetProductSummaryHandler
     {
-        public class GetProductSummaryRequest : IRequest<ResponseBase<GetProductSummaryResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
 
-            public GetProductSummaryRequest(IReadOnlyCollection<string> id, bool details)
+            public Request(IReadOnlyCollection<string> id, bool details)
             {
                 Id = id;
                 Details = details;
             }
         }
 
-        public class GetProductSummaryResponse 
+        public class Response 
         {
-            public SummaryModel SummaryModel { get; set; }
+            public SummaryModel Items { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetProductSummaryRequest, ResponseBase<GetProductSummaryResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -46,13 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<GetProductSummaryResponse>> Handle(GetProductSummaryRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.GetProductSummary(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<GetProductSummaryResponse>(productDetails);
-                    return new ResponseBase<GetProductSummaryResponse> { Content = getProductResponse };
+                    var getProductResponse = _mapper.Map<Response>(productDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        public class Validator : AbstractValidator<GetProductSummaryRequest>
+        public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {

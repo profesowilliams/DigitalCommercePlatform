@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
     [ExcludeFromCodeCoverage]
     public static class FindSummaryHandler
     {
-        public class FindSummaryRequest : IRequest<ResponseBase<FindSummaryResponse>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public IEnumerable<string> MaterialNumber { get; set; }
             public IEnumerable<string> OldMaterialNumber { get; set; }
@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public string System { get; set; }
             public bool Details { get; set; } = true;
 
-            public FindSummaryRequest(FindProductModel query)
+            public Request(FindProductModel query)
             {
                 MaterialNumber = query.MaterialNumber;
                 OldMaterialNumber = query.OldMaterialNumber;
@@ -50,12 +50,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             }
         }
 
-        public class FindSummaryResponse 
+        public class Response 
         {
-            public SummaryDetails SummaryModels { get; set; }
+            public SummaryDetails Items { get; set; }
         }
 
-        public class Handler : IRequestHandler<FindSummaryRequest, ResponseBase<FindSummaryResponse>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -68,13 +68,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<FindSummaryResponse>> Handle(FindSummaryRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.FindSummaryDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<FindSummaryResponse>(productDetails);
-                    return new ResponseBase<FindSummaryResponse> { Content = getProductResponse };
+                    var getProductResponse = _mapper.Map<Response>(productDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
