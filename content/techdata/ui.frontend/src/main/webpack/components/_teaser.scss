@@ -376,3 +376,12 @@
         }
     }
 }
+.cmp-text-color {
+    &--onDark-theme {
+        color: #ffffff;
+    }
+
+    &--onLight-theme {
+        color: #7c8388;
+    }
+}
