@@ -8,18 +8,16 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Moq;
 using System.Collections.Generic;
 using System.Net;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
-    public class SeciurityControllerTests
+    public class SecurityControllerTests
     {
         public static AppSettings GetAppSettings()
         {

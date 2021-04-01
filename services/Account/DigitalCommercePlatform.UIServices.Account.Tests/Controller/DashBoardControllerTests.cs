@@ -12,6 +12,7 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -69,17 +70,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetDealsSummary(ResponseBase<GetDealsSummary.Response> expected)
         {
-
+            // Arrange
+            expected.Error = null;
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetDealsSummary.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
             var controller = GetController();
-
+            // Act
             var result = await controller.GetDealsSummary("2,7,14").ConfigureAwait(false);
-
-            result.Should().NotBeNull();
+            // Assert
+            _mediator.Verify(x => x.Send(It.IsAny<GetDealsSummary.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+            var response = result as ObjectResult;
+            Assert.Equal((int)HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(expected.Content);
+            Assert.Null(expected.Error);
         }
 
         [Theory]
