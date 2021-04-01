@@ -124,7 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
-                var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Items);
+                var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Data);
 
                 var orderResponse = new Response
                 {
