@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
 using DigitalFoundation.Common.Settings;
@@ -38,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
         }
 
-        public async Task<string> GetToken(string code, string redirectUri, string traceId, string language, string consumer)
+        public async Task<ClientLoginCodeTokenResponseModel> GetToken(string code, string redirectUri, string traceId, string language, string consumer)
         {
             var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
             {
@@ -53,10 +52,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             
 
             var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
-            return tokenResponseDto?.AccessToken;
+            return tokenResponseDto;
         }
 
-        public async Task<User> GetUser(string accessToken,string applicationName, string traceId, string language, string consumer)
+        public async Task<ValidateUserResponseModel> GetUser(string accessToken,string applicationName, string traceId, string language, string consumer)
         {
             _context.SetContext(consumer, language, traceId, accessToken);
 
@@ -67,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 ApplicationName = applicationName
             });
 
-            return userResponseDto?.User;
+            return userResponseDto;
         }
     }
 }

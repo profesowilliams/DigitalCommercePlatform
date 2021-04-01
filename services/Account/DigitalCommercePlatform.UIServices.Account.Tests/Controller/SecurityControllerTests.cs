@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
@@ -35,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [Theory]
         [AutoDomainData]
         public async Task GetUser(
-            GetUser.Response expected,
+            ResponseBase<GetUser.Response> expected,
             [Frozen] Mock<IMediator> mediator,
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
@@ -55,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         public async Task AuthenticateUser(
             [Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
-            AuthenticateUser.Response expected)
+            ResponseBase<AuthenticateUser.Response> expected)
         {
             var bodyRequest = new AuthenticateBodyRequest
             {
@@ -87,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task AuthenticateUser_BadRequest([Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
-            AuthenticateUser.Response expected)
+            ResponseBase<AuthenticateUser.Response> expected)
         {
 
             mediator.Setup(x => x.Send(
@@ -103,9 +104,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task AuthenticateUser_OkRequest([Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
-            AuthenticateUser.Response expected)
+            ResponseBase<AuthenticateUser.Response> expected)
         {
-            expected.IsError = false;
+            expected.Error.IsError = false;
 
             mediator.Setup(x => x.Send(
                       It.IsAny<AuthenticateUser.Request>(),
@@ -152,7 +153,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetUser_BadRequest(GetUser.Response expected,
+        public async Task GetUser_BadRequest(ResponseBase<GetUser.Response> expected,
             [Frozen] Mock<IMediator> mediator,
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
@@ -172,13 +173,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetUser_OkRequest(GetUser.Response expected,
+        public async Task GetUser_OkRequest(ResponseBase<GetUser.Response> expected,
             [Frozen] Mock<IMediator> mediator,
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
         {
 
-            expected.IsError = false;
+            expected.Error.IsError = false;
 
             mediator.Setup(x => x.Send(
                       It.IsAny<GetUser.Request>(),

@@ -36,9 +36,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new GetUser.Request(applicationName)).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);
@@ -52,9 +52,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var response = await Mediator.Send(new AuthenticateUser.Request(authenticateBodyRequest?.Code, authenticateBodyRequest?.RedirectUri, authenticateBodyRequest?.ApplicationName,
                authenticateHeaderRequest?.TraceId, authenticateHeaderRequest?.Language, authenticateHeaderRequest?.Consumer, authenticateHeaderRequest?.SessionId));
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using MediatR;
 using System;
@@ -14,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
     [ExcludeFromCodeCoverage]
     public sealed class AuthenticateUser
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Code { get; }
             public string RedirectUri { get; }
@@ -38,7 +40,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
         public class Response
         {
-            public virtual bool IsError { get; set; }
             public User User { get; set; }
         }
 
@@ -56,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
             }
         }
 
-        public class AuthenticateUserQueryHandler : IRequestHandler<Request, Response>
+        public class AuthenticateUserQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ISecurityService _securityService;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
@@ -71,27 +72,44 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var accessToken = await _securityService.GetToken(request.Code, request.RedirectUri, request.TraceId, request.Language, request.Consumer);
+                var tokenResponse = await _securityService.GetToken(request.Code, request.RedirectUri, request.TraceId, request.Language, request.Consumer);
 
-                if (string.IsNullOrEmpty(accessToken))
+                if (string.IsNullOrEmpty(tokenResponse.AccessToken))
                 {
-                    return new Response { IsError = true };
+                    return new ResponseBase<Response>
+                    {
+                        Error = new ErrorInformation
+                        {
+                            IsError = true,
+                            Message = tokenResponse.Exception.Message,
+                            Code = tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 // we should agree about code
+                        }
+                    };
+                }
+                
+
+                var userResponse = await _securityService.GetUser(tokenResponse.AccessToken, request.ApplicationName, request.TraceId, request.Language, request.Consumer);
+
+                if (userResponse.User == null)
+                {
+                    return new ResponseBase<Response>
+                    {
+                        Error = new ErrorInformation
+                        {
+                            IsError = true,
+                            Message = userResponse.Exception.Message,
+                            Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111 // we should agree about code
+                        }
+                    };
                 }
 
-                var user = await _securityService.GetUser(accessToken, request.ApplicationName, request.TraceId, request.Language, request.Consumer);
+                _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
 
-                if (user == null)
-                {
-                    return new Response { IsError = true };
-                }
+                var userDto = _mapper.Map<User>(userResponse.User);
 
-                _sessionIdBasedCacheProvider.Put("User", user, 86400);
-
-                var userDto = _mapper.Map<User>(user);
-
-                var response = new Response { IsError = false, User = userDto };
+                var response = new ResponseBase<Response> { Content = new Response { User = userDto } };
                 return response;
             }
         }

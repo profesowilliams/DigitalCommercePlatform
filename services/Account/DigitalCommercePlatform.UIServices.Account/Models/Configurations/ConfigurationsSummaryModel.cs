@@ -8,5 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Configurations
         public int Quoted { get; set; }
         public int UnQuoted { get; set; }
         public int OldConfigurations { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }

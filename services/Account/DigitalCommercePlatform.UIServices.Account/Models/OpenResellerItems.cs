@@ -8,5 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
         public int Sequence { get; set; }
         public string EndUserName { get; set; }
         public string Amount { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }

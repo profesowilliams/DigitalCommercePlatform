@@ -1,8 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -45,7 +45,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 {
                     Quoted = 14,
                     UnQuoted = 30,
-                    OldConfigurations = 25
+                    OldConfigurations = 25,
+                    CurrencyCode = "USD"
                 };
                 return await Task.FromResult(response);
 
@@ -111,6 +112,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = "$" + randomNumber * 100;
+                openItem.CurrencyCode = "USD";
                 openItems.Add(openItem);
             }
 
@@ -160,6 +162,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 openItem.Sequence = i + 1;
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = "$" + randomNumber * 100;
+                openItem.CurrencyCode = "USD";
                 openItems.Add(openItem);
             }
 

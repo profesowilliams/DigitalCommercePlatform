@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Security.SecurityServiceClient;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
     [ExcludeFromCodeCoverage]
     public sealed class GetUser
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string ApplicationName { get; }
 
@@ -24,11 +24,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
 
         public class Response
         {
-            public virtual bool IsError { get; set; }
             public User User { get; set; }
         }
 
-        public class GetUserQueryHandler : IRequestHandler<Request, Response>
+        public class GetUserQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
             private readonly IMapper _mapper;
@@ -39,12 +38,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
                 _mapper = mapper;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
 
                 var user = _mapper.Map<User>(userFromCache);
-                var response = new Response { User = user };
+                var response = new ResponseBase<Response> { Content = new Response { User = user } };
                 return await Task.FromResult(response);
 
             }
