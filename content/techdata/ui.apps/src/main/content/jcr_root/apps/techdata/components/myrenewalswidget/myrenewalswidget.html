@@ -1,0 +1,12 @@
+
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<div id="MyRenewalsWidget" data-observe-mutation>
+    <div data-component="TMyRenewalsWidget" data-cmp-type="react" className="myrenewalswidget" data-config='{"label" : "${properties.label}" , "last30Days" : "${properties.last30Days}", "last60Days" : "${properties.last60Days}","last90Days" : "${properties.last90Days}","currentDay" : "${properties.currentDay}", "uiServiceEndPoint": "${properties.uiServiceEndPoint}"}'>
+    </div>
+</div>
+
+
+
