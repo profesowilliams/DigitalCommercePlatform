@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -23,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Account
         {
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)

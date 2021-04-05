@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -54,6 +55,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
 
             }
         }
-
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Criteria).NotNull();
+            }
+        }
     }
 }

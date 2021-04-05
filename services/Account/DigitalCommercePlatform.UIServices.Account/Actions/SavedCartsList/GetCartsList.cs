@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using FluentValidation;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 {
@@ -58,6 +59,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
                     _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartsList));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.GetAll).NotNull();
+                RuleFor(x => x.Count).NotNull();
             }
         }
     }

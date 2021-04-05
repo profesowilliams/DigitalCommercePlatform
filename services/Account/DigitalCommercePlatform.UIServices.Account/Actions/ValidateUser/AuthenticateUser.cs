@@ -7,6 +7,7 @@ using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,8 +84,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                         Error = new ErrorInformation
                         {
                             IsError = true,
-                            Message = tokenResponse.Exception.Message,
-                            Code = tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 // we should agree about code
+                            Messages = new List<string> { "Something went wrong" },//tokenResponse.Exception.Message,
+                            Code =tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 // we should agree about code
                         }
                     };
                 }
@@ -99,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                         Error = new ErrorInformation
                         {
                             IsError = true,
-                            Message = userResponse.Exception.Message,
+                            Messages = new List<string> { "Something went wrong" },//userResponse.Exception.Message,
                             Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111 // we should agree about code
                         }
                     };
