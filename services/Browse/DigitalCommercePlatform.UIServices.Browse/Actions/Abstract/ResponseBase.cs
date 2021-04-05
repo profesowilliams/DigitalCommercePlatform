@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Abstract
 {
@@ -13,8 +14,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.Abstract
     [ExcludeFromCodeCoverage]
     public class ErrorInformation
     {
-        public string Code { get; set; } = string.Empty;
-        public string Message { get; set; } = string.Empty;
+        public int Code { get; set; } 
+        public List<string> Messages { get; set; } = new List<string>();
         public bool IsError { get; set; }
 
     }

@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -65,6 +66,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
                     throw ex;
                 }
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.Id).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }

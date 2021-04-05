@@ -18,6 +18,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalFoundation.Common.Contexts;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -31,13 +32,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _appProductURL;
         private readonly ILogger<BrowseService> _logger;
         private readonly ICachingService _cachingService;
+        private readonly IUIContext _uiContext;
 
-        public BrowseService(IMiddleTierHttpClient middleTierHttpClient, 
-            ICachingService cachingService,
-            ILogger<BrowseService> logger, IOptions<AppSettings> options
-            )
+        public BrowseService(IMiddleTierHttpClient middleTierHttpClient, ICachingService cachingService, ILogger<BrowseService> logger, IOptions<AppSettings> options, IUIContext uiContext)
         {
-            _middleTierHttpClient=middleTierHttpClient;
+            _uiContext = uiContext;
+            _middleTierHttpClient = middleTierHttpClient;
             _cachingService = cachingService;
             _logger = logger;
             _coreCartURL = options?.Value.GetSetting("App.Cart.Url");
@@ -46,14 +46,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _appProductURL = options?.Value.GetSetting("App.Product.Url");
         }
 
+
         public async Task<GetHeaderHandler.Response> GetHeader(GetHeaderHandler.Request request)
         {
             try
             {
-                var customerRequest = new GetCustomerHandler.Request(request.CustomerId);
-                var cartRequest = new GetCartHandler.Request(request.UserId, request.CustomerId);
+                var customerRequest = new GetCustomerHandler.Request(_uiContext.User.Customers.FirstOrDefault());
+                var cartRequest = new GetCartHandler.Request(_uiContext.User.ID, _uiContext.User.Customers.FirstOrDefault());
                 var CatalogRequest = new GetCatalogHandler.Request(request.CatalogCriteria);
-
                 var cartResponse = await GetCartDetails(cartRequest);
                 var customerDetailsResponse = await GetCustomerDetails(customerRequest);
                 var CatalogDetailsResponse = await GetCatalogDetails(CatalogRequest);
@@ -103,6 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var CustomerURL = _appCustomerURL.BuildQuery(request);
             try
             {
+                var customerRequest = new GetCustomerHandler.Request(_uiContext.User.Customers.FirstOrDefault());
                 var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<IEnumerable<CustomerModel>>(CustomerURL);
                 return getCustomerDetailsResponse;
             }

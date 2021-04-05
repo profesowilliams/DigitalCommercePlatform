@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -57,6 +58,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
                     _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
                     throw ex;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.CustomerId).NotEmpty().WithMessage("Please enter CustomerId");
+                RuleFor(i => i.UserId).NotEmpty().WithMessage("Please enter UserId");
             }
         }
     }

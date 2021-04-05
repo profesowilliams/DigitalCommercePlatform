@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,8 +32,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public string Description { get; set; }
             public string System { get; set; }
             public bool Details { get; set; } = true;
+            public bool WithPaginationInfo { get; set; }
+            public int? Page { get; set; } 
+            public int? PageSize { get; set; }
+            public Sort SortBy { get; set; } = Sort.ID;
+            public bool SortAscending { get; set; } = true;
 
-            public Request(FindProductModel query)
+            public Request(FindProductModel query,bool withPaginationInfo)
             {
                 MaterialNumber = query.MaterialNumber;
                 OldMaterialNumber = query.OldMaterialNumber;
@@ -47,6 +53,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 Description = query.Description;
                 System = query.System;
                 Details = query.Details;
+                Page = query.Page;
+                PageSize = query.PageSize;
+                SortBy = query.SortBy;
+                SortAscending = query.SortAscending;
+                WithPaginationInfo = withPaginationInfo;
             }
         }
 
@@ -83,7 +94,24 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 }
             }
         }
+        public class Validator : AbstractValidator<Request>
+        {
+            private readonly ISortingService _sortingService;
 
-        
+            public Validator(ISortingService sortingService)
+            {
+                _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
+
+                var validProperties = _sortingService.GetValidProperties();
+                RuleFor(i => i.SortBy).Must(IsPropertyValidForSorting).WithMessage(i => $"You can't sort by {i.SortBy} property. Valid properties are: {validProperties}");
+                RuleFor(i => i.PageSize).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
+                RuleFor(i => i.Page).GreaterThanOrEqualTo(0).WithMessage("PageNumber must be greater than or equal to 0.");
+            }
+
+            private bool IsPropertyValidForSorting(Sort arg)
+            {
+                return _sortingService.IsPropertyValid(arg.ToString());
+            }
+        }
     }
 }

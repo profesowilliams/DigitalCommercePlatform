@@ -66,12 +66,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
         {
             public Validator()
             {
-                SetRules();
-            }
-
-            private void SetRules()
-            {
-                RuleFor(r => r.Id).NotEmpty();
+                RuleFor(i => i.Id).NotEmpty().WithMessage("please enter the input id");
+                RuleFor(i => i.Details).NotEmpty().WithMessage("missing the details parameter");
             }
         }
     }

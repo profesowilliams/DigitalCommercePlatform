@@ -39,15 +39,24 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             : base(mediator, logger, context, settings, siteSettings)
         {
         }
-
+        /// <summary>
+        /// Get the Cart, Customer, Catalogue details in a single call
+        /// </summary>
+        /// <param name="catalogueCriteria"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("header/get")]
-        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string userId, string customerId, string catalogueCriteria)
+        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string catalogueCriteria)
         {
-            var response = await Mediator.Send(new GetHeaderHandler.Request(customerId, userId, catalogueCriteria)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetHeaderHandler.Request( catalogueCriteria)).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Get the Cart Name and Cart Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cart/get")]
         public async Task<ActionResult<ResponseBase<GetCartHandler.Response>>> GetCartDetails(string userId, string customerId)
@@ -55,7 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             var response = await Mediator.Send(new GetCartHandler.Request(userId, customerId)).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Get the catalog details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("catalogue/get")]
         public async Task<ActionResult<GetCatalogHandler.Response>> GetCatalog(string id)
@@ -64,7 +77,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             var response = await Mediator.Send(new GetCatalogHandler.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Get the customer details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("customer/get")]
         public async Task<ActionResult<GetCustomerHandler.Response>> GetCustomer([FromQuery] string id)
@@ -72,7 +89,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             var response = await Mediator.Send(new GetCustomerHandler.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Get the product details on the ProductId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="details"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Product/get")]
         public async Task<ActionResult<object>> GetProduct([FromQuery] IReadOnlyList<string> id, [FromQuery] bool details = true)
@@ -88,19 +110,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 return Ok(response);
             }
         }
-
+        /// <summary>
+        /// This method is used for the Searching the Products based on the category
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("product/summary")]
-        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query)
+        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query, bool WithPaginationInfo=true)
         {
             if (query.Details)
             {
-                var response = await Mediator.Send(new FindProductHandler.Request(query)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindProductHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false); 
                 return Ok(response);
             }
             else
             {
-                var response = await Mediator.Send(new FindSummaryHandler.Request(query)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindSummaryHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false);
                 return Ok(response);
             }
         }

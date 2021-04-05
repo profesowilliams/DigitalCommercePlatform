@@ -5,7 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-
+using Microsoft.AspNetCore.Mvc;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 namespace DigitalCommercePlatform.UIService.Browse
 {
     [ExcludeFromCodeCoverage]
@@ -22,6 +23,8 @@ namespace DigitalCommercePlatform.UIService.Browse
         {
             services.AddTransient<IBrowseService, BrowseService>();
             services.AddSingleton<ICachingService, CachingService>();
+            services.AddTransient<ISortingService, SortingService>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
 

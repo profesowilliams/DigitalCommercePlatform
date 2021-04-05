@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,8 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public string Description { get; set; }
             public string System { get; set; }
             public bool Details { get; set; } = true;
+            public bool WithPaginationInfo { get; set; }
+            public int? Page { get; set; }
+            public int? PageSize { get; set; }
 
-            public Request(FindProductModel query)
+            public Request(FindProductModel query, bool withPaginationInfo)
             {
                 MaterialNumber = query.MaterialNumber;
                 OldMaterialNumber = query.OldMaterialNumber;
@@ -47,6 +51,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 Description = query.Description;
                 System = query.System;
                 Details = query.Details;
+                Page = query.Page;
+                PageSize = query.PageSize;
+                WithPaginationInfo = withPaginationInfo;
             }
         }
 
@@ -84,6 +91,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             }
         }
 
-        
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Page).GreaterThan(0);
+                RuleFor(x => x.PageSize).GreaterThan(0);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,14 +18,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string CustomerId { get; set; }
-            public string UserId { get; set; }
             public string CatalogCriteria { get; set; }
 
-            public Request(string customerId, string userId, string catalogCriteria)
+            public Request( string catalogCriteria)
             {
-                CustomerId = customerId;
-                UserId = userId;
                 CatalogCriteria = catalogCriteria;
             }
         }
@@ -68,6 +65,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
                     _logger.LogError(ex, "Exception at GetHeaderHandler : " + nameof(GetHeaderHandler));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.CatalogCriteria).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }

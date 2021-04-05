@@ -17,6 +17,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Find
         public string[] Territories { get; set; }
         public string Description { get; set; }
         public string System { get; set; }
+        public int? Page { get; set; }
+        public int? PageSize { get; set; }
+        public Sort SortBy { get; set; }
+        public bool SortAscending { get; set; } = true;
         public bool Details { get; set; } = true;
     }
 }

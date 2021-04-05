@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetHeader("1", "0038048612", "FCS").ConfigureAwait(false);
+            var result = await controller.GetHeader("FCS").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
