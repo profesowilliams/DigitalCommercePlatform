@@ -1,11 +1,12 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
 {
-   [ExcludeFromCodeCoverage]
+    [ExcludeFromCodeCoverage]
 
     //public class QuoteFindModel
     //{
@@ -13,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
     //}
 
 
-    public class QuoteModel 
+    public class QuoteModel
     {
         public DateTime Published { get; set; }
         public SourceModel Source { get; set; }
@@ -25,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
         public string EndUserPO { get; set; }
         public string CustomerPO { get; set; }
         public decimal Price { get; set; }
+        public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
         public string DocumentType { get; set; }
         public TypeModel Type { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace DigitalCommercePlatform.UIServices.Commerce.Models
+﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+
+namespace DigitalCommercePlatform.UIServices.Commerce.Models
 {
     public class Line
     {
@@ -7,7 +9,9 @@
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal? UnitPrice { get; set; }
+        public string UnitPriceFormatted { get { return string.Format(Constants.MoneyFormat, UnitPrice); } }
         public decimal? TotalPrice { get; set; }
+        public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public string Currency { get; set; }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
@@ -17,7 +21,9 @@
         public string TDNumber { get; set; }
         public string UPCNumber { get; set; }
         public string UnitListPrice { get; set; }
+        public string UnitListPriceFormatted { get { return string.Format(Constants.MoneyFormat, UnitListPrice); } }
         public string ExtendedPrice { get; set; }
+        public string ExtendedPriceFormatted { get { return string.Format(Constants.MoneyFormat, ExtendedPrice); } }
         public string Availability { get; set; }
         public string RebateValue { get; set; }
         public string URLProductImage { get; set; }
