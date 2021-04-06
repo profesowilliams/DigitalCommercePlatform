@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Criteria { get; set; }
+            public string Days { get; set; }
         }
 
         public class Response
         {
-            public DealsSummaryModel Summary { get; set; }           
+            public List<DealsSummaryModel> Items { get; set; }           
         }
 
         public class DealsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -43,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
             {
                 try
                 {
-                    DealsSummaryModel deals = await _accountService.GetDealsSummaryAsync(request);
+                    var deals = await _accountService.GetDealsSummaryAsync(request);
                     var getDeals = _mapper.Map<Response>(deals);
                     return new ResponseBase<Response> { Content = getDeals };
                 }
@@ -59,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
         {
             public Validator()
             {
-                RuleFor(x => x.Criteria).NotNull();
+                RuleFor(x => x.Days).NotNull();
             }
         }
     }

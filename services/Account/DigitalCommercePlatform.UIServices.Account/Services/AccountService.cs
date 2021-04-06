@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
@@ -10,6 +11,7 @@ using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
+using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalFoundation.Common.Settings;
@@ -67,14 +69,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 return await Task.FromResult(response);
 
         }
-        public async Task<DealsSummaryModel> GetDealsSummaryAsync(GetDealsSummary.Request request)
+        public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
-            var response = new DealsSummaryModel
+            var response = new List<DealsSummaryModel>();
+            var objDeal = new DealsSummaryModel();
+            
+            for (int i = 1; i < 4; i++)
             {
-                TwoDays = 5,
-                SevenDays = 10,
-                FourteenDays = 25
-            };
+                objDeal = new DealsSummaryModel
+                {
+                     Value = i * GetRandomNumber(1, 3)
+                };
+                response.Add(objDeal);
+            }
             return await Task.FromResult(response);
         }
 
@@ -217,18 +224,40 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             
         }
-        public async Task<RenewalsSummaryModel> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
+        public async Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
         {
-            var renewals = new RenewalsSummaryModel
+            var renewals = new List<RenewalsSummaryModel>();
+            var objDeal = new RenewalsSummaryModel();
+
+            for (int i = 1; i < 5; i++)
             {
-                NinetyDays = GetRandomNumber(0, 4),
-                SixtyDays = GetRandomNumber(1, 8),
-                ThirtyDays = GetRandomNumber(10, 20),
-                Today = GetRandomNumber(0, 15),
-            };
+                objDeal = new RenewalsSummaryModel
+                {
+                    Value = i * GetRandomNumber(1, 3)
+                };
+                renewals.Add(objDeal);
+            }
             return await Task.FromResult(renewals);
         }
 
-        
+        public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)
+        {
+            var totalAmount = GetRandomNumber(500, 700);
+            var processedAmount = GetRandomNumber(100, 500);
+            var percentage = (totalAmount - processedAmount) *10/100;
+            var formatedTotalAmount = string.Format(totalAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", totalAmount);
+            var formatedProcessced = string.Format(processedAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", processedAmount);
+            var myOrders = new MyOrdersDashboard
+            {
+               CurrencyCode="USD",
+               IsMontly=true,
+               ProcessedOrderPercentage= percentage.ToString(),
+               ProcessedOrdersAmount= processedAmount,
+               TotalOrderAmount = totalAmount,
+               TotalFormattedAmount = formatedTotalAmount,
+               ProcessedFormattedAmount = formatedProcessced,
+            };
+            return await Task.FromResult(myOrders);
+        }
     }
 }

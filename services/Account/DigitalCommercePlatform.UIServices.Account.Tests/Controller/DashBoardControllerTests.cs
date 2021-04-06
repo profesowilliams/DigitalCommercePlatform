@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -291,6 +292,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetMyOrder(ResponseBase<GetMyOrders.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetMyOrders.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetMyOrder(true).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
 
 
         private DashBoardController GetController()

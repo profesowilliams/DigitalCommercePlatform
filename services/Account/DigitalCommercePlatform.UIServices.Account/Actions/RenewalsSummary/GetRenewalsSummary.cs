@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Criteria { get; set; }
+            public string Days { get; set; }
         }
 
         public class Response
         {
-            public RenewalsSummaryModel Summary { get; set; }            
+            public List<RenewalsSummaryModel> Items { get; set; }            
         }
 
         public class RenewalsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -43,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
             {
                 try
                 {
-                    RenewalsSummaryModel renewals = await _accountService.GetRenewalsSummaryAsync(request);
+                    var renewals = await _accountService.GetRenewalsSummaryAsync(request);
                     var getConfigurations = _mapper.Map<Response>(renewals);
                     return new ResponseBase<Response> { Content = getConfigurations };
                 }
@@ -59,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
         {
             public Validator()
             {
-                RuleFor(x => x.Criteria).NotNull();
+                RuleFor(x => x.Days).NotNull();
             }
         }
     }

@@ -18,6 +18,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
@@ -54,18 +55,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("dealsSummary/get")]
-        public async Task<IActionResult> GetDealsSummary([FromQuery] string criteria)
+        public async Task<IActionResult> GetDealsSummary([FromQuery] string days)
         {
-            GetDealsSummary.Request request = new GetDealsSummary.Request { Criteria = criteria };
+            GetDealsSummary.Request request = new GetDealsSummary.Request { Days = days };
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
 
         [HttpGet]
         [Route("actionItems/get")]
-        public async Task<IActionResult> GetActionItems([FromQuery] string criteria)
+        public async Task<IActionResult> GetActionItems([FromQuery] string days)
         {
-            GetActionItems.Request request = new GetActionItems.Request { Criteria = criteria };
+            GetActionItems.Request request = new GetActionItems.Request { Days = days };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -122,9 +123,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("renewals/get")]
-        public async Task<IActionResult> GetRenewals([FromQuery] string criteria)
+        public async Task<IActionResult> GetRenewals([FromQuery] string days)
         {
-            var request = new GetRenewalsSummary.Request { Criteria = criteria };
+            var request = new GetRenewalsSummary.Request { Days = days };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
@@ -135,10 +136,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
         [HttpGet]
-        [Route("MyQuote/get")]
+        [Route("myQuotes/get")]
         public async Task<IActionResult> GetMyQuote([FromQuery] string criteria)
         {
             var request = new MyQuoteDashboard.Request { Criteria = criteria };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("myOrders/get")]
+        public async Task<IActionResult> GetMyOrder([FromQuery] bool isMonthly)
+        {
+            var request = new GetMyOrders.Request { IsMonthly = isMonthly };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
