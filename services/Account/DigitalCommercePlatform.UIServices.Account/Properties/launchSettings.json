@@ -17,13 +17,12 @@
     },
     "DigitalCommercePlatform.UIServices.Account": {
       "commandName": "Project",
-      "commandLineArgs": "-c debug --n=\"UI.Account\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5601 --urls=\"http://localhost\"",
-      "launchBrowser": true,
+      "commandLineArgs": "-c debug --n=\"UI.Account\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5100 --urls=\"http://localhost\" --islocal=\"1\"",
       "launchUrl": "http://localhost:5601/swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5601"
+      "applicationUrl": "http://localhost:5100"
     }
   }
 }
