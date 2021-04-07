@@ -44,12 +44,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             GetConfigurationsSummary.Request request = new GetConfigurationsSummary.Request { Criteria = criteria };
             var response = await Mediator.Send(request).ConfigureAwait(false);
-
-            if (response.Error.IsError)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
-            }
-
             return Ok(response);
         }
 

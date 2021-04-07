@@ -54,19 +54,22 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetConfigurationsSummary(ResponseBase<GetConfigurationsSummary.Response> expected)
         {
-
+            // Arrange
+            expected.Error = null;
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetConfigurationsSummary.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
             var controller = GetController();
-
+            // Act
             var result = await controller.GetConfigurationsSummary("dashboard").ConfigureAwait(false);
-
-            result.Should().NotBeNull();
+            // Assert
+            _mediator.Verify(x => x.Send(It.IsAny<GetConfigurationsSummary.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+            var response = result as ObjectResult;
+            Assert.Equal((int)HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(expected.Content);
+            Assert.Null(expected.Error);
         }
-
 
         [Theory]
         [AutoDomainData]
