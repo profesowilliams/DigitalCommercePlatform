@@ -278,6 +278,10 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'teaser-bigcards.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-bigcards.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quote.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quote.html')
 			})
 		],
 		devServer: {

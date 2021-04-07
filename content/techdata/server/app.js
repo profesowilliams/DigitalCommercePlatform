@@ -138,8 +138,13 @@ app.post("/login", function(req, res){
           "customers": [
               "0038048612"
   ],
-          "roles": []
-  }
+          "roles": [],
+          "cart": {
+            "activeCart": 1,
+            "items":[],
+            "itemsQuantity": 1,
+          }
+  },
   }
 
   let resJsonFail = {
@@ -166,3 +171,122 @@ app.options("/*", function(req, res, next){
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+app.get("/quote/create/:cart", function(req, res){
+  const code = req.query.code;
+  const cart = req.params.cart;
+
+  if (code !== codeValue)
+    return res.status(500).json({isError: true, quote: null})
+
+  res.json({
+    "content": {
+      "quoteDetails": {
+        "shipTo": {
+          "name": "Sis Margaret's Inc",
+          "line1": "Wade Wilson",
+          "line2": "9071",
+          "line3": "Santa Monica Blvd",
+          "city": "West Hollywood",
+          "state": "CA",
+          "zip": "90069",
+          "country": "United States",
+          "email": "dpool@sismargarets.com"
+        },
+        "endUser": {
+          "name": "Stark Enterprises",
+          "line1": "Tony Stark",
+          "line2": "10880 ",
+          "line3": "Malibu Point",
+          "city": "Malibu",
+          "state": "CA",
+          "zip": "90069",
+          "country": "United States",
+          "email": "dpool@sismargarets.com"
+        },
+        "generalInfo": {
+          "configId": "12345!",
+          "dealId": "hello",
+          "tier": "hello",
+          "reference": ""
+        },
+        "notes": "Descrption of Internal Notes",
+        "details": [
+          {
+            "id": "IN00000053",
+            "parent": "TR123YU6653",
+            "description": "Description of the Product is very good",
+            "quantity": 53,
+            "unitPrice": 53,
+            "totalPrice": 53,
+            "currency": "USD",
+            "msrp": 53,
+            "invoice": "IHT128763K0987",
+            "shortDescription": "Product Description",
+            "mfrNumber": "PUT9845011123",
+            "tdNumber": "ITW398765243",
+            "upcNumber": "924378465",
+            "unitListPrice": "2489.00",
+            "extendedPrice": "2349.00",
+            "availability": "53",
+            "rebateValue": "53",
+            "urlProductImage": "https://Product/Image",
+            "urlProductSpecs": "https://Product/details"
+          },
+          {
+            "id": "IN00000053",
+            "parent": "TR123YU6653",
+            "description": "Description of the Product is very good",
+            "quantity": 53,
+            "unitPrice": 53,
+            "totalPrice": 53,
+            "currency": "USD",
+            "msrp": 53,
+            "invoice": "IHT128763K0987",
+            "shortDescription": "Product Description",
+            "mfrNumber": "PUT9845011123",
+            "tdNumber": "ITW398765243",
+            "upcNumber": "924378465",
+            "unitListPrice": "2489.00",
+            "extendedPrice": "2349.00",
+            "availability": "53",
+            "rebateValue": "53",
+            "urlProductImage": "https://Product/Image",
+            "urlProductSpecs": "https://Product/details"
+          },
+          {
+            "id": "IN00000036",
+            "parent": "TR123YU6636",
+            "description": "Description of the Product is very good",
+            "quantity": 36,
+            "unitPrice": 36,
+            "totalPrice": 36,
+            "currency": "USD",
+            "msrp": 36,
+            "invoice": "IHT128763K0987",
+            "shortDescription": "Product Description",
+            "mfrNumber": "PUT9845011123",
+            "tdNumber": "ITW398765243",
+            "upcNumber": "924378465",
+            "unitListPrice": "2489.00",
+            "extendedPrice": "2349.00",
+            "availability": "36",
+            "rebateValue": "36",
+            "urlProductImage": "https://Product/Image",
+            "urlProductSpecs": "https://Product/details"
+          }
+        ],
+        "quoteNumber": "TIW77755701",
+        "orderNumber": "NQL3339019538",
+        "poNumber": "PO12760",
+        "endUserPO": "EPO50142",
+        "poDate": "12/04/2020"
+      }
+    },
+    "error": {
+      "code": "",
+      "message": "",
+      "isError": false
+    }
+  })
+});

@@ -67,3 +67,13 @@ export const signInAsynAction = (apiUrl) => {
       });
   };
 };
+
+export const getLocalStorageUser = () => {
+	return dispatch => {
+		let user = JSON.parse(localStorage.getItem("userData"));
+		if(user)
+			dispatch(signInResponse(user));
+		else
+			dispatch(signInError({ message: 'no login information' }));
+	}
+}

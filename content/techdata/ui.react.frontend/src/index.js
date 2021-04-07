@@ -13,3 +13,4 @@ import './store/store';
 import './index.scss';
 import Chart from "./global/techdata/components/Chart/Chart";
 import SignIn from "./global/techdata/components/SignIn/SignIn";
+import CreateQuote from "./global/techdata/components/CreateQuote/CreateQuote";
