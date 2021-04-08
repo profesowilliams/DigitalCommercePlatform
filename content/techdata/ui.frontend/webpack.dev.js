@@ -232,6 +232,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'my-renewals.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-renewals.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'sign-in.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in.html')
 			}),
