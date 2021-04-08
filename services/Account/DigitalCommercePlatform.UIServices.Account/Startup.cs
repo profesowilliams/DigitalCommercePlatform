@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Account
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseMiddleware<ContextMiddleware>();
+            //app.UseMiddleware<ContextMiddleware>();
             app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             base.ConfigureMiddleSection(app, env);
         }
