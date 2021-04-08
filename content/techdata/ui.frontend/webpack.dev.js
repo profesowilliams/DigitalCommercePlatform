@@ -249,7 +249,7 @@ module.exports = (env) => {
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'sub-header.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/sub-header/sub-header.html')
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sub-header.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-content.html',

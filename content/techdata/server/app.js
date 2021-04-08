@@ -135,6 +135,8 @@ app.post("/login", function(req, res){
           "name": "DAYNA KARAPHILLIS",
           "email": "SHI@cstenet.com",
           "phone": "9999999971",
+          "accountNumber" : "1234567890",
+          "companyName": "Stark Enterprises",
           "customers": [
               "0038048612"
   ],

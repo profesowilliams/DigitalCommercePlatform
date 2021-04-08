@@ -74,6 +74,6 @@ export const getLocalStorageUser = () => {
 		if(user)
 			dispatch(signInResponse(user));
 		else
-			dispatch(signInError({ message: 'no login information' }));
+			dispatch(signInError());
 	}
 }
