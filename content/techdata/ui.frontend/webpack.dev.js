@@ -192,6 +192,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'list-view',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-view.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'article-list-page.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
 			}),
