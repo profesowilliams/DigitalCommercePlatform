@@ -1,12 +1,13 @@
-
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
+<sly data-sly-use.listUse="${'signin.js' @ multifieldName='itemLinks'}">
 
-<div id="SignInBox" data-observe-mutation>
-    <div data-component="SignIn" data-cmp-type="react" className="signin" data-config='{"label" : "${properties.label}" , "authenticationURL" : "${properties.authenticationURL}", "uiServiceEndPoint": "${properties.uiServiceEndPoint}", "clientId": "${properties.clientId}"}'>
+    <div id="SignInBox" data-observe-mutation>
+        <div data-component="SignIn" data-cmp-type="react" className="signin" data-config="${listUse.listValues}">
+        </div>
     </div>
-</div>
+</sly>
 
 
 
