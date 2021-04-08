@@ -6,7 +6,7 @@
 //using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 //using DigitalFoundation.Common.Client;
 //using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.IntegrationTestUtilities;
+//using DigitalFoundation.Common.IntegrationTestUtilities;
 //using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 //using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
 //using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
@@ -31,11 +31,22 @@ using DigitalFoundation.Common.IntegrationTestUtilities;
 //using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
 //using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
 //using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
 {
-    public class UISetup : Setup
+    [TestClass]
+    public class UnitTest1
     {
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
+    }
+}
+
+    //public class UISetup : Setup
+    //{
     //    public override void AddClients([NotNull]ITestHttpClientFactory factory, string serviceName)
     //       => factory
     //           .AddClient<ISimpleHttpClient>()
@@ -176,5 +187,5 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
     //        var response = await client.RunTest<FindSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
     //        response.Should().NotBeNull();
     //    }
-    }
-}
+//    }
+//}

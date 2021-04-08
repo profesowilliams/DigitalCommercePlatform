@@ -17,7 +17,7 @@
     },
     "DigitalCommercePlatform.UIServices.Config": {
       "commandName": "Project",
-      "commandLineArgs": "-c debug --n=\"UI.Config\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5604 --urls=\"http://localhost\"",
+      "commandLineArgs": "-c debug --n=\"UI.Config\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5604 --urls=\"http://localhost\" --islocal=1",
       "launchBrowser": true,
       "launchUrl": "http://localhost:5604/swagger/index.html",
       "environmentVariables": {

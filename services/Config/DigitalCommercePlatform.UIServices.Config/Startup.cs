@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Config
             base.ConfigureServices(services);
         }
 
-        public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<RequestLocalizationOptions> localizationOptions)
+        public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var options = app.ApplicationServices.GetService<IOptions<AppSettings>>();
             var corsAllowedOrigin = options?.Value.GetSetting("UI.Security.CorsAllowedOrigin");
@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Config
                             .WithHeaders(corsAllowedHeaders?.Split(','))
                             .WithMethods(corsAllowedMethods?.Split(','));
             });
-            base.Configure(app, env, localizationOptions);
+            base.ConfigureMiddleSection(app, env);
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
