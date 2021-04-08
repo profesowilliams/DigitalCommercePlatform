@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure
             }
 
 
-            if (validationErrors.Any())
+            if (validationErrors.Any() && !context.Request.Path.Value.Contains("health"))
             {
                 var response = new ResponseBase<object>
                 {
