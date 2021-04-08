@@ -1,9 +1,11 @@
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using DigitalFoundation.Common.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -24,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Config
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IConfigService, ConfigService>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
         public override void ConfigureServices(IServiceCollection services)
