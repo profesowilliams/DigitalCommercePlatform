@@ -162,7 +162,7 @@ import java.util.Collection;
         private String getPageContentHtml(SlingHttpServletRequest request) throws ServletException, IOException {
             Resource xfResource = request.getResource();
 
-            String resourcePath = xfResource.getPath() + ".html";
+            String resourcePath = xfResource.getPath() + ".noclientlibs.atoffer.html";
             HttpServletRequest req = requestResponseFactory.createRequest("GET", resourcePath);
 
             WCMMode.DISABLED.toRequest(req);
