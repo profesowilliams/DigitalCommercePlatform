@@ -29,27 +29,6 @@ namespace DigitalCommercePlatform.UIServices.Config
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors();
-            base.ConfigureServices(services);
-        }
-
-        public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            var options = app.ApplicationServices.GetService<IOptions<AppSettings>>();
-            var corsAllowedOrigin = options?.Value.GetSetting("UI.Security.CorsAllowedOrigin");
-            var corsAllowedHeaders = options?.Value.GetSetting("UI.Security.CorsAllowedHeaders");
-            var corsAllowedMethods = options?.Value.GetSetting("UI.Security.CorsAllowedMethods");
-            app.UseCors(configurePolicy =>
-            {
-                configurePolicy.WithOrigins(corsAllowedOrigin?.Split(','))
-                            .WithHeaders(corsAllowedHeaders?.Split(','))
-                            .WithMethods(corsAllowedMethods?.Split(','));
-            });
-            base.ConfigureMiddleSection(app, env);
-        }
-
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }
