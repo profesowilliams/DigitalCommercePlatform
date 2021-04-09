@@ -23,13 +23,27 @@ use(function () {
 
         }
     }
-    jsonObject.put("label", properties.get("label"));
-    jsonObject.put("authenticationURL", properties.get("authenticationURL"));
-    jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
-    jsonObject.put("clientId", properties.get("clientId"));
-    jsonObject.put("myEcIdlabel", properties.get("myEcIdlabel"));
-    jsonObject.put("myEcId", properties.get("myEcId"));
-    jsonObject.put("items", listValues);
+    if (properties.get("label") != null) {
+        jsonObject.put("label", properties.get("label"));
+    }
+    if (properties.get("authenticationURL") != null) {
+        jsonObject.put("authenticationURL", properties.get("authenticationURL"));
+    }
+    if (properties.get("uiServiceEndPoint") != null) {
+        jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
+    }
+    if (properties.get("clientId") != null) {
+        jsonObject.put("clientId", properties.get("clientId"));
+    }
+    if (properties.get("myEcIdlabel") != null) {
+        jsonObject.put("myEcIdlabel", properties.get("myEcIdlabel"));
+    }
+    if (properties.get("myEcId") != null) {
+        jsonObject.put("myEcId", properties.get("myEcId"));
+    }
+    if (listValues != null) {
+        jsonObject.put("items", listValues);
+    }
     return {
         listValues: jsonObject.toString()
     };
