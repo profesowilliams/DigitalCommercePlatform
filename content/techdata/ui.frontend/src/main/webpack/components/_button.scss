@@ -1,0 +1,59 @@
+.cmp-button {}
+.cmp-button__text {}
+.cmp-button__icon {}
+//.cmp-button__icon--myIcon {}
+
+.cmp-button--background-enabled {
+	& .cmp-button {
+		border-radius: 0.1875em;
+		background-color: #21314d;
+		&:hover {
+			background-color: #00b1e2;
+		}
+	}
+	.cmp-button__icon {
+		color: #ffffff;
+	}
+	& .cmp-button__text {
+		color: #ffffff;
+	}
+}
+
+.cmp-button__text--disabled {
+	& .cmp-button__text {
+		display: none;
+	}
+	& .cmp-button__icon {
+		display: unset;
+	}
+}
+
+.cmp-button__icon--disabled {
+	& .cmp-button__text {
+		display: unset;
+	}
+	& .cmp-button__icon {
+		display: none;
+	}
+}
+
+.cmp-button {
+	border: unset;
+	padding: 0.0625em 0.375em;
+	color: unset;
+	text-decoration: none;
+	background: none;
+	&:active {
+		outline: none;
+		border: none;
+	}
+}
+
+.cmp-button__text {
+	font-size: 0.875em;
+}
+
+.cmp-button__icon {
+	font-size: 1.25em;
+	color: #21314d;
+}

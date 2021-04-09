@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'include-media/dist/_include-media.scss';
+@import 'sass-rem/_rem.scss';
+@import 'normalize-scss';
+@include normalize();
+@import '../resources/fonts/icomoon/style.scss';
+@import './styles/helpers/*.scss';
+@import './styles/*.scss';
+@import './core-components/**/*.scss';
+@import './td-components/**/*.scss';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';

@@ -1,8 +1,444 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
     jcr:primaryType="cq:Page">
     <templates/>
-    <policies/>
+    <policies
+        jcr:created="{Date}2020-10-19T18:11:34.262-04:00"
+        jcr:createdBy="admin"
+        jcr:mixinTypes="[rep:AccessControllable]"
+        jcr:primaryType="nt:unstructured">
+        <wcm jcr:primaryType="nt:unstructured">
+            <foundation jcr:primaryType="nt:unstructured">
+                <components jcr:primaryType="nt:unstructured">
+                    <responsivegrid jcr:primaryType="nt:unstructured">
+                        <content-default
+                            jcr:description="Policy for editable layout containers"
+                            jcr:lastModified="{Date}2020-11-17T14:55:46.250-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Default"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/apps/digital-platform/components/content/breadcrumb,/apps/digital-platform/components/content/carousel,/apps/digital-platform/components/content/contentfragment,/apps/digital-platform/components/content/contentfragmentlist,/apps/digital-platform/components/content/download,/apps/digital-platform/components/content/experiencefragment,/apps/digital-platform/components/content/image,/apps/digital-platform/components/content/languagenavigation,/apps/digital-platform/components/content/list,/apps/digital-platform/components/content/teaser,/apps/digital-platform/components/content/text,/apps/digital-platform/components/content/title,/apps/digital-platform/components/structure/responsivegrid]"
+                            policyResourceType="wcm/foundation/components/responsivegrid">
+                            <cq:authoring jcr:primaryType="nt:unstructured">
+                                <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                    <image
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="image/*"
+                                        droptarget="image"
+                                        resourceType="digital-platform/components/content/image"
+                                        type="Images"/>
+                                </assetToComponentMapping>
+                            </cq:authoring>
+                            <jcr:content
+                                jcr:primaryType="nt:unstructured"
+                                mergeList="{Boolean}true"/>
+                        </content-default>
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/libs/wcm/foundation/components/responsivegrid,group:digital-platform.Content,group:digital-platform.Form,group:digital-platform.Structure]">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <cq:authoring jcr:primaryType="nt:unstructured">
+                                <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                    <mapping_1568417184586
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="image/*"
+                                        droptarget="image"
+                                        resourceType="digital-platform/components/content/image"/>
+                                    <mapping_1570048100274
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="content"
+                                        assetMimetype="text/html"
+                                        droptarget="experiencefragment"
+                                        resourceType="digital-platform/components/content/experiencefragment"/>
+                                    <mapping_1570048111074
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="[text/html,application/vnd.adobe.contentfragment]"
+                                        droptarget="contentfragment"
+                                        resourceType="digital-platform/components/content/contentfragment"/>
+                                </assetToComponentMapping>
+                            </cq:authoring>
+                        </policy_xfm>
+                    </responsivegrid>
+                </components>
+            </foundation>
+        </wcm>
+        <digital-platform jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <form jcr:primaryType="nt:unstructured">
+                    <container jcr:primaryType="nt:unstructured">
+                        <form-container
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Form"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/apps/digital-platform/components/form/button,/apps/digital-platform/components/form/hidden,/apps/digital-platform/components/form/options,/apps/digital-platform/components/form/text]">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </form-container>
+                    </container>
+                </form>
+                <content jcr:primaryType="nt:unstructured">
+                    <button jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Button - Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_xfm>
+                    </button>
+                    <languagenavigation jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Language Navigation - Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            navigationRoot="/content/digital-platform"
+                            structureDepth="1">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_xfm>
+                    </languagenavigation>
+                    <image jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Image - Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedRenditionWidths="[300,400,500,600,700,800,900,1000,1100,1200]"
+                            allowUpload="true"
+                            altValueFromDAM="true"
+                            disableLazyLoading="false"
+                            displayPopupTitle="true"
+                            isDecorative="false"
+                            jpegQuality="{Long}100"
+                            titleValueFromDAM="true"
+                            uuidDisabled="true">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <plugins jcr:primaryType="nt:unstructured">
+                                <crop
+                                    jcr:primaryType="nt:unstructured"
+                                    features="*">
+                                    <aspectRatios jcr:primaryType="nt:unstructured">
+                                        <item0
+                                            jcr:primaryType="nt:unstructured"
+                                            name="Wide Landscape"
+                                            ratio="0.6180"/>
+                                        <item1
+                                            jcr:primaryType="nt:unstructured"
+                                            name="Landscape"
+                                            ratio="0.8284"/>
+                                        <item2
+                                            jcr:primaryType="nt:unstructured"
+                                            name="Square"
+                                            ratio="1"/>
+                                        <item3
+                                            jcr:primaryType="nt:unstructured"
+                                            name="Portrait"
+                                            ratio="1.6180"/>
+                                    </aspectRatios>
+                                </crop>
+                                <rotate
+                                    jcr:primaryType="nt:unstructured"
+                                    features="right"/>
+                                <flip
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                            </plugins>
+                        </policy_xfm>
+                    </image>
+                    <text jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Text - Experience Fragments"
+                            sling:resourceType="wcm/core/components/policy/policy">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <rtePlugins jcr:primaryType="nt:unstructured">
+                                <paraformat
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-">
+                                    <formats
+                                        jcr:primaryType="nt:unstructured"
+                                        override="true">
+                                        <item0
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Paragraph"
+                                            tag="p"/>
+                                        <item1
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 1"
+                                            tag="h1"/>
+                                        <item2
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 2"
+                                            tag="h2"/>
+                                        <item3
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 3"
+                                            tag="h3"/>
+                                        <item4
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 4"
+                                            tag="h4"/>
+                                        <item5
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 5"
+                                            tag="h5"/>
+                                        <item6
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Heading 6"
+                                            tag="h6"/>
+                                        <item7
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Quote"
+                                            tag="blockquote"/>
+                                        <item8
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Horizontal Rule (visual line break)"
+                                            tag="hr"/>
+                                        <item9
+                                            jcr:primaryType="nt:unstructured"
+                                            description="Preformatted"
+                                            tag="pre"/>
+                                    </formats>
+                                </paraformat>
+                                <misctools
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-">
+                                    <specialCharsConfig jcr:primaryType="nt:unstructured">
+                                        <chars
+                                            jcr:primaryType="nt:unstructured"
+                                            override="true">
+                                            <item0
+                                                jcr:primaryType="nt:unstructured"
+                                                entity="&amp;copy;"
+                                                name="copyright"/>
+                                            <item1
+                                                jcr:primaryType="nt:unstructured"
+                                                entity="&amp;euro;"
+                                                name="euro"/>
+                                            <item2
+                                                jcr:primaryType="nt:unstructured"
+                                                entity="&amp;reg;"
+                                                name="registered"/>
+                                            <item3
+                                                jcr:primaryType="nt:unstructured"
+                                                entity="&amp;trade;"
+                                                name="trademark"/>
+                                        </chars>
+                                    </specialCharsConfig>
+                                </misctools>
+                                <edit
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <findreplace
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <undo
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <spellcheck
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <image
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <table
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <lists
+                                    jcr:primaryType="nt:unstructured"
+                                    features="*"/>
+                                <justify
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                                <format
+                                    jcr:primaryType="nt:unstructured"
+                                    features="bold,italic"/>
+                                <links
+                                    jcr:primaryType="nt:unstructured"
+                                    features="modifylink,unlink"/>
+                                <subsuperscript
+                                    jcr:primaryType="nt:unstructured"
+                                    features="-"/>
+                            </rtePlugins>
+                        </policy_xfm>
+                    </text>
+                    <title jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:lastModified="{Date}2020-11-10T16:38:28.907-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Title - Experience Fragments"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedTypes="[h1,h2,h3,h4,h5,h6]"
+                            linkDisabled="false"
+                            type="h1">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <cq:styleGroups jcr:primaryType="nt:unstructured">
+                                <item0
+                                    cq:styleGroupLabel="Colors"
+                                    jcr:primaryType="nt:unstructured">
+                                    <cq:styles jcr:primaryType="nt:unstructured">
+                                        <item0
+                                            cq:styleClasses="dark-text"
+                                            cq:styleId="1605044296464"
+                                            cq:styleLabel="Dark"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    </cq:styles>
+                                </item0>
+                            </cq:styleGroups>
+                        </policy_xfm>
+                    </title>
+                    <experiencefragment jcr:primaryType="nt:unstructured">
+                        <policy_header
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Experience Fragment - Header"
+                            sling:resourceType="wcm/core/components/policy/policy">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_header>
+                        <policy_footer
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Experience Fragment - Footer"
+                            sling:resourceType="wcm/core/components/policy/policy">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_footer>
+                    </experiencefragment>
+                    <search jcr:primaryType="nt:unstructured">
+                        <policy_1610545765683
+                            jcr:lastModified="{Date}2021-01-18T14:48:13.458+01:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Search Component Policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            resultsSize="10"
+                            searchRoot="/content/digital-platform/language-masters"
+                            searchTermMinimumLength="3">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <cq:styleGroups jcr:primaryType="nt:unstructured">
+                                <item0
+                                    cq:styleGroupLabel="Color Theme"
+                                    jcr:primaryType="nt:unstructured">
+                                    <cq:styles jcr:primaryType="nt:unstructured">
+                                        <item0
+                                            cq:styleClasses="cmp-search--light-blue"
+                                            cq:styleId="1610545816695"
+                                            cq:styleLabel="Light blue"
+                                            jcr:primaryType="nt:unstructured"/>
+                                        <item1
+                                            cq:styleClasses="cmp-search--dark-blue"
+                                            cq:styleId="1610546477186"
+                                            cq:styleLabel="Dark blue"
+                                            jcr:primaryType="nt:unstructured"/>
+                                        <item2
+                                            cq:styleClasses="cmp-search--grey"
+                                            cq:styleId="1610546502576"
+                                            cq:styleLabel="Grey"
+                                            jcr:primaryType="nt:unstructured"/>
+                                        <item3
+                                            cq:styleClasses="cmp-search--white"
+                                            cq:styleId="1610619218770"
+                                            cq:styleLabel="White"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    </cq:styles>
+                                </item0>
+                            </cq:styleGroups>
+                        </policy_1610545765683>
+                    </search>
+                    <tabs jcr:primaryType="nt:unstructured"/>
+                    <download jcr:primaryType="nt:unstructured"/>
+                    <teaser jcr:primaryType="nt:unstructured"/>
+                    <carousel jcr:primaryType="nt:unstructured"/>
+                </content>
+                <structure jcr:primaryType="nt:unstructured">
+                    <page jcr:primaryType="nt:unstructured">
+                        <policy_xfm
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            clientlibs="[digital-platform.dependencies,digital-platform.site]"
+                            clientlibsJsHead="digital-platform.dependencies">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_xfm>
+                        <policy_content_page
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="TD Digital Platform Page Policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            clientlibs="[digital-platform.dependencies,digital-platform.site]"
+                            clientlibsJsHead="digital-platform.dependencies">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_content_page>
+                    </page>
+                    <main jcr:primaryType="nt:unstructured">
+                        <policy_1603209288471
+                            jcr:lastModified="{Date}2020-11-20T07:11:03.279-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Digital Platform Content Policy (Default)"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:digital-platform.Blocks,group:digital-platform.Content,group:digital-platform.Layouts,/apps/digital-platform/components/structure/responsivegrid]">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                            <cq:styleGroups jcr:primaryType="nt:unstructured">
+                                <item0
+                                    cq:styleGroupLabel="Color"
+                                    jcr:primaryType="nt:unstructured">
+                                    <cq:styles jcr:primaryType="nt:unstructured">
+                                        <item0
+                                            cq:styleClasses="dark-text"
+                                            cq:styleId="1605044233383"
+                                            cq:styleLabel="black"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    </cq:styles>
+                                </item0>
+                            </cq:styleGroups>
+                        </policy_1603209288471>
+                    </main>
+                    <responsivegrid jcr:primaryType="nt:unstructured">
+                        <policy_1604011420166
+                            jcr:lastModified="{Date}2020-10-29T18:44:59.790-04:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Page hero policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/apps/digital-platform/components/content/carousel,/apps/digital-platform/components/content/image,/apps/digital-platform/components/content/teaser]">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_1604011420166>
+                    </responsivegrid>
+                    <header jcr:primaryType="nt:unstructured">
+                        <policy_1605188116353
+                            jcr:lastModified="{Date}2020-11-12T08:36:20.358-05:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Digital Platform Header"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:digital-platform.Blocks,group:digital-platform.Content,group:digital-platform.Structure]">
+                            <jcr:content jcr:primaryType="nt:unstructured"/>
+                        </policy_1605188116353>
+                    </header>
+                </structure>
+            </components>
+        </digital-platform>
+        <apps jcr:primaryType="nt:unstructured">
+            <digital-platform jcr:primaryType="nt:unstructured">
+                <components jcr:primaryType="nt:unstructured">
+                    <structure jcr:primaryType="nt:unstructured">
+                        <main jcr:primaryType="nt:unstructured">
+                            <policy_1603983209525
+                                jcr:lastModified="{Date}2020-10-29T10:55:12.595-04:00"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Main block policy"
+                                sling:resourceType="wcm/core/components/policy/policy"
+                                components="[group:digital-platform.Content,/apps/digital-platform/components/structure/responsivegrid]">
+                                <jcr:content jcr:primaryType="nt:unstructured"/>
+                            </policy_1603983209525>
+                        </main>
+                    </structure>
+                </components>
+            </digital-platform>
+        </apps>
+        <rep:policy/>
+    </policies>
     <segments/>
     <template-types/>
 </jcr:root>

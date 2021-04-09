@@ -1,0 +1,54 @@
+//== Base
+
+html,
+body {
+	margin: 0;
+	font-size: $font-size;
+	font-family: $font-family;
+	line-height: $font-height;
+	color: $color-foreground;
+	background: $color-background !important;
+
+	// @media (prefers-color-scheme: dark) {
+	//     color:       $color-foreground-dark;
+	//     background:  $color-background-dark;
+	// }
+}
+
+a {
+	color: $color-link;
+
+	@media (prefers-color-scheme: dark) {
+		color: $color-link-dark;
+	}
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	font: inherit;
+}
+
+.cmp-text__white {
+	color: #ffffff;
+}
+
+.cmp-text__black {
+	color: #000000;
+}
+
+.cmp-text__light-blue {
+	color: #00b1e2;
+}
+
+.dp-footer {
+	padding-top: 40.4px !important;
+	padding-bottom: 37.4px !important;
+	padding-left: 28.4px !important;
+	padding-right: 47.4px !important;
+	margin-top: 3rem;
+	background-color: #000C21;
+	color: white;
+}

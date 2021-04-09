@@ -1,0 +1,98 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Dto\GetProductMultiple\**" />
+    <Compile Remove="Dto\GetProduct\**" />
+    <Compile Remove="HttpClients\**" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Dto\GetProductMultiple\**" />
+    <Content Remove="Dto\GetProduct\**" />
+    <Content Remove="HttpClients\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Dto\GetProductMultiple\**" />
+    <EmbeddedResource Remove="Dto\GetProduct\**" />
+    <EmbeddedResource Remove="HttpClients\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Dto\GetProductMultiple\**" />
+    <None Remove="Dto\GetProduct\**" />
+    <None Remove="HttpClients\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Actions\Product\FindProduct1.cs" />
+    <Compile Remove="Actions\Product\FindSummary.cs" />
+    <Compile Remove="Actions\Product\GetProductDetailMultiple.cs" />
+    <Compile Remove="Actions\Product\GetProductSummaryMultiple.cs" />
+    <Compile Remove="Dto\CoreServiceOwners.cs" />
+    <Compile Remove="Dto\MaterialIdDto.cs" />
+    <Compile Remove="Dto\Plant.cs" />
+    <Compile Remove="Dto\PlantInfoDto.cs" />
+    <Compile Remove="Dto\Price.cs" />
+    <Compile Remove="Dto\ProductDetailDto.cs" />
+    <Compile Remove="Dto\ProductSummaryDto.cs" />
+    <Compile Remove="Dto\SalesOrganizationDto.cs" />
+    <Compile Remove="Dto\Source.cs" />
+    <Compile Remove="Dto\Stock.cs" />
+    <Compile Remove="Dto\SubstituteMaterialDto.cs" />
+    <Compile Remove="Exceptions\InvalidCatalogException.cs" />
+    <Compile Remove="Models\CoreProductModel.cs" />
+    <Compile Remove="Models\CoreProductSummaryModel.cs" />
+    <Compile Remove="Models\PlantModel.cs" />
+    <Compile Remove="Models\PriceModel.cs" />
+    <Compile Remove="Models\SalesOrganization.cs" />
+    <Compile Remove="Models\StockModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.170" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.170" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.170" />
+    <PackageReference Include="DigitalFoundation.Common.Sql" Version="3.50.170" />
+    <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
+    <PackageReference Include="Flurl" Version="3.0.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.3" />
+    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.0.7" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Logging\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+
+</Project>

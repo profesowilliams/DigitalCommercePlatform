@@ -1,0 +1,91 @@
+.dp-list,
+.cmp-list{
+    &--teaser {
+        .cmp-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            list-style-type: none;
+        }
+
+        .cmp-list__item {
+            text-align: center;
+            padding: rem(4px);
+            > article {
+                display: flex;
+                flex-direction: column;
+                font-weight: 300;
+                font-size: rem(20px);
+                margin-top: rem(16px);
+                margin-bottom: rem(16px);
+                width: rem(180px);
+                max-width: 100%;
+                justify-content: space-between;
+            }
+        }
+        .cmp-image__image-figure {
+            height: rem(144px);
+            margin: 0;
+            margin-bottom: rem(20px);
+            display: flex;
+            align-items: center;
+        }
+    }
+    &--menu-grid {
+        .cmp-list__item-title{
+            display: block;
+        }
+        .cmp-image__image{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .cmp-list__item-link{
+            color: get-color(brand-blue);
+            font-size: rem(20px);
+            font-weight: 300;
+            text-decoration: none;
+            padding: rem(16px);
+            transition: box-shadow .3s;
+            &:hover{
+                box-shadow: 0 0 rem(4px) rem(1.5px) get-color(brand-light-blue);
+            }
+        }
+        &-fixed{
+            .cmp-list__item{
+                width: 16.66%;
+                article{
+                    margin: 0 auto;
+                    max-width: rem(180px);
+                    width: 100%;
+                }
+            }
+            .cmp-list__item-title{
+                display: block;
+            }
+            .cmp-image__image{
+                max-width: 100%;
+                max-height: 100%;
+            }
+            .cmp-list__item-link{
+                color: get-color(brand-blue);
+                font-size: rem(20px);
+                font-weight: 300;
+                text-decoration: none;
+                padding: rem(16px);
+                transition: box-shadow .3s;
+                &:hover{
+                    box-shadow: 0 0 rem(4px) rem(1.5px) get-color(brand-light-blue);
+                }
+            }
+        }
+    }
+
+    &--brand-grid{
+        .cmp-list__item-title{
+            display: none;
+        }
+        .cmp-image__image {
+            width: rem(160px);
+        }
+    }
+}

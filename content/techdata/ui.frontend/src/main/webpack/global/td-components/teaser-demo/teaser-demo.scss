@@ -1,0 +1,155 @@
+@import './../teaser/teaser.scss';
+
+.cmp-teaser-demo {
+    // Add "cmp-teaser--solution" class for solution Variation
+    &--solution {
+        margin-bottom: rem(100px);
+        margin-top: rem(100px);
+
+        @include media("<lg") {
+            margin-bottom: rem(60px);
+        }
+        .cmp-teaser-demo__image {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            .cmp-image__image {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                transform: translate(-50%, -40%);
+                border-radius: 100px;
+            }
+        }
+        .cmp-teaser-demo__content {
+            padding: rem(64px) rem(54px) rem(45px) rem(50px);
+            border: rem(1px) solid get-color(secondary-light-grey);
+            min-height: rem(250px);
+
+            @include media("<lg") {
+                padding: rem(64px) rem(12px) rem(10px) rem(12px);
+            }
+        }
+        .cmp-teaser-demo__description {
+            color: get-color(secondary-dark-grey);
+            font-size: rem(14px);
+            line-height: 1.45;
+            font-weight: 300;
+            text-align: center;
+            min-height: 75px;
+        }
+        .cmp-teaser-demo__title {
+            color: get-color(brand-black);
+            font-size: rem(24px);
+            line-height: 1.45;
+            font-weight: 300;
+            text-align: center;
+            font-weight: 700;
+        }
+    }
+    // Add "cmp-teaser-demo--about-us" class for about us Variation
+    &--about-us {
+        margin-bottom: rem(100px);
+        margin-top: rem(148px);
+
+        @include media("<lg") {
+            margin-bottom: rem(60px);
+        }
+        .cmp-teaser-demo__image {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            .cmp-image__image {
+                width: 300px;
+                height: 300px;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                transform: translate(-50%, -40%);
+                border-radius: 300px;
+                border: 40px solid get-color(brand-blue);
+            }
+        }
+        .cmp-teaser-demo__content {
+            padding: rem(192px) rem(54px) rem(16px) rem(50px);
+            border: rem(1px) solid get-color(secondary-light-grey);
+            min-height: rem(350px);
+
+            @include media("<lg") {
+                padding: rem(192px) rem(12px) rem(10px) rem(12px);
+            }
+        }
+        .cmp-teaser-demo__description {
+            color: get-color(secondary-dark-grey);
+            font-size: rem(14px);
+            line-height: 1.45;
+            font-weight: 300;
+            text-align: center;
+            min-height: 75px;
+        }
+        .cmp-teaser-demo__title {
+            color: get-color(secondary-link-blue);
+            font-size: rem(24px);
+            line-height: 1.45;
+            font-weight: 300;
+            text-align: center;
+            font-weight: 700;
+        }
+    }
+}
+
+$teaser-headings: (
+    //  tag  size      weight line-height
+    "h1" rem(54px) bold rem(56px),
+    "h2" rem(36px) bold rem(40px),
+    "h3" rem(36px) normal rem(40px),
+    "h4" rem(24px) bold rem(32px),
+    "h5" rem(24px) normal rem(28px),
+    "h6" rem(16px) bold rem(24px)
+);
+
+$teaser-headings-mobile: (
+    "h1" rem(36px) bold rem(40px),
+    "h2" rem(28px) bold rem(32px),
+    "h3" rem(28px) normal rem(32px),
+    "h4" rem(20px) bold rem(24px),
+    "h5" rem(20px) normal rem(24px),
+    "h6" rem(16px) bold rem(24px)
+);
+
+.cmp-teaser-demo__content {
+    text-align: left;
+
+    @each $heading, $fontSize, $weight, $lineHeight in $teaser-headings-mobile {
+        #{$heading} {
+            font-size: $fontSize;
+            font-weight: $weight;
+            line-height: $lineHeight;
+        }
+    }
+    @include media(">=lg") {
+        @each $heading, $fontSize, $weight, $lineHeight in $teaser-headings {
+            #{$heading} {
+                font-size: $fontSize;
+                font-weight: $weight;
+                line-height: $lineHeight;
+            }
+        }
+    }
+    &__text {
+        margin: 0 0 rem(40px) 0;
+        letter-spacing: rem(-0.15px);
+        @include media(">=lg") {
+            margin: 0 0 rem(50px) 0;
+        }
+    }
+}
+

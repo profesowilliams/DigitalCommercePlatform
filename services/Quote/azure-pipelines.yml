@@ -1,0 +1,27 @@
+resources:
+  repositories:
+    - repository: DCP
+      type: git
+      name: 'WW Digital Commerce/DigitalCommercePlatform'
+      
+trigger: none
+
+schedules:
+- cron: "40 0 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
+
+pool:
+  name: 'CLW'
+  workspace:
+    clean: all
+  
+extends:
+  template: pullrequest-template-v2.yml@DCP
+  parameters:
+          projectSources: 'services/Quote/DigitalCommercePlatform.UIServices.Quote.sln'
+          unitTestSources: 'services/Quote/DigitalCommercePlatform.UIServices.Quote.*/*Tests.csproj'
+          projectKey: 'DC-DF-Quote-UI'
+          projectName: 'DC-DF-Quote-UI'          

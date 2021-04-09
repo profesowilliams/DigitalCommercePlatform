@@ -1,0 +1,28 @@
+resources:
+  repositories:
+    - repository: DCP
+      type: git
+      name: 'WW Digital Commerce/DigitalCommercePlatform'
+      
+
+trigger: none
+
+schedules:
+- cron: "0 0 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
+
+pool:
+  name: 'CLW'
+  workspace:
+    clean: all
+  
+extends:
+  template: pullrequest-template-v2.yml@DCP
+  parameters:
+          projectSources: 'services/Account/DigitalCommercePlatform.UIServices.Account.sln'
+          unitTestSources: 'services/Account/DigitalCommercePlatform.UIServices.Account.*/*Tests.csproj'
+          projectKey: 'DC-DF-Account-UI'
+          projectName: 'DC-DF-Account-UI'          

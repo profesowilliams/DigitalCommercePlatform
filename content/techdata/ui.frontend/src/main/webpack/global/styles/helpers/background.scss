@@ -1,0 +1,5 @@
+@each $shade, $value in $color-palette {
+    .bg-#{$shade} {
+        background-color: $value;
+    }
+}

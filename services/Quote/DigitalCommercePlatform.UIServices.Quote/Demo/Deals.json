@@ -1,0 +1,31 @@
+{
+  "returnObject": [
+    {
+      "dealId": "45689588",
+      "vendor": "Cisco",
+      "endUserName": "Frey & Locke Enterprises LLC",
+      "tdQuoteId": "",
+      "tdVendorBid": "MDMF-2175113-1910",
+      "status": "Today",
+      "dealExpires": "31/12/2019"
+    },
+    {
+      "dealId": "41332574",
+      "vendor": "HPE",
+      "endUserName": "Davidson Russel Holdings",
+      "tdQuoteId": "",
+      "tdVendorBid": "MDMF-2175113-1910",
+      "status": "Today",
+      "dealExpires": "31/12/2019"
+    },
+    {
+      "dealId": "46465222",
+      "vendor": "Dell",
+      "endUserName": "Los Angeles Public Works",
+      "tdQuoteId": "123456789",
+      "tdVendorBid": "MDMF-2175113-1910",
+      "status": "1 Week+",
+      "dealExpires": "31/12/2019"
+    }
+  ]
+}

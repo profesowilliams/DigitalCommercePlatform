@@ -1,0 +1,58 @@
+.cmp-text {}
+.cmp-text__paragraph {}
+
+
+.cmp-aem-alert{
+  border: rem(1px) solid get-color(td-primary-blue);
+  padding: rem(32px);
+  background-color: get-color(brand-white);
+  color: get-color(text-mid-gray);
+  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue)!important;
+}
+
+.dp-text--white {
+  
+        color: #fff;
+    
+}
+
+.dp-text--light-blue {
+    
+        color: #00b1e2;
+  
+}
+
+.dp-text--dark-blue {
+
+        color: #000c21;
+  
+}
+
+.dp-text--xsmall {
+    
+        font-size: .6875rem;
+ 
+}
+
+.dp-text--small {
+    font-size: .875rem;
+   
+}
+
+.dp-text--big  {
+ 
+        font-size: 1.25rem;
+       
+}
+
+.dp-text--align-center {
+
+    text-align: center;
+   
+}
+
+.dp-text--align-right {
+  
+    text-align: right;
+   
+}

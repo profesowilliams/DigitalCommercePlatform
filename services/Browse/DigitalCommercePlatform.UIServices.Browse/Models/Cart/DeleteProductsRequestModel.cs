@@ -1,0 +1,14 @@
+﻿using System.Collections.Generic;
+
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Cart
+{
+    public class DeleteProductsRequestModel : List<DeleteProductsItemRequestModel>
+    {
+    }
+
+    public class DeleteProductsItemRequestModel
+    {
+        public long Product { get; set; }
+        public ushort Quantity { get; set; }
+    }
+}

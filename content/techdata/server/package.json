@@ -1,0 +1,23 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor -w . -e js,html app"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "dateformat": "^4.5.1",
+    "node-fetch": "^2.6.1",
+    "reload": "^3.1.1",
+    "url": "^0.11.0"
+  }
+}

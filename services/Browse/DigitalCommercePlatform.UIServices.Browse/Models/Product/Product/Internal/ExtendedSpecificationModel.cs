@@ -1,0 +1,12 @@
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
+{
+    [ExcludeFromCodeCoverage]
+    public class ExtendedSpecificationModel
+    {
+        public string GroupName { get; set; }
+        public IEnumerable<AttributeModel> Attributes { get; set; }
+    }
+}

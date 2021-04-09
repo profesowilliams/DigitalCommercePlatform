@@ -1,0 +1,12 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIService.Browse.Model.Customer
+{
+    [ExcludeFromCodeCoverage]
+    public class TaxCertificateModel
+    {
+        public string CertificateNumber { get; set; }
+        public string Jurisdiction { get; set; }
+        public string Active { get; set; }
+    }
+}

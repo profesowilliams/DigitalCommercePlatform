@@ -1,0 +1,140 @@
+.cmp-separator {}
+.cmp-separator__horizontal-rule {}
+
+.dp-separator {
+  width: auto;
+  hr{
+    height: 1px !important;
+  }
+  &--light-blue{
+    .cmp-separator__horizontal-rule{
+      color: #00B1E2;
+      border-color: #00B1E2;
+    }
+  }
+  &--dark-blue{
+    .cmp-separator__horizontal-rule{
+      color: #000C21;
+      border-color: #000C21;
+    }
+  }
+  &--gray{
+    .cmp-separator__horizontal-rule{
+      color: #979797;
+      border-color: #979797;
+    }
+  }
+  &--white{
+    .cmp-separator__horizontal-rule{
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+  }
+
+  &--hidden{
+    .cmp-separator__horizontal-rule{
+      visibility: hidden;
+    }
+  }
+
+  &--space{
+    &-small{
+      .cmp-separator {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+    }
+
+    &-medium{
+      .cmp-separator {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+    }
+
+    &-large{
+      .cmp-separator {
+        margin-top: 4em;
+        margin-bottom: 4em;
+      }
+    }
+  }
+}
+
+.dp-general__separator{
+    border-color: #000C21;
+    &-left{
+        border-left: 1px solid;
+        padding-left: 1em;
+    }
+    &-right{
+      border-right: 1px solid;
+      padding-right: 1em;
+    }
+    &-top{
+      border-top: 1px solid;
+      padding-top: 1em;
+    }
+    &-bottom{
+      border-bottom: 1px solid;
+      padding-bottom: 1em;
+    }
+
+    &-space--small{
+      .dp-general__separator-left{
+        padding-left: 1em;
+      }
+      .dp-general__separator-right{
+        padding-right: 1em;
+      }
+      .dp-general__separator-top{
+        padding-top: 1em;
+      }
+      .dp-general__separator-bottom{
+        padding-bottom: 1em;
+      }
+    }
+    &-space--medium{
+      .dp-general__separator-left{
+        padding-left: 2em;
+      }
+      .dp-general__separator-right{
+        padding-right: 2em;
+      }
+      .dp-general__separator-top{
+        padding-top: 2em;
+      }
+      .dp-general__separator-bottom{
+        padding-bottom: 2em;
+      }
+
+    }
+    &-space--large{
+      .dp-general__separator-left{
+        padding-left: 4em;
+      }
+      .dp-general__separator-right{
+        padding-right: 4em;
+      }
+      .dp-general__separator-top{
+        padding-top: 4em;
+      }
+      .dp-general__separator-bottom{
+        padding-bottom: 4em;
+      }
+
+    }
+
+    &--light-blue{
+      border-color: #00B1E2;
+    }
+    &--dark-blue{
+      border-color: #000C21;
+    }
+    &--gray{
+      border-color: #979797;
+    }
+    &--white{
+      border-color: #FFFFFF;
+    }
+}

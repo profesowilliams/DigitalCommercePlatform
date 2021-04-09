@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIServices.Browse.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Actions\Browse\**" />
+    <Compile Remove="Actions\GetMenuDetails\**" />
+    <Content Remove="Actions\Browse\**" />
+    <Content Remove="Actions\GetMenuDetails\**" />
+    <EmbeddedResource Remove="Actions\Browse\**" />
+    <EmbeddedResource Remove="Actions\GetMenuDetails\**" />
+    <None Remove="Actions\Browse\**" />
+    <None Remove="Actions\GetMenuDetails\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Actions\GetCartDetails\GetCartRequest.cs" />
+    <Compile Remove="Actions\GetCartDetails\GetCartResponse.cs" />
+    <Compile Remove="Actions\GetCatalogDetails\GetCatalogueRequest.cs" />
+    <Compile Remove="Actions\GetCatalogDetails\GetCatalogueResponse.cs" />
+    <Compile Remove="Actions\GetCustomerDetails\GetCustomerRequest.cs" />
+    <Compile Remove="Actions\GetCustomerDetails\GetCustomerResponse.cs" />
+    <Compile Remove="Actions\GetHeaderDetails\GetHeader.cs" />
+    <Compile Remove="Actions\GetHeaderDetails\GetHeaderRequest.cs" />
+    <Compile Remove="Actions\GetHeaderDetails\GetHeaderResponse.cs" />
+    <Compile Remove="Actions\GetProductDetails\GetProductHandler.cs" />
+    <Compile Remove="Actions\GetProductSummary\GetProductSummaryHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-browse-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Logging\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="3.50.207" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="3.50.207" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="3.50.207" />
+    <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
+    <PackageReference Include="Flurl" Version="3.0.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.0.0" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

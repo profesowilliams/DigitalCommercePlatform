@@ -1,0 +1,34 @@
+.cmp-container {}
+
+
+.cmp-container {
+
+  float: unset !important;
+
+  &--max-1440 {
+    max-width: $container-max-width;
+    margin: 0 auto !important;
+    float: unset !important;
+  }
+
+  &--max-1400 {
+    max-width: 1400px;
+    margin: 0 auto !important;
+    float: unset !important;
+  }
+
+  &--max-1600 {
+    max-width: 1600px;
+    margin: 0 auto !important;
+    float: unset !important;
+  }
+
+  &--fixed > .cmp-container {
+    margin: 0 auto;
+    max-width: 73.12rem;
+    overflow: hidden;
+    @media (min-width: 1024px) {
+      margin: 0 1.25rem;
+    }
+  }
+}

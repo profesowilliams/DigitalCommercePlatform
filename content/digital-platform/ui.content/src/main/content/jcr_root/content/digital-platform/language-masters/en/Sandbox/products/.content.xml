@@ -11,6 +11,13 @@
         <root
             jcr:primaryType="nt:unstructured"
             sling:resourceType="wcm/foundation/components/responsivegrid">
+            <landingcontentv2
+                jcr:created="{Date}2020-10-30T12:08:08.934-04:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2020-10-30T12:15:15.150-04:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="digital-platform/components/content/blocks/landingcontentv2"/>
             <main
                 jcr:created="{Date}2020-10-20T11:34:43.447-04:00"
                 jcr:createdBy="admin"
@@ -73,13 +80,6 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="digital-platform/components/structure/responsivegrid"/>
-            <landingcontentv2
-                jcr:created="{Date}2020-10-30T12:08:08.934-04:00"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2020-10-30T12:15:15.150-04:00"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="digital-platform/components/content/blocks/landingcontentv2"/>
         </root>
     </jcr:content>
     <category/>

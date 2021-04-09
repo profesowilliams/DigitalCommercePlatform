@@ -5,9 +5,9 @@
         cq:lastModified="{Date}2019-06-20T16:15:50.384+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/libs/wcm/msm/templates/blueprint"
+        jcr:description="Creates blueprint config for TD Digital Platform"
         jcr:primaryType="nt:unstructured"
         jcr:title="TD Digital Platform Blueprint"
-        jcr:description="Creates blueprint config for TD Digital Platform"
         sling:resourceType="wcm/msm/components/blueprint"
         sitePath="/content/digital-platform/language-masters">
         <dialog/>
