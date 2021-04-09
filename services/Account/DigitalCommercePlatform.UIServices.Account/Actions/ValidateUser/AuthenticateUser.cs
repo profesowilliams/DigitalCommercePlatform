@@ -3,9 +3,11 @@ using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -63,48 +65,64 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
             private readonly ISecurityService _securityService;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
             private readonly IMapper _mapper;
+            private readonly IUIContext _context;
+            private readonly ILogger<AuthenticateUserQueryHandler> _logger;
 
-
-
-            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper)
+            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper, 
+                                                    IUIContext context, ILogger<AuthenticateUserQueryHandler> logger)
             {
                 _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _context = context ?? throw new ArgumentNullException(nameof(context));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var tokenResponse = await _securityService.GetToken(request.Code, request.RedirectUri, request.TraceId, request.Language, request.Consumer);
+                _context.SetConsumer(request.Consumer);
+                _context.SetLanguage(request.Language);
+                _context.SetTraceId(request.TraceId);
+
+                var tokenResponse = await _securityService.GetToken(request.Code, request.RedirectUri);
 
                 if (string.IsNullOrEmpty(tokenResponse.AccessToken))
                 {
+                    _logger.LogInformation(tokenResponse.Exception, "No access token at: " + nameof(AuthenticateUserQueryHandler));
+
                     return new ResponseBase<Response>
                     {
                         Error = new ErrorInformation
                         {
                             IsError = true,
-                            Messages = new List<string> { "Something went wrong" },//tokenResponse.Exception.Message,
-                            Code =tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 // we should agree about code
+                            Messages = new List<string> { "Something went wrong" }, 
+                            Code =tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 
+                            // we should agree about code and message
                         }
                     };
                 }
-                
 
-                var userResponse = await _securityService.GetUser(tokenResponse.AccessToken, request.ApplicationName, request.TraceId, request.Language, request.Consumer);
+                _context.SetAccessToken(tokenResponse.AccessToken);
+
+                var userResponse = await _securityService.GetUser(request.ApplicationName);
 
                 if (userResponse.User == null)
                 {
+                    _logger.LogInformation(userResponse.Exception, "No user at: " + nameof(AuthenticateUserQueryHandler));
+
                     return new ResponseBase<Response>
                     {
                         Error = new ErrorInformation
                         {
                             IsError = true,
-                            Messages = new List<string> { "Something went wrong" },//userResponse.Exception.Message,
-                            Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111 // we should agree about code
+                            Messages = new List<string> { "Something went wrong" },
+                            Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111 
+                            // we should agree about code and message
                         }
                     };
                 }
+
+                userResponse.User.RefreshToken = tokenResponse.RefreshToken;
 
                 _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
 

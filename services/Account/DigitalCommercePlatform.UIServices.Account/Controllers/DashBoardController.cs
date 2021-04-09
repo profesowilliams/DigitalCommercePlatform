@@ -22,7 +22,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
-    [SetAccessToken]
+    [SetContextFromHeader]
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]

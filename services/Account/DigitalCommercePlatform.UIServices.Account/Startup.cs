@@ -1,15 +1,14 @@
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Mvc;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -31,8 +30,6 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            //app.UseMiddleware<ContextMiddleware>();
             app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             base.ConfigureMiddleSection(app, env);
         }

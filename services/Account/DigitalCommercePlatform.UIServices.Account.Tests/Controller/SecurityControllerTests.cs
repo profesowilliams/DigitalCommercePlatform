@@ -122,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task LogoutUser_BadRequest([Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
-            LogoutUser.Response expected)
+            ResponseBase<LogoutUser.Response> expected)
         {
 
             mediator.Setup(x => x.Send(
@@ -138,9 +138,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task LogoutUser_OkRequest([Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
-            LogoutUser.Response expected)
+            ResponseBase<LogoutUser.Response> expected)
         {
-            expected.IsError = false;
+            expected.Error.IsError = false;
 
             mediator.Setup(x => x.Send(
                       It.IsAny<LogoutUser.Request>(),

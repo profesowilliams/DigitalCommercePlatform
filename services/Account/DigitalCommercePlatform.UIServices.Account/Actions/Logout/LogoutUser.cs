@@ -1,5 +1,5 @@
-﻿using DigitalFoundation.Common.Cache.UI;
-using FluentValidation;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalFoundation.Common.Cache.UI;
 using MediatR;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Logout
     [ExcludeFromCodeCoverage]
     public sealed class LogoutUser
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string SessionId { get; }
 
@@ -23,19 +23,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Logout
 
         public class Response
         {
-            public virtual bool IsError { get; set; }
             public string Message { get; set; }
         }
 
-        public class RequestValidator : AbstractValidator<Request>
-        {
-            public RequestValidator()
-            {
-                RuleFor(p => p.SessionId).NotEmpty().WithMessage("SessionId is required.");
-            }
-        }
-
-        public class LogoutUserQueryHandler : IRequestHandler<Request, Response>
+        public class LogoutUserQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
 
@@ -44,11 +35,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Logout
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 _sessionIdBasedCacheProvider.Remove("User");
 
-                return await Task.FromResult( new Response { IsError = false, Message = "User logged out successfully" });
+                return await Task.FromResult( new ResponseBase<Response> { Content = new Response { Message = "User logged out successfully" } });
             }
         }
     }

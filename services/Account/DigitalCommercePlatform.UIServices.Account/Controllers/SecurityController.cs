@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public SecurityController(IMediator mediator,
             IOptions<AppSettings> options,
             ILogger<BaseUIServiceController> loggerFactory,
-            IContext context,
+            IUIContext context,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new LogoutUser.Request(sessionId));
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }

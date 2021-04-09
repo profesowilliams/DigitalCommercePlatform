@@ -1,6 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
 using DigitalFoundation.Common.Settings;
@@ -17,10 +16,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _coreSecurityUrl;
         private readonly string _clientId;
         private readonly string _clientSecret;
-        private readonly IUIContext _context;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
 
-        public SecurityService(IOptions<AppSettings> appSettingsOptions, IUIContext context, IMiddleTierHttpClient middleTierHttpClient)
+        public SecurityService(IOptions<AppSettings> appSettingsOptions, IMiddleTierHttpClient middleTierHttpClient)
         {
             if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
 
@@ -33,11 +31,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _clientSecret = appSettingsOptions.Value?.TryGetSetting(Globals.AemClientSecret) ??
                                                         throw new InvalidOperationException($"{Globals.AemClientSecret} is missing from AppSettings");
 
-            _context = context ?? throw new ArgumentNullException(nameof(context));
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
         }
 
-        public async Task<ClientLoginCodeTokenResponseModel> GetToken(string code, string redirectUri, string traceId, string language, string consumer)
+        public async Task<ClientLoginCodeTokenResponseModel> GetToken(string code, string redirectUri)
         {
             var clientLoginCodeTokenRequest = new ClientLoginCodeTokenRequestModel()
             {
@@ -48,18 +45,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 RedirectUri = new Uri(redirectUri)
             };
 
-            _context.SetContext(consumer, language, traceId);
-            
-
             var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
             return tokenResponseDto;
         }
 
-        public async Task<ValidateUserResponseModel> GetUser(string accessToken,string applicationName, string traceId, string language, string consumer)
+        public async Task<ValidateUserResponseModel> GetUser(string applicationName)
         {
-            _context.SetContext(consumer, language, traceId, accessToken);
-
-
             var userResponseDto = await _middleTierHttpClient.ValidateUserAsync(new ValidateUserRequestModel
             {
                 Address = _coreSecurityUrl,
