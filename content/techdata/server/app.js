@@ -13,13 +13,12 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-function checkCreds(user, pass)
-{
-    return user in {"admin" : "admin","user" : "temp", "bru" : "temp"} && pass in {"admin" : "admin", "pass" : "temp", "123" : "temp"} ;
+function checkCreds(user, pass) {
+  return user in { "admin": "admin", "user": "temp", "bru": "temp" } && pass in { "admin": "admin", "pass": "temp", "123": "temp" };
 }
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site');
@@ -52,7 +51,7 @@ app.use('/', express.static('public'));
 
 
 
-app.post("/auth", function(req, res){
+app.post("/auth", function (req, res) {
 
   let userid = req.body.userid;
   let password = req.body.password;
@@ -67,13 +66,12 @@ app.post("/auth", function(req, res){
 
 
 
-  res.append("custom" , "value");
+  res.append("custom", "value");
   res.type('application/json');
 
-  if (checkCreds(userid, password))
-  {
-    res.redirect(redirect + "?code="+codeValue);
-  }else{
+  if (checkCreds(userid, password)) {
+    res.redirect(redirect + "?code=" + codeValue);
+  } else {
     // res.send({"userid" : req.body.userid, "password" : req.body.password, auth : checkCreds(userid, password)})
     // res.render('<h1>error</h1>');
     // res.write("<h1>error</h1>");
@@ -92,25 +90,25 @@ app.post("/auth", function(req, res){
 
 });
 
-app.get("/success", function(req, res){
-  res.json({message: "success"})
+app.get("/success", function (req, res) {
+  res.json({ message: "success" })
 });
 
-app.get("/masthead", function(req, res){
+app.get("/masthead", function (req, res) {
   let resJson = {
-    "user" : null,
-    "cart" : {
-      "count" : 2,
-      "items" : []
+    "user": null,
+    "cart": {
+      "count": 2,
+      "items": []
     },
-    "links" : {
-      "home" : "http://localhost:3000/auth"
+    "links": {
+      "home": "http://localhost:3000/auth"
     }
   }
   res.json(resJson)
 });
 
-app.post("/login", function(req, res){
+app.post("/login", function (req, res) {
 
   let code = req.body.code;
   let redirectUrl = req.body.RedirectUri;
@@ -124,47 +122,76 @@ app.post("/login", function(req, res){
 
 
   let resJsonSuccess = {
-      "isError": false,
-      "user": {
-          "id": "516514",
-          "firstName": "Dyana",
-          "lastName": "Karaphillis",
-          "name": "DAYNA KARAPHILLIS",
-          "email": "SHI@cstenet.com",
-          "phone": "9999999971",
-          "accountNumber" : "1234567890",
-          "companyName": "Stark Enterprises",
-          "customers": [
-              "0038048612"
-  ],
-          "roles": [],
-          "cart": {
-            "activeCart": 1,
-            "items":[],
-            "itemsQuantity": 1,
-          }
-  },
+    "isError": false,
+    "user": {
+      "id": "516514",
+      "firstName": "Dyana",
+      "lastName": "Karaphillis",
+      "name": "DAYNA KARAPHILLIS",
+      "email": "SHI@cstenet.com",
+      "phone": "9999999971",
+      "accountNumber": "1234567890",
+      "companyName": "Stark Enterprises",
+      "customers": [
+        "0038048612"
+      ],
+      "roles": [],
+      "cart": {
+        "activeCart": 1,
+        "items": [],
+        "itemsQuantity": 1,
+      }
+    },
   }
 
   let resJsonFail = {
-    "isError" : true,
-    "user" : null
+    "isError": true,
+    "user": null
   }
 
-  if (code === codeValue)
-  {
+  if (code === codeValue) {
     res.json(resJsonSuccess)
-  }else{
+  } else {
     res.json(resJsonFail);
   }
 
 });
 
-app.options("/*", function(req, res, next){
+app.options("/*", function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.send(200);
+});
+
+//---TOP n OPEN CONFIG MOCK API---//
+app.get("/ui-account/v1/topQuotes/get", function (req, res) {
+  const param = req.query.top || 5;
+  const items = [];
+  for (let i = 0; i < param; i++) {
+    const random = Math.floor(Math.random() * 100000);
+    items.push({
+      sequence: i + 1,
+      endUserName: `End User 38${i}`,
+      amount: random,
+      formattedAmount: random.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ".0",
+      currencyCode: 'USD',
+    })
+  }
+  const response = {
+    content: {
+      summary: {
+        items: items
+      },
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+
+  res.json(response)
 });
 
 app.listen(port, () => {
@@ -176,7 +203,7 @@ app.get("/quote/MyQuote", function (req, res) {
 
   if (code !== codeValue)
     return res.status(500).json({ isError: true, myQuotes: null })
-  
+
   res.json({
     "content": {
       "myQuotes": {
@@ -193,12 +220,12 @@ app.get("/quote/MyQuote", function (req, res) {
     }
   })
 });
-app.get("/quote/create/:cart", function(req, res){
+app.get("/quote/create/:cart", function (req, res) {
   const code = req.query.code;
   const cart = req.params.cart;
 
   if (code !== codeValue)
-    return res.status(500).json({isError: true, quote: null})
+    return res.status(500).json({ isError: true, quote: null })
 
   res.json({
     "content": {

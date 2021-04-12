@@ -232,6 +232,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'top-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/top-quotes.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'my-renewals.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-renewals.html')
 			}),
@@ -290,6 +294,18 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'teaser-bigcards.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-bigcards.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'top-five-open-config',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-config-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'top-five-open-deals',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-deals-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'top-five-open-quotes',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-quotes-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'quote.html',
