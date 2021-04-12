@@ -10,9 +10,6 @@ var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 
-// View engine setup
-// app.set('view engine', 'html');
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -174,6 +171,28 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
+app.get("/quote/MyQuote", function (req, res) {
+  const code = req.query.code;
+
+  if (code !== codeValue)
+    return res.status(500).json({ isError: true, myQuotes: null })
+  
+  res.json({
+    "content": {
+      "myQuotes": {
+        "openQuotes": 38,
+        "percentage": 31.49,
+        "ratio": "3:1",
+        "activeQuotes": "$6,251,968"
+      }
+    },
+    "error": {
+      "code": "",
+      "message": "",
+      "isError": false
+    }
+  })
+});
 app.get("/quote/create/:cart", function(req, res){
   const code = req.query.code;
   const cart = req.params.cart;

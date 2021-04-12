@@ -294,7 +294,15 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'quote.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quote.html')
-			})
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-quotes-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-quotes-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes-react.html')
+			}),
 		],
 		devServer: {
 			inline: true,

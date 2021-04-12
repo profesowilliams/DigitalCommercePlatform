@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import "regenerator-runtime/runtime";
 import './utils/app.connector';
 import './utils/axios';
-import './utils/randomCodeGenrator';
 
 import './store/action/authAction';
 
@@ -15,3 +14,4 @@ import Chart from "./global/techdata/components/Chart/Chart";
 import SignIn from "./global/techdata/components/SignIn/SignIn";
 import CreateQuote from "./global/techdata/components/CreateQuote/CreateQuote";
 import Subheader from "./global/techdata/components/Subheader/Subheader";
+import MyQuotes from "./global/techdata/components/MyQuotes/MyQuotes";

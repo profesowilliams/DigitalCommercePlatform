@@ -1,6 +1,6 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
-import {nanoid} from "nanoid";
+import { createSessionId, setSessionId } from '../../utils';
 
 export const signInRequest = () => {
 	return {
@@ -32,13 +32,15 @@ export const signInAsynAction = (apiUrl) => {
 	const signInUrl = apiUrl;
 
   const  prepareSignInHeader = () => {
-		let code = localStorage.getItem("signInCode");
+	  let code = localStorage.getItem("signInCode");
+	  const sessionId = createSessionId();
+	  setSessionId(sessionId);
 		return {
 			"TraceId" : "NA",
 			"Site": "NA",
 			"Accept-Language" : "en-us",
 			"Consumer" : "NA",
-			"SessionId" : nanoid(16),
+			"SessionId" : sessionId,
 			"Content-Type": "application/json"
 		}
 	};
