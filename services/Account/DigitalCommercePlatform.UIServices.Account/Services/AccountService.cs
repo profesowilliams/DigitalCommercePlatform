@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
@@ -69,6 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 return await Task.FromResult(response);
 
         }
+
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
             var response = new List<DealsSummaryModel>();
@@ -85,9 +87,31 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
+        public async Task<List<DealModel>> GetTopDealsAsync(GetTopDeals.Request request)
+        {
+            var deals = new List<DealModel>();
+            var top = (int)request.Top;
+
+            for (int i = top; i >= 0; i--)
+            {
+                var dealValue = i + 1 * 100001.89m;
+                var deal = new DealModel
+                {
+                    Sequence = 5 - i,
+                    UserName = "End User " + i,
+                    DealValue = dealValue,
+                    CurrencyCode = "USD",
+                    FormattedAmount = string.Format("{0:N2}", dealValue)
+                };
+
+                deals.Add(deal);
+            }
+
+            return await Task.FromResult(deals);
+        }
+
         public async Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request)
         {
-
             var carts = new List<SavedCart>();
             for (int i = 0; i < 20; i++)
             {

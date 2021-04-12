@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,6 +15,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
             CreateMap<List<DealsSummaryModel>, GetDealsSummary.Response>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
+            CreateMap<List<DealModel>, GetTopDeals.Response>()
+             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
         }
     }
 }

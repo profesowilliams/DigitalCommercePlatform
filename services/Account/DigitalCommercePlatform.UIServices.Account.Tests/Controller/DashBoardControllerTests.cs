@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Xunit;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -190,6 +191,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetTopConfigurations(5).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopDeals(ResponseBase<GetTopDeals.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetTopDeals.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopDeals(5).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

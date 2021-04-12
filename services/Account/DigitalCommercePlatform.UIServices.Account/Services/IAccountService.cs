@@ -1,21 +1,22 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
+using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
-using DigitalCommercePlatform.UIServices.Account.Models.Orders;
-using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -23,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     {
         Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request);
         Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request);
+        Task<List<DealModel>> GetTopDealsAsync(GetTopDeals.Request request);
         Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
         Task <ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
