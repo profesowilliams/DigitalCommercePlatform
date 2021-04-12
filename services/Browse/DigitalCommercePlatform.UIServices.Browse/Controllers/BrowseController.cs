@@ -45,10 +45,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="catalogueCriteria"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("header/get")]
-        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string catalogueCriteria)
+        [Route("header")]
+        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string catalogueCriteria,bool isDefault=true)
         {
-            var response = await Mediator.Send(new GetHeaderHandler.Request( catalogueCriteria)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetHeaderHandler.Request( catalogueCriteria, isDefault)).ConfigureAwait(false);
             return Ok(response);
         }
         /// <summary>
@@ -58,10 +58,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="customerId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("cart/get")]
-        public async Task<ActionResult<ResponseBase<GetCartHandler.Response>>> GetCartDetails(string userId, string customerId)
+        [Route("cart")]
+        public async Task<ActionResult<ResponseBase<GetCartHandler.Response>>> GetCartDetails(bool isDefault=true)//(string userId, string customerId)
         {
-            var response = await Mediator.Send(new GetCartHandler.Request(userId, customerId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetCartHandler.Request(isDefault)).ConfigureAwait(false);
             return Ok(response);
         }
         /// <summary>
@@ -70,10 +70,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("catalogue/get")]
+        [Route("catalogue")]
         public async Task<ActionResult<GetCatalogHandler.Response>> GetCatalog(string id)
         {
-            
             var response = await Mediator.Send(new GetCatalogHandler.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
@@ -83,10 +82,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("customer/get")]
-        public async Task<ActionResult<GetCustomerHandler.Response>> GetCustomer([FromQuery] string id)
+        [Route("customer")]
+        public async Task<ActionResult<GetCustomerHandler.Response>> GetCustomer()
         {
-            var response = await Mediator.Send(new GetCustomerHandler.Request(id)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetCustomerHandler.Request()).ConfigureAwait(false);
             return Ok(response);
         }
         /// <summary>
@@ -96,8 +95,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="details"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("Product/get")]
-        public async Task<ActionResult<object>> GetProduct([FromQuery] IReadOnlyList<string> id, [FromQuery] bool details = true)
+        [Route("product")]
+        public async Task<ActionResult<object>> GetProduct([FromQuery] IReadOnlyList<string> id, [FromQuery] bool details )
         {
             if (details)
             {

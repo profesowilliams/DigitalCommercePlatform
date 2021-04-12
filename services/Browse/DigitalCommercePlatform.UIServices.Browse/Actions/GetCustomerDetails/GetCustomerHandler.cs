@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,12 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Id { get; set; }
 
-            public Request(string id)
-            {
-                Id = id;
-            }
         }
 
         public class Response
@@ -51,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
             {
                 try
                 {
-                    var customerDetails = await _customerRepositoryServices.GetCustomerDetails(request);
+                    var customerDetails = await _customerRepositoryServices.GetCustomerDetails();
                     var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
                     return new ResponseBase<Response> { Content = getCustomerResponse };
                 }
@@ -60,13 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(GetCustomerHandler));
                     throw ex;
                 }
-            }
-        }
-        public class Validator : AbstractValidator<Request>
-        {
-            public Validator()
-            {
-                RuleFor(i => i.Id).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }
