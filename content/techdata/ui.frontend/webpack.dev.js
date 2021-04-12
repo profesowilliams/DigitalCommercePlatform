@@ -319,6 +319,10 @@ module.exports = (env) => {
 				filename: 'my-quotes.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes-react.html')
 			}),
+			new HtmlWebpackPlugin({
+				filename: 'megamenu.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/megamenu.html')
+			})
 		],
 		devServer: {
 			inline: true,
