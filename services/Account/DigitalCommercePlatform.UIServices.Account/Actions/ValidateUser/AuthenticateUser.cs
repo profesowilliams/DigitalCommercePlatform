@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
 
-                _sessionIdBasedCacheProvider.Put("User", userResponse.User);
+                _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
 
                 var userDto = _mapper.Map<User>(userResponse.User);
 
