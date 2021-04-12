@@ -21,24 +21,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Code { get; }
-            public string RedirectUri { get; }
-            public string ApplicationName { get; set; }
-            public string TraceId { get; }
-            public string Language { get; }
-            public string Consumer { get; }
-            public string SessionId { get; }
-
-            public Request(string code, string redirectUri, string applicationName, string traceId, string language, string consumer, string sessionId)
-            {
-                Code = code;
-                RedirectUri = redirectUri;
-                TraceId = traceId;
-                Language = language;
-                Consumer = consumer;
-                SessionId = sessionId;
-                ApplicationName = applicationName;
-            }
+            public string Code { get; init; }
+            public string RedirectUri { get; init; }
+            public string ApplicationName { get; init; }
+            public string TraceId { get; init; }
+            public string Language { get; init; }
+            public string Consumer { get; init; }
+            public string SessionId { get; init; }
         }
 
         public class Response
@@ -124,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
 
-                _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
+                _sessionIdBasedCacheProvider.Put("User", userResponse.User);
 
                 var userDto = _mapper.Map<User>(userResponse.User);
 
