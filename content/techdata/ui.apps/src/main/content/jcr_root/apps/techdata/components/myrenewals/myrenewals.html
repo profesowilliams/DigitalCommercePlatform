@@ -1,12 +1,11 @@
-
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-
-<div id="MyRenewals" data-observe-mutation>
-    <div data-component="MyRenewals" data-cmp-type="react" className="myrenewals" data-config='{"label" : "${properties.label}","uiServiceEndPoint": "${properties.uiServiceEndPoint}"}'>
+<sly data-sly-use.model="myrenewals.js">
+    <div id="MyRenewals" data-observe-mutation>
+        <div data-component="MyRenewals" data-cmp-type="react" className="myrenewals" data-config="${model.configJson}">
+        </div>
     </div>
-</div>
 
-
+</sly>
 
