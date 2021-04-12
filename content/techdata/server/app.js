@@ -201,16 +201,18 @@ app.listen(port, () => {
 app.get("/quote/MyQuote", function (req, res) {
   const code = req.query.code;
 
-  if (code !== codeValue)
-    return res.status(500).json({ isError: true, myQuotes: null })
-
+  if (!req.headers['sessionid'])
+    return res.status(401)
+  
   res.json({
     "content": {
-      "myQuotes": {
-        "openQuotes": 38,
-        "percentage": 31.49,
-        "ratio": "3:1",
-        "activeQuotes": "$6,251,968"
+      "items": {
+              "converted": "5.00 %",
+              "open": 32,
+              "quoteToOrder": "5:2",
+              "activeQuoteValue": 190400.0,
+              "currencyCode": "USD",
+        "formattedAmount": "190,400.00"
       }
     },
     "error": {

@@ -5,12 +5,12 @@
     font-family: 'Open Sans', sans-serif;
     justify-content: space-between;
     display: flex;
-    width: rem(475px);
+    width: rem(553px);
     height: rem(55px);
     align-items: center;
     margin: 0 15px;
     &__title {
-        font-size: $font-size-small;
+        font-size: $font-size-medium;
         text-transform: uppercase;
         color: get-color(text-mid-gray);
         width: rem(115px);

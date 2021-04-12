@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { getSessionId } from './index';
 
-const API_URL = 'https://api.npoint.io/4070e20470046901e130';
-axios.defaults.baseURL = API_URL;
 axios.defaults.headers.common['TraceId'] = 'NA';
 axios.defaults.headers.common['Site'] = 'NA';
 axios.defaults.headers.common['Accept-Language'] = 'en-us';
