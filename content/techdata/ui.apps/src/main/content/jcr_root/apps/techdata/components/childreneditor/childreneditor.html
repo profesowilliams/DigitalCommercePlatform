@@ -1,0 +1,86 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2018 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<style>
+.coral3-Checkbox-input:checked+.coral3-Checkbox-checkmark:before {
+	background-image:none;
+}
+
+.coral3-Textfield.textfield-readonly {
+    background-color: #f0f0f0;
+    border-color: #e6e6e6;
+    color: #bebebe;
+    -webkit-text-fill-color: #bebebe;
+    -webkit-opacity: 1;
+}
+
+
+input[value="true"] + span:before { background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjExNTJweCIgaGVpZ2h0PSIxMTUycHgiIHZpZXdCb3g9IjAgMCAxMTUyIDExNTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDExNTIgMTE1MiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGQ9Ik0yNzUuOSw4NjYuOUwxMC41LDYwMS41QzMuNSw1OTQuNCwwLDU4NS4yLDAsNTc2czMuNS0xOC40LDEwLjUtMjUuNWwxMDUuMS0xMDUuMWMxNC4xLTE0LjEsMzYuOS0xNC4xLDUwLjksMGwyNjUuNCwyNjUuNAoJbDU1Ny4yLTU1Ny4yYzctNywxNi4xLTkuNywyNS4zLTkuN2M5LjctMC4xLDE5LjQsMywyNi42LDEwLjdsMTAxLjIsMTA5YzYuNSw3LDkuOSwxNS40LDkuOSwyNC4yYzAsOS4yLTMuOCwxOC43LTEwLjgsMjUuNwoJTDU4Ny45LDg2Ni45TDQ1Ny40LDk5Ny41Yy03LDctMTYuMiwxMC41LTI1LjMsMTAuNXMtMTguNS0zLjUtMjUuNi0xMC41TDI3NS45LDg2Ni45eiIgZmlsbD0iIzMyNmVjOCIvPgo8L3N2Zz4=')  !important}
+input[value="false"] + span:before { background-image: none !important}
+
+</style>
+
+<coral-multifield data-sly-use.childrenEditor="com.techdata.core.models.TabEditor"
+                  data-sly-use.iconTemplate="icon.html"
+                  data-cmp-is="childrenEditor"
+                  class="cmp-childreneditor"
+                  data-container-path = "${childrenEditor.container.path}">
+
+
+    <coral-multifield-item data-sly-repeat.item="${childrenEditor.items}" data-name="${item.name}">
+        <div class="coral-form coral-Form-aligned cmp-childreneditor__item">
+            <div class="coral-Form-fieldwrapper">
+                <sly data-sly-call="${iconTemplate.icon @ item=item}"></sly>
+                <input is="coral-textfield"
+                       class="cmp-childreneditor__item-title"
+                       data-cmp-hook-childreneditor="itemTitle"
+                       name="./${item.name}/cq:panelTitle"
+                       value="${item.value}"
+                       placeholder="${item.title}">
+
+                <coral-checkbox
+                        data-toggle-checkbox_master
+                        name="./${item.name}/link"
+                        value="${item.link}"
+                        data-foundation-validation=""
+                        data-validation=""
+                        checked
+                        class="coral-Form-field cmp-childreneditor__checkbox"
+                        aria-disabled="false"
+                        aria-invalid="false">
+                    Link
+                </coral-checkbox>
+            </div>
+
+            	<input class="coral-textfield-custom hide" 
+                    is="coral-textfield"
+                    placeholder="Enter page path" 
+                    name="./${item.name}/linkPath"
+                    value="${item.linkPath}">
+        </div>
+    </coral-multifield-item>
+    <button data-cmp-hook-childreneditor="add" type="button" is="coral-button">Add</button>
+    <template coral-multifield-template="">
+        <div class="cmp-childreneditor__item">
+            <span class="cmp-childreneditor__item-icon"
+                  data-cmp-hook-childreneditor="itemIcon"></span>
+            <input is="coral-textfield"
+                   class="cmp-childreneditor__item-title"
+                   data-cmp-hook-childreneditor="itemTitle" required>
+            <input type="hidden" data-cmp-hook-childreneditor="itemResourceType">
+        </div>
+    </template>
+</coral-multifield>
