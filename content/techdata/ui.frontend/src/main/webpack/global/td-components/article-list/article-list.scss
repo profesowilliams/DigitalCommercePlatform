@@ -1,4 +1,5 @@
 .cmp-article-list{
+
   .cmp-list{
     list-style: none;
     padding: 0;
@@ -7,6 +8,8 @@
     justify-content: space-between;
     flex-wrap: wrap;
   }
+
+
   .cmp-list__item{
     position: relative;
     width: 30%;
@@ -63,6 +66,56 @@
       padding-left: rem(8px);
     }
   }
+
+  &--list-view{
+    .cmp-list__item-description{
+        display: none;
+    }
+    .cmp-list__item{
+        box-shadow: 0 0 0 rem(1px)  get-color(secondary-light-grey);
+        margin-bottom: rem(18px);
+        margin-left: rem(25px);
+        margin-right: rem(25px);
+        &.list-vew {
+         height: rem(110px);
+        }
+    }
+    .cmp-image__image-figure {
+        width: rem(195px);
+        height: rem(110px);
+        margin: 0;
+        display: inline-block;
+    }
+    .cmp-list__item-info{
+        display: flex;
+        flex-direction: column;
+        padding: rem(10px) rem(24px);
+        line-height: rem(24px);
+    }
+    .cmp-list__item-link{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .cmp-list__item-date{
+        font-size: rem(12px);
+        color: get-color(brand-text-gray);
+    }
+    .cmp-list__item-viewmore{
+        font-size: rem(14px);
+        font-weight: 400;
+        color: get-color(brand-text-gray);
+    }
+    .cmp-list__item-title{
+        font-size: rem(20px);
+        color: get-color(brand-blue);
+    }
+    .cmp-image__image{
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
   &--fixed-items{
     .cmp-list__item{
       width: rem(170px);
