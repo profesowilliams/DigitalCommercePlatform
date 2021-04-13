@@ -203,15 +203,15 @@ app.get("/quote/MyQuote", function (req, res) {
 
   if (!req.headers['sessionid'])
     return res.status(401)
-  
+
   res.json({
     "content": {
       "items": {
-              "converted": "5.00 %",
-              "open": 32,
-              "quoteToOrder": "5:2",
-              "activeQuoteValue": 190400.0,
-              "currencyCode": "USD",
+        "converted": "5.00 %",
+        "open": 32,
+        "quoteToOrder": "5:2",
+        "activeQuoteValue": 190400.0,
+        "currencyCode": "USD",
         "formattedAmount": "190,400.00"
       }
     },
