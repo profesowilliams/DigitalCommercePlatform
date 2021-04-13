@@ -274,7 +274,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var myOrders = new MyOrdersDashboard
             {
                CurrencyCode="USD",
-               IsMontly=true,
+               IsMonthly=request.IsMonthly,
                ProcessedOrderPercentage= percentage.ToString(),
                ProcessedOrdersAmount= processedAmount,
                TotalOrderAmount = totalAmount,

@@ -5,7 +5,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Orders
     [ExcludeFromCodeCoverage]
     public class MyOrdersDashboard
     {
-        public bool IsMontly { get; set; }
+        public bool IsMonthly { get; set; }
         public string CurrencyCode { get; set; }
         public string ProcessedOrderPercentage { get; set; }
         public long ProcessedOrdersAmount { get; set; }
