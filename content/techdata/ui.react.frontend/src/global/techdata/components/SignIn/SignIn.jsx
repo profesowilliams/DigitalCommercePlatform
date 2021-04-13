@@ -17,8 +17,8 @@ const SignIn = (props) => {
 
 	const codeQueryParam = "code";
 	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.authenticationURL, configDataAEM.uiServiceEndPoint, configDataAEM.clientId];
-  const requested = props.data.auth.requested;
-  const isError = props.data.auth.showError;
+  	const requested = props.data.auth.requested;
+  	const isError = props.data.auth.showError;
 	const userData = props.data.auth.userData;
 	const userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem("userData"));
 

@@ -8,7 +8,7 @@ const userMenu = (props) => {
     localStorage.removeItem('signout');
     localStorage.removeItem('userData');
     localStorage.removeItem('signInCode');
-    window.location.href = window.location.protocol + "//" + window.location.hostname + window.location.pathname;
+    window.location.href = window.location.protocol +  "//" + window.location.hostname + (window.location.port === "80" ? "" : ":" + window.location.port) + window.location.pathname;
   };
   const userDropDown = () => {
     document.querySelector('.cmp-sign-in-list').classList.toggle('active');

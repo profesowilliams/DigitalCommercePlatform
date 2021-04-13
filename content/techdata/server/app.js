@@ -122,27 +122,20 @@ app.post("/login", function (req, res) {
 
 
   let resJsonSuccess = {
-    "isError": false,
-    "user": {
-      "id": "516514",
-      "firstName": "Dyana",
-      "lastName": "Karaphillis",
-      "name": "DAYNA KARAPHILLIS",
-      "email": "SHI@cstenet.com",
-      "phone": "9999999971",
-      "accountNumber": "1234567890",
-      "companyName": "Stark Enterprises",
-      "customers": [
-        "0038048612"
-      ],
-      "roles": [],
-      "cart": {
-        "activeCart": 1,
-        "items": [],
-        "itemsQuantity": 1,
+    "content": {
+      "user": {
+        "id": "516514",
+        "firstName": "DAYNA Local Server",
+        "lastName": "KARAPHILLIS",
+        "name": "DAYNA KARAPHILLIS",
+        "email": "SHI@cstenet.com",
+        "phone": "9999999971",
+        "companyName": "SHI International",
+        "customers": ["0038048612", "0009000325"],
+        "roles": []
       }
-    },
-  }
+    }, "error": {"code": 0, "messages": [], "isError": false}
+  };
 
   let resJsonFail = {
     "isError": true,
@@ -203,7 +196,7 @@ app.get("/quote/MyQuote", function (req, res) {
 
   if (!req.headers['sessionid'])
     return res.status(401)
-
+  
   res.json({
     "content": {
       "items": {

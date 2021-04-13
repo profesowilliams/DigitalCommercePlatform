@@ -61,8 +61,8 @@ export const signInAsynAction = (apiUrl) => {
     axios
     .post(signInUrl, postData, {headers:headerJson})
       .then(response => {
-        dispatch(signInResponse(response.data.user));
-        localStorage.setItem('userData', JSON.stringify(response.data.user));
+        dispatch(signInResponse(response.data.content.user));
+        localStorage.setItem('userData', JSON.stringify(response.data.content.user));
       })
       .catch(err => {
         dispatch(signInError(err));
