@@ -3,13 +3,12 @@ import React from 'react';
 const userMenu = (props) => {
 
   const onSignOut = () => {
-		// clearing out local storage
-		localStorage.removeItem('signin');
-		localStorage.removeItem('signout');
-		localStorage.removeItem('userData');
-		localStorage.removeItem('signInCode');
-		window.location.href=window.location.protocol + "//" + window.location.hostname + window.location.pathname;
-    // window.location.href="http://localhost:8080/signin";
+    // clearing out local storage
+    localStorage.removeItem('signin');
+    localStorage.removeItem('signout');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('signInCode');
+    window.location.href = window.location.protocol + "//" + window.location.hostname + window.location.pathname;
   };
   const userDropDown = () => {
     document.querySelector('.cmp-sign-in-list').classList.toggle('active');
@@ -22,7 +21,7 @@ const userMenu = (props) => {
         {props.firstName}
       </button>
       <div className='cmp-sign-in-list'>
-        <p>
+        <p className='ec-id'>
           <span>MY EC ID: {props.id}</span>
         </p>
         <p>{props.firstName}</p>
