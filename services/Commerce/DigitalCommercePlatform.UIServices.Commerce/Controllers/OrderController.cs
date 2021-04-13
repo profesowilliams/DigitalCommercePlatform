@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public OrderController(
             IMediator mediator, 
             ILogger<OrderController> logger, 
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> settings, 
             ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)

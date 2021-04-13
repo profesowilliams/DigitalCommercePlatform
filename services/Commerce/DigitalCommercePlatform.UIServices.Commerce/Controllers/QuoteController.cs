@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public QuoteController(IMediator mediator,
             IOptions<AppSettings> options,
             ILogger<BaseUIServiceController> loggerFactory,
-            IContext context,
+            IUIContext context,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
