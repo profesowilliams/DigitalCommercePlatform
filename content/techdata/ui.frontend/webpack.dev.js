@@ -322,6 +322,30 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'megamenu.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/megamenu.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-demo',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/search.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-light-blue',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-light-blue.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-dark-blue',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-dark-blue.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-grey',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-grey.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-white',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-white.html')
 			})
 		],
 		devServer: {
