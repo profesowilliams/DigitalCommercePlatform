@@ -7,7 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.0.16" />
+		<PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.0.20" />
 		<PackageReference Include="FluentAssertions" Version="5.5.3" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />

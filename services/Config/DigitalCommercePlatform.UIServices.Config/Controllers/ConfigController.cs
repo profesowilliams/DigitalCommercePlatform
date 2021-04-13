@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         public ConfigController(
             IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> options,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)

@@ -27,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         private readonly Mock<IMediator> _mockMediator;
         private readonly Mock<IOptions<AppSettings>> _mockOptions;
         private readonly Mock<ILogger<BaseUIServiceController>> _mockLoggerFactory;
-        private readonly Mock<IContext> _mockContext;
+        private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
         public ConfigControllerTests()
         {
@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             _mockOptions = new Mock<IOptions<AppSettings>>();
             _mockOptions.Setup(s => s.Value).Returns(appSettings);
             _mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
-            _mockContext = new Mock<IContext>();
+            _mockContext = new Mock<IUIContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
             _mockSiteSettings = new Mock<ISiteSettings>();
         }

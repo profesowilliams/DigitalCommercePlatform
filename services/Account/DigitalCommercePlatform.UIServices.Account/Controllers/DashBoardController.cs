@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public DashBoardController(IMediator mediator,
             IOptions<AppSettings> options,
             ILogger<BaseUIServiceController> loggerFactory,
-            IContext context,
+            IUIContext context,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {

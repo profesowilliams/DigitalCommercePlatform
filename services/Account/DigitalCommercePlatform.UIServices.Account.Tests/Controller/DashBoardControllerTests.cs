@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
     public class DashBoardControllerTests
     {
-        private readonly Mock<IContext> _context;
+        private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<SecurityController>> _logger;
         private readonly Mock<IOptions<AppSettings>> _optionsMock;
@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             };
             var appSettings = new AppSettings();
             appSettings.Configure(appSettingsDict);
-            _context = new Mock<IContext>();
+            _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<SecurityController>>();
             _optionsMock = new Mock<IOptions<AppSettings>>();
