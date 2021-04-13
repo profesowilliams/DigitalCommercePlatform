@@ -1,0 +1,80 @@
+.cmp-barChart {
+    font-family: 'Open Sans', sans-serif;
+    justify-content: space-between;
+    display: flex;
+    width: 28.75rem;
+    height: 3.438rem;
+    margin: 0 15px;
+
+    &__body {
+        display: grid;
+        grid-template-columns: 60% 40%;
+    }
+
+    &__title {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #53565a;
+        width: 100%;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+    }
+
+    &__container {
+        font-size: 11px;
+        color: #53565a;
+        width: 100%;
+    }
+
+    &__chart {
+        & canvas {
+            padding-bottom: 0.313rem;
+            width: 9.625rem !important;
+        }
+    }
+
+    &__sub-title {
+        font-size: 11px;
+        color: #555555;
+        padding: 0rem 2.5rem 0.313rem 0.313rem;
+
+        &-digits {
+            font-size: 11px;
+            color: #555555;
+            text-align: right;
+            padding-left: 2.5rem;
+        }
+
+        &-currency {
+            font-size: 11px;
+            color: #555555;
+            text-align: right;
+            padding-left: 0.313rem;
+        }
+
+        &-color-1 {
+            border-right: 0.375rem solid #ffbc0d;
+            padding-left: 2rem;
+        }
+
+        &-color-2 {
+            border-right: 0.375rem(6px) solid #000c21;
+            padding-left: 2rem;
+        }
+
+        &-color-3 {
+            border-right: 0.375rem solid #103c82;
+            padding-left: 2rem;
+        }
+
+        &-color-4 {
+            border-right: 0.375rem solid #048fc8;
+            padding-left: 2rem;
+        }
+
+        &-color-5 {
+            border-right: 0.375rem solid #00b1e2;
+            padding-left: 2rem;
+        }
+    }
+}
