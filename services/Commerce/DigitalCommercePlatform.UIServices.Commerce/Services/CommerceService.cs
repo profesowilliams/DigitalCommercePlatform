@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
@@ -80,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return findOrdersDto;
         }
 
-        public async Task<QuoteDetailModel> GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Request request)
+        public async Task<QuoteDetailModel> GetCartDetailsInQuote()
         {
            
                 var LineDetails = new List<Line>();
@@ -181,6 +182,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getQuoteResponse;
         }
 
-        
+        public async Task<CreateQuoteFrom.Response> CreateQuoteFrom(CreateQuoteFrom.Request request)
+        {
+            // Manual faking all possible scenarios, so the frontend developers can code the error handling on their side
+            if (request.CreateModelFrom.CreateFromId == "99999")
+            {
+                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.");
+            }
+            var response = new CreateQuoteFrom.Response
+            {
+                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
+                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+        }
     }
 }

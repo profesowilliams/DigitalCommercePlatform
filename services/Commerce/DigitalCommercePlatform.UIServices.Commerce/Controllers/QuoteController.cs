@@ -51,6 +51,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("createFrom")]
+        public async Task<ActionResult> CreateFrom([FromBody] CreateModelFrom createFrom)
+        {
+            var response = await Mediator.Send(new CreateQuoteFrom.Request(createFrom)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
         [HttpGet]
         [Route("create/{savedCartId}")]
         public async Task<ActionResult> GetCartDetailsInQuote(string cartId)

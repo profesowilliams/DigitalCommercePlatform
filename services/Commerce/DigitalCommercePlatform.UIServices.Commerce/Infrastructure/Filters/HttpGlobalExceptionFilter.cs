@@ -29,7 +29,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = "500000000" } // agree about code
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = "400" }
+                });
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+            }
+            else if (context.Exception is UIServiceException uiServiceException)
+            {
+                context.Result = new ObjectResult(new ResponseBase<object>
+                {
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = "500" }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

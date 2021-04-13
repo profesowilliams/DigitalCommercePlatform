@@ -1,32 +1,33 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
+namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 {
     [ExcludeFromCodeCoverage]
-    public class DetailsOfSavedCartsQuote
+    public sealed class CreateQuoteFrom
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string CartId { get; set; }
+            public CreateModelFrom CreateModelFrom { get; set; }
 
-            public Request(string cartId)
+            public Request(CreateModelFrom createModelFrom)
             {
-                CartId = cartId;
+                CreateModelFrom = createModelFrom;
             }
         }
 
         public class Response
         {
-            public QuoteDetails QuoteDetails { get; set; }
+            public string QuoteId { get; set; }
+            public string ConfirmationId { get; set; }
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -42,19 +43,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
+                var response = await _quoteService.CreateQuoteFrom(request);
+                return new ResponseBase<Response> { Content = response };
+            }
+
+            public class Validator : AbstractValidator<Request>
+            {
+                public Validator()
                 {
-                    var cartDetails = await _quoteService.GetCartDetailsInQuote();
-                    var getcartResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content = getcartResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(DetailsOfSavedCartsQuote));
-                    throw;
+                    RuleFor(r => r.CreateModelFrom).Cascade(CascadeMode.Stop).NotNull()
+                        .ChildRules(request =>
+                        {
+                            request.RuleFor(c => c.CreateFromId).NotNull();
+                            request.RuleFor(c => c.CreateFromType).NotNull();
+                        });
                 }
             }
         }
     }
-
 }
