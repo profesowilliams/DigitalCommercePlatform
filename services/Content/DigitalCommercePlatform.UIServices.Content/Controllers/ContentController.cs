@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
@@ -45,5 +46,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("activeCart")]
+        public async Task<ActionResult<GetCart.Response>> GetActiveCartDetails()
+        {
+            var response = await Mediator.Send(new GetActiveCart.Request()).ConfigureAwait(false);
+            return Ok(response);
+        }
     }
 }

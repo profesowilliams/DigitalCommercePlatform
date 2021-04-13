@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
@@ -17,7 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
     public class ContentService : IContentService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _coreCartURL;
+        private readonly string _appCartURL;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
@@ -29,12 +30,29 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         {
             _logger = logger;
             _middleTierHttpClient = middleTierHttpClient;
-            _coreCartURL = options?.Value.GetSetting("App.Cart.Url");
+            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
             _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
             _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
             _typeSearchUrl = "https://typeahead.techdata.com/kw2";
         }
-        
+
+        public async Task<ActiveCartModel> GetActiveCartDetails()
+        {
+            var CartURL = _appCartURL;
+            try
+            {
+                var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(CartURL);
+                var totalQunatity= getActiveCartResponse.Lines.Where(x=>x.Quantity!=null).ToList().Sum(o => o.Quantity);
+                getActiveCartResponse.TotalQuantity = totalQunatity;
+                return getActiveCartResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(ContentService));
+                throw ex;
+            }
+        }
+
         public async Task<CartModel> GetCartDetails(GetCart.Request request)
         {
             var CartURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-cart/v2/";

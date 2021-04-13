@@ -10,5 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
     {
         public Task<CartModel> GetCartDetails(GetCart.Request request);
         public Task<TypeAheadSearch.Response> GetTypeAhead(TypeAheadSearch.Request request);
+        public Task<ActiveCartModel> GetActiveCartDetails();
     }
 }

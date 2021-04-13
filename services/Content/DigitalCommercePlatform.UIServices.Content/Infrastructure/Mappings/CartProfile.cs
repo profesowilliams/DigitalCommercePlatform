@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
@@ -17,6 +18,8 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Mappings
 
             CreateMap<TypeAheadSearch.Response, TypeAheadSearch.Response>();
 
+            CreateMap<ActiveCartModel, GetActiveCart.Response>()
+               .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
         }
     }
 }

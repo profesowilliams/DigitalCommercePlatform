@@ -1,8 +1,6 @@
 using DigitalCommercePlatform.UIServices.Content.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -24,12 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Content
         {
             services.AddTransient<IContentService, ContentService>();
         }
-        public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            base.ConfigureMiddleSection(app, env);
-        }
-
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }
