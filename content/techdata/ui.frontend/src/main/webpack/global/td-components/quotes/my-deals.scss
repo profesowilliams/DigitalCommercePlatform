@@ -6,7 +6,7 @@
     justify-content: space-between;
     display: flex;
     width: rem(460px);
-    height: rem(55px);
+    // height: rem(55px);
     margin: 0 15px;
     &__title {
         font-size: $font-size-small;
@@ -50,11 +50,15 @@
             &:last-of-type {
                 padding-right: rem(32px);
             }
+            i,svg{
+                font-size: rem(50px);
+            }
         }
     }
     &__count{
         text-align: center;
         font-size: $font-size-custom-medium;
+        padding-top: rem(17px);
     }
     &__icon-color-1{
         color: get-color(brand-primary-text);

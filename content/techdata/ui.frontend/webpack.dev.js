@@ -241,7 +241,7 @@ module.exports = (env) => {
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'my-deals.html',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-deals.html')
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-deals.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'sign-in.html',

@@ -333,3 +333,29 @@ app.get("/quote/create/:cart", function (req, res) {
     }
   })
 });
+
+app.get("/dealsSummary", function (req, res) {
+  if (!req.headers['sessionid'])
+    return res.status(500).json({ 
+      "error": { 
+        "code": 0, 
+        "message": [], 
+        "isError": true
+      } 
+    })
+  
+  res.json({
+    "content": {
+      "items": [ 
+        { "value": 5 },
+        { "value": 15 },
+        { "value": 20 },
+      ]
+    }, 
+    "error": { 
+      "code": 0, 
+      "message": [], 
+      "isError": false 
+    } 
+  });
+});
