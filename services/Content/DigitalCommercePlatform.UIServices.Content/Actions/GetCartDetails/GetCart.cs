@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -25,8 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails
 
         public class Response
         {
-            public string Id { get; set; }
-            public string Quantity { get; set; }
+            public CartModel Data { get; set; }
         }
 
         public class GetCartQueryHandler : IRequestHandler<Request, ResponseBase<Response>>

@@ -13,8 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Mappings
         public CartProfile()
         {
             CreateMap<CartModel, GetCart.Response>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.source.Id))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.totalQuantity));
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
 
             CreateMap<TypeAheadSearch.Response, TypeAheadSearch.Response>();
 
