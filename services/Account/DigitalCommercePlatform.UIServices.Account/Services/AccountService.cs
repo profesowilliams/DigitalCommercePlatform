@@ -54,7 +54,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     EndUserName = a.EndUserName,
                     Amount = a?.Amount,
                     FormattedAmount = a.FormattedAmount,
-                    CurrencyCode = a.CurrencyCode
+                    CurrencyCode = a.CurrencyCode,
+                    CurrencySymbol=a.CurrencySymbol
                 }).ToList();
             return openItems;
         }
@@ -101,6 +102,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     UserName = "End User " + i,
                     DealValue = dealValue,
                     CurrencyCode = "USD",
+                    CurrencySymbol="$",
                     FormattedAmount = string.Format("{0:N2}", dealValue)
                 };
 
@@ -159,6 +161,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.CurrencySymbol = "$";
                 openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
@@ -213,6 +216,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.CurrencySymbol = "$";
                 openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
@@ -237,6 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     MyQuotes.Converted = string.Format("{0:N2}", (randomNumber/100))+" %";
                     MyQuotes.ActiveQuoteValue = (randomNumber * 350);
                     MyQuotes.CurrencyCode = "USD";
+                    MyQuotes.CurrencySymbol = "$";
                     MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
                 }
                 return await Task.FromResult(MyQuotes);
@@ -274,6 +279,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var myOrders = new MyOrdersDashboard
             {
                CurrencyCode="USD",
+               CurrencySymbol="$",
                IsMonthly=request.IsMonthly,
                ProcessedOrderPercentage= percentage.ToString(),
                ProcessedOrdersAmount= processedAmount,

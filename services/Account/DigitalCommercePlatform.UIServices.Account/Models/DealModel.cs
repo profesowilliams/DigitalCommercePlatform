@@ -9,6 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Deals
         public string UserName { get; set; }
         public decimal DealValue { get; set; }
         public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
         public string FormattedAmount { get; set; }
     }
 }
