@@ -60,10 +60,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpGet]
-        [Route("deals/get")]
-        public async Task<ActionResult> GetDeal([FromQuery] Models.Deals.FindModel criteria)
+        [Route("deals")]
+        public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
         {
-            var data = new GetDeal.Request { Criteria = criteria };
+            var data = new GetDeal.Request(dealId, vendorId) ;
             var response = await Mediator.Send(data).ConfigureAwait(false);
             //if (response.IsError)
             //{

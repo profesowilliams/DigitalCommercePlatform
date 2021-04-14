@@ -13,6 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public decimal? TotalPrice { get; set; }
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public string Currency { get; set; }
+        public string CurrencySymbol { get; set; } = "$";
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
         //added details

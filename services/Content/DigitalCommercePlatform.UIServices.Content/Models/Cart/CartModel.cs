@@ -18,6 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Models.Cart
         public int numberOfLines { get; set; }
         public float totalQuantity { get; set; }
         public string currency { get; set; }
+        public string CurrencySymbol { get; set; } = "$";
         public string status { get; set; }
         public DateTime expireDate { get; set; }
         public DateTime syncDate { get; set; }

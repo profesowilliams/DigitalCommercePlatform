@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
@@ -7,6 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     {
         Task<Models.Configurations.RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request);
         Task<Models.Deals.RecentDealsModel> GetDeals(FindModel request);
-        Task<DealsDetailModel> GetDealDetails(FindModel request);
+        Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
     }
 }

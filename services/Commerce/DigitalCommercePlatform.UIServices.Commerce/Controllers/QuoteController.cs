@@ -34,15 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         {
         }
 
-
-        [HttpGet]
-        [Route("")]
-        public IActionResult GetQuote(string quoteId)
-        {
-            var response = "Quote Id : " + quoteId;
-            return Ok(response);
-        }
-
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromBody] CreateModel create)

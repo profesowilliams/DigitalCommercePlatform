@@ -149,13 +149,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var criteria = new Models.Deals.FindModel
-            {                
-                SortBy = "TDPartNumber",
-                SortAscending = false,
-            };
-
-            var result = await controller.GetDeal(criteria).ConfigureAwait(false);
+            var result = await controller.GetDeal("123","123").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -171,17 +165,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var criteria = new Models.Deals.FindModel
-            {               
-                SortBy = "TDPartNumber",
-                SortAscending = false,
-            };
-
-            var result = await controller.GetDeal(criteria).ConfigureAwait(false);
+            var result = await controller.GetDeal("123", "123").ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }
-    
+
 
         //[Theory]
         //[AutoDomainData]

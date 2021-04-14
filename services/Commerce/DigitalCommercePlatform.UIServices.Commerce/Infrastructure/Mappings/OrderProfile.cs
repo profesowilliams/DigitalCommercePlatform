@@ -33,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
+                .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
                 .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name));
         }
     }

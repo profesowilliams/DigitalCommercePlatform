@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Settings;
 using Microsoft.Extensions.Options;
@@ -112,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return await Task.FromResult(objReponse);
         }
 
-        public async Task<DealsDetailModel> GetDealDetails(Models.Deals.FindModel request)
+        public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
         {
             var lstMaterials = new List<MaterialInformation>();
             for (int i = 1; i < 16; i++)

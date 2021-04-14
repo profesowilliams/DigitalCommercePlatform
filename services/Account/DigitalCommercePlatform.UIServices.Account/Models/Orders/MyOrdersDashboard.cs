@@ -7,6 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Orders
     {
         public bool IsMonthly { get; set; }
         public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
         public string ProcessedOrderPercentage { get; set; }
         public long ProcessedOrdersAmount { get; set; }
         public long TotalOrderAmount { get; set; }

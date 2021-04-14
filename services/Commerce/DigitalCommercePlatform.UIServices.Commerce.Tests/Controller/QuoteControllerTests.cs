@@ -49,22 +49,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             return new QuoteController(_mediator.Object, _optionsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
 
-        [Fact]
-        public void GetQuote()
-        {
-
-            //_mediator.Setup(x => x.Send(
-            //           It.IsAny<GetQuote.Request>(),
-            //           It.IsAny<CancellationToken>()))
-            //       .ReturnsAsync(expected);
-
-            var controller = GetController();
-
-            var result = controller.GetQuote("645665656565");
-
-            result.Should().NotBeNull();
-        }
-
         [Theory]
         [AutoDomainData]
         public async Task CreateQuoteTest(ResponseBase<CreateQuote.Response> expected)

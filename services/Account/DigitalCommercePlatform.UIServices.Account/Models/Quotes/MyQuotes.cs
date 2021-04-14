@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Quotes
         public string QuoteToOrder { get; set; }
         public decimal ActiveQuoteValue { get; set; }
         public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
         public string FormattedAmount { get; set; }
     }
 }

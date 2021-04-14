@@ -97,6 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     newSavedCart.MSRP = randomNumber;
                     newSavedCart.UnitPrice = randomNumber;
                     newSavedCart.Currency = "USD";
+                    newSavedCart.CurrencySymbol = "$";
                     newSavedCart.Invoice = "IHT128763K0987";
                     newSavedCart.Description = "Description of the Product is very good";
                     newSavedCart.ShortDescription = "Product Description";
