@@ -32,6 +32,9 @@ public class LinkItem {
     private String linkUrl;
 
     @Inject
+    private String iconUrl;
+
+    @Inject
     private String navigationRoot;
 
     @Inject
