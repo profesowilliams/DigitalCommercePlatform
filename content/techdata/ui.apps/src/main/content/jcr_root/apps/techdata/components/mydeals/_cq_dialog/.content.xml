@@ -11,11 +11,16 @@
 					jcr:primaryType="nt:unstructured"
 					sling:resourceType="granite/ui/components/coral/foundation/container">
 				<items jcr:primaryType="nt:unstructured">
-					<componentTitle
+					<label
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="Title"
-						name="./componentTitle"/>
+						fieldLabel="Label"
+						name="./label"/>
+					<endpoint
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="End Point"
+						name="./endpoint"/>
 				</items>
 			</column>
 		</items>
