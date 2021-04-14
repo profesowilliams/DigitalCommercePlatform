@@ -5,7 +5,9 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
@@ -25,31 +27,59 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         }
         public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
         {
-            var lstConfigurations = new List<Configuration>();
-            for (int i = 0; i < 30; i++)
+            //var lstConfigurations = new List<Configuration>();
+            //for (int i = 0; i < 30; i++)
+            //{
+            //    Configuration objConfiguration = new Configuration();
+            //    var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
+            //    objConfiguration.ConfigId = "Dummy-Configuration : " + randomNumber;
+            //    objConfiguration.ConfigurationType = i % 2 == 0 ? "Cart" : i % 5 == 0 ? "Favorite" : "Vendor Quote";
+            //    objConfiguration.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
+            //    objConfiguration.TdQuoteId = i < 2 ? "" : objConfiguration.ConfigurationType != "Vendor Quote" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
+            //    objConfiguration.VendorQuoteId = i > 2 ? "" : objConfiguration.ConfigurationType == "Vendor Quote" ? Convert.ToString(GetRandomNumber(50000000, 90000000)) + "VQ" : "";
+            //    objConfiguration.ConfigName = i % 2 == 0 ? "HP Config " : i % 5 == 0 ? "Dell Config" : "";
+            //    objConfiguration.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
+            //    objConfiguration.Action = string.IsNullOrWhiteSpace(objConfiguration.VendorQuoteId) && string.IsNullOrWhiteSpace(objConfiguration.TdQuoteId) ? "Create Quote" : "Update Quote";
+            //    objConfiguration.CreatedOn = DateTime.Now.AddDays(i * -5);
+            //    lstConfigurations.Add(objConfiguration);
+            //}
+
+            IEnumerable<Configuration> lstConfigurations = new List<Configuration>();
+            string dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string filename = dir + @"\DummyData\ConfigurationList.json";
+            using (var reader = File.OpenText(filename))
             {
-                Configuration objConfiguration = new Configuration();
-                var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
-                objConfiguration.ConfigId = "Dummy-Configuration : " + randomNumber;
-                objConfiguration.ConfigurationType = i % 2 == 0 ? "Cart" : i % 5 == 0 ? "Favorite" : "Vendor Quote";
-                objConfiguration.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
-                objConfiguration.TdQuoteId = i < 2 ? "" : objConfiguration.ConfigurationType != "Vendor Quote" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
-                objConfiguration.VendorQuoteId = i > 2 ? "" : objConfiguration.ConfigurationType == "Vendor Quote" ? Convert.ToString(GetRandomNumber(50000000, 90000000)) + "VQ" : "";
-                objConfiguration.ConfigName = i % 2 == 0 ? "HP Config " : i % 5 == 0 ? "Dell Config" : "";
-                objConfiguration.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
-                objConfiguration.Action = string.IsNullOrWhiteSpace(objConfiguration.VendorQuoteId) && string.IsNullOrWhiteSpace(objConfiguration.TdQuoteId) ? "Create Quote" : "Update Quote";
-                objConfiguration.CreatedOn = DateTime.Now.AddDays(i * -5);
-                lstConfigurations.Add(objConfiguration);
+                var fileContent = await reader.ReadToEndAsync();
+                var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
+                lstConfigurations = JsonSerializer.Deserialize<List<Configuration>>(fileContent, serializerOptions);
+            }
+
+            // Manual implementation of filtering applied on dummy data
+            if (request.ConfigurationIdFilter != null)
+            {
+                lstConfigurations = lstConfigurations.Where(x => x.ConfigId == request.ConfigurationIdFilter);
+            }
+            if (request.EndUserFilter != null)
+            {
+                lstConfigurations = lstConfigurations.Where(x => x.EndUserName == request.EndUserFilter);
+            }
+            if (request.CreationDateFromFilter != null)
+            {
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.CreationDateFromFilter);
+            }
+            if (request.CreationDateToFilter != null)
+            {
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.CreationDateToFilter);
             }
 
             var objResponse = new RecentConfigurationsModel
             {
-                Items = lstConfigurations,
+                Items = lstConfigurations.ToList(),
                 TotalRecords = lstConfigurations.Count(),
                 SortBy = request.SortBy,
                 SortDirection = "desc", // fix this
-                PageSize = 25,
-                CurrentPage = 10,
+                PageSize = 50,
+                CurrentPage = 1,
             };
             return await Task.FromResult(objResponse);
         }
