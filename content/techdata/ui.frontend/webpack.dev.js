@@ -15,6 +15,10 @@ module.exports = (env) => {
 		performance: { hints: 'warning' },
 		plugins: [
 			new HtmlWebpackPlugin({
+				filename: 'dashboard.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/dashboard.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'index.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/index.html')
 			}),
