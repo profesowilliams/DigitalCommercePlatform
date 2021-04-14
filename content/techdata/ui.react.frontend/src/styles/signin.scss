@@ -24,9 +24,11 @@
 		&:hover {
 			border-bottom: 2px solid #04b0e2;
 		}
+
 		&:focus {
 			outline: 0;
 		}
+
 		svg {
 			font-size: 19px;
 			margin-top: 10px;
@@ -59,14 +61,15 @@
 			margin: 0 0 15px 0;
 			text-align: left;
 			box-sizing: border-box;
+
 			&.ec-id {
 				border-bottom: 1px solid #d6d6d6;
 				display: block;
 				width: 100%;
 			}
-
 		}
 	}
+
 	&-signout {
 		border: none;
 		background-color: transparent;
@@ -84,5 +87,13 @@
 
 	.active {
 		display: block;
+	}
+
+	.fa-user:before {
+		padding-right: 5px;
+	}
+
+	.fa-user-alt:before {
+		padding-right: 5px;
 	}
 }
