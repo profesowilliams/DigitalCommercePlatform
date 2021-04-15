@@ -155,7 +155,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         public async Task<ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
         {
             var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
@@ -199,7 +199,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             // return getQuoteResponse;
 
             var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
