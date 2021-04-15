@@ -2,57 +2,55 @@
 @import '../../../site/variables';
 
 .cmp-renewals {
-    font-family: 'Open Sans', sans-serif;
-    justify-content: space-between;
-    display: flex;
-    width: rem(445px);
-    height: rem(54px);
-    align-items: center;
-    margin: 0 15px;
-    &__title {
-        font-size: $font-size-small;
-        text-transform: uppercase;
-        color: get-color(text-mid-gray);
-        width: rem(115px);
-        align-self: baseline;
-    }
-    &__sub-title {
-        font-size: $font-size-xsmall;
-        font-family: Verdana, sans-serif;
-        color: get-color(text-light-charcoal);
+	font-family: 'Open Sans', sans-serif;
+	justify-content: space-between;
+	display: flex;
+	width: rem(445px);
+	height: rem(54px);
+	align-items: center;
+	margin: 0 15px;
+	&__title {
+		font-size: $font-size-small;
+		text-transform: uppercase;
+		color: get-color(text-mid-gray);
+		width: rem(115px);
+		align-self: baseline;
+	}
+	&__sub-title {
+		font-size: $font-size-xsmall;
+		font-family: Verdana, sans-serif;
+		color: get-color(text-light-charcoal);
 
-        &--digits {
-            font-size: $font-size-custom-large;
-        }
-    }
-    &__all-days {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__today {
-        display: flex;
-        width: auto;
-        margin: auto;
-        text-align: center;
-        &--number {
-            font-size: $font-size-custom-large;
-        }
-    }
-
-    &-color-1{
-        border-left: rem(6px) solid get-color(brand-primary-text);
-        padding-left: rem(6px);
-        padding-right: rem(28px);
-    }
-    &-color-2{
-        border-left: rem(6px) solid get-color(brand-blue);
-        padding-left: rem(6px);
-        padding-right: rem(28px);
-    }
-    &-color-3{
-        border-left: rem(6px) solid get-color(tertiary-dark-blue);
-        padding-left: rem(6px);
-        padding-right: rem(28px);
-    }
+		&--digits {
+			font-size: $font-size-custom-large;
+		}
+	}
+	&__all-days {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__today {
+		display: flex;
+		width: auto;
+		margin: auto;
+		text-align: center;
+		&--number {
+			font-size: $font-size-custom-large;
+		}
+	}
+	&-color-1 {
+		border-left: rem(6px) solid get-color(brand-primary-text);
+		padding-left: rem(6px);
+		padding-right: rem(28px);
+	}
+	&-color-2 {
+		border-left: rem(6px) solid get-color(tertiary-light-blue);
+		padding-left: rem(6px);
+		padding-right: rem(28px);
+	}
+	&-color-3 {
+		border-left: rem(6px) solid get-color(brand-blue);
+		padding-left: rem(6px);
+		padding-right: rem(28px);
+	}
 }

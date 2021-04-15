@@ -134,7 +134,7 @@ app.post("/login", function (req, res) {
         "customers": ["0038048612", "0009000325"],
         "roles": []
       }
-    }, "error": {"code": 0, "messages": [], "isError": false}
+    }, "error": { "code": 0, "messages": [], "isError": false }
   };
 
   let resJsonFail = {
@@ -156,6 +156,11 @@ app.options("/*", function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.send(200);
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
 
 //---TOP n OPEN CONFIG MOCK API---//
 app.get("/ui-account/v1/topQuotes/get", function (req, res) {
@@ -187,16 +192,12 @@ app.get("/ui-account/v1/topQuotes/get", function (req, res) {
   res.json(response)
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
-
 app.get("/quote/MyQuote", function (req, res) {
   const code = req.query.code;
 
   if (!req.headers['sessionid'])
     return res.status(401)
-  
+
   res.json({
     "content": {
       "items": {
@@ -332,28 +333,53 @@ app.get("/quote/create/:cart", function (req, res) {
   })
 });
 
+//---MY RENEWALS MOCK API---//
+app.get("/ui-account/v1/getRenewals", function (req, res) {
+  const param = req.query.days || '30,60,90';
+  const items = [];
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  for (let i = 0; i < param.split(',').length + 1; i++) {
+    items.push({
+      value: getRandom(100),
+    })
+  }
+  const response = {
+    content: {
+      items: items
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+  res.json(response)
+});
+
 app.get("/dealsSummary", function (req, res) {
   if (!req.headers['sessionid'])
-    return res.status(500).json({ 
-      "error": { 
-        "code": 0, 
-        "message": [], 
-        "isError": true
-      } 
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
     })
-  
+
   res.json({
-    "content": {
-      "items": [ 
-        { "value": 5 },
-        { "value": 15 },
+    "content": {
+      "items": [
+        { "value": 5 },
+        { "value": 15 },
         { "value": 20 },
       ]
-    }, 
-    "error": { 
-      "code": 0, 
-      "message": [], 
-      "isError": false 
-    } 
+    },
+    "error": {
+      "code": 0,
+      "message": [],
+      "isError": false
+    }
   });
 });

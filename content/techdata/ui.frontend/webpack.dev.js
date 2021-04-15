@@ -328,6 +328,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/megamenu.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'my-renewals',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-renewals-demo.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'search-demo',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/search.html')
 			}),
