@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<MyQuotesHandler> _logger;
-            public MyQuotesHandler(IAccountService accountService,IMapper mapper,ILogger<MyQuotesHandler> logger)
+            public MyQuotesHandler(IAccountService accountService, IMapper mapper, ILogger<MyQuotesHandler> logger)
             {
                 _accountService = accountService;
                 _mapper = mapper;
@@ -39,18 +39,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var myQuotes = await _accountService.MyQuotesSummaryAsync(request);
-                    var getMyQuotes = _mapper.Map<Response>(myQuotes);
-                    return new ResponseBase<Response> { Content = getMyQuotes };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting ActionItemsSummaryQueryHandler  : " + nameof(MyQuotesHandler));
-                    throw;
-                }
-
+                var myQuotes = await _accountService.MyQuotesSummaryAsync(request);
+                var getMyQuotes = _mapper.Map<Response>(myQuotes);
+                return new ResponseBase<Response> { Content = getMyQuotes };
             }
         }
         public class Validator : AbstractValidator<Request>

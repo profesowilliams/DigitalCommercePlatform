@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
 
         public class Response
         {
-            public ActiveOpenQuotesModel Summary { get; set; }            
+            public ActiveOpenQuotesModel Summary { get; set; }
         }
 
         public class GetTopQuotesQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -30,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
             private readonly IAccountService _accountQueryService;
             private readonly IMapper _mapper;
             private readonly ILogger<GetTopQuotesQueryHandler> _logger;
-            public GetTopQuotesQueryHandler(IAccountService accountQueryService, 
+            public GetTopQuotesQueryHandler(IAccountService accountQueryService,
                 IMapper mapper,
                 ILogger<GetTopQuotesQueryHandler> logger
                 )
@@ -41,17 +41,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    ActiveOpenQuotesModel quotes = await _accountQueryService.GetTopQuotesAsync(request);
-                    var getQuotes = _mapper.Map<Response>(quotes);
-                    return new ResponseBase<Response> { Content = getQuotes };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting GetTopQuotesQueryHandler  : " + nameof(GetTopQuotesQueryHandler));
-                    throw;
-                }
+                ActiveOpenQuotesModel quotes = await _accountQueryService.GetTopQuotesAsync(request);
+                var getQuotes = _mapper.Map<Response>(quotes);
+                return new ResponseBase<Response> { Content = getQuotes };
             }
         }
         public class Validator : AbstractValidator<Request>

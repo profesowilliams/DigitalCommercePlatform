@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
 
         public class Response
         {
-            public List<RenewalsSummaryModel> Items { get; set; }            
+            public List<RenewalsSummaryModel> Items { get; set; }
         }
 
         public class RenewalsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<RenewalsSummaryQueryHandler> _logger;
-            public RenewalsSummaryQueryHandler(IAccountService accountService, 
+            public RenewalsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<RenewalsSummaryQueryHandler> logger
                 )
@@ -42,18 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var renewals = await _accountService.GetRenewalsSummaryAsync(request);
-                    var getConfigurations = _mapper.Map<Response>(renewals);
-                    return new ResponseBase<Response> { Content = getConfigurations };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(RenewalsSummaryQueryHandler));
-                    throw;
-                }
-
+                var renewals = await _accountService.GetRenewalsSummaryAsync(request);
+                var getConfigurations = _mapper.Map<Response>(renewals);
+                return new ResponseBase<Response> { Content = getConfigurations };
             }
         }
         public class Validator : AbstractValidator<Request>

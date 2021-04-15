@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 
-namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters
+namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling
 {
     [ExcludeFromCodeCoverage]
     public class HttpGlobalExceptionFilter : IExceptionFilter
@@ -29,7 +29,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 500000000 } // agree about code
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
+                });
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+            }
+            else if (context.Exception is UIServiceException uiServiceException)
+            {
+                context.Result = new ObjectResult(new ResponseBase<object>
+                {
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = uiServiceException.ErrorCode }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -39,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500000000 } // we need to agree about message
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

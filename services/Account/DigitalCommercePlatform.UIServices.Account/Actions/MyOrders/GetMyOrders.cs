@@ -39,18 +39,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.MyOrders
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var myOrders = await _accountService.GetMyOrdersSummaryAsync(request);
-                    var getMyOrders = _mapper.Map<Response>(myOrders);
-                    return new ResponseBase<Response> { Content = getMyOrders };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting MyOrders from  : " + nameof(MyOrdersHandler));
-                    throw;
-                }
-
+                var myOrders = await _accountService.GetMyOrdersSummaryAsync(request);
+                var getMyOrders = _mapper.Map<Response>(myOrders);
+                return new ResponseBase<Response> { Content = getMyOrders };
             }
         }
         public class Validator : AbstractValidator<Request>

@@ -40,17 +40,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    ConfigurationsSummaryModel configurations = await _accountService.GetConfigurationsSummaryAsync(request);
-                    var getConfigurations = _mapper.Map<Response>(configurations);
-                    return new ResponseBase<Response> { Content = getConfigurations };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(ConfigurationsSummaryQueryHandler));
-                    throw;
-                }
+                ConfigurationsSummaryModel configurations = await _accountService.GetConfigurationsSummaryAsync(request);
+                var getConfigurations = _mapper.Map<Response>(configurations);
+                return new ResponseBase<Response> { Content = getConfigurations };
             }
         }
         public class Validator : AbstractValidator<Request>

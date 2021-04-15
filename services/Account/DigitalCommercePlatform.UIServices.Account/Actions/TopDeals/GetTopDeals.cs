@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopDeals
 
         public class Response
         {
-            public List<DealModel> Items {get; set; }
+            public List<DealModel> Items { get; set; }
         }
 
         public class GetTopDealsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -43,20 +43,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopDeals
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var deals = await _accountService.GetTopDealsAsync(request);
-                    var mappedDeals = _mapper.Map<Response>(deals);
-
-                    return new ResponseBase<Response> { Content = mappedDeals };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting TopDealsQueryHandler  : " + nameof(GetTopDealsQueryHandler));
-                    throw;
-                }
+                var deals = await _accountService.GetTopDealsAsync(request);
+                var mappedDeals = _mapper.Map<Response>(deals);
+                return new ResponseBase<Response> { Content = mappedDeals };
             }
-
         }
 
         public class Validator : AbstractValidator<Request>

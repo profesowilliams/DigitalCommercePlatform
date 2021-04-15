@@ -1,4 +1,4 @@
-using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;

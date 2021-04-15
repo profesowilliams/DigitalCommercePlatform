@@ -55,20 +55,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     Amount = a?.Amount,
                     FormattedAmount = a.FormattedAmount,
                     CurrencyCode = a.CurrencyCode,
-                    CurrencySymbol=a.CurrencySymbol
+                    CurrencySymbol = a.CurrencySymbol
                 }).ToList();
             return openItems;
         }
 
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
-                       var response = new ConfigurationsSummaryModel
-                {
-                    Quoted = 14,
-                    UnQuoted = 30,
-                    OldConfigurations = 25
-                };
-                return await Task.FromResult(response);
+            var response = new ConfigurationsSummaryModel
+            {
+                Quoted = 14,
+                UnQuoted = 30,
+                OldConfigurations = 25
+            };
+            return await Task.FromResult(response);
 
         }
 
@@ -76,14 +76,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var response = new List<DealsSummaryModel>();
             var objDeal = new DealsSummaryModel();
-            
+
             for (int i = 1; i < 4; i++)
             {
                 objDeal = new DealsSummaryModel
                 {
-                     Value = i * GetRandomNumber(1, 3)
+                    Value = i * GetRandomNumber(1, 3)
                 };
                 response.Add(objDeal);
+
             }
             return await Task.FromResult(response);
         }
@@ -102,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     UserName = "End User " + i,
                     DealValue = dealValue,
                     CurrencyCode = "USD",
-                    CurrencySymbol="$",
+                    CurrencySymbol = "$",
                     FormattedAmount = string.Format("{0:N2}", dealValue)
                 };
 
@@ -120,17 +121,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 SavedCart cart = new SavedCart();
                 var randomNumber = GetRandomNumber(1000, 6000);
                 cart.Id = randomNumber;
-                cart.Name = "CartId : " + randomNumber.ToString();                    
+                cart.Name = "CartId : " + randomNumber.ToString();
                 carts.Add(cart);
             }
             UserSavedCartsModel savedCarts = new UserSavedCartsModel
             {
                 Items = carts,
-                TotalNumberOfSavedCarts = carts.Count 
+                TotalNumberOfSavedCarts = carts.Count
             };
             var savedCartResponse = new CartModel
             {
-                UserSavedCarts = savedCarts                
+                UserSavedCarts = savedCarts
             };
             return await Task.FromResult(savedCartResponse);
         }
@@ -179,35 +180,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
-            try
-            {
-                //Returning dummy data for now as App-Service is not yet ready 
-                var url = _quoteServiceURL
-                        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
-                        .SetQueryParams(new
-                        {
+            //Returning dummy data for now as App-Service is not yet ready 
+            var url = _quoteServiceURL
+                    .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
+                    .SetQueryParams(new
+                    {
 
-                        });
+                    });
 
-                //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
 
-                //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+            //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
 
-                //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
-                //response.EnsureSuccessStatusCode();
+            //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
+            //response.EnsureSuccessStatusCode();
 
-                //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
-                // return getQuoteResponse;
+            //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
+            // return getQuoteResponse;
 
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
-                throw ex;
-            }
-
-            
             var openItems = new List<OpenResellerItems>();
             for (int i = 0; i < 4; i++)
             {
@@ -231,27 +221,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         }
         public async Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
         {
-            try
+            var MyQuotes = new MyQuotes();
             {
-                var MyQuotes = new MyQuotes();
-                {
-                    var randomNumber = GetRandomNumber(100, 600);
-                    MyQuotes.QuoteToOrder = "5:2";
-                    MyQuotes.Open = GetRandomNumber(10, 60);
-                    MyQuotes.Converted = string.Format("{0:N2}", (randomNumber/100))+" %";
-                    MyQuotes.ActiveQuoteValue = (randomNumber * 350);
-                    MyQuotes.CurrencyCode = "USD";
-                    MyQuotes.CurrencySymbol = "$";
-                    MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
-                }
-                return await Task.FromResult(MyQuotes);
+                var randomNumber = GetRandomNumber(100, 600);
+                MyQuotes.QuoteToOrder = "5:2";
+                MyQuotes.Open = GetRandomNumber(10, 60);
+                MyQuotes.Converted = string.Format("{0:N2}", (randomNumber / 100)) + " %";
+                MyQuotes.ActiveQuoteValue = (randomNumber * 350);
+                MyQuotes.CurrencyCode = "USD";
+                MyQuotes.CurrencySymbol = "$";
+                MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
             }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
-                throw ex;
-            }
-            
+            return await Task.FromResult(MyQuotes);
         }
         public async Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
         {
@@ -273,19 +254,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var totalAmount = GetRandomNumber(500, 700);
             var processedAmount = GetRandomNumber(100, 500);
-            var percentage = (totalAmount - processedAmount) *10/100;
+            var percentage = (totalAmount - processedAmount) * 10 / 100;
             var formatedTotalAmount = string.Format(totalAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", totalAmount);
             var formatedProcessced = string.Format(processedAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", processedAmount);
             var myOrders = new MyOrdersDashboard
             {
-               CurrencyCode="USD",
-               CurrencySymbol="$",
-               IsMonthly=request.IsMonthly,
-               ProcessedOrderPercentage= percentage.ToString(),
-               ProcessedOrdersAmount= processedAmount,
-               TotalOrderAmount = totalAmount,
-               TotalFormattedAmount = formatedTotalAmount,
-               ProcessedFormattedAmount = formatedProcessced,
+                CurrencyCode = "USD",
+                CurrencySymbol = "$",
+                IsMonthly = request.IsMonthly,
+                ProcessedOrderPercentage = percentage.ToString(),
+                ProcessedOrdersAmount = processedAmount,
+                TotalOrderAmount = totalAmount,
+                TotalFormattedAmount = formatedTotalAmount,
+                ProcessedFormattedAmount = formatedProcessced,
             };
             return await Task.FromResult(myOrders);
         }

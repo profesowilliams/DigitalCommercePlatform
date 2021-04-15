@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
         public class Response
         {
-            public UserSavedCartsModel SavedCarts { get; internal set; }            
+            public UserSavedCartsModel SavedCarts { get; internal set; }
         }
         public class GetSavedCartsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -37,8 +37,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
             private readonly IMapper _mapper;
             private readonly ILogger<GetSavedCartsQueryHandler> _logger;
 
-            public GetSavedCartsQueryHandler(IAccountService accountServices, 
-                IMapper mapper, 
+            public GetSavedCartsQueryHandler(IAccountService accountServices,
+                IMapper mapper,
                 ILogger<GetSavedCartsQueryHandler> logger)
             {
                 _accountServices = accountServices;
@@ -48,17 +48,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var cartDetails = await _accountServices.GetSavedCartListAsync(request);
-                    var getcartResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content = getcartResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartsList));
-                    throw;
-                }
+                var cartDetails = await _accountServices.GetSavedCartListAsync(request);
+                var getcartResponse = _mapper.Map<Response>(cartDetails);
+                return new ResponseBase<Response> { Content = getcartResponse };
             }
         }
         public class Validator : AbstractValidator<Request>

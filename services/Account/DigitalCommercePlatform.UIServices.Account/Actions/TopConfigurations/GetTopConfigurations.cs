@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
 
         public class Response
         {
-            public ActiveOpenConfigurationsModel Summary { get; set; }            
+            public ActiveOpenConfigurationsModel Summary { get; set; }
         }
 
         public class GetTopConfigurationsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
             private readonly IMapper _mapper;
             private readonly ILogger<GetTopConfigurationsQueryHandler> _logger;
 
-            public GetTopConfigurationsQueryHandler(IAccountService accountService, 
+            public GetTopConfigurationsQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<GetTopConfigurationsQueryHandler> logger
                 )
@@ -42,19 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    ActiveOpenConfigurationsModel configurations = await _accountService.GetTopConfigurationsAsync(request);
-                    var getConfigurations = _mapper.Map<Response>(configurations);
-                    
-                    return new ResponseBase<Response> { Content = getConfigurations };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting ConfigurationsSummaryQueryHandler  : " + nameof(GetTopConfigurationsQueryHandler));
-                    throw;
-                }
-
+                ActiveOpenConfigurationsModel configurations = await _accountService.GetTopConfigurationsAsync(request);
+                var getConfigurations = _mapper.Map<Response>(configurations);
+                return new ResponseBase<Response> { Content = getConfigurations };
             }
         }
         public class Validator : AbstractValidator<Request>
