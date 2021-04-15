@@ -219,8 +219,6 @@ app.get("/quote/create/:cart", function (req, res) {
   const code = req.query.code;
   const cart = req.params.cart;
 
-  if (code !== codeValue)
-    return res.status(500).json({ isError: true, quote: null })
 
   res.json({
     "content": {
