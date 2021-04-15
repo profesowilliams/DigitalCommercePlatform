@@ -333,6 +333,31 @@ app.get("/quote/create/:cart", function (req, res) {
   })
 });
 
+app.get("/configurationsSummary/get", function (req, res) {
+
+  if (!req.headers['sessionid'])
+    return res.status(401).json({ "error":{ 
+      "code":0, 
+      "messages":[], 
+      "isError":false
+    } });
+
+  res.json({
+    "content":{ 
+        "summary":{ 
+        "quoted":14, 
+        "unQuoted":30, 
+        "oldConfigurations":25, 
+        "currencyCode":null 
+      } 
+    }, 
+    "error":{ 
+      "code":0, 
+      "messages":[], 
+      "isError":false
+    } 
+  });
+});
 //---MY RENEWALS MOCK API---//
 app.get("/ui-account/v1/getRenewals", function (req, res) {
   const param = req.query.days || '30,60,90';

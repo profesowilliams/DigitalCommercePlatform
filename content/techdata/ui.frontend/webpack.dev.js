@@ -354,6 +354,10 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'search-white',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-white.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-configurations',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-configurations.html')
 			})
 		],
 		devServer: {
