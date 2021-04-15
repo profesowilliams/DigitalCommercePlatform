@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
+namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling
 {
     [ExcludeFromCodeCoverage]
     public class HttpGlobalExceptionFilter : IExceptionFilter
@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = "400" }
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
             {
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = "500" }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = uiServiceException.ErrorCode }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = "500000000" } // we need to agree about message
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
@@ -188,7 +189,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             // Manual faking all possible scenarios, so the frontend developers can code the error handling on their side
             if (request.CreateModelFrom.CreateFromId == "99999")
             {
-                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.");
+                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.", (int)UIServiceExceptionCode.QuoteCreationFailed);
             }
             var response = new CreateQuoteFrom.Response
             {
