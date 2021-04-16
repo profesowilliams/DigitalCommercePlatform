@@ -124,23 +124,17 @@ module.exports = (env) => {
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-expanded-item-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-expanded-items-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-single-expansion-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
@@ -196,10 +190,6 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
 			}),
 			new HtmlWebpackPlugin({
-				filename: 'list-view',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-view.html')
-			}),
-			new HtmlWebpackPlugin({
 				filename: 'article-list-page.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
 			}),
@@ -222,6 +212,10 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'article-list-noheader-comp',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'article-list-view',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-view.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-hero.html',
