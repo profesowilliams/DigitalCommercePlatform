@@ -370,6 +370,14 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'my-configurations',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-configurations.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'dropdown-menu-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/dropdown-menu-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'dropdown-menu-react-comp',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/dropdown-menu/dropdown-menu-react.html')
 			})
 		],
 		devServer: {
