@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Carts
     {
         public UserSavedCartsModel UserSavedCarts { get; set; }
     }
+
     [ExcludeFromCodeCoverage]
     public class SavedCart
     {

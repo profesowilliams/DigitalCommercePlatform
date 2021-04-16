@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
@@ -32,5 +33,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task <ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request);
         Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria);
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
+        Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
     }
 }

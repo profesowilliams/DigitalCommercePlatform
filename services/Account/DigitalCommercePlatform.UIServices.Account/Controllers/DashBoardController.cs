@@ -20,6 +20,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
@@ -123,6 +124,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> GetSavedCartList([FromQuery] bool getAll, int maximumSavedCarts)
         {
             var response = await Mediator.Send(new GetCartsList.Request(getAll, maximumSavedCarts)).ConfigureAwait(false);
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("configurations")]
+        public async Task<IActionResult> GetConfigurationsFor([FromQuery] bool getAll, int maximumItems, GetConfigurationsFor.RequestType requestType)
+        {
+            var response = await Mediator.Send(new GetConfigurationsFor.Request(requestType, getAll, maximumItems)).ConfigureAwait(false);
             if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);

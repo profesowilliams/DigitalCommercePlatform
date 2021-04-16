@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
@@ -135,6 +136,31 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
             return await Task.FromResult(savedCartResponse);
         }
+
+        
+        public async Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request)
+        {
+            var items = new List<GetConfigurationsForItem>();
+            var randomNumber = GetRandomNumber(100, 600);
+            for (int i = 0; i < 20; i++)
+            {
+                var item = new GetConfigurationsForItem
+                {
+                    Id = randomNumber + i
+                };
+                item.Name = $"{request.RequestType} : {item.Id}";
+                items.Add(item);
+            }
+
+            var result = new GetConfigurationsForModel
+            {
+                Items = items,
+                TotalNumberOfConfigurationsItems = items.Count
+            };
+            
+            return await Task.FromResult(result);
+        }
+
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);

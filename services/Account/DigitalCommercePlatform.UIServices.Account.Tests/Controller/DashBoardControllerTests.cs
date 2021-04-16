@@ -24,6 +24,7 @@ using Xunit;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
+using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -140,6 +141,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetSavedCartList(false,50).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetQuotesData(ResponseBase<Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetConfigurationsFor(false, 50, RequestType.DealId).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
