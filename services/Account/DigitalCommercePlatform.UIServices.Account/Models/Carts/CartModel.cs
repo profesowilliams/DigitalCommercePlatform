@@ -1,27 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models.Carts
 {
     [ExcludeFromCodeCoverage]
-    public class CartModel
+   
+    public class SavedCartDetailsModel
     {
-        public UserSavedCartsModel UserSavedCarts { get; set; }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class SavedCart
-    {
-        public long Id { get; set; }
+        public SourceModel Source { get; set; }
         public string Name { get; set; }
-        
     }
 
     [ExcludeFromCodeCoverage]
-    public class UserSavedCartsModel
+    public class SavedCartsResponse
     {
-        public IList<SavedCart> Items { get; set; }
-        public int TotalNumberOfSavedCarts { get; internal set; }
-       
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class SourceModel
+    {
+        public string Id { get; set; }
     }
 }

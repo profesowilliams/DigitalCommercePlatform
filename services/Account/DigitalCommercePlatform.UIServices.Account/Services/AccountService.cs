@@ -16,6 +16,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
@@ -34,15 +35,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _configurationsServiceUrl;
         private readonly string _dealsServiceUrl;
         private readonly string _quoteServiceURL;
+        private readonly string _cartServiceURL;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
 
-        public AccountService(IOptions<AppSettings> options, ILogger<AccountService> logger)
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, ILogger<AccountService> logger)
         {
+            _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
             _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
+            _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
         }
 
 
@@ -114,27 +119,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(deals);
         }
 
-        public async Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request)
+        public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)
         {
-            var carts = new List<SavedCart>();
-            for (int i = 0; i < 20; i++)
+            var savedCartURL = _cartServiceURL.AppendPathSegment("listsavedcarts");
+            try
             {
-                SavedCart cart = new SavedCart();
-                var randomNumber = GetRandomNumber(1000, 6000);
-                cart.Id = randomNumber;
-                cart.Name = "CartId : " + randomNumber.ToString();
-                carts.Add(cart);
+                var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
+                return response;
             }
-            UserSavedCartsModel savedCarts = new UserSavedCartsModel
+            catch(Exception ex)
             {
-                Items = carts,
-                TotalNumberOfSavedCarts = carts.Count
-            };
-            var savedCartResponse = new CartModel
-            {
-                UserSavedCarts = savedCarts
-            };
-            return await Task.FromResult(savedCartResponse);
+                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
+                return null;
+            }
         }
 
         

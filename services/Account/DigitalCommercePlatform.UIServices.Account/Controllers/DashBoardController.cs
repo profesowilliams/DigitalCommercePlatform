@@ -1,9 +1,14 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -13,13 +18,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
-using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
+using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
@@ -124,6 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> GetSavedCartList([FromQuery] bool getAll, int maximumSavedCarts)
         {
             var response = await Mediator.Send(new GetCartsList.Request(getAll, maximumSavedCarts)).ConfigureAwait(false);
+
             if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);

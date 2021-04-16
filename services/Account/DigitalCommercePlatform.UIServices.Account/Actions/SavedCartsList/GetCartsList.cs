@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using FluentValidation;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 {
@@ -29,7 +29,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
         public class Response
         {
-            public UserSavedCartsModel SavedCarts { get; internal set; }
+           public List<SavedCartsResponse> Items { get; set; }
+           public int? TotalRecords { get; set; }
         }
         public class GetSavedCartsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -37,8 +38,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
             private readonly IMapper _mapper;
             private readonly ILogger<GetSavedCartsQueryHandler> _logger;
 
-            public GetSavedCartsQueryHandler(IAccountService accountServices,
-                IMapper mapper,
+            public GetSavedCartsQueryHandler(IAccountService accountServices, 
+                IMapper mapper, 
                 ILogger<GetSavedCartsQueryHandler> logger)
             {
                 _accountServices = accountServices;
@@ -48,17 +49,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var cartDetails = await _accountServices.GetSavedCartListAsync(request);
-                var getcartResponse = _mapper.Map<Response>(cartDetails);
-                return new ResponseBase<Response> { Content = getcartResponse };
-            }
-        }
-        public class Validator : AbstractValidator<Request>
-        {
-            public Validator()
-            {
-                RuleFor(x => x.GetAll).NotNull();
-                RuleFor(x => x.Count).NotNull();
+                try
+                {
+                    var cartDetails = await _accountServices.GetSavedCartListAsync(request);
+                    var cartResponse = _mapper.Map<List<SavedCartsResponse>>(cartDetails);
+                    var getcartResponse = _mapper.Map<Response>(cartResponse);
+                    return new ResponseBase<Response> { Content = getcartResponse };
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartsList));
+                    throw;
+                }
             }
         }
     }
