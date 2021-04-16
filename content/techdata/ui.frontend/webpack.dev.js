@@ -324,6 +324,18 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes-react.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'cart',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/cart/cart.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'cart-active',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/cart/cart-active.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'cart-demo',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/cart-demo.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'megamenu.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/megamenu.html')
 			}),

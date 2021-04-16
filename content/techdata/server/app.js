@@ -332,6 +332,59 @@ app.get("/quote/create/:cart", function (req, res) {
     }
   })
 });
+app.get("/activeCart", function (req, res) {
+  if (!req.headers['sessionid'])
+    return res.status(500).json({
+      "error":{
+        "code":200, 
+        "message":"",
+        "isError":false 
+      }
+    });
+
+  res.json({ 
+    "content":{
+      "data":{
+        "source":{
+        "salesOrg":"0100,1002",
+        "system":"Shop"
+      },
+      "lines":[
+        {
+          "lineNo":"100",
+          "parentLineNo":null, 
+          "productId":"13641675",
+          "quantity":1
+        }, 
+        { 
+          "lineNo":"200",
+          "parentLineNo":null, 
+          "productId":"11337383",
+          "quantity":1
+        },
+        {
+          "lineNo":"300",
+          "parentLineNo":null,
+          "productId":"11357376",
+          "quantity":1
+        },
+        {
+          "lineNo":"400",
+          "parentLineNo":null,
+          "productId":"11456989",
+          "quantity":1
+        }
+      ],
+      "totalQuantity":4
+      }
+    },
+    "error":{
+      "code":200, 
+      "message":"",
+      "isError":false 
+    }
+  })
+});
 
 app.get("/configurationsSummary/get", function (req, res) {
 
