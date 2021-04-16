@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "84460961-101e-4ea2-897a-1aea3015c048",
+		"name": "DF UI-Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "[DIT] Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "TraceId",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA"
+							},
+							{
+								"key": "SessionId",
+								"value": "sid26",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Code\":\"LI_7WpVKFW0QGoLYabm9Bqt9xLp6qDehXGYAAABk\",\n    \"RedirectUri\":\"https://dit-aem.tdebusiness.cloud/content/digitalCommerce/base-global/en.html\",\n    \"applicationName\":\"AEM\"\n}"
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-account/v1/login",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-account",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quote",
+			"item": [
+				{
+					"name": "[DIT] quote/Create/{cartId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "TraceId",
+								"value": "35345345-Browse",
+								"type": "text"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/create/123",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"create",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/createQuoteFrom OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "TraceId",
+								"value": "35345345-Browse",
+								"type": "text"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"createFromId\": \"123\",\r\n\t\"createFromType\": \"savedCart\",\r\n\t\"salesOrg\": \"0100\",\r\n\t\"targetSystem\": \"R3\",\r\n\t\"EndUserPO\": \"1341434314341\",\r\n\t\"customerPo\": \"123456\",\r\n\t\"Type\": {\r\n\t\t\"ID\": \"000\",\r\n\t\t\"Value\": \"Commercial\"\r\n\t},\r\n\t\"creator\": \"testViaPostman\",\r\n\t\"ShipTo\": {\r\n\t\t\"ID\": \"38048612\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Email\": \"aa@bb.cc\",\r\n\t\t\t\t\"Phone\": \"8004776479\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t\"EndUser\": {\r\n\t\t\"ID\": \"\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Phone\": \"8004776479\",\r\n\t\t\t\t\"Email\": null\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t \"VendorReference\": {\r\n\t\t \"Type\":\"\",\r\n\t\t \"Value\":\"\"\r\n\t},\r\n\t\"agreements\": []\r\n}"
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/createFrom",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"createFrom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/createQuoteFrom Exception",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "TraceId",
+								"value": "35345345-Browse",
+								"type": "text"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"createFromId\": \"99999\",\r\n\t\"createFromType\": \"savedCart\",\r\n\t\"salesOrg\": \"0100\",\r\n\t\"targetSystem\": \"R3\",\r\n\t\"EndUserPO\": \"1341434314341\",\r\n\t\"customerPo\": \"123456\",\r\n\t\"Type\": {\r\n\t\t\"ID\": \"000\",\r\n\t\t\"Value\": \"Commercial\"\r\n\t},\r\n\t\"creator\": \"testViaPostman\",\r\n\t\"ShipTo\": {\r\n\t\t\"ID\": \"38048612\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Email\": \"aa@bb.cc\",\r\n\t\t\t\t\"Phone\": \"8004776479\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t\"EndUser\": {\r\n\t\t\"ID\": \"\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Phone\": \"8004776479\",\r\n\t\t\t\t\"Email\": null\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t \"VendorReference\": {\r\n\t\t \"Type\":\"\",\r\n\t\t \"Value\":\"\"\r\n\t},\r\n\t\"agreements\": []\r\n}"
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/createFrom",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"createFrom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/createQuoteFrom ValidationError",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "TraceId",
+								"value": "35345345-Browse",
+								"type": "text"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"WRONG_NAME_createFromId\": \"99999\",\r\n\t\"createFromType\": \"NOT_VALID\",\r\n\t\"salesOrg\": \"0100\",\r\n\t\"targetSystem\": \"R3\",\r\n\t\"EndUserPO\": \"1341434314341\",\r\n\t\"customerPo\": \"123456\",\r\n\t\"Type\": {\r\n\t\t\"ID\": \"000\",\r\n\t\t\"Value\": \"Commercial\"\r\n\t},\r\n\t\"creator\": \"testViaPostman\",\r\n\t\"ShipTo\": {\r\n\t\t\"ID\": \"38048612\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Email\": \"aa@bb.cc\",\r\n\t\t\t\t\"Phone\": \"8004776479\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t\"EndUser\": {\r\n\t\t\"ID\": \"\",\r\n\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\"Contact\": [\r\n\t\t\t{\r\n\t\t\t\t\"Name\": \"SHI INTERNATIONAL CORP\",\r\n\t\t\t\t\"Phone\": \"8004776479\",\r\n\t\t\t\t\"Email\": null\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"Address\": {\r\n\t\t\t\"ID\": null,\r\n\t\t\t\"Name\": null,\r\n\t\t\t\"Contact\": null,\r\n\t\t\t\"Line1\": \"290 Davidson Ave\",\r\n\t\t\t\"Line2\": \"\",\r\n\t\t\t\"Line3\": \"\",\r\n\t\t\t\"City\": \"Somerset\",\r\n\t\t\t\"State\": \"NJ\",\r\n\t\t\t\"ZIP\": \"08873-4145\",\r\n\t\t\t\"Country\": \"US\"\r\n\t\t}\r\n\t},\r\n\t \"VendorReference\": {\r\n\t\t \"Type\":\"\",\r\n\t\t \"Value\":\"\"\r\n\t},\r\n\t\"agreements\": []\r\n}"
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/createFrom",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"createFrom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							},
+							{
+								"key": "Site",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "Consumer",
+								"value": "NA",
+								"type": "text"
+							},
+							{
+								"key": "TraceId",
+								"value": "35345345-Browse",
+								"type": "text"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/get?id=121721710",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"get"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "121721710"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/find",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-us"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer 0006Y0ha0rbTtT1TE2UUNQXiHB3W"
+							},
+							{
+								"key": "Site",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "Consumer",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "TraceId",
+								"type": "text",
+								"value": "35345345-Browse"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/find?id=121721682",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "121721682"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DIT] quote/getTdQuotesForGrid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-us"
+							},
+							{
+								"key": "Site",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "Consumer",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "TraceId",
+								"type": "text",
+								"value": "35345345-Browse"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/quote/find?createdBy=BTQ_SALES&sortBy=Created&sortAscending=false&withPaginationInfo=true",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"quote",
+								"find"
+							],
+							"query": [
+								{
+									"key": "createdBy",
+									"value": "BTQ_SALES"
+								},
+								{
+									"key": "sortBy",
+									"value": "Created"
+								},
+								{
+									"key": "sortAscending",
+									"value": "false"
+								},
+								{
+									"key": "withPaginationInfo",
+									"value": "true"
+								},
+								{
+									"key": "pageSize",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "pageNumber",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "ConfigIdFilter",
+									"value": "unknown",
+									"disabled": true
+								},
+								{
+									"key": "quoteCreationDateFilter",
+									"value": "2021-02-28",
+									"disabled": true
+								},
+								{
+									"key": "quoteExpirationDateFilter",
+									"value": "2021-02-28",
+									"disabled": true
+								},
+								{
+									"key": "quoteIdFilter",
+									"value": "4009852813",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "[DIT] orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-us"
+							},
+							{
+								"key": "Site",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "Consumer",
+								"type": "text",
+								"value": "NA"
+							},
+							{
+								"key": "TraceId",
+								"type": "text",
+								"value": "35345345-Browse"
+							},
+							{
+								"key": "SessionId",
+								"value": "{{DF.SessionId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-commerce/v1/orders?sortBy=&ShipTo=&sortAscending=false",
+							"protocol": "https",
+							"host": [
+								"eastus-dit-ui",
+								"dc",
+								"tdebusiness",
+								"cloud"
+							],
+							"path": [
+								"ui-commerce",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": ""
+								},
+								{
+									"key": "ShipTo",
+									"value": ""
+								},
+								{
+									"key": "sortAscending",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
