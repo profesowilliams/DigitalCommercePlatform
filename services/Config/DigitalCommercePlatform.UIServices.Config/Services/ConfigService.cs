@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -46,9 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             //}
 
             IEnumerable<Configuration> lstConfigurations = new List<Configuration>();
-            string dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filename = dir + @"\DummyData\ConfigurationList.json";
-            using (var reader = File.OpenText(filename))
+            var resourceStream = this.GetType().Assembly.GetManifestResourceStream("DigitalCommercePlatform.UIServices.Config.DummyData.ConfigurationList.json");
+            using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
             {
                 var fileContent = await reader.ReadToEndAsync();
                 var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
