@@ -1,37 +1,50 @@
-.cmp-tabs.cmp-megamenu {
-  [role=tab] {
-    padding: 0 rem(16px);
-    font-size: rem(15px);
-    border: 0 none;
-    &:active, &:hover, &:focus {
-      outline: none;
-    }
-    .cmp-tabs__tab-text{
-      transition: border .3s;
-      padding: 0 rem(3px);
-      display: block;
-      min-height: rem(30px);
-      border-bottom: transparent rem(3px) solid;
-      text-decoration: none;
-      color: get-color(header-links-blue);
-    }
-    &.cmp-tabs__tab--active,
-    &:hover {
-      .cmp-tabs__tab-text{
+.cmp-megamenu {
+  .cmp-megamenu__primary {
+    padding-left: 0;
+    li {
+      display: inline;
+      padding: 0 rem(16px);
+      font-size: rem(15px);
+      border: 0 none;
+      &:active, &:hover, &:focus {
+        outline: none;
+      }
+      .cmp-megamenu__tab-text{
+        transition: border .3s;
+        padding: 0 rem(3px);
+        // display: block;
+        min-height: rem(30px);
+        border-bottom: transparent rem(3px) solid;
+        text-decoration: none;
+        color: get-color(header-links-blue);
+      }
+      &:hover {
+        .cmp-megamenu__tab-text{
+          border-bottom-color: get-color(brand-light-blue);
+        }
+      }
+      a.cmp-megamenu__tab--active{
         border-bottom-color: get-color(brand-light-blue);
+
       }
     }
   }
-  .cmp-tabs__tabpanel--active {
+
+  .cmp-megamenu__tabpanel{
+    display: none;
+  }
+
+  .cmp-megamenu__tabpanel--active {
     display: block;
   }
 }
 
-.cmp-tabs.cmp-megamenu .cmp-navigation{
+.cmp-megamenu .cmp-navigation{
   display: flex;
   position: absolute;
   min-height: rem(370px);
   border-top: rem(2px) solid get-color(td-dark-blue);
+  background-color: get-color(brand-white);
   .cmp-megamenu__wrapper{
     ul{
       min-width: 270px;
