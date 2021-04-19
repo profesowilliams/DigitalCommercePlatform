@@ -2,6 +2,7 @@ using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
+using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models;
@@ -188,6 +189,47 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
 
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task ActiveCustomer_BadRequest(ResponseBase<ActiveCustomer.Response> expected,
+            [Frozen] Mock<IMediator> mediator,
+            [Set(nameof(GetAppSettings))]
+            [Greedy] SecurityController controller)
+        {
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<ActiveCustomer.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+
+            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task ActiveCustomer_OkRequest(ResponseBase<ActiveCustomer.Response> expected,
+            [Frozen] Mock<IMediator> mediator,
+            [Set(nameof(GetAppSettings))]
+            [Greedy] SecurityController controller)
+        {
+
+            expected.Error.IsError = false;
+
+            mediator.Setup(x => x.Send(
+                      It.IsAny<ActiveCustomer.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+
+            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }

@@ -30,4 +30,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
         [FromHeader]
         public string SessionId { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class ActiveCustomerRequest
+    {
+        public string CompanyNumber { get; set; }
+        public string CompanyName { get; set; }
+    }
 }

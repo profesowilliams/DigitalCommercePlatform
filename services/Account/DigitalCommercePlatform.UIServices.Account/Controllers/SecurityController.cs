@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
+using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Contexts;
@@ -75,6 +76,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> Logout([FromHeader] string sessionId)
         {
             var response = await Mediator.Send(new LogoutUser.Request(sessionId));
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("activeCustomer")]
+        public async Task<IActionResult> ActiveCustomer(ActiveCustomerRequest activeCustomerRequest)
+        {
+            var response = await Mediator.Send(new ActiveCustomer.Request 
+            { 
+                CompanyNumber = activeCustomerRequest.CompanyNumber,
+                CompanyName = activeCustomerRequest.CompanyName
+            });
 
             if (response.Error.IsError)
             {

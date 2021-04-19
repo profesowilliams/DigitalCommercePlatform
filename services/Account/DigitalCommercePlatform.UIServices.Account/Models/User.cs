@@ -15,5 +15,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
         public string CompanyName { get; set; } = "SHI International";
         public IEnumerable<string> Customers { get; set; }
         public IEnumerable<string> Roles { get; set; }
+        public IEnumerable<Customer> CustomersV2 { get; set; }
+        public Customer ActiveCustomer { get; set; }
+    }
+
+    public class Customer
+    {
+        public string Number { get; set; }
+        public string Name { get; set; }
     }
 }
