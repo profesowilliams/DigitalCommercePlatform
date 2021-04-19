@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopDeals
 
         public class Response
         {
-            public List<DealModel> Items { get; set; }
+            public DealModel Items { get; set; }
         }
 
         public class GetTopDealsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>

@@ -95,28 +95,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-        public async Task<List<DealModel>> GetTopDealsAsync(GetTopDeals.Request request)
+        public async Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request)
         {
-            var deals = new List<DealModel>();
-            var top = (int)request.Top;
-
-            for (int i = top; i >= 0; i--)
+            var deals = new List<OpenResellerItems>();
+            for (int i = 0; i < 5; i++)
             {
-                var dealValue = i + 1 * 100001.89m;
-                var deal = new DealModel
-                {
-                    Sequence = 5 - i,
-                    UserName = "End User " + i,
-                    DealValue = dealValue,
-                    CurrencyCode = "USD",
-                    CurrencySymbol = "$",
-                    FormattedAmount = string.Format("{0:N2}", dealValue)
-                };
-
+                OpenResellerItems deal = new OpenResellerItems();
+                var randomNumber = GetRandomNumber(100, 600);
+                deal.EndUserName = "End User " + randomNumber.ToString();
+                deal.Amount = (randomNumber * 100);
+                deal.CurrencyCode = "USD";
+                deal.CurrencySymbol = "$";
+                deal.FormattedAmount = string.Format(deal.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", deal.Amount);
                 deals.Add(deal);
             }
-
-            return await Task.FromResult(deals);
+           
+            deals = AddSequenceNumber(deals);
+            var response = new DealModel
+             {
+                    Items = deals
+            };
+            return await Task.FromResult(response);
         }
 
         public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)

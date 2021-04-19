@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     {
         Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request);
         Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request);
-        Task<List<DealModel>> GetTopDealsAsync(GetTopDeals.Request request);
+        Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request);
         Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
         Task <ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request);

@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
             CreateMap<List<DealsSummaryModel>, GetDealsSummary.Response>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
-            CreateMap<List<DealModel>, GetTopDeals.Response>()
+            CreateMap<DealModel, GetTopDeals.Response>()
              .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
         }
     }
