@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<DealModel, GetTopDeals.Response>()
-             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+             .ForMember(dest => dest.Summary, opt => opt.MapFrom(src => src));
         }
     }
 }
