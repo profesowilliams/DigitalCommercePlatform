@@ -1,6 +1,6 @@
 .cmp-sign-in {
 	display: flex;
-	justify-content: center;
+	// justify-content: center;
 
 	&-option {
 		display: inline-block;
@@ -37,8 +37,7 @@
 	}
 
 	&-list {
-		// display: none;
-		// position: absolute;
+		background-color: #fff;
 		top: 45px;
 		right: 0;
 		z-index: 9999;
@@ -71,9 +70,9 @@
 		&-content{
 			list-style: none;
 			padding: 0 15px;
-
 			&--item{
 				margin-bottom: 10px;
+				display: flex;
 				&-link{
 					text-decoration: none;
 

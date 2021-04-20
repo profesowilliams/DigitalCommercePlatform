@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { signOut, getUser } from '../../../../utils';
+import { signOut } from '../../../../utils';
 
-const DropdownMenu = ({ componentProp }) => {
+const DropdownMenu = ({ items, userDataCheck }) => {
     const [isActive, setDropdown] = useState(false);
     const userDropDown = () => setDropdown(!isActive);
     const {
         id: userId,
         firstName: userName
-    } = getUser();
-    const { items } = JSON.parse(componentProp);
-
+    } = userDataCheck;
     return (
         <>
             <button data-component="DropdownMenu" className="cmp-sign-in-button" onClick={userDropDown}>
@@ -44,14 +42,16 @@ const DropdownMenu = ({ componentProp }) => {
     )
 }
 
-export default DropdownMenu
+export default DropdownMenu;
 
 DropdownMenu.propTypes = {
-    componentProp: PropTypes.shape({
-        items: PropTypes.arrayOf(PropTypes.shape({
-            linkTitle: PropTypes.string,
-            LinkUrl: PropTypes.string,
-            iconUrl: PropTypes.string
-        })).isRequired
+    items: PropTypes.arrayOf(PropTypes.shape({
+        linkTitle: PropTypes.string,
+        LinkUrl: PropTypes.string,
+        iconUrl: PropTypes.string
+    })).isRequired,
+    userDataCheck: PropTypes.shape({
+        id: PropTypes.string,
+        firstName: PropTypes.string,
     }).isRequired
 };
