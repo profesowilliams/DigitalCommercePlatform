@@ -206,7 +206,7 @@ app.get("/quote/MyQuote", function (req, res) {
         "quoteToOrder": "3:1",
         "activeQuoteValue": 6251968.0,
         "currencyCode": "USD",
-        "currencySign": "$",
+        "currencySymbol": "$",
         "formattedAmount": "6,251,968"
       }
     },

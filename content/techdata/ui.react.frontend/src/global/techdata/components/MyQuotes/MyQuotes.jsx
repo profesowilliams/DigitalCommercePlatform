@@ -23,8 +23,8 @@ const MyQuotes = ({ componentProp }) => {
         open,
         quoteToOrder,
         formattedAmount,
-        currencySign
-    } = myQuotesDetails;
+        currencySymbol`
+    }${ }{myQuotesDetails}`;
     return (
         <section id="cmp-quotes">
             <div className="cmp-quotes">
@@ -46,7 +46,7 @@ const MyQuotes = ({ componentProp }) => {
             </div>
             <div className="cmp-quotes">
                 <div className="cmp-quotes__active-value">
-                    <div className="cmp-quotes__active-value--price">{currencySign}{formattedAmount}</div>
+                    <div className="cmp-quotes__active-value--price">{`${currencySymbol}${formattedAmount}`}</div>
                     <div className="cmp-quotes__active-value--title">{labelActiveQuoteValue}</div>
                 </div>
             </div>
