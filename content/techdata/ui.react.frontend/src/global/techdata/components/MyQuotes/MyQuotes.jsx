@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { get } from '../../../../utils/api'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { get } from '../../../../utils/api';
 
-const MyQuotes = (props) => {
+const MyQuotes = ({ componentProp }) => {
     const [myQuotesDetails, setMyQuotes] = useState({});
     const {
         label,
@@ -10,7 +11,7 @@ const MyQuotes = (props) => {
         labelQuoteToOrder,
         labelActiveQuoteValue,
         uiServiceEndPoint
-    } = JSON.parse(props.componentProp);
+    } = JSON.parse(componentProp);
     useEffect(async () => {
         const body = { code: localStorage.getItem("signInCode") };
         const { data: { content: { items } } } = await get(uiServiceEndPoint, { params: body });
@@ -22,7 +23,7 @@ const MyQuotes = (props) => {
         open,
         quoteToOrder,
         formattedAmount,
-        currencyCode
+        currencySign
     } = myQuotesDetails;
     return (
         <section id="cmp-quotes">
@@ -45,7 +46,7 @@ const MyQuotes = (props) => {
             </div>
             <div className="cmp-quotes">
                 <div className="cmp-quotes__active-value">
-                    <div className="cmp-quotes__active-value--price">{currencyCode}{formattedAmount}</div>
+                    <div className="cmp-quotes__active-value--price">{currencySign}{formattedAmount}</div>
                     <div className="cmp-quotes__active-value--title">{labelActiveQuoteValue}</div>
                 </div>
             </div>
@@ -54,3 +55,14 @@ const MyQuotes = (props) => {
 }
 
 export default MyQuotes;
+
+MyQuotes.propTypes = {
+    componentProp: PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        labelConverted: PropTypes.string.isRequired,
+        labelOpen: PropTypes.string.isRequired,
+        labelQuoteToOrder: PropTypes.string.isRequired,
+        labelActiveQuoteValue: PropTypes.string.isRequired,
+        uiServiceEndPoint: PropTypes.string.isRequired
+    })
+};

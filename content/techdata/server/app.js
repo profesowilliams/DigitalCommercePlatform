@@ -201,12 +201,13 @@ app.get("/quote/MyQuote", function (req, res) {
   res.json({
     "content": {
       "items": {
-        "converted": "5.00 %",
-        "open": 32,
-        "quoteToOrder": "5:2",
-        "activeQuoteValue": 190400.0,
+        "converted": "31.49%",
+        "open": 38,
+        "quoteToOrder": "3:1",
+        "activeQuoteValue": 6251968.0,
         "currencyCode": "USD",
-        "formattedAmount": "190,400.00"
+        "currencySign": "$",
+        "formattedAmount": "6,251,968"
       }
     },
     "error": {
