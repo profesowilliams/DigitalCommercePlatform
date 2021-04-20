@@ -17,5 +17,4 @@ extends:
   parameters:
           projectSources: 'services/Quote/DigitalCommercePlatform.UIServices.Quote.sln'
           unitTestSources: 'services/Quote/DigitalCommercePlatform.UIServices.Quote.*/*Tests.csproj'
-          projectKey: 'DC-DF-Quote-UI'
-          projectName: 'DC-DF-Quote-UI'          
+          
