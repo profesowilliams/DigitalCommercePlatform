@@ -59,24 +59,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
+        [Route("details")]
         public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id,[FromQuery] bool details = true)
         {
             var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
             return Ok(response);
         }
 
-        [HttpGet]
-        [Route("find")]
-        public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)
-        {
-            var response = await Mediator.Send(new FindQuotes.Request(query)).ConfigureAwait(false);
-                return Ok(response);
-        }
+        //[HttpGet]
+        //[Route("")]
+        //public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)
+        //{
+        //    var response = await Mediator.Send(new FindQuotes.Request(query)).ConfigureAwait(false);
+        //        return Ok(response);
+        //}
 
         [HttpGet]
-        [Route("getQuotesForGrid")]
-        public async Task<IActionResult> GetQuotesForGrid([FromQuery] GetQuotesForGrid.Request request)
+        [Route("")]
+        public async Task<IActionResult> GetRecentQuotes([FromQuery] GetQuotesForGrid.Request request)
         {
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);

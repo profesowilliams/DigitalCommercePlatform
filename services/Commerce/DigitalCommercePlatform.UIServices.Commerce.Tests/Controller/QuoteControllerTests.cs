@@ -49,6 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             return new QuoteController(_mediator.Object, _optionsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
 
+
         [Theory]
         [AutoDomainData]
         public async Task CreateQuoteTest(ResponseBase<CreateQuote.Response> expected)
@@ -98,64 +99,91 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
+        //[Theory]
+        //[AutoDomainData]
+        //public async Task FindQuoteDetails(ResponseBase<GetQuotesForGrid.Response> expected)
+        //{
+        //    _mediator.Setup(x => x.Send(
+        //               It.IsAny<GetQuotesForGrid.Request>(),
+        //               It.IsAny<CancellationToken>()))
+        //           .ReturnsAsync(expected);
+
+        //    var detailsInput = new FindModel()
+        //    {
+        //     Id = "123",
+        //     CustomerName=  "123",
+        //     CustomerNumber="123",
+        //     Active = "123",
+        //     CreatedBy = "123",
+        //     SalesTeamId = "123",
+        //     SalesTeamName = "123",
+        //     SalesAreaName = "123",
+        //     SuperSalesAreaName = "123",
+        //     QuoteType = "123",
+        //     Manufacturer = "123",
+        //     OrderId = "123",
+        //     Material = "123",
+        //     ManufacturerPart = "123",
+        //     CustomerPart = "123",
+        //     ShipToName = "123",
+        //     EndUserName = "123",
+        //     CustomerPO = "123",
+        //     EndUserPO = "123",
+        //     RevenueMaxThreshold =101,
+        //     RevenueMinThreshold = 101,
+        //     TDUAN = "123",
+        //     VendorAgreement = "123",
+        //     WorkflowId = "123",
+        //     SalesOrg = "123",
+        //     AccountOwner = "123",
+        //     DirectorId = "123",
+        //     DirectorName = "123",
+        //     BusinessManagerId = "123",
+        //     BusinessManagerName = "123",
+        //     DivisionManagerId = "123",
+        //     DivisionManagerName = "123",
+        //     VendorSalesAssociate = "123",
+        //     VendorSalesRep = "123",
+        //     Description ="123",
+        //     SortBy ="123",
+        //     SortAscending =true,
+        //     Page  = 1,
+        //     PageSize  = 25,
+        //     WithPaginationInfo=true,
+        //     Details = true
+        //    };
+
+
+        //var controller = GetController();
+        //    var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
+
+        //    result.Should().NotBeNull();
+        //}
+
         [Theory]
         [AutoDomainData]
-        public async Task FindQuoteDetails(ResponseBase<GetQuotesForGrid.Response> expected)
+        public async Task GetRecentQuotes(ResponseBase<GetQuotesForGrid.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetQuotesForGrid.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var detailsInput = new FindModel()
-            {
-             Id = "123",
-             CustomerName=  "123",
-             CustomerNumber="123",
-             Active = "123",
-             CreatedBy = "123",
-             SalesTeamId = "123",
-             SalesTeamName = "123",
-             SalesAreaName = "123",
-             SuperSalesAreaName = "123",
-             QuoteType = "123",
-             Manufacturer = "123",
-             OrderId = "123",
-             Material = "123",
-             ManufacturerPart = "123",
-             CustomerPart = "123",
-             ShipToName = "123",
-             EndUserName = "123",
-             CustomerPO = "123",
-             EndUserPO = "123",
-             RevenueMaxThreshold =101,
-             RevenueMinThreshold = 101,
-             TDUAN = "123",
-             VendorAgreement = "123",
-             WorkflowId = "123",
-             SalesOrg = "123",
-             AccountOwner = "123",
-             DirectorId = "123",
-             DirectorName = "123",
-             BusinessManagerId = "123",
-             BusinessManagerName = "123",
-             DivisionManagerId = "123",
-             DivisionManagerName = "123",
-             VendorSalesAssociate = "123",
-             VendorSalesRep = "123",
-             Description ="123",
-             SortBy ="123",
-             SortAscending =true,
-             Page  = 1,
-             PageSize  = 25,
-             WithPaginationInfo=true,
-             Details = true
-            };
 
+            GetQuotesForGrid.Request inputDetails = new GetQuotesForGrid.Request
+                {
+                    CreatedBy="",
+                    QuoteIdFilter = "123",
+                    ConfigIdFilter = "123",
+                    SortBy = "123",
+                    SortAscending = true,
+                    PageSize = 1,
+                    PageNumber = 10,
+                    WithPaginationInfo =true,
+                };
 
-        var controller = GetController();
-            var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
-
+            var controller = GetController();
+            var result = await controller.GetRecentQuotes(inputDetails).ConfigureAwait(false);
             result.Should().NotBeNull();
         }
     }

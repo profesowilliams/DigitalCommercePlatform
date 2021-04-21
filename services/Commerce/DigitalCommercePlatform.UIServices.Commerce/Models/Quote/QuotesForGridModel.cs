@@ -14,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string Status { get; set; }
         public double QuoteValue { get; set; }
         public string FormatedQuoteValue { get; set; }
+        public string CurrencySymbol { get; set; } = "$";
         public bool CanUpdate { get; set; } = true;
         public bool CanCheckOut { get; set; } = true;
     }
