@@ -10,7 +10,6 @@
 	&-button {
 		border: none;
 		background-color: transparent;
-		//padding: 5px;
 		cursor: pointer;
 		height: 35px;
 		max-width: 175px;
@@ -20,11 +19,11 @@
 		letter-spacing: 0;
 		line-height: 13px;
 		border-bottom: 2px solid transparent;
-
-		&:hover {
-			border-bottom: 2px solid #04b0e2;
+		&.active {
+			&:hover {
+				border-bottom: 2px solid #04b0e2;
+			}
 		}
-
 		&:focus {
 			outline: 0;
 		}
