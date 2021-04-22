@@ -27,18 +27,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
              .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
-             .ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src.VendorReference.FirstOrDefault().Value))//Need to write a function to return dealID and return Multiple for multiple DealId's
+             .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src.Agreements))
              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
              .ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src.Price))
              .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => src.Currency)) 
              .ForMember(dest => dest.CanUpdate, opt => opt.MapFrom(src => string.Join( "","true")))
-             .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join( "","True")))
-             ;
+             .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join( "","True")));
+
             CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotesForGrid.Response>()
-                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data))
-                 .ForMember(dest => dest.Count, s => s.MapFrom(src => src.Count.ToString()));
-
+                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data));
         }
-
     }
 }

@@ -181,7 +181,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
-            getQuoteResponse.Count = getQuoteResponse.Data.Count();
             return getQuoteResponse;
         }
 

@@ -83,10 +83,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class Response
         {
-            public int? TotalItems { get; set; }
+            public long? TotalItems { get; set; }
+            public long? PageCount { get; set; }
             public int PageNumber { get; set; }
             public int PageSize { get; set; }
-
             public IEnumerable<RecentOrdersModel> Items { get; set; }
         }
 
@@ -131,8 +131,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     Items = ordersDto,
                     TotalItems = orders?.Count,
                     PageNumber = request.PageNumber,
-                    PageSize = request.PageSize
-                };
+                    PageSize = request.PageSize,
+                    PageCount =(orders?.Count + request.PageSize - 1) / request.PageSize
+            };
 
                 return new ResponseBase<Response> { Content = orderResponse };
             }
