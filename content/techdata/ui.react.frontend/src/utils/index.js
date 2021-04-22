@@ -7,6 +7,7 @@ export const setSessionId = (sessionId) => localStorage.setItem('sessionId', ses
 export const getSessionId = () => localStorage.getItem('sessionId');
 
 export const signOut = () => {
+    localStorage.removeItem('sessionId');
     localStorage.removeItem('signin');
     localStorage.removeItem('signout');
     localStorage.removeItem('userData');
