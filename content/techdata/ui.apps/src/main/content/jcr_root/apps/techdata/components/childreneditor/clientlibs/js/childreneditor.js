@@ -219,6 +219,7 @@
 
                                                 $(item).find('.coral-textfield-custom').attr('name', "./" + name + "/linkPath");
                                                 $(item).find('.coral-textfield-custom').attr('value', "");
+                                                $(item).find('.coral3-Textfield').val('');
 
                                                 $(item).find('.coral3-Checkbox').attr('name', "./" + name + "/link");
                                                 $(item).find('.coral3-Checkbox input').attr('name', "./" + name + "/link");

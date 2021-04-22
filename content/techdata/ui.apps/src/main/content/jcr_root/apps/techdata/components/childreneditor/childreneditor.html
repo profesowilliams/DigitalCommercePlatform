@@ -64,12 +64,26 @@ input[value="false"] + span:before { background-image: none !important}
                     Link
                 </coral-checkbox>
             </div>
+            <input type="hidden" class="cmp-childreneditor__linkName" name="item-name" value="./${item.name}/linkPath">
+            <input type="hidden" class="cmp-childreneditor__linkPath" name="item-value" value="${item.linkPath}">
 
-            	<input class="coral-textfield-custom hide" 
-                    is="coral-textfield"
-                    placeholder="Enter page path" 
-                    name="./${item.name}/linkPath"
-                    value="${item.linkPath}">
+                <foundation-autocomplete class="coral-textfield-custom hide coral-Form-field"  value="${item.linkPath}" pickersrc="/mnt/overlay/granite/ui/content/coral/foundation/form/pathfield/picker.html?_charset_=utf-8&amp;path={value}&amp;root=%2fcontent%2ftechdata&amp;filter=hierarchyNotFile&amp;selectionCount=single" data-foundation-validation="">
+                    <div class="foundation-autocomplete-inputgroupwrapper">
+                        <div class="coral-InputGroup" role="presentation">
+                        </div>
+                    </div>
+                    <coral-overlay foundation-autocomplete-suggestion="" class="foundation-picker-buttonlist coral3-Overlay" data-foundation-picker-buttonlist-src="/mnt/overlay/granite/ui/content/coral/foundation/form/pathfield/suggestion{.offset,limit}.html?_charset_=utf-8&amp;root=%2fcontent%2ftechdata&amp;filter=hierarchyNotFile{&amp;query}" aria-hidden="true" style="display: none;">
+                    </coral-overlay>
+                    <coral-taglist foundation-autocomplete-value="" class="coral3-TagList" aria-disabled="false" role="grid" aria-live="off" aria-atomic="false" aria-relevant="additions" aria-readonly="false" aria-invalid="false"><coral-tag value="" tabindex="0" class="coral3-Tag coral3-Tag--large" role="row" aria-labelledby="coral-id-658">
+                    <span handle="buttonCell" role="gridcell">
+                      <button is="coral-button" class="coral3-Button coral3-Button--minimal coral3-Tag-removeButton" size="M" variant="minimal" tracking="off" handle="button" type="button" icon="close" iconsize="XS" title="Remove" tabindex="-1" coral-close="" aria-label="Remove: ">
+                        <coral-icon class="coral3-Icon coral3-Icon--close coral3-Icon--sizeXS" icon="close" size="XS" autoarialabel="on" role="img" aria-label="close"></coral-icon>
+                        <coral-button-label></coral-button-label>
+                      </button>
+                    </span>
+                    <coral-tag-label role="rowheader" id="coral-id-658"></coral-tag-label><input handle="input" type="hidden" value=""></coral-tag><object aria-hidden="true" tabindex="-1" style="display:block; position:absolute; top:0; left:0; height:100%; width:100%; opacity:0; overflow:hidden; z-index:-100;" type="text/html" data="about:blank">&#8203;</object>
+                    </coral-taglist>
+                </foundation-autocomplete>
         </div>
     </coral-multifield-item>
     <button data-cmp-hook-childreneditor="add" type="button" is="coral-button">Add</button>
