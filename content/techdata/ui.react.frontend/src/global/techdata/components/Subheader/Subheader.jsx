@@ -13,10 +13,21 @@ const DashboardSubheader = () => {
   if( showError )
     return <p>You should be logged to see this feat</p>
 
+  const getAccountNumber = () => {
+    let accountNumber = '';
+    if( userData.customersV2 && userData.customersV2[0] ){
+      accountNumber = userData.customersV2[0].number;
+    }else if( userData.customers && userData.customers[0] ){
+      const item = userData.customers[0];
+      accountNumber = typeof item === 'string' ? item : item.number;
+    }
+    return accountNumber;
+  }
+
   return(
     <ul>
       { userData.companyName && <li><a href="#">{userData.companyName}</a></li> }
-      { userData.accountNumber && <li><a href="#">Account Number: {userData.accountNumber}</a></li> }
+      <li><a href="#">Account Number: {getAccountNumber()}</a></li>
       <li><a href="#"><i className="fas fa-link"></i></a></li>
     </ul>
   )

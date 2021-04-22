@@ -132,6 +132,11 @@ app.post("/login", function (req, res) {
         "phone": "9999999971",
         "companyName": "SHI International",
         "customers": ["0038048612", "0009000325"],
+        "customersV2":[
+          {"number":"0038048612","name":"Company 0"},
+          {"number":"0009000325","name":"Company 1"},
+          {"number":"0038048612","name":"Company 2"}
+        ],
         "roles": []
       }
     }, "error": { "code": 0, "messages": [], "isError": false }
