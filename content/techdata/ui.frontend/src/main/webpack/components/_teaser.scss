@@ -227,15 +227,21 @@
 }
 
 .hero-style-4 {
-
-
+    position: relative;
     &__image {
     }
 
-    &__content {
-        padding-top: 8.563rem;
-        padding-bottom: 5rem;
+    .cmp-teaser__content {
         display: flex;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
+        //color: get-color(brand-white);
+        padding: 3.438rem;
     }
 
     .cmp-teaser__pretitle{
@@ -245,6 +251,7 @@
         //width: 3rem(50px
         float: left;
         width: 50%;
+        max-width: rem(530px);
         font-family: "Open Sans", sans-serif;
         text-shadow: 0 0 0.063rem #919599;
         font-size: 2rem;
@@ -270,8 +277,10 @@
         letter-spacing: 0rem;
         line-height: 1.375rem;
         padding-left: 3.438rem;
-        padding-right: 3.438rem;
+        padding-right: 0;
+        padding-bottom: 0;
         margin: 0rem;
+        max-width: rem(550px);
     }
 }
 
