@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLocalStorageUser } from '../../../../store/action/authAction';
 
-const DashboardSubheader = () => {
+const DashboardSubheader = ({ componentProp }) => {
+  const { accountnumberLabel = 'Account Number' } = JSON.parse(componentProp);
   const dispatch = useDispatch();
   const { userData, showError } = useSelector(state => ({userData: state.auth.userData, showError: state.auth.showError}))
 
@@ -27,7 +28,7 @@ const DashboardSubheader = () => {
   return(
     <ul>
       { userData.companyName && <li><a href="#">{userData.companyName}</a></li> }
-      <li><a href="#">Account Number: {getAccountNumber()}</a></li>
+      <li><a href="#">{accountnumberLabel}: {getAccountNumber()}</a></li>
       <li><a href="#"><i className="fas fa-link"></i></a></li>
     </ul>
   )
