@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Content.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,20 +17,19 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string SearchApplication { get; set; }
-            public string Keyword { get; set; }
+            public string SearchTerm { get; set; }
+            public int? MaxResults { get; set; }
 
-            public Request(string keyword, string searchApplication)
+            public Request(string searchTerm, int? maxResults)
             {
-                Keyword = keyword;
-                SearchApplication = searchApplication;
+                SearchTerm = searchTerm;
+                MaxResults = maxResults;
             }
-
         }
 
         public class Response
         {
-            public TypeAheadSuggestion[] Suggestions { get; set; }
+            public IEnumerable<TypeAheadSuggestion> Items { get; set; }
         }
 
         public class GetTypeAheadHandler : IRequestHandler<Request, ResponseBase<Response>>

@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -40,9 +41,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string keyword, string searchApplication = "SHOP")
+        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string searchTerm,  int? maxResults)
         {
-            var response = await Mediator.Send(new TypeAheadSearch.Request(keyword, searchApplication)).ConfigureAwait(false);
+            var response = await Mediator.Send(new TypeAheadSearch.Request(searchTerm, maxResults)).ConfigureAwait(false);
             return Ok(response);
         }
 

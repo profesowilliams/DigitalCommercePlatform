@@ -93,10 +93,11 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
                        It.IsAny<TypeAheadSearch.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
+            
 
             var controller = GetController();
 
-            var result = await controller.TypeAheadSearch("12","SHOP").ConfigureAwait(false);
+            var result = await controller.TypeAheadSearch("12", 123).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
