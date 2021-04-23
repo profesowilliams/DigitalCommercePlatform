@@ -1,0 +1,36 @@
+@import '../../variables';
+@import '../../../site/variables';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+.cmp-td-quote-subheader {
+  font-family: $open-sans;
+  width: 100%;
+  max-width: rem(1440px);
+  height: rem(40px);
+  display: flex;
+  justify-content: space-between;
+  background-color: get-color(td-dark-blue);
+  padding: rem(8px) rem(20px) 0;
+  box-sizing: border-box;
+  color: get-color(brand-white);
+
+  &__sub-title {
+    padding: 0;
+    margin: 0;
+    font-weight: lighter;
+    font-size: $font-size-custom-midi;
+    span {
+      color: get-color(td-primary-blue);
+      font-weight: 500;;
+    }
+  }
+
+  &__date {
+    font-size: $font-size-xsmall;
+    font-weight: lighter;
+
+    svg {
+      margin-left: rem(32px);
+    }
+  }
+}
