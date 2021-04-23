@@ -14,7 +14,7 @@ schedules:
     - develop
 
 pool:
-  name: 'DC-Buildpool-Windows'
+  name: 'CLW'
   workspace:
     clean: all
 
