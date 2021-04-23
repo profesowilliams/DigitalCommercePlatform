@@ -2,8 +2,11 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using TechData.CarrierTrackingInfoUtility;
+using TechData.CarrierTrackingInfoUtility.Model;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
@@ -18,7 +21,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
                 .ForMember(dest => dest.Vendor, opt => opt.MapFrom<OrderVendorResolver>())
-                .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>());
+                .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>())
+                .ForMember(dest => dest.Invoices, opt => opt.MapFrom<OrderInvoicesResolver>())
+                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<OrderTrackingsResolver>());
+
 
             CreateMap<Item, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name)); 
@@ -56,6 +62,74 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             var theFirstProduct = theFirstItem?.Product?.FirstOrDefault();
             var description = theFirstProduct?.Manufacturer ?? string.Empty;
             return description;
+        }
+    }
+
+
+    [ExcludeFromCodeCoverage]
+    public class OrderInvoicesResolver : IValueResolver<OrderModel, RecentOrdersModel, List<InvoiceDetails>>
+    {
+        public List<InvoiceDetails> Resolve(OrderModel source, RecentOrdersModel destination, List<InvoiceDetails> destMember, ResolutionContext context)
+        {
+            if (source?.Items == null) { return new List<InvoiceDetails>(); }
+
+            var invoiceDetails = source.Items.SelectMany(i => i.Invoices).Where(i => i.Price.HasValue && i.Price > 0)
+                .Select(i => new InvoiceDetails
+                {
+                    Created = i.Created,
+                    ID = i.ID,
+                    Line = i.Line,
+                    Price = i.Price,
+                    Quantity = i.Quantity
+                }).ToList();
+
+
+            var pendingInvoiceDetails = (from item in source.Items.Where(i => i.Invoices == null || i.Invoices.Count == 0)
+                                         group item by 1 into g
+                                         select new InvoiceDetails
+                                         {
+                                             ID = "Pending",
+                                             Line = "",
+                                             Quantity = g.Sum(x => x.Quantity),
+                                             Price = g.Sum(x => x.TotalPrice),
+                                             Created = null
+                                         }).FirstOrDefault();
+
+            if (pendingInvoiceDetails != null)
+            {
+                invoiceDetails.Add(pendingInvoiceDetails);
+            }
+
+            return invoiceDetails;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class OrderTrackingsResolver : IValueResolver<OrderModel, RecentOrdersModel, List<TrackingDetails>>
+    {
+        public List<TrackingDetails> Resolve(OrderModel source, RecentOrdersModel destination, List<TrackingDetails> destMember, ResolutionContext context)
+        {
+            // temporary code. will be replaced when NuGet package is done
+            var _objShipment = new ShipmentUtility();
+            var _objTrackingQuery = new TrackingQuery();
+
+            var trackingDetails = source?.Items?.SelectMany(i => i.Shipments).Select(i => new TrackingDetails
+            {
+                OrderNumber = source.Source.ID,
+                ID = i.ID,
+                Carrier = i.Carrier,
+                Date = i.Date,
+                Description = i.Description,
+                DNote = i.DNote,
+                DNoteLineNumber = i.DNoteLineNumber,
+                GoodsReceiptNo = i.GoodsReceiptNo,
+                ServiceLevel = i.ServiceLevel,
+                TrackingNumber = i.TrackingNumber,
+                TrackingLink = _objShipment.GetSingleCarrierInformation(new TrackingQuery { TrackingId = i.TrackingNumber })?.CarrierURL,
+                Type = i.Type
+            }).ToList();
+
+            return trackingDetails;
         }
     }
 }

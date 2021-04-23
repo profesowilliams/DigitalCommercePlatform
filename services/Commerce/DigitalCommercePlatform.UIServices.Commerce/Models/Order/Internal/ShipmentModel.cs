@@ -1,16 +1,13 @@
 ﻿using System;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
+namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
 {
-    public class TrackingDetails
+    public class ShipmentModel
     {
-        public string OrderNumber { get; set; }
-        public string InvoiceNumber { get; set; }
         public string ID { get; set; }
         public string Carrier { get; set; }
         public string ServiceLevel { get; set; }
         public string TrackingNumber { get; set; }
-        public string TrackingLink { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
         public DateTime? Date { get; set; }
