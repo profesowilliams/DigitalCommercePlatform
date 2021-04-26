@@ -238,7 +238,15 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-renewals.html')
 			}),
 			new HtmlWebpackPlugin({
-				filename: 'td-quote-subheader',
+				filename: 'Your Company Information',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/company-address-info.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'End User Information',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/end-user-info.html')
+			}),
+			
+			new HtmlWebpackPlugin({filename: 'td-quote-subheader',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subheader.html')
 			}),
 			new HtmlWebpackPlugin({
