@@ -5,7 +5,9 @@ using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,8 +21,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
             public FindModel Criteria { get; set; }
         }
         public class Response
-        {            
-            public RecentDealsModel Deals { get; internal set; }
+        {
+            public long? TotalItems { get; set; }
+            public long? PageCount { get; set; }
+            public int? PageNumber { get; set; }
+            public int? PageSize { get; set; }
+            public List<Deal> Items { get; internal set; }
         }
 
         public class GetDealsHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -42,8 +48,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
 
                 try
                 {
-                    RecentDealsModel deals = await _configService.GetDeals(request.Criteria);
+                    var deals = await _configService.GetDeals(request);
                     var recentDealResponse = _mapper.Map<Response>(deals);
+                    recentDealResponse = new Response
+                    {
+                        Items = recentDealResponse.Items,
+                        TotalItems = recentDealResponse.Items.Count(),
+                        PageNumber = request.Criteria.PageNumber,
+                        PageSize = request.Criteria.PageSize,
+                        PageCount = (recentDealResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize,
+
+                    };
                     return new ResponseBase<Response> { Content = recentDealResponse };
                 }
                 catch (Exception ex)

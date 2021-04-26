@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = "500000000" } // agree about code
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 500000000 } // agree about code
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = "500000000" } // we need to agree about message
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500000000 } // we need to agree about message
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

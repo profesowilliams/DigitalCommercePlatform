@@ -1,4 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Settings;
@@ -27,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             //_appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
         }
-        public async Task<RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request)
+        public async Task<List<Configuration>> GetConfigurations(GetConfigurations.Request request)
         {
             //var lstConfigurations = new List<Configuration>();
             //for (int i = 0; i < 30; i++)
@@ -56,35 +58,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
 
             // Manual implementation of filtering applied on dummy data
-            if (request.ConfigurationIdFilter != null)
+            if (request.Criteria.ConfigurationIdFilter != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.ConfigId == request.ConfigurationIdFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.ConfigId == request.Criteria.ConfigurationIdFilter);
             }
-            if (request.EndUserFilter != null)
+            if (request.Criteria.EndUserFilter != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.EndUserName == request.EndUserFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.EndUserName == request.Criteria.EndUserFilter);
             }
-            if (request.CreationDateFromFilter != null)
+            if (request.Criteria.CreationDateFromFilter != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.CreationDateFromFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.Criteria.CreationDateFromFilter);
             }
-            if (request.CreationDateToFilter != null)
+            if (request.Criteria.CreationDateToFilter != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.CreationDateToFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.Criteria.CreationDateToFilter);
             }
 
-            var objResponse = new RecentConfigurationsModel
-            {
-                Items = lstConfigurations.ToList(),
-                TotalRecords = lstConfigurations.Count(),
-                SortBy = request.SortBy,
-                SortDirection = "desc", // fix this
-                PageSize = 50,
-                CurrentPage = 1,
-            };
-            return await Task.FromResult(objResponse);
+            return await Task.FromResult(lstConfigurations.ToList());
         }
-        public async Task<Models.Deals.RecentDealsModel> GetDeals(Models.Deals.FindModel request)
+        public async Task<List<Deal>> GetDeals(GetDeals.Request request)
         {
             var lstDeals = new List<Deal>();
             for (int i = 0; i < 30; i++)
@@ -101,16 +94,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 lstDeals.Add(objDeal);
             }
 
-            var objReponse = new RecentDealsModel
-            {
-                Items = lstDeals,
-                TotalRecords = lstDeals.Count(),
-                SortBy = request.SortBy,
-                SortDirection = "desc", // fix this
-                PageSize = 25,
-                CurrentPage = 10,
-            };
-            return await Task.FromResult(objReponse);
+            return await Task.FromResult(lstDeals.ToList());
         }
 
         public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
