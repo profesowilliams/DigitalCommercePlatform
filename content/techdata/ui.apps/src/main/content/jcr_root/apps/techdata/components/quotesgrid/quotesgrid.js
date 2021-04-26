@@ -14,9 +14,11 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var columnLabel = res.properties["columnLabel"];
             var columnKey = res.properties["columnKey"];
+            var sortable = res.properties["sortable"];
             var itemData = {};
             itemData.columnLabel = columnLabel;
             itemData.columnKey = columnKey;
+            itemData.sortable = sortable;
             listValues.push(itemData);
 
         }
@@ -26,10 +28,13 @@ use(function () {
     }
 
     if (properties && properties["uiServiceEndPoint"]) {
-        jsonObject["endpoint"] = properties["uiServiceEndPoint"];
+        jsonObject["uiServiceEndPoint"] = properties["uiServiceEndPoint"];
     }
     if (properties && properties["itemsPerPage"]) {
         jsonObject["itemsPerPage"]= properties["itemsPerPage"];
+    }
+    if (properties && properties["paginationStyle"]) {
+        jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
 
     if (listValues != null) {
