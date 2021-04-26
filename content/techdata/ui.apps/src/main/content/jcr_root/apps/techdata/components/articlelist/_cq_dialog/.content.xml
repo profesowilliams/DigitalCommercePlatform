@@ -28,6 +28,10 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Item with image"
                                                         value="article"/>
+                                                    <articleListView
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Item with image List View"
+                                                        value="articleListView"/>
                                                 </items>
                                             </itemType>
                                         </items>
