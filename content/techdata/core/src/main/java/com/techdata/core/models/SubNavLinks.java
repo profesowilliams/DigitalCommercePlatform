@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 
 public class SubNavLinks {
@@ -20,6 +21,8 @@ public class SubNavLinks {
     public static final String FILE =  "file";
     public static final String EXTERNAL_IMAGE_PATH = "file/jcr:content/dam:thumbnails/dam:thumbnail_48.png";
     public static final String FILE_REFERENCE_IMAGE_PATH = "/jcr:content/renditions/cq5dam.thumbnail.48.48.png";
+    private static final String FONTAWESOME_ICON_PROPERTY_NAME = "pageMenuIcon";
+    private static final String DEFAULT_FONT_AWESOME_ICON = "fas fa-server";
 
     private String pageTitle;
 
@@ -31,23 +34,34 @@ public class SubNavLinks {
 
     private String hasChildPages;
 
+    private String rootParentTitle;
+
     private List<SubNavLinks> subNavLinkslist =  new ArrayList<>();
 
-    SubNavLinks(Page page, ResourceResolver resolver){
+    SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle){
         this.navPage = page;
         this.pageTitle = page.getTitle();
         this.pagePath = page.getPath();
-        Resource imgResource = resolver.getResource(page.getPath() + JCR_CONTENT_IMAGE);
-        if(imgResource != null){
-            if(imgResource.getChild(FILE) != null){
-                pageIcon = imgResource.getChild(EXTERNAL_IMAGE_PATH).getPath();
-            }else {
-                pageIcon = imgResource.getValueMap().get("fileReference", String.class) + FILE_REFERENCE_IMAGE_PATH;
-            }
+        this.rootParentTitle = rootParentTitle;
+
+        ValueMap pageProps = page.getProperties();
+        if (pageProps.containsKey(FONTAWESOME_ICON_PROPERTY_NAME))
+        {
+            this.pageIcon = (String) pageProps.get(FONTAWESOME_ICON_PROPERTY_NAME);
         }
+
+        if (this.pageIcon == null || this.pageIcon.isEmpty())
+        {
+            this.pageIcon = DEFAULT_FONT_AWESOME_ICON;
+        }
+
         childPageIterator(resolver);
     }
 
+
+    public String getRootParentTitle() {
+        return this.rootParentTitle;
+    }
 
     public String getPageTitle() {
         return pageTitle;
@@ -79,7 +93,7 @@ public class SubNavLinks {
             Page childPage = itr.next();
             if(!childPage.isHideInNav()){
                 hasChildPages = "true";
-                SubNavLinks childNav = new SubNavLinks(childPage, resolver);
+                SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle);
                 subNavLinkslist.add(childNav);
             }
         }
@@ -103,6 +117,10 @@ public class SubNavLinks {
 
     public void setHasChildPages(String hasChildPages) {
         this.hasChildPages = hasChildPages;
+    }
+
+    public String getMenuID() {
+        return (this.getRootParentTitle()+"-"+this.getPageTitle()).toLowerCase(Locale.ROOT);
     }
 }
 
