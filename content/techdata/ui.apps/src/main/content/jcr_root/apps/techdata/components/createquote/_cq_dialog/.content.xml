@@ -16,21 +16,59 @@
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Label"
                         name="./label"/>
-					<cartLabel
-					   jcr:primaryType="nt:unstructured"
-					   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-					   fieldLabel="Cart Label"
-					   name="./cartLabel"/>
-					<buttonLabel
+					<buttonTitle
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Button Label"
-						name="./buttonLabel"/>
+						name="./buttonTitle"/>
+					<quotePreviewUrl
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="quote Preview Url"
+						name="./quotePreviewUrl"/>
 					<endpoint
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="End Point"
 						name="./endpoint"/>
+					<optionsList
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+						composite="{Boolean}true"
+						fieldLabel="Options List"
+						fieldDescription="Click 'Add' to add options list">
+						<field
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/foundation/form/fieldset"
+							name="./optionsList">
+							<items jcr:primaryType="nt:unstructured">
+								<column
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/container">
+									<items jcr:primaryType="nt:unstructured">
+										<label
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter option label"
+											fieldLabel="Option Label"
+											name="./label"/>
+										<key
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter Option Key"
+											fieldLabel="Option Key"
+											name="./key"/>
+										<title
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter Option Title"
+											fieldLabel="Option Title"
+											name="./title"/>
+									</items>
+								</column>
+							</items>
+						</field>
+					</optionsList>
                 </items>
             </column>
         </items>

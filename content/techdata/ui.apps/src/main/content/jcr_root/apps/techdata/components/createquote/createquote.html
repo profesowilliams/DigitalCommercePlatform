@@ -3,10 +3,15 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 
+<sly data-sly-use.model="${'createquote.js' @ multifieldName='optionsList'}" />
 <div id="CreateQuoteWidget" data-observe-mutation>
-    <div data-component="CreateQuote" data-cmp-type="react" className="createquotewidget" data-config='{"label" : "${properties.label}" , "cartLabel" : "${properties.cartLabel}", "buttonTitle": "${properties.buttonLabel}","endpoint": "${properties.endpoint}"}'>
+    <div data-component="CreateQuote"
+         data-cmp-type="react"
+         className="createquotewidget"
+         data-config="${model.configJson}">
     </div>
 </div>
+
 
 
 
