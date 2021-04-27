@@ -467,3 +467,38 @@ app.get("/dealsSummary", function (req, res) {
     }
   });
 });
+
+app.get("/browse", function(req,res){
+  if (!req.headers['sessionid'])
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+    res.json({
+      "content": {
+        "userId": "12345",
+        "userName": "Techdata User",
+        "customerId": "38048612",
+        "customerName": "SHI INTERNATIONAL CORP",
+        "cartId": "1",
+        "cartItemCount": 27,
+        "catalogHierarchies": [
+          {
+            "source": {
+              "system": "2",
+              "id": "FCS"
+            }
+          }
+        ]
+      },
+      "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+      }
+    })
+});

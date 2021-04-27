@@ -8,6 +8,8 @@ const MiniCart = ({componentProp}) => {
   useEffect(async() => {
     const { data: { content: { data: {totalQuantity} } } } = await get(endpoint, { });
     setCartItems(totalQuantity);
+    if( totalQuantity )
+      localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
   },[]);
   useEffect(() => {
     const newActive = cartItems ? 'cmp-cart__active' : '';

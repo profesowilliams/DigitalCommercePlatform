@@ -15,7 +15,7 @@ const Dropdown = ({ selected, setValue, options }) => {
       <div className={`cmp-dropdown-custom ${open?'cmp-dropdown-custom--open':''}`}>
         <a className="cmp-dropdown-custom__input" onClick={toggleOpen}>
           <span>
-            {selected ? selected.name : 'Create from'}
+            {selected ? selected.label : 'Create from'}
           </span>
           <span>
             <i className="fas fa-chevron-right"></i>
@@ -26,7 +26,7 @@ const Dropdown = ({ selected, setValue, options }) => {
           <ul className="cmp-dropdown-custom__list">
             {
               options.map( option => 
-                <li key={Symbol(option.id).toString()} onClick={() => handleSetValue(option) }>{option.name}</li> )
+                <li key={Symbol(option.key).toString()} onClick={() => handleSetValue(option) }>{option.label}</li> )
             }
           </ul>
         </div>

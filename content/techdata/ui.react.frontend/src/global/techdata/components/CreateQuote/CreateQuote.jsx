@@ -3,57 +3,69 @@ import SelectMethod from './SelectMethod';
 import {mapDispatchToProps} from './dispatch';
 import {mapStateToProps} from './selector';
 import { connect } from 'react-redux';
+import SavedCart from './SavedCart';
 
 const QuoteCreate = ({ 
-    quoteCreated, requested, showError, cart, authError,
-    getLocalStorageUser, createQuoteRequestDispatcher, componentProp, 
+    requested, authError, componentProp, 
   }) => {
-  const { cartLabel, label, endpoint, buttonTitle } = JSON.parse(componentProp)
+  const { label, quotePreviewUrl, buttonTitle, optionsList } = JSON.parse(componentProp)
   const [methodSelected, setMethodSelected] = useState(false)
-  const methods = [
-    {
-      id: 1,
-      name: cartLabel
-    },
-  ]
-  const createQuote = async () => {
-    if( methodSelected && cart ){
-      createQuoteRequestDispatcher( endpoint, cart )
+  const [currentCart, setCurrentCart] = useState(false);
+  const methods = optionsList;
+  const createQuote = () => {
+      alert('Creating quote')
+      window.location.href = quotePreviewUrl;
+    }
+  const createFromActive = async () => {
+    if(currentCart ){
+      if( currentCart.totalQuantity > 0 ){
+        createQuote();
+      }else{
+        alert('The cart is empty');
+      }
     }else{
-      alert('please select an option to continue.')
+      alert('Not a valid cart available');
     }
   }
-  useEffect(() => {
-    getLocalStorageUser()
+  
+
+  useEffect(async () => {
+    const result = JSON.parse(localStorage.getItem("ActiveCart"));
+    if( result )
+      setCurrentCart({ totalQuantity: result.totalQuantity })
   },[])
-  useEffect(() => {
-    if( showError )
-      alert('An error occours, please confirm your data and try again')
-  },[showError])
-  useEffect(() => {
-    if( quoteCreated.quoteDetails ){
-      const { quoteDetails } = quoteCreated
-      alert(`Quote created, quote ID: ${quoteDetails.quoteNumber}`)
-    }
-  },[quoteCreated])
+
   if( authError )
     return (
       <p>You need to be logged to use this feat</p>
     )
   return(
-    <>
-      <h3 className="cmp-title--small">{ label }</h3>
-      <SelectMethod 
-        method={methodSelected}
-        setMethod={setMethodSelected}
-        methods={methods}
-        createQuote={createQuote}
-        buttonTitle={buttonTitle}
-      />
+    <div className="cmp-widget">
+      { 
+        (!methodSelected || (methodSelected&&methodSelected.key ==='active')) && 
+        <SelectMethod 
+          title={label}
+          method={methodSelected}
+          setMethod={setMethodSelected}
+          methods={methods}
+          createQuote={createFromActive}
+          buttonTitle={buttonTitle}
+        /> 
+      }
+      {
+        methodSelected && methodSelected.key==='saved' && 
+        <SavedCart
+          method={methodSelected}
+          setMethod={setMethodSelected}
+          methods={methods}
+          createQuote={createQuote}
+          buttonTitle={buttonTitle}
+          />
+      }
       {
         requested && <p>Loading</p>
       }
-    </>
+    </div>
   );
 };
 

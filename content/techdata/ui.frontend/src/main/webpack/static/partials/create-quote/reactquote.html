@@ -1,8 +1,17 @@
-<div id="CreateQuote" data-observe-mutation>
+<div id="CreateQuote" data-observe-mutation style="padding: 30px;">
 	<div
 		data-component="CreateQuote"
 		data-cmp-type="react"
 		className="cmp-quote-create"
-		data-config='{"label": "Create Quote","cartLabel": "My Active Cart", "buttonTitle": "Create Quote", "endpoint": "http://localhost:3000/quote/create"}'
+		data-config='{
+			"label": "Create Quote",
+			"buttonTitle": "Create Quote", 
+			"optionsList": [
+				{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE" },
+				{ "key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM" }
+			],
+			"quotePreviewUrl": "http://localhost:8080/quote.html?redirected=true",
+			"endpoint": "http://localhost:3000/quote/create/"
+		}'
 	></div>
 </div>
