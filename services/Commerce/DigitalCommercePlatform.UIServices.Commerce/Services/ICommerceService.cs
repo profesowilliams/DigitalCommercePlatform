@@ -1,4 +1,6 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
@@ -17,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<QuoteDetailModel> GetCartDetailsInQuote();
         Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query);
         Task<CreateQuoteFrom.Response> CreateQuoteFrom(CreateQuoteFrom.Request request);
+        Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request);
     }
 }

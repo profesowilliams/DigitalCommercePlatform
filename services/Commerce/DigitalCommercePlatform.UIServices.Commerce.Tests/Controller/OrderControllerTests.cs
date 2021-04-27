@@ -1,11 +1,13 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -175,6 +177,42 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetOrderLinesAsync("645665656565") as ObjectResult;
+
+            var statusCode = (HttpStatusCode)result.StatusCode;
+
+            statusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetPricingConditions(ResponseBase<GetPricingConditions.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetPricingConditions.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetPricingConditions(true,"");
+
+            result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetPricingConditions_BadRequest(ResponseBase<GetPricingConditions.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetPricingConditions.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetPricingConditions(false,"XYZ") as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 

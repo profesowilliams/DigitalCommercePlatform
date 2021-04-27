@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
@@ -196,6 +197,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
                 ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
             };
+            return await Task.FromResult(response);
+        }
+
+        public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
+        {
+           
+            List<PricingCondition> lstPricingConditions = new List<PricingCondition>();
+
+            lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "0"));
+            lstPricingConditions.Add(new PricingCondition("Education (Student, Staff)", "1"));
+            lstPricingConditions.Add(new PricingCondition("Education (Higher)", "2"));
+            lstPricingConditions.Add(new PricingCondition("Education (K - 12)", "3"));
+            lstPricingConditions.Add(new PricingCondition("Education E-Rate (K - 12)", "4"));
+            lstPricingConditions.Add(new PricingCondition("Federal", "5"));
+            lstPricingConditions.Add(new PricingCondition("Federal GSA", "6"));
+            lstPricingConditions.Add(new PricingCondition("State", "7"));
+            lstPricingConditions.Add(new PricingCondition("Medical", "8"));
+            lstPricingConditions.Add(new PricingCondition("SEWP Contract", "11"));
+
+            var response = new PricingConditionsModel {
+                Items = lstPricingConditions
+            };
+
             return await Task.FromResult(response);
         }
     }

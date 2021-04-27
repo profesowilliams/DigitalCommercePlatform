@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
@@ -85,6 +86,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             else
             {
                 return Ok(orderLinesResponse);
+            }
+        }
+        [HttpGet]
+        [Route("pricingConditions")]
+        public async Task<ActionResult> GetPricingConditions([FromRoute] bool getAll,string Id)
+        {
+            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll,Id)).ConfigureAwait(false);
+            if (getPricingCondition.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, getPricingCondition);
+            }
+            else
+            {
+                return Ok(getPricingCondition);
             }
         }
 
