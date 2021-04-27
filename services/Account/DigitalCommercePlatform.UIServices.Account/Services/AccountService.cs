@@ -26,6 +26,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -36,18 +39,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _dealsServiceUrl;
         private readonly string _quoteServiceURL;
         private readonly string _cartServiceURL;
+        private readonly string _customerServiceURL;
+        private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
 
-        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, ILogger<AccountService> logger)
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, ILogger<AccountService> logger
+            , IUIContext uiContext)
         {
+            _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
             _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
             _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
+            _customerServiceURL= options?.Value.GetSetting("App.Customer.Url");
         }
 
 
@@ -291,6 +299,22 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 ProcessedFormattedAmount = formatedProcessced,
             };
             return await Task.FromResult(myOrders);
+        }
+
+        public async Task<IEnumerable<AddressDetails>> GetShipToAdress(GetShipToAddress.Request request)
+        {
+            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
+            try
+            {
+                var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
+                return null;
+            }
         }
     }
 }

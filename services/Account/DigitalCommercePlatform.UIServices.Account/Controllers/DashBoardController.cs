@@ -1,10 +1,12 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -20,7 +22,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
@@ -180,6 +181,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> GetMyOrder([FromQuery] bool isMonthly)
         {
             var request = new GetMyOrders.Request { IsMonthly = isMonthly };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("getShipToAddress")]
+        public async Task<IActionResult> GetShipToAddress()
+        {
+            var request = new GetShipToAddress.Request { };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)

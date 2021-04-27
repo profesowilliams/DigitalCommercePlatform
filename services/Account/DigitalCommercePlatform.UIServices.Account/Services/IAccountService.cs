@@ -1,11 +1,12 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -34,5 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria);
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
         Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
+        Task<IEnumerable<AddressDetails>> GetShipToAdress(GetShipToAddress.Request request);
     }
 }
