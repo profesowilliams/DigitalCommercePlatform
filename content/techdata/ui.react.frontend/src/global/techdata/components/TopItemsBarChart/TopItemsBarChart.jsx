@@ -10,6 +10,7 @@ function TopItemsBarChart(props) {
 		sort: componentProp.sort,
 	};
 	const [payload, setPayload] = useState(null);
+	const formatAmount = (amount) => amount.split('.')[0];
 
 	async function getChartData() {
 		const response = await get(componentProp.uiServiceEndPoint);
@@ -98,7 +99,6 @@ function TopItemsBarChart(props) {
 			createChart(ctx, payload.content.summary.items, chartOptions);
 		}
 	}, [payload]);
-
 	return (
 		<section>
 			<div className='cmp-barChart'>
@@ -114,9 +114,8 @@ function TopItemsBarChart(props) {
 												<span className={`cmp-barChart__sub-title-color-${i + 1}`}></span>
 												<span className='cmp-barChart__sub-title'>{item.endUserName ?? null}</span>
 												<span className='cmp-barChart__sub-title-digits'>
-													{item.formattedAmount ?? item.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+												{item.currencySymbol ?? '$'}{formatAmount(item.formattedAmount ?? item.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
 												</span>
-												<span className='cmp-barChart__sub-title-currency'>{item.currencyCode}</span>
 											</div>
 										);
 									})}

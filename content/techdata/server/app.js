@@ -179,6 +179,7 @@ app.get("/ui-account/v1/topQuotes/get", function (req, res) {
       amount: random,
       formattedAmount: random.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ".0",
       currencyCode: 'USD',
+      currencySymbol: '$'
     })
   }
   const response = {
