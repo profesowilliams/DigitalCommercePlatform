@@ -1,16 +1,26 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Abstract
 {
+    
     [ExcludeFromCodeCoverage]
-    public abstract class ResponseBase<T>
+    public class ResponseBase<T>
     {
         public T Content { get; set; }
-        public virtual bool IsError { get; set; }
-        public string ErrorCode { get; set; }
-        protected ResponseBase(T content)
-        {
-            Content = content;
-        }
+        public ErrorInformation Error { get; set; } = new ErrorInformation();
     }
+
+    [ExcludeFromCodeCoverage]
+    public class ErrorInformation
+    {
+        public int Code { get; set; } 
+        public List<string> Messages { get; set; } = new List<string>();
+        public bool IsError { get; set; }
+
+    }
+
+
+
+
 }

@@ -24,46 +24,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (string.IsNullOrWhiteSpace(sortingValue)) { return true; }
 
-            var propertyNameWithoutSortingType = GetPropertyName(sortingValue);
-
-            var isValid = _propertiesMapping.ContainsKey(propertyNameWithoutSortingType);
+            var isValid = _propertiesMapping.ContainsKey(sortingValue.Trim());
             return isValid;
         }
 
-        public (string sortingProperty, bool sortAscending) GetSortingParameters(string sortingValue)
+        public string GetSortingProperty(string sortingValue)
         {
             if (string.IsNullOrWhiteSpace(sortingValue))
             {
-                return ("CREATED", true);
+                return "CREATED";
             }
 
-            var propertyNameWithoutSortingType = GetPropertyName(sortingValue);
+            sortingValue = sortingValue.Trim();
 
-            if (!_propertiesMapping.ContainsKey(propertyNameWithoutSortingType))
+            if (!_propertiesMapping.ContainsKey(sortingValue))
             {
-                return ("CREATED", true);
+                return "CREATED";
             }
 
-            var sortingProperty = _propertiesMapping[propertyNameWithoutSortingType];
+            var sortingProperty = _propertiesMapping[sortingValue];
 
-            bool sortDescending = sortingValue.Trim().EndsWith(" desc", StringComparison.OrdinalIgnoreCase);
-            bool sortAscending = !sortDescending;
-
-            return (sortingProperty, sortAscending);
+            return sortingProperty;
         }
 
         public string GetValidProperties()
         {
             var properties = string.Join(" , ", _propertiesMapping.Keys);
             return properties;
-        }
-
-        private string GetPropertyName(string sortingValue)
-        {
-            var sortingValueAfterTrim = sortingValue.Trim();
-            var indexOfFirstSpace = sortingValueAfterTrim.IndexOf(" ", StringComparison.OrdinalIgnoreCase);
-            var propertyNameWithoutSortingType = indexOfFirstSpace == -1 ? sortingValueAfterTrim : sortingValueAfterTrim.Remove(indexOfFirstSpace);
-            return propertyNameWithoutSortingType;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -8,12 +9,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
     public class OrderModel
     {
         public Source Source { get; set; }
-        public Address ShipTo { get; set; }
+        public AddressModel ShipTo { get; set; }
         public DateTime? Created { get; set; }
         public string DocType { get; set; }
         public decimal? Price { get; set; }
+        public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
-        //public Status Status { get; set; }
+        public Status Status { get; set; }
         public List<Item> Items { get; set; }
         public string CustomerPO { get; set; }
     }

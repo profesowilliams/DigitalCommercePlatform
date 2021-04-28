@@ -12,7 +12,7 @@ module.exports = (env) => {
 	return merge(common, {
 		mode: 'development',
 		devtool: 'inline-source-map',
-		performance: {hints: 'warning'},
+		performance: { hints: 'warning' },
 		plugins: [
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
@@ -192,6 +192,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'list-view',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-view.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'article-list-page.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
 			}),
@@ -224,12 +228,32 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text/text.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'my-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-renewals.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-renewals.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'sign-in.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'sign-out.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-out.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'text-demo.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/text-demo/text-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-comp.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/tabs/tabs.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'sub-header.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sub-header.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'tabs-content.html',
@@ -252,12 +276,20 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/sign-in-demo-page.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'signin-aem',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/signin/signin-aem.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'teaser-cards1.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-cards1.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'teaser-bigcards.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-bigcards.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quote.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quote.html')
 			})
 		],
 		devServer: {

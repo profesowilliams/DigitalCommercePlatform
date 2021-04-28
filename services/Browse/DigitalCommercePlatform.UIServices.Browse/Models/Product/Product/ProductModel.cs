@@ -5,6 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
 {
     [ExcludeFromCodeCoverage]
+    public class ProductData
+    {
+        public ProductModel[] Data { get; set; }
+    }
     public class ProductModel
     {
         public SourceModel Source { get; set; }

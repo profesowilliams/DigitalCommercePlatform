@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using System.Collections.Generic;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
@@ -13,10 +13,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
     {
         public ProductProfile()
         {
-            CreateMap<IEnumerable<ProductModel>, GetProductResponse>()
-                .ForMember(dest => dest.ReturnObject, opt => opt.MapFrom(src => src));
-            CreateMap<IEnumerable<SummaryModel>, FindSummaryResponse>()
-                .ForMember(dest => dest.SummaryModels, opt => opt.MapFrom(src => src));
+            CreateMap<IEnumerable<ProductModel>, GetProductDetailsHandler.Response>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+
+            CreateMap<ProductData, FindProductHandler.Response>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+            CreateMap<SummaryDetails, FindSummaryHandler.Response>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+
+            CreateMap<SummaryModel, GetProductSummaryHandler.Response>()
+                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src) );
 
         }
     }

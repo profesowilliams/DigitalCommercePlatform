@@ -3,3 +3,14 @@
         background-color: $value;
     }
 }
+
+.bkgrd-none {
+    background-color: none;
+}
+
+// borders
+
+.b-0 {
+    border: 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}

@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
 {
+    [ExcludeFromCodeCoverage]
     public sealed class GetLines
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; }
             public Request(string id)
@@ -22,11 +25,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
 
         public class Response
         {
-            public IEnumerable<Line> OrderLines { get; set; }
-            public bool IsError { get; internal set; }
-            public string ErrorCode { get; internal set; }
+            public IEnumerable<Line> Items { get; set; }
         }
-        public class GetOrderLinesHandler : IRequestHandler<Request, Response>
+        public class GetOrderLinesHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
@@ -38,17 +39,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
+
                 var orderLinesResponse = new Response();
+                
                 if (order == null)
                 {
                     orderLinesResponse = new Response
                     {
-                        OrderLines = null,
-                        IsError = false,
-                        ErrorCode = "No Lines found for order number " + request.Id
+                        Items = null
                     };
                 }
                 else
@@ -56,13 +57,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                     var linesDto = _mapper.Map<IEnumerable<Line>>(order.Items);
                     orderLinesResponse = new Response
                     {
-                        OrderLines = linesDto,
-                        IsError = false,
-                        ErrorCode = string.Empty
+                        Items = linesDto
                     };
                 }
                 
-                return orderLinesResponse; 
+                return new ResponseBase<Response> { Content = orderLinesResponse }; 
             }
         }
     }

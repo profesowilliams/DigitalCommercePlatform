@@ -1,8 +1,8 @@
-﻿using AutoFixture.Xunit2;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -12,7 +12,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +19,9 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 {
-   public class QuoteControllerTests
+    public class QuoteControllerTests
     {
-        private readonly Mock<IContext> _context;
+        private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<QuoteController>> _logger;
         private readonly Mock<IOptions<AppSettings>> _optionsMock;
@@ -37,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             };
             var appSettings = new AppSettings();
             appSettings.Configure(appSettingsDict);
-            _context = new Mock<IContext>();
+            _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<QuoteController>>();
             _optionsMock = new Mock<IOptions<AppSettings>>();
@@ -66,11 +65,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateQuoteTest(ResponseBase<CreateQuote.Response> expected)
+        {
+            // Arrange
+            _mediator.Setup(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
 
+            var controller = GetController();
+            var createModel = new CreateModel();
+            // Act
+            var result = await controller.Create(createModel).ConfigureAwait(false);
+            // Assert
+            _mediator.Verify(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetailsInQuote(DetailsOfSavedCartsQuote.Response expected)
+        public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
@@ -87,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetQuoteDetails(GetQuote.Response expected)
+        public async Task GetQuoteDetails(ResponseBase<GetQuote.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetQuote.Request>(),
@@ -103,10 +116,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task FindQuoteDetails(FindQuotesForGrid.Response expected)
+        public async Task FindQuoteDetails(ResponseBase<GetQuotesForGrid.Response> expected)
         {
             _mediator.Setup(x => x.Send(
-                       It.IsAny<FindQuotesForGrid.Request>(),
+                       It.IsAny<GetQuotesForGrid.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 

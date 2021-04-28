@@ -1,0 +1,39 @@
+<sly data-sly-use.model="com.techdata.core.models.MegaMenu"
+     data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
+    <div data-sly-test=${hasContent} class="top-nav">
+        <ul data-sly-list.item="${model.menuLinkList}" >
+
+
+            <li >
+                <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
+                   title="${item.platformName}"
+                   href="${item.linkUrl}"
+                   target="${item.linkTarget == 'true' ? '_blank' : '_self'}">
+                    <article>
+
+                        <span >${item.platformName} = </span>
+                        <span >${item.linkUrl}</span>
+                    </article>
+                    <ul data-sly-list.sublinks="${item.subLinks}">
+                        <li>
+                            ${sublinks.pageTitle}
+                            <img src="${subLinks.pageIcon}"></img>
+                             <ul data-sly-test="${subLinks.hasChildPages}" data-sly-list.level2links="${sublinks.subNavLinkslist}">
+                                 <li>
+                                     ${level2links.pageTitle}
+                                 </li>
+                             </ul>
+                            <! -- ${sublinks.pagePath} -->
+                        </li>
+                    </ul>
+                </a>
+
+            </li>
+
+        </ul>
+
+
+    </div>
+</sly>
+<sly data-sly-use.placeholderTemplates="core/wcm/components/commons/v1/templates.html"
+     data-sly-call="${placeholderTemplates.placeholder @ isEmpty=!hasContent}"></sly>

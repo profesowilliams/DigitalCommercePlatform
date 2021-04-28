@@ -1,0 +1,55 @@
+@import '../../variables';
+@import '../../../site/variables';
+
+.cmp-quotes {
+    font-family: 'Open Sans', sans-serif;
+    justify-content: space-between;
+    display: flex;
+    width: rem(475px);
+    height: rem(55px);
+    align-items: center;
+    margin: 0 15px;
+    &__title {
+        font-size: $font-size-small;
+        text-transform: uppercase;
+        color: get-color(text-mid-gray);
+        width: rem(115px);
+        align-self: baseline;
+    }
+    &__sub-title {
+        font-size: $font-size-xxsmall;
+        color: get-color(text-light-charcoal);
+        width: 33%;
+        text-align: center;
+        box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+        &:last-of-type {
+            box-shadow: none;
+        }
+
+        &--digits {
+            font-size: $font-size-large;
+        }
+    }
+    &__all-myQuotes {
+        width: rem(340px);
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+    }
+
+    &__active-value {
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        width: auto;
+        margin: rem(30px) auto 0;
+        &--price {
+            font-size: $font-size-xlarge;
+            color: get-color(td-primary-blue);
+            margin-right: rem(20px);
+        }
+        &--title {
+            font-size: $font-size-custom-medium;
+        }
+    }
+}

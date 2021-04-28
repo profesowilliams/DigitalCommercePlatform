@@ -1,18 +1,21 @@
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DigitalCommercePlatform.UIService.Browse
 {
     [ExcludeFromCodeCoverage]
     public class Startup : BaseUIServiceStartup
     {
+
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
         }
@@ -21,25 +24,17 @@ namespace DigitalCommercePlatform.UIService.Browse
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpClient("apiServiceClient").AddHeaderPropagation();
-            services.AddHeaderPropagation(options =>
-            {
-                options.Headers.Add("Authorization");
-                options.Headers.Add("Accept-Language");
-                options.Headers.Add("Site");
-                options.Headers.Add("Consumer");
-            });
-
             services.AddTransient<IBrowseService, BrowseService>();
             services.AddSingleton<ICachingService, CachingService>();
+            services.AddTransient<ISortingService, SortingService>();
+            services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHeaderPropagation();
+            app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             base.ConfigureMiddleSection(app, env);
         }
-
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }

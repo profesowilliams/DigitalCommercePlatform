@@ -1,36 +1,68 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 {
+    [ExcludeFromCodeCoverage]
     public static class FindSummaryHandler
     {
-        public class FindSummaryRequest : IRequest<FindSummaryResponse>
+        public class Request : IRequest<ResponseBase<Response>>
         {
-            public FindProductModel Query { get; set; }
+            public IEnumerable<string> MaterialNumber { get; set; }
+            public IEnumerable<string> OldMaterialNumber { get; set; }
+            public IEnumerable<string> Manufacturer { get; set; }
+            public IEnumerable<string> MfrPartNumber { get; set; }
+            public IEnumerable<string> UPC { get; set; }
+            public string CustomerNumber { get; set; }
+            public string CustomerPartNumber { get; set; }
+            public string SalesOrganization { get; set; }
+            public IEnumerable<string> MaterialStatus { get; set; }
+            public IEnumerable<string> Territories { get; set; }
+            public string Description { get; set; }
+            public string System { get; set; }
+            public bool Details { get; set; } = true;
+            public bool WithPaginationInfo { get; set; }
+            public int? Page { get; set; }
+            public int? PageSize { get; set; }
 
-            public FindSummaryRequest(FindProductModel query)
+            public Request(FindProductModel query, bool withPaginationInfo)
             {
-                Query = query;
+                MaterialNumber = query.MaterialNumber;
+                OldMaterialNumber = query.OldMaterialNumber;
+                Manufacturer = query.Manufacturer;
+                MfrPartNumber = query.MfrPartNumber;
+                UPC = query.UPC;
+                CustomerNumber = query.CustomerNumber;
+                CustomerPartNumber = query.CustomerPartNumber;
+                SalesOrganization = query.SalesOrganization;
+                MaterialStatus = query.MaterialStatus;
+                Territories = query.Territories;
+                Description = query.Description;
+                System = query.System;
+                Details = query.Details;
+                Page = query.Page;
+                PageSize = query.PageSize;
+                WithPaginationInfo = withPaginationInfo;
             }
         }
 
-        public class FindSummaryResponse : PaginatedResponse<IEnumerable<SummaryModel>>
+        public class Response 
         {
-            public IEnumerable<SummaryModel> SummaryModels { get; set; }
+            public SummaryDetails Items { get; set; }
         }
 
-        public class Handler : IRequestHandler<FindSummaryRequest, FindSummaryResponse>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -43,13 +75,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
                 _logger = logger;
             }
 
-            public async Task<FindSummaryResponse> Handle(FindSummaryRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.FindSummaryDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<FindSummaryResponse>(productDetails);
-                    return getProductResponse;
+                    var getProductResponse = _mapper.Map<Response>(productDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
@@ -59,11 +91,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             }
         }
 
-        public class Validator : AbstractValidator<FindSummaryRequest>
+        public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                RuleFor(x => x.Query).NotEmpty();
+                RuleFor(x => x.Page).GreaterThan(0);
+                RuleFor(x => x.PageSize).GreaterThan(0);
             }
         }
     }

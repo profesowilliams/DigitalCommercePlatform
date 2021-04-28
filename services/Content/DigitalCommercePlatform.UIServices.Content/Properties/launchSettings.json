@@ -1,0 +1,29 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:50548/",
+      "sslPort": 44348
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "DigitalCommercePlatform.UIServices.Content": {
+      "commandName": "Project",
+      "commandLineArgs": "-c debug --n=\"UI.Content\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5605 --urls=\"http://localhost\" --islocal=1",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5605/swagger/index.html",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5605"
+    }
+  }
+}

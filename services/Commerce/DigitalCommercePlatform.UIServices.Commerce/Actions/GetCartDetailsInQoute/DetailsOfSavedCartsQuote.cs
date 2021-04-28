@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using MediatR;
@@ -13,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
     [ExcludeFromCodeCoverage]
     public class DetailsOfSavedCartsQuote
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string CartId { get; set; }
 
@@ -27,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
         {
             public QuoteDetails QuoteDetails { get; set; }
         }
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _quoteService;
             private readonly IMapper _mapper;
@@ -39,13 +40,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
                 _mapper = mapper;
                 _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var cartDetails = await _quoteService.GetCartDetailsInQuote(request);
                     var getcartResponse = _mapper.Map<Response>(cartDetails);
-                    return getcartResponse;
+                    return new ResponseBase<Response> { Content = getcartResponse };
                 }
                 catch (Exception ex)
                 {

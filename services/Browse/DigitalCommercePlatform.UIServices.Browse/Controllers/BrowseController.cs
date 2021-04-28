@@ -1,29 +1,35 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
+﻿using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails.GetCatalogHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 {
+    [ExcludeFromCodeCoverage]
+    [SetContextFromHeader]
     [ApiController]
     [ApiVersion("1")]
     [Route("/v{apiVersion}")]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class BrowseController : BaseUIServiceController
     {
+        
         public BrowseController(
             IMediator mediator,
             ILogger<BrowseController> logger,
@@ -33,67 +39,94 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             : base(mediator, logger, context, settings, siteSettings)
         {
         }
-
+        /// <summary>
+        /// Get the Cart, Customer, Catalogue details in a single call
+        /// </summary>
+        /// <param name="catalogueCriteria"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("header/get")]
-        public async Task<ActionResult<GetHeaderResponse>> GetHeader(string userId, string customerId, string catalogueCriteria)
+        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string catalogueCriteria)
         {
-            var response = await Mediator.Send(new GetHeaderRequest(customerId, userId, catalogueCriteria)).ConfigureAwait(false);
-            return response;
+            var response = await Mediator.Send(new GetHeaderHandler.Request( catalogueCriteria)).ConfigureAwait(false);
+            return Ok(response);
         }
-
+        /// <summary>
+        /// Get the Cart Name and Cart Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("cart/get")]
-        public async Task<ActionResult<GetCartResponse>> GetCartDetails(string userId, string customerId)
+        public async Task<ActionResult<ResponseBase<GetCartHandler.Response>>> GetCartDetails(string userId, string customerId)
         {
-            var response = await Mediator.Send(new GetCartRequest(userId, customerId)).ConfigureAwait(false);
-            return response;
+            var response = await Mediator.Send(new GetCartHandler.Request(userId, customerId)).ConfigureAwait(false);
+            return Ok(response);
         }
-
+        /// <summary>
+        /// Get the catalog details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("catalogue/get")]
-        public async Task<ActionResult<GetCatalogResponse>> GetCatalog(string id)
+        public async Task<ActionResult<GetCatalogHandler.Response>> GetCatalog(string id)
         {
-            var response = await Mediator.Send(new GetCatalogRequest(id)).ConfigureAwait(false);
-            return response;
+            
+            var response = await Mediator.Send(new GetCatalogHandler.Request(id)).ConfigureAwait(false);
+            return Ok(response);
         }
-
+        /// <summary>
+        /// Get the customer details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("customer/get")]
-        public async Task<ActionResult<GetCustomerResponse>> GetCustomer(string id)
+        public async Task<ActionResult<GetCustomerHandler.Response>> GetCustomer([FromQuery] string id)
         {
-            var response = await Mediator.Send(new GetCustomerRequest(id)).ConfigureAwait(false);
-            return response;
+            var response = await Mediator.Send(new GetCustomerHandler.Request(id)).ConfigureAwait(false);
+            return Ok(response);
         }
-
+        /// <summary>
+        /// Get the product details on the ProductId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="details"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Product/get")]
         public async Task<ActionResult<object>> GetProduct([FromQuery] IReadOnlyList<string> id, [FromQuery] bool details = true)
         {
             if (details)
             {
-                var response = await Mediator.Send(new GetProductDetailsRequest(id, details)).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, details)).ConfigureAwait(false);
                 return Ok(response);
             }
             else
             {
-                var response = await Mediator.Send(new GetProductSummaryRequest(id, details)).ConfigureAwait(false);
+                var response = await Mediator.Send(new GetProductSummaryHandler.Request(id, details)).ConfigureAwait(false);
                 return Ok(response);
             }
         }
-
+        /// <summary>
+        /// This method is used for the Searching the Products based on the category
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("product/summary")]
-        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query)
+        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query, bool WithPaginationInfo=true)
         {
             if (query.Details)
             {
-                var response = await Mediator.Send(new GetProductRequest(query)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindProductHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false); 
                 return Ok(response);
             }
             else
             {
-                var response = await Mediator.Send(new FindSummaryRequest(query)).ConfigureAwait(false);
+                var response = await Mediator.Send(new FindSummaryHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false);
                 return Ok(response);
             }
         }

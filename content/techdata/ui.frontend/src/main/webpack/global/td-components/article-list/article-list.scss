@@ -25,7 +25,15 @@
     color: get-color(brand-white);
     font-size: rem(13px);
     line-height: rem(18px);
-    padding: rem(22px) rem(11px);
+    padding: rem(18px) rem(5px) rem(12px) rem(11px);
+    span{
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
   .cmp-image__image-figure{
     padding: 0;

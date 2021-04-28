@@ -1,44 +1,39 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Core.Models.DTO.Common;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetProductSummaryHandler
     {
-        public class GetProductSummaryRequest : IRequest<GetProductSummaryResponse>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
 
-            public GetProductSummaryRequest(IReadOnlyCollection<string> id, bool details)
+            public Request(IReadOnlyCollection<string> id, bool details)
             {
                 Id = id;
                 Details = details;
             }
         }
 
-        public class GetProductSummaryResponse : Response<IEnumerable<SummaryModel>>
+        public class Response 
         {
-            public GetProductSummaryResponse()
-            {
-            }
-
-            public GetProductSummaryResponse(IEnumerable<SummaryModel> response)
-            {
-                ReturnObject = response;
-            }
+            public SummaryModel Items { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetProductSummaryRequest, GetProductSummaryResponse>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
@@ -51,13 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _logger = logger;
             }
 
-            public async Task<GetProductSummaryResponse> Handle(GetProductSummaryRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var productDetails = await _productRepositoryServices.GetProductSummary(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<GetProductSummaryResponse>(productDetails);
-                    return getProductResponse;
+                    var getProductResponse = _mapper.Map<Response>(productDetails);
+                    return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
                 {
@@ -66,17 +61,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 }
             }
         }
-
-        public class Validator : AbstractValidator<GetProductSummaryRequest>
+        public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                SetRules();
-            }
-
-            private void SetRules()
-            {
-                RuleFor(r => r.Id).NotEmpty();
+                RuleFor(i => i.Id).NotEmpty().WithMessage("please enter the input id");
+                RuleFor(i => i.Details).NotEmpty().WithMessage("missing the details parameter");
             }
         }
     }

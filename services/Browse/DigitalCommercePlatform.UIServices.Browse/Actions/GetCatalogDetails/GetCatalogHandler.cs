@@ -1,33 +1,37 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCatalogHandler
     {
-        public class GetCatalogRequest : IRequest<GetCatalogResponse>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
 
-            public GetCatalogRequest(string CatalogId)
+            public Request(string CatalogId)
             {
                 Id = CatalogId;
             }
         }
 
-        public class GetCatalogResponse
+        public class Response
         {
             public IEnumerable<CatalogHierarchyModel> CatalogHierarchies { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCatalogRequest, GetCatalogResponse>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _CatalogRepositoryService;
             private readonly IMapper _mapper;
@@ -42,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                 _logger = logger;
             }
 
-            public async Task<GetCatalogResponse> Handle(GetCatalogRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -52,9 +56,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                     if (getCatalogResponse == null)
                     {
                         var CatalogDetails = await _CatalogRepositoryService.GetCatalogDetails(request);
-                        getCatalogResponse = _mapper.Map<GetCatalogResponse>(CatalogDetails);
+                        getCatalogResponse = _mapper.Map<Response>(CatalogDetails);
                     }
-                    return getCatalogResponse;
+                    return new ResponseBase<Response> { Content = getCatalogResponse };
                 }
                 catch (Exception ex)
                 {
@@ -62,6 +66,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
                     throw ex;
                 }
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.Id).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }

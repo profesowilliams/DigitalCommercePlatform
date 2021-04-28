@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,48 +14,45 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
     [ExcludeFromCodeCoverage]
     public sealed class GetConfigurations
     {
-        public class Request : IRequest<Response>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public FindModel Criteria { get; set; }
         }
 
         public class Response
         {
-            public RecentConfigurationsModel Content { get; }
-
-            public virtual bool IsError { get; set; }
-            public string ErrorCode { get; set; }
-
-            public Response(RecentConfigurationsModel records)
-            {
-                Content = records;
-            }
+            public RecentConfigurationsModel Configurations { get; internal set; }
         }
 
-        public class GetConfigurationsHandler : IRequestHandler<Request, Response>
+        public class GetConfigurationsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configServiceQueryService;
+            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
+            private readonly ILogger<GetConfigurationsHandler> _logger;
 
-            public GetConfigurationsHandler(IConfigService commerceQueryService, IMapper mapper)
+            public GetConfigurationsHandler(IConfigService configService, 
+                IMapper mapper,
+                ILogger<GetConfigurationsHandler> logger
+                )
             {
-                _configServiceQueryService = commerceQueryService;
+                _configService = configService;
                 _mapper = mapper;
+                _logger = logger;
             }
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                if (request.Criteria != null)
+                try
                 {
-                    RecentConfigurationsModel response = await _configServiceQueryService.GetConfigurations(request.Criteria);
-                    return new Response(response);
+                    RecentConfigurationsModel configurations = await _configService.GetConfigurations(request.Criteria);
+                    var recentDealResponse = _mapper.Map<Response>(configurations);
+                    return new ResponseBase<Response> { Content = recentDealResponse };
                 }
-                else
+                catch (Exception ex)
                 {
-                    var response = new Response(null);
-                    response.ErrorCode = "possible_invalid_code"; // fix this
-                    response.IsError = true;
-                    return response;
+                    _logger.LogError(ex, "Exception at getting recent configurations for grid : " + nameof(GetConfigurations));
+                    throw;
                 }
+
 
             }
         }

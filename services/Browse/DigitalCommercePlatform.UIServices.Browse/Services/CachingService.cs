@@ -21,9 +21,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _logger = logger;
         }
 
-        public Task<GetCatalogHandler.GetCatalogResponse> GetCatalogFromCache(string cacheKey)
+        public Task<GetCatalogHandler.Response> GetCatalogFromCache(string cacheKey)
         {
-            GetCatalogHandler.GetCatalogResponse catalog = null;
+            GetCatalogHandler.Response catalog = null;
             try
             {
                 if (_cache.TryGetValue(cacheKey, out catalog))
@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return Task.FromResult(catalog);
         }
 
-        public Task<bool> SetCatalogCache(GetCatalogHandler.GetCatalogResponse Catalog, string cacheKey)
+        public Task<bool> SetCatalogCache(GetCatalogHandler.Response Catalog, string cacheKey)
         {
             try
             {

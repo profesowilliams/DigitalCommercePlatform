@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public SecurityController(IMediator mediator,
             IOptions<AppSettings> options,
             ILogger<BaseUIServiceController> loggerFactory,
-            IContext context,
+            IUIContext context,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
@@ -36,9 +36,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new GetUser.Request(applicationName)).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);
@@ -52,13 +52,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             var response = await Mediator.Send(new AuthenticateUser.Request(authenticateBodyRequest?.Code, authenticateBodyRequest?.RedirectUri, authenticateBodyRequest?.ApplicationName,
                authenticateHeaderRequest?.TraceId, authenticateHeaderRequest?.Language, authenticateHeaderRequest?.Consumer, authenticateHeaderRequest?.SessionId));
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, response);
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);
         }
+
+        [AllowAnonymous]
+        [HttpOptions("login")]
+        public IActionResult PreflightRoute()
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+            HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site");
+
+
+            return NoContent();
+        }
+
+
 
         [HttpPost]
         [Route("logout")]
@@ -66,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new LogoutUser.Request(sessionId));
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }

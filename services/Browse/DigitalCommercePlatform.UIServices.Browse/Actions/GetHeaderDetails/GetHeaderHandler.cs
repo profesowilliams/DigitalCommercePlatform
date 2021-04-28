@@ -1,32 +1,32 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetHeaderHandler
     {
-        public class GetHeaderRequest : IRequest<GetHeaderResponse>
+        public class Request : IRequest<ResponseBase<Response>>
         {
-            public string CustomerId { get; set; }
-            public string UserId { get; set; }
             public string CatalogCriteria { get; set; }
 
-            public GetHeaderRequest(string customerId, string userId, string catalogCriteria)
+            public Request( string catalogCriteria)
             {
-                CustomerId = customerId;
-                UserId = userId;
                 CatalogCriteria = catalogCriteria;
             }
         }
 
-        public class GetHeaderResponse
+        public class Response
         {
             public string UserId { get; set; }
             public string UserName { get; set; }
@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
             public IReadOnlyCollection<CatalogHierarchyModel> CatalogHierarchies { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetHeaderRequest, GetHeaderResponse>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _headerRepositoryServices;
             private readonly IMapper _mapper;
@@ -52,19 +52,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
                 _mapper = mapper;
             }
 
-            public async Task<GetHeaderResponse> Handle(GetHeaderRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var headerDetails = await _headerRepositoryServices.GetHeader(request);
-                    var headerResponse = _mapper.Map<GetHeaderResponse>(headerDetails);
-                    return headerResponse;
+                    var headerResponse = _mapper.Map<Response>(headerDetails);
+                    return new ResponseBase<Response> { Content = headerResponse };
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at GetHeaderHandler : " + nameof(GetHeaderHandler));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.CatalogCriteria).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }

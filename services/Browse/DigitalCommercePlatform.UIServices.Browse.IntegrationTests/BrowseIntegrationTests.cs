@@ -1,41 +1,52 @@
-﻿using DigitalCommercePlatform.UIService.Browse;
-using DigitalCommercePlatform.UIService.Browse.Model.Customer;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.IntegrationTestUtilities;
-using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
-using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
-using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
-using DigitalFoundation.Common.TestUtilities;
-using FluentAssertions;
-using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails.GetCatalogHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
-using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+﻿//using DigitalCommercePlatform.UIService.Browse;
+//using DigitalCommercePlatform.UIService.Browse.Model.Customer;
+//using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
+//using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
+//using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
+//using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+//using DigitalFoundation.Common.Client;
+//using DigitalFoundation.Common.Extensions;
+//using DigitalFoundation.Common.IntegrationTestUtilities;
+//using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
+//using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
+//using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
+//using DigitalFoundation.Common.TestUtilities;
+//using FluentAssertions;
+//using Microsoft.AspNetCore.Authorization.Policy;
+//using Microsoft.Extensions.DependencyInjection;
+//using Newtonsoft.Json;
+//using System;
+//using System.Collections.Generic;
+//using System.Diagnostics.CodeAnalysis;
+//using System.Net.Http;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Xunit;
+//using Xunit.Abstractions;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails.GetCartHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails.GetCatalogHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails.GetCustomerHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails.GetHeaderHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductDetailsHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails.GetProductSummaryHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindProductHandler;
+//using static DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary.FindSummaryHandler;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
 {
-    public class UISetup : Setup
+    [TestClass]
+    public class UnitTest1
     {
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
+    }
+}
+
+    //public class UISetup : Setup
+    //{
     //    public override void AddClients([NotNull]ITestHttpClientFactory factory, string serviceName)
     //       => factory
     //           .AddClient<ISimpleHttpClient>()
@@ -176,5 +187,5 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
     //        var response = await client.RunTest<FindSummaryResponse>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
     //        response.Should().NotBeNull();
     //    }
-    }
-}
+//    }
+//}

@@ -32,19 +32,25 @@ $color-palette: (
     "tertiary-light-green": #a9c141,
     "tertiary-dark-blue": #103c82,
     "tertiary-light-blue": #56afd1,
-    "tertiary-fuschia": #9a0a4d,
+    "tertiary-fuchsia": #9a0a4d,
     "tertiary-beige": #b69a81,
     "brand-light-blue": #00B1E2,
     "brand-button-blue": #00558C,
     "brand-nav-blue": #048FC8,
-    "border-light-gray": #979797,
-    "text-shadow": #919599,
-    "text-light-gray": #7c8388,
-    "text-mid-gray": #53565a,
-    "td-lightblue": #00b1e2,
-    "td-primary-blue": #048FC8,
-    "td-dark-blue": #000C21,
-    "brand-light-gray": #eaeaea
+	'border-light-gray': #979797,
+	'text-shadow': #919599,
+	'text-light-gray': #7c8388,
+	'text-mid-gray': #53565a,
+	'text-light-charcoal': #555555,
+	'td-lightblue': #00b1e2,
+	'td-primary-blue': #048fc8,
+	'td-dim-blue': #153b51,
+	'td-dark-blue': #000c21,
+	'brand-light-gray': #eaeaea,
+	"header-links-blue": #21314D,
+        'v-divider-gray': #e6e6e6,
+	'brand-light-gray2': #E6E6E6,
+        "brand-text-gray": #555555,
 );
 
 $white: #ffffff; // Default white
@@ -64,10 +70,10 @@ $gray-2: #979797;
 $gray-4: #d6d6d6;
 $gray-5: #f6f6f6;
 $gray-3: #c6c6c6;
-
 $container-max-width: 1170px;
 $container-padding: 64px;
 $breakpoints: (
 	'lg': 1024px,
 	'md': 768px,
 );
+

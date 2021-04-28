@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 
 
 
-            CreateMap<CustomerModel, GetCustomerHandler.GetCustomerResponse>()
+            CreateMap<CustomerModel, GetCustomerHandler.Response>()
                .ForMember(dest => dest.ID, opt => opt.MapFrom(src => src.Source.ID));
         }
     }

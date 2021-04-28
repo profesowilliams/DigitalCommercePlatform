@@ -1,34 +1,38 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCustomerHandler
     {
-        public class GetCustomerRequest : IRequest<GetCustomerResponse>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
 
-            public GetCustomerRequest(string id)
+            public Request(string id)
             {
                 Id = id;
             }
         }
 
-        public class GetCustomerResponse
+        public class Response
         {
             public string ID { get; set; }
             public string Name { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetCustomerRequest, GetCustomerResponse>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _customerRepositoryServices;
             private readonly IMapper _mapper;
@@ -43,19 +47,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
                 _logger = logger;
             }
 
-            public async Task<GetCustomerResponse> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
                     var customerDetails = await _customerRepositoryServices.GetCustomerDetails(request);
-                    var getCustomerResponse = _mapper.Map<IEnumerable<GetCustomerResponse>>(customerDetails)?.FirstOrDefault();
-                    return getCustomerResponse;
+                    var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
+                    return new ResponseBase<Response> { Content = getCustomerResponse };
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(GetCustomerHandler));
                     throw ex;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(i => i.Id).NotEmpty().WithMessage("Please enter the input");
             }
         }
     }

@@ -11,8 +11,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Content
 {
     [ExcludeFromCodeCoverage]
-    public class Startup : BaseAppServiceStartup
+    public class Startup : BaseUIServiceStartup
     {
+
         public Startup(IConfiguration configuration, IStartupLogger startupLogger) : base(configuration, startupLogger)
         {
         }
@@ -21,11 +22,11 @@ namespace DigitalCommercePlatform.UIServices.Content
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IContentService, ContentService>();           
+            services.AddTransient<IContentService, ContentService>();
         }
-
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             base.ConfigureMiddleSection(app, env);
         }
 

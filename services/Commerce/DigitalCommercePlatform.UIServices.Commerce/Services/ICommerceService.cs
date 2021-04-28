@@ -1,7 +1,7 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuoteDetails;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetQuotes;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<OrderModel> GetOrderByIdAsync(string id);
         Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters);
         Task<QuoteDetailModel> GetCartDetailsInQuote(Request request);
-        Task<FindResponse<IEnumerable<QuoteModel>>> FindQuoteDetails(FindQuotesForGrid.Request request);
+        Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query);
 
     }
 }
