@@ -12,8 +12,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
         public string SortBy { get; set; }
-        public bool? SortAscending { get; set; }
+        public string SortDirection { get; set; } 
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public bool WithPaginationInfo { get; set; }
     }
 }

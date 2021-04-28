@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
                 getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
 
-            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortAscending, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
+            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortDirection, getOrdersRequest.PageNumber, getOrdersRequest.PageSize,getOrdersRequest.WithPaginationInfo);
 
             var getOrdersQuery = new GetOrders.Request(filtering, paging);
 

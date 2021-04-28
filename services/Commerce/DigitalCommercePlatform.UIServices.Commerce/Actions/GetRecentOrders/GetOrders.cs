@@ -24,9 +24,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
             public string SortBy { get; }
-            public bool? SortAscending { get; set; }
+            public string SortDirection { get; set; }
             public int PageNumber { get; }
             public int PageSize { get; }
+            public bool WithPaginationInfo { get; set; }
 
             public Request(FilteringDto filtering, PagingDto paging)
             {
@@ -36,27 +37,30 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 CreatedFrom = filtering.CreatedFrom;
                 CreatedTo = filtering.CreatedTo;
                 SortBy = paging.SortBy;
-                SortAscending = paging.SortAscending;
+                SortDirection = paging.SortDirection;
                 PageNumber = paging.PageNumber;
                 PageSize = paging.PageSize == 0 ? 25 : paging.PageSize;
+                WithPaginationInfo = paging.WithPaginationInfo;
             }
         }
 
 
         public class PagingDto
         {
-            public PagingDto(string sortBy, bool? sortAscending, int pageNumber, int pageSize)
+            public PagingDto(string sortBy, string sortDirection, int pageNumber, int pageSize, bool withPaginationInfo)
             {
                 SortBy = sortBy;
-                SortAscending = sortAscending;
+                SortDirection = sortDirection;
                 PageNumber = pageNumber;
                 PageSize = pageSize;
+                WithPaginationInfo = withPaginationInfo;
             }
 
             public string SortBy { get; set; }
-            public bool? SortAscending { get; set; }
+            public string SortDirection { get; set; }
             public int PageNumber { get; }
             public int PageSize { get; }
+            public bool WithPaginationInfo { get; set; }
         }
 
         public class FilteringDto
@@ -76,9 +80,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
         }
-
-
-
 
 
         public class Response
@@ -107,8 +108,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var sortingProperty = _sortingService.GetSortingProperty(request.SortBy);
-
-                bool sortAscendingByDefault = true;
+                var sortAscending = _sortingService.IsSortingDirectionAscending(request.SortDirection);
 
                 var orderParameters = new SearchCriteria
                 {
@@ -118,9 +118,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     CreatedFrom = request.CreatedFrom,
                     CreatedTo = request.CreatedTo,
                     SortBy = sortingProperty,
-                    SortAscending = request.SortAscending ?? sortAscendingByDefault,
+                    SortAscending = sortAscending,
                     PageNumber = request.PageNumber,
-                    PageSize = request.PageSize
+                    PageSize = request.PageSize,
+                    WithPaginationInfo = request.WithPaginationInfo
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
@@ -129,12 +130,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 var orderResponse = new Response
                 {
                     Items = ordersDto,
-                    TotalItems = orders?.Count,
-                    PageNumber = request.PageNumber,
-                    PageSize = request.PageSize,
-                    PageCount =(orders?.Count + request.PageSize - 1) / request.PageSize
-            };
-
+                    TotalItems = request.WithPaginationInfo ? orders?.Count : 0,
+                    PageNumber = request.WithPaginationInfo ? request.PageNumber : 0,
+                    PageSize = request.WithPaginationInfo ? request.PageSize : 0,
+                    PageCount = request.WithPaginationInfo ? (orders?.Count + request.PageSize - 1) / request.PageSize : 0
+                };
                 return new ResponseBase<Response> { Content = orderResponse };
             }
         }
@@ -148,7 +148,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
 
                 var validProperties = _sortingService.GetValidProperties();
+                var validSortingValues = _sortingService.GetValidSortingValues();
+
                 RuleFor(i => i.SortBy).Must(IsPropertyValidForSorting).WithMessage(i => $"You can't sort by {i.SortBy} property. Valid properties are: {validProperties}");
+                RuleFor(i => i.SortDirection).Must(IsSortingDirectionValid).WithMessage(i => $"You can't order by {i.SortDirection} value. Valid values are: {validSortingValues}");
                 RuleFor(i => i.PageSize).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
                 RuleFor(i => i.PageNumber).GreaterThanOrEqualTo(0).WithMessage("PageNumber must be greater than or equal to 0.");
             }
@@ -156,6 +159,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             private bool IsPropertyValidForSorting(string propertyValue)
             {
                 return _sortingService.IsPropertyValid(propertyValue);
+            }
+
+            private bool IsSortingDirectionValid(string sortingValue)
+            {
+                return _sortingService.IsSortingDirectionValid(sortingValue);
             }
         }
     }

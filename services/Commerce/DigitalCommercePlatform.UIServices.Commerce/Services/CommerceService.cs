@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             SortAscending = orderParameters.SortAscending.ToString(),
                             orderParameters.PageSize,
                             Page = orderParameters.PageNumber,
-                            WithPaginationInfo = true,
+                            WithPaginationInfo = orderParameters.WithPaginationInfo,
                             Details = true
                         });
 

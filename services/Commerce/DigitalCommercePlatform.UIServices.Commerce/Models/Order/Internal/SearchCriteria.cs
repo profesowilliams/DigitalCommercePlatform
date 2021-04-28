@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public bool SortAscending { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public bool WithPaginationInfo { get; set; }
     }
 }

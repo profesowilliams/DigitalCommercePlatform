@@ -100,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                 CreatedFrom = DateTime.Now.AddMonths(-6),
                 CreatedTo = DateTime.Now,
                 SortBy = "Id",
-                SortAscending = false,
+                SortDirection = "asc",
                 PageNumber = 1,
                 PageSize = 25,
             };
@@ -127,7 +127,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                 CreatedFrom = DateTime.Now.AddMonths(-6),
                 CreatedTo = DateTime.Now,
                 SortBy = "Id",
-                SortAscending = false,
+                SortDirection = "asc",
                 PageNumber = 1,
                 PageSize = 25,
             };

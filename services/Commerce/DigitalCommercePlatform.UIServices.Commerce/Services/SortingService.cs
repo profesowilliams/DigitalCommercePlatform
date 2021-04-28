@@ -6,6 +6,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     public class SortingService : ISortingService
     {
         private readonly Dictionary<string, string> _propertiesMapping;
+        private readonly List<string> _sortingDirections;
+        private readonly int _indexOfAscendingValue = 0;
 
         public SortingService()
         {
@@ -17,6 +19,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 { "Type", "ORDERTYPE" },
                 { "Price", "PRICE" },
                 { "Status", "ORDERSTATUS" }
+            };
+
+            _sortingDirections = new List<string>()
+            {
+                "asc",
+                "desc"
             };
         }
 
@@ -51,6 +59,39 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             var properties = string.Join(" , ", _propertiesMapping.Keys);
             return properties;
+        }
+
+        public bool IsSortingDirectionValid(string sortingValue)
+        {
+            if (string.IsNullOrWhiteSpace(sortingValue)) { return true; }
+
+            var isValid = _sortingDirections.Contains(sortingValue.Trim().ToLower());
+            return isValid;
+        }
+
+        public string GetValidSortingValues()
+        {
+            var values = string.Join(" , ", _sortingDirections);
+            return values;
+        }
+
+        public bool IsSortingDirectionAscending(string sortingValue)
+        {
+            if (string.IsNullOrWhiteSpace(sortingValue))
+            {
+                return true;
+            }
+
+            sortingValue = sortingValue.Trim().ToLower();
+
+            if (!_sortingDirections.Contains(sortingValue))
+            {
+                return true;
+            }
+
+            var sortAscending = sortingValue == _sortingDirections[_indexOfAscendingValue];
+
+            return sortAscending;
         }
     }
 }

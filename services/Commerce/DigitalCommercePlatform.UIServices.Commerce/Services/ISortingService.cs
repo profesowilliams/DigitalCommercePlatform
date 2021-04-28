@@ -3,7 +3,10 @@
     public interface ISortingService
     {
         bool IsPropertyValid(string sortingValue);
+        bool IsSortingDirectionValid(string sortingValue);
         string GetValidProperties();
+        string GetValidSortingValues();
         string GetSortingProperty(string sortingValue);
+        bool IsSortingDirectionAscending(string sortingValue);
     }
 }
