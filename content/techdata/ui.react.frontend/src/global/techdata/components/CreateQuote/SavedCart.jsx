@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../Widgets/Button';
-import WidgetTitle from '../Widgets/Title';
+import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import SavedCartManuallyTyped from './SavedCartManuallyTyped';

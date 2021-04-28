@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Dropdown from '../Widgets/Dropdown';
-import WidgetTitle from '../Widgets/Title';
+import WidgetTitle from '../Widgets/WidgetTitle';
 
 const SelectMethod = ({ 
   title, 
