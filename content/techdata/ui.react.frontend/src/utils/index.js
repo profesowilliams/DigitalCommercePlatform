@@ -7,12 +7,27 @@ export const setSessionId = (sessionId) => localStorage.setItem('sessionId', ses
 export const getSessionId = () => localStorage.getItem('sessionId');
 
 export const signOut = () => {
+    const {
+        protocol, 
+        hostname, 
+        port, 
+        pathname,
+    } = window.location;
     localStorage.removeItem('sessionId');
     localStorage.removeItem('signin');
     localStorage.removeItem('signout');
     localStorage.removeItem('userData');
     localStorage.removeItem('signInCode');
-    window.location.href = window.location.protocol + "//" + window.location.hostname + window.location.pathname;
+    window.location.href = `${protocol}//${hostname}${port !== '80' ? `:${port}` : ''}${pathname}`;
 };
 
 export const getUser = () => JSON.parse(localStorage.getItem("userData"));
+
+export const getUrlParams = () => Object.fromEntries(
+                                    new Map(
+                                        window.location.search
+                                            .replace('?', '')
+                                            .split('&')
+                                            .map((item) => item.split('='))
+                                        )
+                                    );

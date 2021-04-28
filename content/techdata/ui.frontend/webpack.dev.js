@@ -384,7 +384,20 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'dropdown-menu-react-comp',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/dropdown-menu/dropdown-menu-react.html')
-			})
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quotes-subheader-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-subheader.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quotes-subheader-react-2',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-subheader-2.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'subheader-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/subheader-react.html')
+			}),
+			
 		],
 		devServer: {
 			inline: true,
