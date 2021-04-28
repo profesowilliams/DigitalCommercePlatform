@@ -1,6 +1,6 @@
 @import "main";
 
-.cmp-article-list {
+.cmp-article-list{
     .cmp-list {
         list-style: none;
         padding: 0;
@@ -38,7 +38,7 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-        }   
+        }
     }
 
     .cmp-image__image-figure {
@@ -99,7 +99,6 @@
             display: inline-block;
         }
     }
-
     &.cmp-article-article{
         &__list-view{
 
@@ -141,7 +140,20 @@
                     padding: 0;
                     position: relative;
                 }
+                .cmp-image__image {
+                    min-width: 100%;
+                    min-height: 100%;
+                    &-figure {
+                        width: rem(195px);
+                        min-width: rem(195px);
+                        height: rem(110px);
+                        margin: 0;
+                        display: inline-block;
+                        overflow: hidden;
+                    }
+                }
             }
         }
     }
+
 }
