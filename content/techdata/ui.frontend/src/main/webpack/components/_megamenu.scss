@@ -1,6 +1,8 @@
 @import "main";
 
 .cmp-megamenu {
+  position: relative;
+  z-index: 99;
   .cmp-megamenu__primary {
     padding-left: 0;
     li {
@@ -67,6 +69,7 @@
     }
     i,svg{
       transition: color .3s;
+      height: auto;
     }
   }
   .cmp-megamenu__wrapper-item{
