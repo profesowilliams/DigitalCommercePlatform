@@ -132,10 +132,10 @@ app.post("/login", function (req, res) {
         "phone": "9999999971",
         "companyName": "SHI International",
         "customers": ["0038048612", "0009000325"],
-        "customersV2":[
-          {"number":"0038048612","name":"Company 0"},
-          {"number":"0009000325","name":"Company 1"},
-          {"number":"0038048612","name":"Company 2"}
+        "customersV2": [
+          { "number": "0038048612", "name": "Company 0" },
+          { "number": "0009000325", "name": "Company 1" },
+          { "number": "0038048612", "name": "Company 2" }
         ],
         "roles": []
       }
@@ -342,53 +342,53 @@ app.get("/quote/create/:cart", function (req, res) {
 app.get("/activeCart", function (req, res) {
   if (!req.headers['sessionid'])
     return res.status(500).json({
-      "error":{
-        "code":200, 
-        "message":"",
-        "isError":false 
+      "error": {
+        "code": 200,
+        "message": "",
+        "isError": false
       }
     });
 
-  res.json({ 
-    "content":{
-      "data":{
-        "source":{
-        "salesOrg":"0100,1002",
-        "system":"Shop"
-      },
-      "lines":[
-        {
-          "lineNo":"100",
-          "parentLineNo":null, 
-          "productId":"13641675",
-          "quantity":1
-        }, 
-        { 
-          "lineNo":"200",
-          "parentLineNo":null, 
-          "productId":"11337383",
-          "quantity":1
+  res.json({
+    "content": {
+      "data": {
+        "source": {
+          "salesOrg": "0100,1002",
+          "system": "Shop"
         },
-        {
-          "lineNo":"300",
-          "parentLineNo":null,
-          "productId":"11357376",
-          "quantity":1
-        },
-        {
-          "lineNo":"400",
-          "parentLineNo":null,
-          "productId":"11456989",
-          "quantity":1
-        }
-      ],
-      "totalQuantity":4
+        "lines": [
+          {
+            "lineNo": "100",
+            "parentLineNo": null,
+            "productId": "13641675",
+            "quantity": 1
+          },
+          {
+            "lineNo": "200",
+            "parentLineNo": null,
+            "productId": "11337383",
+            "quantity": 1
+          },
+          {
+            "lineNo": "300",
+            "parentLineNo": null,
+            "productId": "11357376",
+            "quantity": 1
+          },
+          {
+            "lineNo": "400",
+            "parentLineNo": null,
+            "productId": "11456989",
+            "quantity": 1
+          }
+        ],
+        "totalQuantity": 4
       }
     },
-    "error":{
-      "code":200, 
-      "message":"",
-      "isError":false 
+    "error": {
+      "code": 200,
+      "message": "",
+      "isError": false
     }
   })
 });
@@ -396,26 +396,28 @@ app.get("/activeCart", function (req, res) {
 app.get("/configurationsSummary/get", function (req, res) {
 
   if (!req.headers['sessionid'])
-    return res.status(401).json({ "error":{ 
-      "code":0, 
-      "messages":[], 
-      "isError":false
-    } });
+    return res.status(401).json({
+      "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+      }
+    });
 
   res.json({
-    "content":{ 
-        "summary":{ 
-        "quoted":14, 
-        "unQuoted":30, 
-        "oldConfigurations":25, 
-        "currencyCode":null 
-      } 
-    }, 
-    "error":{ 
-      "code":0, 
-      "messages":[], 
-      "isError":false
-    } 
+    "content": {
+      "summary": {
+        "quoted": 14,
+        "unQuoted": 30,
+        "oldConfigurations": 25,
+        "currencyCode": null
+      }
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
   });
 });
 //---MY RENEWALS MOCK API---//
@@ -469,7 +471,49 @@ app.get("/dealsSummary", function (req, res) {
   });
 });
 
-app.get("/browse", function(req,res){
+//---QUOTES GRID MOCK API---//
+app.get("/ui-commerce/v1/quote/", function (req, res) {
+  const details = req.query.details || true;
+  const pageSize = req.query.pageSize || 10;
+  const pageNumber = req.query.pageNumber || 1;
+  const items = [];
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  for (let i = 0; i < pageSize; i++) {
+    items.push({
+      id: Number(`${pageNumber}${4009754974 + i}`),
+      quoteReference: null,
+      vendor: null,
+      created: new Date().toISOString(),
+      expires: new Date(Date.now() + 3600000 * 24 * 7).toISOString(),
+      endUserName: null,
+      dealId: null,
+      status: i % 2 ? "OPEN" : "CLOSED",
+      quoteValue: 73002.31 + getRandom(1000),
+      formatedQuoteValue: "USD",
+      currencySymbol: "$",
+      canUpdate: i % 2 ? true : false,
+      canCheckOut: i % 2 ? true : false,
+    })
+  }
+  const response = {
+    content: {
+      items: items,
+      totalItems: 2500,
+      pageCount: 25,
+      pageSize
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+  res.json(response)
+});
+
+app.get("/browse", function (req, res) {
   if (!req.headers['sessionid'])
     return res.status(500).json({
       "error": {
@@ -479,27 +523,27 @@ app.get("/browse", function(req,res){
       }
     });
 
-    res.json({
-      "content": {
-        "userId": "12345",
-        "userName": "Techdata User",
-        "customerId": "38048612",
-        "customerName": "SHI INTERNATIONAL CORP",
-        "cartId": "1",
-        "cartItemCount": 27,
-        "catalogHierarchies": [
-          {
-            "source": {
-              "system": "2",
-              "id": "FCS"
-            }
+  res.json({
+    "content": {
+      "userId": "12345",
+      "userName": "Techdata User",
+      "customerId": "38048612",
+      "customerName": "SHI INTERNATIONAL CORP",
+      "cartId": "1",
+      "cartItemCount": 27,
+      "catalogHierarchies": [
+        {
+          "source": {
+            "system": "2",
+            "id": "FCS"
           }
-        ]
-      },
-      "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-      }
-    })
+        }
+      ]
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  })
 });

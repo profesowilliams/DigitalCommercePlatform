@@ -16,3 +16,4 @@ import TopItemsBarChart from "./global/techdata/components/TopItemsBarChart/TopI
 import CreateQuote from "./global/techdata/components/CreateQuote/CreateQuote";
 import Subheader from "./global/techdata/components/Subheader/Subheader";
 import MyQuotes from "./global/techdata/components/MyQuotes/MyQuotes";
+import QuotesGrid from "./global/techdata/components/Grid/Grid";

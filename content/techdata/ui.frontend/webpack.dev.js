@@ -245,8 +245,9 @@ module.exports = (env) => {
 				filename: 'End User Information',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/end-user-info.html')
 			}),
-			
-			new HtmlWebpackPlugin({filename: 'td-quote-subheader',
+
+			new HtmlWebpackPlugin({
+				filename: 'td-quote-subheader',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subheader.html')
 			}),
 			new HtmlWebpackPlugin({
@@ -386,6 +387,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/dropdown-menu/dropdown-menu-react.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'quotes-grid',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-grid-demo.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'quotes-subheader-react',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-subheader.html')
 			}),
@@ -397,7 +402,6 @@ module.exports = (env) => {
 				filename: 'subheader-react',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/subheader-react.html')
 			}),
-			
 		],
 		devServer: {
 			inline: true,
