@@ -1,0 +1,13 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<sly data-sly-use.model="${'createconfig.js' @ multifieldName='VendorList'}">
+    <div id="CreateConfigWidget" data-observe-mutation>
+        <div data-component="CreateConfig" data-cmp-type="react" className="createconfigwidget" data-config="${model.configJson}">
+        </div>
+    </div>
+</sly>
+
+
+
