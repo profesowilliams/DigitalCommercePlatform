@@ -41,6 +41,13 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Items Per Page"
                                                 name="./itemsPerPage"/>
+											<quoteDetailUrl
+												 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+												 fieldLabel="Link"
+												 fieldDescription="Enter link"
+												 jcr:primaryType="nt:unstructured"
+												 rootPath="/content/techdata"
+												 name="./quoteDetailUrl" />
 											<paginationStyle
 											   jcr:primaryType="nt:unstructured"
 											   sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"

@@ -36,7 +36,10 @@ use(function () {
     if (properties && properties["paginationStyle"]) {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
-
+    if (properties && properties["quoteDetailUrl"]) {
+        jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"];
+    }
+    
     if (listValues != null) {
         jsonObject["columnList"] = listValues;
     }
