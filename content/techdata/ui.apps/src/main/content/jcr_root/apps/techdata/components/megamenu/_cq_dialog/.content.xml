@@ -61,6 +61,14 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         rootPath="/content/techdata"
                                                         name="./navigationRoot" />
+												<enableSecondaryIcon
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                        text="Enable Secondary Menu Icons"
+                                                        fieldDescription="Enable Secondary Menu Icons"
+                                                        jcr:primaryType="nt:unstructured"
+														uncheckedValue="false"
+                                                        value="true"
+                                                        name="./enableSecondaryIcon" />
                                             </items>
                                         </column>
                                     </items>

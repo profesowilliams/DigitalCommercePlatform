@@ -42,6 +42,9 @@ public class LinkItem {
     private String linkTarget;
 
     @Inject
+    private String enableSecondaryIcon;
+
+    @Inject
     private ResourceResolver resolver;
 
 
