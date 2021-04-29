@@ -68,6 +68,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
+        public async Task CreateQuoteFromTest(ResponseBase<CreateQuoteFrom.Response> expected)
+        {
+            // Arrange
+            _mediator.Setup(x => x.Send(It.IsAny<CreateQuoteFrom.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var createModelFrom = new CreateModelFrom();
+            // Act
+            var result = await controller.CreateFrom(createModelFrom).ConfigureAwait(false);
+            // Assert
+            _mediator.Verify(x => x.Send(It.IsAny<CreateQuoteFrom.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
         {
 

@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query);
         Task<CreateQuoteFrom.Response> CreateQuoteFrom(CreateQuoteFrom.Request request);
         Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request);
+        Task<CreateQuoteFrom.Response> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);
     }
 }

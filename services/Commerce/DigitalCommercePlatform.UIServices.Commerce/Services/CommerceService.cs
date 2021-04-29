@@ -1,17 +1,18 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -30,24 +31,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly ILogger<CommerceService> _logger;
         private readonly string _appOrderServiceUrl;
         private readonly string _appQuoteServiceUrl;
+        private readonly string _appCartURL;
         private static readonly Random getrandom = new Random();
 
-        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger,IOptions<AppSettings> options)
+        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IOptions<AppSettings> options)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
+            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
         }
 
-        public async Task<OrderModel> GetOrderByIdAsync(string id)
+        public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
         {
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
-            var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<OrderModel>>(url);
+            var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<Models.Order.Internal.OrderModel>>(url);
             return getOrderByIdResponse?.FirstOrDefault();
         }
 
-        
+
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
@@ -85,92 +88,92 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<QuoteDetailModel> GetCartDetailsInQuote()
         {
-           
-                var LineDetails = new List<Line>();
-                for (int i = 0; i < 3; i++)
-                {
-                    Line newSavedCart = new Line();
-                    var randomNumber = GetRandomNumber(10, 60);
 
-                    newSavedCart.Id = "IN000000" + randomNumber;
-                    newSavedCart.Parent = "TR123YU66" + randomNumber;
-                    newSavedCart.Quantity = randomNumber;
-                    newSavedCart.TotalPrice = randomNumber;
-                    newSavedCart.MSRP = randomNumber;
-                    newSavedCart.UnitPrice = randomNumber;
-                    newSavedCart.Currency = "USD";
-                    newSavedCart.CurrencySymbol = "$";
-                    newSavedCart.Invoice = "IHT128763K0987";
-                    newSavedCart.Description = "Description of the Product is very good";
-                    newSavedCart.ShortDescription = "Product Description";
-                    newSavedCart.MFRNumber = "PUT9845011123";
-                    newSavedCart.TDNumber = "ITW398765243";
-                    newSavedCart.UPCNumber = "924378465";
-                    newSavedCart.UnitListPrice = "2489.00";
-                    newSavedCart.ExtendedPrice = "2349.00";
-                    newSavedCart.Availability = randomNumber.ToString();
-                    newSavedCart.RebateValue = randomNumber.ToString();
-                    newSavedCart.URLProductImage = "https://Product/Image";
-                    newSavedCart.URLProductSpecs = "https://Product/details";
-                    LineDetails.Add(newSavedCart);
+            var LineDetails = new List<Line>();
+            for (int i = 0; i < 3; i++)
+            {
+                Line newSavedCart = new Line();
+                var randomNumber = GetRandomNumber(10, 60);
+
+                newSavedCart.Id = "IN000000" + randomNumber;
+                newSavedCart.Parent = "TR123YU66" + randomNumber;
+                newSavedCart.Quantity = randomNumber;
+                newSavedCart.TotalPrice = randomNumber;
+                newSavedCart.MSRP = randomNumber;
+                newSavedCart.UnitPrice = randomNumber;
+                newSavedCart.Currency = "USD";
+                newSavedCart.CurrencySymbol = "$";
+                newSavedCart.Invoice = "IHT128763K0987";
+                newSavedCart.Description = "Description of the Product is very good";
+                newSavedCart.ShortDescription = "Product Description";
+                newSavedCart.MFRNumber = "PUT9845011123";
+                newSavedCart.TDNumber = "ITW398765243";
+                newSavedCart.UPCNumber = "924378465";
+                newSavedCart.UnitListPrice = "2489.00";
+                newSavedCart.ExtendedPrice = "2349.00";
+                newSavedCart.Availability = randomNumber.ToString();
+                newSavedCart.RebateValue = randomNumber.ToString();
+                newSavedCart.URLProductImage = "https://Product/Image";
+                newSavedCart.URLProductSpecs = "https://Product/details";
+                LineDetails.Add(newSavedCart);
+            }
+
+            var shipTo = new Address()
+            {
+                Name = "Sis Margaret's Inc",
+                Line1 = "Wade Wilson",
+                Line2 = "9071",
+                Line3 = "Santa Monica Blvd",
+                City = "West Hollywood",
+                State = "CA",
+                Zip = "90069",
+                Country = "United States",
+                Email = "dpool@sismargarets.com",
+            };
+            var endUser = new Address()
+            {
+                Name = "Stark Enterprises",
+                Line1 = "Tony Stark",
+                Line2 = "10880 ",
+                Line3 = "Malibu Point",
+                City = "Malibu",
+                State = "CA",
+                Zip = "90069",
+                Country = "United States",
+                Email = "dpool@sismargarets.com",
+            };
+            var generalInfo = new DetailsForGenInfo()
+            {
+                ConfigId = "12345!",
+                DealId = "hello",
+                Tier = "hello",
+                Reference = "",
+            };
+            var quoteNumber = "TIW777" + GetRandomNumber(10000, 60000);
+            var orderNumber = "NQL33390" + GetRandomNumber(10000, 60000);
+            var poNumber = "PO" + GetRandomNumber(10000, 60000);
+            var endUserNumber = "EPO" + GetRandomNumber(10000, 60000);
+
+            var savedCartResponse = new QuoteDetailModel
+            {
+
+                QuoteDetails = new QuoteDetails
+                {
+
+                    ShipTo = shipTo,
+                    EndUser = endUser,
+                    GeneralInfo = generalInfo,
+                    Notes = "Descrption of Internal Notes",
+                    QuoteNumber = quoteNumber,
+                    OrderNumber = orderNumber,
+                    PONumber = poNumber,
+                    EndUserPO = endUserNumber,
+                    PODate = "12/04/2020",
+                    Details = LineDetails,
+
                 }
-
-                var shipTo = new Address()
-                {
-                    Name = "Sis Margaret's Inc",
-                    Line1 = "Wade Wilson",
-                    Line2 = "9071",
-                    Line3 = "Santa Monica Blvd",
-                    City = "West Hollywood",
-                    State = "CA",
-                    Zip = "90069",
-                    Country = "United States",
-                    Email = "dpool@sismargarets.com",
-                };
-                var endUser = new Address()
-                {
-                    Name = "Stark Enterprises",
-                    Line1 = "Tony Stark",
-                    Line2 = "10880 ",
-                    Line3 = "Malibu Point",
-                    City = "Malibu",
-                    State = "CA",
-                    Zip = "90069",
-                    Country = "United States",
-                    Email = "dpool@sismargarets.com",
-                };
-                var generalInfo = new DetailsForGenInfo()
-                {
-                    ConfigId = "12345!",
-                    DealId = "hello",
-                    Tier = "hello",
-                    Reference = "",
-                };
-                var quoteNumber = "TIW777" + GetRandomNumber(10000, 60000);
-                var orderNumber = "NQL33390" + GetRandomNumber(10000, 60000);
-                var poNumber = "PO" + GetRandomNumber(10000, 60000);
-                var endUserNumber = "EPO" + GetRandomNumber(10000, 60000);
-
-                var savedCartResponse = new QuoteDetailModel
-                {
-
-                    QuoteDetails = new QuoteDetails
-                    {
-
-                        ShipTo = shipTo,
-                        EndUser = endUser,
-                        GeneralInfo = generalInfo,
-                        Notes = "Descrption of Internal Notes",
-                        QuoteNumber = quoteNumber,
-                        OrderNumber = orderNumber,
-                        PONumber = poNumber,
-                        EndUserPO = endUserNumber,
-                        PODate = "12/04/2020",
-                        Details = LineDetails,
-                       
-                    }
-                };
-                return await Task.FromResult(savedCartResponse);
+            };
+            return await Task.FromResult(savedCartResponse);
 
         }
         public static int GetRandomNumber(int min, int max)
@@ -221,6 +224,58 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             };
 
             return await Task.FromResult(response);
+        }
+
+        public async Task<CreateQuoteFrom.Response> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
+        {
+            var savedCartId = request.CreateModelFrom.CreateFromId;
+            CartModel cart = await GetCartDetails(savedCartId);
+            if (cart == null)
+            {
+                throw new UIServiceException("Invalid savedCartId: " + savedCartId, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+
+            // Mapping cart into a quote
+            request.CreateModelFrom.SalesOrg = cart.source.SalesOrg;
+            request.CreateModelFrom.TargetSystem = cart.source.System;
+            request.CreateModelFrom.Creator = cart.userId;
+            request.CreateModelFrom.EndUser.Id = cart.customerNo;
+            foreach(var cartLine in cart.lines)
+            {
+                var item = new ItemModel();
+                item.Quantity = cartLine.Quantity;
+                item.Id = cartLine.ProductId;
+                //cartLine.Type
+                //cartLine.UAN
+                //item.Product
+            }
+
+            var response = new CreateQuoteFrom.Response
+            {
+                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
+                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+        }
+
+        public async Task<CartModel> GetCartDetails(string cartId)
+        {
+            try
+            {
+                var cartURL = _appCartURL.Replace("/v1", "/v2") + "/";
+                cartURL = cartURL.AppendPathSegment(cartId);
+                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<CartModel>(cartURL);
+                return getCustomerDetailsResponse;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Code == System.Net.HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartDetails));
+                throw ex;
+            }
         }
     }
 }

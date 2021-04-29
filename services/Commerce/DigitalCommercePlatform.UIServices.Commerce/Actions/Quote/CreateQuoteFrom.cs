@@ -6,6 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +44,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var response = await _quoteService.CreateQuoteFrom(request);
+                Response response;
+                if (request.CreateModelFrom.CreateFromType == "savedCart")
+                {
+                    response = await _quoteService.CreateQuoteFromSavedCart(request);
+                }
+                else
+                {
+                    response = await _quoteService.CreateQuoteFrom(request);
+                }
                 return new ResponseBase<Response> { Content = response };
             }
 
@@ -55,8 +64,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         .ChildRules(request =>
                         {
                             request.RuleFor(c => c.CreateFromId).NotNull();
-                            request.RuleFor(c => c.CreateFromType).NotNull();
+                            request.RuleFor(c => c.CreateFromType).NotNull().Must(IsValidCreateFromType).WithMessage("'CreateFromType' must be one of the following values: " + string.Join(", ", CreateFromType.AllowedValues));
                         });
+                }
+
+                private bool IsValidCreateFromType(string createTypeFrom)
+                {
+                    var isValid = CreateFromType.AllowedValues.Contains(createTypeFrom);
+                    return isValid;
                 }
             }
         }
