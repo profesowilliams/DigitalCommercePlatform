@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="SonarQube - DC-DF-Renewals-UI Sonar way" ToolsVersion="16.0">
-  <Include Path="..\.sonarlint\dc-df-renewals-uicsharp.ruleset" Action="Default" />
-  <Include Path="digitalcommerceplatform.uiservices.renewals.ruleset" Action="Default" />
-  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
-	<Rule Id="CS1591" Action="None" />
-  </Rules>
-</RuleSet>
