@@ -1,12 +1,11 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
@@ -87,7 +86,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return findOrdersDto;
         }
 
-        public async Task<QuoteDetailModel> GetCartDetailsInQuote(SavedCartQuoteDetails.Request request)
+        public async Task<QuotePreviewModel> CreateQuotePreview(GetQuotePreviewDetails.Request request)
         {
             var lineItems = new List<Line>();
 
@@ -102,8 +101,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 lineItem.TotalPrice = randomNumber;
                 lineItem.MSRP = randomNumber;
                 lineItem.UnitPrice = randomNumber;
-                lineItem.Currency = "USD";
-                lineItem.CurrencySymbol = "$";
                 lineItem.Invoice = $"IHT128763K0987{i}";
                 lineItem.Description = "Description of the Product is very good";
                 lineItem.ShortDescription = "Product Short Description";
@@ -120,40 +117,54 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             };
 
             var quoteNumber = "TIW777" + GetRandomNumber(10000, 60000);
-            var orderNumber = "NQL33390" + GetRandomNumber(10000, 60000);
+            var orderNumber = new List<Models.Quote.Quote.Internal.OrderModel>();
+            for (int i = 0; i < 2; i++)
+            {
+                Models.Quote.Quote.Internal.OrderModel newSavedCart = new Models.Quote.Quote.Internal.OrderModel();
+                var randomNumber = GetRandomNumber(10, 60);
+
+                newSavedCart.Id = "IN000000" + randomNumber;
+                newSavedCart.System = "2";
+                newSavedCart.SalesOrg = "0100";
+                orderNumber.Add(newSavedCart);
+            }
             var poNumber = "PO" + GetRandomNumber(10000, 60000);
             var endUserNumber = "EPO" + GetRandomNumber(10000, 60000);
 
-            var response = new QuoteDetailModel
+            var quotePreview = new QuotePreview
             {
-                ShipAddresses = GenerateAddress("ShipTo"),
-                EndUserAddresses = GenerateAddress("EndUser"),
-                GeneralInformation = new QuoteGeneralInformation()
-                {
-                    QuoteReference = GetRandomNumber(1000000, 6000000).ToString(),
-                    Source = $"Estimate ID" + GetRandomNumber(10000, 60000).ToString(),
-                    SPAId = GetRandomNumber(1000000, 6000000).ToString(),
-                    Tier = GetRandomNumber(1, 6).ToString()
-                },
+
+                 ShipTo= GenerateAddress("ShipTo"),
+                EndUser = GenerateAddress("EndUser"),
+                //GeneralInformation = new QuoteGeneralInformation()
+                //{
+                //    QuoteReference = GetRandomNumber(1000000, 6000000).ToString(),
+                //    Source = $"Estimate ID" + GetRandomNumber(10000, 60000).ToString(),
+                //    SPAId = GetRandomNumber(1000000, 6000000).ToString(),
+                //    Tier = GetRandomNumber(1, 6).ToString()
+                //},
                 Notes = "Descrption of Internal Notes",
-                QuoteNumber = quoteNumber,
-                OrderNumber = orderNumber,
-                PONumber = poNumber,
+                Id = quoteNumber,
+                //OrderNumber = orderNumber,
+                CustomerPO = poNumber,
                 EndUserPO = endUserNumber,
                 PODate = "12/04/2020",
-                LineItems = lineItems
-            };
+                Items = lineItems,
+                Currency = "USD",
+                CurrencySymbol = "$"
+        };
 
-            Address[] GenerateAddress(string prefix)
+            List<Address> GenerateAddress(string prefix)
             {
-                var addressList = new Address[4];
+                var addressList = new List<Address>();
 
-                for(var i = 0; i < addressList.Length; i++)
+                for(var i=0; i < 3; i++)
                 {
                     var address = new Address
                     {
+                       
                         Name = prefix + i,
-                        Email= $"myemail{i}@example.com",
+                        Email = $"myemail{i}@example.com",
                         Line1 = $"Line 1{i} Road",
                         Line2 = $"Line 2{i} Road",
                         Line3 = $"Line 3{i} Road",
@@ -161,14 +172,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         State = $"State{i}",
                         Zip = $"{i}{i - 0}{i}{i - 0}{i}",
                         Country = $"Country{i}"
+
                     };
 
-                    addressList[i] = address;
+                    addressList.Add(address);
                 }
-
+               
                 return addressList;
             }
-
+            var response = new QuotePreviewModel()
+            {
+                QuoteDetails = quotePreview,
+            };
             return await Task.FromResult(response);        
         }
 

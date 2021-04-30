@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalFoundation.Common.Contexts;
@@ -50,10 +50,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("cartQuote/{cartId}")]
-        public async Task<ActionResult> GetCartDetailsInQuote(string cartId)
+        [Route("preview/{cartId}")]
+        public async Task<ActionResult> GetQuotePreview([FromQuery]string id)
         {
-            var response = await Mediator.Send(new SavedCartQuoteDetails.Request(cartId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuotePreviewDetails.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
 

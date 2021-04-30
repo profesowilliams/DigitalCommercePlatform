@@ -5,16 +5,18 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
 {
     [ExcludeFromCodeCoverage]
-    public class QuoteDetailModel
+    public class QuotePreviewModel
     {
-       public QuoteDetails QuoteDetails { get; set; }
+        public QuotePreview QuoteDetails { get; set; }
     }
-    public class QuoteDetails
+
+    [ExcludeFromCodeCoverage]
+    public class QuotePreview
     {
-        public Address ShipTo { get; set; }
-        public Address EndUser { get; set; }
-        public Address Reseller { get; set; }
-        public List<VendorReferenceModel> Source { get; set; }
+        public List<Address> ShipTo { get; set; }
+        public List<Address> EndUser { get; set; }
+        public List<Address> Reseller { get; set; }
+        public VendorReferenceModel Source { get; set; }
         public string Notes { get; set; }
         public List<Line> Items { get; set; }
         public string Id { get; set; }
@@ -32,3 +34,4 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
 
     }
 }
+

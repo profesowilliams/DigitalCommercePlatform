@@ -9,29 +9,29 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
+namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
 {
     [ExcludeFromCodeCoverage]
-    public class SavedCartQuoteDetails
+    public class GetQuotePreviewDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
             public bool Details => true;
 
-            public Request(string Id)
+            public Request(string id)
             {
-                this.Id = Id;
+                this.Id = id;
             }
         }
 
         public class Response
         {
-            public QuoteDetailModel QuoteDetails { get; private set; }
+            public QuotePreviewModel QuotePreview { get; private set; }
             
-            public Response(QuoteDetailModel quoteDetails)
+            public Response(QuotePreviewModel quotePreview)
             {
-                QuoteDetails = quoteDetails;
+                QuotePreview = quotePreview;
             }
         }
 
@@ -51,14 +51,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             {
                 try
                 {
-                    var quoteDetailsModel = await _quoteService.GetCartDetailsInQuote(request);
+                    var quoteDetailsModel = await _quoteService.CreateQuotePreview(request);
                     // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
                     var response = new Response(quoteDetailsModel);
                     return new ResponseBase<Response> { Content = response };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(SavedCartQuoteDetails));
+                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetQuotePreviewDetails));
                     throw;
                 }
             }

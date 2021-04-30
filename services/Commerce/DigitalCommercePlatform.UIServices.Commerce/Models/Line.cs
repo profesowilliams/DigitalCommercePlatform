@@ -13,18 +13,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string UnitPriceFormatted { get { return string.Format(Constants.MoneyFormat, UnitPrice); } }
         public decimal? TotalPrice { get; set; }
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
-        public string Currency { get; set; }
-        public string CurrencySymbol { get; set; } = "$";
-        public Discount[] Discounts { get; set; }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
+        public Discount[] Discounts { get; set; }
         //added details
         public string ShortDescription { get; set; }
         public string MFRNumber { get; set; }
         public string TDNumber { get; set; }
         public string UPCNumber { get; set; }
         public string UnitListPrice { get; set; }
-        public string UnitListPriceFormatted { get { return string.Format(Constants.MoneyFormat, UnitListPrice); } }
+        public string UnitListPriceFormatted { get; set; }
         public string ExtendedPrice { get; set; }
         public string ExtendedPriceFormatted { get { return string.Format(Constants.MoneyFormat, ExtendedPrice); } }
         public string Availability { get; set; }

@@ -1,9 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
@@ -84,16 +83,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetailsInQuote(ResponseBase<SavedCartQuoteDetails.Response> expected)
+        public async Task GetQuotePreview(ResponseBase<GetQuotePreviewDetails.Response> expected)
         {
             _mediator.Setup(x => x.Send(
-                      It.IsAny<SavedCartQuoteDetails.Request>(),
+                      It.IsAny<GetQuotePreviewDetails.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
+            var result = await controller.GetQuotePreview("1234").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
