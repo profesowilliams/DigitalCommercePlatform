@@ -2,11 +2,8 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 <sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList'}">
-
-        <div>
-            <div data-component="Quotesgrid" data-cmp-type="react" className="quotesgrid" data-config="${listUse.configJson}">
+    <div data-component="QuotesGrid" data-cmp-type="react" className="cmp-quotes-grid" data-config="${listUse.configJson}">
             </div>
-        </div>
-</sly>
+ </sly>
 
 
