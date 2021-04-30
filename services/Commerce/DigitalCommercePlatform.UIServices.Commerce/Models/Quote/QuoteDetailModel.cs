@@ -7,15 +7,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
     [ExcludeFromCodeCoverage]
     public class QuoteDetailModel
     {
-       public QuoteDetails QuoteDetails { get; set; }
-    }
-    public class QuoteDetails
-    {
-        public Address ShipTo { get; set; }
-        public Address EndUser { get; set; }
-        public DetailsForGenInfo GeneralInfo { get; set; }
+        public Address[] ShipAddresses { get; set; }
+        public Address[] EndUserAddresses { get; set; }
+        public QuoteGeneralInformation GeneralInformation { get; set; }
         public string Notes { get; set; }
-        public List<Line> Details { get; set; }
+        public List<Line> LineItems { get; set; }
         public string QuoteNumber { get; set; }
         public string OrderNumber { get; set; }
         public string PONumber { get; set; }

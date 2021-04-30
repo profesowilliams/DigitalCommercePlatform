@@ -2,7 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using System.Diagnostics.CodeAnalysis;
-using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
+using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.SavedCartQuoteDetails;
 using System.Collections.Generic;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using System.Linq;

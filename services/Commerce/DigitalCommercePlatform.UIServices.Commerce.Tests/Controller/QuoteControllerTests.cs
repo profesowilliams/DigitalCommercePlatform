@@ -84,11 +84,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
+        public async Task GetCartDetailsInQuote(ResponseBase<SavedCartQuoteDetails.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
-                      It.IsAny<DetailsOfSavedCartsQuote.Request>(),
+                      It.IsAny<SavedCartQuoteDetails.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 

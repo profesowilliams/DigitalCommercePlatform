@@ -6,6 +6,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
     {
         public string Id { get; set; }
         public string Parent { get; set; }
+        public string VendorPartNO { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal? UnitPrice { get; set; }
@@ -14,6 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public string Currency { get; set; }
         public string CurrencySymbol { get; set; } = "$";
+        public Discount[] Discounts { get; set; }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
         //added details

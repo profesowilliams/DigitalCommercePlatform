@@ -1,19 +1,18 @@
-﻿using MediatR;
-using System.Threading.Tasks;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Settings;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.Http.Controller;
-using static DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute.DetailsOfSavedCartsQuote;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Authorization;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {
@@ -51,10 +50,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("create/{savedCartId}")]
+        [Route("cartQuote/{cartId}")]
         public async Task<ActionResult> GetCartDetailsInQuote(string cartId)
         {
-            var response = await Mediator.Send(new Request(cartId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new SavedCartQuoteDetails.Request(cartId)).ConfigureAwait(false);
             return Ok(response);
         }
 

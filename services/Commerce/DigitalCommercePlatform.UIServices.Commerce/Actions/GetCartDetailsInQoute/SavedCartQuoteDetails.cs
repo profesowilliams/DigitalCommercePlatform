@@ -12,22 +12,29 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
 {
     [ExcludeFromCodeCoverage]
-    public class DetailsOfSavedCartsQuote
+    public class SavedCartQuoteDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string CartId { get; set; }
+            public string Id { get; set; }
+            public bool Details => true;
 
-            public Request(string cartId)
+            public Request(string Id)
             {
-                CartId = cartId;
+                this.Id = Id;
             }
         }
 
         public class Response
         {
-            public QuoteDetails QuoteDetails { get; set; }
+            public QuoteDetailModel QuoteDetails { get; private set; }
+            
+            public Response(QuoteDetailModel quoteDetails)
+            {
+                QuoteDetails = quoteDetails;
+            }
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _quoteService;
@@ -44,13 +51,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderQoute
             {
                 try
                 {
-                    var cartDetails = await _quoteService.GetCartDetailsInQuote();
-                    var getcartResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content = getcartResponse };
+                    var quoteDetailsModel = await _quoteService.GetCartDetailsInQuote(request);
+                    // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
+                    var response = new Response(quoteDetailsModel);
+                    return new ResponseBase<Response> { Content = response };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(DetailsOfSavedCartsQuote));
+                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(SavedCartQuoteDetails));
                     throw;
                 }
             }
