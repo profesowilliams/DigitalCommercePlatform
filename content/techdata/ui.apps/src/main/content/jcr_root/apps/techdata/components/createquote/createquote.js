@@ -35,6 +35,12 @@ use(function () {
     if (properties.get("quotePreviewUrl") != null) {
         jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));
     }
+    if (properties.get("cartslistEndpoint") != null) {
+        jsonObject.put("cartslistEndpoint", properties.get("cartslistEndpoint"));
+    }
+    if (properties.get("cartdetailsEndpoint") != null) {
+        jsonObject.put("cartdetailsEndpoint", properties.get("cartdetailsEndpoint"));
+    }
 
     if (listValues != null) {
         jsonObject.put("optionsList", listValues);
