@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { get } from '../../../../utils/api';
+import { usGet } from '../../../../utils/api';
 
 const MiniCart = ({componentProp}) => {
   const { maxItems, endpoint } = JSON.parse(componentProp);
   const [cartItems, setCartItems] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   useEffect(async() => {
-    const { data: { content: { data: {totalQuantity} } } } = await get(endpoint, { });
+    const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
     setCartItems(totalQuantity);
     if( totalQuantity )
       localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
