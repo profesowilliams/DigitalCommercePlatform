@@ -245,10 +245,12 @@ module.exports = (env) => {
 				filename: 'End User Information',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/end-user-info.html')
 			}),
-
-			new HtmlWebpackPlugin({
-				filename: 'td-quote-subheader',
+			
+			new HtmlWebpackPlugin({filename: 'td-quote-subheader', 
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subheader.html')
+			}),			
+			new HtmlWebpackPlugin({filename: 'td-quote-subtotal',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subtotal.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'my-deals.html',

@@ -1,30 +1,32 @@
+@import "main";
+
+
 .cmp-button {
 	cursor: pointer !important;
 }
 .cmp-button__text {}
 .cmp-button__icon {}
 //.cmp-button__icon--myIcon {}
-
+button {border: none !important;}
 .cmp-button--background-enabled {
 	& .cmp-button {
-		border-radius: 0.1875em;
-		background-color: #21314d;
+		border-radius: rem(3px);
+		background-color: get-color(header-links-blue);;
 		&:hover {
-			background-color: #00b1e2;
+			background-color: get-color(td-lightblue);;
 		}
 	}
 	.cmp-button__icon {
-		color: #ffffff;
+		color: get-color(brand-white);
 	}
 	& .cmp-button__text {
-		color: #ffffff;
+		color: get-color(brand-white);
 	}
 }
 
 .cmp-button__clear {
 	background-color: transparent !important;
-	cursor: pointer !important;
-
+	cursor: pointer !important;	
 }
 .cmp-button__text--disabled {
 	& .cmp-button__text {
@@ -46,7 +48,7 @@
 
 .cmp-button {
 	border: unset;
-	padding: 0.0625em 0.375em;
+	padding: rem(1px) rem(6px);
 	color: unset;
 	text-decoration: none;
 	background: none;
@@ -54,16 +56,17 @@
 		outline: none;
 		border: none;
 	}
+	&__full {
+		color: get-color(brand-white);
+		background-color: get-color(td-dark-blue);
+		width: rem(240px);
+		height: rem(40px);
+	}
+	&__outlined {
+		color: get-color(td-dark-blue);
+		background-color: get-color(brand-white);
+		width: rem(240px);
+		height: rem(40px);
+		box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
+	}
 }
-
-// .cmp-button__text {
-// 	font-size: 0.875em;
-// 	&--sign-in-out {
-// 		font-size: smaller;
-// 	}
-// }
-
-// .cmp-button__icon {
-// 	font-size: 1.25em;
-// 	color: get-color(header-links-blue);
-// }
