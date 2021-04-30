@@ -4,8 +4,10 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import SavedCartManuallyTyped from './SavedCartManuallyTyped';
+import SavedCartSelectItem from './SavedCartSelectItem';
 
-const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle }) => {
+const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpoints }) => {
+  const { cartslistEndpoint, cartdetailsEndpoint } = endpoints;
   const cartTypes = [
     { id: 'manually', name: 'Enter Cart name' },
     { id: 'browse', name: 'Browse carts' },
@@ -31,7 +33,7 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle }) => 
     <>
       <WidgetTitle>
         { step > 0 ? 
-          <a onClick={() => setStep(0) }><i class="fas fa-chevron-left"></i> {method.title}</a> : 
+          <a onClick={() => setStep(0) }><i className="fas fa-chevron-left"></i> {method.title}</a> : 
           method.title 
         }
       </WidgetTitle>
@@ -50,6 +52,15 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle }) => 
           <SavedCartManuallyTyped inputValue={cartName} setValue={setCartName} />
           <Button disabled={!cartName} onClick={manuallyCreateQuote}>{buttonTitle}</Button>
         </>
+      }
+      {
+        step > 0 && (cartType && cartType.id==='browse') && 
+          <SavedCartSelectItem 
+            onClick={createQuote} 
+            buttonTitle={buttonTitle} 
+            cartslistEndpoint={cartslistEndpoint} 
+            cartdetailsEndpoint={cartdetailsEndpoint}
+          />
       }
       { step === 0 && <Button disabled={!cartType} onClick={nextStep}>Next</Button>}
     </>

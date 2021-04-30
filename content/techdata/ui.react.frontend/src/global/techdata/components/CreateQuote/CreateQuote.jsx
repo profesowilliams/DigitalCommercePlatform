@@ -8,7 +8,10 @@ import SavedCart from './SavedCart';
 const QuoteCreate = ({ 
     requested, authError, componentProp, 
   }) => {
-  const { label, quotePreviewUrl, buttonTitle, optionsList } = JSON.parse(componentProp)
+  const { 
+    label, quotePreviewUrl, buttonTitle, optionsList, 
+    ...endpoints
+  } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false)
   const [currentCart, setCurrentCart] = useState(false);
   const methods = optionsList;
@@ -60,6 +63,7 @@ const QuoteCreate = ({
           methods={methods}
           createQuote={createQuote}
           buttonTitle={buttonTitle}
+          endpoints={endpoints}
           />
       }
       {

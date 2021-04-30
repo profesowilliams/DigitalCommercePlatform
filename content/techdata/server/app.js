@@ -547,3 +547,54 @@ app.get("/browse", function (req, res) {
     }
   })
 });
+
+app.get("/savedCarts", function(req,res){
+  if (!req.headers['sessionid'] || req.headers['site'] !== 'US')
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+    res.json({
+      "content": {
+        "items": [
+          { "id": "96721037","name": "Test_Global_157024" },
+          { "id": "96718606","name": "Blah 1" },
+          { "id": "96718607","name": "Blah 2" },
+          { "id": "96718608","name": "Blah 3" },
+          { "id": "96718609","name": "Blah 4" },
+        ],
+        "totalRecords": 2
+      },
+      "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+      }
+    })
+});
+
+app.get("/cart", function(req,res){
+  if (!req.headers['sessionid'] || req.headers['site'] !== 'US')
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+    res.json({
+      "content":{
+        "data":null
+      },
+      "error":{
+        "code":0,
+        "messages":[],
+        "isError":false
+      } 
+    })
+});
