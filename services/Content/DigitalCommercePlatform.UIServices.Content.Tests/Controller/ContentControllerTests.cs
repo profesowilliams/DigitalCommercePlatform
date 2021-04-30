@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         private readonly Mock<IMediator> _mockMediator;
         private readonly Mock<IOptions<AppSettings>> _mockOptions;
         private readonly Mock<ILogger<ContentController>> _mockLoggerFactory;
-        private readonly Mock<IContext> _mockContext;
+        private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
 
         public ContentControllerTests()
@@ -41,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
             _mockOptions.Setup(s => s.Value).Returns(appSettings);
 
             _mockLoggerFactory = new Mock<ILogger<ContentController>>();
-            _mockContext = new Mock<IContext>();
+            _mockContext = new Mock<IUIContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
             _mockSiteSettings = new Mock<ISiteSettings>();
         }

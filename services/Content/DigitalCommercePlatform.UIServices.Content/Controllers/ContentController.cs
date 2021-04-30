@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         public ContentController(
             IMediator mediator,
             ILogger<ContentController> logger,
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> settings,
             ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)
