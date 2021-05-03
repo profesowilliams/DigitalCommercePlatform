@@ -149,10 +149,16 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("renewals")]
-        public async Task<IActionResult> GetRenewals([FromQuery] string days)
+        public async Task<IActionResult> GetRenewals()
         {
-            var request = new GetRenewalsSummary.Request { Days = days };
-            var response = await Mediator.Send(request).ConfigureAwait(false);
+            var renewalsSummaryRequest = new GetRenewalsSummary.Request
+            {
+                CustomerNumber = "0038048612", // in future this will be here:     Context.User.ActiveCustomer 
+                SalesOrganization = "0100",    // in future this will be here:        Context.User.SalesOrganization
+                Days = 30                         // in future this will be from param - ([FromQuery] int days)  
+            };
+
+            var response = await Mediator.Send(renewalsSummaryRequest).ConfigureAwait(false);
 
             if (response.Error.IsError)
             {

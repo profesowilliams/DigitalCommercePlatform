@@ -1,10 +1,9 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
-using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
@@ -15,12 +14,12 @@ using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
-using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RenewalsService;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -44,9 +43,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
+        private readonly IRenewalsService _renewalsService;
 
-        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, ILogger<AccountService> logger
-            , IUIContext uiContext)
+
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, 
+            ILogger<AccountService> logger, IRenewalsService renewalsService, IUIContext uiContext)
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
@@ -55,6 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
             _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
+            _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
             _customerServiceURL= options?.Value.GetSetting("App.Customer.Url");
         }
 
@@ -206,8 +208,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-
-
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
             //Returning dummy data for now as App-Service is not yet ready 
@@ -264,20 +264,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             return await Task.FromResult(MyQuotes);
         }
-        public async Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
-        {
-            var renewals = new List<RenewalsSummaryModel>();
-            var objDeal = new RenewalsSummaryModel();
 
-            for (int i = 1; i < 5; i++)
+        public async Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber,string salesOrganization, int numberOfDaysToSubtract)
+        {
+            var renewalSearchDto = new RenewalSearchDto
             {
-                objDeal = new RenewalsSummaryModel
-                {
-                    Value = i * GetRandomNumber(1, 3)
-                };
-                renewals.Add(objDeal);
-            }
-            return await Task.FromResult(renewals);
+                CustomerNumber = customerNumber,
+                SalesOrganization = salesOrganization,
+                ExpirationSearchFrom = DateTime.Today.AddDays(numberOfDaysToSubtract * -1)
+            };
+
+            var renewalResponseDto = await _renewalsService.RenewalSearchAsync(renewalSearchDto);
+
+            var renewalSearchResult = renewalResponseDto?.Select(s => s.ExpirationDate.ToShortDateString()).ToList();
+
+            return renewalSearchResult;
         }
 
         public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)

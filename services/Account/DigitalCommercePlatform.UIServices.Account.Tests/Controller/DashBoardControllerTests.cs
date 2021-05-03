@@ -294,7 +294,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetRenewals("5").ConfigureAwait(false);
+            var result = await controller.GetRenewals().ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -311,7 +311,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetRenewals(null).ConfigureAwait(false);
+            var result = await controller.GetRenewals().ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

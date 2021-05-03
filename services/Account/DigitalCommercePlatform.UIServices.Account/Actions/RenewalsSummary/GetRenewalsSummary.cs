@@ -18,7 +18,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Days { get; set; }
+            public int Days { get; set; }
+            public string CustomerNumber { get; set; }
+            public string SalesOrganization { get; set; }
         }
 
         public class Response
@@ -29,22 +31,26 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
         public class RenewalsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IAccountService _accountService;
+            private readonly IRenewalsSummaryService _renewalsSummaryService;
             private readonly IMapper _mapper;
             private readonly ILogger<RenewalsSummaryQueryHandler> _logger;
-            public RenewalsSummaryQueryHandler(IAccountService accountService,
+            public RenewalsSummaryQueryHandler(IAccountService accountService, IRenewalsSummaryService renewalsSummaryService,
                 IMapper mapper,
                 ILogger<RenewalsSummaryQueryHandler> logger
                 )
             {
-                _accountService = accountService;
-                _mapper = mapper;
-                _logger = logger;
+                _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
+                _renewalsSummaryService = renewalsSummaryService ?? throw new ArgumentNullException(nameof(renewalsSummaryService));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var renewals = await _accountService.GetRenewalsSummaryAsync(request);
-                var getConfigurations = _mapper.Map<Response>(renewals);
-                return new ResponseBase<Response> { Content = getConfigurations };
+                var renewalsExpirationDates = await _accountService.GetRenewalsExpirationDatesAsync(request.CustomerNumber,request.SalesOrganization,request.Days);
+                var summaryItems = _renewalsSummaryService.GetSummaryItemsFrom(renewalsExpirationDates);
+                var response = _mapper.Map<Response>(summaryItems);
+                return new ResponseBase<Response> { Content = response };
             }
         }
         public class Validator : AbstractValidator<Request>
