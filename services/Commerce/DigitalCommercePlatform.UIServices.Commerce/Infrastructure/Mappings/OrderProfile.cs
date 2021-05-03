@@ -5,8 +5,8 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using TechData.CarrierTrackingInfoUtility;
-using TechData.CarrierTrackingInfoUtility.Model;
+using Techdata.Common.Utility.CarrierTracking;
+using Techdata.Common.Utility.CarrierTracking.Model;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
@@ -109,7 +109,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public List<TrackingDetails> Resolve(OrderModel source, RecentOrdersModel destination, List<TrackingDetails> destMember, ResolutionContext context)
         {
-            // temporary code. will be replaced when NuGet package is done
             var _objShipment = new ShipmentUtility();
             var _objTrackingQuery = new TrackingQuery();
 
