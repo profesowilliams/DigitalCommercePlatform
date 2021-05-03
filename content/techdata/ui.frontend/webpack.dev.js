@@ -389,6 +389,14 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/dropdown-menu/dropdown-menu-react.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'subtotal-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/subtotal-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'subtotal-react-comp',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/subtotal-react.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'quotes-grid',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-grid-demo.html')
 			}),
