@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         {
             CreateMap<ItemModel, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name))
-                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom(src => src.Product[0].Name))
+                //.ForMember(dest => dest.MFRNumber, opt => opt.MapFrom(src => src.Product[0].Manufacturer))
                 .ForMember(dest => dest.TDNumber, opt => opt.MapFrom(src => src.Product[0].Id))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.UnitListPrice, opt => opt.MapFrom(src => src.UnitListPrice))
