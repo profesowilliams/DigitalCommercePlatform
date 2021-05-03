@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         public BrowseController(
             IMediator mediator,
             ILogger<BrowseController> logger,
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> settings,
             ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)
