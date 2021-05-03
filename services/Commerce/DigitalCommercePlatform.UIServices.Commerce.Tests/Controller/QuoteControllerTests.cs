@@ -81,6 +81,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _mediator.Verify(x => x.Send(It.IsAny<CreateQuoteFrom.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
+        //[Theory]
+        //[AutoDomainData]
+        //public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
+        //{
+
+        //    _mediator.Setup(x => x.Send(
+        //              It.IsAny<DetailsOfSavedCartsQuote.Request>(),
+        //              It.IsAny<CancellationToken>()))
+        //          .ReturnsAsync(expected);
+
+        //    var controller = GetController();
+
+        //    var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
+
+        //    result.Should().NotBeNull();
+        //}
+
         [Theory]
         [AutoDomainData]
         public async Task GetQuotePreview(ResponseBase<GetQuotePreviewDetails.Response> expected)
@@ -185,16 +202,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
 
             GetQuotesForGrid.Request inputDetails = new GetQuotesForGrid.Request
-                {
-                    CreatedBy="",
-                    QuoteIdFilter = "123",
-                    ConfigIdFilter = "123",
-                    SortBy = "123",
-                    SortAscending = true,
-                    PageSize = 1,
-                    PageNumber = 10,
-                    WithPaginationInfo =true,
-                };
+            {
+                CreatedBy = "",
+                QuoteIdFilter = "123",
+                ConfigIdFilter = "123",
+                SortBy = "123",
+                SortAscending = true,
+                PageSize = 1,
+                PageNumber = 10,
+                WithPaginationInfo = true,
+            };
 
             var controller = GetController();
             var result = await controller.GetRecentQuotes(inputDetails).ConfigureAwait(false);

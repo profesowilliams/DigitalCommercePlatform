@@ -3,8 +3,10 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Cart;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
@@ -199,24 +201,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getQuoteResponse;
         }
 
-        public async Task<CreateQuoteFrom.Response> CreateQuoteFrom(CreateQuoteFrom.Request request)
-        {
-            // Manual faking all possible scenarios, so the frontend developers can code the error handling on their side
-            if (request.CreateModelFrom.CreateFromId == "99999")
-            {
-                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.", (int)UIServiceExceptionCode.QuoteCreationFailed);
-            }
-            var response = new CreateQuoteFrom.Response
-            {
-                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
-                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
-            };
-            return await Task.FromResult(response);
-        }
-
         public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
         {
-           
+
             List<PricingCondition> lstPricingConditions = new List<PricingCondition>();
 
             lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "0"));
@@ -230,15 +217,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             lstPricingConditions.Add(new PricingCondition("Medical", "8"));
             lstPricingConditions.Add(new PricingCondition("SEWP Contract", "11"));
 
-            var response = new PricingConditionsModel {
+            var response = new PricingConditionsModel
+            {
                 Items = lstPricingConditions
             };
 
             return await Task.FromResult(response);
         }
 
+        public async Task<CreateQuoteFrom.Response> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
+        {
+            _ = PopulateCreateQuoteRequestFromActiveCart(request.CreateModelFrom);
+            // TO_DO: call app quote service to create a quote, now mocked data
+            var response = new CreateQuoteFrom.Response
+            {
+                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
+                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+        }
+
         public async Task<CreateQuoteFrom.Response> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
         {
+            // Manual faking all possible scenarios, so the frontend developers can code the error handling on their side
+            if (request.CreateModelFrom.CreateFromId == "99999")
+            {
+                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.", (int)UIServiceExceptionCode.QuoteCreationFailed);
+            }
             var savedCartId = request.CreateModelFrom.CreateFromId;
             CartModel cart = await GetCartDetails(savedCartId);
             if (cart == null)
@@ -251,16 +256,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             request.CreateModelFrom.TargetSystem = cart.source.System;
             request.CreateModelFrom.Creator = cart.userId;
             request.CreateModelFrom.EndUser.Id = cart.customerNo;
-            foreach(var cartLine in cart.lines)
+            foreach (var cartLine in cart.lines)
             {
                 var item = new ItemModel();
                 item.Quantity = cartLine.Quantity;
                 item.Id = cartLine.ProductId;
+                // TO_DO: more mapping is necessary
                 //cartLine.Type
                 //cartLine.UAN
                 //item.Product
             }
+            // TO_DO: Call app quote
+            var response = new CreateQuoteFrom.Response
+            {
+                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
+                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+        }
 
+        public async Task<CreateQuoteFrom.Response> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
+        {
+            // TO_DO: Missing implementation
             var response = new CreateQuoteFrom.Response
             {
                 QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
@@ -285,6 +302,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     return null;
                 }
                 _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartDetails));
+                throw ex;
+            }
+        }
+
+        private async Task<CreateModelFrom> PopulateCreateQuoteRequestFromActiveCart(CreateModelFrom request)
+        {
+            try
+            {
+                var activeCartURL = _appCartURL.AppendPathSegment("/");
+                var activeCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(activeCartURL);
+                // TO_DO: more mapping is necessary
+                request.SalesOrg = activeCartResponse.Source.SalesOrg;
+                request.TargetSystem = activeCartResponse.Source.System;
+                foreach (var cartLine in activeCartResponse.Lines)
+                {
+                    var quoteLine = new ItemModel();
+                    quoteLine.Quantity = Convert.ToDecimal(cartLine.Quantity);
+                    quoteLine.Parent = cartLine.ParentLineNo;
+                    quoteLine.Product = new List<ProductModel> { new ProductModel { Id = cartLine.ProductId } };
+                    //cartLine.LineNo
+                    request.Items.Add(quoteLine);
+                }
+                return request;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Code == System.Net.HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(CommerceService));
                 throw ex;
             }
         }

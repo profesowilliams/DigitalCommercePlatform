@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,13 +46,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 Response response;
-                if (request.CreateModelFrom.CreateFromType == "savedCart")
+                switch (request.CreateModelFrom.CreateFromType)
                 {
-                    response = await _quoteService.CreateQuoteFromSavedCart(request);
-                }
-                else
-                {
-                    response = await _quoteService.CreateQuoteFrom(request);
+                    case QuoteCreationSourceType.ActiveCart:
+                        response = await _quoteService.CreateQuoteFromActiveCart(request);
+                        break;
+                    case QuoteCreationSourceType.SavedCart:
+                        response = await _quoteService.CreateQuoteFromSavedCart(request);
+                        break;
+                    case QuoteCreationSourceType.EstimationId:
+                        response = await _quoteService.CreateQuoteFromEstimationId(request);
+                        break;
+                    default:
+                        throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 return new ResponseBase<Response> { Content = response };
             }
@@ -64,14 +71,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         .ChildRules(request =>
                         {
                             request.RuleFor(c => c.CreateFromId).NotNull();
-                            request.RuleFor(c => c.CreateFromType).NotNull().Must(IsValidCreateFromType).WithMessage("'CreateFromType' must be one of the following values: " + string.Join(", ", CreateFromType.AllowedValues));
+                            request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
                         });
-                }
-
-                private bool IsValidCreateFromType(string createTypeFrom)
-                {
-                    var isValid = CreateFromType.AllowedValues.Contains(createTypeFrom);
-                    return isValid;
                 }
             }
         }

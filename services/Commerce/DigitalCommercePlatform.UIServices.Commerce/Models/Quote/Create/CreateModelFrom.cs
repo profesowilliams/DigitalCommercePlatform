@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -8,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
     public class CreateModelFrom
     {
         public string CreateFromId { get; set; }
-        public string CreateFromType { get; set; }
+        public QuoteCreationSourceType CreateFromType { get; set; }
         public string SalesOrg { get; set; }
         public string TargetSystem { get; set; }
         public string EndUserPo { get; set; }
@@ -20,8 +21,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
         public ShipToModel ShipTo { get; set; }
         public EndUserModel EndUser { get; set; }
         public VendorReferenceModel VendorReference { get; set; }
-        public IEnumerable<ItemModel> Items { get; set; }
-        public IEnumerable<AgreementModel> Agreements { get; set; }
-
+        public List<ItemModel> Items { get; set; }
+        public List<AgreementModel> Agreements { get; set; }
+        public int PricingCondition { get; set; }
     }
 }
