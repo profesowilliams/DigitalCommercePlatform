@@ -18,6 +18,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalFoundation.Common.Contexts;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -64,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                     CustomerName = customerDetailsResponse.FirstOrDefault()?.Name,
                     UserId = "12345", //Hardcoded now , in future it will come from the UI Security service
                     UserName = "Techdata User", //Hardcoded now , in future it will come from the UI Security service
-                    CatalogHierarchies = CatalogDetailsResponse.CatalogHierarchies.ToList(),
+                    //CatalogHierarchies = CatalogDetailsResponse.Children,
                 };
 
                 return getHeaderResponse;
@@ -76,7 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
         }
 
-        public async Task<GetCatalogHandler.Response> GetCatalogDetails(GetCatalogHandler.Request request)
+        public async Task<List<CategoryModel>> GetCatalogDetails(GetCatalogHandler.Request request)
         {
             var CatalogURL = _appCatalogURL.BuildQuery(request);
             try
@@ -84,8 +85,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
                 if (getCatalogResponse == null)
                 {
-                    getCatalogResponse = await _middleTierHttpClient.GetAsync<GetCatalogHandler.Response>(CatalogURL);
-                    await _cachingService.SetCatalogCache(getCatalogResponse, request.Id);
+                 getCatalogResponse = await _middleTierHttpClient.GetAsync<List<CategoryModel>>(CatalogURL);
+                 await _cachingService.SetCatalogCache(getCatalogResponse, request.Id);
                 }
                 return getCatalogResponse;
             }

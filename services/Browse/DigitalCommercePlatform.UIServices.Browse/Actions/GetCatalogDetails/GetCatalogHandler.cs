@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
         public class Response
         {
-            public IEnumerable<CatalogHierarchyModel> CatalogHierarchies { get; set; }
+            public List<CategoryModel> Items { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
@@ -53,12 +53,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                     //get catalog from cache
                     var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
 
-                    if (getCatalogResponse == null)
-                    {
+                   if (getCatalogResponse == null)
+                   {
                         var CatalogDetails = await _CatalogRepositoryService.GetCatalogDetails(request);
-                        getCatalogResponse = _mapper.Map<Response>(CatalogDetails);
-                    }
-                    return new ResponseBase<Response> { Content = getCatalogResponse };
+                        getCatalogResponse = CatalogDetails;
+                   }
+                   return new ResponseBase<Response> { Content = new Response { Items = getCatalogResponse } };
                 }
                 catch (Exception ex)
                 {
