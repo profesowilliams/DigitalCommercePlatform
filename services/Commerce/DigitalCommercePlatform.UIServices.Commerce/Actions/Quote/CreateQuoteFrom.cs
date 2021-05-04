@@ -70,11 +70,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     RuleFor(r => r.CreateModelFrom).Cascade(CascadeMode.Stop).NotNull()
                         .ChildRules(request =>
                         {
-                            request.RuleFor(c => c.CreateFromId).NotNull();
                             request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
+                            request.RuleFor(c => c).Must(IsValidCreateFromId);
+
                         });
                 }
+                private bool IsValidCreateFromId(CreateModelFrom r)
+                {
+                    return (r.CreateFromId != null || r.CreateFromType == QuoteCreationSourceType.ActiveCart);
+                }
             }
-        }
+    }
     }
 }
