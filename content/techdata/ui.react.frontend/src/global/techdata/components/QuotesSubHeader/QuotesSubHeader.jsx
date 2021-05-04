@@ -1,29 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { getUrlParams } from '../../../../utils';
+import React from "react";
+import PropTypes from "prop-types";
+import { getUrlParams } from "../../../../utils";
 
-const QuotesSubHeader = ({ componentProp }) => {
-    const {
-        label, 
-        title
-    } = JSON.parse(componentProp)
+const QuotesSubHeader = ({ label, title }) => {
     const urlParams = getUrlParams();
-    const getQuoteId = ({ tdQuoteId }) => tdQuoteId; 
+    const getQuoteId = ({ tdQuoteId }) => tdQuoteId;
 
     return (
-        <div class="cmp-td-quote-subheader">
-            <div class="cmp-td-quote-subheader__sub-title">
-            {urlParams.hasOwnProperty('tdQuoteId') 
-            ?   <><span>{label}</span> {getQuoteId(urlParams)}</>
-            :   <><span>{label}</span> {title}</>
-            }
+        <div className='cmp-td-quote-subheader'>
+            <div className='cmp-td-quote-subheader__sub-title'>
+                {urlParams.hasOwnProperty("tdQuoteId") ? (
+                    <>
+                        <span>{label}</span> {getQuoteId(urlParams)}
+                    </>
+                ) : (
+                    <>
+                        <span>{label}</span> {title}
+                    </>
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default QuotesSubHeader;
 
 QuotesSubHeader.propTypes = {
-    componentProp: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
 };
