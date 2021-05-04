@@ -513,6 +513,46 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
   res.json(response)
 });
 
+app.get("/ui-commerce/v1/orders/", function (req, res) {
+  const details = req.query.details || true;
+  const pageSize = req.query.pageSize || 10;
+  const pageNumber = req.query.pageNumber || 1;
+  const items = [];
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  for (let i = 0; i < pageSize; i++) {
+    items.push({
+      orderId: Number(`${pageNumber}${4009754974 + i}`),
+      orderDate: new Date().toISOString(),
+      resellerPO: Number(`${pageNumber}${111048 + i}`),
+
+      shipTo: "UPS",
+      orderType: "Manual",
+      orderValue: 73002.31 + getRandom(1000),
+      invoiceNum: Number(`${pageNumber}${4009754974 + i}`),
+      status: i % 2 ? true : false,
+      track:  i % 2 ? true : false,
+      returns:  i % 2 ? true : false,
+    })
+  }
+  const response = {
+    content: {
+      items: items,
+      totalItems: 2500,
+      pageCount: 25,
+      pageSize
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+  res.json(response)
+});
+
+
 app.get("/browse", function (req, res) {
   if (!req.headers['sessionid'])
     return res.status(500).json({

@@ -252,6 +252,9 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({filename: 'td-quote-subtotal',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subtotal.html')
 			}),
+			new HtmlWebpackPlugin({filename: 'td-order-subtotal',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subtotal.html')
+			}),
 			new HtmlWebpackPlugin({
 				filename: 'my-deals.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-deals.html')
@@ -399,6 +402,10 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				filename: 'quotes-grid',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-grid-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'orders-grid',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/orders-grid-demo.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'quotes-subheader-react',
