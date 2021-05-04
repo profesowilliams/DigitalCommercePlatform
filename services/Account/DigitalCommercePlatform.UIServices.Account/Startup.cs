@@ -11,7 +11,7 @@ using RenewalsService;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using static RenewalsService.RenewalsServiceClient;
+using System.ServiceModel;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -35,7 +35,17 @@ namespace DigitalCommercePlatform.UIServices.Account
                     throw new InvalidOperationException("External.Order.RenewalsService.Url is missing from AppSettings");
                 }
 
-                return new RenewalsServiceClient(EndpointConfiguration.BasicHttpBinding_IRenewalsService, renewalsServiceUrl);
+                var endpointAddress = new EndpointAddress(renewalsServiceUrl);
+                var binding = new BasicHttpBinding
+                {
+                    MaxBufferSize = int.MaxValue,
+                    ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
+                    MaxReceivedMessageSize = int.MaxValue,
+                    AllowCookies = true
+                };
+                binding.Security.Mode = BasicHttpSecurityMode.Transport;
+
+                return new RenewalsServiceClient(binding, endpointAddress);
             });
 
 
