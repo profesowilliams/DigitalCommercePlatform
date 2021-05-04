@@ -759,6 +759,10 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/td-quote-details-react.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+				filename: 'create-config',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/create-config.html')
+			}),
         ],
         devServer: {
             inline: true,

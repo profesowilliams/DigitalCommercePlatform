@@ -42,7 +42,6 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpo
           <> 
             <Dropdown selected={method} setValue={setMethod} options={methods} />
             <RadioButtons selected={cartType} options={cartTypes} onSelect={(val) => setCartType(val)} /> 
-            <br />
           </> 
         )
       }

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 
-const Dropdown = ({ selected, setValue, options }) => {
+const Dropdown = ({ selected, setValue, options, label = "Create from" }) => {
   const [open, setOpen] = useState(false)
   const toggleOpen = () =>{
     const newOpen = open ? false : true;
@@ -15,7 +15,7 @@ const Dropdown = ({ selected, setValue, options }) => {
       <div className={`cmp-dropdown-custom ${open?'cmp-dropdown-custom--open':''}`}>
         <a className="cmp-dropdown-custom__input" onClick={toggleOpen}>
           <span>
-            {selected ? selected.label : 'Create from'}
+            {selected ? selected.label : label}
           </span>
           <span>
             <i className="fas fa-chevron-right"></i>
@@ -25,8 +25,10 @@ const Dropdown = ({ selected, setValue, options }) => {
         <div className="cmp-dropdown-custom__list-wrapper">
           <ul className="cmp-dropdown-custom__list">
             {
-              options.map( option => 
-                <li key={Symbol(option.key).toString()} onClick={() => handleSetValue(option) }>{option.label}</li> )
+              options.map( (option, i) => 
+                <li 
+                  key={ Symbol(option.key? option.key : `${i}-${option.label}`).toString()} 
+                  onClick={() => handleSetValue(option) }>{option.label}</li> )
             }
           </ul>
         </div>

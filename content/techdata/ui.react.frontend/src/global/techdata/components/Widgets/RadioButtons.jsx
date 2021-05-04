@@ -4,7 +4,7 @@ const RadioButton = ({ option, onSelect, selected }) => {
   const inputId = Symbol(option.name).toString();
 
   return (
-    <div key={inputId} className="cmp-radio-button">
+    <div key={inputId} className="cmp-radio-buttons__input">
       <input 
         checked={selected.id === option.id}
         onChange={() => onSelect(option)} 
@@ -15,12 +15,12 @@ const RadioButton = ({ option, onSelect, selected }) => {
 }
 
 const RadioButtons = ({options, onSelect, selected}) => (
-  <>
+  <div className="cmp-radio-buttons">
     { options.map(option => {
       const key = Symbol(`radio ${option.id}`).toString();
       return <RadioButton key={key} selected={selected} onSelect={(val) => onSelect(val)} option={option} />;
     } ) }
-  </>
+  </div>
 );
 
 export default RadioButtons;

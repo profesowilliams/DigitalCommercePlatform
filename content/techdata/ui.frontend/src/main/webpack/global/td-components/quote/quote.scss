@@ -108,32 +108,37 @@
   color: get-color(text-mid-gray);
 }
 
-.cmp-widget .cmp-radio-button{
-  padding: rem(2px 0);
-  position: relative;
-  input{
-    margin: rem(0 15px 0 10px);
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
+.cmp-widget{
+  .cmp-radio-buttons{
+    margin-bottom: rem(12px);
   }
-  label{
-    color: get-color(text-mid-gray);
-    &:before{
-      content: '';
-      position: relative;
-      display: inline-block;
-      width: rem(13px);
-      height: rem(13px);
-      margin: rem(4px 14px 0 10px);
-      border-radius: 50%;
-      border: rem(1px) solid get-color(text-mid-gray);
-      transition: all .15s;
-      background-color: get-color(brand-white);
-      box-sizing: border-box;
+  .cmp-radio-buttons__input{
+    padding: rem(2px 0);
+    position: relative;
+    input{
+      margin: rem(0 15px 0 10px);
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
     }
-  }
-  input:checked + label:before{
-    border: rem(5px) solid get-color(td-lightblue);
+    label{
+      color: get-color(text-mid-gray);
+      &:before{
+        content: '';
+        position: relative;
+        display: inline-block;
+        width: rem(13px);
+        height: rem(13px);
+        margin: rem(4px 14px 0 10px);
+        border-radius: 50%;
+        border: rem(1px) solid get-color(text-mid-gray);
+        transition: all .15s;
+        background-color: get-color(brand-white);
+        box-sizing: border-box;
+      }
+    }
+    input:checked + label:before{
+      border: rem(5px) solid get-color(td-lightblue);
+    }
   }
 }
