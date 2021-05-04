@@ -136,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var quotePreview = new QuotePreview
             {
 
-                 ShipTo= GenerateAddress("ShipTo"),
+                ShipTo = GenerateAddress("ShipTo"),
                 EndUser = GenerateAddress("EndUser"),
                 //GeneralInformation = new QuoteGeneralInformation()
                 //{
@@ -154,17 +154,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 Items = lineItems,
                 Currency = "USD",
                 CurrencySymbol = "$"
-        };
+            };
 
             List<Address> GenerateAddress(string prefix)
             {
                 var addressList = new List<Address>();
 
-                for(var i=0; i < 3; i++)
+                for (var i = 0; i < 3; i++)
                 {
                     var address = new Address
                     {
-                       
+
                         Name = prefix + i,
                         Email = $"myemail{i}@example.com",
                         Line1 = $"Line 1{i} Road",
@@ -179,14 +179,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                     addressList.Add(address);
                 }
-               
+
                 return addressList;
             }
             var response = new QuotePreviewModel()
             {
                 QuoteDetails = quotePreview,
             };
-            return await Task.FromResult(response);        
+            return await Task.FromResult(response);
         }
 
         public static int GetRandomNumber(int min, int max)
@@ -283,6 +283,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
                 ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
             };
+            return await Task.FromResult(response);
+        }
+
+        public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
+        {
+            // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
+            var url = _appQuoteServiceUrl + "/Update";
+            var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
+            var response = new UpdateQuote.Response(result);
             return await Task.FromResult(response);
         }
 

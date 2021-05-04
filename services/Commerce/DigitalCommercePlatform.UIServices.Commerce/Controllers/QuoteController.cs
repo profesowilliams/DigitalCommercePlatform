@@ -57,6 +57,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateModel quoteToUpdate)
+        {
+            var response = await Mediator.Send(new UpdateQuote.Request(quoteToUpdate)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
         [HttpGet]
         [Route("details")]
         public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id,[FromQuery] bool details = true)

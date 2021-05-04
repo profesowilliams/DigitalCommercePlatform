@@ -23,5 +23,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<CreateQuoteFrom.Response> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request);
         Task<CreateQuoteFrom.Response> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);
         Task<CreateQuoteFrom.Response> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request);
+        Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
     }
 }
