@@ -9,10 +9,24 @@ function OrdersGrid(props) {
 		return formatedDate;
 	}
 
+	function getTrackingStatus(trackingArray){
+		console.log("tracking status");
+		console.log(trackingArray);
+		return trackingArray.length ? trackingArray.length > 0 : false;
+	}
+
+	function getStatus(status) {
+		return status === "OPEN";
+	}
+
+	function nullFormatter(value){
+		return value === null ? "N/A" : value;
+	}
+
 	const columnDefs = [
 		{
 			headerName: 'Order #',
-			field: 'orderId',
+			field: 'id',
 			sortable: true,
 			cellRenderer: (props) => {
 				return (
@@ -29,7 +43,7 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Order Date',
-			field: 'orderDate',
+			field: 'created',
 			sortable: false,
 			valueFormatter: (props) => {
 				return getDateTransformed(props.value);
@@ -37,7 +51,12 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Reseller PO#',
-			field: 'resellerPO',
+			field: 'reseller',
+			sortable: false,
+		},
+		{
+			headerName: 'Vendor',
+			field: 'vendor',
 			sortable: false,
 		},
 		{
@@ -47,7 +66,7 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Order Type',
-			field: 'orderType',
+			field: 'type',
 			sortable: false,
 		},
 		{
@@ -60,10 +79,14 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Invoice #',
-			field: 'invoiceNum',
+			field: 'invoice',
 			sortable: true,
-			valueFormatter: (props) => {
-				return getDateTransformed(props.value);
+			cellRenderer: (props) => {
+				return (
+					<div>
+						{nullFormatter(props.value)}
+					</div>
+				);
 			},
 		},
 		{
@@ -73,26 +96,26 @@ function OrdersGrid(props) {
 			cellRenderer: (props) => {
 				return (
 					<div className='cmp-quotes-grid-checkout-icon'>
-						{props.value ? <p><i className='fas fa-check'></i> Shipped</p> : <p><i className='fas fa-ban'></i> Canceled</p>}
+						{getStatus(props.value) ? <p><i className='fas fa-check'></i> Shipped</p> : <p><i className='fas fa-ban'></i> Canceled</p>}
 					</div>
 				);
 			},
 		},
 		{
 			headerName: 'Track',
-			field: 'track',
+			field: 'trackings',
 			sortable: false,
 			cellRenderer: (props) => {
 				return (
 					<div className='cmp-quotes-grid-checkout-icon'>
-						{props.value ? <i className='fas fa-truck'></i> : <div></div>}
+						{getTrackingStatus(props.value) ? <i className='fas fa-truck'></i> : <div></div>}
 					</div>
 				);
 			},
 		},
 		{
 			headerName: 'Returns',
-			field: 'returns',
+			field: 'isReturn',
 			sortable: false,
 			cellRenderer: (props) => {
 				return (

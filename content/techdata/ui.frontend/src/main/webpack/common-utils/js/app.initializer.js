@@ -10,8 +10,6 @@ class AppInitializer {
 
         // observe body element for mutations change
         var targetNode = document.querySelector('[data-observe-mutation]');
-        // console.log("app initializer from within ui.frontend is starting");
-        // console.log(targetNode);
 
         // Options for the observer (which mutations to observe)
         var config = {
@@ -54,14 +52,11 @@ class AppInitializer {
     }
 
     initComponent(scope) {
-        // console.log("inside init component");
         let _scope = typeof scope == 'undefined' ? document : scope;
-        let componentReferences = _scope.querySelectorAll(`[data-component]`);
+        let componentReferences = _scope.querySelectorAll ? _scope.querySelectorAll(`[data-component]`) : [];
 
         Array.prototype.forEach.call(componentReferences, function (element) {
             const componentProps = element.dataset;
-            // console.log("componentProps")
-            // console.log(componentProps)
 
             if ('react' === (componentProps.cmpType && componentProps.cmpType.toLowerCase())) {
                 // Initialize React Component
