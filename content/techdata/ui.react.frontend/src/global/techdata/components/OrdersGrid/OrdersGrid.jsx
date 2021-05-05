@@ -71,11 +71,8 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Order Value',
-			field: 'orderValue',
-			sortable: true,
-			valueFormatter: (props) => {
-				return getDateTransformed(props.value);
-			},
+			field: 'priceFormatted',
+			sortable: true
 		},
 		{
 			headerName: 'Invoice #',
