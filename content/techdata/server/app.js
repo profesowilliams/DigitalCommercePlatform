@@ -511,38 +511,38 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   const pageSize = req.query.pageSize || 10;
   const pageNumber = req.query.pageNumber || 1;
   const items = [];
-  function getRandom(maxValue) {
-    return Math.floor(Math.random() * maxValue);
-  }
-  for (let i = 0; i < pageSize; i++) {
-    items.push({
-      orderId: Number(`${pageNumber}${4009754974 + i}`),
-      orderDate: new Date().toISOString(),
-      resellerPO: Number(`${pageNumber}${111048 + i}`),
-
-      shipTo: "UPS",
-      orderType: "Manual",
-      orderValue: 73002.31 + getRandom(1000),
-      invoiceNum: Number(`${pageNumber}${4009754974 + i}`),
-      status: i % 2 ? true : false,
-      track:  i % 2 ? true : false,
-      returns:  i % 2 ? true : false,
-    })
-  }
-  const response = {
-    content: {
-      items: items,
-      totalItems: 2500,
-      pageCount: 25,
-      pageSize
-    },
-    error: {
-      code: 0,
-      message: [],
-      isError: false,
-    },
-  };
-  res.json(response)
+  // function getRandom(maxValue) {
+  //   return Math.floor(Math.random() * maxValue);
+  // }
+  // for (let i = 0; i < pageSize; i++) {
+  //   items.push({
+  //     id: Number(`${pageNumber}${4009754974 + i}`),
+  //     created: new Date().toISOString(),
+  //     resellerPO: Number(`${pageNumber}${111048 + i}`),
+  //     shipTo: "UPS",
+  //     orderType: "Manual",
+  //     orderValue: 73002.31 + getRandom(1000),
+  //     invoice: Number(`${pageNumber}${4009754974 + i}`),
+  //     status: i % 2 ? true : false,
+  //     track:  i % 2 ? true : false,
+  //     returns:  i % 2 ? true : false,
+  //   })
+  // }
+  // const response = {
+  //   content: {
+  //     items: items,
+  //     totalItems: 2500,
+  //     pageCount: 25,
+  //     pageSize
+  //   },
+  //   error: {
+  //     code: 0,
+  //     message: [],
+  //     isError: false,
+  //   },
+  // };
+    var jsonResponseFromDIT = "{\"content\":{\"totalItems\":0,\"pageCount\":0,\"pageNumber\":0,\"pageSize\":0,\"items\":[{\"id\":\"I008126269\",\"reseller\":\"SO-FLOORPLAN\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-05T07:26:00Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"114.24 USD\",\"priceFormatted\":\"114.24 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":4,\"price\":228.48,\"created\":null}]},{\"id\":\"I008126271\",\"reseller\":\"SO-NO-FREESHIP\",\"vendor\":\"BRETFORD\",\"created\":\"2021-02-05T07:42:50Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"2124.92 USD\",\"priceFormatted\":\"2124.92 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":4249.84,\"created\":null}]},{\"id\":\"6030694406\",\"reseller\":\"SO-ADVANCED CHECKOUT\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-05T07:50:54Z\",\"shipTo\":\"Prachi Khobragade CA\",\"type\":\"ZZIT\",\"price\":\"0.00 USD\",\"priceFormatted\":\"0.00 USD\",\"status\":\"CANCELLED\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":20.92,\"created\":null}]},{\"id\":\"I008126273\",\"reseller\":\"05022021SHOPUSTEST7\",\"vendor\":\"MICROSOFT\",\"created\":\"2021-02-05T08:02:40Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"17.79 USD\",\"priceFormatted\":\"17.79 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":35.58,\"created\":null}]},{\"id\":\"727182\",\"reseller\":\"PO_ESTIMATEQ67ORDER\",\"vendor\":\"CISCO\",\"created\":\"2021-02-05T08:16:20Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZOR\",\"price\":\"4194.00 USD\",\"priceFormatted\":\"4194.00 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":3,\"price\":4194.00,\"created\":null}]},{\"id\":\"I008126275\",\"reseller\":\"05022021SHOPUSTEST8\",\"vendor\":\"MICROSOFT\",\"created\":\"2021-02-05T08:32:06Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"6977.79 USD\",\"priceFormatted\":\"6977.79 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":3,\"price\":35.58,\"created\":null}]},{\"id\":\"I008126276\",\"reseller\":\"05022021SHOPUSTEST9\",\"vendor\":\"CISCO\",\"created\":\"2021-02-05T08:41:10Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"429.20 USD\",\"priceFormatted\":\"429.20 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":1,\"price\":0.0,\"created\":null}]},{\"id\":\"6030686028\",\"reseller\":\"RTZRZRZ\",\"vendor\":\"CISCO\",\"created\":\"2021-02-05T09:23:15Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZOR\",\"price\":\"5069.68 USD\",\"priceFormatted\":\"5069.68 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":3,\"price\":0.0,\"created\":null}]},{\"id\":\"I008126278\",\"reseller\":\"TEST ORDER\",\"vendor\":\"CISCO\",\"created\":\"2021-02-05T09:49:11Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"40935.96 USD\",\"priceFormatted\":\"40935.96 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":87,\"price\":0.0,\"created\":null}]},{\"id\":\"I008126280\",\"reseller\":\"TEST FOR 6.8\",\"vendor\":\"MICROSOFT\",\"created\":\"2021-02-05T11:29:52Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"17.79 USD\",\"priceFormatted\":\"17.79 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":35.58,\"created\":null}]},{\"id\":\"I008126306\",\"reseller\":\"SO-FLOORPLAN\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-08T06:45:40Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"114.24 USD\",\"priceFormatted\":\"114.24 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":4,\"price\":228.48,\"created\":null}]},{\"id\":\"I008126307\",\"reseller\":\"SO-EU PROMO ORDER\",\"vendor\":\"HP INC\",\"created\":\"2021-02-08T06:50:56Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"33.73 USD\",\"priceFormatted\":\"33.73 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":1,\"price\":0.0,\"created\":null}]},{\"id\":\"I008126308\",\"reseller\":\"SO-NO-FREESHIP\",\"vendor\":\"BRETFORD\",\"created\":\"2021-02-08T07:02:58Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"2124.92 USD\",\"priceFormatted\":\"2124.92 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":4249.84,\"created\":null}]},{\"id\":\"6030686029\",\"reseller\":\"SO-ADVANCED CHECKOUT\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-08T07:10:28Z\",\"shipTo\":\"Prachi Khobragade CA\",\"type\":\"ZZIT\",\"price\":\"0.00 USD\",\"priceFormatted\":\"0.00 USD\",\"status\":\"CANCELLED\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":20.92,\"created\":null}]},{\"id\":\"I008126309\",\"reseller\":\"SO-VENDORSHIPPED\",\"vendor\":\"LENOVO\",\"created\":\"2021-02-08T07:13:06Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"213.12 USD\",\"priceFormatted\":\"213.12 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":2,\"price\":0.0,\"created\":null}]},{\"id\":\"I008126311\",\"reseller\":\"SO-VOLUMEPRICING\",\"vendor\":\"CABLE 2 GO\",\"created\":\"2021-02-08T07:35:31Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"757.50 USD\",\"priceFormatted\":\"757.50 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":500,\"price\":1515.00,\"created\":null}]},{\"id\":\"I008126318\",\"reseller\":\"SO-EDUCATIONPRICING\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-08T08:06:44Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"171.36 USD\",\"priceFormatted\":\"171.36 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":6,\"price\":342.72,\"created\":null}]},{\"id\":\"727191\",\"reseller\":\"PO_ESTIMATEQ67ORDER\",\"vendor\":\"CISCO\",\"created\":\"2021-02-08T08:09:07Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZOR\",\"price\":\"4194.00 USD\",\"priceFormatted\":\"4194.00 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":3,\"price\":4194.00,\"created\":null}]},{\"id\":\"I008126320\",\"reseller\":\"SO-GOVTPRICING\",\"vendor\":\"GM 3M\",\"created\":\"2021-02-08T08:10:33Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"114.24 USD\",\"priceFormatted\":\"114.24 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":4,\"price\":228.48,\"created\":null}]},{\"id\":\"I008126321\",\"reseller\":\"13213\",\"vendor\":\"CISCO\",\"created\":\"2021-02-08T08:35:02Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"60222.95 USD\",\"priceFormatted\":\"60222.95 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":670,\"price\":120445.90,\"created\":null}]},{\"id\":\"727192\",\"reseller\":\"PO_ESTIMATEQ67ORDER\",\"vendor\":\"CISCO\",\"created\":\"2021-02-08T09:02:58Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZOR\",\"price\":\"4194.00 USD\",\"priceFormatted\":\"4194.00 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":3,\"price\":4194.00,\"created\":null}]},{\"id\":\"I008126335\",\"reseller\":\"WM_RPO_0208_EUTEST\",\"vendor\":\"MICROSOFT\",\"created\":\"2021-02-08T20:48:47Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"1453.94 USD\",\"priceFormatted\":\"1453.94 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":6,\"price\":0.0,\"created\":null}]},{\"id\":\"70135138\",\"reseller\":\"8079\",\"vendor\":\"HP\",\"created\":\"2021-02-08T23:47:05Z\",\"shipTo\":\"Tampa General Hospital\",\"type\":\"ZDR4\",\"price\":\"0.00 USD\",\"priceFormatted\":\"0.00 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":0,\"price\":0.00,\"created\":null}]},{\"id\":\"60132069\",\"reseller\":\"8167\",\"vendor\":\"CISCO\",\"created\":\"2021-02-08T23:51:05Z\",\"shipTo\":\"Tampa General Hospital\",\"type\":\"ZCR4\",\"price\":\"0.00 USD\",\"priceFormatted\":\"0.00 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[]},{\"id\":\"I008126343\",\"reseller\":\"TEST ORDER FROM CART\",\"vendor\":\"CISCO\",\"created\":\"2021-02-09T06:45:43Z\",\"shipTo\":\"SHI INTERNATIONAL CORP\",\"type\":\"ZZIT\",\"price\":\"463.13 USD\",\"priceFormatted\":\"463.13 USD\",\"status\":\"OPEN\",\"invoice\":null,\"isReturn\":null,\"trackings\":[],\"invoices\":[{\"id\":\"Pending\",\"line\":\"\",\"quantity\":10,\"price\":926.26,\"created\":null}]}]},\"error\":{\"code\":0,\"messages\":[],\"isError\":false}}";
+  res.json(JSON.parse(jsonResponseFromDIT));
 });
 
 
