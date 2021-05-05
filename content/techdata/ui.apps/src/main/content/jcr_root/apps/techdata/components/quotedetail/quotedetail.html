@@ -1,0 +1,11 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+	<div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<div id="QuoteDetails" data-observe-mutation data-sly-use.model="${'quotedetail.js'}">
+	<div
+			data-component="QuoteDetails"
+			data-cmp-type="react"
+			className="cmp-td-quote-details"
+			data-config="${model.configJson}"
+	></div>
+</div>
