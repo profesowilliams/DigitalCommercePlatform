@@ -25,7 +25,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
-using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
+using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -351,17 +351,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         }
         [Theory]
         [AutoDomainData]
-        public async Task GetShipToAddress(ResponseBase<GetShipToAddress.Response> expected)
+        public async Task GetShipToAddress(ResponseBase<GetAddress.Response> expected)
         {
 
             _mediator.Setup(x => x.Send(
-                      It.IsAny<GetShipToAddress.Request>(),
+                      It.IsAny<GetAddress.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
             var controller = GetController();
 
-            var result = await controller.GetShipToAddress().ConfigureAwait(false);
+            var result = await controller.GetAddress("ALL",false).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
@@ -15,6 +16,8 @@ using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
@@ -25,9 +28,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -46,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IRenewalsService _renewalsService;
 
 
-        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, 
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options,
             ILogger<AccountService> logger, IRenewalsService renewalsService, IUIContext uiContext)
         {
             _uiContext = uiContext;
@@ -57,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
             _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
             _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
-            _customerServiceURL= options?.Value.GetSetting("App.Customer.Url");
+            _customerServiceURL = options?.Value.GetSetting("App.Customer.Url");
         }
 
 
@@ -119,11 +119,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 deal.FormattedAmount = string.Format(deal.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", deal.Amount);
                 deals.Add(deal);
             }
-           
+
             deals = AddSequenceNumber(deals);
             var response = new DealModel
-             {
-                    Items = deals
+            {
+                Items = deals
             };
             return await Task.FromResult(response);
         }
@@ -136,14 +136,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
                 return null;
             }
         }
 
-        
+
         public async Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request)
         {
             var items = new List<GetConfigurationsForItem>();
@@ -163,7 +163,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 Items = items,
                 TotalNumberOfConfigurationsItems = items.Count
             };
-            
+
             return await Task.FromResult(result);
         }
 
@@ -265,7 +265,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(MyQuotes);
         }
 
-        public async Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber,string salesOrganization, int numberOfDaysToSubtract)
+        public async Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract)
         {
             var renewalSearchDto = new RenewalSearchDto
             {
@@ -302,18 +302,30 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(myOrders);
         }
 
-        public async Task<IEnumerable<AddressDetails>> GetShipToAdress(GetShipToAddress.Request request)
+        public async Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request)
         {
             var customerId = _uiContext.User.Customers.FirstOrDefault();
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
             try
             {
                 var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
+                if (response.Any())
+                {
+                    if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
+                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == "0100").ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                    else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
+                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                    else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
+                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == "0100").ToList(); // use sales organization from user context
+                    else
+                        return response;
+                }
+
                 return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
+                _logger.LogError(ex, $"Exception at getting {nameof(GetAddress)}: {nameof(AccountService)}");
                 return null;
             }
         }

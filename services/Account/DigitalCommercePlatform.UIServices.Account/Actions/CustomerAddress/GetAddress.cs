@@ -10,17 +10,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress
+namespace DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress
 {
     [ExcludeFromCodeCoverage]
-    public class GetShipToAddress
+    public class GetAddress
     {
-        public class Request : IRequest<ResponseBase<Response>>
-        {
-            public Request()
-            {
-               
-            }
+        public class Request : IRequest<ResponseBase<Response>>        {
+            public string Criteria { get; set; }            
+            public bool IgnoreSalesOrganization { get; set; }
         }
         public class Response
         {
@@ -43,13 +40,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress
             {
                 try
                 {
-                    var cartDetails = await _accountServices.GetShipToAdress(request);
+                    var cartDetails = await _accountServices.GetAddress(request);
                     var cartResponse = _mapper.Map<Response>(cartDetails);
                     return new ResponseBase<Response> { Content = cartResponse };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetShipToAddress));
+                    _logger.LogError(ex, "Exception at getting Address : " + nameof(GetAddress));
                     throw;
                 }
             }

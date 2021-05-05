@@ -24,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
         public string Email { get; set; }
         public string AddressType { get; set; }
         public string Phone { get; set; }
+        public string SalesOrganization { get; set; }
     }
     [ExcludeFromCodeCoverage]
     public class Companies

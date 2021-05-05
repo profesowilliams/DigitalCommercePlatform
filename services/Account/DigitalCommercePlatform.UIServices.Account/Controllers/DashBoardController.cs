@@ -6,7 +6,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
-using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
+using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -198,10 +198,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [HttpGet]
-        [Route("getShipToAddress")]
-        public async Task<IActionResult> GetShipToAddress()
+        [Route("getAddress")]
+        public async Task<IActionResult> GetAddress([FromQuery] string criteria, bool ignoreSalesOrganization=false)
         {
-            var request = new GetShipToAddress.Request { };
+            criteria = string.IsNullOrWhiteSpace(criteria) ? "ALL" : criteria.ToUpper();
+
+            GetAddress.Request request = new GetAddress.Request { 
+                Criteria = criteria, 
+                IgnoreSalesOrganization = ignoreSalesOrganization
+            };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
