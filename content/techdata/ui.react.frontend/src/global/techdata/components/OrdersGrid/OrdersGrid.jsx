@@ -19,7 +19,7 @@ function OrdersGrid(props) {
 					<div>
 						<a
 							className='cmp-grid-url-underlined'
-							href={`${window.location.origin + componentProp.quoteDetailUrl}?quoteId=${props.value}`}
+							href={`${window.location.origin + componentProp.orderDetailUrl}?quoteId=${props.value}`}
 						>
 							{props.value}
 						</a>
