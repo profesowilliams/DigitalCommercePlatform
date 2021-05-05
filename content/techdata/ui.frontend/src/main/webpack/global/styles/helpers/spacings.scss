@@ -4,6 +4,10 @@
   margin: 0;
 }
 
-.mx-1 {
 
+.v-divider {  
+  box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+  &:last-of-type {    
+    box-shadow: 0 0 0 0 get-color(v-divider-gray);
+  }
 }

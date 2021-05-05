@@ -1,7 +1,20 @@
 /// Your Company Information
 
 .cmp-quote-address-info {
-  width: rem(210px);
+  display: inline-grid;
+  width: 33%;
+  margin: rem(30px) 0;
+  padding-left: rem(65px);
+  box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+
+  &:last-of-type {    
+    box-shadow: 0 0 0 0;
+  }
+
+  &:first-of-type {
+    padding-left: rem(40px);
+  }
+
     &__title {
         // height: rem(19px);
         // width: rem(184px);
