@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
@@ -11,7 +11,9 @@ const CreateConfig = ({ componentProp }) => {
     window.location.href = redirectUrl.url;
   }
   const getOptions = () =>{
-    if( !methodSelected.urls.length > 0 ) return null;
+    if( !methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ){
+      return null;
+    }
     let types = methodSelected.urls.map((item,i) => {
       const {label:name,url} = item;
       const id = Symbol(`${i}-${name}`).toString();
@@ -28,6 +30,10 @@ const CreateConfig = ({ componentProp }) => {
     setMethodSelected(val);
     setRedirectUrl(false);
   }
+  useEffect(()=>{
+    if( methodSelected && (!methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ))
+      setRedirectUrl({url: methodSelected.url});
+  },[methodSelected])
   return (
     <div className="cmp-widget">
       <WidgetTitle>{ label }</WidgetTitle>
