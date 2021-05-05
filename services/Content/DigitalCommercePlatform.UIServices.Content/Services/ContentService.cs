@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
@@ -25,7 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _typeSearchUrl;
-        private readonly string _appCartV2Url;
 #pragma warning restore CS0414
         private readonly ILogger<ContentService> _logger;
         public ContentService(IMiddleTierHttpClient middleTierHttpClient,
@@ -37,7 +36,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
             _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
             _typeSearchUrl = options?.Value.GetSetting("Core.Search.Url");
-            _appCartV2Url = options?.Value.GetSetting("App.Cart-V2.Url");
         }
 
         public async Task<ActiveCartModel> GetActiveCartDetails()
@@ -57,12 +55,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             }
         }
 
-        public async Task<CartModel> GetCartDetails(GetCart.Request request)
+        public async Task<SavedCartDetailsModel> GetSavedCartDetails(GetSavedCartDetails.Request request)
         {
-            var CartURL = _appCartV2Url.AppendPathSegment(request.Id);
+            var CartURL = _appCartURL.AppendPathSegment(request.Id);
             try
             {
-                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<CartModel>(CartURL);
+                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(CartURL);
                 return getCustomerDetailsResponse;
             }
             catch (Exception ex)

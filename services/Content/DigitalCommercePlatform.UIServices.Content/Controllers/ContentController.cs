@@ -1,8 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
-using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -32,10 +31,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         {
         }
         [HttpGet]
-        [Route("cart")]
-        public async Task<ActionResult<GetCart.Response>> GetCartDetails(string id)
+        [Route("savedCart")]
+        public async Task<ActionResult<GetSavedCartDetails.Response>> GetSavedCartDetails(string id)
         {
-            var response = await Mediator.Send(new GetCart.Request(id)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetSavedCartDetails.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -49,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("activeCart")]
-        public async Task<ActionResult<GetCart.Response>> GetActiveCartDetails()
+        public async Task<ActionResult<GetSavedCartDetails.Response>> GetActiveCartDetails()
         {
             var response = await Mediator.Send(new GetActiveCart.Request()).ConfigureAwait(false);
             return Ok(response);

@@ -1,6 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
-using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -52,17 +52,17 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         }
         [Theory]
         [AutoDomainData]
-        public async Task GetCartDetails(ResponseBase<GetCart.Response> expected)
+        public async Task GetSavedCartDetails(ResponseBase<GetSavedCartDetails.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCart.Request>(),
+                       It.IsAny<GetSavedCartDetails.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
             var controller = GetController();
 
-            var result = await controller.GetCartDetails("12").ConfigureAwait(false);
+            var result = await controller.GetSavedCartDetails("12").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
