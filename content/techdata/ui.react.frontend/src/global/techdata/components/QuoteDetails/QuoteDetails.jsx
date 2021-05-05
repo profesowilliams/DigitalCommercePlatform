@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import QuotesSubHeader from "../QuotesSubHeader/QuotesSubHeader";
 import QuoteContactInfo from "../QuoteContactInfo/QuoteContactInfo";
 import QuoteSubtotal from "../QuoteSubtotal/QuoteSubtotal";
+import { getUrlParams } from "../../../../utils";
 import { get } from "../../../../utils/api";
 
 const QuoteDetails = ({ componentProp }) => {
@@ -15,11 +16,13 @@ const QuoteDetails = ({ componentProp }) => {
         uiServiceEndPoint,
     } = JSON.parse(componentProp);
     useEffect(async () => {
+        const getDetailsId = ({ id }) => id;
+        const id = getDetailsId(getUrlParams());
         const {
             data: {
                 content: { details },
             },
-        } = await get(uiServiceEndPoint);
+        } = await get(`${uiServiceEndPoint}&id=${id}`);
         setQuoteDetails(details);
     }, []);
 

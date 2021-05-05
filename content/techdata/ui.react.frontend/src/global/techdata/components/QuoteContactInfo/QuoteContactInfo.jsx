@@ -14,8 +14,10 @@ const QuoteContactInfo = ({ label, company, contact }) => {
         country = "",
         email = "",
         phoneNumber = "",
-    } = contact;
-    const street = `${line1}\n ${line2}\n ${line3}`;
+    } = contact || {};
+    const street = `${line1 ? line1 : ""}\n ${line2 ? line2 : ""}\n ${
+        line3 ? line3 : ""
+    }`;
     return (
         <section className='cmp-quote-address-info'>
             <div className='cmp-quote-address-info__title'>{label}</div>
