@@ -68,16 +68,23 @@
 }
 
 .cmp-myconfigurations{
-  .cmp-dcp-widget-chart__title{
-    margin: 0;
-    padding-bottom: rem(15px);
-  }
-  .cmp-dcp-widget-chart__body{
+  .cmp-dcp-widget-chart{
+    &__title{
+      margin: 0;
+      padding-bottom: rem(15px);
+    }
+    &__body{
       display: flex;
+      justify-content: space-between;
+    }
+    &__legend{
+      margin-top: rem(20px);
+    }
+    &__sub-title{
+      padding-right: 0;
+    }
   }
-  .cmp-dcp-widget-chart__legend{
-    margin-top: rem(20px);
-  }
+  
   .cmp-dcp-widget-chart__chart{
     position: relative;
     &-row{
