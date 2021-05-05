@@ -11,34 +11,32 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var vendorLabel = res.properties["vendorLabel"];
             var internalUrl = res.properties["internalUrl"];
-            var externalUrl = res.properties["externalUrl"];
             var extendedOption = res.properties["extendedOption"];
             var itemData = {};
-            itemData.vendorLabel = vendorLabel;
-            itemData.internalUrl = internalUrl;
+            itemData.label = vendorLabel;
+            itemData.url = internalUrl;
             itemData.extendedOption = extendedOption;
-            itemData.externalUrl = externalUrl;
 
-            itemData.extendedOptionList = [];
-            var childNode = resourceResolver.getResource(res.getPath() + '/extendedOptionList');
-            if(childNode != null){
-                var childNodeList = childNode.getChildren();
-                for (var [childkey, childRes] in Iterator(childNodeList)) {
-                    var itemDataChild = {};
-                    var extendedItemLabel = childRes.properties["extendedItemLabel"];
-                    var extendedInternalUrl = childRes.properties["extendedInternalUrl"];
-                    var extendedExternalUrl = childRes.properties["extendedExternalUrl"];
-                    itemDataChild.extendedItemLabel = extendedItemLabel;
-                    itemDataChild.extendedInternalUrl = extendedInternalUrl;
-                    itemDataChild.extendedExternalUrl = extendedExternalUrl;
-                    itemData.extendedOptionList.push(itemDataChild);
+            if(extendedOption == "true"){
+                itemData.urls = [];
+                var childNode = resourceResolver.getResource(res.getPath() + '/extendedOptionList');
+                if(childNode != null){
+                    var childNodeList = childNode.getChildren();
+                    for (var [childkey, childRes] in Iterator(childNodeList)) {
+                        var itemDataChild = {};
+                        var extendedItemLabel = childRes.properties["extendedItemLabel"];
+                        var extendedUrl = childRes.properties["extendedUrl"];
+                        itemDataChild.label = extendedItemLabel;
+                        itemDataChild.url = extendedUrl;
+                        itemData.urls.push(itemDataChild);
+                    }
                 }
             }
             listValues.push(itemData);
         }
     }
     if (properties.get("createConfigTitle") != null) {
-        jsonObject.put("createConfigTitle", properties.get("createConfigTitle"));
+        jsonObject.put("label", properties.get("createConfigTitle"));
     }
 
     if (properties.get("placeholderText") != null) {
@@ -46,11 +44,11 @@ use(function () {
     }
 
     if (properties.get("buttonLabel") != null) {
-        jsonObject.put("buttonLabel", properties.get("buttonLabel"));
+        jsonObject.put("buttonTitle", properties.get("buttonLabel"));
     }
 
     if (listValues != null) {
-        jsonObject.put("VendorsList", listValues);
+        jsonObject.put("optionsList", listValues);
     }
     return {
         configJson: jsonObject.toString()
