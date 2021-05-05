@@ -2,8 +2,8 @@
      data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
     <div id="megamenu" class="cmp-megamenu">
         <ol class="cmp-megamenu__primary" aria-multiselectable="false" data-sly-list="${model.firstLevelMenuItems}">
-            <li>
-                <a data-cmp-clickable="true" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
+            <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.linkUrl}">
+                <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
             </li>
         </ol>
         <sly data-sly-list.nav="${model.firstLevelMenuItems}">
