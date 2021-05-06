@@ -40,11 +40,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 
         public async Task<ActiveCartModel> GetActiveCartDetails()
         {
-            var CartURL = _appCartURL;
             try
             {
-                var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(CartURL);
-                var totalQunatity= getActiveCartResponse.Lines.Where(x=>x.Quantity!=null).ToList().Sum(o => o.Quantity);
+                var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(_appCartURL);
+                var totalQunatity= getActiveCartResponse.Items.Where(x=>x.Quantity!=0).ToList().Sum(o => o.Quantity);
                 getActiveCartResponse.TotalQuantity = totalQunatity;
                 return getActiveCartResponse;
             }
