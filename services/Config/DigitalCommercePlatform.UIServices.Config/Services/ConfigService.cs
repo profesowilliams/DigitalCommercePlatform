@@ -66,13 +66,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 lstConfigurations = lstConfigurations.Where(x => x.EndUserName == request.Criteria.EndUserFilter);
             }
-            if (request.Criteria.CreationDateFromFilter != null)
+            if (request.Criteria.CreatedFrom != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.Criteria.CreationDateFromFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.Criteria.CreatedFrom);
             }
-            if (request.Criteria.CreationDateToFilter != null)
+            if (request.Criteria.CreatedTo != null)
             {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.Criteria.CreationDateToFilter);
+                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.Criteria.CreatedTo);
             }
 
             return await Task.FromResult(lstConfigurations.ToList());

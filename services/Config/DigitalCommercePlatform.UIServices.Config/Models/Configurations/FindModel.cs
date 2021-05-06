@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string ConfigurationNameFilter { get; set; }
         public string EndUserFilter { get; set; }
         public string ConfigurationTypeFilter { get; set; }
-        public DateTime? CreationDateFromFilter { get; set; }
-        public DateTime? CreationDateToFilter { get; set; }
+        public DateTime? CreatedFrom { get; set; }
+        public DateTime? CreatedTo { get; set; }
     }
 }
