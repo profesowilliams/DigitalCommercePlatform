@@ -54,8 +54,8 @@ function Grid({ columnDefinition, config, data }) {
 	async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
 		// check if there are additional query params in url, append grid specific params
 		const url = new URL(config.uiServiceEndPoint);
-		const pages = `pageSize=${pageSize ?? 10}&pageNumber=${pageNumber ?? 1}`;
-		const sortParams = sortKey && sortDir ? `&sortDirection=${sortDir}&sortByColumnKey=${sortKey}` : '';
+		const pages = `PageSize=${pageSize ?? 10}&PageNumber=${pageNumber ?? 1}`;
+		const sortParams = sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : '';
 		let apiUrl = `${url.origin}${url.pathname}${url.search}`;
 		url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
 		const response = await get(apiUrl);
@@ -129,8 +129,8 @@ function Grid({ columnDefinition, config, data }) {
 					</AgGridReact>
 				</Fragment>
 			) : (
-				<Fragment> Loading... </Fragment>
-			)}
+					<Fragment> Loading... </Fragment>
+				)}
 		</div>
 	);
 }
