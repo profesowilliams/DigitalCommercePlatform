@@ -4,12 +4,12 @@ import { getUrlParams } from "../../../../utils";
 
 const QuotesSubHeader = ({ label, title }) => {
     const urlParams = getUrlParams();
-    const getQuoteId = ({ tdQuoteId }) => tdQuoteId;
+    const getQuoteId = ({ id }) => id;
 
     return (
         <div className='cmp-td-quote-subheader'>
             <div className='cmp-td-quote-subheader__sub-title'>
-                {urlParams.hasOwnProperty("tdQuoteId") ? (
+                {urlParams.hasOwnProperty("id") ? (
                     <>
                         <span>{label}</span> {getQuoteId(urlParams)}
                     </>
