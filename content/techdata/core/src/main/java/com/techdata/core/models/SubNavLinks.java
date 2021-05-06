@@ -99,6 +99,13 @@ public class SubNavLinks {
         }
     }
 
+    SubNavLinks(String name, String pageUrl, String rootParentTitle ){
+        this.pageTitle = name;
+        this.pagePath = pageUrl;
+        this.rootParentTitle = rootParentTitle;
+
+    }
+
     public List<SubNavLinks> getSubNavLinkslist(){
         return subNavLinkslist;
     }
