@@ -54,6 +54,7 @@
                                                     text="Link to New tab"
                                                     uncheckedValue="false"
                                                     value="true"/>
+
                                                 <navigationRoot
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                         fieldLabel=" Navigation Root"
@@ -96,6 +97,12 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="External URL"
                                                                 name="./externalUrl"/>
+                                                        <sessionID
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="session ID"
+                                                                name="./sessionID"/>
+
                                                     </items>
                                                 </column>
 											</items>

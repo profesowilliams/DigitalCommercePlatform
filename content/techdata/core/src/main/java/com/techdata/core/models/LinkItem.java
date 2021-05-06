@@ -64,6 +64,9 @@ public class LinkItem {
     @Inject
     private String externalUrl;
 
+    @Inject
+    private String sessionID;
+
 
     List<SubNavLinks> subLinks = new ArrayList<>();
     private List<SubNavLinks> tertiarySubNavLinks = new ArrayList<>();
@@ -98,7 +101,7 @@ public class LinkItem {
                 conn.setRequestProperty("Site", "NA");
                 conn.setRequestProperty("Consumer", "NA");
                 conn.setRequestProperty("Accept-Language", "en-us");
-                conn.setRequestProperty("sessionid", "siddit06");
+                conn.setRequestProperty("sessionid", sessionID);
                 if (conn.getResponseCode() != 200) {
                     throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
                 }
