@@ -22,8 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string CreatedBy { get; set; }
             public string QuoteIdFilter { get; set; }
             public string ConfigIdFilter { get; set; }
-            public DateTime? QuoteCreationDateFilter { get; set; }
-            public DateTime? QuoteExpirationDateFilter { get; set; }
+            public DateTime? CreatedFrom { get; set; }
+            public DateTime? CreatedTo { get; set; }
             public string SortBy { get; set; }
             public bool? SortAscending { get; set; }
             public int? PageSize { get; set; } = 25;
@@ -71,8 +71,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         // Filters
                         Id = request.QuoteIdFilter,
                         // ??? = request.ConfigIdFilter, // JH: I'm not able to find which field allows me to filter by ConfigId in App-Quote
-                        CreatedTo = request.QuoteCreationDateFilter,
-                        ExpiresTo = request.QuoteExpirationDateFilter,
+                        CreatedTo = request.CreatedFrom,
+                        ExpiresTo = request.CreatedTo,
                     };
                     if (request.SortAscending != null) { query.SortAscending = (bool)request.SortAscending; }
 
