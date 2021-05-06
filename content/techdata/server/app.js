@@ -664,31 +664,31 @@ app.get("/details", (req, res) => {
                 },
                 endUser: {
                     id: null,
-                    name: "SHI INTERNATIONAL CORP",
-                    line1: null,
+                    name: "Tony Stark",
+                    line1: "10880 Malibu Point",
                     line2: null,
                     line3: null,
-                    city: null,
-                    state: null,
+                    city: "Malibu",
+                    state: "CA",
                     zip: null,
-                    postalCode: null,
-                    country: null,
-                    email: null,
-                    phoneNumber: null,
+                    postalCode: "90069",
+                    country: "United States",
+                    email: "ironman@avengers.com",
+                    phoneNumber: "(310) 440-7300",
                 },
                 reseller: {
                     id: null,
-                    name: "SHI INTERNATIONAL CORP",
-                    line1: "290 Davidson Ave",
-                    line2: " ",
+                    name: "Wade Wilson",
+                    line1: "9071 Santa Monica Blvd",
+                    line2: null,
                     line3: null,
-                    city: "Somerset",
-                    state: "NJ",
-                    zip: "08873-4145",
-                    postalCode: null,
-                    country: "US",
-                    email: null,
-                    phoneNumber: null,
+                    city: "West Hollywood",
+                    state: "CA",
+                    zip: null,
+                    postalCode: "90069",
+                    country: "United States",
+                    email: "dpool@sismargarets.com",
+                    phoneNumber: "(424) 777-8399",
                 },
                 source: null,
                 notes: null,
@@ -826,6 +826,36 @@ app.get("/details", (req, res) => {
                 subTotal: 5150.92,
                 subTotalFormatted: "5,150.92",
                 tier: "Commercial",
+            },
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false,
+        },
+    });
+});
+
+app.get("/myorders", (req, res) => {
+    if (!req.headers["sessionid"])
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+    res.json({
+        content: {
+            items: {
+                isMonthly: false,
+                currencyCode: "USD",
+                currencySymbol: "$",
+                processedOrderPercentage: "26",
+                processedOrdersAmount: 268,
+                totalOrderAmount: 529,
+                totalFormattedAmount: "529.00",
+                processedFormattedAmount: "268.00",
             },
         },
         error: {

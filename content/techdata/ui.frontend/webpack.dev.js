@@ -428,7 +428,6 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/partials/quotes/end-user-info.html"
                 ),
             }),
-
             new HtmlWebpackPlugin({
                 filename: "td-quote-subheader",
                 template: path.resolve(
@@ -760,12 +759,31 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-				filename: 'create-config',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/create-config.html')
-			}),
+                filename: "gauge-chart",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                        "/static/partials/gauge-chart/gauge-chart.html"
+                ),
+            }),
             new HtmlWebpackPlugin({
-                filename: 'orders-grid',
-                template: path.resolve(__dirname, SOURCE_ROOT + '/static/orders-grid-demo.html')
+                filename: "my-orders-widget-react",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/my-orders-widget-react.html"
+                ),
+                filename: "create-config",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/create-config.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "orders-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/orders-grid-demo.html"
+                ),
             }),
         ],
         devServer: {
