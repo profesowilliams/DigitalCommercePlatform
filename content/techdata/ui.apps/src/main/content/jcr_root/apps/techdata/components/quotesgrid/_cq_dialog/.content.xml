@@ -116,6 +116,11 @@
 																	   text="Sortable"
 																	   uncheckedValue="false"
 																	   value="{Boolean}true"/>
+                                                                <sortable-typehint
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                                        name="./sortable@TypeHint"
+                                                                        value="Boolean"/>
                                                             </items>
                                                         </column>
                                                     </items>
