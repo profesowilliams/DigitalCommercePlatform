@@ -14,9 +14,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
         {                 
             CreateMap<SavedCartDetailsModel, SavedCartsResponse>()
             .ForMember(dest => dest.Id, src => src.MapFrom(src => src.Source.Id))
+            .ForMember(dest => dest.system, src => src.MapFrom(src => src.Source.system))
             .ForMember(dest => dest.Name, src => src.MapFrom(src => src.Name));
 
-           CreateMap<List<SavedCartsResponse>, GetCartsList.Response>()
+            CreateMap<List<SavedCartsResponse>, GetCartsList.Response>()
             .ForMember(d => d.Items, s => s.MapFrom(src => src))
             .ForMember(d => d.TotalRecords, s => s.MapFrom(src => src.Count()));
         }

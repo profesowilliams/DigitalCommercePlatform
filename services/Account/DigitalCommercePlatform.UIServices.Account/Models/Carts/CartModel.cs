@@ -14,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Carts
     public class SavedCartsResponse
     {
         public string Id { get; set; }
+        public string system { get; set; }
         public string Name { get; set; }
     }
 
@@ -21,5 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Carts
     public class SourceModel
     {
         public string Id { get; set; }
+        public string system { get; set; }
     }
 }
