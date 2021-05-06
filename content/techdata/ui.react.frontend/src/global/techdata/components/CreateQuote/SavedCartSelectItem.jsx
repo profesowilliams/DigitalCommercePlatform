@@ -18,10 +18,10 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
     if( !selected )
       return alert('Select an item to continue');
     const getCart = `${cartdetailsEndpoint}?id=${selected.id}`
-    const { data: { content: { data } }, error: { isError } } = await usGet(getCart, { });
+    const { data: { content: { data }, error: { isError } } } = await usGet(getCart, { });
     if( isError ) return alert('Error');
     if( data ){
-      if(data.numberOfLines && data.numberOfLines > 0){
+      if(data.items && data.items.length > 0){
         alert('Create from valid cart')
         // onClick();
       }else{

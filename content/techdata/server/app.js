@@ -620,16 +620,20 @@ app.get("/cart", function (req, res) {
             },
         });
 
-    res.json({
-        content: {
-            data: null,
-        },
-        error: {
-            code: 0,
-            messages: [],
-            isError: false,
-        },
-    });
+    res.json(
+        {"content":
+        {
+            "data":{
+                "items":[
+                    {"itemId":"100","parentItemId":"0","productId":"11189283","quantity":1},
+                    {"itemId":"200","parentItemId":"0","productId":"11272301","quantity":1}
+                ],
+                "source":{
+                    "id":"96721203","system":"Shop"},
+                    "name":"ParentlineNo"}
+                },
+                "error":{"code":0,"messages":[],"isError":false}}
+    );
 });
 
 app.get("/details", (req, res) => {

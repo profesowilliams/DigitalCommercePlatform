@@ -45,7 +45,9 @@
     function selectPrimaryItem(event){
       var target = event.target;
       if( target.dataset.cmpClickable !== 'true') return; // avoid everything if there is no menu attached to this item
-      event.preventDefault();
+      
+      if( event.type === 'click' && target.href === '' )
+        event.preventDefault();
       clearItems(MenuPrimary, ' li a.' + ActiveTabClass, ActiveTabClass);
       target.classList.add(ActiveTabClass);
       var navSecondaryItems = navigation.querySelectorAll('.cmp-megamenu__tabpanel');
