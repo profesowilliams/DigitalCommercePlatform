@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Techdata.Common.Utility.CarrierTracking;
 using Techdata.Common.Utility.CarrierTracking.Model;
+using Techdata.Common.Utility.Globalization;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 {
@@ -15,6 +17,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public OrderProfile()
         {
+            CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
+
             CreateMap<OrderModel, RecentOrdersModel>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
@@ -49,7 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
         {
-            return $"{source.Price} {source.Currency}";
+            return source.Price.HasValue ? CurrencyHelper.GetFormattedAmount(source.Price.Value) : string.Empty; 
         }
     }
 
