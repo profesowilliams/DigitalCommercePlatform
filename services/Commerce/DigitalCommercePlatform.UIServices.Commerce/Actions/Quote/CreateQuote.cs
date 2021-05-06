@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using FluentValidation;
@@ -10,6 +12,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,45 +34,39 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
         public class Response
         {
-            public QuoteModel QuoteModel { get; }
-
-            public Response(QuoteModel quoteModel)
-            {
-                QuoteModel = quoteModel;
-            }
+            public string Id { get; set; }
+            public string Confirmation { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IMiddleTierHttpClient _httpClient;
+            private readonly ICommerceService _quoteService;
+            private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
-            private readonly IOptions<AppSettings> _appSettings;
 
-            private readonly string _appQuoteKey;
-
-            public Handler(IOptions<AppSettings> appSettings, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
+            public Handler(ICommerceService quoteService, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
             {
-                _httpClient = httpClient;
+                _quoteService = quoteService;
+                _mapper = mapper;
                 _logger = logger;
-                _appSettings = appSettings;
-                _appQuoteKey = "App.Quote.Url";
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
+                var result = await _quoteService.CreateQuote(request);
+                var content = new Response
                 {
-                    var baseUrl = _appSettings.Value.GetSetting(_appQuoteKey);
-                    var url = baseUrl + "/Create";
-                    var result = await _httpClient.PostAsync<QuoteModel>(url, null, request.CreateModel);
-                    var response = new Response(result);
-                    return new ResponseBase<Response> { Content = response };
-                }
-                catch (Exception ex)
+                    Id = result.Id,
+                    Confirmation = result.Confirmation,
+                };
+                var response = new ResponseBase<Response> { Content = content };
+                foreach (var message in result?.Messages)
                 {
-                    _logger.LogError(ex, $"Error getting quote data in {nameof(CreateQuote)}");
-                    throw;
+                    response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
+                    response.Error.IsError = true;
+                    response.Error.Messages.Add(message.Value);
                 }
+                return response;
             }
 
             public class Validator : AbstractValidator<Request>

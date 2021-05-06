@@ -225,6 +225,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return await Task.FromResult(response);
         }
 
+        public async Task<CreateModelResponse> CreateQuote(CreateQuote.Request request)
+        {
+            var url = _appQuoteServiceUrl + "/Create";
+            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(url, null, request.CreateModel);
+            return response;
+        }
+
         public async Task<CreateQuoteFrom.Response> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
             _ = PopulateCreateQuoteRequestFromActiveCart(request.CreateModelFrom);
