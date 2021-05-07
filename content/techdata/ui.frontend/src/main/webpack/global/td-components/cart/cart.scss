@@ -4,6 +4,8 @@
 .cmp-cart{
     width: rem(36px); 
     height: rem(32px);
+    display: inline-block;
+    text-decoration: none;
 
     &__icon{
         position: absolute;
@@ -27,6 +29,8 @@
             color: get_color('brand-white');
             span {
                 margin-left: 18%;
+                text-decoration: none;
+                color: get-color(brand-white);
             }
         }
     }

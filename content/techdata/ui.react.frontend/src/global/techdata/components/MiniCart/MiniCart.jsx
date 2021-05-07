@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { usGet } from '../../../../utils/api';
 
+const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
+  const className = `cmp-cart ${cartActive}`;
+  if( cartActive )
+    return <a href={shopUrl} className={className}>{children}</a>
+  
+  return <div className={className}>{children}</div>
+}
+
 const MiniCart = ({componentProp}) => {
-  const { maxItems, endpoint } = JSON.parse(componentProp);
+  const { maxItems, endpoint, shopUrl } = JSON.parse(componentProp);
   const [cartItems, setCartItems] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   useEffect(async() => {
@@ -16,16 +24,16 @@ const MiniCart = ({componentProp}) => {
     setCartActive(newActive);
   },[cartItems]);
   return (
-    <div className={`cmp-cart ${cartActive}`}>
-      <div className="cmp-cart__icon">
+    <MiniCartWrapper shopUrl={shopUrl} cartActive={cartActive} >
+      <span className="cmp-cart__icon">
         <i className="fas fa-shopping-cart fa-2x"></i>
-      </div>
-      <div className="cmp-cart__number">
+      </span>
+      <span className="cmp-cart__number">
         <span>
           { maxItems && maxItems < cartItems ? `${maxItems}+` : cartItems }
         </span>
-      </div>
-    </div>
+      </span>
+    </MiniCartWrapper>
   )
 };
 
