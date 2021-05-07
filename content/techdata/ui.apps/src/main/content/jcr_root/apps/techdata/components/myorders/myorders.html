@@ -1,0 +1,11 @@
+
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<div id="MyQuotes" data-observe-mutation>
+    <div data-component="MyOrdersWidget" data-cmp-type="react" className="cmp-mydeals-widget" data-config='{"label" : "${properties.label @ i18n}", "endpoint": "${properties.uiServiceEndPoint}"}'>
+    </div>
+</div>
+
+

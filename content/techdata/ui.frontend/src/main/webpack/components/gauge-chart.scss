@@ -1,0 +1,40 @@
+@import "main";
+.cmp-gauge-chart {
+    width: rem(450px);
+    font-family: "Open Sans", sans-serif;
+    justify-content: space-between;
+    display: flex;
+    // height: rem(55px);
+    align-items: center;
+    margin: 0 15px;
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    &__title {
+        font-size: $font-size-small;
+        text-transform: uppercase;
+        color: get-color(text-mid-gray);
+        width: rem(115px);
+        align-self: baseline;
+    }
+    &__orders-processed {
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        width: auto;
+        margin: rem(30px) auto 0;
+        &--number {
+            font-size: $font-size-custom-large;
+            color: get-color(td-lightblue);
+            margin-right: rem(20px);
+        }
+        &--title {
+            font-size: $font-size-custom-midi;
+            color: get-color(brand-blue);
+        }
+    }
+}

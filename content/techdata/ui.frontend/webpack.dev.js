@@ -772,6 +772,8 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/my-orders-widget-react.html"
                 ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "create-config",
                 template: path.resolve(
                     __dirname,
