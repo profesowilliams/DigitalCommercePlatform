@@ -20,7 +20,7 @@ const MyOrdersWidget = ({ componentProp }) => {
                         data,
                         value,
                         backgroundColor: ["#33C0E1", "#E6E6E6"],
-                        borderWidth: 0,
+                        borderWidth: 1,
                     },
                 ],
             },
@@ -31,14 +31,14 @@ const MyOrdersWidget = ({ componentProp }) => {
                 },
                 layout: {
                     padding: {
-                        bottom: 50,
+                        bottom: 35,
                     },
                 },
                 needle: {
-                    radiusPercentage: 2,
-                    widthPercentage: 3.2,
+                    radiusPercentage: 1.5,
+                    widthPercentage: 3,
                     lengthPercentage: 80,
-                    color: "rgba(0, 0, 0, 1)",
+                    color: "rgba(0, 12, 33, 1)",
                 },
                 valueLabel: {
                     display: false,
@@ -69,15 +69,11 @@ const MyOrdersWidget = ({ componentProp }) => {
 
     return myOrders ? (
         <>
-            <div>
+            <div className='cmp-gauge-chart-wrap'>
                 <div className='cmp-gauge-chart'>
                     <div className='cmp-gauge-chart__title'>My Orders</div>
                 </div>
-                <div
-                    id='canvas-holder'
-                    className='cmp-gauge-chart'
-                    style={{ width: "25%" }}
-                >
+                <div id='canvas-holder'>
                     <canvas id='chart' ref={chartRef} />
                 </div>
                 <div className='cmp-gauge-chart'>

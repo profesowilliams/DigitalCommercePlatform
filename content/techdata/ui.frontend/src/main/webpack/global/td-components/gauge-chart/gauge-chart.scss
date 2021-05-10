@@ -1,16 +1,22 @@
-.cmp-gauge-chart {
+@import './../../variables';
+
+.cmp-gauge-chart-wrap {
     width: rem(450px);
-    font-family: "Open Sans", sans-serif;
-    justify-content: space-between;
-    display: flex;
-    // height: rem(55px);
-    align-items: center;
     margin: 0 15px;
+
     canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
+        width: 350px !important;
+        height: auto !important;
+        margin: 0 auto;
     }
+.cmp-gauge-chart {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin: 0;
 
     &__title {
         font-size: $font-size-small;
@@ -25,7 +31,7 @@
         display: flex;
         flex-wrap: wrap;
         width: auto;
-        margin: rem(30px) auto 0;
+        margin: 0 auto;
         &--number {
             font-size: $font-size-custom-large;
             color: get-color(td-lightblue);
@@ -36,4 +42,5 @@
             color: get-color(brand-blue);
         }
     }
+}
 }
