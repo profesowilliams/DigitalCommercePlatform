@@ -621,20 +621,32 @@ app.get("/cart", function (req, res) {
             },
         });
 
-    res.json(
-        {"content":
-        {
-            "data":{
-                "items":[
-                    {"itemId":"100","parentItemId":"0","productId":"11189283","quantity":1},
-                    {"itemId":"200","parentItemId":"0","productId":"11272301","quantity":1}
+    res.json({
+        content: {
+            data: {
+                items: [
+                    {
+                        itemId: "100",
+                        parentItemId: "0",
+                        productId: "11189283",
+                        quantity: 1,
+                    },
+                    {
+                        itemId: "200",
+                        parentItemId: "0",
+                        productId: "11272301",
+                        quantity: 1,
+                    },
                 ],
-                "source":{
-                    "id":"96721203","system":"Shop"},
-                    "name":"ParentlineNo"}
+                source: {
+                    id: "96721203",
+                    system: "Shop",
                 },
-                "error":{"code":0,"messages":[],"isError":false}}
-    );
+                name: "ParentlineNo",
+            },
+        },
+        error: { code: 0, messages: [], isError: false },
+    });
 });
 
 app.get("/details", (req, res) => {
@@ -651,6 +663,7 @@ app.get("/details", (req, res) => {
             details: {
                 shipTo: {
                     id: null,
+                    companyName: "SHI INTERNATIONAL CORP",
                     name: "SHI INTERNATIONAL CORP",
                     line1: "290 Davidson Ave",
                     line2: " ",
@@ -665,6 +678,7 @@ app.get("/details", (req, res) => {
                 },
                 endUser: {
                     id: null,
+                    companyName: "SHI INTERNATIONAL CORP",
                     name: "Tony Stark",
                     line1: "10880 Malibu Point",
                     line2: null,
@@ -679,6 +693,7 @@ app.get("/details", (req, res) => {
                 },
                 reseller: {
                     id: null,
+                    companyName: "SHI INTERNATIONAL CORP",
                     name: "Wade Wilson",
                     line1: "9071 Santa Monica Blvd",
                     line2: null,

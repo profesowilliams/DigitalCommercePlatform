@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const QuoteContactInfo = ({ label, company, contact }) => {
-    const { name: companyName } = company;
+const QuoteContactInfo = ({ label, contact }) => {
     const {
         name = "",
+        companyName = "",
         line1 = "",
         line2 = "",
         line3 = "",
@@ -49,11 +49,9 @@ export default QuoteContactInfo;
 
 QuoteContactInfo.propTypes = {
     label: PropTypes.string.isRequired,
-    company: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-    }),
     contact: PropTypes.shape({
         name: PropTypes.string,
+        companyName: PropTypes.string,
         line1: PropTypes.string,
         line2: PropTypes.string,
         line3: PropTypes.string,

@@ -27,7 +27,6 @@ const QuoteDetails = ({ componentProp }) => {
     }, []);
 
     const {
-        shipTo,
         reseller,
         endUser,
         subTotalFormatted,
@@ -37,16 +36,8 @@ const QuoteDetails = ({ componentProp }) => {
     return quoteDetails ? (
         <>
             <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
-            <QuoteContactInfo
-                label={resellerContactLabel}
-                company={shipTo}
-                contact={reseller}
-            />
-            <QuoteContactInfo
-                label={endUserContactLabel}
-                company={shipTo}
-                contact={endUser}
-            />
+            <QuoteContactInfo label={resellerContactLabel} contact={reseller} />
+            <QuoteContactInfo label={endUserContactLabel} contact={endUser} />
             <QuoteSubtotal
                 label={subtotalLabel}
                 amount={subTotalFormatted}
