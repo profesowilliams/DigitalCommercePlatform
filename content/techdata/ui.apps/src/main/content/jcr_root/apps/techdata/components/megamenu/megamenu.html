@@ -2,8 +2,8 @@
      data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
     <div id="megamenu" class="cmp-megamenu">
         <ol class="cmp-megamenu__primary" aria-multiselectable="false" data-sly-list="${model.firstLevelMenuItems}">
-            <li>
-                <a data-cmp-clickable="true" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
+            <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.linkUrl}">
+                <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="true" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
             </li>
         </ol>
         <sly data-sly-list.nav="${model.firstLevelMenuItems}">
@@ -12,8 +12,8 @@
                 <nav id="navigation-0e123bccd2" class="cmp-navigation" role="navigation" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
                     <div class="cmp-megamenu__wrapper cmp-megamenu__secondary">
                         <ul class="cmp-navigation__group" data-sly-list="${nav.secondaryMenuItems}">
-                            <li class="cmp-navigation__item cmp-navigation__item--level-0">
-                                <a href="${item.pagePath}" title="Config" data-cmp-clickable="true" data-cmp-children="menu ${item.menuID}" class="cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}">
+                            <li class="cmp-navigation__item cmp-navigation__item--level-0" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">
+                                <a href="${urlHelper.url  @ context='html'}" title="Config" data-cmp-clickable="true" data-cmp-children="menu ${item.menuID}" class="cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}">
                                     <i data-sly-test="${nav.enableSecondaryIcon == 'true'}" class="${item.pageIcon}"></i>${item.pageTitle}
                                 </a>
                             </li>
@@ -23,8 +23,8 @@
                         <div class="cmp-megamenu__wrapper-item ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}" data-cmp-parent="menu ${item.menuID}" data-sly-test="${item.hasChildPages}">
                             <h4 class="cmp-megamenu-level-title">${item.rootParentTitle} Home</h4>
                             <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
-                                <li class="cmp-navigation__item cmp-navigation__item--level-1">
-                                    <a href="" title="${item.pageTitle}" data-cmp-clickable="${item.hasChildPages}" class="cmp-navigation__item-link" data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
+                                <li class="cmp-navigation__item cmp-navigation__item--level-1" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">
+                                    <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" data-cmp-clickable="${item.hasChildPages}" class="cmp-navigation__item-link" data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
                                         ${item.pageTitle}<i class="fas fa-chevron-right"></i>
                                     </a>
                                 </li>
@@ -38,8 +38,8 @@
                         <div class="cmp-megamenu__wrapper-item" data-cmp-parent="menu ${item.menuID}">
                             <h4 class="cmp-megamenu-level-title"><i class="fas fa-chevron-left"></i> ${item.pageTitle}</h4>
                             <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
-                                <li class="cmp-navigation__item cmp-navigation__item--level-2" data-cmp-data-layer="{&quot;navigation-0e123bccd2-item-734f73b286&quot;:{&quot;@type&quot;:&quot;core/wcm/components/navigation/v1/navigation/item&quot;,&quot;repo:modifyDate&quot;:&quot;2021-03-17T08:17:44Z&quot;,&quot;dc:title&quot;:&quot;Config&quot;,&quot;xdm:linkURL&quot;:&quot;/content/core-components-examples/config.html&quot;}}">
-                                    <a href="" title="${item.pageTitle}" class="cmp-navigation__item-link">
+                                <li class="cmp-navigation__item cmp-navigation__item--level-2" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}" data-cmp-data-layer="{&quot;navigation-0e123bccd2-item-734f73b286&quot;:{&quot;@type&quot;:&quot;core/wcm/components/navigation/v1/navigation/item&quot;,&quot;repo:modifyDate&quot;:&quot;2021-03-17T08:17:44Z&quot;,&quot;dc:title&quot;:&quot;Config&quot;,&quot;xdm:linkURL&quot;:&quot;/content/core-components-examples/config.html&quot;}}">
+                                    <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" class="cmp-navigation__item-link">
                                         ${item.pageTitle}
                                     </a>
                                 </li>

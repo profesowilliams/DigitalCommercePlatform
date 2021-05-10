@@ -3,6 +3,9 @@
 .cmp-cart{
   width: rem(36px);
   height: rem(32px);
+  display: inline-block;
+  text-decoration: none;
+
   &__icon{
     position: absolute;
     color: get_color('brand-light-blue');
@@ -10,6 +13,7 @@
   &__number{
     display: none;
   }
+
   &__active{
     .cmp-cart__icon{
       color: get_color('brand-blue');
@@ -24,6 +28,8 @@
       color: get_color('brand-white');
       span {
         margin-left: 18%;
+        text-decoration: none;
+        color: get-color(brand-white);
       }
     }
   }

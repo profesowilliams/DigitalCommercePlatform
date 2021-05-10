@@ -9,6 +9,9 @@ use(function () {
     if (properties.get("endpoint") != null) {
         jsonObject.put("endpoint", properties.get("endpoint"));
     }
+    if (properties.get("shopUrl") != null) {
+        jsonObject.put("shopUrl", properties.get("shopUrl"));
+    }
 
     return {
         configJson: jsonObject.toString()
