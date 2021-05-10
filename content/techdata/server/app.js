@@ -466,9 +466,10 @@ app.get("/dealsSummary", function (req, res) {
 
 //---QUOTES GRID MOCK API---//
 app.get("/ui-commerce/v1/quote/", function (req, res) {
+    console.log(req);
     const details = req.query.details || true;
-    const pageSize = req.query.pageSize || 10;
-    const pageNumber = req.query.pageNumber || 1;
+    const pageSize = req.query.PageSize || 10;
+    const pageNumber = req.query.PageNumber || 1;
     const items = [];
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
@@ -494,8 +495,8 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
         content: {
             items: items,
             totalItems: 2500,
-            pageCount: 25,
-            pageSize,
+            pageCount: 10,
+            pageSize: pageSize,
         },
         error: {
             code: 0,

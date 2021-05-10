@@ -102,11 +102,10 @@ function Grid({ columnDefinition, config, data }) {
 						pagination={pagination}
 						paginationPageSize={config.itemsPerPage}
 						cacheBlockSize={config.itemsPerPage}
-						maxBlocksInCache={100}
+						maxBlocksInCache={config.itemsPerPage}
 						rowModelType={serverSide ? 'serverSide' : 'clientSide'}
 						rowData={gridData}
 						onGridReady={onGridReady}
-						onBodyScroll={onBodyScroll}
 						serverSideDatasource={createDataSource()}
 						serverSideStoreType={serverSide ? 'partial' : 'full'}
 						rowSelection='single'
