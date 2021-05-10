@@ -1,11 +1,11 @@
+@import './mixins';
+
+//$OpenSansVersion: "1.101" !default;
 //== REM SASS Mixin
 $rem-baseline: 16px;
 
 //== Font
 $font-base-path: '../resources/fonts';
-$font-primary-path: $font-base-path + '/Speedee';
-$icomoon-font-family: 'icomoon';
-$icomoon-font-path: '../resources/fonts/icomoon/fonts';
 
 $fontawsome-font-family: 'fontawsome';
 $fontawsome-font-path: '../resources/fonts/fontawsome';
@@ -13,6 +13,7 @@ $fontawsome-font-path: '../resources/fonts/fontawsome';
 $font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
 	sans-serif;
 
+$font-primary-path: '../resources/fonts/OpenSans';
 $open-sans: "Open Sans", sans-serif;
 
 //== Techdata Color Palette

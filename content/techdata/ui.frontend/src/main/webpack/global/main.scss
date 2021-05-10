@@ -3,7 +3,6 @@
 @import 'sass-rem/_rem.scss';
 @import 'normalize-scss';
 @include normalize();
-@import '../resources/fonts/icomoon/style.scss';
 @import './styles/helpers/*.scss';
 @import './styles/*.scss';
 @import './core-components/**/*.scss';
