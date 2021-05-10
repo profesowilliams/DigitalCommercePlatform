@@ -93,9 +93,10 @@ function Grid({ columnDefinition, config, data }) {
 			{gridData ? (
 				<Fragment>
 					<div className={`page-info ${config.paginationStyle === 'scroll' ? 'visible' : 'hidden'}`}>
-						<span>
+						{config.paginationStyle === 'pages' ? (<span>
 							{actualRange.from} - {actualRange.to} of {totalCount}
-						</span>
+						</span>) : <></>
+						}
 					</div>
 					<AgGridReact
 						frameworkComponents={renderers}
