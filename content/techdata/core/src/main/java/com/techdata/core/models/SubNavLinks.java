@@ -113,7 +113,7 @@ public class SubNavLinks {
             hasChildPages = "true";
             JsonElement subNavrecordElement = subNavelements.next();
             String subNavname = subNavrecordElement.getAsJsonObject().get("name").toString().replace("\"", "");
-            String subNavpageUrl = externalUrl+subNavrecordElement.getAsJsonObject().get("key").toString();
+            String subNavpageUrl = externalUrl+subNavrecordElement.getAsJsonObject().get("key").toString().replace("\"", "");
             JsonArray subNavchildren = (JsonArray) subNavrecordElement.getAsJsonObject().get("children");
             SubNavLinks quaduaryLink = new SubNavLinks(subNavname, subNavpageUrl, this.rootParentTitle, subNavchildren, externalUrl);
             this.subNavLinkslist.add(quaduaryLink);
