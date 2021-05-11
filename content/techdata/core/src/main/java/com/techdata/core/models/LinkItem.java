@@ -69,6 +69,7 @@ public class LinkItem {
 
 
     List<SubNavLinks> subLinks = new ArrayList<>();
+
     private List<SubNavLinks> tertiarySubNavLinks = new ArrayList<>();
 
     @PostConstruct
@@ -124,15 +125,18 @@ public class LinkItem {
                     while (elements.hasNext()) {
                         JsonElement recordElement = elements.next();
                         String name = recordElement.getAsJsonObject().get("name").toString().replace("\"", "");
-                        String pageUrl = externalUrl+recordElement.getAsJsonObject().get("key").toString();
-                        SubNavLinks link = new SubNavLinks(name, pageUrl, platformName);
+                        String pageUrl = externalUrl+recordElement.getAsJsonObject().get("key").toString().replace("\"", "");
+                        JsonArray children = (JsonArray) recordElement.getAsJsonObject().get("children");
+                        SubNavLinks link = new SubNavLinks(name, pageUrl, platformName, children, externalUrl);
                         subLinks.add(link);
+                        for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
+                        {
+                            this.tertiarySubNavLinks.add(tertiaryLink);
+                        }
+
                     }
 
                 }
-                Gson gson = new GsonBuilder().create();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

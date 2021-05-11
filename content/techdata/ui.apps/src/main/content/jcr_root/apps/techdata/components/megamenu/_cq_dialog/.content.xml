@@ -54,14 +54,20 @@
                                                     text="Link to New tab"
                                                     uncheckedValue="false"
                                                     value="true"/>
-
-                                                <navigationRoot
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                        fieldLabel=" Navigation Root"
-                                                        fieldDescription="Enter link"
+                                                <column1
+                                                        granite:class="navigation-root-config"
                                                         jcr:primaryType="nt:unstructured"
-                                                        rootPath="/content/techdata"
-                                                        name="./navigationRoot" />
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <navigationRoot
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                fieldLabel=" Navigation Root"
+                                                                fieldDescription="Enter link"
+                                                                jcr:primaryType="nt:unstructured"
+                                                                rootPath="/content/techdata"
+                                                                name="./navigationRoot" />
+                                                    </items>
+                                                </column1>
 												<enableSecondaryIcon
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                         text="Enable Secondary Menu Icons"

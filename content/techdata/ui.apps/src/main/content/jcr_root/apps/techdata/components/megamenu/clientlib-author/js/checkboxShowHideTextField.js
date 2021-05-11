@@ -29,7 +29,10 @@
 
     function showHide(component, element) {
         var target = $(element).data("cqDialogCheckboxShowhideTarget");
+        console.log(target);
         var $target = $(target);
+        var newTarget = ".navigation-root-config";
+        var $newTarget = $(newTarget);
 
 
 
@@ -37,6 +40,13 @@
             $target.addClass("hide");
             if (component.checked) {
                 $target.removeClass("hide");
+            }
+        }
+
+        if (newTarget) {
+            $newTarget.removeClass("hide");
+            if (component.checked) {
+                $newTarget.addClass("hide");
             }
         }
     }

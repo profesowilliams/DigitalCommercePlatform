@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-
+import com.google.gson.*;
 
 public class SubNavLinks {
     protected static final Logger log = LoggerFactory.getLogger(SubNavLinks.class);
@@ -99,11 +99,26 @@ public class SubNavLinks {
         }
     }
 
-    SubNavLinks(String name, String pageUrl, String rootParentTitle ){
+    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl ){
         this.pageTitle = name;
         this.pagePath = pageUrl;
         this.rootParentTitle = rootParentTitle;
+        childJsonIterator(children, externalUrl);
 
+    }
+
+    public void childJsonIterator(JsonArray children, String externalUrl){
+        Iterator<JsonElement> subNavelements = children.iterator();
+        while (subNavelements.hasNext()) {
+            hasChildPages = "true";
+            JsonElement subNavrecordElement = subNavelements.next();
+            String subNavname = subNavrecordElement.getAsJsonObject().get("name").toString().replace("\"", "");
+            String subNavpageUrl = externalUrl+subNavrecordElement.getAsJsonObject().get("key").toString();
+            JsonArray subNavchildren = (JsonArray) subNavrecordElement.getAsJsonObject().get("children");
+            SubNavLinks quaduaryLink = new SubNavLinks(subNavname, subNavpageUrl, this.rootParentTitle, subNavchildren, externalUrl);
+            this.subNavLinkslist.add(quaduaryLink);
+
+        }
     }
 
     public List<SubNavLinks> getSubNavLinkslist(){
