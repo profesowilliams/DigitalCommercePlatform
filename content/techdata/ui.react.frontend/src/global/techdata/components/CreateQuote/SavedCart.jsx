@@ -18,6 +18,9 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpo
   const nextStep = () => {
     setStep(1);
   }
+  const prevStep = () => {
+    setStep(0)
+  }
 
   const manuallyCreateQuote = () => {
     //this alert should be a endpoint to validate the cart name provided by the user
@@ -33,7 +36,7 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpo
     <>
       <WidgetTitle>
         { step > 0 ? 
-          <a onClick={() => setStep(0) }><i className="fas fa-chevron-left"></i> {method.title}</a> : 
+          <a onClick={prevStep}><i className="fas fa-chevron-left"></i> {method.title}</a> : 
           method.title 
         }
       </WidgetTitle>

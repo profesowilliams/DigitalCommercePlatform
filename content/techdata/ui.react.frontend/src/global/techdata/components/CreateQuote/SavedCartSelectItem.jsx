@@ -9,10 +9,13 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
   const onChange = (el) => {
     setSelected(el);
   }
-  useEffect(async() => {
-    const { data: { content: { items } } } = await usGet(cartslistEndpoint, { });
-    if(items)
-      setCartList(items)
+  useEffect(() => {
+    const getData = async () => {
+      const { data: { content: { items } } } = await usGet(cartslistEndpoint, { });
+      if(items)
+        setCartList(items)
+    }
+    getData()
   },[])
   const onNext = async () => {
     if( !selected )
