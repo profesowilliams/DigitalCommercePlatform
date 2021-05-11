@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     {
         Task<GetCartHandler.Response> GetCartDetails(GetCartHandler.Request request);
 
-        Task<List<CategoryModel>> GetCatalogDetails(GetCatalogHandler.Request request);
+        Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request);
 
         Task<IEnumerable<CustomerModel>> GetCustomerDetails();
 

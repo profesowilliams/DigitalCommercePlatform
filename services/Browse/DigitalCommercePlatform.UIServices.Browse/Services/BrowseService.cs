@@ -1,7 +1,15 @@
-﻿using DigitalCommercePlatform.UIService.Browse.Model.Customer;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIService.Browse.Model.Customer;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
@@ -12,13 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
-using DigitalFoundation.Common.Contexts;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -33,13 +35,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly ILogger<BrowseService> _logger;
         private readonly ICachingService _cachingService;
         private readonly IUIContext _uiContext;
+        private readonly IMapper _mapper;
 
-        public BrowseService(IMiddleTierHttpClient middleTierHttpClient, ICachingService cachingService, ILogger<BrowseService> logger, IOptions<AppSettings> options, IUIContext uiContext)
+        public BrowseService(IMiddleTierHttpClient middleTierHttpClient, 
+            ICachingService cachingService, 
+            ILogger<BrowseService> logger, 
+            IOptions<AppSettings> options, 
+            IUIContext uiContext,
+            IMapper mapper
+            )
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _cachingService = cachingService;
             _logger = logger;
+            _mapper = mapper;
             _coreCartURL = options?.Value.GetSetting("App.Cart.Url");
             _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
             _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
@@ -77,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
         }
 
-        public async Task<List<CategoryModel>> GetCatalogDetails(GetCatalogHandler.Request request)
+        public async Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request)
         {
             var CatalogURL = _appCatalogURL.BuildQuery(request);
             try
@@ -85,8 +95,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
                 if (getCatalogResponse == null)
                 {
-                 getCatalogResponse = await _middleTierHttpClient.GetAsync<List<CategoryModel>>(CatalogURL);
-                 await _cachingService.SetCatalogCache(getCatalogResponse, request.Id);
+                    var response = await _middleTierHttpClient.GetAsync<CatalogDto>(CatalogURL).ConfigureAwait(false);
+                    if (response != null && response.Catalogs.Any())
+                    {
+                        var tempResponse = _mapper.Map<CatalogModel>(response);                        
+                        getCatalogResponse = new List<CatalogResponse>();
+                        var objCatalogResponse = new CatalogResponse
+                        {
+                            Key = request.Id,
+                            Name = null,
+                            DocCount = 0, //Fix This
+                            Children = tempResponse.Catalogs
+                        };
+
+                        getCatalogResponse.Add(objCatalogResponse);
+                        await _cachingService.SetCatalogCache(getCatalogResponse, request.Id);
+                    }
+
                 }
                 return getCatalogResponse;
             }

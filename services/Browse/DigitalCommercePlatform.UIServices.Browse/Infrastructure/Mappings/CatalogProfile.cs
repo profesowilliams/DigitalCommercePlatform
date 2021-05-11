@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIService.Browse.DTO.Catalog;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
-using DigitalCommercePlatform.UIService.Browse.DTO.Catalog.Internal;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
@@ -12,9 +10,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
     {
         public CatalogProfile()
         {
-            CreateMap<CatalogHierarchyDto, CatalogHierarchyModel>();
-            CreateMap<SourceDto, SourceModel>();
-            CreateMap<NodeDto, NodeModel>();
+            CreateMap<CategoryModel, CatalogResponse>()
+               .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Id))
+               .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+               .ForMember(dest => dest.DocCount, opt => opt.MapFrom(src => src.ProductCount));
+
+            CreateMap<CatalogDto, CatalogModel>()
+                .ForPath(dest => dest.Catalogs, opt => opt.MapFrom(src => src.Catalogs.FirstOrDefault().Categories));
         }
     }
 }

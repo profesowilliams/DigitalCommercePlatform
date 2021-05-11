@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
         public class Response
         {
-            public List<CategoryModel> Items { get; set; }
+            public List<CatalogResponse> Items { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>

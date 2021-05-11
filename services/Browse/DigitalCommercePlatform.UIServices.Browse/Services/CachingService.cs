@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
@@ -22,9 +22,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _logger = logger;
         }
 
-        public Task<List<CategoryModel>> GetCatalogFromCache(string cacheKey)
+        public Task<List<CatalogResponse>> GetCatalogFromCache(string cacheKey)
         {
-            List<CategoryModel> catalog = null;
+            List<CatalogResponse> catalog = null;
             try
             {
                 if (_cache.TryGetValue(cacheKey, out catalog))
@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return Task.FromResult(catalog);
         }
 
-        public Task<bool> SetCatalogCache(List<CategoryModel> Catalog, string cacheKey)
+        public Task<bool> SetCatalogCache(List<CatalogResponse> Catalog, string cacheKey)
         {
             try
             {
