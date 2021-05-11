@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public DateTime? CreatedFrom { get; set; }
             public DateTime? CreatedTo { get; set; }
             public string SortBy { get; set; }
-            public bool? SortAscending { get; set; }
+            public string SortDirection { get; set; }
             public int? PageSize { get; set; } = 25;
             public int? PageNumber { get; set; } = 1;
             public bool? WithPaginationInfo { get; set; } = true;
@@ -64,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     {
                         CreatedBy = request.CreatedBy,
                         SortBy = request.SortBy,
-                        SortAscending = request.SortAscending,
+                        SortAscending = string.IsNullOrWhiteSpace(request.SortDirection) ? false : request.SortDirection.ToLower().Equals("asc") ? true : false,
                         Page = request.PageNumber,
                         PageSize = request.PageSize,
                         WithPaginationInfo = request.WithPaginationInfo,
@@ -74,8 +74,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         CreatedTo = request.CreatedFrom,
                         ExpiresTo = request.CreatedTo,
                     };
-                    if (request.SortAscending != null) { query.SortAscending = (bool)request.SortAscending; }
-
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
                     getProductResponse = new Response

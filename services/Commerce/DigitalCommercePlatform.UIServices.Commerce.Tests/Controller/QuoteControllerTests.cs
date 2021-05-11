@@ -226,7 +226,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                 QuoteIdFilter = "123",
                 ConfigIdFilter = "123",
                 SortBy = "123",
-                SortAscending = true,
+                SortDirection = "asc",
                 PageSize = 1,
                 PageNumber = 10,
                 WithPaginationInfo = true,

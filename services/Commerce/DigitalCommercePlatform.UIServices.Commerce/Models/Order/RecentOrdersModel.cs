@@ -13,7 +13,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string ShipTo { get; set; }
         public string Type { get; set; }
         public string Price { get; set; }
-        public string PriceFormatted { get { return string.Format("{0:N2}", Price); } } 
+        public string PriceFormatted { get { return string.Format("{0:N2}", Price); } }
+        public string Currency { get; set; } = "USD";
+        public string CurrencySymbol { get; set; } = "$";
         public string Status { get; set; }
         public string Invoice { get; set; }
         public string IsReturn { get; set; }

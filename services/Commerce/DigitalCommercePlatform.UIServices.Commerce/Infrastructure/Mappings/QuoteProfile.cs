@@ -73,7 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src.Agreements))
              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
              .ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src.Price))
-             .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => src.Currency)) 
+             .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => string.Format(src.Price % 1 == 0 ? "{0:N2}" : "{0:N2}", src.Price))) 
              .ForMember(dest => dest.CanUpdate, opt => opt.MapFrom(src => string.Join( "","true")))
              .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join( "","True")));
 

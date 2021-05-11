@@ -193,10 +193,44 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             return getrandom.Next(min, max);
         }
+        
+        private string GetParameterName(string parameter)
+        {
+            var sortBy = string.Empty;
+            if (string.IsNullOrEmpty(parameter))
+            {
+                sortBy= string.Empty;
+            }
+            if (parameter.ToLower()=="id")
+            {
+                sortBy ="Source.OriginId";
+            }
+            else if (parameter.ToLower() == "created")
+            {
+                sortBy ="Created";
+            }
+            else if (parameter.ToLower() == "quotevalue")
+            {
+                sortBy= "Price";
+            }
+            else if (parameter.ToLower() == "updated")
+            {
+                sortBy = "Updated";
+            }
+            else
+            {
+                sortBy= "Created";
+            }
+            return sortBy;
 
+        }
         public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query)
         {
+            query.SortBy = GetParameterName(query.SortBy);
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
+            //we need to fix this issue 
+            quoteURL = quoteURL.ToString().Replace("=False","=false");
+            quoteURL = quoteURL.ToString().Replace("=True","=true");
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
             return getQuoteResponse;
         }
