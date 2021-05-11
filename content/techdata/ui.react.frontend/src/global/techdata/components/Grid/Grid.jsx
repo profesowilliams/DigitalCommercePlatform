@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
@@ -7,6 +7,7 @@ function Grid({ columnDefinition, config, data }) {
 	const [gridData, setGridData] = useState(data ?? null);
 	const [totalCount, setTotalCount] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null });
+	const range = useRef(null);
 
 	const pagination = config.paginationStyle && config.paginationStyle !== 'none' && config.paginationStyle !== 'scroll';
 	const serverSide = config.serverSide || true;
@@ -40,7 +41,17 @@ function Grid({ columnDefinition, config, data }) {
 				const sortDir = params.request.sortModel?.[0]?.sort;
 				getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then((response) => {
 					setTotalCount(response.totalItems);
-
+					/*workaround for page info in infinite scroll mode
+						update 'to' only if currently retrieved last index is higher than the last one stored in reference
+						this will resolve issue when we already have loded in memory for example last page, but we are not yet loaded
+						pages in the middle of the list
+					*/
+					if (!range.current || range.current.to < pageNo * config.itemsPerPage)
+						range.current = {
+							from: 1,
+							to: pageNo * config.itemsPerPage,
+						};
+					setActualRange(range.current);
 					params.success({
 						rowData: response.items,
 						lastRow: response.totalItems,
@@ -56,10 +67,10 @@ function Grid({ columnDefinition, config, data }) {
 		const url = new URL(config.uiServiceEndPoint);
 		const pages = `PageSize=${pageSize ?? 10}&PageNumber=${pageNumber ?? 1}`;
 		const sortParams = sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : '';
-		let apiUrl = `${url.origin}${url.pathname}${url.search}`;
+		let apiUrl = `${url.origin}${url.pathname ?? ''}${url.search ?? ''}`;
 		url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
-		const response = await get(apiUrl);
 		console.log(apiUrl);
+		const response = await get(apiUrl);
 		if (!gridData) setGridData(response.data.content.items);
 		return response.data.content;
 	}
@@ -68,23 +79,14 @@ function Grid({ columnDefinition, config, data }) {
 		data.api.sizeColumnsToFit();
 	}
 
-	function onBodyScroll(data) {
-		const renderedNodes = data.api.getRenderedNodes();
-		const firstIndex = renderedNodes[0].rowIndex;
-		const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
-		setActualRange({
-			from: firstIndex + 1,
-			to: lastIndex + 1,
-		});
-	}
-
 	useEffect(() => {
 		getGridData();
 	}, []);
 
 	useEffect(() => {
-		if (gridData && !gridData.error?.isError) {
-			console.log(gridData);
+		if (gridData && gridData.error?.isError) {
+			// handle ui update for render error
+			console.error(gridData.error);
 		}
 	}, [gridData]);
 
@@ -93,10 +95,9 @@ function Grid({ columnDefinition, config, data }) {
 			{gridData ? (
 				<Fragment>
 					<div className={`page-info ${config.paginationStyle === 'scroll' ? 'visible' : 'hidden'}`}>
-						{config.paginationStyle === 'pages' ? (<span>
+						<span>
 							{actualRange.from} - {actualRange.to} of {totalCount}
-						</span>) : <></>
-						}
+						</span>
 					</div>
 					<AgGridReact
 						frameworkComponents={renderers}
@@ -129,8 +130,8 @@ function Grid({ columnDefinition, config, data }) {
 					</AgGridReact>
 				</Fragment>
 			) : (
-					<Fragment> Loading... </Fragment>
-				)}
+				<Fragment> Loading... </Fragment>
+			)}
 		</div>
 	);
 }
