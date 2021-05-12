@@ -3,6 +3,14 @@
 		data-component="SignIn"
 		data-cmp-type="react"
 		className="signin"
-		data-config='{"label": "Sign In", "authenticationURL":"http://localhost:3000", "uiServiceEndPoint": "http://localhost:3000/login", "clientId":"ecom.apps.web.aem.dit", "uiServiceEndPoint2":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-account/v1"}'
+		data-config='{
+			"label": "Sign In",
+			"myEcIdlabel":"test my ecid label",
+			"authenticationURL":"http://localhost:3000/", 
+			"uiServiceEndPoint": "http://localhost:3000/login",
+			"clientId":"testciendID",
+			"myEcId":"testECID",
+			"items":[{"linkTitle":"My Dashboard","linkUrl":"/dashboard","iconUrl":"fa fa-user"},{"linkTitle":"Reseller Tools","linkUrl":"/reseller-tools","iconUrl":"fa fa-calculator"},{"linkTitle":"Favorites","linkUrl":"/favorites","iconUrl":"fa fa-heart"}, {"linkTitle":"Account Settings","linkUrl":"/account-settings","iconUrl":"fa fa-cog"}]
+		}'
 	></div>
 </div>

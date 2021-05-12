@@ -1,7 +1,4 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
@@ -14,6 +11,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var sut = new SortingService();
 
             var result = sut.IsPropertyValid("wrong");
+
+            Assert.False(result);
+        }
+
+        [Fact(DisplayName = "Validation failed with incorect sorting order value")]
+        public void ValidationFailedWithIncorectSortingOrderValue()
+        {
+            var sut = new SortingService();
+
+            var result = sut.IsSortingDirectionValid("aaaasssscccc");
 
             Assert.False(result);
         }
@@ -36,6 +43,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.True(result);
         }
 
+        [Theory(DisplayName = "Validation succeed with correct sorting order value")]
+        [InlineData("asc")]
+        [InlineData("ASC")]
+        [InlineData("desc")]
+        [InlineData("DESC")]
+        [InlineData("")]
+        [InlineData(null)]
+        public void ValidationSucceedWithCorrectSortingOrderValue(string sortingValue)
+        {
+            var sut = new SortingService();
+
+            var result = sut.IsSortingDirectionValid(sortingValue);
+
+            Assert.True(result);
+        }
+
         [Fact(DisplayName = "Valid properties text is successfully generated")]
         public void ValidPropertiesTextIsSuccessfullyGenerated()
         {
@@ -44,6 +67,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var result = sut.GetValidProperties();
 
             Assert.Equal("Id , ShipTo , Created , Type , Price , Status", result);
+        }
+
+        [Fact(DisplayName = "Valid sorting values text is successfully generated")]
+        public void ValidSortingValuesTextIsSuccessfullyGenerated()
+        {
+            var sut = new SortingService();
+
+            var result = sut.GetValidSortingValues();
+
+            Assert.Equal("asc , desc", result);
         }
 
         [Theory(DisplayName = "Sort by created date when no sorting value is provided")]
@@ -81,6 +114,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var sut = new SortingService();
 
             var sortingProperty = sut.GetSortingProperty(argument);
+
+            Assert.Equal(matchingValue, sortingProperty);
+        }
+
+        [Theory(DisplayName = "Sort by ordering value that is matching to provided argument")]
+        [InlineData("asc", true)]
+        [InlineData("ASC", true)]
+        [InlineData("desc", false)]
+        [InlineData("DESC", false)]
+        [InlineData("", true)]
+        [InlineData(null, true)]
+        public void SortByOrderingValueThatIsMatchingToProvidedArgument(string argument, bool matchingValue)
+        {
+            var sut = new SortingService();
+
+            var sortingProperty = sut.IsSortingDirectionAscending(argument);
 
             Assert.Equal(matchingValue, sortingProperty);
         }

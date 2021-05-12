@@ -2,10 +2,12 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
@@ -14,6 +16,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
@@ -23,6 +26,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Account.Actions.ShipToAddress;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -32,15 +38,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _configurationsServiceUrl;
         private readonly string _dealsServiceUrl;
         private readonly string _quoteServiceURL;
+        private readonly string _cartServiceURL;
+        private readonly string _customerServiceURL;
+        private readonly IUIContext _uiContext;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
 
-        public AccountService(IOptions<AppSettings> options, ILogger<AccountService> logger)
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options, ILogger<AccountService> logger
+            , IUIContext uiContext)
         {
+            _uiContext = uiContext;
+            _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
             _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
+            _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
+            _customerServiceURL= options?.Value.GetSetting("App.Customer.Url");
         }
 
 
@@ -53,61 +68,103 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     EndUserName = a.EndUserName,
                     Amount = a?.Amount,
                     FormattedAmount = a.FormattedAmount,
-                    CurrencyCode = a.CurrencyCode
+                    CurrencyCode = a.CurrencyCode,
+                    CurrencySymbol = a.CurrencySymbol
                 }).ToList();
             return openItems;
         }
 
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
-                       var response = new ConfigurationsSummaryModel
-                {
-                    Quoted = 14,
-                    UnQuoted = 30,
-                    OldConfigurations = 25
-                };
-                return await Task.FromResult(response);
+            var response = new ConfigurationsSummaryModel
+            {
+                Quoted = 14,
+                UnQuoted = 30,
+                OldConfigurations = 25
+            };
+            return await Task.FromResult(response);
 
         }
+
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
             var response = new List<DealsSummaryModel>();
             var objDeal = new DealsSummaryModel();
-            
+
             for (int i = 1; i < 4; i++)
             {
                 objDeal = new DealsSummaryModel
                 {
-                     Value = i * GetRandomNumber(1, 3)
+                    Value = i * GetRandomNumber(1, 3)
                 };
                 response.Add(objDeal);
+
             }
             return await Task.FromResult(response);
         }
 
-        public async Task<CartModel> GetSavedCartListAsync(GetCartsList.Request request)
+        public async Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request)
         {
+            var deals = new List<OpenResellerItems>();
+            for (int i = 0; i < 5; i++)
+            {
+                OpenResellerItems deal = new OpenResellerItems();
+                var randomNumber = GetRandomNumber(100, 600);
+                deal.EndUserName = "End User " + randomNumber.ToString();
+                deal.Amount = (randomNumber * 100);
+                deal.CurrencyCode = "USD";
+                deal.CurrencySymbol = "$";
+                deal.FormattedAmount = string.Format(deal.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", deal.Amount);
+                deals.Add(deal);
+            }
+           
+            deals = AddSequenceNumber(deals);
+            var response = new DealModel
+             {
+                    Items = deals
+            };
+            return await Task.FromResult(response);
+        }
 
-            var carts = new List<SavedCart>();
+        public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)
+        {
+            var savedCartURL = _cartServiceURL.AppendPathSegment("listsavedcarts");
+            try
+            {
+                var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
+                return response;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
+                return null;
+            }
+        }
+
+        
+        public async Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request)
+        {
+            var items = new List<GetConfigurationsForItem>();
+            var randomNumber = GetRandomNumber(100, 600);
             for (int i = 0; i < 20; i++)
             {
-                SavedCart cart = new SavedCart();
-                var randomNumber = GetRandomNumber(1000, 6000);
-                cart.Id = randomNumber;
-                cart.Name = "CartId : " + randomNumber.ToString();                    
-                carts.Add(cart);
+                var item = new GetConfigurationsForItem
+                {
+                    Id = randomNumber + i
+                };
+                item.Name = $"{request.RequestType} : {item.Id}";
+                items.Add(item);
             }
-            UserSavedCartsModel savedCarts = new UserSavedCartsModel
+
+            var result = new GetConfigurationsForModel
             {
-                Items = carts,
-                TotalNumberOfSavedCarts = carts.Count 
+                Items = items,
+                TotalNumberOfConfigurationsItems = items.Count
             };
-            var savedCartResponse = new CartModel
-            {
-                UserSavedCarts = savedCarts                
-            };
-            return await Task.FromResult(savedCartResponse);
+            
+            return await Task.FromResult(result);
         }
+
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
@@ -128,13 +185,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         public async Task<ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
         {
             var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.CurrencySymbol = "$";
                 openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
@@ -152,43 +210,33 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
-            try
-            {
-                //Returning dummy data for now as App-Service is not yet ready 
-                var url = _quoteServiceURL
-                        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
-                        .SetQueryParams(new
-                        {
+            //Returning dummy data for now as App-Service is not yet ready 
+            var url = _quoteServiceURL
+                    .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
+                    .SetQueryParams(new
+                    {
 
-                        });
+                    });
 
-                //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
 
-                //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
+            //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
 
-                //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
-                //response.EnsureSuccessStatusCode();
+            //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
+            //response.EnsureSuccessStatusCode();
 
-                //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
-                // return getQuoteResponse;
+            //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
+            // return getQuoteResponse;
 
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
-                throw ex;
-            }
-
-            
             var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 OpenResellerItems openItem = new OpenResellerItems();
                 var randomNumber = GetRandomNumber(100, 600);
                 openItem.EndUserName = "End User " + randomNumber.ToString();
                 openItem.Amount = (randomNumber * 100);
                 openItem.CurrencyCode = "USD";
+                openItem.CurrencySymbol = "$";
                 openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
                 openItems.Add(openItem);
             }
@@ -203,26 +251,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         }
         public async Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
         {
-            try
+            var MyQuotes = new MyQuotes();
             {
-                var MyQuotes = new MyQuotes();
-                {
-                    var randomNumber = GetRandomNumber(100, 600);
-                    MyQuotes.QuoteToOrder = "5:2";
-                    MyQuotes.Open = GetRandomNumber(10, 60);
-                    MyQuotes.Converted = string.Format("{0:N2}", (randomNumber/100))+" %";
-                    MyQuotes.ActiveQuoteValue = (randomNumber * 350);
-                    MyQuotes.CurrencyCode = "USD";
-                    MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
-                }
-                return await Task.FromResult(MyQuotes);
+                var randomNumber = GetRandomNumber(100, 600);
+                MyQuotes.QuoteToOrder = "5:2";
+                MyQuotes.Open = GetRandomNumber(10, 60);
+                MyQuotes.Converted = string.Format("{0:N2}", (randomNumber / 100)) + " %";
+                MyQuotes.ActiveQuoteValue = (randomNumber * 350);
+                MyQuotes.CurrencyCode = "USD";
+                MyQuotes.CurrencySymbol = "$";
+                MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
             }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetTopQuotesAsync)}: {nameof(AccountService)}");
-                throw ex;
-            }
-            
+            return await Task.FromResult(MyQuotes);
         }
         public async Task<List<RenewalsSummaryModel>> GetRenewalsSummaryAsync(GetRenewalsSummary.Request criteria)
         {
@@ -244,20 +284,37 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var totalAmount = GetRandomNumber(500, 700);
             var processedAmount = GetRandomNumber(100, 500);
-            var percentage = (totalAmount - processedAmount) *10/100;
+            var percentage = (totalAmount - processedAmount) * 10 / 100;
             var formatedTotalAmount = string.Format(totalAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", totalAmount);
             var formatedProcessced = string.Format(processedAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", processedAmount);
             var myOrders = new MyOrdersDashboard
             {
-               CurrencyCode="USD",
-               IsMontly=true,
-               ProcessedOrderPercentage= percentage.ToString(),
-               ProcessedOrdersAmount= processedAmount,
-               TotalOrderAmount = totalAmount,
-               TotalFormattedAmount = formatedTotalAmount,
-               ProcessedFormattedAmount = formatedProcessced,
+                CurrencyCode = "USD",
+                CurrencySymbol = "$",
+                IsMonthly = request.IsMonthly,
+                ProcessedOrderPercentage = percentage.ToString(),
+                ProcessedOrdersAmount = processedAmount,
+                TotalOrderAmount = totalAmount,
+                TotalFormattedAmount = formatedTotalAmount,
+                ProcessedFormattedAmount = formatedProcessced,
             };
             return await Task.FromResult(myOrders);
+        }
+
+        public async Task<IEnumerable<AddressDetails>> GetShipToAdress(GetShipToAddress.Request request)
+        {
+            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
+            try
+            {
+                var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
+                return null;
+            }
         }
     }
 }

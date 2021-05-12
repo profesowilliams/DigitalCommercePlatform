@@ -2,8 +2,10 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -67,6 +69,50 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 {
                     _logger.LogError(ex, $"Error getting quote data in {nameof(CreateQuote)}");
                     throw;
+                }
+            }
+
+            public class Validator : AbstractValidator<Request>
+            {
+                public Validator()
+                {
+                    RuleFor(r => r.CreateModel).Cascade(CascadeMode.Stop).NotNull()
+                        .ChildRules(request =>
+                        {
+                            request.RuleFor(c => c.SalesOrg).NotNull();
+                            request.RuleFor(c => c.TargetSystem).NotNull();
+                            request.RuleFor(c => c.Creator).NotNull();
+                            request.RuleFor(c => c.Type).NotNull();
+                            request.RuleForEach(c => c.Items).SetValidator(new ItemsValidator());
+                            request.RuleFor(c => c.CustomerPo).NotNull();
+                            request.RuleFor(c => c.EndUserPo).NotNull();
+                            request.RuleFor(c => c.EndUser).NotNull();
+                            request.RuleFor(c => c.VendorReference).NotNull();
+                            request.RuleFor(c => c.ShipTo).NotNull();
+                        });
+                }
+
+                public class ItemsValidator : AbstractValidator<ItemModel>
+                {
+                    public ItemsValidator()
+                    {
+                        RuleFor(c => c.Id).NotNull();
+                        RuleFor(c => c.Quantity).NotNull();
+                        RuleFor(c => c.TotalPrice).NotNull();
+                        RuleFor(c => c.UnitPrice).NotNull();
+                        RuleFor(c => c.UnitListPrice).NotNull();
+                        RuleForEach(c => c.Product).SetValidator(new ProductValidator());
+                    }
+                }
+
+                public class ProductValidator : AbstractValidator<ProductModel>
+                {
+                    public ProductValidator()
+                    {
+                        RuleFor(c => c.Id).NotNull().NotEmpty();
+                        RuleFor(c => c.Name).NotNull().NotEmpty();
+                        RuleFor(c => c.Type).NotNull().NotEmpty();
+                    }
                 }
             }
         }

@@ -16,7 +16,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public FindModel Criteria { get; set; }
+           public string DealId { get; set; }
+           public string VendorId { get; set; }
+            public Request(string dealId,string vendorId)
+            {
+                DealId = dealId;
+                VendorId = vendorId;
+            }
         }
 
         public class Response
@@ -42,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             {
                 try
                 {
-                    DealsDetailModel deal = await _configService.GetDealDetails(request.Criteria);
+                    DealsDetailModel deal = await _configService.GetDealDetails(request);
                     var getDealResponse = _mapper.Map<Response>(deal);
                     return new ResponseBase<Response> { Content = getDealResponse };
                 }

@@ -1,19 +1,26 @@
-.cmp-title--small{
+.cmp-widget .cmp-title--small{
   font-size: rem(14px);
   margin-bottom: rem(15.5px);
   font-weight: normal;
   text-transform: uppercase;
   color: get-color(text-mid-gray);
+  a{
+    color: get-color(text-mid-gray);
+    cursor: pointer;
+  }
 }
 
-.cmp-quote-button{
+.cmp-widget .cmp-quote-button{
   border: rem(1px) solid get-color(td-dark-blue);
-  color: get-color(td-dark-blue);
-  background-color: get-color(brand-white);
+  // color: get-color(td-dark-blue);
+  // background-color: get-color(brand-white);
+  background-color: get-color(td-dark-blue);
+  color: get-color(brand-white);
   font-size: rem(13px);
   padding: rem(6px) rem(25px);
   width: 100%;
   transition: all .3s;
+  cursor: pointer;
   &--active,
   &:hover{
     background-color: get-color(td-dark-blue);
@@ -21,10 +28,14 @@
   }
   &:disabled{
     opacity: .7;
+    cursor: default;
+    color: get-color(brand-text-gray);
+    background-color: get-color(v-divider-gray);
+    border: rem(1px) solid get-color(brand-light-gray2);
   }
 }
 
-.cmp-dropdown-custom{
+.cmp-widget .cmp-dropdown-custom{
   margin-bottom: rem(18px);
   position: relative;
   z-index: 1;
@@ -85,5 +96,44 @@
     .fa-chevron-right{
       display: none;
     }
+  }
+}
+
+.cmp-widget .cmp-text-input{
+  width: 100%;
+  display: block;
+  border: rem(1px) solid get-color(brand-light-gray2);
+  font-size: rem(12px);
+  padding: rem( 7px 10px );
+  color: get-color(text-mid-gray);
+}
+
+.cmp-widget .cmp-radio-button{
+  padding: rem(2px 0);
+  position: relative;
+  input{
+    margin: rem(0 15px 0 10px);
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+  }
+  label{
+    color: get-color(text-mid-gray);
+    &:before{
+      content: '';
+      position: relative;
+      display: inline-block;
+      width: rem(13px);
+      height: rem(13px);
+      margin: rem(4px 14px 0 10px);
+      border-radius: 50%;
+      border: rem(1px) solid get-color(text-mid-gray);
+      transition: all .15s;
+      background-color: get-color(brand-white);
+      box-sizing: border-box;
+    }
+  }
+  input:checked + label:before{
+    border: rem(5px) solid get-color(td-lightblue);
   }
 }

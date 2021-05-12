@@ -19,10 +19,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string CatalogCriteria { get; set; }
+            public bool IsDefault { get; set; } = true;
 
-            public Request( string catalogCriteria)
+            public Request( string catalogCriteria,bool isDefault)
             {
                 CatalogCriteria = catalogCriteria;
+                IsDefault = isDefault;
             }
         }
 

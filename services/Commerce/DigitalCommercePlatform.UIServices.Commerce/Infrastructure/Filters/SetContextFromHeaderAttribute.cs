@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
             {
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = validationErrors, Code = "432121" } // to agree about code
+                    Error = new ErrorInformation { IsError = true, Messages = validationErrors, Code = 432121 } // to agree about code
                 });
                 return;
             }

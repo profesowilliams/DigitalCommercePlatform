@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using FluentValidation;
@@ -21,22 +22,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
 
-            //public RequestHeaders Headers { get; set; }
-
             public Request(IReadOnlyCollection<string> id, bool details)
             {
                 Id = id;
                 Details = details;
-              // Headers = new RequestHeaders();
             }
         }
 
         public class Response 
         {
-            public QuoteModel Details { get; set; }
-            //public int? TotalItems { get; set; }
-            //public int PageNumber { get; set; }
-            //public int PageSize { get; set; }
+            public QuoteDetails Details { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
@@ -60,8 +55,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     var productDetails = await _commerceRepositoryServices.GetQuote(request).ConfigureAwait(false);
                     if (productDetails != null)
                     {
-
-                        getQuoteResponse = _mapper.Map<Response>(productDetails);
+                        getQuoteResponse.Details= _mapper.Map<QuoteDetails>(productDetails);
+                       
                     }
                     else 
                     {

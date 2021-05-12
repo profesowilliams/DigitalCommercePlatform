@@ -1,0 +1,9 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList'}">
+    <div data-component="QuotesGrid" data-cmp-type="react" className="cmp-quotes-grid" data-config="${listUse.configJson}">
+            </div>
+ </sly>
+
+

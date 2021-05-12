@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const userMenu = (props) => {
+  const [isActive, setDropdown] = useState(false);
+  const userDropDown = () => setDropdown(!isActive);
 
   const onSignOut = () => {
-		// clearing out local storage
-		localStorage.removeItem('signin');
-		localStorage.removeItem('signout');
-		localStorage.removeItem('userData');
-		localStorage.removeItem('signInCode');
-		window.location.href=window.location.protocol + "//" + window.location.hostname + window.location.pathname;
-    // window.location.href="http://localhost:8080/signin";
+    // clearing out local storage
+    localStorage.removeItem('signin');
+    localStorage.removeItem('signout');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('signInCode');
+    window.location.href = window.location.protocol +  "//" + window.location.hostname + (window.location.port === "80" ? "" : ":" + window.location.port) + window.location.pathname;
   };
-  const userDropDown = () => {
-    document.querySelector('.cmp-sign-in-list').classList.toggle('active');
-  }
 
   return (
     <React.Fragment>
@@ -21,18 +19,21 @@ const userMenu = (props) => {
         <i className='fas fa-user-alt'></i>
         {props.firstName}
       </button>
-      <div className='cmp-sign-in-list'>
-        <p>
-          <span>MY EC ID: {props.id}</span>
-        </p>
-        <p>{props.firstName}</p>
-        <p>{props.lastName}</p>
-        <p>{props.email}</p>
-        <p>{props.phone}</p>
-        <button className='cmp-sign-in-signout' onClick={onSignOut}>
-          Log Out
-        </button>
-      </div>
+      {isActive ? 
+        <div className='cmp-sign-in-list'>
+          <p className='ec-id'>
+            <span>MY EC ID: {props.id}</span>
+          </p>
+          <p>{props.firstName}</p>
+          <p>{props.lastName}</p>
+          <p>{props.email}</p>
+          <p>{props.phone}</p>
+          <button className='cmp-sign-in-signout' onClick={onSignOut}>
+            Log Out
+          </button>
+        </div>
+        : ''
+      }
     </React.Fragment>
   )
 }

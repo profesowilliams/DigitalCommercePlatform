@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
         public decimal Price { get; set; }
         public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
+        public string CurrencySymbol { get; set; } = "$";
         public string DocumentType { get; set; }
         public TypeModel Type { get; set; }
         public LevelModel Level { get; set; }

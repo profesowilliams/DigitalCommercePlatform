@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -25,9 +26,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public DateTime? QuoteExpirationDateFilter { get; set; }
             public string SortBy { get; set; }
             public bool? SortAscending { get; set; }
-            public int? PageSize { get; set; }
-            public int? PageNumber { get; set; }
-            public bool? WithPaginationInfo { get; set; }
+            public int? PageSize { get; set; } = 25;
+            public int? PageNumber { get; set; } = 1;
+            public bool? WithPaginationInfo { get; set; } = true;
 
             public Request()
             {
@@ -35,8 +36,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         }
         public class Response
         {
+            public long? TotalItems { get; set; }
+            public long? PageCount { get; set; }
+            public int? PageNumber { get; set; }
+            public int? PageSize { get; set; }
             public IEnumerable<QuotesForGridModel> Items { get; set; }
-            public long? Count { get; set; }
+
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -73,6 +78,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
+                    getProductResponse = new Response
+                    {
+                        Items = getProductResponse.Items,
+                        TotalItems = quoteDetails?.Count,
+                        PageNumber = request.PageNumber,
+                        PageSize = request.PageSize,
+                        PageCount = (quoteDetails?.Count + request.PageSize - 1) / request.PageSize
+
+                    };
                     return new ResponseBase<Response> { Content = getProductResponse };
                 }
                 catch (Exception ex)
@@ -80,6 +94,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
                     throw;
                 }
+            }
+        }
+        public class GetQuotesValidator : AbstractValidator<Request>
+        {
+            public GetQuotesValidator(ISortingService sortingService)
+            {
+                RuleFor(i => i.PageSize).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
+                RuleFor(i => i.PageNumber).GreaterThanOrEqualTo(0).WithMessage("PageNumber must be greater than or equal to 0.");
             }
         }
     }

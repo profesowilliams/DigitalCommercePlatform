@@ -62,9 +62,12 @@ import java.util.Collection;
 
         private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
         private String[] htmlClientLibCategories = null;
+        private String htmlXFClientLibCategory = null;
 
         @ObjectClassDefinition(name = "Techdata XF JS Servlet")
         public @interface XFJSServletConfig {
+            @AttributeDefinition(name = "XF JS Clientlibrary")
+            String xf_clientlib_category() default "techdata.xf";
             @AttributeDefinition(name = "JQuery Library")
             String jquery_path() default "jquery";
             @AttributeDefinition(name = "ClientLib Categories")
@@ -100,6 +103,8 @@ import java.util.Collection;
                     : "jquery";
             this.htmlClientLibCategories = (PropertiesUtil.toStringArray(config.clientlib_categories()) != null) ? PropertiesUtil.toStringArray(config.clientlib_categories())
                     : null;
+            this.htmlXFClientLibCategory = (String.valueOf(config.jquery_path()) != null) ? String.valueOf(config.xf_clientlib_category())
+                    : "techdata.xf";
 
         }
 
@@ -132,7 +137,7 @@ import java.util.Collection;
 
             LOG.debug("Getting deliveryJS...");
             out.print("var xfDeliveryObj = " + xfJson + ";");
-//            out.print(getXfDeliveryJs());
+            out.print(getXfDeliveryJs());
 
             LOG.debug("Exit XFJSServlet...");
 
@@ -176,7 +181,8 @@ import java.util.Collection;
         }
 
         private String getXfDeliveryJs() {
-            Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(new String[]{"site.xf-js"}, LibraryType.JS, true, true);
+
+            Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(new String[]{this.htmlXFClientLibCategory}, LibraryType.JS, true, true);
             StringWriter jsContentString = new StringWriter();
 
             LOG.info("Enter getXfDeliveryJs...");

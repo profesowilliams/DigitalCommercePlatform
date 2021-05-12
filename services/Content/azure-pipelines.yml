@@ -14,7 +14,7 @@ schedules:
     - develop
 
 pool:
-  name: 'CLW'
+  name: 'DC-Buildpool-Windows'
   workspace:
     clean: all
   
@@ -24,4 +24,5 @@ extends:
           projectSources: 'services/Content/DigitalCommercePlatform.UIServices.Content.sln'
           unitTestSources: 'services/Content/DigitalCommercePlatform.UIServices.Content.*/*Tests.csproj'
           projectKey: 'DC-DF-Content-UI'
-          projectName: 'DC-DF-Content-UI'          
+          projectName: 'DC-DF-Content-UI'              
+       

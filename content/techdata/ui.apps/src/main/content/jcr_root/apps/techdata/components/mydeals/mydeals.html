@@ -2,9 +2,13 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 
-<div id="MyDealsWidget" data-observe-mutation>
-    <div data-component="MyQuotes"
-         data-cmp-type="react"
-         class="mydeals__widget">
-</div>
-</div>
+<sly data-sly-use.model="${'mydeals.js'}">
+    <div id="MyDeals" data-observe-mutation>
+        <div
+            data-component="MyDeals"
+            data-cmp-type="react"
+            className="cmp-mydeals"
+            data-config="${model.configJson}"
+        ></div>
+    </div>
+</sly>

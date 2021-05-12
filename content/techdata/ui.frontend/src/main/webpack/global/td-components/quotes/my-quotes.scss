@@ -5,7 +5,7 @@
     font-family: 'Open Sans', sans-serif;
     justify-content: space-between;
     display: flex;
-    width: rem(475px);
+    // width: rem(553px);
     height: rem(55px);
     align-items: center;
     margin: 0 15px;
@@ -41,10 +41,11 @@
         justify-content: space-between;
         align-items: center;
         display: flex;
+        flex-wrap: wrap;
         width: auto;
         margin: rem(30px) auto 0;
         &--price {
-            font-size: $font-size-xlarge;
+            font-size: $font-size-custom-xlarge;
             color: get-color(td-primary-blue);
             margin-right: rem(20px);
         }

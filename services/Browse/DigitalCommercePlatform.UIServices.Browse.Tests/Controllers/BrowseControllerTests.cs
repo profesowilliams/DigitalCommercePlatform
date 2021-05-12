@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
            var controller = GetController();
 
-            var result = await controller.GetCartDetails("12", "12").ConfigureAwait(false);
+            var result = await controller.GetCartDetails(true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -84,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             var controller = GetController();
 
-            var result = await controller.GetCustomer("0038048612").ConfigureAwait(false);
+            var result = await controller.GetCustomer().ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -113,7 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetHeader("FCS").ConfigureAwait(false);
+            var result = await controller.GetHeader("FCS",true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

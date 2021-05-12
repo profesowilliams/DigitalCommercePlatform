@@ -1,12 +1,17 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
     public interface IConfigService
     {
-        Task<Models.Configurations.RecentConfigurationsModel> GetConfigurations(Models.Configurations.FindModel request);
-        Task<Models.Deals.RecentDealsModel> GetDeals(FindModel request);
-        Task<DealsDetailModel> GetDealDetails(FindModel request);
+        Task<List<Configuration>> GetConfigurations(GetConfigurations.Request request);
+        Task<List<Deal>> GetDeals(GetDeals.Request request);
+        Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
     }
 }

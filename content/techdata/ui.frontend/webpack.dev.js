@@ -15,6 +15,10 @@ module.exports = (env) => {
 		performance: { hints: 'warning' },
 		plugins: [
 			new HtmlWebpackPlugin({
+				filename: 'dashboard.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/dashboard.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'index.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/index.html')
 			}),
@@ -120,23 +124,17 @@ module.exports = (env) => {
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-expanded-item-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-item.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-expanded-items-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-expanded-items.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'accordion-single-expansion-comp',
-				template: path.resolve(
-					__dirname,
-					SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html'
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/accordion-footer/accordion-single-expansion.html'
 				),
 			}),
 			new HtmlWebpackPlugin({
@@ -192,10 +190,6 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-with-link.html')
 			}),
 			new HtmlWebpackPlugin({
-				filename: 'list-view',
-				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/list/list-view.html')
-			}),
-			new HtmlWebpackPlugin({
 				filename: 'article-list-page.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-page.html')
 			}),
@@ -220,6 +214,10 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/article-list/article-list-header.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'article-list-view',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/article-list-view.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'teaser-hero.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-hero.html')
 			}),
@@ -232,8 +230,31 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'top-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/top-quotes.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'my-renewals.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-renewals.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'Your Company Information',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/company-address-info.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'End User Information',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/end-user-info.html')
+			}),
+			
+			new HtmlWebpackPlugin({filename: 'td-quote-subheader', 
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subheader.html')
+			}),			
+			new HtmlWebpackPlugin({filename: 'td-quote-subtotal',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/td-quote-subtotal.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-deals.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-deals.html')
 			}),
 			new HtmlWebpackPlugin({
 				filename: 'sign-in.html',
@@ -288,9 +309,101 @@ module.exports = (env) => {
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/teaser-bigcards.html')
 			}),
 			new HtmlWebpackPlugin({
+				filename: 'top-five-open-config',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-config-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'top-five-open-deals',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-deals-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'top-five-open-quotes',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/top5-quotes-demo.html')
+			}),
+			new HtmlWebpackPlugin({
 				filename: 'quote.html',
 				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quote.html')
-			})
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-quotes-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-quotes-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-quotes.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/my-quotes-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'cart',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/cart/cart.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'cart-active',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/cart/cart-active.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'cart-demo',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/cart-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'megamenu.html',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/megamenu.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-renewals',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-renewals-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-demo',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/search.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-light-blue',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-light-blue.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-dark-blue',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-dark-blue.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-grey',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-grey.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'search-white',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/search/search-white.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'my-configurations',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/my-configurations.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'dropdown-menu-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/dropdown-menu-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'dropdown-menu-react-comp',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/dropdown-menu/dropdown-menu-react.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quotes-grid',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-grid-demo.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quotes-subheader-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-subheader.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'quotes-subheader-react-2',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/quotes-subheader-2.html')
+			}),
+			new HtmlWebpackPlugin({
+				filename: 'subheader-react',
+				template: path.resolve(__dirname, SOURCE_ROOT + '/static/partials/quotes/subheader-react.html')
+			}),
 		],
 		devServer: {
 			inline: true,

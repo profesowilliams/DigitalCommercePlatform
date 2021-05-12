@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
+using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Contexts;
@@ -49,8 +50,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         [Route("login")]
         public async Task<IActionResult> Authenticate(AuthenticateBodyRequest authenticateBodyRequest, [FromHeader] AuthenticateHeaderRequest authenticateHeaderRequest)
         {
-            var response = await Mediator.Send(new AuthenticateUser.Request(authenticateBodyRequest?.Code, authenticateBodyRequest?.RedirectUri, authenticateBodyRequest?.ApplicationName,
-               authenticateHeaderRequest?.TraceId, authenticateHeaderRequest?.Language, authenticateHeaderRequest?.Consumer, authenticateHeaderRequest?.SessionId));
+            var authenticateUserRequest = new AuthenticateUser.Request
+            {
+                 ApplicationName = authenticateBodyRequest?.ApplicationName,
+                 Code = authenticateBodyRequest?.Code,
+                 Consumer = authenticateHeaderRequest?.Consumer,
+                 Language = authenticateHeaderRequest?.Language,
+                 RedirectUri = authenticateBodyRequest?.RedirectUri,
+                 SessionId = authenticateHeaderRequest?.SessionId,
+                 TraceId = authenticateHeaderRequest?.TraceId
+            };
+
+            var response = await Mediator.Send(authenticateUserRequest);
 
             if (response.Error.IsError)
             {
@@ -60,25 +71,29 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
-        [HttpOptions("login")]
-        public IActionResult PreflightRoute()
-        {
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site");
-
-
-            return NoContent();
-        }
-
-
-
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout([FromHeader] string sessionId)
         {
             var response = await Mediator.Send(new LogoutUser.Request(sessionId));
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("activeCustomer")]
+        public async Task<IActionResult> ActiveCustomer(ActiveCustomerRequest activeCustomerRequest)
+        {
+            var response = await Mediator.Send(new ActiveCustomer.Request 
+            { 
+                CompanyNumber = activeCustomerRequest.CompanyNumber,
+                CompanyName = activeCustomerRequest.CompanyName
+            });
 
             if (response.Error.IsError)
             {

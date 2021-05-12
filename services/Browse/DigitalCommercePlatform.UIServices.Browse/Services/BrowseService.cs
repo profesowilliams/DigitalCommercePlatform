@@ -16,7 +16,6 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalFoundation.Common.Contexts;
 
@@ -51,11 +50,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         {
             try
             {
-                var customerRequest = new GetCustomerHandler.Request(_uiContext.User.Customers.FirstOrDefault());
-                var cartRequest = new GetCartHandler.Request(_uiContext.User.ID, _uiContext.User.Customers.FirstOrDefault());
+                var cartRequest = new GetCartHandler.Request(request.IsDefault);
                 var CatalogRequest = new GetCatalogHandler.Request(request.CatalogCriteria);
                 var cartResponse = await GetCartDetails(cartRequest);
-                var customerDetailsResponse = await GetCustomerDetails(customerRequest);
+                var customerDetailsResponse = await GetCustomerDetails();
                 var CatalogDetailsResponse = await GetCatalogDetails(CatalogRequest);
 
                 var getHeaderResponse = new GetHeaderHandler.Response
@@ -98,12 +96,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
         }
 
-        public async Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerHandler.Request request)
+        public async Task<IEnumerable<CustomerModel>> GetCustomerDetails()
         {
-            var CustomerURL = _appCustomerURL.BuildQuery(request);
+            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            var CustomerURL = _appCustomerURL.BuildQuery("Id="+ customerId);
             try
             {
-                var customerRequest = new GetCustomerHandler.Request(_uiContext.User.Customers.FirstOrDefault());
                 var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<IEnumerable<CustomerModel>>(CustomerURL);
                 return getCustomerDetailsResponse;
             }
@@ -117,7 +115,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public Task<GetCartHandler.Response> GetCartDetails(GetCartHandler.Request request)
         {
-            var CartURL = _coreCartURL.BuildQuery(request);
+            string userId = _uiContext.User.ID;
+            string customerId = _uiContext.User.Customers.FirstOrDefault();
+            var CartURL = _coreCartURL.BuildQuery("UserId=" + userId + "&CustomerId=" + customerId);
             try
             {
                 Random rnd = new Random();

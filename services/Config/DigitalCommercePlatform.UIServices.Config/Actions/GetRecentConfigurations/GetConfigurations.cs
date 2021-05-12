@@ -5,7 +5,9 @@ using DigitalCommercePlatform.UIServices.Config.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,7 +23,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
 
         public class Response
         {
-            public RecentConfigurationsModel Configurations { get; internal set; }
+            public long? TotalItems { get; set; }
+            public long? PageCount { get; set; }
+            public int? PageNumber { get; set; }
+            public int? PageSize { get; set; }
+            public List<Configuration> Items { get; internal set; }
         }
 
         public class GetConfigurationsHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -43,9 +49,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 try
                 {
-                    RecentConfigurationsModel configurations = await _configService.GetConfigurations(request.Criteria);
-                    var recentDealResponse = _mapper.Map<Response>(configurations);
-                    return new ResponseBase<Response> { Content = recentDealResponse };
+                    var configurations = await _configService.GetConfigurations(request);
+                    var recentConfigResponse = _mapper.Map<Response>(configurations);
+                    recentConfigResponse = new Response
+                    {
+                        Items = recentConfigResponse.Items,
+                        TotalItems = recentConfigResponse.Items.Count(),
+                        PageNumber = request.Criteria.PageNumber,
+                        PageSize = request.Criteria.PageSize,
+                        PageCount = (recentConfigResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize
+
+                    };
+                    return new ResponseBase<Response> { Content = recentConfigResponse };
                 }
                 catch (Exception ex)
                 {

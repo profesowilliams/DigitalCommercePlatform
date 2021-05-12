@@ -1,10 +1,12 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<sly data-sly-use.model="myconfigurations.js">
+<sly data-sly-use.listUse="${'myconfigurations.js' @ multifieldName='labelLinks'}">
 
-    <div id="My Configurations" data-observe-mutation>
-        <div data-component="My Configurations" data-cmp-type="react" className="myconfigurations" data-config="${model.configJson}">
+        <div id="MyConfigurations" data-observe-mutation>
+            <div data-component="MyConfigurations" data-cmp-type="react" className="myconfigurations" data-config="${listUse.listValues}">
+            </div>
         </div>
-    </div>
 </sly>
+
+

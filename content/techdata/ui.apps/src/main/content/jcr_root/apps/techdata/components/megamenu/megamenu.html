@@ -1,39 +1,54 @@
 <sly data-sly-use.model="com.techdata.core.models.MegaMenu"
      data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
-    <div data-sly-test=${hasContent} class="top-nav">
-        <ul data-sly-list.item="${model.menuLinkList}" >
-
-
-            <li >
-                <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
-                   title="${item.platformName}"
-                   href="${item.linkUrl}"
-                   target="${item.linkTarget == 'true' ? '_blank' : '_self'}">
-                    <article>
-
-                        <span >${item.platformName} = </span>
-                        <span >${item.linkUrl}</span>
-                    </article>
-                    <ul data-sly-list.sublinks="${item.subLinks}">
-                        <li>
-                            ${sublinks.pageTitle}
-                            <img src="${subLinks.pageIcon}"></img>
-                             <ul data-sly-test="${subLinks.hasChildPages}" data-sly-list.level2links="${sublinks.subNavLinkslist}">
-                                 <li>
-                                     ${level2links.pageTitle}
-                                 </li>
-                             </ul>
-                            <! -- ${sublinks.pagePath} -->
-                        </li>
-                    </ul>
-                </a>
-
+    <div id="megamenu" class="cmp-megamenu">
+        <ol class="cmp-megamenu__primary" aria-multiselectable="false" data-sly-list="${model.firstLevelMenuItems}">
+            <li>
+                <a data-cmp-clickable="true" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
             </li>
+        </ol>
+        <sly data-sly-list.nav="${model.firstLevelMenuItems}">
+            <div class="cmp-megamenu__tabpanel" data-cmp-parent="${nav.platformMenuID}">
+                <!-- Nvigation -->
+                <nav id="navigation-0e123bccd2" class="cmp-navigation" role="navigation" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+                    <div class="cmp-megamenu__wrapper cmp-megamenu__secondary">
+                        <ul class="cmp-navigation__group" data-sly-list="${nav.secondaryMenuItems}">
+                            <li class="cmp-navigation__item cmp-navigation__item--level-0">
+                                <a href="${item.pagePath}" title="Config" data-cmp-clickable="true" data-cmp-children="menu ${item.menuID}" class="cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}">
+                                    <i data-sly-test="${nav.enableSecondaryIcon == 'true'}" class="${item.pageIcon}"></i>${item.pageTitle}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cmp-megamenu__wrapper cmp-megamenu__tertiary" data-sly-list="${nav.secondaryMenuItems}">
+                        <div class="cmp-megamenu__wrapper-item ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}" data-cmp-parent="menu ${item.menuID}" data-sly-test="${item.hasChildPages}">
+                            <h4 class="cmp-megamenu-level-title">${item.rootParentTitle} Home</h4>
+                            <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
+                                <li class="cmp-navigation__item cmp-navigation__item--level-1">
+                                    <a href="" title="${item.pageTitle}" data-cmp-clickable="${item.hasChildPages}" class="cmp-navigation__item-link" data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
+                                        ${item.pageTitle}<i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-        </ul>
 
 
+                    </div>
+                    <div class="cmp-megamenu__wrapper cmp-megamenu__quaternary" data-sly-list="${nav.tertiaryMenuItems}">
+                        <div class="cmp-megamenu__wrapper-item" data-cmp-parent="menu ${item.menuID}">
+                            <h4 class="cmp-megamenu-level-title"><i class="fas fa-chevron-left"></i> ${item.pageTitle}</h4>
+                            <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
+                                <li class="cmp-navigation__item cmp-navigation__item--level-2" data-cmp-data-layer="{&quot;navigation-0e123bccd2-item-734f73b286&quot;:{&quot;@type&quot;:&quot;core/wcm/components/navigation/v1/navigation/item&quot;,&quot;repo:modifyDate&quot;:&quot;2021-03-17T08:17:44Z&quot;,&quot;dc:title&quot;:&quot;Config&quot;,&quot;xdm:linkURL&quot;:&quot;/content/core-components-examples/config.html&quot;}}">
+                                    <a href="" title="${item.pageTitle}" class="cmp-navigation__item-link">
+                                        ${item.pageTitle}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Nvigation -->
+            </div>
+        </sly>
     </div>
 </sly>
-<sly data-sly-use.placeholderTemplates="core/wcm/components/commons/v1/templates.html"
-     data-sly-call="${placeholderTemplates.placeholder @ isEmpty=!hasContent}"></sly>

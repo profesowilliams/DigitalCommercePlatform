@@ -15,6 +15,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="DummyData\ConfigurationList.json" />
+  </ItemGroup>
+  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-config-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
@@ -32,9 +35,13 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.0.15" />
+    <EmbeddedResource Include="DummyData\ConfigurationList.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="5.0.20" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.0.20" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.0.20" />
     <PackageReference Include="Flurl" Version="3.0.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

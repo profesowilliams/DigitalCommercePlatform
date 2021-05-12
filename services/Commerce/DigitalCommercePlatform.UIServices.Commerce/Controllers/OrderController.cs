@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
@@ -26,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public OrderController(
             IMediator mediator, 
             ILogger<OrderController> logger, 
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> settings, 
             ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)
@@ -57,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
                 getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
 
-            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortAscending, getOrdersRequest.PageNumber, getOrdersRequest.PageSize);
+            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortDirection, getOrdersRequest.PageNumber, getOrdersRequest.PageSize,getOrdersRequest.WithPaginationInfo);
 
             var getOrdersQuery = new GetOrders.Request(filtering, paging);
 
@@ -85,6 +86,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             else
             {
                 return Ok(orderLinesResponse);
+            }
+        }
+        [HttpGet]
+        [Route("pricingConditions")]
+        public async Task<ActionResult> GetPricingConditions([FromRoute] bool getAll,string Id)
+        {
+            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll,Id)).ConfigureAwait(false);
+            if (getPricingCondition.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, getPricingCondition);
+            }
+            else
+            {
+                return Ok(getPricingCondition);
             }
         }
 

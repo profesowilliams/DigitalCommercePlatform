@@ -1,0 +1,30 @@
+@import "main";
+
+.cmp-cart{
+  width: rem(36px);
+  height: rem(32px);
+  &__icon{
+    position: absolute;
+    color: get_color('brand-light-blue');
+  }
+  &__number{
+    display: none;
+  }
+  &__active{
+    .cmp-cart__icon{
+      color: get_color('brand-blue');
+    }
+    .cmp-cart__number{
+      position: relative;
+      display: block;
+      top: 15%;
+      top: rem(4px);
+      text-align: center;
+      font-size: $font-size-xxsmall;
+      color: get_color('brand-white');
+      span {
+        margin-left: 18%;
+      }
+    }
+  }
+}

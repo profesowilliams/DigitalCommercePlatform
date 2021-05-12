@@ -3,26 +3,46 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Properties"
     sling:resourceType="cq/gui/components/authoring/dialog">
-    <content
+	<content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
-        <items jcr:primaryType="nt:unstructured">
-            <column
+		<items jcr:primaryType="nt:unstructured">
+			<column
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
-                <items jcr:primaryType="nt:unstructured">
-                    <label
+				<items jcr:primaryType="nt:unstructured">
+					<label
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Label"
                         name="./label"/>
+					<paramOneLabel
+				 jcr:primaryType="nt:unstructured"
+				 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+				 fieldLabel="First # of days"
+				 name="./paramOneLabel"/>
+					<paramTwoLabel
+					 jcr:primaryType="nt:unstructured"
+					 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+					 fieldLabel="Second # of days"
+					 name="./paramTwoLabel"/>
+					<paramThreeLabel
+					 jcr:primaryType="nt:unstructured"
+					 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+					 fieldLabel="Third # of days"
+					 name="./paramThreeLabel"/>
+					<todayLabel
+					 jcr:primaryType="nt:unstructured"
+					 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+					 fieldLabel="Current Day Renewal Text"
+					 name="./todayLabel"/>
 					<uiService
 					   jcr:primaryType="nt:unstructured"
 					   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 					   fieldLabel="UI Service End Point"
 					   name="./uiServiceEndPoint"/>
 				</items>
-            </column>
-        </items>
-    </content>
+			</column>
+		</items>
+	</content>
 </jcr:root>

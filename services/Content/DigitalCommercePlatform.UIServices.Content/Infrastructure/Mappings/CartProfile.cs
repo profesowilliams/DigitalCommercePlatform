@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using DigitalCommercePlatform.UIServices.Content.Models.Search;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Mappings
@@ -12,11 +15,13 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Mappings
         public CartProfile()
         {
             CreateMap<CartModel, GetCart.Response>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.source.Id))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.totalQuantity));
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
 
-            CreateMap<TypeAheadSearch.Response, TypeAheadSearch.Response>();
+            CreateMap<IEnumerable<TypeAheadSuggestion>, TypeAheadSearch.Response>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
+            CreateMap<ActiveCartModel, GetActiveCart.Response>()
+               .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src));
         }
     }
 }

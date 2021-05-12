@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { signInAsynAction } from '../../../../store/action/authAction';
 import { getQueryStringValue } from "../../../../utils/utils";
-import UserMenu from '../user/userMenu';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import SpinnerCode from '../spinner/spinner'
 
 const FA = require('react-fontawesome');
 
@@ -16,9 +17,15 @@ const SignIn = (props) => {
 	});
 
 	const codeQueryParam = "code";
-	const [authUrl, uiServiceEndPoint, clientId] = [configDataAEM.authenticationURL, configDataAEM.uiServiceEndPoint, configDataAEM.clientId];
-  const requested = props.data.auth.requested;
-  const isError = props.data.auth.showError;
+	const {
+		authenticationURL: authUrl, 
+		uiServiceEndPoint, 
+		clientId,
+		items
+	} = configDataAEM;
+	const requested = props.data.auth.requested;
+	const isError = props.data.auth.showError;
+	const isLoading = props.data.auth.loading;
 	const userData = props.data.auth.userData;
 	const userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem("userData"));
 
@@ -85,9 +92,9 @@ const SignIn = (props) => {
 				{requested ?
 					'Loading...'
 				: (userDataCheck !== null) ?
-					<UserMenu {...userDataCheck} />
+					<DropdownMenu userDataCheck={userDataCheck} items={items}/>
 				: signInButton()}
-				{isError ? <div>Failed to fetch API: <code>{uiServiceEndPoint}</code></div> : null }
+				{ (isError && isLoading)? <SpinnerCode /> : null }
 			</div>
 		</div>
 	);

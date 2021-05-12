@@ -30,11 +30,6 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
-        public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseCors(cfg => cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            base.ConfigureMiddleSection(app, env);
-        }
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }

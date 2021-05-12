@@ -1,8 +1,5 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
+FROM techdata.azurecr.io/df-base-debian-5:latest
 ARG BuildConfiguration=Debug
 ARG Environment=Development
 COPY bin/$BuildConfiguration/net5.0/. app
 ENV ASPNETCORE_ENVIRONMENT $Environment
-RUN apk add curl \
-&& curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin \
-&& trivy filesystem --exit-code 1 --severity CRITICAL --no-progress /

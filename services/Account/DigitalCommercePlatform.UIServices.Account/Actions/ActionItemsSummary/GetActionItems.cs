@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
         public class Response
         {
             public ActionItemsModel Summary { get; set; }
-            
+
         }
 
         public class ActionItemsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<ActionItemsSummaryQueryHandler> _logger;
-            public ActionItemsSummaryQueryHandler(IAccountService accountService, 
+            public ActionItemsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<ActionItemsSummaryQueryHandler> logger
                 )
@@ -42,17 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    ActionItemsModel actionItems = await _accountService.GetActionItemsSummaryAsync(request);
-                    var getActionItems = _mapper.Map<Response>(actionItems);
-                    return new ResponseBase<Response> { Content = getActionItems };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting ActionItemsSummaryQueryHandler  : " + nameof(ActionItemsSummaryQueryHandler));
-                    throw;
-                }
+                ActionItemsModel actionItems = await _accountService.GetActionItemsSummaryAsync(request);
+                var getActionItems = _mapper.Map<Response>(actionItems);
+                return new ResponseBase<Response> { Content = getActionItems };
             }
         }
         public class Validator : AbstractValidator<Request>

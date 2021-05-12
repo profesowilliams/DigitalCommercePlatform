@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.Contexts;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalFoundation.Common.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
@@ -32,28 +33,29 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var validationErrors = new Dictionary<string, string[]>();
+            var validationErrors = new List<string>();
 
             if (!context.HttpContext.Request.Headers.TryGetValue("Accept-Language", out StringValues language) || string.IsNullOrWhiteSpace(language))
             {
-                validationErrors.Add("Accept-Language", new string[] { "The Accept-Language field is required." });
+                validationErrors.Add("The Accept-Language field is required.");
             }
 
             if (!context.HttpContext.Request.Headers.TryGetValue("Consumer", out StringValues consumer) || string.IsNullOrWhiteSpace(consumer))
             {
-                validationErrors.Add("Consumer", new string[] { "The Consumer field is required." });
+                validationErrors.Add("The Consumer field is required.");
             }
 
             if (!context.HttpContext.Request.Headers.TryGetValue("TraceId", out StringValues traceId) || string.IsNullOrWhiteSpace(traceId))
             {
-                validationErrors.Add("TraceId", new string[] { "The TraceId field is required." });
+                validationErrors.Add("The TraceId field is required.");
             }
-
 
             if (validationErrors.Any())
             {
-                var validationProblemDetails = new ValidationProblemDetails(validationErrors);
-                context.Result = new BadRequestObjectResult(validationProblemDetails);
+                context.Result = new ObjectResult(new ResponseBase<object>
+                {
+                    Error = new ErrorInformation { IsError = true, Messages = validationErrors, Code = 500 } // to agree about code
+                });
                 return;
             }
 
@@ -61,7 +63,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters
             _uiContext.SetConsumer(consumer);
             _uiContext.SetTraceId(traceId);
             _uiContext.SetAccessToken(_uiContext.User.AccessToken);
-
             await next();
         }
     }

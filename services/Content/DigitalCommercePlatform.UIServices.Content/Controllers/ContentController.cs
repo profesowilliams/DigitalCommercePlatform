@@ -1,6 +1,8 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -23,14 +25,14 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         public ContentController(
             IMediator mediator,
             ILogger<ContentController> logger,
-            IContext context,
+            IUIContext context,
             IOptions<AppSettings> settings,
             ISiteSettings siteSettings)
             : base(mediator, logger, context, settings, siteSettings)
         {
         }
         [HttpGet]
-        [Route("cart/get")]
+        [Route("cart")]
         public async Task<ActionResult<GetCart.Response>> GetCartDetails(string id)
         {
             var response = await Mediator.Send(new GetCart.Request(id)).ConfigureAwait(false);
@@ -39,11 +41,18 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string keyword, string searchApplication = "SHOP")
+        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string searchTerm,  int? maxResults)
         {
-            var response = await Mediator.Send(new TypeAheadSearch.Request(keyword, searchApplication)).ConfigureAwait(false);
+            var response = await Mediator.Send(new TypeAheadSearch.Request(searchTerm, maxResults)).ConfigureAwait(false);
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("activeCart")]
+        public async Task<ActionResult<GetCart.Response>> GetActiveCartDetails()
+        {
+            var response = await Mediator.Send(new GetActiveCart.Request()).ConfigureAwait(false);
+            return Ok(response);
+        }
     }
 }

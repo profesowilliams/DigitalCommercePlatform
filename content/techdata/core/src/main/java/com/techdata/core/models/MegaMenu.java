@@ -36,4 +36,14 @@ public class MegaMenu {
             }
         }
     }
+
+    public String getMessage(){
+        return "hello from model" + menuList.getPath();
+    }
+
+    public List<LinkItem> getFirstLevelMenuItems() {
+        return this.menuLinkList;
+    }
+
+
 }

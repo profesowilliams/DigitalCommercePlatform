@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 @Model(adaptables = Resource.class,
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -32,15 +33,23 @@ public class LinkItem {
     private String linkUrl;
 
     @Inject
+    private String iconUrl;
+
+    @Inject
     private String navigationRoot;
 
     @Inject
     private String linkTarget;
 
     @Inject
+    private String enableSecondaryIcon;
+
+    @Inject
     private ResourceResolver resolver;
 
+
     List<SubNavLinks> subLinks = new ArrayList<>();
+    private List<SubNavLinks> tertiarySubNavLinks = new ArrayList<>();
 
     @PostConstruct
     protected void init(){
@@ -51,10 +60,33 @@ public class LinkItem {
                 while(children.hasNext()){
                     Page childPage = children.next();
                     Resource pageResource = childPage.getContentResource();
-                    SubNavLinks link = new SubNavLinks(childPage, resolver);
+                    SubNavLinks link = new SubNavLinks(childPage, resolver, platformName);
                     subLinks.add(link);
+                    for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
+                    {
+                        this.tertiarySubNavLinks.add(tertiaryLink);
+                    }
                 }
+
             }
         }
+
+    }
+
+    public String getPlatformMenuID(){
+        return this.getPlatformName().toLowerCase(Locale.ROOT);
+    }
+
+    public List<SubNavLinks> getSecondaryMenuItems() {
+        return this.subLinks;
+    }
+
+    public boolean getHasSecondaryMenuItems() {
+        return this.subLinks!=null && this.subLinks.size() > 0;
+    }
+
+
+    public List<SubNavLinks> getTertiaryMenuItems(){
+        return this.tertiarySubNavLinks;
     }
 }

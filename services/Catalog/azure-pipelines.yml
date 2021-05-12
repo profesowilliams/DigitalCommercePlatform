@@ -7,7 +7,7 @@ resources:
 trigger: none
 
 pool:
-  name: 'CLW'
+  name: 'DC-Buildpool-Windows'
   workspace:
     clean: all
   

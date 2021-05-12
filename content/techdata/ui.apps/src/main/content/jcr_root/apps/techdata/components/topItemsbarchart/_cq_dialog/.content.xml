@@ -21,6 +21,25 @@
 					   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 					   fieldLabel="UI Service End Point"
 					   name="./uiServiceEndPoint"/>
+					<radioGroup jcr:primaryType="nt:unstructured"
+                        name="./sortOrder"
+                        text="Sort Order"
+                        sling:resourceType="granite/ui/components/foundation/form/radiogroup">
+	                        <items jcr:primaryType="nt:unstructured">
+		                        <radioAsc
+			                        jcr:primaryType="nt:unstructured"
+			                        name="./sort"
+			                        text="Ascending Order"
+			                        value="asc"
+			                        sling:resourceType="granite/ui/components/foundation/form/radio"/>
+		                        <radioDesc
+			                        jcr:primaryType="nt:unstructured"
+			                        name="./sort"
+			                        text="Desending Order"
+			                        value="desc"
+			                        sling:resourceType="granite/ui/components/foundation/form/radio"/>
+	                        </items>
+                        </radioGroup>
 				</items>
             </column>
         </items>

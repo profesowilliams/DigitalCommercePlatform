@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
@@ -8,7 +9,9 @@ using Flurl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
@@ -17,11 +20,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
     public class ContentService : IContentService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _coreCartURL;
+        private readonly string _appCartURL;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _typeSearchUrl;
+        private readonly string _appCartV2Url;
 #pragma warning restore CS0414
         private readonly ILogger<ContentService> _logger;
         public ContentService(IMiddleTierHttpClient middleTierHttpClient,
@@ -29,16 +33,33 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         {
             _logger = logger;
             _middleTierHttpClient = middleTierHttpClient;
-            _coreCartURL = options?.Value.GetSetting("App.Cart.Url");
+            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
             _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
             _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
-            _typeSearchUrl = "https://typeahead.techdata.com/kw2";
+            _typeSearchUrl = options?.Value.GetSetting("Core.Search.Url");
+            _appCartV2Url = options?.Value.GetSetting("App.Cart-V2.Url");
         }
-        
+
+        public async Task<ActiveCartModel> GetActiveCartDetails()
+        {
+            var CartURL = _appCartURL;
+            try
+            {
+                var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(CartURL);
+                var totalQunatity= getActiveCartResponse.Lines.Where(x=>x.Quantity!=null).ToList().Sum(o => o.Quantity);
+                getActiveCartResponse.TotalQuantity = totalQunatity;
+                return getActiveCartResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(ContentService));
+                throw ex;
+            }
+        }
+
         public async Task<CartModel> GetCartDetails(GetCart.Request request)
         {
-            var CartURL = "https://eastus-dit-service.dc.tdebusiness.cloud/app-cart/v2/";
-            CartURL=CartURL.AppendPathSegment(request.Id);
+            var CartURL = _appCartV2Url.AppendPathSegment(request.Id);
             try
             {
                 var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<CartModel>(CartURL);
@@ -51,12 +72,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             }
         }
 
-        public async Task<TypeAheadSearch.Response> GetTypeAhead(TypeAheadSearch.Request request)
+        public async Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request)
         {
-            var typeAheadUrl = _typeSearchUrl.BuildQuery(request);
+            var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/GetTypeAheadTerms").BuildQuery(request);
             try
             {
-                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<TypeAheadSearch.Response>(typeAheadUrl);
+                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
                 return getTypeAheadResponse;
             }
             catch (Exception ex)

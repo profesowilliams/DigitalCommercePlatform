@@ -1,13 +1,13 @@
 .cmp-teaser,
-.dp-teaser-big {
+.dp-teaser {
   &__card {
     padding: 3.18rem 0.5rem;
     .cmp-teaser {
       position: relative;
       display: flex;
       flex-direction: column;
+      min-height: 18.563rem;
       min-width: 0;
-      min-height: 20.43rem;
       background-color: #ffffff;
       background-clip: border-box;
       border: 0.06rem solid #adadad;
@@ -28,7 +28,7 @@
       text-align: center;
       // padding-top: rem(24px);
       // padding-bottom: rem(24px);
-      min-height: 6.25rem;
+      min-height: 4.375rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -43,7 +43,7 @@
     }
     .cmp-teaser__image {
       position: relative;
-      margin-bottom: 4.68rem;
+      margin-bottom: 5.625rem;
       img {
         border-radius: 50%;
         width: 6.62rem;
@@ -51,7 +51,7 @@
         position: absolute;
         left: 50%;
         top: 0;
-        transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-33%);
       }
     }
     .cmp-teaser__description {
@@ -60,7 +60,7 @@
       word-wrap: break-word;
       text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 7;
+      -webkit-line-clamp: 6;
       -webkit-box-orient: vertical;
       overflow: hidden;
       p {
@@ -68,7 +68,7 @@
         font-size: 0.87rem;
         font-weight: 300;
         margin-top: 0;
-        margin-bottom:1rem;
+        margin-bottom:0.875rem;
         line-height: 1.18rem;
         -webkit-line-clamp: unset!important;
         display: block!important;
@@ -90,6 +90,7 @@
         border: 1.18rem solid #000c21;
         width: 16rem;
         height: 16rem;
+        transform: translateX(-50%) translateY(-50%);
       }
     }
   }

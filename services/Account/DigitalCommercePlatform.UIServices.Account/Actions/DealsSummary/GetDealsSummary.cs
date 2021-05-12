@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
 
         public class Response
         {
-            public List<DealsSummaryModel> Items { get; set; }           
+            public List<DealsSummaryModel> Items { get; set; }
         }
 
         public class DealsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<DealsSummaryQueryHandler> _logger;
-            public DealsSummaryQueryHandler(IAccountService accountService, 
+            public DealsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<DealsSummaryQueryHandler> logger
                 )
@@ -42,18 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var deals = await _accountService.GetDealsSummaryAsync(request);
-                    var getDeals = _mapper.Map<Response>(deals);
-                    return new ResponseBase<Response> { Content = getDeals };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting DealsSummaryQueryHandler  : " + nameof(DealsSummaryQueryHandler));
-                    throw;
-                }
-
+                var deals = await _accountService.GetDealsSummaryAsync(request);
+                var getDeals = _mapper.Map<Response>(deals);
+                return new ResponseBase<Response> { Content = getDeals };
             }
         }
         public class Validator : AbstractValidator<Request>

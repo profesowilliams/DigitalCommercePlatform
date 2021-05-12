@@ -1,0 +1,78 @@
+@import 'sass-rem/_rem.scss';
+@import '../global/variables';
+@import '../site/variables';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+
+.cmp-deals {
+    font-family: 'Open Sans', sans-serif;
+    justify-content: space-between;
+    display: flex;
+    width: rem(460px);
+    // height: rem(55px);
+    margin: 0 15px;
+    &__title {
+        font-size: $font-size-small;
+        text-transform: uppercase;
+        color: get-color(text-mid-gray);
+        width: 100%;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+    }
+    &__table {
+        font-size: $font-size-xxsmall;
+        color: get-color(text-mid-gray);
+        width: 100%;
+    }
+    &__sub-title {
+        font-size: $font-size-xxsmall;
+        color: get-color(text-light-charcoal);
+
+        &-digits{
+            font-size: $font-size-xxsmall;
+            color: get-color(text-light-charcoal);
+            text-align: right;
+            padding-left: rem(40px);
+        }
+
+        &-color-1{
+            border-right: rem(6px) solid get-color(brand-primary-text);
+        }
+        &-color-2{
+            border-right: rem(6px) solid get-color(td-lightblue);
+        }
+        &-color-3{
+            border-right: rem(6px) solid get-color(brand-blue);
+        }
+    }
+    &__bar-Graph{
+        display: flex;
+        section{
+            padding-top: rem(25px);
+            padding-right: rem(64px);
+            &:last-of-type {
+                padding-right: rem(32px);
+            }
+            i,svg{
+                font-size: rem(50px);
+            }
+        }
+    }
+    &__count{
+        text-align: center;
+        font-size: $font-size-custom-medium;
+        padding-top: rem(17px);
+    }
+    &__icon-color-1{
+        color: get-color(brand-primary-text);
+
+    }
+    &__icon-color-2{
+        color: get-color(td-lightblue);
+
+    }
+    &__icon-color-3{
+        color: get-color(brand-blue);
+
+    }
+}

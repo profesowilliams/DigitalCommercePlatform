@@ -15,6 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public decimal? Price { get; set; }
         public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
+        public string CurrencySymbol { get; set; } = "$";
         public Status Status { get; set; }
         public List<Item> Items { get; set; }
         public string CustomerPO { get; set; }

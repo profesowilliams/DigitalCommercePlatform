@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
@@ -18,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         Task<GetCatalogHandler.Response> GetCatalogDetails(GetCatalogHandler.Request request);
 
-        Task<IEnumerable<CustomerModel>> GetCustomerDetails(GetCustomerHandler.Request request);
+        Task<IEnumerable<CustomerModel>> GetCustomerDetails();
 
         Task<GetHeaderHandler.Response> GetHeader(GetHeaderHandler.Request request);
 

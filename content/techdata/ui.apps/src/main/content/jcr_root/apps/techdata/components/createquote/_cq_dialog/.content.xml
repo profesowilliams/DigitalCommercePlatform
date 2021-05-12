@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Properties"
+    sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+        <items jcr:primaryType="nt:unstructured">
+            <column
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/container">
+                <items jcr:primaryType="nt:unstructured">
+                    <label
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Label"
+                        name="./label"/>
+					<buttonTitle
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Button Label"
+						name="./buttonTitle"/>
+					<quotePreviewUrl
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="quote Preview Url"
+						name="./quotePreviewUrl"/>
+					<endpoint
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="End Point"
+						name="./endpoint"/>
+					<cartslistEndpoint
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Cart list Endpoint"
+							name="./cartslistEndpoint"/>
+					<cartdetailsEndpoint
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Cart details Endpoint"
+							name="./cartdetailsEndpoint"/>
+					<optionsList
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+						composite="{Boolean}true"
+						fieldLabel="Options List"
+						fieldDescription="Click 'Add' to add options list">
+						<field
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/foundation/form/fieldset"
+							name="./optionsList">
+							<items jcr:primaryType="nt:unstructured">
+								<column
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/container">
+									<items jcr:primaryType="nt:unstructured">
+										<label
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter option label"
+											fieldLabel="Option Label"
+											name="./label"/>
+										<key
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter Option Key"
+											fieldLabel="Option Key"
+											name="./key"/>
+										<title
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											fieldDescription="Enter Option Title"
+											fieldLabel="Option Title"
+											name="./title"/>
+									</items>
+								</column>
+							</items>
+						</field>
+					</optionsList>
+                </items>
+            </column>
+        </items>
+    </content>
+</jcr:root>

@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
@@ -23,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         private readonly Mock<IMediator> _mockMediator;
         private readonly Mock<IOptions<AppSettings>> _mockOptions;
         private readonly Mock<ILogger<ContentController>> _mockLoggerFactory;
-        private readonly Mock<IContext> _mockContext;
+        private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
 
         public ContentControllerTests()
@@ -40,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
             _mockOptions.Setup(s => s.Value).Returns(appSettings);
 
             _mockLoggerFactory = new Mock<ILogger<ContentController>>();
-            _mockContext = new Mock<IContext>();
+            _mockContext = new Mock<IUIContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
             _mockSiteSettings = new Mock<ISiteSettings>();
         }
@@ -68,6 +69,23 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
         [Theory]
         [AutoDomainData]
+        public async Task GetActiveCartDetails(ResponseBase<GetActiveCart.Response> expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetActiveCart.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetActiveCartDetails().ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task TypeAheadSearch(ResponseBase<TypeAheadSearch.Response> expected)
         {
 
@@ -75,10 +93,11 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
                        It.IsAny<TypeAheadSearch.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
+            
 
             var controller = GetController();
 
-            var result = await controller.TypeAheadSearch("12","SHOP").ConfigureAwait(false);
+            var result = await controller.TypeAheadSearch("12", 123).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

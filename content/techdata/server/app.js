@@ -10,19 +10,15 @@ var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 
-// View engine setup
-// app.set('view engine', 'html');
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-function checkCreds(user, pass)
-{
-    return user in {"admin" : "admin","user" : "temp", "bru" : "temp"} && pass in {"admin" : "admin", "pass" : "temp", "123" : "temp"} ;
+function checkCreds(user, pass) {
+  return user in { "admin": "admin", "user": "temp", "bru": "temp" } && pass in { "admin": "admin", "pass": "temp", "123": "temp" };
 }
 
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site');
@@ -55,7 +51,7 @@ app.use('/', express.static('public'));
 
 
 
-app.post("/auth", function(req, res){
+app.post("/auth", function (req, res) {
 
   let userid = req.body.userid;
   let password = req.body.password;
@@ -70,13 +66,12 @@ app.post("/auth", function(req, res){
 
 
 
-  res.append("custom" , "value");
+  res.append("custom", "value");
   res.type('application/json');
 
-  if (checkCreds(userid, password))
-  {
-    res.redirect(redirect + "?code="+codeValue);
-  }else{
+  if (checkCreds(userid, password)) {
+    res.redirect(redirect + "?code=" + codeValue);
+  } else {
     // res.send({"userid" : req.body.userid, "password" : req.body.password, auth : checkCreds(userid, password)})
     // res.render('<h1>error</h1>');
     // res.write("<h1>error</h1>");
@@ -95,25 +90,25 @@ app.post("/auth", function(req, res){
 
 });
 
-app.get("/success", function(req, res){
-  res.json({message: "success"})
+app.get("/success", function (req, res) {
+  res.json({ message: "success" })
 });
 
-app.get("/masthead", function(req, res){
+app.get("/masthead", function (req, res) {
   let resJson = {
-    "user" : null,
-    "cart" : {
-      "count" : 2,
-      "items" : []
+    "user": null,
+    "cart": {
+      "count": 2,
+      "items": []
     },
-    "links" : {
-      "home" : "http://localhost:3000/auth"
+    "links": {
+      "home": "http://localhost:3000/auth"
     }
   }
   res.json(resJson)
 });
 
-app.post("/login", function(req, res){
+app.post("/login", function (req, res) {
 
   let code = req.body.code;
   let redirectUrl = req.body.RedirectUri;
@@ -127,43 +122,40 @@ app.post("/login", function(req, res){
 
 
   let resJsonSuccess = {
-      "isError": false,
+    "content": {
       "user": {
-          "id": "516514",
-          "firstName": "Dyana",
-          "lastName": "Karaphillis",
-          "name": "DAYNA KARAPHILLIS",
-          "email": "SHI@cstenet.com",
-          "phone": "9999999971",
-          "accountNumber" : "1234567890",
-          "companyName": "Stark Enterprises",
-          "customers": [
-              "0038048612"
-  ],
-          "roles": [],
-          "cart": {
-            "activeCart": 1,
-            "items":[],
-            "itemsQuantity": 1,
-          }
-  },
-  }
+        "id": "516514",
+        "firstName": "DAYNA Local Server",
+        "lastName": "KARAPHILLIS",
+        "name": "DAYNA KARAPHILLIS",
+        "email": "SHI@cstenet.com",
+        "phone": "9999999971",
+        "companyName": "SHI International",
+        "customers": ["0038048612", "0009000325"],
+        "customersV2": [
+          { "number": "0038048612", "name": "Company 0" },
+          { "number": "0009000325", "name": "Company 1" },
+          { "number": "0038048612", "name": "Company 2" }
+        ],
+        "roles": []
+      }
+    }, "error": { "code": 0, "messages": [], "isError": false }
+  };
 
   let resJsonFail = {
-    "isError" : true,
-    "user" : null
+    "isError": true,
+    "user": null
   }
 
-  if (code === codeValue)
-  {
+  if (code === codeValue) {
     res.json(resJsonSuccess)
-  }else{
+  } else {
     res.json(resJsonFail);
   }
 
 });
 
-app.options("/*", function(req, res, next){
+app.options("/*", function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
@@ -174,12 +166,67 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-app.get("/quote/create/:cart", function(req, res){
+
+//---TOP n OPEN CONFIG MOCK API---//
+app.get("/ui-account/v1/topQuotes/get", function (req, res) {
+  const param = req.query.top || 5;
+  const items = [];
+  for (let i = 0; i < param; i++) {
+    const random = Math.floor(Math.random() * 100000);
+    items.push({
+      sequence: i + 1,
+      endUserName: `End User 38${i}`,
+      amount: random,
+      formattedAmount: random.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ".0",
+      currencyCode: 'USD',
+      currencySymbol: '$'
+    })
+  }
+  const response = {
+    content: {
+      summary: {
+        items: items
+      },
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+
+  res.json(response)
+});
+
+app.get("/quote/MyQuote", function (req, res) {
+  const code = req.query.code;
+
+  if (!req.headers['sessionid'])
+    return res.status(401)
+
+  res.json({
+    "content": {
+      "items": {
+        "converted": "31.49%",
+        "open": 38,
+        "quoteToOrder": "3:1",
+        "activeQuoteValue": 6251968.0,
+        "currencyCode": "USD",
+        "currencySymbol": "$",
+        "formattedAmount": "6,251,968"
+      }
+    },
+    "error": {
+      "code": "",
+      "message": "",
+      "isError": false
+    }
+  })
+});
+app.get("/quote/create/:cart", function (req, res) {
   const code = req.query.code;
   const cart = req.params.cart;
 
-  if (code !== codeValue)
-    return res.status(500).json({isError: true, quote: null})
 
   res.json({
     "content": {
@@ -291,4 +338,263 @@ app.get("/quote/create/:cart", function(req, res){
       "isError": false
     }
   })
+});
+app.get("/activeCart", function (req, res) {
+  if (!req.headers['sessionid'])
+    return res.status(500).json({
+      "error": {
+        "code": 200,
+        "message": "",
+        "isError": false
+      }
+    });
+
+  res.json({
+    "content": {
+      "data": {
+        "source": {
+          "salesOrg": "0100,1002",
+          "system": "Shop"
+        },
+        "lines": [
+          {
+            "lineNo": "100",
+            "parentLineNo": null,
+            "productId": "13641675",
+            "quantity": 1
+          },
+          {
+            "lineNo": "200",
+            "parentLineNo": null,
+            "productId": "11337383",
+            "quantity": 1
+          },
+          {
+            "lineNo": "300",
+            "parentLineNo": null,
+            "productId": "11357376",
+            "quantity": 1
+          },
+          {
+            "lineNo": "400",
+            "parentLineNo": null,
+            "productId": "11456989",
+            "quantity": 1
+          }
+        ],
+        "totalQuantity": 4
+      }
+    },
+    "error": {
+      "code": 200,
+      "message": "",
+      "isError": false
+    }
+  })
+});
+
+app.get("/configurationsSummary/get", function (req, res) {
+
+  if (!req.headers['sessionid'])
+    return res.status(401).json({
+      "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+      }
+    });
+
+  res.json({
+    "content": {
+      "summary": {
+        "quoted": 14,
+        "unQuoted": 30,
+        "oldConfigurations": 25,
+        "currencyCode": null
+      }
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  });
+});
+//---MY RENEWALS MOCK API---//
+app.get("/ui-account/v1/getRenewals", function (req, res) {
+  const param = req.query.days || '30,60,90';
+  const items = [];
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  for (let i = 0; i < param.split(',').length + 1; i++) {
+    items.push({
+      value: getRandom(100),
+    })
+  }
+  const response = {
+    content: {
+      items: items
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+  res.json(response)
+});
+
+app.get("/dealsSummary", function (req, res) {
+  if (!req.headers['sessionid'])
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    })
+
+  res.json({
+    "content": {
+      "items": [
+        { "value": 5 },
+        { "value": 15 },
+        { "value": 20 },
+      ]
+    },
+    "error": {
+      "code": 0,
+      "message": [],
+      "isError": false
+    }
+  });
+});
+
+//---QUOTES GRID MOCK API---//
+app.get("/ui-commerce/v1/quote/", function (req, res) {
+  const details = req.query.details || true;
+  const pageSize = req.query.pageSize || 10;
+  const pageNumber = req.query.pageNumber || 1;
+  const items = [];
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  for (let i = 0; i < pageSize; i++) {
+    items.push({
+      id: Number(`${pageNumber}${4009754974 + i}`),
+      quoteReference: null,
+      vendor: null,
+      created: new Date().toISOString(),
+      expires: new Date(Date.now() + 3600000 * 24 * 7).toISOString(),
+      endUserName: null,
+      dealId: null,
+      status: i % 2 ? "OPEN" : "CLOSED",
+      quoteValue: 73002.31 + getRandom(1000),
+      formatedQuoteValue: "USD",
+      currencySymbol: "$",
+      canUpdate: i % 2 ? true : false,
+      canCheckOut: i % 2 ? true : false,
+    })
+  }
+  const response = {
+    content: {
+      items: items,
+      totalItems: 2500,
+      pageCount: 25,
+      pageSize
+    },
+    error: {
+      code: 0,
+      message: [],
+      isError: false,
+    },
+  };
+  res.json(response)
+});
+
+app.get("/browse", function (req, res) {
+  if (!req.headers['sessionid'])
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+  res.json({
+    "content": {
+      "userId": "12345",
+      "userName": "Techdata User",
+      "customerId": "38048612",
+      "customerName": "SHI INTERNATIONAL CORP",
+      "cartId": "1",
+      "cartItemCount": 27,
+      "catalogHierarchies": [
+        {
+          "source": {
+            "system": "2",
+            "id": "FCS"
+          }
+        }
+      ]
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  })
+});
+
+app.get("/savedCarts", function(req,res){
+  if (!req.headers['sessionid'] || req.headers['site'] !== 'US')
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+    res.json({
+      "content": {
+        "items": [
+          { "id": "96721037","name": "Test_Global_157024" },
+          { "id": "96718606","name": "Blah 1" },
+          { "id": "96718607","name": "Blah 2" },
+          { "id": "96718608","name": "Blah 3" },
+          { "id": "96718609","name": "Blah 4" },
+        ],
+        "totalRecords": 2
+      },
+      "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+      }
+    })
+});
+
+app.get("/cart", function(req,res){
+  if (!req.headers['sessionid'] || req.headers['site'] !== 'US')
+    return res.status(500).json({
+      "error": {
+        "code": 0,
+        "message": [],
+        "isError": true
+      }
+    });
+
+    res.json({
+      "content":{
+        "data":null
+      },
+      "error":{
+        "code":0,
+        "messages":[],
+        "isError":false
+      } 
+    })
 });

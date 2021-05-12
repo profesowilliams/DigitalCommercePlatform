@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,14 +15,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public Request(string userId, string customerId)
+            public Request(bool isDefault)
             {
-                UserId = userId;
-                CustomerId = customerId;
+                IsDefault = isDefault;
             }
 
-            public string UserId { get; set; }
-            public string CustomerId { get; set; }
+            public bool IsDefault { get; set; } = true;
         }
 
         public class Response
@@ -58,14 +55,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
                     _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
                     throw ex;
                 }
-            }
-        }
-        public class Validator : AbstractValidator<Request>
-        {
-            public Validator()
-            {
-                RuleFor(i => i.CustomerId).NotEmpty().WithMessage("Please enter CustomerId");
-                RuleFor(i => i.UserId).NotEmpty().WithMessage("Please enter UserId");
             }
         }
     }
