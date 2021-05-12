@@ -9,6 +9,11 @@ function QuotesGrid(props) {
 		return formatedDate;
 	}
 
+	const options = {
+		defaultSortingColumnKey: 'id',
+		defaultSortingDirection: 'asc',
+	};
+
 	const columnDefs = [
 		{
 			headerName: 'TD Quote ID',
@@ -47,7 +52,7 @@ function QuotesGrid(props) {
 		{
 			headerName: 'End User Name',
 			field: 'endUserName',
-			sortable: true,
+			sortable: false,
 		},
 		{
 			headerName: 'SPA/Deal IDs',
@@ -65,7 +70,7 @@ function QuotesGrid(props) {
 		{
 			headerName: 'Expires',
 			field: 'expires',
-			sortable: true,
+			sortable: false,
 			valueFormatter: (props) => {
 				return getDateTransformed(props.value);
 			},
@@ -95,7 +100,7 @@ function QuotesGrid(props) {
 	return (
 		<section>
 			<div className='cmp-quotes-grid'>
-				<Grid columnDefinition={columnDefs} config={componentProp}></Grid>
+				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
 			</div>
 		</section>
 	);
