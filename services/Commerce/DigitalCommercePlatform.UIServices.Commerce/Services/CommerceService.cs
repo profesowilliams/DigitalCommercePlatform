@@ -207,9 +207,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 sortBy ="Created";
             }
-            else if (parameter.ToLower() == "quotevalue")
+            else if (parameter.ToLower() == "quotevalue" || parameter.ToLower() == "formatedquotevalue")
             {
-                sortBy= "Price";
+                sortBy = "Price";
             }
             else if (parameter.ToLower() == "updated")
             {

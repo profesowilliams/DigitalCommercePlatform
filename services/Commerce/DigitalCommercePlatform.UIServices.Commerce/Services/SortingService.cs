@@ -18,7 +18,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 { "Created", "CREATED" },
                 { "Type", "ORDERTYPE" },
                 { "Price", "PRICE" },
-                { "Status", "ORDERSTATUS" }
+                { "Status", "ORDERSTATUS" },
+                { "PriceFormatted", "PRICE" }
             };
 
             _sortingDirections = new List<string>()

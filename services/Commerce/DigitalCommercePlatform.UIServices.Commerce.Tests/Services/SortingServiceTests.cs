@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [InlineData("Type")]
         [InlineData("Price")]
         [InlineData("Status")]
+        [InlineData("PriceFormatted")]
         [InlineData("")]
         [InlineData(null)]
         public void ValidationSucceedWithCorrectSortingValue(string sortingValue)
@@ -66,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             var result = sut.GetValidProperties();
 
-            Assert.Equal("Id , ShipTo , Created , Type , Price , Status", result);
+            Assert.Equal("Id , ShipTo , Created , Type , Price , Status , PriceFormatted", result);
         }
 
         [Fact(DisplayName = "Valid sorting values text is successfully generated")]
@@ -109,7 +110,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [InlineData("Type", "ORDERTYPE")]
         [InlineData("Price", "PRICE")]
         [InlineData("Status", "ORDERSTATUS")]
-        public void SortByPropertyThatIsMatchingToProvidedArgument(string argument,string matchingValue)
+        [InlineData("PriceFormatted", "PRICE")]
+
+    public void SortByPropertyThatIsMatchingToProvidedArgument(string argument,string matchingValue)
         {
             var sut = new SortingService();
 
