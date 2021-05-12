@@ -11,7 +11,7 @@ const SearchList = ({items, selected, onChange}) => {
   }
   useEffect(() => {
     //update list of elements
-    if( search !== '' && search.length > 2 ){
+    if( search !== '' ){
       const newFiltered = items.filter((item) => item.name.toLowerCase().indexOf(search.toLowerCase()) >= 0)
       setFiltered(newFiltered);
     }else{
