@@ -4,6 +4,7 @@ use(function () {
     var jsonObject = {};
 
     var listValues = [];
+    var optionData = {};
     var resourceResolver = resource.getResourceResolver();
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
@@ -39,9 +40,19 @@ use(function () {
     if (properties && properties["quoteDetailUrl"]) {
         jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"];
     }
-    
+    if (properties && properties["defaultSortingColumnKey"]) {
+        optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
+    }
+    if (properties && properties["defaultSortingDirection"]) {
+        optionData.defaultSortingDirection = properties["defaultSortingDirection"];
+    }
+
+
     if (listValues != null) {
         jsonObject["columnList"] = listValues;
+    }
+    if (optionData != null) {
+        jsonObject["options"] = optionData;
     }
     return {
         configJson: JSON.stringify(jsonObject)
