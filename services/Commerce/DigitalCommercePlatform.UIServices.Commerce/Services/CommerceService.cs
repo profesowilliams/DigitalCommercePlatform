@@ -3,7 +3,6 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Cart;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
@@ -14,7 +13,6 @@ using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -31,18 +29,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<CommerceService> _logger;
+        private readonly ICartService _cartService;
         private readonly string _appOrderServiceUrl;
         private readonly string _appQuoteServiceUrl;
-        private readonly string _appCartURL;
         private static readonly Random getrandom = new Random();
 
-        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IOptions<AppSettings> options)
+        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IOptions<AppSettings> options, ICartService cartService)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _cartService = cartService;
             _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
             _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
-            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
         }
 
         public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
@@ -261,68 +259,75 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuote(CreateQuote.Request request)
         {
-            var url = _appQuoteServiceUrl + "/Create";
-            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(url, null, request.CreateModel);
+            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, request.CreateModel);
             return response;
         }
 
-        public async Task<CreateQuoteFrom.Response> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
+        public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
-            _ = PopulateCreateQuoteRequestFromActiveCart(request.CreateModelFrom);
-            // TO_DO: call app quote service to create a quote, now mocked data
-            var response = new CreateQuoteFrom.Response
+            ActiveCartModel activeCart = await _cartService.GetActiveCart();
+            if (activeCart.Items != null)
             {
-                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
-                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
-            };
-            return await Task.FromResult(response);
+                request.CreateModelFrom.Items = new List<ItemModel>();
+                foreach (var cartLine in activeCart.Items)
+                {
+                    var item = new ItemModel();
+                    item.Id = cartLine.ItemId;
+                    item.Product = new List<ProductModel> {
+                        new ProductModel {
+                            Id = cartLine.ProductId,
+                            Name = cartLine.ProductId,
+                            Type = "1",
+                        }
+                    };
+                    item.Quantity = cartLine.Quantity;
+                    request.CreateModelFrom.Items.Add(item);
+                }
+            }
+            var response = await CallCreateQuote(request.CreateModelFrom);
+            return response;
         }
 
-        public async Task<CreateQuoteFrom.Response> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
+        public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
         {
-            // Manual faking all possible scenarios, so the frontend developers can code the error handling on their side
-            if (request.CreateModelFrom.CreateFromId == "99999")
-            {
-                throw new UIServiceException("Unable to create a quote. The Quote publisher service is unavailable.", (int)UIServiceExceptionCode.QuoteCreationFailed);
-            }
+            var createQuoteFrom = request.CreateModelFrom;
             var savedCartId = request.CreateModelFrom.CreateFromId;
-            CartModel cart = await GetCartDetails(savedCartId);
-            if (cart == null)
+            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetails(savedCartId);
+            if (savedCart == null)
             {
                 throw new UIServiceException("Invalid savedCartId: " + savedCartId, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
 
-            // Mapping cart into a quote
-            request.CreateModelFrom.SalesOrg = cart.source.SalesOrg;
-            request.CreateModelFrom.TargetSystem = cart.source.System;
-            request.CreateModelFrom.Creator = cart.userId;
-            request.CreateModelFrom.EndUser.Id = cart.customerNo;
-            foreach (var cartLine in cart.lines)
+            if (savedCart.Items != null)
             {
-                var item = new ItemModel();
-                item.Quantity = cartLine.Quantity;
-                item.Id = cartLine.ProductId;
-                // TO_DO: more mapping is necessary
-                //cartLine.Type
-                //cartLine.UAN
-                //item.Product
+                createQuoteFrom.Items = new List<ItemModel>();
+                foreach (var cartLine in savedCart.Items)
+                {
+                    var itemModel = new ItemModel();
+                    itemModel.Id = cartLine.ItemId;
+                    itemModel.Product = new List<ProductModel> { new ProductModel { Id = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", } };
+                    itemModel.Quantity = cartLine.Quantity;
+                    createQuoteFrom.Items.Add(itemModel);
+                }
             }
-            // TO_DO: Call app quote
-            var response = new CreateQuoteFrom.Response
-            {
-                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
-                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
-            };
-            return await Task.FromResult(response);
+            var response = await CallCreateQuote(createQuoteFrom);
+            return response;
+        }
+        private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
+        {
+            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
+            return response;
         }
 
-        public async Task<CreateQuoteFrom.Response> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
+        public async Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
         {
-            // TO_DO: Missing implementation
-            var response = new CreateQuoteFrom.Response
+            // TO_DO: Missing implementation, so we return dummy response for now
+            var response = new CreateModelResponse
             {
-                QuoteId = "TIW777" + GetRandomNumber(10000, 60000),
-                ConfirmationId = "CONFIRM_" + GetRandomNumber(10000, 60000),
+                Id = "TIW777" + GetRandomNumber(10000, 60000),
+                Confirmation = "CONFIRM_" + GetRandomNumber(10000, 60000),
             };
             return await Task.FromResult(response);
         }
@@ -334,57 +339,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
             var response = new UpdateQuote.Response(result);
             return await Task.FromResult(response);
-        }
-
-        public async Task<CartModel> GetCartDetails(string cartId)
-        {
-            try
-            {
-                var cartURL = _appCartURL.Replace("/v1", "/v2") + "/";
-                cartURL = cartURL.AppendPathSegment(cartId);
-                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<CartModel>(cartURL);
-                return getCustomerDetailsResponse;
-            }
-            catch (RemoteServerHttpException ex)
-            {
-                if (ex.Code == System.Net.HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
-                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartDetails));
-                throw ex;
-            }
-        }
-
-        private async Task<CreateModelFrom> PopulateCreateQuoteRequestFromActiveCart(CreateModelFrom request)
-        {
-            try
-            {
-                var activeCartURL = _appCartURL.AppendPathSegment("/");
-                var activeCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(activeCartURL);
-                // TO_DO: more mapping is necessary
-                request.SalesOrg = activeCartResponse.Source.SalesOrg;
-                request.TargetSystem = activeCartResponse.Source.System;
-                foreach (var cartLine in activeCartResponse.Lines)
-                {
-                    var quoteLine = new ItemModel();
-                    quoteLine.Quantity = Convert.ToDecimal(cartLine.Quantity);
-                    quoteLine.Parent = cartLine.ParentLineNo;
-                    quoteLine.Product = new List<ProductModel> { new ProductModel { Id = cartLine.ProductId } };
-                    //cartLine.LineNo
-                    request.Items.Add(quoteLine);
-                }
-                return request;
-            }
-            catch (RemoteServerHttpException ex)
-            {
-                if (ex.Code == System.Net.HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
-                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(CommerceService));
-                throw ex;
-            }
         }
     }
 }

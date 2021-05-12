@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<ICommerceService, CommerceService>();
+            services.AddTransient<ICartService, CartService>();
             services.AddTransient<ISortingService, SortingService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }

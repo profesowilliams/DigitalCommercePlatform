@@ -45,22 +45,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                Response response;
+                CreateModelResponse createModelResponse;
                 switch (request.CreateModelFrom.CreateFromType)
                 {
                     case QuoteCreationSourceType.ActiveCart:
-                        response = await _quoteService.CreateQuoteFromActiveCart(request);
+                        createModelResponse = await _quoteService.CreateQuoteFromActiveCart(request);
                         break;
                     case QuoteCreationSourceType.SavedCart:
-                        response = await _quoteService.CreateQuoteFromSavedCart(request);
+                        createModelResponse = await _quoteService.CreateQuoteFromSavedCart(request);
                         break;
                     case QuoteCreationSourceType.EstimationId:
-                        response = await _quoteService.CreateQuoteFromEstimationId(request);
+                        createModelResponse = await _quoteService.CreateQuoteFromEstimationId(request);
                         break;
                     default:
                         throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
-                return new ResponseBase<Response> { Content = response };
+                var content = new Response
+                {
+                    QuoteId = createModelResponse.Id,
+                    ConfirmationId = createModelResponse.Confirmation,
+                };
+                var response = new ResponseBase<Response> { Content = content };
+                if (createModelResponse.Messages != null)
+                {
+                    foreach (var message in createModelResponse.Messages)
+                    {
+                        response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
+                        response.Error.IsError = true;
+                        response.Error.Messages.Add(message.Value);
+                    }
+                }
+                return response;
             }
 
             public class Validator : AbstractValidator<Request>

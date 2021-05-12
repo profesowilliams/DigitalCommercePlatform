@@ -34,8 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
         public class Response
         {
-            public string Id { get; set; }
-            public string Confirmation { get; set; }
+            public string QuoteId { get; set; }
+            public string ConfirmationId { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
@@ -53,18 +53,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var result = await _quoteService.CreateQuote(request);
+                var createModelResponse = await _quoteService.CreateQuote(request);
                 var content = new Response
                 {
-                    Id = result.Id,
-                    Confirmation = result.Confirmation,
+                    QuoteId = createModelResponse.Id,
+                    ConfirmationId = createModelResponse.Confirmation,
                 };
                 var response = new ResponseBase<Response> { Content = content };
-                foreach (var message in result?.Messages)
+                if (createModelResponse.Messages != null)
                 {
-                    response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
-                    response.Error.IsError = true;
-                    response.Error.Messages.Add(message.Value);
+                    foreach (var message in createModelResponse?.Messages)
+                    {
+                        response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
+                        response.Error.IsError = true;
+                        response.Error.Messages.Add(message.Value);
+                    }
                 }
                 return response;
             }
