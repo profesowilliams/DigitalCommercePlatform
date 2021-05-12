@@ -13,6 +13,9 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+
+var utils = require('./utils');
+
 function checkCreds(user, pass) {
     return (
         user in { admin: "admin", user: "temp", bru: "temp" } &&
@@ -479,8 +482,8 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
             id: Number(`${pageNumber}${4009754974 + i}`),
             quoteReference: null,
             vendor: null,
-            created: new Date().toISOString(),
-            expires: new Date(Date.now() + 3600000 * 24 * 7).toISOString(),
+            created: utils.getRandomDate(),
+            expires: utils.getRandomDate(),
             endUserName: null,
             dealId: null,
             status: i % 2 ? "OPEN" : "CLOSED",

@@ -3,7 +3,10 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
+
+
 function Grid({ columnDefinition, config, data }) {
+	const SORT_BY_KEYS = {"created" : "created", "id" : "id", "quoteValue" : "quoteValue"};
 	const [gridData, setGridData] = useState(data ?? null);
 	const [totalCount, setTotalCount] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null });
@@ -33,13 +36,42 @@ function Grid({ columnDefinition, config, data }) {
 		}
 	});
 
+	function getParsedSortKey(sortKey) {
+
+		let parsedSortKey = null;
+
+		if (sortKey in SORT_BY_KEYS)
+		{
+			parsedSortKey = SORT_BY_KEYS[sortKey];
+		}else{
+			parsedSortKey = SORT_BY_KEYS.created;
+		}
+
+		return parsedSortKey;
+	}
+
+	function getParsedSortDir(sortDir, parsedSortKey) {
+
+		let parsedSortDir = null;
+
+		if (parsedSortKey === SORT_BY_KEYS.created)
+		{
+			parsedSortDir = sortDir ? sortDir : "desc";
+		}else{
+			parsedSortDir = sortDir;
+		}
+		return undefined;
+	}
+
 	function createDataSource() {
 		return {
 			getRows: (params) => {
 				const pageNo = params.request.endRow / config.itemsPerPage;
 				const sortKey = params.request.sortModel?.[0]?.colId;
 				const sortDir = params.request.sortModel?.[0]?.sort;
-				getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then((response) => {
+				const parsedSortKey = getParsedSortKey(sortKey);
+				const parsedSortDir = getParsedSortDir(sortDir, parsedSortKey);
+				getGridData(config.itemsPerPage, pageNo, parsedSortKey, parsedSortDir).then((response) => {
 					setTotalCount(response.totalItems);
 					/*workaround for page info in infinite scroll mode
 						update 'to' only if currently retrieved last index is higher than the last one stored in reference
@@ -66,7 +98,7 @@ function Grid({ columnDefinition, config, data }) {
 		// check if there are additional query params in url, append grid specific params
 		const url = new URL(config.uiServiceEndPoint);
 		const pages = `PageSize=${pageSize ?? 10}&PageNumber=${pageNumber ?? 1}`;
-		const sortParams = sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : '';
+		const sortParams = sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : `&SortDirection=desc&SortBy=created&WithPaginationInfo=true`;
 		let apiUrl = `${url.origin}${url.pathname ?? ''}${url.search ?? ''}`;
 		url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
 		console.log(apiUrl);
