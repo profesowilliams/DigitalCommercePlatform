@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -59,6 +60,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
                 }
 
 
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.DealId).NotNull();
+                RuleFor(x => x.VendorId).NotNull();
             }
         }
     }

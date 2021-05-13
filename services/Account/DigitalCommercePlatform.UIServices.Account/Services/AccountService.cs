@@ -82,7 +82,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 Quoted = 14,
                 UnQuoted = 30,
-                OldConfigurations = 25
+                OldConfigurations = 25,
+                CurrencyCode="USD"
             };
             return await Task.FromResult(response);
 

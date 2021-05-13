@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public DateTime? CreatedTo { get; set; }
         public string EndUser { get; set; }
         public string SortBy { get; set; }
-        public bool SortByAscending { get; set; }
+        public string SortDirection { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }

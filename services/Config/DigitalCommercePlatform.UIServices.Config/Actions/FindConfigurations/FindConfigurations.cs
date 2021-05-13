@@ -71,24 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations
                 }
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                When(x => x.Criteria.SortByAscending, () =>
-                {
-                    RuleFor(x => x.Criteria.SortBy).NotEmpty().WithMessage("Query parameter 'SortBy' must be set.");
-                });
-                When(x => x.Criteria.WithPaginationInfo, () =>
-                {
-                    RuleFor(i => i.Criteria.Page).GreaterThan(0).WithMessage("Page must be greater than 0.");
-                });
-                When(x => x.Criteria.WithPaginationInfo, () =>
-                {
-                    RuleFor(i => i.Criteria.PageSize).GreaterThan(0).WithMessage("PageSize must be greater than 0.");
-                });
-                
+                RuleFor(i => i.Criteria.Page).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
+                RuleFor(i => i.Criteria.PageSize).GreaterThan(0).WithMessage("PageNumber must be greater than or equal to 0.");
             }
         }
     }

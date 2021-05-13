@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -55,6 +56,13 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails
                     _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetSavedCartDetails));
                     throw ex;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.Id).NotNull();
             }
         }
     }

@@ -79,12 +79,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                         RuleFor(x => x.Page).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
                         RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
                     });
-
-                    When(x => x.SortAscending, () =>
-                    {
-                        RuleFor(x => x.SortBy).NotEmpty().WithMessage("Query parameter 'SortBy' must be set.");
-                    });
-
                 }
                 
             }

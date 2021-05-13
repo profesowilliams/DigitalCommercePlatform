@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -49,6 +50,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress
                     _logger.LogError(ex, "Exception at getting Address : " + nameof(GetAddress));
                     throw;
                 }
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Criteria).NotNull();
             }
         }
     }

@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -67,8 +68,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
                     _logger.LogError(ex, "Exception at getting recent configurations for grid : " + nameof(GetConfigurations));
                     throw;
                 }
-
-
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Criteria.PageSize).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
+                RuleFor(x => x.Criteria.Page).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
             }
         }
     }
