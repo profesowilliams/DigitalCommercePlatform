@@ -36,6 +36,8 @@ public class SubNavLinks {
 
     private String rootParentTitle;
 
+    private String docCount;
+
     private List<SubNavLinks> subNavLinkslist =  new ArrayList<>();
 
     SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle){
@@ -99,10 +101,11 @@ public class SubNavLinks {
         }
     }
 
-    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl ){
+    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount ){
         this.pageTitle = name;
         this.pagePath = pageUrl;
         this.rootParentTitle = rootParentTitle;
+        this.docCount = docCount;
         childJsonIterator(children, externalUrl);
 
     }
@@ -114,8 +117,9 @@ public class SubNavLinks {
             JsonElement subNavrecordElement = subNavelements.next();
             String subNavname = subNavrecordElement.getAsJsonObject().get("name").toString().replace("\"", "");
             String subNavpageUrl = externalUrl+subNavrecordElement.getAsJsonObject().get("key").toString().replace("\"", "");
+            String subDocCount = externalUrl+subNavrecordElement.getAsJsonObject().get("docCount").toString();
             JsonArray subNavchildren = (JsonArray) subNavrecordElement.getAsJsonObject().get("children");
-            SubNavLinks quaduaryLink = new SubNavLinks(subNavname, subNavpageUrl, this.rootParentTitle, subNavchildren, externalUrl);
+            SubNavLinks quaduaryLink = new SubNavLinks(subNavname, subNavpageUrl, this.rootParentTitle, subNavchildren, externalUrl, subDocCount);
             this.subNavLinkslist.add(quaduaryLink);
 
         }
@@ -137,12 +141,15 @@ public class SubNavLinks {
         return hasChildPages;
     }
 
+    public String getDocCount() {
+        return docCount;
+    }
+
     public void setHasChildPages(String hasChildPages) {
         this.hasChildPages = hasChildPages;
     }
 
-    public String getMenuID() {
-        return (this.getRootParentTitle()+"-"+this.getPageTitle()).toLowerCase(Locale.ROOT);
+    public String getMenuID() {return (this.getRootParentTitle()+"-"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT);
     }
 }
 

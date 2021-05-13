@@ -126,8 +126,9 @@ public class LinkItem {
                         JsonElement recordElement = elements.next();
                         String name = recordElement.getAsJsonObject().get("name").toString().replace("\"", "");
                         String pageUrl = externalUrl+recordElement.getAsJsonObject().get("key").toString().replace("\"", "");
+                        String docCount = recordElement.getAsJsonObject().get("docCount").toString().replace("\"", "");
                         JsonArray children = (JsonArray) recordElement.getAsJsonObject().get("children");
-                        SubNavLinks link = new SubNavLinks(name, pageUrl, platformName, children, externalUrl);
+                        SubNavLinks link = new SubNavLinks(name, pageUrl, platformName, children, externalUrl, docCount);
                         subLinks.add(link);
                         for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
                         {
