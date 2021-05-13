@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
                     {
                         Items = recentConfigResponse.Items,
                         TotalItems = recentConfigResponse.Items.Count(),
-                        PageNumber = request.Criteria.PageNumber,
+                        PageNumber = request.Criteria.Page,
                         PageSize = request.Criteria.PageSize,
                         PageCount = (recentConfigResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize
 

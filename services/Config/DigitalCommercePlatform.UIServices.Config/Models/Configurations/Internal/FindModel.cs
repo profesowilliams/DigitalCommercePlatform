@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
+namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal
 {
     [ExcludeFromCodeCoverage]
     public class FindModel

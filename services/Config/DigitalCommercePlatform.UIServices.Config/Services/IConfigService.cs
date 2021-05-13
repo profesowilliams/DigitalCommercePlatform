@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -11,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public interface IConfigService
     {
         Task<List<Configuration>> GetConfigurations(GetConfigurations.Request request);
+        Task<List<Configuration>> FindConfigurations(FindConfigurations.Request request);
         Task<List<Deal>> GetDeals(GetDeals.Request request);
         Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
     }

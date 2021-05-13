@@ -1,9 +1,16 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
+using Flurl;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -20,14 +27,23 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public class ConfigService : IConfigService
     {
         private static readonly Random getrandom = new Random();
-        //private readonly string _appOrderServiceUrl;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
 #pragma warning disable CS0414 // The field is assigned but its value is never used
-        private readonly string _appQuoteServiceUrl;
+        private readonly string _appConfigurationUrl;
 #pragma warning restore CS0414
-        public ConfigService(IOptions<AppSettings> options)
+
+        private readonly IMapper _mapper;
+        private readonly ILogger<ConfigService> _logger;
+
+        public ConfigService(IOptions<AppSettings> options, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
+            ILogger<ConfigService> logger)
         {
-            //_appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
-            _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
+            //_appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
+            //currently there are no settings which provides below url.
+            _appConfigurationUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-configuration/v1";
+            _mapper = mapper;
+            _middleTierHttpClient = middleTierHttpClient;
+            _logger = logger;
         }
         public async Task<List<Configuration>> GetConfigurations(GetConfigurations.Request request)
         {
@@ -48,35 +64,44 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             //    lstConfigurations.Add(objConfiguration);
             //}
 
-            IEnumerable<Configuration> lstConfigurations = new List<Configuration>();
-            var resourceStream = this.GetType().Assembly.GetManifestResourceStream("DigitalCommercePlatform.UIServices.Config.DummyData.ConfigurationList.json");
-            using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
+            IEnumerable<Configuration> configurations;
+            try
             {
-                var fileContent = await reader.ReadToEndAsync();
-                var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
-                lstConfigurations = JsonSerializer.Deserialize<List<Configuration>>(fileContent, serializerOptions);
+                var resourceStream = GetType().Assembly
+                    .GetManifestResourceStream("DigitalCommercePlatform.UIServices.Config.DummyData.ConfigurationList.json");
+                using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
+                {
+                    var fileContent = await reader.ReadToEndAsync();
+                    var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, };
+                    configurations = JsonSerializer.Deserialize<List<Configuration>>(fileContent, serializerOptions);
+                }
+
+                // Manual implementation of filtering applied on dummy data
+                if (!string.IsNullOrEmpty(request.Criteria.Id))
+                {
+                    configurations = configurations.Where(x => x.ConfigId == request.Criteria.Id);
+                }
+                if (!string.IsNullOrEmpty(request.Criteria.EndUser))
+                {
+                    configurations = configurations.Where(x => x.EndUserName == request.Criteria.EndUser);
+                }
+                if (request.Criteria.CreatedFrom.HasValue)
+                {
+                    configurations = configurations.Where(x => x.CreatedOn >= request.Criteria.CreatedFrom);
+                }
+                if (request.Criteria.CreatedTo.HasValue)
+                {
+                    configurations = configurations.Where(x => x.CreatedOn <= request.Criteria.CreatedTo);
+                }
+            }
+            catch (Exception)
+            {
+                configurations = CreateDefaultConfigurations();
             }
 
-            // Manual implementation of filtering applied on dummy data
-            if (request.Criteria.ConfigurationIdFilter != null)
-            {
-                lstConfigurations = lstConfigurations.Where(x => x.ConfigId == request.Criteria.ConfigurationIdFilter);
-            }
-            if (request.Criteria.EndUserFilter != null)
-            {
-                lstConfigurations = lstConfigurations.Where(x => x.EndUserName == request.Criteria.EndUserFilter);
-            }
-            if (request.Criteria.CreatedFrom != null)
-            {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn >= request.Criteria.CreatedFrom);
-            }
-            if (request.Criteria.CreatedTo != null)
-            {
-                lstConfigurations = lstConfigurations.Where(x => x.CreatedOn <= request.Criteria.CreatedTo);
-            }
-
-            return await Task.FromResult(lstConfigurations.ToList());
+            return await Task.FromResult(configurations.ToList());
         }
+
         public async Task<List<Deal>> GetDeals(GetDeals.Request request)
         {
             var lstDeals = new List<Deal>();
@@ -125,14 +150,100 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             objResponse.TotalResultCount = lstMaterials.Count();
             objResponse.Prodcuts = lstMaterials;
             objResponse.InvalidTDPartNumbers = null;
-            
+
             return await Task.FromResult(objResponse);
 
         }
+
         public static int GetRandomNumber(int min, int max)
         {
             return getrandom.Next(min, max);
         }
 
+        public async Task<List<Configuration>> FindConfigurations(FindConfigurations.Request request)
+        {
+            try
+            {
+                var appServiceRequest = PrepareAppServiceRequest(request);
+                var findConfigurationUrl = _appConfigurationUrl.AppendPathSegment("find");
+                if (appServiceRequest.Details)
+                {
+                    var findConfigurationResponse = await _middleTierHttpClient.GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl,
+                        queryParams: new Dictionary<string, object>() { { "FindModel", appServiceRequest } });
+                    var result = MapAppResponseToConfigurations(findConfigurationResponse);
+                    return result;
+
+                }
+                else
+                {
+                    var findConfigurationResponse = await _middleTierHttpClient.GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl,
+                        queryParams: new Dictionary<string, object>() { { "FindModel", appServiceRequest } });
+                    var result = MapAppResponseToConfigurations(findConfigurationResponse);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
+                throw ex;
+            }
+        }
+
+        private List<Configuration> MapAppResponseToConfigurations<T>(FindResponse<T> findConfigurationResponse)
+        {
+            var data = findConfigurationResponse.Data;
+            var result = _mapper.Map<List<Configuration>>(data);
+            return result;
+        }
+
+        private static List<Configuration> CreateDefaultConfigurations()
+        {
+            var result = new List<Configuration>
+            {
+                new Configuration()
+                {
+                    ConfigId = "Dummy-Configuration : 3979",
+                    ConfigurationType = "Cart",
+                    CreatedOn = DateTime.UtcNow,
+                    Vendor = "Dell",
+                    ConfigName = "Dell Config",
+                    EndUserName = "CDW International",
+                    TdQuoteId = "48173792",
+                    VendorQuoteId = "",
+                    Action = "Create Quote",
+                },
+                new Configuration()
+                {
+                    ConfigId = "Dummy-Configuration : 4762",
+                    ConfigurationType = "Cart",
+                    CreatedOn = DateTime.UtcNow,
+                    Vendor = "HP",
+                    ConfigName = "HP Config",
+                    EndUserName = "SHI International",
+                    TdQuoteId = "20772298",
+                    VendorQuoteId = "",
+                    Action = "Update Quote",
+                },
+                new Configuration()
+                {
+                    ConfigId = "Dummy-Configuration : 1900",
+                    ConfigurationType = "Vendor Quote",
+                    CreatedOn = DateTime.UtcNow,
+                    Vendor = "Intel",
+                    ConfigName = "",
+                    EndUserName = "Davidson Russel Holdings",
+                    TdQuoteId = "",
+                    VendorQuoteId = "7385743VQ",
+                    Action = "Update Quote",
+                }
+            };
+            return result;
+        }
+
+        private Models.Configurations.Internal.FindModel PrepareAppServiceRequest(FindConfigurations.Request request)
+        {
+            var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
+            return result;
+        }
     }
 }

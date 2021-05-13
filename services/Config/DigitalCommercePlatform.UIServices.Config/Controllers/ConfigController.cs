@@ -1,7 +1,9 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -30,31 +32,33 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             : base(mediator, loggerFactory, context, options, siteSettings)
         {
         }
+
         [HttpGet]
-        [Route("configurations/find")]
-        public async Task<ActionResult> GetConfigurations([FromQuery] Models.Configurations.FindModel criteria)
+        [Route("configurations/find-mocked")]
+        public async Task<ActionResult> GetConfigurations([FromQuery] FindModel criteria)
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            //if (response.IsError)
-            //{
-            //    return StatusCode(StatusCodes.Status400BadRequest, response);
-            //}
-
             return Ok(response);
 
         }
+
+        [HttpGet]
+        [Route("configurations/find")]
+        public async Task<ActionResult> FindConfigurations([FromQuery] FindModel criteria)
+        {
+            var data = new FindConfigurations.Request { Criteria = criteria };
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+
+        }
+
         [HttpGet]
         [Route("deals/find")]
         public async Task<ActionResult> GetDeals([FromQuery] Models.Deals.FindModel criteria)
         {
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            //if (response.IsError)
-            //{
-            //    return StatusCode(StatusCodes.Status400BadRequest);
-            //}
-
             return Ok(response);
 
         }
@@ -65,13 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetDeal.Request(dealId, vendorId) ;
             var response = await Mediator.Send(data).ConfigureAwait(false);
-            //if (response.IsError)
-            //{
-            //    return StatusCode(StatusCodes.Status400BadRequest);
-            //}
-
             return Ok(response);
-
         }
     }
 }

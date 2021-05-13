@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public string DealId { get; set; }
         public string Vendor { get; set; }
         public string Market { get; set; }
-        public int PageNumber { get; set; } = 1;
+        public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }

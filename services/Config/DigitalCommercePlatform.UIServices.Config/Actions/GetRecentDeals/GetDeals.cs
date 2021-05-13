@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -43,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
 
@@ -54,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                     {
                         Items = recentDealResponse.Items,
                         TotalItems = recentDealResponse.Items.Count(),
-                        PageNumber = request.Criteria.PageNumber,
+                        PageNumber = request.Criteria.Page,
                         PageSize = request.Criteria.PageSize,
                         PageCount = (recentDealResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize,
 
@@ -67,6 +69,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                     throw;
                 }
             }
+        
+            public class Validator : AbstractValidator<FindModel>
+            {
+                public Validator()
+                {
+                    When(x => x.WithPaginationInfo.HasValue && x.WithPaginationInfo.Value, () =>
+                    {
+                        RuleFor(x => x.Page).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
+                        RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
+                    });
+
+                    When(x => x.SortAscending, () =>
+                    {
+                        RuleFor(x => x.SortBy).NotEmpty().WithMessage("Query parameter 'SortBy' must be set.");
+                    });
+
+                }
+                
+            }
+        
         }
     }
 }

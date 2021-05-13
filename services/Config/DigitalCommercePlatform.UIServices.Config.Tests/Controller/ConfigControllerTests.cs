@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
@@ -61,13 +62,34 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Configurations.FindModel
             {                
                 SortBy = "createdOn",
-                SortAscending = false,
-                ConfigurationIdFilter = string.Empty,
-                Market = string.Empty,
-                Vendor = string.Empty 
+                SortByAscending = false,
+                Id = string.Empty,
             };
 
             var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task FindConfigurations(ResponseBase<FindConfigurations.Response> expected)
+        {
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<FindConfigurations.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var criteria = new Models.Configurations.FindModel
+            {
+                SortBy = "createdOn",
+                SortByAscending = false,
+                Id = string.Empty,
+            };
+
+            var result = await controller.FindConfigurations(criteria).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -86,7 +108,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Configurations.FindModel
             {                
                 SortBy = "createdOn",
-                SortAscending = false,
+                SortByAscending = false,
             };
 
             var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
