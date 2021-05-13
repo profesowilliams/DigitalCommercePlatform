@@ -68,7 +68,9 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			const pages = `PageSize=${pageSize ?? 10}&PageNumber=${pageNumber ?? 1}`;
 			const sortParams =
 				sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : '';
-			let apiUrl = `${url.origin}${url.pathname ?? ''}${url.search ?? ''}`;
+			let pathName = url.pathname ?? '';
+			pathName.slice(-1) === '/' ? (pathName = pathName.slice(0, -1)) : null;
+			let apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}`;
 			url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
 			console.log(apiUrl);
 			const response = await get(apiUrl);
@@ -98,16 +100,17 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		}
 	}
 
-	function onModelUpdated(data) {
+	function onViewportChanged(data) {
 		if (config.paginationStyle === 'scroll' && domInfoRef.current) {
-			setActualRange({
-				from: data.api.getFirstDisplayedRow() + 1,
-				to: data.api.getLastDisplayedRow() + 1,
-				total: data.api.getDisplayedRowCount(),
-			});
-			// 	domInfoRef.current.innerHTML = `${data.api.getFirstDisplayedRow() + 1} - ${
-			// 		data.api.getLastDisplayedRow() + 1
-			// 	} of ${data.api.getDisplayedRowCount()}`;
+			const renderedNodes = data.api.getRenderedNodes();
+			const firstIndex = renderedNodes[0].rowIndex;
+			const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
+			/*
+				  React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
+					on some environmets.
+			*/
+			// update page-info after scrolling in "scroll" paginations style
+			domInfoRef.current.innerHTML = `${firstIndex + 1} - ${lastIndex + 1} of ${data.api.getDisplayedRowCount()}`;
 		}
 	}
 
@@ -135,7 +138,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 					serverSideDatasource={createDataSource()}
 					serverSideStoreType={serverSide ? 'partial' : 'full'}
 					rowSelection='single'
-					// onModelUpdated={onModelUpdated}
+					onViewportChanged={onViewportChanged}
 					blockLoadDebounceMillis={100}
 				>
 					{columnDefinition.map((column) => {

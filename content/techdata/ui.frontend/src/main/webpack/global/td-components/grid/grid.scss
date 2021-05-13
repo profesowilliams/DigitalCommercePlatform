@@ -1,13 +1,12 @@
 .cmp-grid {
+	position: relative;
 	height: 100%;
 	width: 100%;
-	position: relative;
 	.ag-root-wrapper {
 	}
 	.ag-root {
 		font-size: $font-size-xsmall;
 	}
-
 	.ag-header {
 		border-top: 2px solid get-color(brand-blue);
 		border-bottom: 1px solid get-color(brand-blue);
@@ -111,7 +110,6 @@
 	.ag-body-horizontal-scroll {
 		display: none;
 	}
-
 	// *** custom page info ***//
 	.hidden {
 		display: none;
