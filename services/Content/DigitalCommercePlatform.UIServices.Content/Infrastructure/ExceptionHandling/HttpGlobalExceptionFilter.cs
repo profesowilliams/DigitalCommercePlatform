@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHan
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = (int)UIServiceExceptionCode.GenericBadRequestError }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHan
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = (int)UIServiceExceptionCode.GenericServerError }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

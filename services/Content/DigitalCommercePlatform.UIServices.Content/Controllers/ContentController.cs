@@ -32,9 +32,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         }
         [HttpGet]
         [Route("savedCart")]
-        public async Task<ActionResult<GetSavedCartDetails.Response>> GetSavedCartDetails(string id)
+        public async Task<ActionResult<GetSavedCartDetails.Response>> GetSavedCartDetails(string id, bool isCartName)
         {
-            var response = await Mediator.Send(new GetSavedCartDetails.Request(id)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetSavedCartDetails.Request(id, isCartName)).ConfigureAwait(false);
             return Ok(response);
         }
 

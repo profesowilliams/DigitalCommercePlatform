@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Client;
@@ -56,10 +57,19 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 
         public async Task<SavedCartDetailsModel> GetSavedCartDetails(GetSavedCartDetails.Request request)
         {
-            var CartURL = _appCartURL.AppendPathSegment(request.Id);
+            if (request.IsCartName)
+            {
+                var savedCartURL = _appCartURL.AppendPathSegment("listsavedcarts");
+                var savedCartresponse = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
+        
+                request.Id = savedCartresponse.Where(c => c.Name == request.Id).Any() ?
+                    savedCartresponse.Where(c => c.Name == request.Id)?.FirstOrDefault().Source.Id :
+                        throw new UIServiceException("Invalid Saved Cart Name: " + request.Id, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            var cartURL = _appCartURL.AppendPathSegment(request.Id);
             try
             {
-                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(CartURL);
+                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(cartURL);
                 return getCustomerDetailsResponse;
             }
             catch (Exception ex)

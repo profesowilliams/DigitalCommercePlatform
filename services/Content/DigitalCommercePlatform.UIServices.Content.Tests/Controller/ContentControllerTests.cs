@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetSavedCartDetails("12").ConfigureAwait(false);
+            var result = await controller.GetSavedCartDetails("12",true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
