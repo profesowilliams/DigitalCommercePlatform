@@ -1,0 +1,14 @@
+
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<sly data-sly-use.model="createtdquote.js">
+
+    <div id="CreateTDQuote" data-observe-mutation>
+        <div data-component="CreateTDQuote" data-cmp-type="react" className="cmp-topConfig" data-config="${model.configJson}">
+        </div>
+    </div>
+ </sly>
+
+
+ 
