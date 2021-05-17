@@ -106,7 +106,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			const firstIndex = renderedNodes[0].rowIndex;
 			const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
 			/*
-				  React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
+					React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
 					on some environmets.
 			*/
 			// update page-info after scrolling in "scroll" paginations style

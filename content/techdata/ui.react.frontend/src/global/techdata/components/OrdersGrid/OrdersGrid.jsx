@@ -127,10 +127,17 @@ function OrdersGrid(props) {
 		},
 	];
 
+	// remove non-config aem columns from column definition
+	const configColumnKeys = [];
+	componentProp.columnList?.forEach((column) => {
+		configColumnKeys.push(column.columnKey);
+	});
+	const columnDefinition = columnDefs.filter(el => configColumnKeys.includes(el.field));
+
 	return (
 		<section>
 			<div className='cmp-quotes-grid'>
-				<Grid columnDefinition={columnDefs} config={componentProp}></Grid>
+				<Grid columnDefinition={columnDefinition} config={componentProp}></Grid>
 			</div>
 		</section>
 	);
