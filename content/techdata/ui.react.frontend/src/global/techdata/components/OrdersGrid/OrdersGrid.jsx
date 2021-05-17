@@ -9,7 +9,7 @@ function OrdersGrid(props) {
 		return formatedDate;
 	}
 
-	function getTrackingStatus(trackingArray){
+	function getTrackingStatus(trackingArray) {
 		console.log("tracking status");
 		console.log(trackingArray);
 		return trackingArray.length ? trackingArray.length > 0 : false;
@@ -19,7 +19,7 @@ function OrdersGrid(props) {
 		return status === "OPEN";
 	}
 
-	function nullFormatter(value){
+	function nullFormatter(value) {
 		return value === null ? "N/A" : value;
 	}
 
@@ -72,7 +72,10 @@ function OrdersGrid(props) {
 		{
 			headerName: 'Order Value',
 			field: 'priceFormatted',
-			sortable: true
+			sortable: true,
+			valueFormatter: (props) => {
+				return props.data.currencySymbol + props.value;
+			},
 		},
 		{
 			headerName: 'Invoice #',

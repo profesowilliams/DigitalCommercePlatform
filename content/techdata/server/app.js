@@ -516,34 +516,36 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     const pageNumber = req.query.pageNumber || 1;
     const items = [];
     function getRandom(maxValue) {
-      return Math.floor(Math.random() * maxValue);
+        return Math.floor(Math.random() * maxValue);
     }
     for (let i = 0; i < pageSize; i++) {
-      items.push({
-        id: Number(`${pageNumber}${4009754974 + i}`),
-        created: new Date().toISOString(),
-        reseller: Number(`${pageNumber}${111048 + i}`),
-        shipTo: "UPS",
-        type: "Manual",
-        priceFormatted: 73002.31 + getRandom(1000),
-        invoice: Number(`${pageNumber}${4009754974 + i}`),
-        status: i % 2 ? "OPEN" : "CLOSED",
-        trackings:  i % 2 ? true : false,
-        isReturn:  i % 2 ? true : false,
-      })
+        items.push({
+            id: Number(`${pageNumber}${4009754974 + i}`),
+            created: new Date().toISOString(),
+            reseller: Number(`${pageNumber}${111048 + i}`),
+            shipTo: "UPS",
+            type: "Manual",
+            priceFormatted: 73002.31 + getRandom(1000),
+            invoice: Number(`${pageNumber}${4009754974 + i}`),
+            status: i % 2 ? "OPEN" : "CLOSED",
+            trackings: i % 2 ? true : false,
+            isReturn: i % 2 ? true : false,
+            currency: "USD",
+            currencySymbol: "$",
+        })
     }
     const response = {
-      content: {
-        items: items,
-        totalItems: 2500,
-        pageCount: 25,
-        pageSize
-      },
-      error: {
-        code: 0,
-        message: [],
-        isError: false,
-      },
+        content: {
+            items: items,
+            totalItems: 2500,
+            pageCount: 25,
+            pageSize
+        },
+        error: {
+            code: 0,
+            message: [],
+            isError: false,
+        },
     };
     // var jsonResponseFromDIT =
     //     '{"content":{"totalItems":0,"pageCount":0,"pageNumber":0,"pageSize":0,
