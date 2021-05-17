@@ -28,9 +28,9 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		});
 		if (el) {
 			// translation
-			column.columnLabel ? (el.headerName = column.columnLabel) : null;
+			column.columnLabel !== undefined ? (el.headerName = column.columnLabel) : null;
 			// sortable attribute
-			column.sortable ? (el.sortable = column.sortable) : null;
+			column.sortable !== undefined ? (el.sortable = column.sortable) : null;
 		}
 	});
 
