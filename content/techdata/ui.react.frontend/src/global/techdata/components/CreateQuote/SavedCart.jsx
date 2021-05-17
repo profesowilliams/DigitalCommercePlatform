@@ -3,10 +3,16 @@ import Button from '../Widgets/Button';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
-import SavedCartManuallyTyped from './SavedCartManuallyTyped';
+import ManuallyTyped from './ManuallyTyped';
 import SavedCartSelectItem from './SavedCartSelectItem';
 
-const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpoints }) => {
+const SavedCart = ({ 
+  method, 
+  setMethod, 
+  methods, 
+  endpoints,
+  next,
+ }) => {
   const { cartslistEndpoint, cartdetailsEndpoint } = endpoints;
   const cartTypes = [
     { id: 'manually', name: 'Enter Cart name' },
@@ -16,50 +22,41 @@ const SavedCart = ({ method, setMethod, methods, createQuote, buttonTitle, endpo
   const [cartName, setCartName] = useState("");
   const [step, setStep] = useState(0);
   const nextStep = () => {
-    setStep(1);
+    setStep(step + 1);
   }
   const prevStep = () => {
-    setStep(0)
+    setStep(step - 1);
   }
-
-  const manuallyCreateQuote = () => {
-    //this alert should be a endpoint to validate the cart name provided by the user
-    alert('Validating cartName...');
-    if( cartName ){
-      createQuote()
-    }else{
-      alert('Write a cart name to continue.')
-    }
-  }
+  const goToNext = () => next(cartType)
 
   return(
     <>
       <WidgetTitle>
-        { step > 0 ? 
-          <a onClick={prevStep}><i className="fas fa-chevron-left"></i> {method.title}</a> : 
-          method.title 
+        { step > 0 ?
+          <a onClick={prevStep}><i className="fas fa-chevron-left"></i> {method.title}</a> :
+          method.title
         }
       </WidgetTitle>
       { step === 0 &&
         (
-          <> 
+          <>
             <Dropdown selected={method} setValue={setMethod} options={methods} />
-            <RadioButtons selected={cartType} options={cartTypes} onSelect={(val) => setCartType(val)} /> 
-          </> 
+            <RadioButtons selected={cartType} options={cartTypes} onSelect={(val) => setCartType(val)} />
+          </>
         )
       }
       {
-        step > 0 && (cartType && cartType.id==='manually') && 
+        step === 1 && (cartType && cartType.id==='manually') && 
         <>
           <SavedCartManuallyTyped inputValue={cartName} setValue={setCartName} />
-          <Button disabled={!cartName} onClick={manuallyCreateQuote}>{buttonTitle}</Button>
+          <Button disabled={!cartName} onClick={goToNext}>Next</Button>
         </>
       }
       {
-        step > 0 && (cartType && cartType.id==='browse') && 
+        step === 1 && (cartType && cartType.id==='browse') && 
           <SavedCartSelectItem 
-            onClick={createQuote} 
-            buttonTitle={buttonTitle} 
+            onClick={goToNext} 
+            buttonTitle="Next" 
             cartslistEndpoint={cartslistEndpoint} 
             cartdetailsEndpoint={cartdetailsEndpoint}
           />

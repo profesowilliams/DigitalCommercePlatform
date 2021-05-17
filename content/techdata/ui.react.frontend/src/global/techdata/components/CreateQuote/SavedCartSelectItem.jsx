@@ -25,8 +25,7 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
     if( isError ) return alert('Error');
     if( data ){
       if(data.items && data.items.length > 0){
-        alert('Create from valid cart')
-        // onClick();
+        onClick();
       }else{
         alert('No items in selected cart')
       }

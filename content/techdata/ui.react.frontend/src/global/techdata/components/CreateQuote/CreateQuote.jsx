@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import SelectMethod from './SelectMethod';
-import {mapDispatchToProps} from './dispatch';
-import {mapStateToProps} from './selector';
+import { mapDispatchToProps } from './dispatch';
+import { mapStateToProps } from './selector';
 import { connect } from 'react-redux';
 import SavedCart from './SavedCart';
+import Pricing from './Pricing';
+import EstimatedId from './EstimatedId';
 
 const QuoteCreate = ({ 
     requested, authError, componentProp, 
   }) => {
   const { 
-    label, quotePreviewUrl, buttonTitle, optionsList, 
+    label, quotePreviewUrl, buttonTitle, optionsList, pricingConditions,
     ...endpoints
   } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false)
   const [currentCart, setCurrentCart] = useState(false);
+  const [pricing, setPricing] = useState(false);
+  const [step, setStep] = useState(0);
   const methods = optionsList;
   const createQuote = () => {
       alert('Creating quote')
@@ -30,13 +34,19 @@ const QuoteCreate = ({
       alert('Not a valid cart available');
     }
   }
+  const goToPricing = (type) => {
+    alert(`Go to pricing with type: ${type.id}`);
+    setStep(1);
+  }
+  const prev = () => {
+    setStep(0);
+  }
   
 
-  useEffect(async () => {
-    const result = JSON.parse(localStorage.getItem("ActiveCart"));
-    if( result )
-      setCurrentCart({ totalQuantity: result.totalQuantity })
-  },[])
+	useEffect(async () => {
+		const result = JSON.parse(localStorage.getItem('ActiveCart'));
+		if (result) setCurrentCart({ totalQuantity: result.totalQuantity });
+	}, []);
 
   if( authError )
     return (
@@ -45,26 +55,46 @@ const QuoteCreate = ({
   return(
     <div className="cmp-widget">
       { 
-        (!methodSelected || (methodSelected&&methodSelected.key ==='active')) && 
+        (!methodSelected || (methodSelected&&methodSelected.key ==='active')) &&  step === 0 &&
         <SelectMethod 
           title={label}
           method={methodSelected}
           setMethod={setMethodSelected}
           methods={methods}
-          createQuote={createFromActive}
-          buttonTitle={buttonTitle}
+          createQuote={goToPricing}
+          buttonTitle='Next'
         /> 
       }
       {
-        methodSelected && methodSelected.key==='saved' && 
+        methodSelected && methodSelected.key==='saved' && step === 0 && 
         <SavedCart
           method={methodSelected}
           setMethod={setMethodSelected}
           methods={methods}
-          createQuote={createQuote}
-          buttonTitle={buttonTitle}
+          next={goToPricing}
           endpoints={endpoints}
           />
+      }
+      {methodSelected && methodSelected.key === 'estimate' && step === 0 && (
+				<EstimatedId
+					method={methodSelected}
+					setMethod={setMethodSelected}
+					methods={methods}
+					createQuote={createQuote}
+					buttonTitle={buttonTitle}
+					endpoints={endpoints}
+				/>
+			)}
+      {
+        step === 1 &&
+        <Pricing 
+          createQuote={() => { alert('create') }} 
+          buttonTitle={buttonTitle}
+          method={pricing}
+          setMethod={setPricing}
+          pricingConditions={pricingConditions}
+          prev={prev}
+        />
       }
       {
         requested && <p>Loading</p>
@@ -73,4 +103,4 @@ const QuoteCreate = ({
   );
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(QuoteCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(QuoteCreate);

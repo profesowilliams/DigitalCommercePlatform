@@ -5,15 +5,17 @@
 		className="cmp-quote-create"
 		data-config='{
 			"label": "Create Quote",
-			"buttonTitle": "Create Quote", 
+			"buttonTitle": "Create Quote",
 			"optionsList": [
 				{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE" },
-				{ "key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM" }
+				{ "key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM" },
+				{ "key": "estimate", "label": "Estimate ID", "title": "CREATE QUOTE" }
 			],
 			"quotePreviewUrl": "http://localhost:8080/quote.html?redirected=true",
 			"endpoint": "http://localhost:3000/quote/create/",
 			"cartslistEndpoint": "http://localhost:3000/savedCarts",
-			"cartdetailsEndpoint": "http://localhost:3000/cart"
+			"cartdetailsEndpoint": "http://localhost:3000/cart",
+			"pricingConditions": "http://localhost:3000/pricingConditions"
 		}'
 	></div>
 </div>

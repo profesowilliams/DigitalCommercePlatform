@@ -904,3 +904,37 @@ app.get("/myorders", (req, res) => {
         },
     });
 });
+
+app.get("/pricingConditions", (req, res) => {
+    if (!req.headers["sessionid"])
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+    res.json({
+        content:{
+            pricingConditions:{
+              items:[
+                { key: "Commercial(Non-Govt)", value: "0" },
+                { key: "Education(Student,Staff)", value: "1" },
+                { key: "Education(Higher)", value: "2" },
+                { key: "Education(K-12)", value: "3" },
+                { key: "EducationE-Rate(K-12)", value: "4" },
+                { key: "Federal", value: "5" },
+                { key: "FederalGSA", value: "6" },
+                { key: "State", value: "7" },
+                { key: "Medical", value: "8" },
+                { key: "SEWPContract", value: "11" }
+              ]
+            }
+          },
+          error:{
+            code:0,
+            messages:[],
+            isError:false
+          }
+    });
+});
