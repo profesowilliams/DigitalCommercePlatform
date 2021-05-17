@@ -17,6 +17,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -34,5 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
         Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
         Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request);
+        Task<List<VendorReferenceModel>> GetVendorReference();
     }
 }

@@ -26,6 +26,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -362,6 +363,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetAddress("ALL",false).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetVendorReference(ResponseBase<GetVendorReference.Response> expected)
+        {
+
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetVendorReference.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetVendorReference().ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

@@ -15,6 +15,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
+using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
@@ -329,6 +330,40 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, $"Exception at getting {nameof(GetAddress)}: {nameof(AccountService)}");
                 return null;
             }
+        }
+
+        public async Task<List<VendorReferenceModel>> GetVendorReference()
+        {
+            try
+            {
+                //Returning dummy data for now as App-Service is not yet ready 
+                //var Vendorurl = _quoteServiceURL
+                //        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
+                //        .SetQueryParams(new{});
+
+                //var getVendorResponse = await _middleTierHttpClient.GetAsync<List<VendorReferenceModel>>(Vendorurl);
+                //return getVendorResponse;
+
+                var response = new List<VendorReferenceModel>();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Google" };
+                    var Vendors = new VendorReferenceModel();
+                    Vendors.Vendor = arrayOfStrings[i];
+                    Vendors.IsConnected = true;
+                    Vendors.IsValidRefreshToken = false;
+                    Vendors.ConnectionDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    response.Add(Vendors);
+                }
+                return await Task.FromResult(response);
+            }
+            catch(Exception ex) 
+            {
+                _logger.LogError(ex, "Exception at getting Vendor connections : " + nameof(GetVendorReference));
+                throw ex;
+            }
+            
         }
     }
 }
