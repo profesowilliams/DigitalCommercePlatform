@@ -65,7 +65,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		if (gridId.current) {
 			// check if there are additional query params in url, append grid specific params
 			const url = new URL(config.uiServiceEndPoint);
-			const pages = `PageSize=${pageSize ?? 10}&PageNumber=${pageNumber ?? 1}`;
+			const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
 			const sortParams =
 				sortKey && sortDir ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true` : '';
 			let pathName = url.pathname ?? '';
@@ -110,7 +110,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 					on some environmets.
 			*/
 			// update page-info after scrolling in "scroll" paginations style
-			domInfoRef.current.innerHTML = `${firstIndex + 1} - ${lastIndex + 1} of ${data.api.getDisplayedRowCount()}`;
+			domInfoRef.current.textContent = `${firstIndex + 1} - ${lastIndex + 1} of ${data.api.getDisplayedRowCount()}`;
 		}
 	}
 
