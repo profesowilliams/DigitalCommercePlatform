@@ -16,6 +16,14 @@
                                         fieldLabel="Menu Icon to be displayed on Mega Menu"
                                         value="fas fa-server"
                                         name="./pageMenuIcon"/>
+                                    <errorPages
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            fieldDescription="Error pages for this content tree"
+                                            fieldLabel="Error Pages Path"
+                                            name="./errorPages"
+                                            rootPath="/content/techdata">
+                                    </errorPages>
                                 </items>
                             </column>
                         </items>
