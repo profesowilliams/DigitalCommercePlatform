@@ -393,6 +393,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "edit-a-config.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/quotes/edit-a-config.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "my-quotes.html",
                 template: path.resolve(
                     __dirname,

@@ -21,3 +21,14 @@
     color: get-color(text-light-gray);
   }
 }
+
+.cmp-text-input {
+  width: 100%;
+  height: rem(30px);
+  box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
+  border: 0;
+  &::placeholder {
+    font-size: $font-size-custom-xxsmall;
+    font-style: italic;
+  }
+}
