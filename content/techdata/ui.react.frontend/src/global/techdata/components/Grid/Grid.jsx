@@ -13,13 +13,8 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	const domInfoRef = useRef(null);
 	const gridId = useRef(null);
 
-	// check for render functions in column definiton, add all of them to renderers object
 	const renderers = {};
-	columnDefinition.forEach((column) => {
-		if (column.cellRenderer) {
-			renderers[column.field] = column.cellRenderer;
-		}
-	});
+	let filteredColumns = [];
 
 	// overwrite config in column definitions with config from AEM
 	config.columnList?.forEach((column) => {
@@ -31,8 +26,23 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			column.columnLabel !== undefined ? (el.headerName = column.columnLabel) : null;
 			// sortable attribute
 			column.sortable !== undefined ? (el.sortable = column.sortable) : null;
+			// check for render function
+			if (el.cellRenderer) {
+				renderers[el.field] = el.cellRenderer;
+			}
+			filteredColumns.push(el);
 		}
 	});
+
+	// fallback in case of lack of columnList from AEM
+	if (filteredColumns.length === 0) {
+		columnDefinition.forEach((column) => {
+			if (column.cellRenderer) {
+				renderers[column.field] = column.cellRenderer;
+			}
+		});
+		filteredColumns = columnDefinition;
+	}
 
 	// overwrite options with options from AEM
 	if (options) {
@@ -72,8 +82,9 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			pathName.slice(-1) === '/' ? (pathName = pathName.slice(0, -1)) : null;
 			let apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}`;
 			url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
-			console.log(apiUrl);
+			globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
 			const response = await get(apiUrl);
+			globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
 			return response.data.content;
 		}
 	}
@@ -93,7 +104,12 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			});
 		}
 		// expose this instance of grid object globally for debug purposes
-		globalThis[`$$tdGrid${gridId.current}`] = { node: gridNodeRef.current, api: data.api };
+		globalThis[`$$tdGrid${gridId.current}`] = {
+			node: gridNodeRef.current,
+			api: data.api,
+			onAjaxCall: (apiUrl) => {},
+			onNewGridDataLoaded: (response) => {},
+		};
 		// fire onAfterGridInit callback and pass AG grid object to parent
 		if (typeof onAfterGridInit === 'function') {
 			onAfterGridInit({ node: gridNodeRef.current, api: data.api });
@@ -106,10 +122,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			const firstIndex = renderedNodes[0].rowIndex;
 			const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
 			/*
-					React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
-					on some environmets.
+				  React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
+					on some environments.
 			*/
-			// update page-info after scrolling in "scroll" paginations style
+			// update page-info after scrolling in "scroll" pagination style
 			domInfoRef.current.textContent = `${firstIndex + 1} - ${lastIndex + 1} of ${data.api.getDisplayedRowCount()}`;
 		}
 	}
@@ -141,7 +157,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 					onViewportChanged={onViewportChanged}
 					blockLoadDebounceMillis={100}
 				>
-					{columnDefinition.map((column) => {
+					{filteredColumns.map((column) => {
 						return (
 							<AgGridColumn
 								headerName={column.headerName}
