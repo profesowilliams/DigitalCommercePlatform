@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../Widgets/Button';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
-import ManuallyTyped from './ManuallyTyped';
 import SavedCartSelectItem from './SavedCartSelectItem';
+import ManuallyTyped from './ManuallyTyped';
 
 const SavedCart = ({ 
   method, 
@@ -27,7 +27,7 @@ const SavedCart = ({
   const prevStep = () => {
     setStep(step - 1);
   }
-  const goToNext = () => next(cartType)
+  const goToNext = (id) => next(id)
 
   return(
     <>
@@ -47,10 +47,11 @@ const SavedCart = ({
       }
       {
         step === 1 && (cartType && cartType.id==='manually') && 
-        <>
-          <SavedCartManuallyTyped inputValue={cartName} setValue={setCartName} />
-          <Button disabled={!cartName} onClick={goToNext}>Next</Button>
-        </>
+        <ManuallyTyped 
+          validateCartEndpoint={cartdetailsEndpoint} 
+          onClick={goToNext} inputValue={cartName} 
+          setValue={setCartName}
+          label="cart name" />
       }
       {
         step === 1 && (cartType && cartType.id==='browse') && 

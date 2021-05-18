@@ -20,17 +20,22 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
   const onNext = async () => {
     if( !selected )
       return alert('Select an item to continue');
-    const getCart = `${cartdetailsEndpoint}?id=${selected.id}`
-    const { data: { content: { data }, error: { isError } } } = await usGet(getCart, { });
-    if( isError ) return alert('Error');
-    if( data ){
-      if(data.items && data.items.length > 0){
-        onClick();
+    try{
+      const params = { id: selected.id, isCartName: false }
+      const { data: { content: { data }, error: { isError } } } = await usGet(cartdetailsEndpoint, { params });
+      if( isError ) return alert('Error');
+      if( data ){
+        const total = data.items.reduce((result, item) => ( result + item.quantity ), 0 );
+        if(data.items && total > 0){
+          onClick(selected.id);
+        }else{
+          alert('No items in selected cart')
+        }
       }else{
-        alert('No items in selected cart')
+        alert('Invalid cart')
       }
-    }else{
-      alert('Invalid cart')
+    }catch(e){
+      alert('Error getting the cart')
     }
   }
   return(

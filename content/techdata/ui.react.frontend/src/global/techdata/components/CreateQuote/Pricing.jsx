@@ -16,7 +16,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       }
     }
     getData();
-  })
+  },[])
   return (
     <>
       <WidgetTitle>

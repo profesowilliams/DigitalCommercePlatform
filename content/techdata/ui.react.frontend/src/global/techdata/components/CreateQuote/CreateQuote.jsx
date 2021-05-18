@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import SavedCart from './SavedCart';
 import Pricing from './Pricing';
 import EstimatedId from './EstimatedId';
+import { get } from '../../../../utils/api';
 
 const QuoteCreate = ({ 
     requested, authError, componentProp, 
@@ -18,30 +19,48 @@ const QuoteCreate = ({
   const [currentCart, setCurrentCart] = useState(false);
   const [pricing, setPricing] = useState(false);
   const [step, setStep] = useState(0);
+  const [cartID, setCartID] = useState(false);
   const methods = optionsList;
-  const createQuote = () => {
-      alert('Creating quote')
-      window.location.href = quotePreviewUrl;
-    }
-  const createFromActive = async () => {
+
+  const validateActiveCart = () => {
     if(currentCart ){
       if( currentCart.totalQuantity > 0 ){
-        createQuote();
+        return { isError: false, message: '' };
       }else{
-        alert('The cart is empty');
+        return { isError: true, message: 'The cart is empty' };
       }
     }else{
-      alert('Not a valid cart available');
+      return { isError: true, message: 'Not a valid cart available' };
     }
   }
-  const goToPricing = (type) => {
-    alert(`Go to pricing with type: ${type.id}`);
-    setStep(1);
+  const goToPricing = (id) => {
+    if( id ){ 
+      setCartID(id);
+      setStep(1);
+    }else if( methodSelected.key === 'active'  ){
+      const { isError, message } = validateActiveCart();
+      if(isError)
+        alert(message);
+      else
+        setStep(1);
+    }else{
+      alert('Invalid cart, try again please')
+    }
   }
   const prev = () => {
     setStep(0);
   }
-  
+  const createQuote = async () => {
+    const { endpoint } = endpoints;
+    let params = { pricingCondition: pricing.key }
+    if( methodSelected.key !== 'active' )
+      params = {...params, id: cartID };
+    const { data: { content: { quoteDetails: { orderNumber } }, error: { isError, message } } } = await get(endpoint, { params });
+    if( isError )
+      return alert( `Error in create quote: ${message}` )
+    alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
+    window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber${orderNumber}`;
+  }
 
 	useEffect(async () => {
 		const result = JSON.parse(localStorage.getItem('ActiveCart'));
@@ -88,7 +107,7 @@ const QuoteCreate = ({
       {
         step === 1 &&
         <Pricing 
-          createQuote={() => { alert('create') }} 
+          createQuote={createQuote} 
           buttonTitle={buttonTitle}
           method={pricing}
           setMethod={setPricing}

@@ -224,7 +224,7 @@ app.get("/quote/MyQuote", function (req, res) {
         },
     });
 });
-app.get("/quote/create/:cart", function (req, res) {
+app.get("/quote/create", function (req, res) {
     const code = req.query.code;
     const cart = req.params.cart;
 

@@ -14,7 +14,7 @@ const SelectMethod = ({
     <Fragment>
       <WidgetTitle>{title}</WidgetTitle>
       <Dropdown selected={method} setValue={setMethod} options={methods} />
-      <button disabled={!method} className="cmp-quote-button" onClick={createQuote}>{buttonTitle}</button>
+      <button disabled={!method} className="cmp-quote-button" onClick={() => createQuote()}>{buttonTitle}</button>
     </Fragment>
   );
 };
