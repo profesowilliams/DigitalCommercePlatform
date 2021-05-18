@@ -13,8 +13,7 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-
-var utils = require('./utils');
+var utils = require("./utils");
 
 function checkCreds(user, pass) {
     return (
@@ -532,14 +531,14 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
             isReturn: i % 2 ? true : false,
             currency: "USD",
             currencySymbol: "$",
-        })
+        });
     }
     const response = {
         content: {
             items: items,
             totalItems: 2500,
             pageCount: 25,
-            pageSize
+            pageSize,
         },
         error: {
             code: 0,
@@ -565,9 +564,6 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     // res.json(JSON.parse(jsonResponseFromDIT));
 
     res.json(response);
-
-
-
 });
 
 app.get("/browse", function (req, res) {
@@ -905,7 +901,7 @@ app.get("/myorders", (req, res) => {
     });
 });
 
-app.get("/pricingConditions", (req, res) => {
+app.get("/getAddress", (req, res) => {
     if (!req.headers["sessionid"])
         return res.status(500).json({
             error: {
@@ -915,26 +911,108 @@ app.get("/pricingConditions", (req, res) => {
             },
         });
     res.json({
-        content:{
-            pricingConditions:{
-              items:[
-                { key: "Commercial(Non-Govt)", value: "0" },
-                { key: "Education(Student,Staff)", value: "1" },
-                { key: "Education(Higher)", value: "2" },
-                { key: "Education(K-12)", value: "3" },
-                { key: "EducationE-Rate(K-12)", value: "4" },
-                { key: "Federal", value: "5" },
-                { key: "FederalGSA", value: "6" },
-                { key: "State", value: "7" },
-                { key: "Medical", value: "8" },
-                { key: "SEWPContract", value: "11" }
-              ]
-            }
-          },
-          error:{
-            code:0,
-            messages:[],
-            isError:false
-          }
+        content: {
+            items: [
+                {
+                    name: "SHI INTERNATIONAL CORP",
+                    companies: [
+                        {
+                            companyCode: "0101",
+                            paymentTermsCode: "Z271",
+                            paymentTermsText: "1.50 % 10 Net 30",
+                        },
+                        {
+                            companyCode: "0100",
+                            paymentTermsCode: "Z271",
+                            paymentTermsText: "1.50 % 10 Net 30",
+                        },
+                    ],
+                    addresses: [
+                        {
+                            addressNumber: "0001445402",
+                            addressLine1: "290 Davidson Ave",
+                            addressLine2: " ",
+                            addressLine3: " ",
+                            city: "Somerset",
+                            state: "NJ",
+                            country: "US",
+                            zip: "08873-4145",
+                            email: null,
+                            addressType: "PAY",
+                            phone: "8005276389",
+                            salesOrganization: "0100",
+                        },
+                        {
+                            addressNumber: "0001369841",
+                            addressLine1: "4111 Northside Parkway",
+                            addressLine2: " ",
+                            addressLine3: " ",
+                            city: "ATLANTA",
+                            state: "GA",
+                            country: "US",
+                            zip: "30327",
+                            email: null,
+                            addressType: "PAY",
+                            phone: " ",
+                            salesOrganization: "0100",
+                        },
+                        {
+                            addressNumber: "0001369845",
+                            addressLine1: "116 Inverness Dr E",
+                            addressLine2: "Ste 375",
+                            addressLine3: " ",
+                            city: "Englewood",
+                            state: "CO",
+                            country: "US",
+                            zip: "80112-5149",
+                            email: null,
+                            addressType: "PAY",
+                            phone: " ",
+                            salesOrganization: "0100",
+                        },
+                    ],
+                },
+            ],
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false,
+        },
+    });
+});
+
+app.get("/pricingConditions", (req, res) => {
+    if (!req.headers["sessionid"])
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+
+    res.json({
+        content: {
+            pricingConditions: {
+                items: [
+                    { key: "Commercial(Non-Govt)", value: "0" },
+                    { key: "Education(Student,Staff)", value: "1" },
+                    { key: "Education(Higher)", value: "2" },
+                    { key: "Education(K-12)", value: "3" },
+                    { key: "EducationE-Rate(K-12)", value: "4" },
+                    { key: "Federal", value: "5" },
+                    { key: "FederalGSA", value: "6" },
+                    { key: "State", value: "7" },
+                    { key: "Medical", value: "8" },
+                    { key: "SEWPContract", value: "11" },
+                ],
+            },
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false,
+        },
     });
 });

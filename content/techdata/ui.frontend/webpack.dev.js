@@ -787,6 +787,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/orders-grid-demo.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "edit-config",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/edit-config.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
