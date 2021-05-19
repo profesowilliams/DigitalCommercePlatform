@@ -38,17 +38,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var cartDetails = await _contentService.GetActiveCartDetails();
                     var getProductResponse = _mapper.Map<Response>(cartDetails);
                     return new ResponseBase<Response> { Content = getProductResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetActiveCartHandler));
-                    throw ex;
-                }
             }
         }
     }

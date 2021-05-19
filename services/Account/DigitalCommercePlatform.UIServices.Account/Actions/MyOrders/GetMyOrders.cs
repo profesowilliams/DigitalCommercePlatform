@@ -1,14 +1,13 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using MediatR;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Services;
-using AutoMapper;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using FluentValidation;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
+using DigitalCommercePlatform.UIServices.Account.Services;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.MyOrders
 {

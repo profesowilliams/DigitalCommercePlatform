@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using FluentValidation;
-using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 
 namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor
 {
@@ -58,16 +57,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var configurationsModel = await _accountServices.GetConfigurationsForAsync(request);
                     return new ResponseBase<Response> { Content = new Response { ConfigurationsData = configurationsModel } };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting data for quotes : " + nameof(GetConfigurationsFor));
-                    throw;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>

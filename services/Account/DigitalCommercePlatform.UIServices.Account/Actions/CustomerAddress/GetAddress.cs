@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Account.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -39,17 +38,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var cartDetails = await _accountServices.GetAddress(request);
                     var cartResponse = _mapper.Map<Response>(cartDetails);
                     return new ResponseBase<Response> { Content = cartResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Address : " + nameof(GetAddress));
-                    throw;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>

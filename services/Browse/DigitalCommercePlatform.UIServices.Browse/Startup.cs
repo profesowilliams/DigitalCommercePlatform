@@ -1,4 +1,4 @@
-using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;

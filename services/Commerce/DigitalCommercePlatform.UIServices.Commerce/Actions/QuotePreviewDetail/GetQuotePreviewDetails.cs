@@ -49,18 +49,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var quoteDetailsModel = await _quoteService.CreateQuotePreview(request);
                     // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
                     var response = new Response(quoteDetailsModel);
                     return new ResponseBase<Response> { Content = response };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetQuotePreviewDetails));
-                    throw;
-                }
             }
         }
     }

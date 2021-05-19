@@ -58,8 +58,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var query = new FindModel()
                     {
                         CreatedBy = request.CreatedBy,
@@ -86,12 +84,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                     };
                     return new ResponseBase<Response> { Content = getProductResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
-                    throw;
-                }
             }
         }
         public class GetQuotesValidator : AbstractValidator<Request>

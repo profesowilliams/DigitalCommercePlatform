@@ -59,8 +59,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<GetHeaderHandler.Response> GetHeader(GetHeaderHandler.Request request)
         {
-            try
-            {
                 var cartRequest = new GetCartHandler.Request(request.IsDefault);
                 var CatalogRequest = new GetCatalogHandler.Request(request.CatalogCriteria);
                 var cartResponse = await GetCartDetails(cartRequest);
@@ -79,19 +77,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 };
 
                 return getHeaderResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetHeader)}: {nameof(BrowseService)}");
-                throw ex;
-            }
         }
 
         public async Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request)
         {
             var CatalogURL = _appCatalogURL.BuildQuery(request);
-            try
-            {
+
                 var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
                 if (getCatalogResponse == null)
                 {
@@ -114,29 +105,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
                 }
                 return getCatalogResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetCatalogDetails)}: {nameof(BrowseService)}");
-                throw ex;
-            }
         }
 
         public async Task<IEnumerable<CustomerModel>> GetCustomerDetails()
         {
             var customerId = _uiContext.User.Customers.FirstOrDefault();
             var CustomerURL = _appCustomerURL.BuildQuery("Id="+ customerId);
-            try
-            {
                 var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<IEnumerable<CustomerModel>>(CustomerURL);
-                return getCustomerDetailsResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetCustomerDetails)}: {nameof(BrowseService)}");
-                throw ex;
-            }
-            
+                return getCustomerDetailsResponse;            
         }
 
         public Task<GetCartHandler.Response> GetCartDetails(GetCartHandler.Request request)
@@ -144,8 +120,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             string userId = _uiContext.User.ID;
             string customerId = _uiContext.User.Customers.FirstOrDefault();
             var CartURL = _coreCartURL.BuildQuery("UserId=" + userId + "&CustomerId=" + customerId);
-            try
-            {
                 Random rnd = new Random();
                 var v1 = new GetCartHandler.Response
                 {
@@ -155,74 +129,35 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 #pragma warning restore CA5394 // Do not use insecure randomness
                 };
                 return Task.FromResult(v1);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetCartDetails)}: {nameof(BrowseService)}");
-                throw ex;
-            }
         }
 
         public async Task<ProductData> FindProductDetails(FindProductHandler.Request request)
         {
             var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
-            try
-            {
                 
                 var getProductResponse = await _middleTierHttpClient.GetAsync<ProductData>(ProductURL);
                 return getProductResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(FindProductDetails)}: {nameof(BrowseService)}");
-                throw;
-            }
         }
 
         public async Task<SummaryDetails> FindSummaryDetails(FindSummaryHandler.Request request)
         {
             var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
-            try
-            {
                 var getProductResponse = await _middleTierHttpClient.GetAsync<SummaryDetails>(ProductURL).ConfigureAwait(false);
                 return getProductResponse;
-            }
-           
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(FindSummaryDetails)}: {nameof(BrowseService)}");
-                throw;
-            }
         }
 
         public async Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsHandler.Request request)
         {
             var ProductURL = _appProductURL.BuildQuery(request);
-            try
-            {
                 var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductModel>>(ProductURL);
                 return getProductResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetProductDetails)}: {nameof(BrowseService)}");
-                throw;
-            }
         }
 
         public async Task<SummaryModel> GetProductSummary(GetProductSummaryHandler.Request request)
         {
             var ProductURL = _appProductURL.BuildQuery(request);
-            try
-            {
                 var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<SummaryModel>>(ProductURL);
                 return getProductResponse.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetProductSummary)}: {nameof(BrowseService)}");
-                throw;
-            }
         }
     }
 }

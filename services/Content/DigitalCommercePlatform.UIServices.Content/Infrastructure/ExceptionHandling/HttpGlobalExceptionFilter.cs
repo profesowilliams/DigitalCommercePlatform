@@ -25,16 +25,18 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHan
         {
             if (context.Exception is ValidationException validationException)
             {
+                _logger.LogError(context.Exception, "Validation Exception at: " + nameof(HttpGlobalExceptionFilter));
                 var messages = validationException.Errors.Select(e => e.ErrorMessage).ToList();
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = (int)UIServiceExceptionCode.GenericBadRequestError }
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
             else if (context.Exception is UIServiceException uiServiceException)
             {
+                _logger.LogError(context.Exception, "UI Service Exception at: " + nameof(HttpGlobalExceptionFilter));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
                     Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = uiServiceException.ErrorCode }
@@ -47,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHan
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = (int)UIServiceExceptionCode.GenericServerError }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

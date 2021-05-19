@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -39,38 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorReference
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var vendorReference = await _accountService.GetVendorReference();
                     var vendorMappedDeals = _mapper.Map<Response>(vendorReference);
                     return new ResponseBase<Response> { Content = vendorMappedDeals };
-                }
-                catch (UIServiceException ex)
-                {
-                    _logger.LogError(ex, "Exception at Vendor Connections: " + nameof(GetVendorReference));
-                    return new ResponseBase<Response>
-                    {
-                        Error = new ErrorInformation
-                        {
-                            Code = ex.ErrorCode,
-                            IsError = true,
-                            Messages = new List<string>() { ex.Message }
-                        }
-                    };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at Vendor Connections: " + nameof(GetVendorReference));
-                    return new ResponseBase<Response>
-                    {
-                        Error = new ErrorInformation
-                        {
-                            Code = 500,
-                            IsError = true,
-                            Messages = new List<string>() { ex.Message }
-                        }
-                    };
-                }
             }
         }
     }

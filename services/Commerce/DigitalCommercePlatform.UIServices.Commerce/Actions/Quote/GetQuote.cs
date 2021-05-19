@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using FluentValidation;
 using MediatR;
@@ -49,8 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var getQuoteResponse = new Response();
                     var productDetails = await _commerceRepositoryServices.GetQuote(request).ConfigureAwait(false);
                     if (productDetails != null)
@@ -63,12 +60,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         getQuoteResponse.Details = null;
                     }
                     return new ResponseBase<Response> { Content = getQuoteResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
-                    throw;
-                }
             }
         }
 

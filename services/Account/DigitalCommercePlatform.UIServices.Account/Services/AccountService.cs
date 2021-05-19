@@ -133,16 +133,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)
         {
             var savedCartURL = _cartServiceURL.AppendPathSegment("listsavedcarts");
-            try
-            {
                 var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
                 return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetSavedCartListAsync)}: {nameof(AccountService)}");
-                return null;
-            }
         }
 
 
@@ -308,8 +300,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var customerId = _uiContext.User.Customers.FirstOrDefault();
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
-            try
-            {
                 var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
                 if (response.Any())
                 {
@@ -322,20 +312,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     else
                         return response;
                 }
-
                 return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Exception at getting {nameof(GetAddress)}: {nameof(AccountService)}");
-                return null;
-            }
         }
 
         public async Task<List<VendorReferenceModel>> GetVendorReference()
         {
-            try
-            {
                 //Returning dummy data for now as App-Service is not yet ready 
                 //var Vendorurl = _quoteServiceURL
                 //        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
@@ -357,13 +338,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     response.Add(Vendors);
                 }
                 return await Task.FromResult(response);
-            }
-            catch(Exception ex) 
-            {
-                _logger.LogError(ex, "Exception at getting Vendor connections : " + nameof(GetVendorReference));
-                throw ex;
-            }
-            
         }
     }
 }

@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -48,8 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
+
                     //get catalog from cache
                     var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
 
@@ -59,13 +57,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
                         getCatalogResponse = CatalogDetails;
                    }
                    return new ResponseBase<Response> { Content = new Response { Items = getCatalogResponse } };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Catalog : " + nameof(GetCatalogHandler));
-
-                    throw ex;
-                }
             }
         }
 

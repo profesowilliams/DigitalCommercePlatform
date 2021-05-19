@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Account.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -50,18 +49,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var cartDetails = await _accountServices.GetSavedCartListAsync(request);
                     var cartResponse = _mapper.Map<List<SavedCartsResponse>>(cartDetails);
                     var getcartResponse = _mapper.Map<Response>(cartResponse);
                     return new ResponseBase<Response> { Content = getcartResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting users saved cart(s) : " + nameof(GetCartsList));
-                    throw;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>

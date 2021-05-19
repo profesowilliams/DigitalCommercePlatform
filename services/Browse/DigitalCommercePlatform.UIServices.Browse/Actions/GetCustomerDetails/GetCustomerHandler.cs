@@ -3,7 +3,6 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -43,17 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var customerDetails = await _customerRepositoryServices.GetCustomerDetails();
                     var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
                     return new ResponseBase<Response> { Content = getCustomerResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(GetCustomerHandler));
-                    throw ex;
-                }
             }
         }
     }

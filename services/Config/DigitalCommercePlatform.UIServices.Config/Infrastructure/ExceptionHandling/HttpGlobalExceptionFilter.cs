@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 
-namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
+namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.ExceptionHandling
 {
     [ExcludeFromCodeCoverage]
     public class HttpGlobalExceptionFilter : IExceptionFilter
@@ -25,11 +25,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
         {
             if (context.Exception is ValidationException validationException)
             {
+                _logger.LogError(context.Exception, "Validation Exception at: " + nameof(HttpGlobalExceptionFilter));
                 var messages = validationException.Errors.Select(e => e.ErrorMessage).ToList();
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 500000000 } // agree about code
+                    Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
+                });
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+            }
+            else if (context.Exception is UIServiceException uiServiceException)
+            {
+                _logger.LogError(context.Exception, "UI Service Exception at: " + nameof(HttpGlobalExceptionFilter));
+                context.Result = new ObjectResult(new ResponseBase<object>
+                {
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = uiServiceException.ErrorCode }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -39,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500000000 } // we need to agree about message
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

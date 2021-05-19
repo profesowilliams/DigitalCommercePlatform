@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -48,17 +47,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var productDetails = await _productRepositoryServices.GetProductSummary(request).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(productDetails);
                     return new ResponseBase<Response> { Content = getProductResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
-                    throw;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>

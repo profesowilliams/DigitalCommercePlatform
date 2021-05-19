@@ -3,7 +3,6 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,18 +42,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
-            {
-                try
-                {
+            {  
                     var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
                     var getcartResponse = _mapper.Map<Response>(cartDetails);
                     return new ResponseBase<Response> { Content=getcartResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetCartHandler));
-                    throw ex;
-                }
             }
         }
     }

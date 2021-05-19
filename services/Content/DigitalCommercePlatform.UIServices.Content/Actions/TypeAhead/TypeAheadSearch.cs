@@ -48,17 +48,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
                     var getTypeAheadDetails = await _contentService.GetTypeAhead(request);
                     var getResponse = _mapper.Map<Response>(getTypeAheadDetails);
                     return new ResponseBase<Response> { Content = getResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at getting Cart  : " + nameof(TypeAheadSearch));
-                    throw ex;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>

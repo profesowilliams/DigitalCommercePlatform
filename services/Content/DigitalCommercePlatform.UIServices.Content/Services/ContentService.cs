@@ -41,18 +41,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 
         public async Task<ActiveCartModel> GetActiveCartDetails()
         {
-            try
-            {
-                var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(_appCartURL);
+            var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(_appCartURL);
                 var totalQunatity= getActiveCartResponse.Items.Where(x=>x.Quantity!=0).ToList().Sum(o => o.Quantity);
                 getActiveCartResponse.TotalQuantity = totalQunatity;
                 return getActiveCartResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(ContentService));
-                throw ex;
-            }
         }
 
         public async Task<SavedCartDetailsModel> GetSavedCartDetails(GetSavedCartDetails.Request request)
@@ -67,31 +59,15 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
                         throw new UIServiceException("Invalid Saved Cart Name: " + request.Id, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
             var cartURL = _appCartURL.AppendPathSegment(request.Id);
-            try
-            {
                 var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(cartURL);
                 return getCustomerDetailsResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at getting GetCartDetails : " + nameof(ContentService));
-                throw ex;
-            }
         }
 
         public async Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request)
         {
             var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/GetTypeAheadTerms").BuildQuery(request);
-            try
-            {
                 var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
                 return getTypeAheadResponse;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at getting GetTypeAhead : " + nameof(ContentService));
-                throw ex;
-            }
         }
     }
 }

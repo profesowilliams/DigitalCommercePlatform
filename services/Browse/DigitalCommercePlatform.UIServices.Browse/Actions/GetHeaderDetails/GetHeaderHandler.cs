@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -56,17 +55,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var headerDetails = await _headerRepositoryServices.GetHeader(request);
+                var headerDetails = await _headerRepositoryServices.GetHeader(request);
                     var headerResponse = _mapper.Map<Response>(headerDetails);
                     return new ResponseBase<Response> { Content = headerResponse };
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception at GetHeaderHandler : " + nameof(GetHeaderHandler));
-                    throw;
-                }
             }
         }
         public class Validator : AbstractValidator<Request>
