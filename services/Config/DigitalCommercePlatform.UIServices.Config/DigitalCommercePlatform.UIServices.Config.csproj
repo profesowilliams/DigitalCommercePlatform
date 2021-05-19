@@ -25,9 +25,6 @@
     <None Remove="Infrastructure\Mappings\Quotes\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="DummyData\ConfigurationList.json" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-config-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
@@ -45,17 +42,13 @@
   </Choose>
 
   <ItemGroup>
-    <EmbeddedResource Include="DummyData\ConfigurationList.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.0.41" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.0.41" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.0.41" />
-    <PackageReference Include="Flurl" Version="3.0.1" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.0.50" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.0.50" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.0.50" />
+    <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Serilog" Version="2.10.0" />

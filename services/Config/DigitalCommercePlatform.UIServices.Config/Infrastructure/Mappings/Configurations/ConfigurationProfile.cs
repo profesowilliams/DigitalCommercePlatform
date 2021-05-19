@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations
@@ -12,9 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
     {
         public ConfigurationProfile()
         {
-            CreateMap<List<Configuration>, GetConfigurations.Response>()
-                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
-
             CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>();
             CreateMap<SummaryDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))

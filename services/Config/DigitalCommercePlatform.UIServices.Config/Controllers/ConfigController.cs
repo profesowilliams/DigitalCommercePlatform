@@ -1,6 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -34,20 +33,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpGet]
-        [Route("configurations/find-mocked")]
-        public async Task<ActionResult> GetConfigurations([FromQuery] FindModel criteria)
+        [Route("configurations")]
+        public async Task<ActionResult> GetRecentConfigurations([FromQuery] FindModel criteria)
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
-            var response = await Mediator.Send(data).ConfigureAwait(false);
-            return Ok(response);
-
-        }
-
-        [HttpGet]
-        [Route("configurations/find")]
-        public async Task<ActionResult> FindConfigurations([FromQuery] FindModel criteria)
-        {
-            var data = new FindConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
 

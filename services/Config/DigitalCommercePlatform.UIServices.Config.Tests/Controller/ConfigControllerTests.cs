@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Config.Actions.FindConfigurations;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -50,34 +49,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurations(ResponseBase<GetConfigurations.Response> expected)
+        public async Task GetRecentConfigurations(ResponseBase<GetConfigurations.Response> expected)
         {
 
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetConfigurations.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-            var criteria = new Models.Configurations.FindModel
-            {                
-                SortBy = "createdOn",
-                SortDirection = "asc",
-                Id = string.Empty,
-            };
-
-            var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task FindConfigurations(ResponseBase<FindConfigurations.Response> expected)
-        {
-
-            _mockMediator.Setup(x => x.Send(
-                       It.IsAny<FindConfigurations.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
@@ -89,31 +65,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                 Id = string.Empty,
             };
 
-            var result = await controller.FindConfigurations(criteria).ConfigureAwait(false);
+            var result = await controller.GetRecentConfigurations(criteria).ConfigureAwait(false);
 
             result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetConfigurations_OKResponse(ResponseBase<GetConfigurations.Response> expected)
-        {
-
-            _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetConfigurations.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-            var criteria = new Models.Configurations.FindModel
-            {                
-                SortBy = "createdOn",
-                SortDirection = "asc",
-            };
-
-            var result = await controller.GetConfigurations(criteria).ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.OK);
         }
 
         [Theory]

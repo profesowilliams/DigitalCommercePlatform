@@ -8,14 +8,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations
 {
     [ExcludeFromCodeCoverage]
-    public sealed class GetConfigurations
+    public class GetConfigurations
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -28,54 +27,55 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             public long? PageCount { get; set; }
             public int? PageNumber { get; set; }
             public int? PageSize { get; set; }
-            public List<Configuration> Items { get; internal set; }
+            public IEnumerable<Configuration> Items { get; set; }
+
         }
 
-        public class GetConfigurationsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configService;
             private readonly IMapper _mapper;
-            private readonly ILogger<GetConfigurationsHandler> _logger;
+            private readonly ILogger<Handler> _logger;
+            private readonly IConfigService _configService;
 
-            public GetConfigurationsHandler(IConfigService configService, 
-                IMapper mapper,
-                ILogger<GetConfigurationsHandler> logger
-                )
+            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
             {
-                _configService = configService;
                 _mapper = mapper;
                 _logger = logger;
+                _configService = configService;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var configurations = await _configService.GetConfigurations(request);
-                    var recentConfigResponse = _mapper.Map<Response>(configurations);
-                    recentConfigResponse = new Response
+                    var configurations = await _configService.FindConfigurations(request).ConfigureAwait(false);
+                    var getRecentConfigurationContent = new Response
                     {
-                        Items = recentConfigResponse.Items,
-                        TotalItems = recentConfigResponse.Items.Count(),
+                        Items = configurations,
+                        TotalItems = configurations?.Count,
                         PageNumber = request.Criteria.Page,
                         PageSize = request.Criteria.PageSize,
-                        PageCount = (recentConfigResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize
+                        PageCount = (configurations?.Count + request.Criteria.PageSize - 1) / request.Criteria.PageSize
 
                     };
-                    return new ResponseBase<Response> { Content = recentConfigResponse };
+                    return new ResponseBase<Response> { Content = getRecentConfigurationContent };
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at getting recent configurations for grid : " + nameof(GetConfigurations));
+                    _logger.LogError(ex, "Exception at searching configurations, Handler : " + nameof(Handler));
                     throw;
                 }
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                RuleFor(x => x.Criteria.PageSize).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
-                RuleFor(x => x.Criteria.Page).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
+                RuleFor(x => x.Criteria.Page).GreaterThan(0)
+                    .WithMessage("Page Size must be greater than 0.");
+                RuleFor(x => x.Criteria.PageSize).GreaterThan(0)
+                    .WithMessage("PageNumber must be greater than or equal to 0.");
             }
         }
     }
