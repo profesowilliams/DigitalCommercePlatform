@@ -60,69 +60,81 @@
     }
   }
 }
-
+.dp-general__innerspace{
+  &--all{
+    padding: rem(16px);
+    &-small{
+      padding: rem(8px);
+    }
+    &-medium{
+      padding: rem(32px);
+    }
+    &-large{
+      padding: rem(64px);
+    }
+  }
+  &-top{
+    padding-top: rem(16px);
+    &-small{
+      padding-top: rem(8px);
+    }
+    &-medium{
+      padding-top: rem(32px);
+    }
+    &-large{
+      padding-top: rem(64px);
+    }
+  }
+  &-bottom{
+    padding-bottom: rem(16px);
+    &-small{
+      padding-bottom: rem(8px);
+    }
+    &-medium{
+      padding-bottom: rem(32px);
+    }
+    &-large{
+      padding-bottom: rem(64px);
+    }
+  }
+  &-right{
+    padding-right: rem(16px);
+    &-small{
+      padding-right: rem(8px);
+    }
+    &-medium{
+      padding-right: rem(32px);
+    }
+    &-large{
+      padding-right: rem(64px);
+    }
+  }
+  &-left{
+    padding-left: rem(16px);
+    &-small{
+      padding-left: rem(8px);
+    }
+    &-medium{
+      padding-left: rem(32px);
+    }
+    &-large{
+      padding-left: rem(64px);
+    }
+  }
+}
 .dp-general__separator{
     border-color: get-color(brand-blue);
     &-left{
-        border-left: 1px solid;
-        padding-left: 1em;
+      border-left: 1px solid;
     }
     &-right{
       border-right: 1px solid;
-      padding-right: 1em;
     }
     &-top{
       border-top: 1px solid;
-      padding-top: 1em;
     }
     &-bottom{
       border-bottom: 1px solid;
-      padding-bottom: 1em;
-    }
-
-    &-space--small{
-      &.dp-general__separator-left{
-        padding-left: 1em;
-      }
-      &.dp-general__separator-right{
-        padding-right: 1em;
-      }
-      &.dp-general__separator-top{
-        padding-top: 1em;
-      }
-      &.dp-general__separator-bottom{
-        padding-bottom: 1em;
-      }
-    }
-    &-space--medium{
-      &.dp-general__separator-left{
-        padding-left: 2em;
-      }
-      &.dp-general__separator-right{
-        padding-right: 2em;
-      }
-      &.dp-general__separator-top{
-        padding-top: 2em;
-      }
-      &.dp-general__separator-bottom{
-        padding-bottom: 2em;
-      }
-
-    }
-    &-space--large{
-      &.dp-general__separator-left{
-        padding-left: 4em;
-      }
-      &.dp-general__separator-right{
-        padding-right: 4em;
-      }
-      &.dp-general__separator-top{
-        padding-top: 4em;
-      }
-      &.dp-general__separator-bottom{
-        padding-bottom: 4em;
-      }
-
     }
 
     &--light-blue{
