@@ -801,6 +801,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/edit-config.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "region-select",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/region-select/region-select-dropdown.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

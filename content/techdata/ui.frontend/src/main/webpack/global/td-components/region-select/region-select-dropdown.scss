@@ -1,0 +1,25 @@
+.cmp-region-select-dropdown {
+    width: rem(175px);
+    height: rem(135px);
+    box-shadow: inset 0 rem(2px) rem(1px) 0 get-color(td-dark-blue);
+    border: rem(0rem);    
+    display: flex;
+    flex-direction: column;
+    line-height: rem(45px);
+    margin: 0 !important;
+}
+
+.cmp-form-options--radio {
+    padding: rem(22px) 0 0 rem(15px);
+    border: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmp-form-options__field-description {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    top: rem(-16px);
+    left: rem(20px);
+}
