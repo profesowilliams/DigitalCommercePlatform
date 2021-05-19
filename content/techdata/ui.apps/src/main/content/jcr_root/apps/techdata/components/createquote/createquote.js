@@ -41,6 +41,9 @@ use(function () {
     if (properties.get("cartdetailsEndpoint") != null) {
         jsonObject.put("cartdetailsEndpoint", properties.get("cartdetailsEndpoint"));
     }
+     if (properties.get("pricingConditions") != null) {
+            jsonObject.put("pricingConditions", properties.get("pricingConditions"));
+        }
 
     if (listValues != null) {
         jsonObject.put("optionsList", listValues);
