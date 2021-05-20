@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
@@ -217,6 +218,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             var statusCode = (HttpStatusCode)result.StatusCode;
 
             statusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task DownloadInvoicePdfTest(ResponseBase<DownloadInvoicePdf.Response> expected)
+        {
+            // Arrange
+            expected.Content.Filename = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf";
+            _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoicePdf.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+            var controller = GetController();
+            // Act
+            var result = await controller.DownloadInvoicePdf("123456", null, false).ConfigureAwait(false);
+            // Assert
+            _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoicePdf.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

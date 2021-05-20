@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
@@ -103,5 +104,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("downloadInvoicePdf")]
+        public async Task<ActionResult> DownloadInvoicePdf([FromQuery] string orderId, string invoiceId, bool downloadAll)
+        {
+            var response = await Mediator.Send(new DownloadInvoicePdf.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);
+
+            var resourceStream = this.GetType().Assembly.GetManifestResourceStream(response.Content.Filename);
+            return new FileStreamResult(resourceStream, "application/pdf");
+        }
     }
 }
