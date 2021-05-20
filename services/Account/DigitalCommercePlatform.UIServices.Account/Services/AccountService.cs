@@ -9,6 +9,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
@@ -329,7 +330,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
                 for (int i = 0; i < 2; i++)
                 {
-                    string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Google" };
+                    string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Dell" };
                     var Vendors = new VendorReferenceModel();
                     Vendors.Vendor = arrayOfStrings[i];
                     Vendors.IsConnected = true;
@@ -338,6 +339,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     response.Add(Vendors);
                 }
                 return await Task.FromResult(response);
+        }
+
+        public async Task<GetVendorRefresh.Response> VendorRefresh(GetVendorRefresh.Request request)
+        {
+            //var CoreSecurity = _coreSecurity.AppendPathSegment("Vendor");
+            //var response = await _middleTierHttpClient.GetAsync<CoreSecurityModel>(CoreSecurity); Needs to be implemented after core security is ready
+
+            bool vendorRefreshValue = true;
+            var response =new GetVendorRefresh.Response();
+            if (vendorRefreshValue==true)
+            {
+                response.IsSuccess = true;
+            }
+            else
+            {
+                response.IsSuccess = false;
+            }
+
+            return await Task.FromResult(response);
         }
     }
 }
