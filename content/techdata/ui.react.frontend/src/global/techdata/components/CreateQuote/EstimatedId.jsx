@@ -4,10 +4,11 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import ManuallyTyped from './ManuallyTyped';
-// import SavedCartSelectItem from './SavedCartSelectItem';
+import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 
 const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, endpoints }) => {
-	// const { cartslistEndpoint, cartdetailsEndpoint } = endpoints;
+	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
+	const { cartslistEndpoint, cartdetailsEndpoint } = endpoints; //For testing purposes
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
 		{ id: 'browse', name: 'Browse Estimates' },
@@ -31,6 +32,7 @@ const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, end
 			alert('Write a Estimate name to continue.');
 		}
 	};
+	const goToNext = (id) => next(id)
 
 	return (
 		<>
@@ -51,20 +53,23 @@ const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, end
 			)}
 			{step > 0 && estimatedType && estimatedType.id === 'manually' && (
 				<>
-					<ManuallyTyped inputValue={estimatedId} setValue={setEstimatedId} label='Estimate ID' />
-					<Button disabled={!estimatedId} onClick={manuallyCreateQuote}>
-						{buttonTitle}
-					</Button>
+					<ManuallyTyped
+					// validateCartEndpoint={estimatedIdDetailsEndpoint}
+					inputValue={estimatedId}
+					setValue={setEstimatedId}
+					label='Estimate ID'
+					onClick={goToNext} />
+
 				</>
 			)}
-			{/* {step > 0 && cartType && cartType.id === 'browse' && (
-				<SavedCartSelectItem
+			{step > 0 && estimatedType && estimatedType.id === 'browse' && (
+				<EstimatedIdSelectItem
 					onClick={createQuote}
 					buttonTitle={buttonTitle}
-					cartslistEndpoint={cartslistEndpoint}
-					cartdetailsEndpoint={cartdetailsEndpoint}
+					estimatedIdlistEndpoint={cartslistEndpoint}
+					estimatedIddetailsEndpoint={cartdetailsEndpoint}
 				/>
-			)} */}
+			)}
 			{step === 0 && (
 				<Button disabled={!estimatedType} onClick={nextStep}>
 					Next

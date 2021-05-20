@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TextInput from './TextInput';
 import WidgetList from './WidgetList';
 
-const SearchList = ({items, selected, onChange}) => {
+const SearchList = ({items, selected, onChange, label}) => {
   const [search, setSearch] = useState('');
   const [openlist, setOpenlist] = useState(true);
   const [filtered, setFiltered] = useState(items)
@@ -29,7 +29,7 @@ const SearchList = ({items, selected, onChange}) => {
   return(
     <div className="cmp-widget__search-list">
       <p>
-        <TextInput onFocus={onFocus} label="Search Cart Name" inputValue={ selected&&!openlist ? selected.name : search } onChange={searchUpdate} />
+        <TextInput onFocus={onFocus} label={label} inputValue={ selected&&!openlist ? selected.name : search } onChange={searchUpdate} />
       </p>
       <WidgetList openlist={openlist} items={filtered} selected={selected} onChange={resetOnChange} />
     </div>
