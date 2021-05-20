@@ -174,7 +174,6 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 					})}
 				</AgGridReact>
 			</Fragment>
-			)
 		</div>
 	);
 }

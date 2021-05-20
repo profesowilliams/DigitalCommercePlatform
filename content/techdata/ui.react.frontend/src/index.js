@@ -19,3 +19,4 @@ import MyQuotes from "./global/techdata/components/MyQuotes/MyQuotes";
 import QuotesGrid from "./global/techdata/components/Grid/Grid";
 import QuoteDetails from "./global/techdata/components/QuoteDetails/QuoteDetails";
 import OrdersGrid from "./global/techdata/components/OrdersGrid/OrdersGrid";
+import Modal from "./global/techdata/components/Modal/Modal";

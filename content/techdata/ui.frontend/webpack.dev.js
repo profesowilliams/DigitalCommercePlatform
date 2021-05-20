@@ -61,7 +61,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/teaser-demo/teaser-demo.html"
+                    "/static/partials/teaser-demo/teaser-demo.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -83,7 +83,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/form-options/multi-select-drop-down.html"
+                    "/static/partials/form-options/multi-select-drop-down.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -91,7 +91,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/form-options/radio-button.html"
+                    "/static/partials/form-options/radio-button.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -197,7 +197,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-footer.html"
+                    "/static/partials/accordion-footer/accordion-footer.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -205,7 +205,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-sample.html"
+                    "/static/partials/accordion-footer/accordion-sample.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -213,7 +213,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-expanded-item.html"
+                    "/static/partials/accordion-footer/accordion-expanded-item.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -221,7 +221,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-expanded-items.html"
+                    "/static/partials/accordion-footer/accordion-expanded-items.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -229,7 +229,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-single-expansion.html"
+                    "/static/partials/accordion-footer/accordion-single-expansion.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -237,7 +237,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/accordion-footer/accordion-nested.html"
+                    "/static/partials/accordion-footer/accordion-nested.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -336,7 +336,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/article-list/article-list.html"
+                    "/static/partials/article-list/article-list.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -344,7 +344,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/article-list/article-list-fixed-width.html"
+                    "/static/partials/article-list/article-list-fixed-width.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -352,7 +352,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/article-list/article-list-title.html"
+                    "/static/partials/article-list/article-list-title.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -360,7 +360,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/article-list/article-list-link.html"
+                    "/static/partials/article-list/article-list-link.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -368,7 +368,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/article-list/article-list-header.html"
+                    "/static/partials/article-list/article-list-header.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -425,7 +425,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/quotes/company-address-info.html"
+                    "/static/partials/quotes/company-address-info.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -440,7 +440,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/quotes/td-quote-subheader.html"
+                    "/static/partials/quotes/td-quote-subheader.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -448,7 +448,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/quotes/td-quote-subtotal.html"
+                    "/static/partials/quotes/td-quote-subtotal.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -512,7 +512,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/tabs/tabs-default-active.html"
+                    "/static/partials/tabs/tabs-default-active.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -646,7 +646,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/search/search-light-blue.html"
+                    "/static/partials/search/search-light-blue.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -654,7 +654,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/search/search-dark-blue.html"
+                    "/static/partials/search/search-dark-blue.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -690,7 +690,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/dropdown-menu/dropdown-menu-react.html"
+                    "/static/partials/dropdown-menu/dropdown-menu-react.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -747,7 +747,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/quotes/contact-info-react.html"
+                    "/static/partials/quotes/contact-info-react.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -755,7 +755,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/quotes/td-quote-details-react.html"
+                    "/static/partials/quotes/td-quote-details-react.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -770,7 +770,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT +
-                        "/static/partials/gauge-chart/gauge-chart.html"
+                    "/static/partials/gauge-chart/gauge-chart.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -792,6 +792,13 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/orders-grid-demo.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "modal",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/modal-demo.html"
                 ),
             }),
             new HtmlWebpackPlugin({
