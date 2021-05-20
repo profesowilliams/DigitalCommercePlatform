@@ -53,7 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
                     {
                         Items = configurations,
                         TotalItems = configurations?.Count,
-                        PageNumber = request.Criteria.Page,
+                        PageNumber = request.Criteria.PageNumber,
                         PageSize = request.Criteria.PageSize,
                         PageCount = (configurations?.Count + request.Criteria.PageSize - 1) / request.Criteria.PageSize
 
@@ -72,10 +72,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
         {
             public Validator()
             {
-                RuleFor(x => x.Criteria.Page).GreaterThan(0)
-                    .WithMessage("Page Size must be greater than 0.");
+                RuleFor(x => x.Criteria.PageNumber).GreaterThan(0)
+                    .WithMessage("PageNumber must be greater than 0.");
                 RuleFor(x => x.Criteria.PageSize).GreaterThan(0)
-                    .WithMessage("PageNumber must be greater than or equal to 0.");
+                    .WithMessage("PageSize must be greater than 0.");
             }
         }
     }

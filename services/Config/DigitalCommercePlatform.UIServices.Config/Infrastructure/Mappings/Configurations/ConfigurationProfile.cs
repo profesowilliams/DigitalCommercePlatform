@@ -10,7 +10,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
     {
         public ConfigurationProfile()
         {
-            CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>();
+            CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
+                .ForMember(d => d.Page, o => o.MapFrom(s => s.PageNumber))
+                ;
             CreateMap<SummaryDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
                 .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))

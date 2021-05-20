@@ -105,19 +105,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             try
             {
                 var appServiceRequest = PrepareAppServiceRequest(request);
-                var findConfigurationUrl = _appConfigurationUrl.AppendPathSegment("find");
+                var findConfigurationUrl = _appConfigurationUrl
+                    .AppendPathSegment("find")
+                    .SetQueryParams(appServiceRequest);
+
                 if (appServiceRequest.Details)
                 {
-                    var findConfigurationResponse = await _middleTierHttpClient.GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl,
-                        queryParams: new Dictionary<string, object>() { { "FindModel", appServiceRequest } });
+                    var findConfigurationResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl);
                     var result = MapAppResponseToConfigurations(findConfigurationResponse);
                     return result;
 
                 }
                 else
                 {
-                    var findConfigurationResponse = await _middleTierHttpClient.GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl,
-                        queryParams: new Dictionary<string, object>() { { "FindModel", appServiceRequest } });
+                    var findConfigurationResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl);
                     var result = MapAppResponseToConfigurations(findConfigurationResponse);
                     return result;
                 }
