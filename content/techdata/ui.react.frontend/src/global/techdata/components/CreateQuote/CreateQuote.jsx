@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SavedCart from './SavedCart';
 import Pricing from './Pricing';
 import EstimatedId from './EstimatedId';
-import { get } from '../../../../utils/api';
+import { usPost } from '../../../../utils/api';
 
 const QuoteCreate = ({ 
     requested, authError, componentProp, 
@@ -55,11 +55,11 @@ const QuoteCreate = ({
     let params = { pricingCondition: pricing.key }
     if( methodSelected.key !== 'active' )
       params = {...params, id: cartID };
-    const { data: { content: { quoteDetails: { orderNumber } }, error: { isError, message } } } = await get(endpoint, { params });
+    const { data: { content: { quoteDetails: { orderNumber } }, error: { isError, message } } } = await usPost(endpoint, { params });
     if( isError )
       return alert( `Error in create quote: ${message}` )
     alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
-    window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber${orderNumber}`;
+    window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber=${orderNumber}`;
   }
 
 	useEffect(async () => {
@@ -99,8 +99,7 @@ const QuoteCreate = ({
 					method={methodSelected}
 					setMethod={setMethodSelected}
 					methods={methods}
-					createQuote={createQuote}
-					buttonTitle={buttonTitle}
+          next={goToPricing}
 					endpoints={endpoints}
 				/>
 			)}

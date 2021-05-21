@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState } from 'react';
 import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 
-const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, estimatedIddetailsEndpoint }) => {
+const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, estimatedIddetailsEndpoint, label }) => {
 // const EstimatedIdSelectItem = ({ onClick, buttonTitle }) => {
   const [selected, setSelected] = useState(false);
   const [estimatedIdList, setEstimatedIdList] = useState([]);
@@ -13,8 +13,10 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
   useEffect(() => {
     const getData = async () => {
       const { data: { content: { items } } } = await usGet(estimatedIdlistEndpoint, { }); // WIP: Check the new endpoint to check if the funtionality is going to be the same
-      if(items)
-        setEstimatedIdList(items)
+      if(items){
+        const newItems = items.map(item =>({ id: item.configId, name: item.configId }));
+        setEstimatedIdList(newItems);
+      }
     }
     getData()
   },[])
@@ -36,12 +38,13 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
         alert('Invalid cart')
       }
     }catch(e){
+      console.log('ERROR', e)
       alert('Error getting the cart')
     }
   }
   return(
     <>
-      { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label="Search Estimated ID"/>}
+      { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} />}
       <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
     </>
   );

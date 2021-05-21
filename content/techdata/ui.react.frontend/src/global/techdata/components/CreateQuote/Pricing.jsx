@@ -15,7 +15,11 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
         setItems(newItems);
       }
     }
-    getData();
+    try{
+      getData();
+    }catch{
+      alert('error getting data');
+    }
   },[])
   return (
     <>
@@ -23,7 +27,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
         <a onClick={prev}><i className="fas fa-chevron-left"></i> Create quote from</a>
       </WidgetTitle>
       <Dropdown selected={method} setValue={setMethod} options={items} label="Select pricing" />
-      <Button disabled={false} onClick={createQuote}>{buttonTitle}</Button>
+      <Button disabled={!method} onClick={createQuote}>{buttonTitle}</Button>
     </>
   )
 }

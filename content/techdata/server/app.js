@@ -226,7 +226,7 @@ app.get("/quote/MyQuote", function (req, res) {
         },
     });
 });
-app.get("/quote/create", function (req, res) {
+app.post("/quote/create", function (req, res) {
     const code = req.query.code;
     const cart = req.params.cart;
 
@@ -1022,6 +1022,48 @@ app.get("/pricingConditions", (req, res) => {
     });
 });
 
+app.get("/estimates", function (req, res) {
+    if (!req.headers["sessionid"] || req.headers["site"] !== "US")
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+
+    res.json({
+        content: {
+            items: [
+                {
+                    "configId": "VI112127534ZT",
+                    "configurationType": "Estimate",
+                    "vendor": "Cisco"
+                },
+                {
+                    "configId": "WC121011624NR",
+                    "configurationType": "Estimate",
+                    "vendor": "Cisco"
+                },
+                {
+                    "configId": "VI112127534ZT1",
+                    "configurationType": "Estimate",
+                    "vendor": "Cisco"
+                },
+                {
+                    "configId": "WC121011624NR2",
+                    "configurationType": "Estimate",
+                    "vendor": "Cisco"
+                },
+            ],
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false,
+        },
+    });
+});
 app.get("/catalog",(req, res) =>{
     console.log(req);
     res.json(mockResponses.catalogResponse());

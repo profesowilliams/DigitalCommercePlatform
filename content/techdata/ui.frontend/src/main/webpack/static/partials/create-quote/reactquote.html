@@ -7,17 +7,17 @@
 			"label": "Create Quote",
 			"buttonTitle": "Create Quote",
 			"optionsList": [
-				{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE" },
-				{ "key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM" },
-				{ "key": "estimate", "label": "Estimate ID", "title": "CREATE QUOTE" }
+			{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE", "dropdownPlaceholder": "", "textPlaceholder": "" },
+			{ "key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM", "dropdownPlaceholder": "Select Saved Cart", "textPlaceholder": "Enter Cart name" },
+			{ "key": "estimate", "label": "Estimate ID", "title": "CREATE QUOTE", "dropdownPlaceholder": "Select Estimate", "textPlaceholder": "Estimate ID" }
 			],
 			"quotePreviewUrl": "http://localhost:8080/quote.html?redirected=true",
 			"endpoint": "http://localhost:3000/quote/create",
 			"cartslistEndpoint": "http://localhost:3000/savedCarts",
 			"cartdetailsEndpoint": "http://localhost:3000/cart",
 			"pricingConditions": "http://localhost:3000/pricingConditions",
-			"estimatedIdListEndpoint": "#",
-			"estimatedIdDetailsEndpoint": "#"
+			"estimatedIdListEndpoint": "http://localhost:3000/estimates",
+			"estimatedIdDetailsEndpoint": "http://localhost:3000/cart"
 		}'
 	></div>
 </div>

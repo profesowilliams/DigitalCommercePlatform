@@ -6,9 +6,8 @@ import RadioButtons from '../Widgets/RadioButtons';
 import ManuallyTyped from './ManuallyTyped';
 import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 
-const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, endpoints }) => {
+const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
-	const { cartslistEndpoint, cartdetailsEndpoint } = endpoints; //For testing purposes
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
 		{ id: 'browse', name: 'Browse Estimates' },
@@ -22,17 +21,14 @@ const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, end
 	const prevStep = () => {
 		setStep(0);
 	};
-
-	const manuallyCreateQuote = () => {
-		//this alert should be a endpoint to validate the cart name provided by the user
-		alert('Validating Estimate Name...');
-		if (cartName) {
-			createQuote();
-		} else {
-			alert('Write a Estimate name to continue.');
-		}
-	};
 	const goToNext = (id) => next(id)
+	const onError = {
+    errorMsg: 'We couldn´t find the Estimate ID:',
+    msgBeforelink: 'Enter a new ID or',
+    msgAfterlink: 'instead',
+    linklabel: 'browse estimates',
+    linkFunction: () => setEstimatedType(estimatedTypes[1])
+  }
 
 	return (
 		<>
@@ -54,20 +50,21 @@ const EstimatedId = ({ method, setMethod, methods, createQuote, buttonTitle, end
 			{step > 0 && estimatedType && estimatedType.id === 'manually' && (
 				<>
 					<ManuallyTyped
-					// validateCartEndpoint={estimatedIdDetailsEndpoint}
+					validateCartEndpoint={estimatedIdDetailsEndpoint}
 					inputValue={estimatedId}
 					setValue={setEstimatedId}
-					label='Estimate ID'
-					onClick={goToNext} />
-
+					label={method.textPlaceholder}
+					onClick={goToNext}
+					onError={onError} />
 				</>
 			)}
 			{step > 0 && estimatedType && estimatedType.id === 'browse' && (
 				<EstimatedIdSelectItem
-					onClick={createQuote}
-					buttonTitle={buttonTitle}
-					estimatedIdlistEndpoint={cartslistEndpoint}
-					estimatedIddetailsEndpoint={cartdetailsEndpoint}
+					onClick={goToNext}
+					buttonTitle='Next'
+					estimatedIdlistEndpoint={estimatedIdListEndpoint}
+					estimatedIddetailsEndpoint={estimatedIdDetailsEndpoint}
+					label={method.dropdownPlaceholder}
 				/>
 			)}
 			{step === 0 && (

@@ -10,7 +10,7 @@ const ErrorMessage = (props) => {
       </p>
       <p className="cmp-error-message cmp-error-message__gray">
         {msgBeforelink}
-        <a className="cmp-error-message__link" onClick={linkFunction}>{linklabel}</a>
+        <a className="cmp-error-message__link" onClick={linkFunction}>{linklabel}</a> 
         {msgAfterlink}
       </p>
     </>

@@ -155,6 +155,8 @@
     }
     &__link{
       color: get-color(brand-button-blue);
+      text-decoration: underline;
+      cursor: pointer;
     }
   }
 }

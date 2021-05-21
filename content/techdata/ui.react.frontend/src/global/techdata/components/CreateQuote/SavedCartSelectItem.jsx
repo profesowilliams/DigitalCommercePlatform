@@ -3,7 +3,7 @@ import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 
-const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdetailsEndpoint }) => {
+const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdetailsEndpoint, label="Search Cart Name" }) => {
   const [selected, setSelected] = useState(false);
   const [cartList, setCartList] = useState([]);
   const onChange = (el) => {
@@ -35,12 +35,12 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
         alert('Invalid cart')
       }
     }catch(e){
-      alert('Error getting the cart')
+      alert('Error getting the data')
     }
   }
   return(
     <>
-      { cartList.length > 0 && <SearchList items={cartList} selected={selected} onChange={onChange}  label="Search Cart Name"/>}
+      { cartList.length > 0 && <SearchList items={cartList} selected={selected} onChange={onChange} label={label}/>}
       <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
     </>
   );

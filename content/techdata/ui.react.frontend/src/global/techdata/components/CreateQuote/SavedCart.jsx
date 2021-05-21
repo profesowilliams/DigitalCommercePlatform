@@ -28,7 +28,13 @@ const SavedCart = ({
     setStep(step - 1);
   }
   const goToNext = (id) => next(id)
-
+  const onError = {
+    errorMsg: 'We couldn´t find the cart:',
+    msgBeforelink: 'Enter a new name or ',
+    msgAfterlink: ' instead',
+    linklabel: 'browse carts',
+    linkFunction: () => setCartType(cartTypes[1])
+  }
   return(
     <>
       <WidgetTitle>
@@ -51,7 +57,8 @@ const SavedCart = ({
           validateCartEndpoint={cartdetailsEndpoint} 
           onClick={goToNext} inputValue={cartName} 
           setValue={setCartName}
-          label="cart name" />
+          label={method.textPlaceholder}
+          onError={onError} />
       }
       {
         step === 1 && (cartType && cartType.id==='browse') && 
@@ -60,6 +67,7 @@ const SavedCart = ({
             buttonTitle="Next" 
             cartslistEndpoint={cartslistEndpoint} 
             cartdetailsEndpoint={cartdetailsEndpoint}
+            label={method.dropdownPlaceholder}
           />
       }
       { step === 0 && <Button disabled={!cartType} onClick={nextStep}>Next</Button>}
