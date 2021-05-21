@@ -78,20 +78,17 @@
                                             <defaultSortingDirection
                                                     jcr:primaryType="nt:unstructured"
                                                     jcr:title="Sorting Direction"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                                    name="./defaultSortingDirection"
                                                     margin="{Boolean}true">
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <asc
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="/libs/granite/ui/components/foundation/form/radio"
-                                                            name="./defaultSortingDirection"
                                                             text="Ascending Order"
                                                             value="asc"/>
                                                     <desc
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="/libs/granite/ui/components/foundation/form/radio"
                                                             checked="{Boolean}true"
-                                                            name="./defaultSortingDirection"
                                                             text="Descending Order"
                                                             value="desc"/>
                                                 </items>
