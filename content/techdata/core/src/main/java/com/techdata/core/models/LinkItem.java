@@ -41,7 +41,7 @@ public class LinkItem {
     private String linkUrl;
 
     @Inject
-    private boolean enableUIServiceEndPoint;
+    private String selectType;
 
     @Inject
     private String iconUrl;
@@ -74,7 +74,7 @@ public class LinkItem {
 
     @PostConstruct
     protected void init(){
-        if(resolver != null && navigationRoot != null && !enableUIServiceEndPoint){
+        if(resolver != null && navigationRoot != null && selectType.equalsIgnoreCase("internalResource") ){
             Page rootPage = resolver.adaptTo(PageManager.class).getPage(navigationRoot);
             if(rootPage != null){
                 Iterator<Page> children = rootPage.listChildren();
@@ -90,7 +90,7 @@ public class LinkItem {
                 }
 
             }
-        } else if(enableUIServiceEndPoint){
+        } else if(selectType.equalsIgnoreCase("UIServiceEndPoint")){
 
             try {
                 URL url = new URL(UIServiceEndPoint);
