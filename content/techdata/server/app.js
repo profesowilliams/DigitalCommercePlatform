@@ -13,7 +13,9 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-var utils = require("./utils");
+
+var utils = require('./utils');
+var mockResponses = require('./responses');
 
 function checkCreds(user, pass) {
     return (
@@ -531,14 +533,14 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
             isReturn: i % 2 ? true : false,
             currency: "USD",
             currencySymbol: "$",
-        });
+        })
     }
     const response = {
         content: {
             items: items,
             totalItems: 2500,
             pageCount: 25,
-            pageSize,
+            pageSize
         },
         error: {
             code: 0,
@@ -564,6 +566,9 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     // res.json(JSON.parse(jsonResponseFromDIT));
 
     res.json(response);
+
+
+
 });
 
 app.get("/browse", function (req, res) {
@@ -1016,3 +1021,10 @@ app.get("/pricingConditions", (req, res) => {
         },
     });
 });
+
+app.get("/catalog",(req, res) =>{
+    console.log(req);
+    res.json(mockResponses.catalogResponse());
+    // res.json(mockResponses.shortResponse());
+
+})

@@ -2,10 +2,10 @@ package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import com.google.gson.*;
+import com.techdata.core.util.Constants;
+import com.techdata.core.util.ContentFragmentHelper;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -15,16 +15,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Iterator;
 
 @Model(adaptables = Resource.class,
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -33,6 +27,7 @@ import java.util.Iterator;
 public class LinkItem {
 
     protected static final Logger log = LoggerFactory.getLogger(LinkItem.class);
+    private static final String CATALOG_ROOT_PARENT_PATH = "/content/dam/techdata/catalog";
 
     @Inject
     private String platformName;
@@ -41,7 +36,10 @@ public class LinkItem {
     private String linkUrl;
 
     @Inject
-    private String selectType;
+    private boolean enableUIServiceEndPoint;
+
+    @Inject
+    private String navigationCatalogRoot;
 
     @Inject
     private String iconUrl;
@@ -74,7 +72,34 @@ public class LinkItem {
 
     @PostConstruct
     protected void init(){
-        if(resolver != null && navigationRoot != null && selectType.equalsIgnoreCase("internalResource") ){
+        if(resolver != null && navigationCatalogRoot != null){
+            log.debug("UI Service enabled to generate megamenu");
+
+            Resource cfRootParent = resolver.getResource(navigationCatalogRoot);
+            if (null != cfRootParent)
+            {
+                for(Resource child : cfRootParent.getChildren())
+                {
+                    if (ContentFragmentHelper.isContentFragment(child))
+                    {
+                        log.debug("processing resource at path {}", child.getPath());
+                        SubNavLinks link = new SubNavLinks(child, platformName);
+                        this.subLinks.add(link);
+                        for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
+                        {
+                            this.tertiarySubNavLinks.add(tertiaryLink);
+                        }
+                    }
+                }
+
+                log.debug("sublink size is {}",this.subLinks.size());
+            }
+
+
+        }
+
+        if(resolver != null && navigationRoot != null){
+            log.debug("page root also present. path is {}", navigationRoot);
             Page rootPage = resolver.adaptTo(PageManager.class).getPage(navigationRoot);
             if(rootPage != null){
                 Iterator<Page> children = rootPage.listChildren();
@@ -90,59 +115,9 @@ public class LinkItem {
                 }
 
             }
-        } else if(selectType.equalsIgnoreCase("UIServiceEndPoint")){
-
-            try {
-                URL url = new URL(UIServiceEndPoint);
-                HttpURLConnection conn = null;
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setRequestProperty("TraceId", "35345345-Browse");
-                conn.setRequestProperty("Site", "NA");
-                conn.setRequestProperty("Consumer", "NA");
-                conn.setRequestProperty("Accept-Language", "en-us");
-                conn.setRequestProperty("sessionid", sessionID);
-                if (conn.getResponseCode() != 200) {
-                    throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-                }
-                BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-                String output;
-                StringBuilder myJSON = new StringBuilder();
-                while ((output = br.readLine()) != null) {
-                    myJSON.append(output);
-                }
-                br.close();
-
-                String jsonData = myJSON.toString();
-                if (StringUtils.isNotBlank(jsonData)) {
-                    JsonElement jsonElement = new JsonParser().parse(jsonData);
-                    JsonObject jobject = jsonElement.getAsJsonObject();
-                    JsonElement responseData = jobject.get("content").getAsJsonObject().get("items");
-
-                    JsonArray jsonArray = (JsonArray) responseData.getAsJsonArray().get(0).getAsJsonObject().get("children");
-                    Iterator<JsonElement> elements = jsonArray.iterator();
-                    while (elements.hasNext()) {
-                        JsonElement recordElement = elements.next();
-                        String name = recordElement.getAsJsonObject().get("name").toString().replace("\"", "");
-                        String pageUrl = externalUrl+recordElement.getAsJsonObject().get("key").toString().replace("\"", "");
-                        String docCount = recordElement.getAsJsonObject().get("docCount").toString().replace("\"", "");
-                        JsonArray children = (JsonArray) recordElement.getAsJsonObject().get("children");
-                        SubNavLinks link = new SubNavLinks(name, pageUrl, platformName, children, externalUrl, docCount);
-                        subLinks.add(link);
-                        for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
-                        {
-                            this.tertiarySubNavLinks.add(tertiaryLink);
-                        }
-
-                    }
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }
+
+
 
     }
 

@@ -31,6 +31,7 @@ public class MegaMenu {
     protected void initModel() {
         if (menuList != null) {
             for (Resource item : menuList.getChildren()) {
+                log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
                 menuLinkList.add(link);
             }
@@ -38,7 +39,7 @@ public class MegaMenu {
     }
 
     public String getMessage(){
-        return "hello from model" + menuList.getPath();
+        return "hello from model" + menuLinkList.size();
     }
 
     public List<LinkItem> getFirstLevelMenuItems() {
