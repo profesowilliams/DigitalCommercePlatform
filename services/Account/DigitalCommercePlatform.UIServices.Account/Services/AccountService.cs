@@ -23,7 +23,6 @@ using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using RenewalsService;
 using System;
 using System.Collections.Generic;
@@ -47,21 +46,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private static readonly Random getrandom = new Random();
         private readonly IRenewalsService _renewalsService;
 
-
-        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IOptions<AppSettings> options,
+        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
             ILogger<AccountService> logger, IRenewalsService renewalsService, IUIContext uiContext)
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
-            _configurationsServiceUrl = options?.Value.GetSetting("App.Quote.Url");
-            _dealsServiceUrl = options?.Value.GetSetting("App.Order.Url");
-            _quoteServiceURL = options?.Value.GetSetting("App.Quote.Url");
-            _cartServiceURL = options?.Value.GetSetting("App.Cart.Url");
+            _configurationsServiceUrl = appSettings.GetSetting("App.Quote.Url");
+            _dealsServiceUrl = appSettings.GetSetting("App.Order.Url");
+            _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
+            _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
             _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
-            _customerServiceURL = options?.Value.GetSetting("App.Customer.Url");
+            _customerServiceURL = appSettings.GetSetting("App.Customer.Url");
         }
-
 
         private static List<OpenResellerItems> AddSequenceNumber(List<OpenResellerItems> openItems)
         {
@@ -85,10 +82,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 Quoted = 14,
                 UnQuoted = 30,
                 OldConfigurations = 25,
-                CurrencyCode="USD"
+                CurrencyCode = "USD"
             };
             return await Task.FromResult(response);
-
         }
 
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
@@ -103,7 +99,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     Value = i * GetRandomNumber(1, 3)
                 };
                 response.Add(objDeal);
-
             }
             return await Task.FromResult(response);
         }
@@ -134,10 +129,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)
         {
             var savedCartURL = _cartServiceURL.AppendPathSegment("listsavedcarts");
-                var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
-                return response;
+            var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
+            return response;
         }
-
 
         public async Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request)
         {
@@ -174,7 +168,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 ExpiringDeals = GetRandomNumber(0, 4),
                 NewOpportunities = GetRandomNumber(1, 8),
                 OrdersBlocked = GetRandomNumber(10, 20)
-
             };
             return await Task.FromResult(actionItems);
         }
@@ -205,12 +198,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
-            //Returning dummy data for now as App-Service is not yet ready 
+            //Returning dummy data for now as App-Service is not yet ready
             var url = _quoteServiceURL
-                    .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
+                    .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready
                     .SetQueryParams(new
                     {
-
                     });
 
             //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
@@ -244,6 +236,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
             return await Task.FromResult(response);
         }
+
         public async Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
         {
             var MyQuotes = new MyQuotes();
@@ -301,44 +294,44 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var customerId = _uiContext.User.Customers.FirstOrDefault();
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
-                var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
-                if (response.Any())
-                {
-                    if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
-                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == "0100").ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
-                    else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
-                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
-                    else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
-                        response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == "0100").ToList(); // use sales organization from user context
-                    else
-                        return response;
-                }
-                return response;
+            var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
+            if (response.Any())
+            {
+                if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == "0100").ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == "0100").ToList(); // use sales organization from user context
+                else
+                    return response;
+            }
+            return response;
         }
 
         public async Task<List<VendorReferenceModel>> GetVendorReference()
         {
-                //Returning dummy data for now as App-Service is not yet ready 
-                //var Vendorurl = _quoteServiceURL
-                //        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready 
-                //        .SetQueryParams(new{});
+            //Returning dummy data for now as App-Service is not yet ready
+            //var Vendorurl = _quoteServiceURL
+            //        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready
+            //        .SetQueryParams(new{});
 
-                //var getVendorResponse = await _middleTierHttpClient.GetAsync<List<VendorReferenceModel>>(Vendorurl);
-                //return getVendorResponse;
+            //var getVendorResponse = await _middleTierHttpClient.GetAsync<List<VendorReferenceModel>>(Vendorurl);
+            //return getVendorResponse;
 
-                var response = new List<VendorReferenceModel>();
+            var response = new List<VendorReferenceModel>();
 
-                for (int i = 0; i < 2; i++)
-                {
-                    string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Dell" };
-                    var Vendors = new VendorReferenceModel();
-                    Vendors.Vendor = arrayOfStrings[i];
-                    Vendors.IsConnected = true;
-                    Vendors.IsValidRefreshToken = false;
-                    Vendors.ConnectionDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    response.Add(Vendors);
-                }
-                return await Task.FromResult(response);
+            for (int i = 0; i < 2; i++)
+            {
+                string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Dell" };
+                var Vendors = new VendorReferenceModel();
+                Vendors.Vendor = arrayOfStrings[i];
+                Vendors.IsConnected = true;
+                Vendors.IsValidRefreshToken = false;
+                Vendors.ConnectionDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                response.Add(Vendors);
+            }
+            return await Task.FromResult(response);
         }
 
         public async Task<GetVendorRefresh.Response> VendorRefresh(GetVendorRefresh.Request request)
@@ -347,8 +340,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             //var response = await _middleTierHttpClient.GetAsync<CoreSecurityModel>(CoreSecurity); Needs to be implemented after core security is ready
 
             bool vendorRefreshValue = true;
-            var response =new GetVendorRefresh.Response();
-            if (vendorRefreshValue==true)
+            var response = new GetVendorRefresh.Response();
+            if (vendorRefreshValue == true)
             {
                 response.IsSuccess = true;
             }

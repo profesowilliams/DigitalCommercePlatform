@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -24,12 +23,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
     [Route("v{version:apiVersion}/quote")]
     public class QuoteController : BaseUIServiceController
     {
-        public QuoteController(IMediator mediator,
-            IOptions<AppSettings> options,
+        public QuoteController(
+            IMediator mediator,
+            IAppSettings appSettings,
             ILogger<BaseUIServiceController> loggerFactory,
             IUIContext context,
             ISiteSettings siteSettings)
-            : base(mediator, loggerFactory, context, options, siteSettings)
+            : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
         }
 
@@ -51,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("preview/{Id}")]
-        public async Task<ActionResult> GetQuotePreview([FromQuery]string id)
+        public async Task<ActionResult> GetQuotePreview([FromQuery] string id)
         {
             var response = await Mediator.Send(new GetQuotePreviewDetails.Request(id)).ConfigureAwait(false);
             return Ok(response);
@@ -67,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("details")]
-        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id,[FromQuery] bool details = true)
+        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id, [FromQuery] bool details = true)
         {
             var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
             return Ok(response);

@@ -1,4 +1,3 @@
-using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
@@ -14,7 +13,6 @@ using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -26,33 +24,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
     public class BrowseControllerTests
     {
         private readonly Mock<IMediator> mockMediator;
-        private readonly Mock<IOptions<AppSettings>> mockOptions;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ILogger<BrowseController>> mockLoggerFactory;
         private readonly Mock<IUIContext> mockContext;
         private readonly Mock<ISiteSettings> mockSiteSettings;
 
         public BrowseControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             mockMediator = new Mock<IMediator>();
-            mockOptions = new Mock<IOptions<AppSettings>>();
-            mockOptions.Setup(s => s.Value).Returns(appSettings);
 
             mockLoggerFactory = new Mock<ILogger<BrowseController>>();
             mockContext = new Mock<IUIContext>();
             mockContext.SetupGet(x => x.Language).Returns("en-us");
             mockSiteSettings = new Mock<ISiteSettings>();
         }
+
         private BrowseController GetController()
         {
             return new BrowseController(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
-                mockOptions.Object, mockSiteSettings.Object);
+                _appSettingsMock.Object, mockSiteSettings.Object);
         }
 
         [Theory]
@@ -64,14 +57,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-           var controller = GetController();
+            var controller = GetController();
 
             var result = await controller.GetCartDetails(true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
-
-
 
         [Theory]
         [AutoDomainData]
@@ -113,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetHeader("FCS",true).ConfigureAwait(false);
+            var result = await controller.GetHeader("FCS", true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

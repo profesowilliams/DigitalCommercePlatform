@@ -21,17 +21,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
     public class SecurityControllerTests
     {
-        public static AppSettings GetAppSettings()
+        public static IAppSettings GetAppSettings()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-                {
-                    { "localizationlist", "en-US" },
-                    { "SalesOrg", "WW_ORG" }
-                };
-
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
-            return appSettings;
+            var appSettingsMock = new Mock<IAppSettings>();
+            appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+            return appSettingsMock.Object;
         }
 
         [Theory]
@@ -80,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
-            var result = await controller.Authenticate(bodyRequest,headerRequest);
+            var result = await controller.Authenticate(bodyRequest, headerRequest);
 
             result.Should().NotBeNull();
         }
@@ -91,12 +85,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             [Greedy] SecurityController controller,
             ResponseBase<AuthenticateUser.Response> expected)
         {
-
             mediator.Setup(x => x.Send(
                       It.IsAny<AuthenticateUser.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
-            var result = await controller.Authenticate(null,null).ConfigureAwait(false);
+            var result = await controller.Authenticate(null, null).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -118,14 +111,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             result.Should().Equals(HttpStatusCode.OK);
         }
 
-
         [Theory]
         [AutoDomainData]
         public async Task LogoutUser_BadRequest([Frozen] Mock<IMediator> mediator,
             [Greedy] SecurityController controller,
             ResponseBase<LogoutUser.Response> expected)
         {
-
             mediator.Setup(x => x.Send(
                       It.IsAny<LogoutUser.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -159,18 +150,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
         {
-
             mediator.Setup(x => x.Send(
                       It.IsAny<GetUser.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
-
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
-
 
         [Theory]
         [AutoDomainData]
@@ -179,14 +167,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
         {
-
             expected.Error.IsError = false;
 
             mediator.Setup(x => x.Send(
                       It.IsAny<GetUser.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
-
 
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
 
@@ -200,18 +186,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
         {
-
             mediator.Setup(x => x.Send(
                       It.IsAny<ActiveCustomer.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
-
             var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
-
 
         [Theory]
         [AutoDomainData]
@@ -220,14 +203,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             [Set(nameof(GetAppSettings))]
             [Greedy] SecurityController controller)
         {
-
             expected.Error.IsError = false;
 
             mediator.Setup(x => x.Send(
                       It.IsAny<ActiveCustomer.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
-
 
             var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
 

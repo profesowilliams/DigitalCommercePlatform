@@ -26,9 +26,9 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IRenewalsService>(provider => 
+            services.AddScoped<IRenewalsService>(provider =>
             {
-                var renewalsServiceUrl = provider.GetRequiredService<IOptions<AppSettings>>()?.Value?.GetSetting("External.Order.RenewalsService.Url");
+                var renewalsServiceUrl = provider.GetRequiredService<IAppSettings>().GetSetting("External.Order.RenewalsService.Url");
 
                 if (string.IsNullOrWhiteSpace(renewalsServiceUrl))
                 {
@@ -47,7 +47,6 @@ namespace DigitalCommercePlatform.UIServices.Account
 
                 return new RenewalsServiceClient(binding, endpointAddress);
             });
-
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();

@@ -1,6 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -10,9 +10,7 @@ using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading;
@@ -25,22 +23,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
     public class ConfigControllerTests
     {
         private readonly Mock<IMediator> _mockMediator;
-        private readonly Mock<IOptions<AppSettings>> _mockOptions;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ILogger<BaseUIServiceController>> _mockLoggerFactory;
         private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
+
         public ConfigControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             _mockMediator = new Mock<IMediator>();
-            _mockOptions = new Mock<IOptions<AppSettings>>();
-            _mockOptions.Setup(s => s.Value).Returns(appSettings);
             _mockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
             _mockContext = new Mock<IUIContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
@@ -51,7 +44,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetRecentConfigurations(ResponseBase<GetConfigurations.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetConfigurations.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -74,7 +66,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetDeals(ResponseBase<GetDeals.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetDeals.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -82,9 +73,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {                
+            {
                 SortBy = "createdOn",
-                SortDirection ="asc",
+                SortDirection = "asc",
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -96,7 +87,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetDeals_OKResponse(ResponseBase<GetDeals.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetDeals.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -104,7 +94,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var criteria = new Models.Deals.FindModel
-            {             
+            {
                 SortBy = "createdOn",
                 SortDirection = "asc",
             };
@@ -118,14 +108,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetDeal(ResponseBase<GetDeal.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetDeal.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetDeal("123","123").ConfigureAwait(false);
+            var result = await controller.GetDeal("123", "123").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -134,7 +123,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetDeal_OKResponse(ResponseBase<GetDeal.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetDeal.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -146,12 +134,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().Equals(HttpStatusCode.OK);
         }
 
-
         //[Theory]
         //[AutoDomainData]
         //public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
         //{
-
         //    _mockMediator.Setup(x => x.Send(
         //               It.IsAny<GetConfigurations.Request>(),
         //               It.IsAny<CancellationToken>()))
@@ -167,7 +153,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [AutoDomainData]
         public async Task GetDeals_BadRequest(ResponseBase<GetDeals.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetDeals.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -183,7 +168,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         //[AutoDomainData]
         //public async Task GetDeal_BadRequest(GetDeal.Response expected)
         //{
-
         //    _mockMediator.Setup(x => x.Send(
         //               It.IsAny<GetDeal.Request>(),
         //               It.IsAny<CancellationToken>()))
@@ -198,7 +182,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         private ConfigController GetController()
         {
             return new ConfigController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
-                _mockOptions.Object, _mockSiteSettings.Object);
+                _appSettingsMock.Object, _mockSiteSettings.Object);
         }
     }
 }

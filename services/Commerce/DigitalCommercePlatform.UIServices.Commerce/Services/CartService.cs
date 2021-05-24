@@ -4,7 +4,6 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -18,11 +17,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly ILogger<CommerceService> _logger;
         private readonly string _appCartURL;
 
-        public CartService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IOptions<AppSettings> options)
+        public CartService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IAppSettings appSettings)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
+            _appCartURL = appSettings.GetSetting("App.Cart.Url");
         }
 
         public async Task<ActiveCartModel> GetActiveCart()

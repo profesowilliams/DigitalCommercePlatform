@@ -13,10 +13,8 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,36 +27,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<OrderController>> _logger;
-        private readonly Mock<IOptions<AppSettings>> _optionsMock;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ISiteSettings> _siteSettings;
 
         public OrderControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<OrderController>>();
-            _optionsMock = new Mock<IOptions<AppSettings>>();
-            _optionsMock.Setup(s => s.Value).Returns(appSettings);
             _siteSettings = new Mock<ISiteSettings>();
         }
 
         private OrderController GetController()
         {
-            return new OrderController(_mediator.Object, _logger.Object, _context.Object, _optionsMock.Object, _siteSettings.Object);
+            return new OrderController(_mediator.Object, _logger.Object, _context.Object, _appSettingsMock.Object, _siteSettings.Object);
         }
 
         [Theory]
         [AutoMoqData]
         public async Task GetOrderDetails(ResponseBase<GetOrder.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetOrder.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -70,7 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             result.Should().NotBeNull();
         }
-
 
         [Theory]
         [AutoMoqData]
@@ -146,12 +136,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             statusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-
         [Theory]
         [AutoMoqData]
         public async Task GetOrderLinesAsync(ResponseBase<GetLines.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetLines.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -164,12 +152,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
-
         [Theory]
         [AutoMoqData]
         public async Task GetOrderLinesAsync_BadRequest(ResponseBase<GetLines.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetLines.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -188,7 +174,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         [AutoDomainData]
         public async Task GetPricingConditions(ResponseBase<GetPricingConditions.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetPricingConditions.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -196,11 +181,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetPricingConditions(true,"");
+            var result = await controller.GetPricingConditions(true, "");
 
             result.Should().NotBeNull();
         }
-
 
         [Theory]
         [AutoDomainData]
@@ -213,7 +197,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetPricingConditions(false,"XYZ") as ObjectResult;
+            var result = await controller.GetPricingConditions(false, "XYZ") as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 

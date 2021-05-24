@@ -21,7 +21,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -36,13 +35,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
     public class DashBoardController : BaseUIServiceController
     {
         public DashBoardController(IMediator mediator,
-            IOptions<AppSettings> options,
+            IAppSettings appSettings,
             ILogger<BaseUIServiceController> loggerFactory,
             IUIContext context,
             ISiteSettings siteSettings)
-            : base(mediator, loggerFactory, context, options, siteSettings)
+            : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
         }
+
         [HttpGet]
         [Route("configurationsSummary")]
         public async Task<IActionResult> GetConfigurationsSummary([FromQuery] string criteria)
@@ -121,7 +121,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             return Ok(response);
         }
 
-
         [HttpGet]
         [Route("savedCarts")]
         public async Task<IActionResult> GetSavedCartList([FromQuery] bool getAll, int maximumSavedCarts)
@@ -155,9 +154,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var renewalsSummaryRequest = new GetRenewalsSummary.Request
             {
-                CustomerNumber = "0038048612", // in future this will be here:     Context.User.ActiveCustomer 
+                CustomerNumber = "0038048612", // in future this will be here:     Context.User.ActiveCustomer
                 SalesOrganization = "0100",    // in future this will be here:        Context.User.SalesOrganization
-                Days = 30                         // in future this will be from param - ([FromQuery] int days)  
+                Days = 30                         // in future this will be from param - ([FromQuery] int days)
             };
 
             var response = await Mediator.Send(renewalsSummaryRequest).ConfigureAwait(false);
@@ -169,6 +168,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
             return Ok(response);
         }
+
         [HttpGet]
         [Route("myQuotes")]
         public async Task<IActionResult> GetMyQuote([FromQuery] string criteria)
@@ -201,12 +201,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("getAddress")]
-        public async Task<IActionResult> GetAddress([FromQuery] string criteria, bool ignoreSalesOrganization=false)
+        public async Task<IActionResult> GetAddress([FromQuery] string criteria, bool ignoreSalesOrganization = false)
         {
             criteria = string.IsNullOrWhiteSpace(criteria) ? "ALL" : criteria.ToUpper();
 
-            GetAddress.Request request = new GetAddress.Request { 
-                Criteria = criteria, 
+            GetAddress.Request request = new GetAddress.Request
+            {
+                Criteria = criteria,
                 IgnoreSalesOrganization = ignoreSalesOrganization
             };
             var response = await Mediator.Send(request).ConfigureAwait(false);

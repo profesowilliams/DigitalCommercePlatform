@@ -28,23 +28,24 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         private readonly string _typeSearchUrl;
 #pragma warning restore CS0414
         private readonly ILogger<ContentService> _logger;
+
         public ContentService(IMiddleTierHttpClient middleTierHttpClient,
-            ILogger<ContentService> logger, IOptions<AppSettings> options)
+            ILogger<ContentService> logger, IAppSettings appSettings)
         {
             _logger = logger;
             _middleTierHttpClient = middleTierHttpClient;
-            _appCartURL = options?.Value.GetSetting("App.Cart.Url");
-            _appCustomerURL = options?.Value.GetSetting("App.Customer.Url");
-            _appCatalogURL = options?.Value.GetSetting("App.Catalog.Url");
-            _typeSearchUrl = options?.Value.GetSetting("Core.Search.Url");
+            _appCartURL = appSettings.GetSetting("App.Cart.Url");
+            _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
+            _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
+            _typeSearchUrl = appSettings.GetSetting("Core.Search.Url");
         }
 
         public async Task<ActiveCartModel> GetActiveCartDetails()
         {
             var getActiveCartResponse = await _middleTierHttpClient.GetAsync<ActiveCartModel>(_appCartURL);
-                var totalQunatity= getActiveCartResponse.Items.Where(x=>x.Quantity!=0).ToList().Sum(o => o.Quantity);
-                getActiveCartResponse.TotalQuantity = totalQunatity;
-                return getActiveCartResponse;
+            var totalQunatity = getActiveCartResponse.Items.Where(x => x.Quantity != 0).ToList().Sum(o => o.Quantity);
+            getActiveCartResponse.TotalQuantity = totalQunatity;
+            return getActiveCartResponse;
         }
 
         public async Task<SavedCartDetailsModel> GetSavedCartDetails(GetSavedCartDetails.Request request)
@@ -53,21 +54,21 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             {
                 var savedCartURL = _appCartURL.AppendPathSegment("listsavedcarts");
                 var savedCartresponse = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
-        
+
                 request.Id = savedCartresponse.Where(c => c.Name == request.Id).Any() ?
                     savedCartresponse.Where(c => c.Name == request.Id)?.FirstOrDefault().Source.Id :
                         throw new UIServiceException("Invalid Saved Cart Name: " + request.Id, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
             var cartURL = _appCartURL.AppendPathSegment(request.Id);
-                var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(cartURL);
-                return getCustomerDetailsResponse;
+            var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<SavedCartDetailsModel>(cartURL);
+            return getCustomerDetailsResponse;
         }
 
         public async Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request)
         {
             var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/GetTypeAheadTerms").BuildQuery(request);
-                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
-                return getTypeAheadResponse;
+            var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
+            return getTypeAheadResponse;
         }
     }
 }

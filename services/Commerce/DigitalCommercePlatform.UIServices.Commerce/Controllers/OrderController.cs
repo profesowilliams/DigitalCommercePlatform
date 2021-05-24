@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
@@ -26,15 +25,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
     public class OrderController : BaseUIServiceController
     {
         public OrderController(
-            IMediator mediator, 
-            ILogger<OrderController> logger, 
+            IMediator mediator,
+            ILogger<OrderController> logger,
             IUIContext context,
-            IOptions<AppSettings> settings, 
+            IAppSettings appSettings,
             ISiteSettings siteSettings)
-            : base(mediator, logger, context, settings, siteSettings)
+            : base(mediator, logger, context, appSettings, siteSettings)
         {
         }
-
 
         [HttpGet]
         [Route("order/{id}")]
@@ -51,7 +49,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
-        
         [HttpGet]
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
@@ -59,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
                 getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo);
 
-            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortDirection, getOrdersRequest.PageNumber, getOrdersRequest.PageSize,getOrdersRequest.WithPaginationInfo);
+            var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortDirection, getOrdersRequest.PageNumber, getOrdersRequest.PageSize, getOrdersRequest.WithPaginationInfo);
 
             var getOrdersQuery = new GetOrders.Request(filtering, paging);
 
@@ -73,7 +70,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
                 return Ok(ordersResponse);
             }
         }
-
 
         [HttpGet]
         [Route("orderLines/{id}")]
@@ -89,11 +85,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
                 return Ok(orderLinesResponse);
             }
         }
+
         [HttpGet]
         [Route("pricingConditions")]
-        public async Task<ActionResult> GetPricingConditions([FromRoute] bool getAll,string Id)
+        public async Task<ActionResult> GetPricingConditions([FromRoute] bool getAll, string Id)
         {
-            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll,Id)).ConfigureAwait(false);
+            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, Id)).ConfigureAwait(false);
             if (getPricingCondition.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, getPricingCondition);

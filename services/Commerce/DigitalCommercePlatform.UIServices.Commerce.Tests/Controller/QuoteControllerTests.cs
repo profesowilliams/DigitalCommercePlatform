@@ -9,7 +9,6 @@ using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -23,31 +22,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<QuoteController>> _logger;
-        private readonly Mock<IOptions<AppSettings>> _optionsMock;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ISiteSettings> _siteSettings;
 
         public QuoteControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<QuoteController>>();
-            _optionsMock = new Mock<IOptions<AppSettings>>();
-            _optionsMock.Setup(s => s.Value).Returns(appSettings);
             _siteSettings = new Mock<ISiteSettings>();
         }
 
         private QuoteController GetController()
         {
-            return new QuoteController(_mediator.Object, _optionsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
+            return new QuoteController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
-
 
         [Theory]
         [AutoDomainData]
@@ -104,7 +96,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         //[AutoDomainData]
         //public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
         //{
-
         //    _mediator.Setup(x => x.Send(
         //              It.IsAny<DetailsOfSavedCartsQuote.Request>(),
         //              It.IsAny<CancellationToken>()))
@@ -203,7 +194,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         //     Details = true
         //    };
 
-
         //var controller = GetController();
         //    var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
 
@@ -218,7 +208,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                        It.IsAny<GetQuotesForGrid.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
 
             GetQuotesForGrid.Request inputDetails = new GetQuotesForGrid.Request
             {

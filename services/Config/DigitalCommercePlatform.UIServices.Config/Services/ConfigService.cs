@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
@@ -10,7 +10,6 @@ using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -31,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private readonly IMapper _mapper;
         private readonly ILogger<ConfigService> _logger;
 
-        public ConfigService(IOptions<AppSettings> options, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
+        public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
             ILogger<ConfigService> logger)
         {
             //_appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
@@ -92,7 +91,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             objResponse.InvalidTDPartNumbers = null;
 
             return await Task.FromResult(objResponse);
-
         }
 
         public static int GetRandomNumber(int min, int max)
@@ -115,7 +113,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                         .GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl);
                     var result = MapAppResponseToConfigurations(findConfigurationResponse);
                     return result;
-
                 }
                 else
                 {

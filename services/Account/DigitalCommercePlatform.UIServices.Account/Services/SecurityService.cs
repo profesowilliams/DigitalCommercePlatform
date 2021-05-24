@@ -18,17 +18,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _clientSecret;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
 
-        public SecurityService(IOptions<AppSettings> appSettingsOptions, IMiddleTierHttpClient middleTierHttpClient)
+        public SecurityService(IAppSettings appSettings, IMiddleTierHttpClient middleTierHttpClient)
         {
-            if (appSettingsOptions == null) { throw new ArgumentNullException(nameof(appSettingsOptions)); }
+            if (appSettings == null) { throw new ArgumentNullException(nameof(appSettings)); }
 
-            _coreSecurityUrl = appSettingsOptions.Value?.TryGetSetting(Globals.CoreSecurityUrl) ?? 
+            _coreSecurityUrl = appSettings.TryGetSetting(Globals.CoreSecurityUrl) ??
                                                         throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
 
-            _clientId = appSettingsOptions.Value?.TryGetSetting(Globals.AemClientId) ??
+            _clientId = appSettings.TryGetSetting(Globals.AemClientId) ??
                                                         throw new InvalidOperationException($"{Globals.AemClientId} is missing from AppSettings");
 
-            _clientSecret = appSettingsOptions.Value?.TryGetSetting(Globals.AemClientSecret) ??
+            _clientSecret = appSettings.TryGetSetting(Globals.AemClientSecret) ??
                                                         throw new InvalidOperationException($"{Globals.AemClientSecret} is missing from AppSettings");
 
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));

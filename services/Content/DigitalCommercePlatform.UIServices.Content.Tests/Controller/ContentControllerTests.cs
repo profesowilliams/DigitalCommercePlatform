@@ -9,52 +9,44 @@ using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-
 
 namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 {
     public class ContentControllerTests
     {
         private readonly Mock<IMediator> _mockMediator;
-        private readonly Mock<IOptions<AppSettings>> _mockOptions;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ILogger<ContentController>> _mockLoggerFactory;
         private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
 
         public ContentControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             _mockMediator = new Mock<IMediator>();
-            _mockOptions = new Mock<IOptions<AppSettings>>();
-            _mockOptions.Setup(s => s.Value).Returns(appSettings);
 
             _mockLoggerFactory = new Mock<ILogger<ContentController>>();
             _mockContext = new Mock<IUIContext>();
             _mockContext.SetupGet(x => x.Language).Returns("en-us");
             _mockSiteSettings = new Mock<ISiteSettings>();
         }
+
         private ContentController GetController()
         {
             return new ContentController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
-                _mockOptions.Object, _mockSiteSettings.Object);
+                _appSettingsMock.Object, _mockSiteSettings.Object);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetSavedCartDetails(ResponseBase<GetSavedCartDetails.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetSavedCartDetails.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -62,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetSavedCartDetails("12",true).ConfigureAwait(false);
+            var result = await controller.GetSavedCartDetails("12", true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -71,7 +63,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         [AutoDomainData]
         public async Task GetActiveCartDetails(ResponseBase<GetActiveCart.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetActiveCart.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -88,12 +79,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
         [AutoDomainData]
         public async Task TypeAheadSearch(ResponseBase<TypeAheadSearch.Response> expected)
         {
-
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<TypeAheadSearch.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-            
 
             var controller = GetController();
 

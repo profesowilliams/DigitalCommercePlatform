@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Controllers
@@ -25,11 +24,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
             IMediator mediator,
             ILogger<ContentController> logger,
             IUIContext context,
-            IOptions<AppSettings> settings,
+            IAppSettings appSettings,
             ISiteSettings siteSettings)
-            : base(mediator, logger, context, settings, siteSettings)
+            : base(mediator, logger, context, appSettings, siteSettings)
         {
         }
+
         [HttpGet]
         [Route("savedCart")]
         public async Task<ActionResult<GetSavedCartDetails.Response>> GetSavedCartDetails(string id, bool isCartName)
@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string searchTerm,  int? maxResults)
+        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string searchTerm, int? maxResults)
         {
             var response = await Mediator.Send(new TypeAheadSearch.Request(searchTerm, maxResults)).ConfigureAwait(false);
             return Ok(response);

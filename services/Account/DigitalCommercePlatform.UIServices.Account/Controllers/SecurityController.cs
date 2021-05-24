@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
@@ -23,11 +22,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
     public class SecurityController : BaseUIServiceController
     {
         public SecurityController(IMediator mediator,
-            IOptions<AppSettings> options,
+            IAppSettings appSettings,
             ILogger<BaseUIServiceController> loggerFactory,
             IUIContext context,
             ISiteSettings siteSettings)
-            : base(mediator, loggerFactory, context, options, siteSettings)
+            : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
         }
 
@@ -52,13 +51,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var authenticateUserRequest = new AuthenticateUser.Request
             {
-                 ApplicationName = authenticateBodyRequest?.ApplicationName,
-                 Code = authenticateBodyRequest?.Code,
-                 Consumer = authenticateHeaderRequest?.Consumer,
-                 Language = authenticateHeaderRequest?.Language,
-                 RedirectUri = authenticateBodyRequest?.RedirectUri,
-                 SessionId = authenticateHeaderRequest?.SessionId,
-                 TraceId = authenticateHeaderRequest?.TraceId
+                ApplicationName = authenticateBodyRequest?.ApplicationName,
+                Code = authenticateBodyRequest?.Code,
+                Consumer = authenticateHeaderRequest?.Consumer,
+                Language = authenticateHeaderRequest?.Language,
+                RedirectUri = authenticateBodyRequest?.RedirectUri,
+                SessionId = authenticateHeaderRequest?.SessionId,
+                TraceId = authenticateHeaderRequest?.TraceId
             };
 
             var response = await Mediator.Send(authenticateUserRequest);
@@ -89,8 +88,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         [Route("activeCustomer")]
         public async Task<IActionResult> ActiveCustomer(ActiveCustomerRequest activeCustomerRequest)
         {
-            var response = await Mediator.Send(new ActiveCustomer.Request 
-            { 
+            var response = await Mediator.Send(new ActiveCustomer.Request
+            {
                 CompanyNumber = activeCustomerRequest.CompanyNumber,
                 CompanyName = activeCustomerRequest.CompanyName
             });

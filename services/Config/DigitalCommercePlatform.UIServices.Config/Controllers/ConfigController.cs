@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -10,7 +10,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
@@ -26,9 +25,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             IMediator mediator,
             ILogger<BaseUIServiceController> loggerFactory,
             IUIContext context,
-            IOptions<AppSettings> options,
+            IAppSettings appSettings,
             ISiteSettings siteSettings)
-            : base(mediator, loggerFactory, context, options, siteSettings)
+            : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
         }
 
@@ -39,7 +38,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
-
         }
 
         [HttpGet]
@@ -49,14 +47,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var data = new GetDeals.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
-
         }
 
         [HttpGet]
         [Route("deals")]
         public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
         {
-            var data = new GetDeal.Request(dealId, vendorId) ;
+            var data = new GetDeal.Request(dealId, vendorId);
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

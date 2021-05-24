@@ -1,11 +1,17 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
-using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -14,20 +20,12 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
-using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
-using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
-using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -36,22 +34,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<ILogger<SecurityController>> _logger;
-        private readonly Mock<IOptions<AppSettings>> _optionsMock;
+        private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ISiteSettings> _siteSettings;
+
         public DashBoardControllerTests()
         {
-            var appSettingsDict = new Dictionary<string, string>()
-            {
-                { "localizationlist", "en-US" },
-                { "SalesOrg", "WW_ORG" }
-            };
-            var appSettings = new AppSettings();
-            appSettings.Configure(appSettingsDict);
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
             _context = new Mock<IUIContext>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<SecurityController>>();
-            _optionsMock = new Mock<IOptions<AppSettings>>();
-            _optionsMock.Setup(s => s.Value).Returns(appSettings);
             _siteSettings = new Mock<ISiteSettings>();
         }
 
@@ -101,7 +94,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetDeals_BadRequest(ResponseBase<GetDealsSummary.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetDealsSummary.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -118,7 +110,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetConfigurationsSummary_BadRequest(ResponseBase<GetConfigurationsSummary.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetConfigurationsSummary.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -135,7 +126,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetSavedCarts(ResponseBase<GetCartsList.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetCartsList.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -143,7 +133,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetSavedCartList(false,50).ConfigureAwait(false);
+            var result = await controller.GetSavedCartList(false, 50).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -152,7 +142,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetQuotesData(ResponseBase<Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<Request>(),
                       It.IsAny<CancellationToken>()))
@@ -169,7 +158,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetActionItems(ResponseBase<GetActionItems.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetActionItems.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -186,7 +174,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetActionItems_BadRequest(ResponseBase<GetActionItems.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetActionItems.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -203,7 +190,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetTopConfigurations(ResponseBase<GetTopConfigurations.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetTopConfigurations.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -220,7 +206,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetTopDeals(ResponseBase<GetTopDeals.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetTopDeals.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -237,7 +222,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetTopConfigurations_BadRequest(ResponseBase<GetTopConfigurations.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetTopConfigurations.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -249,11 +233,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetTopQuotes(ResponseBase<GetTopQuotes.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetTopQuotes.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -270,7 +254,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetTopQuotes_BadRequest(ResponseBase<GetTopQuotes.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetTopQuotes.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -283,12 +266,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
 
-
         [Theory]
         [AutoDomainData]
         public async Task GetRenewals(ResponseBase<GetRenewalsSummary.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetRenewalsSummary.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -305,7 +286,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetRenewals_BadRequest(ResponseBase<GetRenewalsSummary.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetRenewalsSummary.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -322,7 +302,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetMyQuote(ResponseBase<MyQuoteDashboard.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<MyQuoteDashboard.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -339,7 +318,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task GetMyOrder(ResponseBase<GetMyOrders.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetMyOrders.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -351,11 +329,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetShipToAddress(ResponseBase<GetAddress.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetAddress.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -363,17 +341,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetAddress("ALL",false).ConfigureAwait(false);
+            var result = await controller.GetAddress("ALL", false).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
-
 
         [Theory]
         [AutoDomainData]
         public async Task GetVendorReference(ResponseBase<GetVendorReference.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetVendorReference.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -390,7 +366,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         [AutoDomainData]
         public async Task VendorRefreshToken(ResponseBase<GetVendorRefresh.Response> expected)
         {
-
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetVendorRefresh.Request>(),
                       It.IsAny<CancellationToken>()))
@@ -405,7 +380,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         private DashBoardController GetController()
         {
-            return new DashBoardController(_mediator.Object, _optionsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
+            return new DashBoardController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
     }
 }

@@ -15,7 +15,6 @@ using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -34,13 +33,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly string _appQuoteServiceUrl;
         private static readonly Random getrandom = new Random();
 
-        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IOptions<AppSettings> options, ICartService cartService)
+        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IAppSettings appSettings, ICartService cartService)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cartService = cartService;
-            _appOrderServiceUrl = options?.Value.GetSetting("App.Order.Url");
-            _appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
+            _appOrderServiceUrl = appSettings.GetSetting("App.Order.Url");
+            _appQuoteServiceUrl = appSettings.GetSetting("App.Quote.Url");
         }
 
         public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
@@ -49,7 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<Models.Order.Internal.OrderModel>>(url);
             return getOrderByIdResponse?.FirstOrDefault();
         }
-
 
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
@@ -133,7 +131,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             var quotePreview = new QuotePreview
             {
-
                 ShipTo = GenerateAddress("ShipTo"),
                 EndUser = GenerateAddress("EndUser"),
                 //GeneralInformation = new QuoteGeneralInformation()
@@ -162,7 +159,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     var address = new Address
                     {
-
                         Name = prefix + i,
                         Email = $"myemail{i}@example.com",
                         Line1 = $"Line 1{i} Road",
@@ -172,7 +168,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         State = $"State{i}",
                         Zip = $"{i}{i - 0}{i}{i - 0}{i}",
                         Country = $"Country{i}"
-
                     };
 
                     addressList.Add(address);
@@ -191,21 +186,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             return getrandom.Next(min, max);
         }
-        
+
         private string GetParameterName(string parameter)
         {
             var sortBy = string.Empty;
             if (string.IsNullOrEmpty(parameter))
             {
-                sortBy= string.Empty;
+                sortBy = string.Empty;
             }
-            if (parameter.ToLower()=="id")
+            if (parameter.ToLower() == "id")
             {
-                sortBy ="Source.OriginId";
+                sortBy = "Source.OriginId";
             }
             else if (parameter.ToLower() == "created")
             {
-                sortBy ="Created";
+                sortBy = "Created";
             }
             else if (parameter.ToLower() == "quotevalue" || parameter.ToLower() == "formatedquotevalue")
             {
@@ -217,25 +212,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             else
             {
-                sortBy= "Created";
+                sortBy = "Created";
             }
             return sortBy;
-
         }
+
         public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query)
         {
             query.SortBy = GetParameterName(query.SortBy);
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
-            //we need to fix this issue 
-            quoteURL = quoteURL.ToString().Replace("=False","=false");
-            quoteURL = quoteURL.ToString().Replace("=True","=true");
+            //we need to fix this issue
+            quoteURL = quoteURL.ToString().Replace("=False", "=false");
+            quoteURL = quoteURL.ToString().Replace("=True", "=true");
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
             return getQuoteResponse;
         }
 
         public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
         {
-
             List<PricingCondition> lstPricingConditions = new List<PricingCondition>();
 
             lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "0"));
@@ -314,6 +308,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var response = await CallCreateQuote(createQuoteFrom);
             return response;
         }
+
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
         {
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
