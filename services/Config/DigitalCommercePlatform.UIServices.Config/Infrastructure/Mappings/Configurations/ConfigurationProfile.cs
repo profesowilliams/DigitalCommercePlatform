@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
+using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations
@@ -26,6 +27,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.CreatedOn, o => o.MapFrom(s => s.Created))
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
+                ;
+
+            CreateMap<SummaryDto, Estimation>()
+                .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
+                .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))
+                .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
+                ;
+            CreateMap<DetailedDto, Estimation>()
+                .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
+                .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))
+                .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 ;
         }
     }

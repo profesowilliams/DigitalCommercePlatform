@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
+using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -102,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             try
             {
-                var appServiceRequest = PrepareAppServiceRequest(request);
+                var appServiceRequest = PrepareConfigurationsAppServiceRequest(request);
                 var findConfigurationUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
@@ -125,7 +127,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
-                throw ex;
+                throw;
             }
         }
 
@@ -136,10 +138,55 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return result;
         }
 
-        private Models.Configurations.Internal.FindModel PrepareAppServiceRequest(GetConfigurations.Request request)
+        private List<Estimation> MapAppResponseToEstimations<T>(FindResponse<T> findConfigurationResponse)
+        {
+            var data = findConfigurationResponse.Data;
+            var result = _mapper.Map<List<Estimation>>(data);
+            return result;
+        }
+
+        private Models.Configurations.Internal.FindModel PrepareConfigurationsAppServiceRequest(GetConfigurations.Request request)
         {
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
             return result;
+        }
+
+        private Models.Configurations.Internal.FindModel PrepareEstimationsAppServiceRequest(GetEstimations.Request request)
+        {
+            var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
+            result.Type = "Estimate";
+            return result;
+        }
+
+        public async Task<List<Estimation>> FindEstimations(GetEstimations.Request request)
+        {
+            try
+            {
+                var appServiceRequest = PrepareEstimationsAppServiceRequest(request);
+                var findConfigurationUrl = _appConfigurationUrl
+                    .AppendPathSegment("find")
+                    .SetQueryParams(appServiceRequest);
+
+                if (appServiceRequest.Details)
+                {
+                    var findConfigurationResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl);
+                    var result = MapAppResponseToEstimations(findConfigurationResponse);
+                    return result;
+                }
+                else
+                {
+                    var findConfigurationResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl);
+                    var result = MapAppResponseToEstimations(findConfigurationResponse);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting estimations: " + nameof(ConfigService));
+                throw;
+            }
         }
     }
 }

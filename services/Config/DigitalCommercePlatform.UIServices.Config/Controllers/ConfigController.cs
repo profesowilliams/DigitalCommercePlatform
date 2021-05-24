@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
 {
@@ -54,6 +55,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
         {
             var data = new GetDeal.Request(dealId, vendorId);
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("estimations")]
+        public async Task<ActionResult> GetEstimations()
+        {
+            var data = new GetEstimations.Request();
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

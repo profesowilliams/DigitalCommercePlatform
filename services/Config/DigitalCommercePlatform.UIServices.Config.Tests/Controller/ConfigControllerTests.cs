@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
@@ -178,6 +179,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         //    var result = await controller.GetDeal(null).ConfigureAwait(false);
         //    result.Should().Equals(HttpStatusCode.BadRequest);
         //}
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetEstimations(ResponseBase<GetEstimations.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetEstimations.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.GetEstimations().ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
 
         private ConfigController GetController()
         {
