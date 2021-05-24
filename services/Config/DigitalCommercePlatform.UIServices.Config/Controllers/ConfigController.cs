@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
@@ -64,6 +65,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         public async Task<ActionResult> GetEstimations()
         {
             var data = new GetEstimations.Request();
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("estimations/validate/{id}")]
+        public async Task<ActionResult> EstimationValidate(string id)
+        {
+            var data = new EstimationValidate.Request { Id = id };
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

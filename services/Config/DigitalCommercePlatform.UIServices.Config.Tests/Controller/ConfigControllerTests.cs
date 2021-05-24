@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -191,6 +192,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var result = await controller.GetEstimations().ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task EstimationValidate(ResponseBase<EstimationValidate.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<EstimationValidate.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.EstimationValidate("xyz").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

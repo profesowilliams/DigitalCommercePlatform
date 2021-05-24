@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
@@ -187,6 +188,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 _logger.LogError(ex, "Exception at getting estimations: " + nameof(ConfigService));
                 throw;
             }
+        }
+
+        public Task<bool> EstimationValidate(EstimationValidate.Request request)
+        {
+            return Task.FromResult(true);
         }
     }
 }
