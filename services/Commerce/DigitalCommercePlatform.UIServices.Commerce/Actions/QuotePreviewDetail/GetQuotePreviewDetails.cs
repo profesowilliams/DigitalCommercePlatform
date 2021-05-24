@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -53,6 +54,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
                     // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
                     var response = new Response(quoteDetailsModel);
                     return new ResponseBase<Response> { Content = response };
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.Id).NotEmpty();
             }
         }
     }

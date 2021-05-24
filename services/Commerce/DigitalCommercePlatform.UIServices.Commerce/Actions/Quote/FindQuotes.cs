@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -56,6 +57,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     _logger.LogError(ex, "Exception at setting GetCustomerHandler : " + nameof(Handler));
                     throw;
                 }
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(r => r.Query).Cascade(CascadeMode.Stop).NotNull()
+                    .ChildRules(request =>
+                    {
+                        request.RuleFor(c => c.Id).NotEmpty();
+                        request.RuleFor(c => c.OrderId).NotEmpty();
+                    });
             }
         }
     }

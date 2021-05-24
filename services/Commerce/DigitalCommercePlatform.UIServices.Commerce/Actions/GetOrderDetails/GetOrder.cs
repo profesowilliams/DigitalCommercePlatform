@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -56,6 +57,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 var orderResponse = _mapper.Map<OrderDetailModel>(order);
                 var response = new Response(orderResponse);
                 return new ResponseBase<Response> { Content = response };
+            }
+            public class Validator : AbstractValidator<Request>
+            {
+                public Validator()
+                {
+                    RuleFor(c => c.Id).NotEmpty();
+                }
             }
         }
     }

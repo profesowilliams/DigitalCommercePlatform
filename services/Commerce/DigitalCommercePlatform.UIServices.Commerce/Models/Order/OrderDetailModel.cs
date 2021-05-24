@@ -34,5 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string OrderTotal { get; set; }
         public string BlindPackaging { get; set; }
         public string SiteURL { get; set; }
+        public string Status { get; set; }
     }
 }

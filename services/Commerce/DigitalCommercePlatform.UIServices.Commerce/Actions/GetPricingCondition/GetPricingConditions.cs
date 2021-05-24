@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -47,6 +48,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
                     PricingConditions = pricing
                 };
                 return new ResponseBase<Response> { Content = response };
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.Id).NotEmpty();
             }
         }
     }

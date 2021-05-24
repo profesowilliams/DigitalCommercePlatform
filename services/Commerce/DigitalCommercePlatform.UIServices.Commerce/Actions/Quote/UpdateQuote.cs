@@ -70,7 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     RuleFor(r => r.QuoteToUpdate).Cascade(CascadeMode.Stop).NotNull()
                         .ChildRules(request =>
                         {
-                            request.RuleFor(c => c.QuoteId).NotNull();
+                            request.RuleFor(c => c.QuoteId).NotEmpty();
                         });
                 }
             }

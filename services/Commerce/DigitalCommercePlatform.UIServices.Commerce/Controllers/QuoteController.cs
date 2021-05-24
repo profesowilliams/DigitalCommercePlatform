@@ -50,8 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("preview/{Id}")]
-        public async Task<ActionResult> GetQuotePreview([FromQuery] string id)
+        [Route("preview")]
+        public async Task<ActionResult> GetQuotePreview([FromQuery]string id)
         {
             var response = await Mediator.Send(new GetQuotePreviewDetails.Request(id)).ConfigureAwait(false);
             return Ok(response);

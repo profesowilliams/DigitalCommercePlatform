@@ -35,8 +35,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("order/{id}")]
-        public async Task<ActionResult> GetOrderDetailsAsync([FromRoute] string id)
+        [Route("order")]
+        public async Task<ActionResult> GetOrderDetailsAsync([FromQuery] string id)
         {
             var orderResponse = await Mediator.Send(new GetOrder.Request(id)).ConfigureAwait(false);
             if (orderResponse.Error.IsError)
@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
                 return Ok(orderResponse);
             }
         }
-
+        
         [HttpGet]
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
@@ -72,8 +72,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("orderLines/{id}")]
-        public async Task<ActionResult> GetOrderLinesAsync([FromRoute] string id)
+        [Route("orderLines")]
+        public async Task<ActionResult> GetOrderLinesAsync([FromQuery] string id)
         {
             var orderLinesResponse = await Mediator.Send(new GetLines.Request(id)).ConfigureAwait(false);
             if (orderLinesResponse.Error.IsError)
@@ -88,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("pricingConditions")]
-        public async Task<ActionResult> GetPricingConditions([FromRoute] bool getAll, string Id)
+        public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll,string Id)
         {
             var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, Id)).ConfigureAwait(false);
             if (getPricingCondition.Error.IsError)
@@ -102,7 +102,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("downloadInvoicePdf")]
+        [Route("downloadInvoice")]
         public async Task<ActionResult> DownloadInvoicePdf([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
             var response = await Mediator.Send(new DownloadInvoicePdf.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);

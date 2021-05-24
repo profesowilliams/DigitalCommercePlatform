@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                 }
                 
                 return new ResponseBase<Response> { Content = orderLinesResponse }; 
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.Id).NotEmpty();
             }
         }
     }

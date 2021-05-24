@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using Techdata.Common.Utility.CarrierTracking;
 using Techdata.Common.Utility.CarrierTracking.Model;
@@ -27,8 +28,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Vendor, opt => opt.MapFrom<OrderVendorResolver>())
                 .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>())
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom<OrderInvoicesResolver>())
-                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<OrderTrackingsResolver>());
-
+                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<OrderTrackingsResolver>())
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
 
             CreateMap<Item, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name)); 
@@ -44,7 +45,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
                 .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
-                .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name));
+                .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
+                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
         }
     }
 
@@ -133,6 +135,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             }).ToList();
 
             return trackingDetails;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public static class StringExtensions
+    {
+        public static string ToTitleCase(this string value)
+        {
+            var result = value.ToString().ToLower();
+
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+            result = textInfo.ToTitleCase(result.Replace("_", " "));
+
+            return result;
         }
     }
 }
