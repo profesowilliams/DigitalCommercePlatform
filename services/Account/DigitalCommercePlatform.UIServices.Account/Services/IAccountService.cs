@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
         Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request);
         Task<List<VendorReferenceModel>> GetVendorReference();
+        Task<List<VendorConnection>> GetVendorConnectionsAsync();
         Task<GetVendorRefresh.Response> VendorRefresh(GetVendorRefresh.Request request);
     }
 }

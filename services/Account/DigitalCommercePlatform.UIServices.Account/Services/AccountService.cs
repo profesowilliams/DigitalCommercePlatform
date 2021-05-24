@@ -334,6 +334,29 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
+        public Task<List<VendorConnection>> GetVendorConnectionsAsync()
+        {
+            var vendorConnections = new List<VendorConnection>()
+            {
+                new VendorConnection
+                {
+                    Vendor = "Cisco",
+                    IsConnected = true,
+                    ConnectionDate = new DateTime(2021,12,4,12,54,46),
+                    IsValidRefreshToken = true
+                },
+                new VendorConnection
+                {
+                    Vendor = "HP",
+                    IsConnected = false,
+                    ConnectionDate = new DateTime(2021,3,4,10,24,16),
+                    IsValidRefreshToken = false
+                }
+            };
+
+            return Task.FromResult(vendorConnections);
+        }
+
         public async Task<GetVendorRefresh.Response> VendorRefresh(GetVendorRefresh.Request request)
         {
             //var CoreSecurity = _coreSecurity.AppendPathSegment("Vendor");
