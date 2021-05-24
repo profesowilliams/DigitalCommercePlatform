@@ -799,6 +799,13 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/modal-demo.html"
+                    ),
+                }),
+                new HtmlWebpackPlugin({
+                filename: "regions-list-popup",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/regions-list-popup/regions-list-popup.html"
                 ),
             }),
             new HtmlWebpackPlugin({

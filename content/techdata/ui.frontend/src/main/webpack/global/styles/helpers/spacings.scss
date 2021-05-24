@@ -11,3 +11,10 @@
     box-shadow: 0 0 0 0 get-color(v-divider-gray);
   }
 }
+
+
+.vx-divider {  
+  border-left: rem(1px) solid get-color(v-divider-darkgray);
+  border-right: rem(1px) solid get-color(v-divider-darkgray);
+  padding: 0 rem(35px);
+}
