@@ -44,8 +44,18 @@
 					<pricingConditions
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-							fieldLabel="Estimate ID Endpoint"
+							fieldLabel="Pricing Conditions Endpoint"
 							name="./pricingConditions"/>
+					<estimatedIdListEndpoint
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Estimated Id List Endpoint"
+							name="./estimatedIdListEndpoint"/>
+					<estimatedIdDetailsEndpoint
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Estimated Id Details Endpoint"
+							name="./estimatedIdDetailsEndpoint"/>
 					<optionsList
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -95,6 +105,18 @@
 												fieldDescription="Enter Option Title"
 												fieldLabel="Option Title"
 												name="./title"/>
+										<dropdownPlaceholder
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldDescription="Enter Dropdown Placeholder"
+												fieldLabel="Dropdown Placeholder"
+												name="./dropdownPlaceholder"/>
+										<textPlaceholder
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldDescription="Enter Text Placeholder "
+												fieldLabel="Text Placeholder "
+												name="./textPlaceholder"/>
 									</items>
 								</column>
 							</items>

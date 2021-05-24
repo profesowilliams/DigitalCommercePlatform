@@ -13,10 +13,16 @@ use(function () {
             var label = res.properties["label"];
             var optionKey = res.properties["key"];
             var title = res.properties["title"];
+            var dropdownPlaceholder = res.properties["dropdownPlaceholder"];
+            var textPlaceholder = res.properties["textPlaceholder"];
+
             var itemData = {};
             itemData.label = label;
             itemData.key = optionKey;
             itemData.title = title;
+            itemData.dropdownPlaceholder = dropdownPlaceholder;
+            itemData.textPlaceholder = textPlaceholder;
+
             listValues.push(itemData);
         }
     }
@@ -42,8 +48,14 @@ use(function () {
         jsonObject.put("cartdetailsEndpoint", properties.get("cartdetailsEndpoint"));
     }
      if (properties.get("pricingConditions") != null) {
-            jsonObject.put("pricingConditions", properties.get("pricingConditions"));
+         jsonObject.put("pricingConditions", properties.get("pricingConditions"));
         }
+     if (properties.get("estimatedIdListEndpoint") != null) {
+         jsonObject.put("estimatedIdListEndpoint", properties.get("estimatedIdListEndpoint"));
+         }
+      if (properties.get("estimatedIdDetailsEndpoint") != null) {
+         jsonObject.put("estimatedIdDetailsEndpoint", properties.get("estimatedIdDetailsEndpoint"));
+         }
 
     if (listValues != null) {
         jsonObject.put("optionsList", listValues);
