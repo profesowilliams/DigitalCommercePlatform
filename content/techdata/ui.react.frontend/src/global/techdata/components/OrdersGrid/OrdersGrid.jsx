@@ -4,23 +4,39 @@ import Grid from '../Grid/Grid';
 function OrdersGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
 
+	const STATUS = {
+		onHold: 'onHold',
+		inProcess: 'inProcess',
+		open: 'open',
+		shipped: 'shipped',
+		cancelled: 'cancelled',
+	};
+
+	const defaultIcons = [
+		{ iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper' },
+		{ iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly' },
+		{ iconKey: STATUS.open, iconValue: 'fas fa-box-open' },
+		{ iconKey: STATUS.shipped, iconValue: 'fas fa-check' },
+		{ iconKey: STATUS.cancelled, iconValue: 'fas fa-ban' },
+	];
+
+	function applyStatusIcon(statusKey) {
+		let icon = componentProp.iconList?.find((icon) => icon.iconKey === statusKey);
+		if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
+		return icon?.iconValue;
+	}
+
 	function getDateTransformed(dateUTC) {
 		const formatedDate = new Date(dateUTC).toLocaleDateString();
 		return formatedDate;
 	}
 
 	function getTrackingStatus(trackingArray) {
-		console.log("tracking status");
-		console.log(trackingArray);
 		return trackingArray.length ? trackingArray.length > 0 : false;
 	}
 
-	function getStatus(status) {
-		return status === "OPEN";
-	}
-
 	function nullFormatter(value) {
-		return value === null ? "N/A" : value;
+		return value === null ? 'N/A' : value;
 	}
 
 	const columnDefs = [
@@ -33,7 +49,7 @@ function OrdersGrid(props) {
 					<div>
 						<a
 							className='cmp-grid-url-underlined'
-							href={`${window.location.origin + componentProp.orderDetailUrl}?quoteId=${props.value}`}
+							href={`${window.location.origin + componentProp.orderDetailUrl}?id=${props.value}`}
 						>
 							{props.value}
 						</a>
@@ -82,11 +98,7 @@ function OrdersGrid(props) {
 			field: 'invoice',
 			sortable: true,
 			cellRenderer: (props) => {
-				return (
-					<div>
-						{nullFormatter(props.value)}
-					</div>
-				);
+				return <div>{nullFormatter(props.value)}</div>;
 			},
 		},
 		{
@@ -95,8 +107,8 @@ function OrdersGrid(props) {
 			sortable: true,
 			cellRenderer: (props) => {
 				return (
-					<div className='cmp-quotes-grid-checkout-icon'>
-						{getStatus(props.value) ? <p><i className='fas fa-check'></i> Shipped</p> : <p><i className='fas fa-ban'></i> Canceled</p>}
+					<div className='cmp-grid-icon'>
+						<i className={`${applyStatusIcon(props.value)}`}></i>
 					</div>
 				);
 			},
@@ -107,7 +119,7 @@ function OrdersGrid(props) {
 			sortable: false,
 			cellRenderer: (props) => {
 				return (
-					<div className='cmp-quotes-grid-checkout-icon'>
+					<div className='cmp-grid-icon'>
 						{getTrackingStatus(props.value) ? <i className='fas fa-truck'></i> : <div></div>}
 					</div>
 				);
@@ -118,26 +130,15 @@ function OrdersGrid(props) {
 			field: 'isReturn',
 			sortable: false,
 			cellRenderer: (props) => {
-				return (
-					<div className='cmp-quotes-grid-checkout-icon'>
-						{props.value ? <i className='fas fa-box-open'></i> : <div></div>}
-					</div>
-				);
+				return <div className='cmp-grid-icon'>{props.value ? <i className='fas fa-box-open'></i> : <div></div>}</div>;
 			},
 		},
 	];
 
-	// remove non-config aem columns from column definition
-	const configColumnKeys = [];
-	componentProp.columnList?.forEach((column) => {
-		configColumnKeys.push(column.columnKey);
-	});
-	const columnDefinition = columnDefs.filter(el => configColumnKeys.includes(el.field));
-
 	return (
 		<section>
 			<div className='cmp-quotes-grid'>
-				<Grid columnDefinition={columnDefinition} config={componentProp}></Grid>
+				<Grid columnDefinition={columnDefs} config={componentProp}></Grid>
 			</div>
 		</section>
 	);

@@ -12,6 +12,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	const gridNodeRef = useRef(null);
 	const domInfoRef = useRef(null);
 	const gridId = useRef(null);
+	const gridApi = useRef(null);
 
 	const renderers = {};
 	let filteredColumns = [];
@@ -96,6 +97,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			gridId.current = pad.substring(0, pad.length - str.length) + str;
 		}
 		data.api.sizeColumnsToFit();
+		gridApi.current = data.api;
 		// apply default sorting
 		if (options?.defaultSortingColumnKey) {
 			data.columnApi.applyColumnState({
@@ -116,6 +118,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		}
 	}
 
+	function onResize() {
+		gridApi?.current?.sizeColumnsToFit();
+	}
+
 	function onViewportChanged(data) {
 		if (config.paginationStyle === 'scroll' && domInfoRef.current) {
 			const renderedNodes = data.api.getRenderedNodes();
@@ -132,6 +138,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 
 	useEffect(() => {
 		getGridData();
+		window.addEventListener('resize', onResize);
+		return () => {
+			window.removeEventListener('resize', onResize);
+		};
 	}, []);
 
 	return (

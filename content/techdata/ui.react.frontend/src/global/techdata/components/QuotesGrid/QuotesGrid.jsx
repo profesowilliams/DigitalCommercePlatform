@@ -38,7 +38,7 @@ function QuotesGrid(props) {
 					<div>
 						<a
 							className='cmp-grid-url-underlined'
-							href={`${window.location.origin + componentProp.quoteDetailUrl}?quoteId=${props.value}`}
+							href={`${window.location.origin + componentProp.quoteDetailUrl}?id=${props.value}`}
 						>
 							{props.value}
 						</a>
