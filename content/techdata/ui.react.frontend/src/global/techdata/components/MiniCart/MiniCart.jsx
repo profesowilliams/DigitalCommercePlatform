@@ -13,11 +13,17 @@ const MiniCart = ({componentProp}) => {
   const { maxItems, endpoint, shopUrl } = JSON.parse(componentProp);
   const [cartItems, setCartItems] = useState(0);
   const [cartActive, setCartActive] = useState(false);
-  useEffect(async() => {
-    const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
-    setCartItems(totalQuantity);
-    if( totalQuantity )
-      localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+  useEffect(() => {
+    const getActiveCart = async () => {
+      try{
+        const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
+        setCartItems(totalQuantity);
+        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+      }catch{
+        localStorage.setItem('ActiveCart', '' );
+      }
+    }
+    getActiveCart();
   },[]);
   useEffect(() => {
     const newActive = cartItems ? 'cmp-cart__active' : '';
