@@ -22,9 +22,11 @@ use(function () {
       internalEndPoint = properties["buttonLinkInternal"];
     }
 
-    jsonObject["endPoint"] = properties["buttonLinkType"] === 'external' ? externalEndPoint : internalEndPoint;
+    jsonObject["endpoint"] = properties["buttonLinkType"] === 'external' ? externalEndPoint : internalEndPoint;
     jsonObject["ignoreSalesOrganization"] = properties["ignoreSalesOrganization"];
     jsonObject["isDefault"] = properties["isDefault"];
+    jsonObject["criteria"] = properties["criteria"];
+
   }
 
   return {

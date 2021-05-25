@@ -26,6 +26,7 @@ const EditConfig = ({ componentProp }) => {
         criteria,
         ignoreSalesOrganization,
         isDefault,
+        placeholderText
     } = JSON.parse(componentProp);
     const onChange = ({ target: { value } }) => {
         setConfigurationId(value);
@@ -39,7 +40,7 @@ const EditConfig = ({ componentProp }) => {
                     <InputText
                         onChange={onChange}
                         inputValue={configurationId}
-                        label='Configuration ID'
+                        label={placeholderText}
                     />
                 </p>
                 <Button disabled={!configurationId} onClick={() => true}>
