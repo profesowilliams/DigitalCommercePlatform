@@ -13,9 +13,10 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+var utils = require("./utils");
+var mockResponses = require("./responses");
 
-var utils = require('./utils');
-var mockResponses = require('./responses');
+const { getRandomArrayWithIds } = utils;
 
 function checkCreds(user, pass) {
     return (
@@ -485,7 +486,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
             created: utils.getRandomDate(),
             expires: utils.getRandomDate(),
             endUserName: null,
-            dealId: null,
+            dealId: getRandomArrayWithIds(2),
             status: i % 2 ? "OPEN" : "CLOSED",
             quoteValue: 73002.31 + getRandom(1000),
             formatedQuoteValue: "USD",
@@ -516,13 +517,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     const pageSize = req.query.PageSize || 25;
     const pageNumber = req.query.PageNumber || 1;
     const items = [];
-    const status = [
-        'onHold',
-        'inProcess',
-        'open',
-        'shipped',
-        'cancelled',
-    ];
+    const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
@@ -536,18 +531,18 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
             priceFormatted: 73002.31 + getRandom(1000),
             invoice: Number(`${pageNumber}${4009754974 + i}`),
             status: status[getRandom(5)],
-            trackings: i % 2 ? ['track1', 'track2'] : [],
+            trackings: i % 2 ? ["track1", "track2"] : [],
             isReturn: i % 2 ? true : false,
             currency: "USD",
             currencySymbol: "$",
-        })
+        });
     }
     const response = {
         content: {
             items: items,
             totalItems: 2500,
             pageCount: 25,
-            pageSize
+            pageSize,
         },
         error: {
             code: 0,
@@ -1023,24 +1018,24 @@ app.get("/estimates", function (req, res) {
         content: {
             items: [
                 {
-                    "configId": "VI112127534ZT",
-                    "configurationType": "Estimate",
-                    "vendor": "Cisco"
+                    configId: "VI112127534ZT",
+                    configurationType: "Estimate",
+                    vendor: "Cisco",
                 },
                 {
-                    "configId": "WC121011624NR",
-                    "configurationType": "Estimate",
-                    "vendor": "Cisco"
+                    configId: "WC121011624NR",
+                    configurationType: "Estimate",
+                    vendor: "Cisco",
                 },
                 {
-                    "configId": "VI112127534ZT1",
-                    "configurationType": "Estimate",
-                    "vendor": "Cisco"
+                    configId: "VI112127534ZT1",
+                    configurationType: "Estimate",
+                    vendor: "Cisco",
                 },
                 {
-                    "configId": "WC121011624NR2",
-                    "configurationType": "Estimate",
-                    "vendor": "Cisco"
+                    configId: "WC121011624NR2",
+                    configurationType: "Estimate",
+                    vendor: "Cisco",
                 },
             ],
         },
@@ -1055,5 +1050,4 @@ app.get("/catalog", (req, res) => {
     console.log(req);
     res.json(mockResponses.catalogResponse());
     // res.json(mockResponses.shortResponse());
-
-})
+});
