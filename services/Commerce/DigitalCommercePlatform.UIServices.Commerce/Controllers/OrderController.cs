@@ -103,9 +103,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("downloadInvoice")]
-        public async Task<ActionResult> DownloadInvoicePdf([FromQuery] string orderId, string invoiceId, bool downloadAll)
+        public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
-            var response = await Mediator.Send(new DownloadInvoicePdf.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);
+            var response = await Mediator.Send(new DownloadInvoice.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);
 
             var resourceStream = this.GetType().Assembly.GetManifestResourceStream(response.Content.Filename);
             return new FileStreamResult(resourceStream, "application/pdf");

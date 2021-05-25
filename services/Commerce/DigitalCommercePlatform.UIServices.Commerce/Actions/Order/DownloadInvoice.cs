@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
 {
     [ExcludeFromCodeCoverage]
-    public sealed class DownloadInvoicePdf
+    public sealed class DownloadInvoice
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -56,13 +56,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 try
                 {
                     string filename = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf";
+                    string filename2 = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample-2.pdf";
+
+                    // Temporary solution to let QA test with at least 2 different PDFs
+                    if (request.OrderId == "6021771625")
+                    {
+                        filename = filename2;
+                    }
 
                     Response response = new Response(filename);
                     return await Task.FromResult(new ResponseBase<Response> { Content = response });
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, $"Error getting quote data in {nameof(DownloadInvoicePdf)}");
+                    _logger.LogError(ex, $"Error getting quote data in {nameof(DownloadInvoice)}");
                     throw;
                 }
             }

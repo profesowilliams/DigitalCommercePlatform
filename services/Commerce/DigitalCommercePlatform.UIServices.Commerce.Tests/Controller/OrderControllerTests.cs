@@ -206,17 +206,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task DownloadInvoicePdfTest(ResponseBase<DownloadInvoicePdf.Response> expected)
+        public async Task DownloadInvoicePdfTest(ResponseBase<DownloadInvoice.Response> expected)
         {
             // Arrange
             expected.Content.Filename = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf";
-            _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoicePdf.Request>(), It.IsAny<CancellationToken>()))
+            _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
             var controller = GetController();
             // Act
-            var result = await controller.DownloadInvoicePdf("123456", null, false).ConfigureAwait(false);
+            var result = await controller.DownloadInvoice("123456", null, false).ConfigureAwait(false);
             // Assert
-            _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoicePdf.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
