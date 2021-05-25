@@ -40,7 +40,7 @@ const ManuallyTyped = ({onClick, inputValue, setValue, label, validateCartEndpoi
         isActive={invalidCartName}
       />
       <p>
-        <InputText onChange={onChange} inputValue={inputValue} label={label} />
+        <InputText onChange={onChange} inputValue={inputValue} label={label} bottomSpace/>
       </p>
       <Button disabled={!inputValue} onClick={goToNext}>Next</Button>
     </>

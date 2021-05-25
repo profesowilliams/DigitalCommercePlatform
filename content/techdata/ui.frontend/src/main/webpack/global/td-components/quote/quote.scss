@@ -106,6 +106,10 @@
   font-size: rem(12px);
   padding: rem( 7px 10px );
   color: get-color(text-mid-gray);
+
+  &_bottom-margin{
+    margin-bottom: rem(15px);
+  }
 }
 
 .cmp-widget{
