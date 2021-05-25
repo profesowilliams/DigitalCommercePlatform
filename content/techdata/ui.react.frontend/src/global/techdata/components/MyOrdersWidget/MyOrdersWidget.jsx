@@ -3,6 +3,8 @@ import Chart from "chart.js";
 import "chartjs-gauge";
 import { get } from "../../../../utils/api";
 
+// import "./style.css";
+
 const MyOrdersWidget = ({ componentProp }) => {
     const chartRef = createRef();
     const [myOrders, setMyOrders] = useState(false);
@@ -67,28 +69,42 @@ const MyOrdersWidget = ({ componentProp }) => {
 
     const { processedFormattedAmount, currencySymbol } = myOrders;
 
-    return myOrders ? (
-        <>
-            <div className='cmp-gauge-chart-wrap'>
-                <div className='cmp-gauge-chart'>
-                    <div className='cmp-gauge-chart__title'>My Orders</div>
-                </div>
-                <div id='canvas-holder'>
-                    <canvas id='chart' ref={chartRef} />
-                </div>
-                <div className='cmp-gauge-chart'>
-                    <div className='cmp-gauge-chart__orders-processed'>
-                        <div className='cmp-gauge-chart__orders-processed--number'>
-                            {`${currencySymbol}${processedFormattedAmount}`}
+    return (
+        myOrders && (
+            <>
+                <div className='cmp-gauge-chart-wrap'>
+                    <div className='cmp-gauge-chart'>
+                        <div className='cmp-gauge-chart__title'>My Orders</div>
+                    </div>
+                    <div id='canvas-holder'>
+                        <canvas id='chart' ref={chartRef} />
+                    </div>
+                    <div className='cmp-gauge-chart'>
+                        <div className='cmp-gauge-chart__orders-processed'>
+                            <div className='cmp-gauge-chart__orders-processed--number'>
+                                {`${currencySymbol}${processedFormattedAmount}`}
+                            </div>
+                            <div className='cmp-gauge-chart__orders-processed--title'>
+                                Orders Processed
+                            </div>
                         </div>
-                        <div className='cmp-gauge-chart__orders-processed--title'>
-                            Orders Processed
+                    </div>
+                    <div className='cmp-gauge-chart-period'>
+                        <div>
+                            <div>MDT</div>
+                            <div className='cmp-gauge-chart-period--toggle'>
+                                <label className='switch'>
+                                    <input type='checkbox' />
+                                    <span className='dot round' />
+                                </label>
+                            </div>
+                            <div>QTD</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
-    ) : null;
+            </>
+        )
+    );
 };
 
 export default MyOrdersWidget;
