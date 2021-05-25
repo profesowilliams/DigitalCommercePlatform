@@ -176,6 +176,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 								sortable={column.sortable}
 								key={column.field}
 								resizable={column.resizable}
+								onCellClicked={column.onCellClicked}
 								cellRenderer={renderers[column.field] ? column.field : null}
 								valueFormatter={column.valueFormatter ?? null}
 								suppressSizeToFit={column.suppressSizeToFit}

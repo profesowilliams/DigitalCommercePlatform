@@ -101,16 +101,13 @@ function QuotesGrid(props) {
 			headerName: 'Checkout',
 			field: 'canCheckOut',
 			sortable: false,
+			onCellClicked: (props) => {
+				setModalContent(() => CheckoutModal(props.data.id));
+				setModalVisible(true);
+			},
 			cellRenderer: (props) => {
 				return (
-					<div
-						className='cmp-quotes-grid-checkout-icon'
-						onClick={() => {
-							setModalAction(() => () => console.log(props));
-							setModalContent(() => CheckoutModal(props.data.id));
-							setModalVisible(true);
-						}}
-					>
+					<div className='cmp-quotes-grid-checkout-icon'>
 						{props.value ? <i className='fas fa-shopping-cart'></i> : <div></div>}
 					</div>
 				);
