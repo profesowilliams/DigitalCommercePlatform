@@ -50,16 +50,24 @@ const QuoteCreate = ({
   const prev = () => {
     setStep(0);
   }
+  const getErrorMessage = (text, messages = []) => {
+    return `${text} ${messages.join(' -- ')}`
+  }
   const createQuote = async () => {
-    const { endpoint } = endpoints;
-    let params = { pricingCondition: pricing.key }
-    if( methodSelected.key !== 'active' )
-      params = {...params, id: cartID };
-    const { data: { content: { quoteDetails: { orderNumber } }, error: { isError, message } } } = await usPost(endpoint, { params });
-    if( isError )
-      return alert( `Error in create quote: ${message}` )
-    alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
-    window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber=${orderNumber}`;
+    try{
+      const { endpoint } = endpoints;
+      let params = { pricingCondition: pricing.key }
+      if( methodSelected.key !== 'active' )
+        params = {...params, id: cartID };
+      const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
+      if( isError )
+        return alert( getErrorMessage('Error in create quote:', messages) )
+      const { quoteDetails: { orderNumber } } = content;
+      alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
+      window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber=${orderNumber}`;
+    }catch{
+      alert( `Unexpected Error in create quote` )
+    }
   }
 
 	useEffect(async () => {

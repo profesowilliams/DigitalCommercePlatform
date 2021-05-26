@@ -22,11 +22,12 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
       return alert('Select an item to continue');
     try{
       const params = { id: selected.id, isCartName: false }
-      const { data: { content: { data }, error: { isError } } } = await usGet(cartdetailsEndpoint, { params });
-      if( isError ) return alert('Error');
-      if( data ){
-        const total = data.items.reduce((result, item) => ( result + item.quantity ), 0 );
-        if(data.items && total > 0){
+      const { data: { content, error: { isError, messages } } } = await usGet(cartdetailsEndpoint, { params });
+      if( isError ) return alert(`Error: ${messages.join(' -- ')}`);
+      const { data: { items } } = content;
+      if( items ){
+        const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
+        if(items && total > 0){
           onClick(selected.id);
         }else{
           alert('No items in selected cart')
