@@ -10,8 +10,6 @@ using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -46,6 +44,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<SecurityController>>();
             _siteSettings = new Mock<ISiteSettings>();
+        }
+
+        private DashBoardController GetController()
+        {
+            return new DashBoardController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
 
         [Theory]
@@ -344,43 +347,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var result = await controller.GetAddress("ALL", false).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetVendorReference(ResponseBase<GetVendorReference.Response> expected)
-        {
-            _mediator.Setup(x => x.Send(
-                      It.IsAny<GetVendorReference.Request>(),
-                      It.IsAny<CancellationToken>()))
-                  .ReturnsAsync(expected);
-
-            var controller = GetController();
-
-            var result = await controller.GetVendorReference().ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.BadRequest);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task VendorRefreshToken(ResponseBase<GetVendorRefresh.Response> expected)
-        {
-            _mediator.Setup(x => x.Send(
-                      It.IsAny<GetVendorRefresh.Request>(),
-                      It.IsAny<CancellationToken>()))
-                  .ReturnsAsync(expected);
-
-            var controller = GetController();
-
-            var result = await controller.VendorRefreshToken("HP").ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.BadRequest);
-        }
-
-        private DashBoardController GetController()
-        {
-            return new DashBoardController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
         }
     }
 }

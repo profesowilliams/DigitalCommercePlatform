@@ -8,10 +8,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh
+namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken
 {
     [ExcludeFromCodeCoverage]
-    public class GetVendorRefresh
+    public class VendorRefreshToken
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -29,19 +29,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountService;
+            private readonly IVendorService _vendorService;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(IAccountService accountService, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IVendorService vendorService, IMapper mapper, ILogger<Handler> logger)
             {
-                _accountService = accountService;
+                _vendorService = vendorService;
                 _mapper = mapper;
                 _logger = logger;
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var vendorRefresh = await _accountService.VendorRefresh(request);
+                var vendorRefresh = await _vendorService.VendorRefreshToken(request);
                 return new ResponseBase<Response> { Content = vendorRefresh };
             }
         }

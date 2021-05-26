@@ -25,19 +25,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorReference
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountService;
+            private readonly IVendorService _vendorService;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(IAccountService accountService, IMapper mapper, ILogger<Handler> logger  )
+            public Handler(IVendorService vendorService, IMapper mapper, ILogger<Handler> logger  )
             {
-                _accountService = accountService;
+                _vendorService = vendorService;
                 _mapper = mapper;
                 _logger = logger;
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var vendorReference = await _accountService.GetVendorReference();
+                    var vendorReference = await _vendorService.GetVendorReference();
                     var vendorMappedDeals = _mapper.Map<Response>(vendorReference);
                     return new ResponseBase<Response> { Content = vendorMappedDeals };
             }

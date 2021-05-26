@@ -50,6 +50,7 @@ namespace DigitalCommercePlatform.UIServices.Account
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();
+            services.AddTransient<IVendorService, VendorService>();
             services.AddTransient<ITimeProvider, DefaultTimeProvider>();
             services.AddTransient<IRenewalsSummaryService, RenewalsSummaryService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());

@@ -24,16 +24,16 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections
 
         public class GetVendorConnectionsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IAccountService _accountService;
+            private readonly IVendorService _vendorService;
 
-            public GetVendorConnectionsHandler(IAccountService accountService)
+            public GetVendorConnectionsHandler(IVendorService vendorService)
             {
-                _accountService = accountService ?? throw new ArgumentNullException(nameof(accountService));
+                _vendorService = vendorService ?? throw new ArgumentNullException(nameof(vendorService));
             }
 
             public Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var vendorConnections =  _accountService.GetVendorConnectionsAsync();
+                var vendorConnections = _vendorService.GetVendorConnectionsAsync();
 
                 var response = new ResponseBase<Response> { Content = new Response {  Items = vendorConnections.Result } };
                 return Task.FromResult(response);

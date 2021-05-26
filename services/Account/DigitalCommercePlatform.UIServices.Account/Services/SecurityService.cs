@@ -3,7 +3,6 @@ using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
 using DigitalFoundation.Common.Settings;
-using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;

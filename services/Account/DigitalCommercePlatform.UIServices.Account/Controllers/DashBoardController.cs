@@ -10,9 +10,6 @@ using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -218,30 +215,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, response);
             }
 
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [Route("vendorReference")]
-        public async Task<ActionResult> GetVendorReference()
-        {
-            var response = await Mediator.Send(new GetVendorReference.Request()).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [Route("vendorRefreshToken")]
-        public async Task<ActionResult> VendorRefreshToken(string Vendor)
-        {
-            var response = await Mediator.Send(new GetVendorRefresh.Request(Vendor)).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-        [HttpGet]
-        [Route("getVendorConnections")]
-        public async Task<ActionResult> GetVendorConnections()
-        {
-            var response = await Mediator.Send(new GetVendorConnections.Request()).ConfigureAwait(false);
             return Ok(response);
         }
     }

@@ -1,11 +1,11 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
-using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
@@ -17,8 +17,6 @@ using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefresh;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -36,8 +34,5 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
         Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
         Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request);
-        Task<List<VendorReferenceModel>> GetVendorReference();
-        Task<List<VendorConnection>> GetVendorConnectionsAsync();
-        Task<GetVendorRefresh.Response> VendorRefresh(GetVendorRefresh.Request request);
     }
 }

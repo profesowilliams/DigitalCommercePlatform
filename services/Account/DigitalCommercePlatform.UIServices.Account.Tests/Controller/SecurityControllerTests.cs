@@ -6,12 +6,13 @@ using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
     public class SecurityControllerTests
     {
+        private readonly Mock<IUIContext> _context;
+        private readonly Mock<IMediator> _mediator;
+        private readonly Mock<ILogger<SecurityController>> _logger;
+        private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly Mock<ISiteSettings> _siteSettings;
+
+        public SecurityControllerTests()
+        {
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
+
+            _context = new Mock<IUIContext>();
+            _mediator = new Mock<IMediator>();
+            _logger = new Mock<ILogger<SecurityController>>();
+            _siteSettings = new Mock<ISiteSettings>();
+        }
+        private SecurityController GetController()
+        {
+            return new SecurityController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
+        }
+
         public static IAppSettings GetAppSettings()
         {
             var appSettingsMock = new Mock<IAppSettings>();
