@@ -5,18 +5,18 @@ import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
 
 const EditConfig = ({ componentProp }) => {
-    useEffect(() => {
-        const params = { criteria, ignoreSalesOrganization, isDefault };
-        const getData = async () => {
-            const {
-                data: {
-                    content: { items },
-                },
-            } = await get(endpoint, params);
-            if (items) setConfigurations(items);
-        };
-        getData();
-    }, []);
+    // useEffect(() => {
+    //     const params = { criteria, ignoreSalesOrganization, isDefault };
+    //     const getData = async () => {
+    //         const {
+    //             data: {
+    //                 content: { items },
+    //             },
+    //         } = await get(endpoint, params);
+    //         if (items) setConfigurations(items);
+    //     };
+    //     getData();
+    // }, []);
     const [configurationId, setConfigurationId] = useState("");
     const [configurations, setConfigurations] = useState(false);
     const {
@@ -26,13 +26,13 @@ const EditConfig = ({ componentProp }) => {
         criteria,
         ignoreSalesOrganization,
         isDefault,
-        placeholderText
+        placeholderText,
     } = JSON.parse(componentProp);
     const onChange = ({ target: { value } }) => {
         setConfigurationId(value);
     };
 
-    return configurations ? (
+    return (
         <div className='cmp-widget'>
             <WidgetTitle>{label}</WidgetTitle>
             <>
@@ -48,7 +48,7 @@ const EditConfig = ({ componentProp }) => {
                 </Button>
             </>
         </div>
-    ) : null;
+    );
 };
 
 export default EditConfig;
