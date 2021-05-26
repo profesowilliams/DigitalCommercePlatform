@@ -2,7 +2,7 @@
 use(function () {
 
     var jsonObject = {};
-
+    var iconValues = [];
     var listValues = [];
     var resourceResolver = resource.getResourceResolver();
 
@@ -22,6 +22,24 @@ use(function () {
             listValues.push(itemData);
 
         }
+    }
+
+    var iconListNode = resourceResolver.getResource(currentNode.getPath() + "/iconList");
+
+    if (iconListNode !== null) {
+        var childrenList = iconListNode.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var iconKey = res.properties["iconKey"];
+            var iconValue = res.properties["iconValue"];
+            var itemData = {};
+            itemData.iconKey = iconKey;
+            itemData.iconValue = iconValue;
+            iconValues.push(itemData);
+
+        }
+
+
     }
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
@@ -43,7 +61,9 @@ use(function () {
     if (listValues != null) {
         jsonObject["columnList"] = listValues;
     }
-    return {
+    if (iconValues != null) {
+        jsonObject["iconList"] = iconValues;
+    }    return {
         configJson: JSON.stringify(jsonObject)
     };
 });
