@@ -69,6 +69,12 @@ use(function () {
         optionData.defaultSortingDirection = properties["defaultSortingDirection"];
     }
 
+    if (properties && properties["spaDealsIdLabel"]) {
+        jsonObject["spaDealsIdLabel"] = properties["spaDealsIdLabel"];
+    }
+
+
+
 
     if (listValues != null) {
         jsonObject["columnList"] = listValues;

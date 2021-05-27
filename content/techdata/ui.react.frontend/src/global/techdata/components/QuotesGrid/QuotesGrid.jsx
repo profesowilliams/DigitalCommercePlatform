@@ -25,9 +25,9 @@ function QuotesGrid(props) {
     };
 
     const getDealsIdLabel = (deals) =>
-        deals.length > 1
+        deals && deals.length > 1
             ? spaDealsIdLabel
-            : deals.length === 1
+            : deals && deals.length === 1
             ? deals[0].id
             : null;
 
