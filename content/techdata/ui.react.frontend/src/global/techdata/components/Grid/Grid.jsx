@@ -5,6 +5,7 @@ import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	const gridData = data;
+	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
 
 	const pagination = config.paginationStyle && config.paginationStyle !== 'none' && config.paginationStyle !== 'scroll';
@@ -13,6 +14,44 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	const domInfoRef = useRef(null);
 	const gridId = useRef(null);
 	const gridApi = useRef(null);
+	/*
+			function that returns AG grid vnode outside main return function
+			to keep that node on useState hook and set it once per component lifecycle
+	*/
+	const AgGrid = () => (
+		<AgGridReact
+			frameworkComponents={renderers}
+			pagination={pagination}
+			paginationPageSize={config.itemsPerPage}
+			cacheBlockSize={config.itemsPerPage}
+			maxBlocksInCache={config.itemsPerPage}
+			rowModelType={serverSide ? 'serverSide' : 'clientSide'}
+			rowData={gridData}
+			onGridReady={onGridReady}
+			serverSideDatasource={createDataSource()}
+			serverSideStoreType={serverSide ? 'partial' : 'full'}
+			rowSelection='single'
+			onViewportChanged={onViewportChanged}
+			blockLoadDebounceMillis={100}
+		>
+			{filteredColumns.map((column) => {
+				return (
+					<AgGridColumn
+						headerName={column.headerName}
+						field={column.field}
+						suppressMenu={true}
+						sortable={column.sortable}
+						key={column.field}
+						resizable={column.resizable}
+						onCellClicked={column.onCellClicked}
+						cellRenderer={renderers[column.field] ? column.field : null}
+						valueFormatter={column.valueFormatter ?? null}
+						suppressSizeToFit={column.suppressSizeToFit}
+					></AgGridColumn>
+				);
+			})}
+		</AgGridReact>
+	);
 
 	const renderers = {};
 	let filteredColumns = [];
@@ -138,6 +177,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 
 	useEffect(() => {
 		getGridData();
+		setAgGrid(<AgGrid />);
 		window.addEventListener('resize', onResize);
 		return () => {
 			window.removeEventListener('resize', onResize);
@@ -152,38 +192,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 						{actualRange.from} - {actualRange.to} of {actualRange.total}
 					</span>
 				</div>
-				<AgGridReact
-					frameworkComponents={renderers}
-					pagination={pagination}
-					paginationPageSize={config.itemsPerPage}
-					cacheBlockSize={config.itemsPerPage}
-					maxBlocksInCache={config.itemsPerPage}
-					rowModelType={serverSide ? 'serverSide' : 'clientSide'}
-					rowData={gridData}
-					onGridReady={onGridReady}
-					serverSideDatasource={createDataSource()}
-					serverSideStoreType={serverSide ? 'partial' : 'full'}
-					rowSelection='single'
-					onViewportChanged={onViewportChanged}
-					blockLoadDebounceMillis={100}
-				>
-					{filteredColumns.map((column) => {
-						return (
-							<AgGridColumn
-								headerName={column.headerName}
-								field={column.field}
-								suppressMenu={true}
-								sortable={column.sortable}
-								key={column.field}
-								resizable={column.resizable}
-								onCellClicked={column.onCellClicked}
-								cellRenderer={renderers[column.field] ? column.field : null}
-								valueFormatter={column.valueFormatter ?? null}
-								suppressSizeToFit={column.suppressSizeToFit}
-							></AgGridColumn>
-						);
-					})}
-				</AgGridReact>
+				{agGrid}
 			</Fragment>
 		</div>
 	);
