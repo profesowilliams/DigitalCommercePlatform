@@ -526,10 +526,11 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
+   
     for (let i = 0; i < pageSize; i++) {
         items.push({
             id: Number(`${pageNumber}${4009754974 + i}`),
-            created: new Date().toISOString(),
+            created: utils.getRandomDate(),
             reseller: Number(`${pageNumber}${111048 + i}`),
             shipTo: "UPS",
             type: "Manual",

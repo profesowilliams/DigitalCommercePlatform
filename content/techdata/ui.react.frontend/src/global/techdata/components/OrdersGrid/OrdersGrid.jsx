@@ -11,6 +11,11 @@ function OrdersGrid(props) {
 		shipped: 'shipped',
 		cancelled: 'cancelled',
 	};
+	
+	const options = {
+		defaultSortingColumnKey: 'id',
+		defaultSortingDirection: 'asc',
+	};
 
 	const defaultIcons = [
 		{ iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper' },
@@ -25,7 +30,7 @@ function OrdersGrid(props) {
 		if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
 		return icon?.iconValue;
 	}
-
+	
 	function getDateTransformed(dateUTC) {
 		const formatedDate = new Date(dateUTC).toLocaleDateString();
 		return formatedDate;
@@ -60,7 +65,7 @@ function OrdersGrid(props) {
 		{
 			headerName: 'Order Date',
 			field: 'created',
-			sortable: false,
+			sortable: true,
 			valueFormatter: (props) => {
 				return getDateTransformed(props.value);
 			},
@@ -138,7 +143,7 @@ function OrdersGrid(props) {
 	return (
 		<section>
 			<div className='cmp-quotes-grid'>
-				<Grid columnDefinition={columnDefs} config={componentProp}></Grid>
+				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
 			</div>
 		</section>
 	);
