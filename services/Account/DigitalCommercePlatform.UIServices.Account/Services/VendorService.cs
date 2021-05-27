@@ -4,8 +4,6 @@ using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
-using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,6 +20,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
 
+        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell" };
+
         public VendorService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
             ILogger<AccountService> logger, IUIContext uiContext)
         {
@@ -29,6 +29,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _coreSecurityUrl = appSettings.GetSetting(Globals.CoreSecurityUrl);
+        }
+        
+        public static string[] GetAllowedVendorValues()
+        {
+            return _allowedVendorValues;
         }
 
         public async Task<List<VendorReferenceModel>> GetVendorReference()
@@ -45,9 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             for (int i = 0; i < 2; i++)
             {
-                string[] arrayOfStrings = { "CISCO", "HP", "APPLE", "Dell" };
                 var Vendors = new VendorReferenceModel();
-                Vendors.Vendor = arrayOfStrings[i];
+                Vendors.Vendor = _allowedVendorValues[i];
                 Vendors.IsConnected = true;
                 Vendors.IsValidRefreshToken = false;
                 Vendors.ConnectionDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");

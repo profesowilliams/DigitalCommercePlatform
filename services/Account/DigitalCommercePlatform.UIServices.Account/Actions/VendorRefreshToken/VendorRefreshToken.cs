@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,7 +52,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken
         {
             public Validator()
             {
-                RuleFor(x => x.Vendor).NotNull();
+                RuleFor(x => x.Vendor).Must(IsValidVendorName).WithMessage("Invalid 'vendor' name");
+            }
+
+            private bool IsValidVendorName(string vendor)
+            {
+                return vendor != null && VendorService.GetAllowedVendorValues().Contains(vendor.ToLower());
             }
         }
     }
