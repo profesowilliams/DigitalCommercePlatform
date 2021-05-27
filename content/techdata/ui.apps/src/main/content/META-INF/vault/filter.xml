@@ -2,6 +2,7 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/techdata/clientlibs"/>
     <filter root="/apps/techdata/components"/>
+    <filter root="/apps/techdata/templates"/>
     <filter root="/apps/techdata/i18n"/>
     <filter root="/apps/sling" />
     <filter root="/apps/msm/techdata_blueprint" mode="merge"/>
