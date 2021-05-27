@@ -25,20 +25,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     public class ConfigService : IConfigService
     {
         private static readonly Random getrandom = new Random();
-        private readonly IMiddleTierHttpClient _middleTierHttpClient;
-#pragma warning disable CS0414 // The field is assigned but its value is never used
-        private readonly string _appConfigurationUrl;
-#pragma warning restore CS0414
 
         private readonly IMapper _mapper;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<ConfigService> _logger;
+        private readonly string _appConfigurationUrl;
 
-        public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
-            ILogger<ConfigService> logger)
+        public ConfigService(IAppSettings appSettings,
+                             IMapper mapper,
+                             IMiddleTierHttpClient middleTierHttpClient,
+                             ILogger<ConfigService> logger)
         {
-            //_appQuoteServiceUrl = options?.Value.GetSetting("App.Quote.Url");
-            //currently there are no settings which provides below url.
-            _appConfigurationUrl = "https://eastus-dit-service.dc.tdebusiness.cloud/app-configuration/v1";
+            _appConfigurationUrl = appSettings.GetSetting("App.Configuration.Url");
             _mapper = mapper;
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
