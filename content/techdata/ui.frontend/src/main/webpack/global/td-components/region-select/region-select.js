@@ -1,0 +1,20 @@
+(function() {
+    function regionSelect() {
+        document.getElementById("regionSelectDropdown").classList.toggle("cmp-show");
+    }    
+    
+    window.onclick = function(event) {
+      if (!event.target.matches('.cmp-dropbtn')) {
+    
+        var dropdowns = document.getElementsByClassName("cmp-dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('cmp-show')) {
+            openDropdown.classList.remove('cmp-show');
+          }
+        }
+      }
+    } 
+
+})();
