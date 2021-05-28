@@ -36,9 +36,11 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var iconKey = res.properties["iconKey"];
             var iconValue = res.properties["iconValue"];
+            var iconText = res.properties["iconText"];
             var itemData = {};
             itemData.iconKey = iconKey;
             itemData.iconValue = iconValue;
+            itemData.iconText = iconText;
             iconValues.push(itemData);
 
         }

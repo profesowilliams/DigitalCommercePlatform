@@ -41,13 +41,13 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Items Per Page"
                                                 name="./itemsPerPage"/>
-											<quoteDetailUrl
+											<orderDetailUrl
 												 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
 												 fieldLabel="Link"
 												 fieldDescription="Enter link"
 												 jcr:primaryType="nt:unstructured"
 												 rootPath="/content/techdata"
-												 name="./quoteDetailUrl" />
+												 name="./orderDetailUrl" />
 											<paginationStyle
 											   jcr:primaryType="nt:unstructured"
 											   sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
@@ -161,6 +161,12 @@
                                                                         fieldDescription="Enter Icon Value"
                                                                         fieldLabel="Icon Value"
                                                                         name="./iconValue"/>
+                                                                <iconText
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Icon Text"
+                                                                        fieldLabel="Icon Text"
+                                                                        name="./iconText"/>
                                                             </items>
                                                         </column>
                                                     </items>
