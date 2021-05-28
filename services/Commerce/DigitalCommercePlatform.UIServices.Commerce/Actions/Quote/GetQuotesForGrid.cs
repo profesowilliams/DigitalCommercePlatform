@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -74,9 +75,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     };
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
+
                     getProductResponse = new Response
                     {
-                        Items = getProductResponse.Items,
+                        Items = GetDummyAgreements(getProductResponse), // getProductResponse.Items,
                         TotalItems = quoteDetails?.Count,
                         PageNumber = request.PageNumber,
                         PageSize = request.PageSize,
@@ -84,6 +86,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                     };
                     return new ResponseBase<Response> { Content = getProductResponse };
+            }
+
+
+            private List<QuotesForGridModel> GetDummyAgreements(Response response)
+            {
+                var quotes = response?.Items?.ToList();
+
+                if (quotes == null) { return new List<QuotesForGridModel>(); }
+
+                var secondQuote = quotes.ElementAtOrDefault(1);
+
+                if (secondQuote != null)
+                {
+                    secondQuote.Deals = new List<AgreementModel>
+                    {
+                        new AgreementModel { Id = "111", Version = "1", VendorId = "2323232", SelectionFlag = "flag" }
+                    };
+                }
+
+                var thirdQuote = quotes.ElementAtOrDefault(2);
+
+                if (thirdQuote != null)
+                {
+                    thirdQuote.Deals = new List<AgreementModel>
+                    {
+                        new AgreementModel { Id = "222", Version = "1", VendorId = "7755444", SelectionFlag = "flag" },
+                        new AgreementModel { Id = "333", Version = "1", VendorId = "9871234", SelectionFlag = "flag" }
+                    };
+                }
+
+                return quotes;
             }
         }
         public class GetQuotesValidator : AbstractValidator<Request>
