@@ -1,0 +1,15 @@
+@import '../../variables';
+@import '../../../site/variables';
+
+.cmp-orders-grid {
+	height: 600px;
+	width: 100%;
+	& .status {
+		display: flex;
+	}
+	& .icon {
+		display: flex;
+		margin-top: rem(11px);
+		margin-right: rem(5px);
+	}
+}

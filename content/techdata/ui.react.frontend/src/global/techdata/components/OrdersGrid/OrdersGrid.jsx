@@ -11,26 +11,26 @@ function OrdersGrid(props) {
 		shipped: 'shipped',
 		cancelled: 'cancelled',
 	};
-	
+
 	const options = {
 		defaultSortingColumnKey: 'id',
 		defaultSortingDirection: 'asc',
 	};
 
 	const defaultIcons = [
-		{ iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper' },
-		{ iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly' },
-		{ iconKey: STATUS.open, iconValue: 'fas fa-box-open' },
-		{ iconKey: STATUS.shipped, iconValue: 'fas fa-check' },
-		{ iconKey: STATUS.cancelled, iconValue: 'fas fa-ban' },
+		{ iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
+		{ iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
+		{ iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
+		{ iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
+		{ iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
 	];
 
 	function applyStatusIcon(statusKey) {
 		let icon = componentProp.iconList?.find((icon) => icon.iconKey === statusKey);
 		if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
-		return icon?.iconValue;
+		return icon;
 	}
-	
+
 	function getDateTransformed(dateUTC) {
 		const formatedDate = new Date(dateUTC).toLocaleDateString();
 		return formatedDate;
@@ -112,9 +112,10 @@ function OrdersGrid(props) {
 			sortable: true,
 			cellRenderer: (props) => {
 				return (
-					<div className='cmp-grid-icon'>
-						<i className={`${applyStatusIcon(props.value)}`}></i>
-					</div>
+					<span className='status'>
+						<i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
+						<div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
+					</span>
 				);
 			},
 		},
@@ -124,9 +125,7 @@ function OrdersGrid(props) {
 			sortable: false,
 			cellRenderer: (props) => {
 				return (
-					<div className='cmp-grid-icon'>
-						{getTrackingStatus(props.value) ? <i className='fas fa-truck'></i> : <div></div>}
-					</div>
+					<div className='icon'>{getTrackingStatus(props.value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
 				);
 			},
 		},
@@ -135,14 +134,14 @@ function OrdersGrid(props) {
 			field: 'isReturn',
 			sortable: false,
 			cellRenderer: (props) => {
-				return <div className='cmp-grid-icon'>{props.value ? <i className='fas fa-box-open'></i> : <div></div>}</div>;
+				return <div className='icon'>{props.value ? <i className='fas fa-box-open'></i> : <div></div>}</div>;
 			},
 		},
 	];
 
 	return (
 		<section>
-			<div className='cmp-quotes-grid'>
+			<div className='cmp-orders-grid'>
 				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
 			</div>
 		</section>
