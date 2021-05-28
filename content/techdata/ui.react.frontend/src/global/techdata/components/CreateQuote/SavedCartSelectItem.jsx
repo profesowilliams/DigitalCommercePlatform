@@ -42,6 +42,9 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
   return(
     <>
       { cartList.length > 0 && <SearchList items={cartList} selected={selected} onChange={onChange} label={label}/>}
+      { cartList.length === 0 && 
+        <p className="cmp-error-message cmp-error-message__red">No cart available <a className="cmp-error-message__link" href="https://shop.techdata.com/cart">Go to my cart</a></p> 
+      }
       <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
     </>
   );

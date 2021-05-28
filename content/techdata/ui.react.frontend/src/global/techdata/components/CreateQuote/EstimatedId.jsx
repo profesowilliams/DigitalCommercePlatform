@@ -50,12 +50,13 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 			{step > 0 && estimatedType && estimatedType.id === 'manually' && (
 				<>
 					<ManuallyTyped
-					validateCartEndpoint={estimatedIdDetailsEndpoint}
-					inputValue={estimatedId}
-					setValue={setEstimatedId}
-					label={method.textPlaceholder}
-					onClick={goToNext}
-					onError={onError} />
+						validateCartEndpoint={estimatedIdDetailsEndpoint}
+						estimatedIdListEndpoint={estimatedIdListEndpoint}
+						inputValue={estimatedId}
+						setValue={setEstimatedId}
+						label={method.textPlaceholder}
+						onClick={goToNext}
+						onError={onError} />
 				</>
 			)}
 			{step > 0 && estimatedType && estimatedType.id === 'browse' && (

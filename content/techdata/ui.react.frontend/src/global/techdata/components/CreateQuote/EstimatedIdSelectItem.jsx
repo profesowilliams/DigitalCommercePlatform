@@ -12,7 +12,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
   }
   useEffect(() => {
     const getData = async () => {
-      const { data: { content: { items } } } = await usGet(estimatedIdlistEndpoint, { }); // WIP: Check the new endpoint to check if the funtionality is going to be the same
+      const { data: { content: { items } } } = await usGet(estimatedIdlistEndpoint, { });
       if(items){
         const newItems = items.map(item =>({ id: item.configId, name: item.configId }));
         setEstimatedIdList(newItems);
@@ -24,27 +24,24 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
     if( !selected )
       return alert('Select an item to continue');
     try{
-      const params = { id: selected.id, isCartName: false }
-      const { data: { content: { data }, error: { isError } } } = await usGet(estimatedIddetailsEndpoint, { params });
+      const newEndpoint = `${estimatedIddetailsEndpoint}/${selected.id}`
+      const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
       if( isError ) return alert('Error');
-      if( data ){
-        const total = data.items.reduce((result, item) => ( result + item.quantity ), 0 );
-        if(data.items && total > 0){
-          onClick(selected.id);
-        }else{
-          alert('No items in selected cart')
-        }
+      if( isValid ){
+        onClick(selected.id);
       }else{
-        alert('Invalid cart')
+        alert('Invalid estimated ID')
       }
     }catch(e){
-      console.log('ERROR', e)
       alert('Error getting the cart')
     }
   }
   return(
     <>
       { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} />}
+      { estimatedIdList.length === 0 && 
+        <p className="cmp-error-message cmp-error-message__red">No Estimated ID's available </p> 
+      }
       <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
     </>
   );

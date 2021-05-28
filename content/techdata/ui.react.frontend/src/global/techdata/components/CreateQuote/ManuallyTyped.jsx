@@ -4,28 +4,54 @@ import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import ErrorMessage from './ErrorMessage';
 
-const ManuallyTyped = ({onClick, inputValue, setValue, label, validateCartEndpoint, onError}) => {
+const ManuallyTyped = ({ 
+  onClick, inputValue, setValue, label, validateCartEndpoint, onError, estimatedIdListEndpoint
+}) => {
   const [invalidCartName, setInvalidCartName] = useState(false);
   const { msgBeforelink, msgAfterlink, linklabel, linkFunction, errorMsg } = onError;
   const onChange = (event) => {
     setValue(event.target.value);
   }
+  const processMannuallyCart = async () => {
+    const params = { id: inputValue, isCartName: true }
+    const { data: { content: { data: { items, source }}, error: { isError } } } = await usGet(validateCartEndpoint,{ params })
+    if( isError || !items ){
+      setInvalidCartName(inputValue);
+      return;
+    }
+    setInvalidCartName(false);
+    const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
+    if( total > 0 && source.id ){
+      onClick(source.id);
+    }else{
+      alert('No items in selected cart')
+    }
+  }
   const goToNext = async () => {
     try{
-      const params = { id: inputValue, isCartName: true }
-      const { data: { content: { data: { items, source }}, error: { isError } } } = await usGet(validateCartEndpoint,{ params })
-      if( isError || !items ){
-        setInvalidCartName(inputValue);
-        return;
-      }
-      setInvalidCartName(false);
-      const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
-      if( total > 0 && source.id ){
-        onClick(source.id);
+      if( estimatedIdListEndpoint ){
+        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint, { }); 
+        if( items ){
+          const filtered = items.filter((item) => item.configId === inputValue )
+          console.log('Coincidencia', filtered)
+          if( filtered[0] ){
+            const newEndpoint = `${validateCartEndpoint}/${inputValue}`
+            const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
+            if(isValid)
+              onClick(inputValue);
+            else
+              alert('Not a valid estimated ID')
+          }else{
+            setInvalidCartName(inputValue);
+          }
+        }else{
+          setInvalidCartName(inputValue);
+        }
       }else{
-        alert('No items in selected cart')
+        processMannuallyCart()
       }
-    }catch{
+    }catch(e){
+      console.log('ERROR?',e)
       setInvalidCartName(inputValue);
     }
   }

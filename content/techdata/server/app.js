@@ -1058,3 +1058,22 @@ app.get("/catalog", (req, res) => {
     // res.json(mockResponses.shortResponse());
 
 })
+
+app.get("/estimations/validate/:id", function (req, res) {
+    const { id } = req.params;
+    if (!req.headers["sessionid"] || !id )
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+
+    res.json({
+        content: {
+            isValid: true,
+        },
+        error: { code: 0, messages: [], isError: false },
+    });
+});

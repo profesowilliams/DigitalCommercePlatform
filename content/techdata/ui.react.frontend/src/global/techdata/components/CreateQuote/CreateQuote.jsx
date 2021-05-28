@@ -56,12 +56,19 @@ const QuoteCreate = ({
   const createQuote = async () => {
     try{
       const { endpoint } = endpoints;
-      let params = { pricingCondition: pricing.key }
+      const createFromTypes = {
+        saved: 'savedCart',
+        active: 'activeCart',
+        estimate: 'estimationId',
+      }
+      //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
+      //this conditins needs to be removed later
+      let params = { pricingCondition: pricing.key === '0' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, id: cartID };
       const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
       if( isError )
-        return alert( getErrorMessage('Error in create quote:', messages) )
+        return alert( 'Error in create quote' )
       const { quoteDetails: { orderNumber } } = content;
       alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
       window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber=${orderNumber}`;
