@@ -86,7 +86,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         .ChildRules(request =>
                         {
                             request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
-                            request.RuleFor(c => c).Must(IsValidCreateFromId);
+                            request.RuleFor(c => c).Must(IsValidCreateFromId).WithMessage("'CreateFromId' cannot be null");
 
                         });
                 }
