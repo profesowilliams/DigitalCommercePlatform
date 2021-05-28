@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Stock
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Stock
 {
+    [ExcludeFromCodeCoverage]
     public class LocationStockModel
     {
         public int? DeliveryTime { get; set; }

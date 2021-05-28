@@ -3,9 +3,12 @@
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SubclassCodeModel
+    public class SpecificationModel
     {
         public string Id { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }
+        public string ValueId { get; set; }
+        public string Value { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }

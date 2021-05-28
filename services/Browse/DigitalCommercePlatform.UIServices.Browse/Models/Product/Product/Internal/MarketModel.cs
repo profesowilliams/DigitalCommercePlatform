@@ -3,9 +3,9 @@
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class HAZMATModel
+    public class MarketModel
     {
         public string Id { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }
     }
 }

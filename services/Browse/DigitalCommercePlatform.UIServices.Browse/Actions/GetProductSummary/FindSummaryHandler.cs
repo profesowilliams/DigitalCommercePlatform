@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -65,13 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
 
-            public Handler(IBrowseService productRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IBrowseService productRepositoryServices, IMapper mapper)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _mapper = mapper;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)

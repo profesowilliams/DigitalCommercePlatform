@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     public class SalesOrganizationModel
     {
         public string Id { get; set; }
-        public List<string> Territories { get; set; }
+        public List<string> Territory { get; set; }
         public string MaterialStatusValidFrom { get; set; }
         public string ItemCategoryGroup { get; set; }
         public string MaterialGroupPricing { get; set; }
@@ -22,5 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public DivisionManagerModel DivisionManager { get; set; }
         public MaterialStatusModel MaterialStatus { get; set; }
         public AccountAssignmentGroupModel AccountAssignmentGroup { get; set; }
+        public List<ProductNoteModel> ProductNotes { get; set; }
     }
 }

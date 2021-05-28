@@ -7,6 +7,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     public class ExtendedSpecificationModel
     {
         public string GroupName { get; set; }
-        public IEnumerable<AttributeModel> Attributes { get; set; }
+        public IEnumerable<SpecificationModel> Specifications { get; set; }
     }
 }

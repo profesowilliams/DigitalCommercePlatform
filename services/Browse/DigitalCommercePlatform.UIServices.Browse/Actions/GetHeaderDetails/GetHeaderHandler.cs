@@ -4,7 +4,6 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -42,14 +41,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
         {
             private readonly IBrowseService _headerRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
 
             public Handler(IBrowseService headerRepositoryServices,
-                IMapper mapper,
-                ILogger<Handler> logger)
+                IMapper mapper)
             {
                 _headerRepositoryServices = headerRepositoryServices;
-                _logger = logger;
                 _mapper = mapper;
             }
 

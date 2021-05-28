@@ -22,5 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public PlantSpecificMaterialStatusModel PlantSpecificMaterialStatus { get; set; }
         public PurchasingGroupModel PurchasingGroup { get; set; }
         public LocationStockModel Stock { get; set; }
+        public PlantIndicatorModel Indicators { get; set; }
     }
 }

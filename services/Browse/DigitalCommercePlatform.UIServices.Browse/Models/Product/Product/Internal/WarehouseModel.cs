@@ -1,5 +1,8 @@
-﻿namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
 {
+    [ExcludeFromCodeCoverage]
     public class WarehouseModel
     {
         public string Id { get; set; }

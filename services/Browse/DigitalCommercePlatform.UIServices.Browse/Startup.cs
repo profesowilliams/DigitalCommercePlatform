@@ -27,7 +27,7 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.AddTransient<ISortingService, SortingService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
-
+        
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
     }
 }

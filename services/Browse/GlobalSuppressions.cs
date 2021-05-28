@@ -24,4 +24,3 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Find.FindProductModel.UPC")]
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Find.FindProductModel.MaterialStatus")]
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Find.FindProductModel.Territories")]
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal.CategoryModel.name")]

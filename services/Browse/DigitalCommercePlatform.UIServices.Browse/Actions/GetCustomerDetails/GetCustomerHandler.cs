@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -29,15 +28,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
         {
             private readonly IBrowseService _customerRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
 
             public Handler(IBrowseService customerRepositoryServices,
-                IMapper mapper,
-                ILogger<Handler> logger)
+                IMapper mapper)
             {
                 _customerRepositoryServices = customerRepositoryServices;
                 _mapper = mapper;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)

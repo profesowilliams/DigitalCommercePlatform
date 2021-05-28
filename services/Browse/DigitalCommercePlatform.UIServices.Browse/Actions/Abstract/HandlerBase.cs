@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.Abstract
 {
+    [ExcludeFromCodeCoverage]
     public abstract class HandlerBase<T> where T : class
     {
         protected ILogger Logger { get; }

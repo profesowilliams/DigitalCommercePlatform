@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,13 +31,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
         {
             private readonly IBrowseService _cartRepositoryServices;
             private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
 
-            public Handler(IBrowseService cartRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IBrowseService cartRepositoryServices, IMapper mapper)
             {
                 _cartRepositoryServices = cartRepositoryServices;
                 _mapper = mapper;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)

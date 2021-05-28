@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var result = await controller.GetCartDetails(true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
-        }
+        }    
 
         [Theory]
         [AutoDomainData]

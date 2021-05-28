@@ -13,7 +13,6 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -30,14 +29,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _appProductURL;
-        private readonly ILogger<BrowseService> _logger;
         private readonly ICachingService _cachingService;
         private readonly IUIContext _uiContext;
         private readonly IMapper _mapper;
 
         public BrowseService(IMiddleTierHttpClient middleTierHttpClient,
             ICachingService cachingService,
-            ILogger<BrowseService> logger,
             IAppSettings appSettings,
             IUIContext uiContext,
             IMapper mapper)
@@ -45,7 +42,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _cachingService = cachingService;
-            _logger = logger;
             _mapper = mapper;
             _coreCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");

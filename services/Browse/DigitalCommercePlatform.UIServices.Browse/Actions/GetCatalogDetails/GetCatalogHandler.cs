@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -33,16 +31,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IBrowseService _CatalogRepositoryService;
-            private readonly IMapper _mapper;
             private readonly ICachingService _cachingService;
-            private readonly ILogger<Handler> _logger;
 
-            public Handler(IBrowseService CatalogRepositoryServices, IMapper mapper, ICachingService cachingService, ILogger<Handler> logger)
+            public Handler(IBrowseService CatalogRepositoryServices, ICachingService cachingService)
             {
                 _CatalogRepositoryService = CatalogRepositoryServices;
-                _mapper = mapper;
                 _cachingService = cachingService;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
