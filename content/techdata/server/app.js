@@ -485,7 +485,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
             created: utils.getRandomDate(),
             expires: utils.getRandomDate(),
             endUserName: null,
-            dealId: utils.getRandomArrayWithIds(4),
+            deals: utils.getRandomArrayWithIds(4),
             status: i % 2 ? "OPEN" : "CLOSED",
             quoteValue: 73002.31 + getRandom(1000),
             formatedQuoteValue: "USD",
@@ -526,11 +526,10 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
-   
     for (let i = 0; i < pageSize; i++) {
         items.push({
             id: Number(`${pageNumber}${4009754974 + i}`),
-            created: utils.getRandomDate(),
+            created: new Date().toISOString(),
             reseller: Number(`${pageNumber}${111048 + i}`),
             shipTo: "UPS",
             type: "Manual",
@@ -1058,22 +1057,3 @@ app.get("/catalog", (req, res) => {
     // res.json(mockResponses.shortResponse());
 
 })
-
-app.get("/estimations/validate/:id", function (req, res) {
-    const { id } = req.params;
-    if (!req.headers["sessionid"] || !id )
-        return res.status(500).json({
-            error: {
-                code: 0,
-                message: [],
-                isError: true,
-            },
-        });
-
-    res.json({
-        content: {
-            isValid: true,
-        },
-        error: { code: 0, messages: [], isError: false },
-    });
-});
