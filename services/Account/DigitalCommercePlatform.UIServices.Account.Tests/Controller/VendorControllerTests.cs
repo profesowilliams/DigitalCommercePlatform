@@ -7,6 +7,7 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Net;
@@ -66,11 +67,22 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                   .ReturnsAsync(expected);
 
             var controller = GetController();
-
-            var result = await controller.VendorRefreshToken("HP").ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            // Act
+            var actionResult = await controller.VendorRefreshToken("HP").ConfigureAwait(false);
+            // Assert
+            Assert.IsType<OkObjectResult>(actionResult);
         }
 
+        [Fact]
+        public async Task VendorRefreshTokenInvalidVendor()
+        {
+            // Arrange
+            var validator = new VendorRefreshToken.Validator();
+            var cmd = new VendorRefreshToken.Request("InvalidVendor");
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.False(validationResult.IsValid);
+        }
     }
 }
