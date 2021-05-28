@@ -7,18 +7,26 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
 // const EstimatedIdSelectItem = ({ onClick, buttonTitle }) => {
   const [selected, setSelected] = useState(false);
   const [estimatedIdList, setEstimatedIdList] = useState([]);
+  const [estimatedIdListError, setEstimatedIdListError] = useState(false);
   const onChange = (el) => {
     setSelected(el);
   }
   useEffect(() => {
     const getData = async () => {
       const { data: { content: { items } } } = await usGet(estimatedIdlistEndpoint, { });
-      if(items){
+      if(items && items.length > 0){
         const newItems = items.map(item =>({ id: item.configId, name: item.configId }));
         setEstimatedIdList(newItems);
+        setEstimatedIdListError(false)
+      }else{
+        setEstimatedIdListError(true)
       }
     }
-    getData()
+    try{
+      getData()
+    }catch{
+      setEstimatedIdListError(true)
+    }
   },[])
   const onNext = async () => {
     if( !selected )
@@ -39,7 +47,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdlistEndpoint, 
   return(
     <>
       { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} />}
-      { estimatedIdList.length === 0 && 
+      { estimatedIdList.length === 0 && estimatedIdListError &&
         <p className="cmp-error-message cmp-error-message__red">No Estimated ID's available </p> 
       }
       <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>

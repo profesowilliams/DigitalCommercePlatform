@@ -65,7 +65,7 @@ const QuoteCreate = ({
       //this conditins needs to be removed later
       let params = { pricingCondition: pricing.key === '0' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
-        params = {...params, id: cartID };
+        params = {...params, createFromId: cartID };
       const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
       if( isError )
         return alert( 'Error in create quote' )

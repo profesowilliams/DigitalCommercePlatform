@@ -14,17 +14,21 @@ const ManuallyTyped = ({
   }
   const processMannuallyCart = async () => {
     const params = { id: inputValue, isCartName: true }
-    const { data: { content: { data: { items, source }}, error: { isError } } } = await usGet(validateCartEndpoint,{ params })
-    if( isError || !items ){
-      setInvalidCartName(inputValue);
-      return;
-    }
-    setInvalidCartName(false);
-    const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
-    if( total > 0 && source.id ){
-      onClick(source.id);
-    }else{
-      alert('No items in selected cart')
+    try{
+      const { data: { content: { data: { items, source }}, error: { isError } } } = await usGet(validateCartEndpoint,{ params })
+      if( isError || !items ){
+        setInvalidCartName(inputValue);
+        return;
+      }
+      setInvalidCartName(false);
+      const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
+      if( total > 0 && source.id ){
+        onClick(source.id);
+      }else{
+        alert('No items in selected cart')
+      }
+    }catch{
+      alert('Not a valid cart name provided')
     }
   }
   const goToNext = async () => {
