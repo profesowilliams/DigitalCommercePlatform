@@ -192,7 +192,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var sortBy = string.Empty;
             if (string.IsNullOrEmpty(parameter))
             {
-                sortBy = string.Empty;
+                return sortBy;
             }
             if (parameter.ToLower() == "id")
             {
