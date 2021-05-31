@@ -5,7 +5,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,11 +34,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
 
         public class Response
         {
-            public string Filename { get; set; }
+            public byte[] BinaryContent { get; set; }
+            public string MimeType { get; set; }
 
-            public Response(string filename)
+            public Response(byte[] binaryContent)
             {
-                Filename = filename;
+                BinaryContent = binaryContent;
+            }
+            public Response()
+            {
             }
         }
 
@@ -55,17 +63,35 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
             {
                 try
                 {
-                    string filename = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf";
-                    string filename2 = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample-2.pdf";
-
-                    // Temporary solution to let QA test with at least 2 different PDFs
-                    if (request.OrderId == "6021771625")
+                    var filenames = new List<string>()
                     {
-                        filename = filename2;
-                    }
+                        "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf",
+                        "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample-2.pdf"
+                    };
 
-                    Response response = new Response(filename);
-                    return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                    var response = new Response();
+                    if (request.DownloadAll)
+                    {
+                        response.BinaryContent = GenerateZipFile(filenames);
+                        response.MimeType = "application/zip";
+                        return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                    }
+                    else
+                    {
+                        var filename = filenames.First();
+                        // Temporary solution to let QA test with at least 2 different PDFs
+                        if (request.OrderId == "6021771625")
+                        {
+                            filename = filenames.Last();
+                        }
+                        using (var resourceStream = GetType().Assembly.GetManifestResourceStream(filename))
+                        {
+                            BinaryReader reader = new BinaryReader(resourceStream);
+                            response.BinaryContent = reader.ReadBytes((int)reader.BaseStream.Length);
+                        }
+                        response.MimeType = "application/pdf";
+                        return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -79,6 +105,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 public Validator()
                 {
                     RuleFor(c => c.OrderId).NotNull();
+                }
+            }
+
+            private byte[] GenerateZipFile(List<string> filenames)
+            {
+                byte[] archiveFile;
+                using (MemoryStream zipStream = new MemoryStream())
+                {
+
+                    using (ZipArchive zip = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
+                    {
+                        foreach (var filename in filenames)
+                        {
+                            var entry = zip.CreateEntry(filename);
+                            using (var resourceStream = this.GetType().Assembly.GetManifestResourceStream(filename))
+                            {
+                                using (StreamWriter entryStream = new StreamWriter(entry.Open()))
+                                {
+                                    resourceStream.CopyTo(entryStream.BaseStream);
+                                }
+                            }
+                        }
+                    }
+                    zipStream.Position = 0;
+                    archiveFile = zipStream.ToArray();
+                    return archiveFile;
                 }
             }
         }

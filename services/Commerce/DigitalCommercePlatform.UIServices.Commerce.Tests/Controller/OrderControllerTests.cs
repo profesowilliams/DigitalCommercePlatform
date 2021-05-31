@@ -206,10 +206,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task DownloadInvoicePdfTest(ResponseBase<DownloadInvoice.Response> expected)
+        public async Task DownloadInvoiceTest(ResponseBase<DownloadInvoice.Response> expected)
         {
             // Arrange
-            expected.Content.Filename = "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf";
+            expected.Content.MimeType = "application/pdf";
             _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
             var controller = GetController();

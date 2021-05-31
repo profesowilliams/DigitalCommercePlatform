@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
                 return Ok(orderResponse);
             }
         }
-        
+
         [HttpGet]
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
@@ -88,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("pricingConditions")]
-        public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll,string Id)
+        public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, string Id)
         {
             var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, Id)).ConfigureAwait(false);
             if (getPricingCondition.Error.IsError)
@@ -106,9 +106,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
             var response = await Mediator.Send(new DownloadInvoice.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);
-
-            var resourceStream = this.GetType().Assembly.GetManifestResourceStream(response.Content.Filename);
-            return new FileStreamResult(resourceStream, "application/pdf");
+            return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
         }
     }
 }
