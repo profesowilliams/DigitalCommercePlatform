@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
@@ -209,6 +210,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var result = await controller.EstimationValidate("xyz").ConfigureAwait(false);
 
             result.Should().NotBeNull();
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetPunchOutURL_OKResponse(ResponseBase<GetPunchOutURL.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetPunchOutURL.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.GetPunchOutURL(new GetPunchOutURL.Request()).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
         }
 
         private ConfigController GetController()

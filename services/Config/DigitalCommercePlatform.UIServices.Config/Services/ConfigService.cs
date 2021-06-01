@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
@@ -15,9 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
-using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -26,20 +29,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     {
         private static readonly Random getrandom = new Random();
 
+        private readonly IAppSettings _appSettings;
         private readonly IMapper _mapper;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<ConfigService> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _appConfigurationUrl;
 
-        public ConfigService(IAppSettings appSettings,
-                             IMapper mapper,
-                             IMiddleTierHttpClient middleTierHttpClient,
-                             ILogger<ConfigService> logger)
+        public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
+            ILogger<ConfigService> logger, IHttpClientFactory httpClientFactory)
         {
-            _appConfigurationUrl = appSettings.GetSetting("App.Configuration.Url");
-            _mapper = mapper;
-            _middleTierHttpClient = middleTierHttpClient;
-            _logger = logger;
+            _appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+            _appConfigurationUrl = _appSettings.GetSetting("App.Configuration.Url");
         }
 
         public async Task<List<Deal>> GetDeals(GetDeals.Request request)
@@ -191,6 +196,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public Task<bool> EstimationValidate(EstimationValidate.Request request)
         {
             return Task.FromResult(true);
+        }
+
+        public async Task<string> GetPunchOutURLAsync(PunchInModel request)
+        {
+            const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
+            var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+
+            var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
+
+            var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+            var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
+
+            httpResponse.EnsureSuccessStatusCode();
+
+            var url = await httpResponse.Content.ReadAsStringAsync();
+            return url;
         }
     }
 }

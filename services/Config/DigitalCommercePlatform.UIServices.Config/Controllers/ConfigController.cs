@@ -1,5 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
@@ -12,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
 {
@@ -75,6 +76,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new EstimationValidate.Request { Id = id };
             var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("getPunchOutURL")]
+        public async Task<ActionResult> GetPunchOutURL(GetPunchOutURL.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
     }

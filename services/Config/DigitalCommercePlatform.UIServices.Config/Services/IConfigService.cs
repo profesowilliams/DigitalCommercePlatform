@@ -18,5 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         Task<List<Deal>> GetDeals(GetDeals.Request request);
         Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
         Task<bool> EstimationValidate(EstimationValidate.Request request);
+        Task<string> GetPunchOutURLAsync(PunchInModel request);
     }
 }

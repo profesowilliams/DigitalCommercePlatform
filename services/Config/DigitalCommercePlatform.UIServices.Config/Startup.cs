@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Config
         {
             services.AddTransient<IConfigService, ConfigService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+            services.AddHttpClient("OneSourceClient");
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
