@@ -9,6 +9,10 @@
 //.cmp-languagenavigation__item-title {}
 @import "main";
 
+#regionSelectDropdown {
+  background-color: get-color(brand-white);
+}
+
 .cmp-region-select-dropdown {
   box-shadow: inset 0 rem(2px) rem(1px) 0 get-color(td-dark-blue);
   border: rem(0rem);
