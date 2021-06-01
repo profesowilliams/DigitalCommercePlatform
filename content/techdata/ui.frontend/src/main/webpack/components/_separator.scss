@@ -75,7 +75,7 @@
       padding: rem(64px);
     }
   }
-  &-top{
+  &--top{
     padding-top: rem(16px);
     &-small{
       padding-top: rem(8px);
@@ -87,7 +87,7 @@
       padding-top: rem(64px);
     }
   }
-  &-bottom{
+  &--bottom{
     padding-bottom: rem(16px);
     &-small{
       padding-bottom: rem(8px);
@@ -99,7 +99,7 @@
       padding-bottom: rem(64px);
     }
   }
-  &-right{
+  &--right{
     padding-right: rem(16px);
     &-small{
       padding-right: rem(8px);
@@ -111,7 +111,7 @@
       padding-right: rem(64px);
     }
   }
-  &-left{
+  &--left{
     padding-left: rem(16px);
     &-small{
       padding-left: rem(8px);
