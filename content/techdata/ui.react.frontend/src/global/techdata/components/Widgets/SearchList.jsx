@@ -29,7 +29,7 @@ const SearchList = ({items, selected, onChange, label}) => {
   return(
     <div className="cmp-widget__search-list">
       <p>
-        <TextInput onFocus={onFocus} label={label} inputValue={ selected&&!openlist ? selected.name : search } onChange={searchUpdate} />
+        <TextInput bottomSpace onFocus={onFocus} label={label} inputValue={ selected&&!openlist ? selected.name : search } onChange={searchUpdate} />
       </p>
       <WidgetList openlist={openlist} items={filtered} selected={selected} onChange={resetOnChange} />
     </div>

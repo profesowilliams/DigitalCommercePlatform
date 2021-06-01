@@ -8,6 +8,68 @@ import Pricing from './Pricing';
 import EstimatedId from './EstimatedId';
 import { usPost } from '../../../../utils/api';
 
+const fixedPayload = { 
+  salesOrg:"0100",
+  TargetSystem:"R3",
+  Creator:"700303",
+  Type:{
+    Id:"ss",
+    Value: "test",
+  },
+  CustomerPO:"test",
+  EndUserPo:"Test1",
+  EndUser:{
+    Id:"1",
+    Contact:[
+      {
+        Email:"test@df.com",
+        Name:"qwe user",
+        Phone:"1"
+      },
+      {
+        Email:"test@df.com",
+        Name:"qwe user2",
+        Phone:"123"
+      }
+    ]
+  },
+  VendorReference:{
+    Type:"1"
+  },
+  Reseller:{
+    Id:"0038048612",
+    Contact:[
+      {
+        Email:"test2@df.com",
+        Name:null,
+        Phone:"1"
+      },
+      {
+        Email:"test2@df.com",
+        Name:"tdos1 tdos2",
+        Phone:"123"
+      }
+    ]
+  },
+  ShipTo:{
+    Id:"1"
+  },
+  Items:[
+    {
+      Id:"1",
+      Quantity:5,
+      Product:[
+        {
+          Id:"10487448",
+          Manufacturer:"10487448",
+          Name:"Test1",
+          Type:"1"
+        }
+      ]
+    }
+  ]
+}
+
 const QuoteCreate = ({ 
     requested, authError, componentProp, 
   }) => {
@@ -63,15 +125,15 @@ const QuoteCreate = ({
       }
       //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
       //this conditins needs to be removed later
-      let params = { pricingCondition: pricing.key === '0' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
+      let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
       const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
       if( isError )
         return alert( 'Error in create quote' )
-      const { quoteDetails: { orderNumber } } = content;
-      alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${orderNumber}`);
-      window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }orderNumber=${orderNumber}`;
+      const { quoteId } = content;
+      alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${quoteId}`);
+      window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
     }catch{
       alert( `Unexpected Error in create quote` )
     }
