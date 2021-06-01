@@ -36,13 +36,11 @@ const EditConfig = ({ componentProp }) => {
         <div className='cmp-widget'>
             <WidgetTitle>{label}</WidgetTitle>
             <>
-                <p>
-                    <InputText
-                        onChange={onChange}
-                        inputValue={configurationId}
-                        label={placeholderText}
-                    />
-                </p>
+                <InputText
+                    onChange={onChange}
+                    inputValue={configurationId}
+                    label={placeholderText}
+                />
                 <Button disabled={!configurationId} onClick={() => true}>
                     {buttonTitle}
                 </Button>

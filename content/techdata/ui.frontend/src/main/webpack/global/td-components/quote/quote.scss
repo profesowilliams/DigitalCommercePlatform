@@ -99,20 +99,22 @@
   }
 }
 
-.cmp-widget .cmp-text-input{
-  width: 100%;
-  display: block;
-  border: rem(1px) solid get-color(brand-light-gray2);
-  font-size: rem(12px);
-  padding: rem( 7px 10px );
-  color: get-color(text-mid-gray);
+.cmp-widget{
+  
+  .cmp-text-input{
+      width: 100%;
+      display: block;
+      border: rem(1px) solid get-color(brand-light-gray2);
+      font-size: rem(12px);
+      padding: rem( 7px 10px );
+      color: get-color(text-mid-gray);
+        margin-bottom: rem(18px);
 
-  &_bottom-margin{
-    margin-bottom: rem(15px);
-  }
+      &_bottom-margin{
+        margin-bottom: rem(18px);
+      }
 }
 
-.cmp-widget{
   .cmp-radio-buttons{
     margin-bottom: rem(12px);
   }
