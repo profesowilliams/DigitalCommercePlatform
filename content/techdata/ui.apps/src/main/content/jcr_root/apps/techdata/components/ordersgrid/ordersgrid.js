@@ -4,6 +4,7 @@ use(function () {
     var jsonObject = {};
     var iconValues = [];
     var listValues = [];
+    var optionData = {};
     var resourceResolver = resource.getResourceResolver();
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
@@ -59,13 +60,28 @@ use(function () {
     if (properties && properties["orderDetailUrl"]) {
         jsonObject["orderDetailUrl"] = properties["orderDetailUrl"];
     }
+
+    if (properties && properties["defaultSortingColumnKey"]) {
+        optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
+    }
+
+    if (properties && properties["defaultSortingDirection"]) {
+        optionData.defaultSortingDirection = properties["defaultSortingDirection"];
+    }
     
     if (listValues != null) {
         jsonObject["columnList"] = listValues;
     }
+
+    if (optionData != null) {
+        jsonObject["options"] = optionData;
+    }
+
     if (iconValues != null) {
         jsonObject["iconList"] = iconValues;
-    }    return {
+    }
+
+    return {
         configJson: JSON.stringify(jsonObject)
     };
 });
