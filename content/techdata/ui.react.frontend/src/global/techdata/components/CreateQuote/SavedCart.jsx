@@ -28,13 +28,30 @@ const SavedCart = ({
     setStep(step - 1);
   }
   const goToNext = (id) => next(id)
-  const onError = {
-    errorMsg: 'We couldn´t find the cart:',
-    msgBeforelink: 'Enter a new name or ',
-    msgAfterlink: ' instead',
-    linklabel: 'browse carts',
-    linkFunction: () => setCartType(cartTypes[1])
+  const getonErrorObj = () => {
+    let result = {
+      errorMsg: 'We couldn´t find the cart:',
+      msgBeforelink: 'Enter a new name or ',
+      msgAfterlink: ' instead',
+      linklabel: 'browse carts',
+      linkFunction: () => setCartType(cartTypes[1])
+    }
+    if( method.manuallyTypedError ){
+      const matches = method.manuallyTypedError.match(/\{(.*?)\}/g)
+      if( matches ){
+        const { 0: match } = matches
+        const split = method.manuallyTypedError.split(match);
+        result = { ...result, 
+          msgBeforelink: split[0],
+          msgAfterlink: split[1],
+          linklabel: match.replace('{','').replace('}',''),
+        }
+      }
+      
+    }
+    return result
   }
+  const onError = getonErrorObj()
   return(
     <>
       <WidgetTitle>
