@@ -209,7 +209,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
 
             var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
+            var httpResponse = await httpClient.PostAsync("https://mtapnewer.stage.svc.us.cstenet.com/OneSource/api/AccessManagement/GetPunchOutURL", requestJson);
 
             httpResponse.EnsureSuccessStatusCode();
 
