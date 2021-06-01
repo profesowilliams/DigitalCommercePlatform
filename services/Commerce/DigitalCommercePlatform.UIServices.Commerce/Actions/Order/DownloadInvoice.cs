@@ -100,14 +100,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 }
             }
 
-            public class Validator : AbstractValidator<Request>
-            {
-                public Validator()
-                {
-                    RuleFor(c => c.OrderId).NotNull();
-                }
-            }
-
             private byte[] GenerateZipFile(List<string> filenames)
             {
                 byte[] archiveFile;
@@ -132,6 +124,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                     archiveFile = zipStream.ToArray();
                     return archiveFile;
                 }
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(c => c.OrderId).NotNull();
             }
         }
     }

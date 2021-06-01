@@ -77,24 +77,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 }
                 return response;
             }
+        }
 
-            public class Validator : AbstractValidator<Request>
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
             {
-                public Validator()
-                {
-                    RuleFor(r => r.CreateModelFrom).Cascade(CascadeMode.Stop).NotNull()
-                        .ChildRules(request =>
-                        {
-                            request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
-                            request.RuleFor(c => c).Must(IsValidCreateFromId).WithMessage("'CreateFromId' cannot be null");
+                RuleFor(r => r.CreateModelFrom).Cascade(CascadeMode.Stop).NotNull()
+                    .ChildRules(request =>
+                    {
+                        request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
+                        request.RuleFor(c => c).Must(IsValidCreateFromId).WithMessage("'CreateFromId' cannot be null");
 
-                        });
-                }
-                private bool IsValidCreateFromId(CreateModelFrom r)
-                {
-                    return (r.CreateFromId != null || r.CreateFromType == QuoteCreationSourceType.ActiveCart);
-                }
+                    });
             }
-    }
+            private bool IsValidCreateFromId(CreateModelFrom r)
+            {
+                return (r.CreateFromId != null || r.CreateFromType == QuoteCreationSourceType.ActiveCart);
+            }
+        }
     }
 }

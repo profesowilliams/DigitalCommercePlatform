@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -73,6 +74,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _mediator.Verify(x => x.Send(It.IsAny<CreateQuoteFrom.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
+        [Fact]
+        public async Task CreateQuoteFromTestMissingCreateTypeId()
+        {
+            // Arrange
+            var validator = new CreateQuoteFrom.Validator();
+            var createFrom = new CreateModelFrom()
+            {
+                CreateFromType = QuoteCreationSourceType.SavedCart,
+            };
+            var cmd = new CreateQuoteFrom.Request(createFrom);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.False(validationResult.IsValid);
+        }
+
         [Theory]
         [AutoDomainData]
         public async Task UpdateQuoteTest(ResponseBase<UpdateQuote.Response> expected)
@@ -90,6 +107,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             var result = await controller.Update(quoteToUpdate).ConfigureAwait(false);
             // Assert
             _mediator.Verify(x => x.Send(It.IsAny<UpdateQuote.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateQuoteTestTestMissingCreateTypeId()
+        {
+            // Arrange
+            var validator = new UpdateQuote.Validator();
+            var updateModel = new UpdateModel();
+            var cmd = new UpdateQuote.Request(updateModel);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.False(validationResult.IsValid);
         }
 
         //[Theory]

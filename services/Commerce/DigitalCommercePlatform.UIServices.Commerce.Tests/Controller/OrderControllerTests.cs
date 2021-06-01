@@ -218,5 +218,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             // Assert
             _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
+
+        [Fact]
+        public async Task DownloadInvoiceTestValidation()
+        {
+            // Arrange
+            var validator = new DownloadInvoice.Validator();
+            var cmd = new DownloadInvoice.Request("123456", null, false);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.True(validationResult.IsValid);
+        }
+
+        [Fact]
+        public async Task DownloadInvoiceTestMissingOrderId()
+        {
+            // Arrange
+            var validator = new DownloadInvoice.Validator();
+            var cmd = new DownloadInvoice.Request(null, null, false);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.False(validationResult.IsValid);
+        }
     }
 }

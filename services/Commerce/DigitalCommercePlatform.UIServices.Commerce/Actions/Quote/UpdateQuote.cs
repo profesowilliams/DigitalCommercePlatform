@@ -62,17 +62,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     throw;
                 }
             }
+        }
 
-            public class Validator : AbstractValidator<Request>
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
             {
-                public Validator()
-                {
-                    RuleFor(r => r.QuoteToUpdate).Cascade(CascadeMode.Stop).NotNull()
-                        .ChildRules(request =>
-                        {
-                            request.RuleFor(c => c.QuoteId).NotEmpty();
-                        });
-                }
+                RuleFor(r => r.QuoteToUpdate).Cascade(CascadeMode.Stop).NotNull()
+                    .ChildRules(request =>
+                    {
+                        request.RuleFor(c => c.QuoteId).NotEmpty();
+                    });
             }
         }
     }
