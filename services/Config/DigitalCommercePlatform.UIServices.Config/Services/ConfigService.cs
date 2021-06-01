@@ -203,6 +203,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
             var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
 
+            _logger.LogInformation($"Requested URL is: {requestUrl}");
+
+
             var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
 
             var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
