@@ -15,6 +15,8 @@ use(function () {
             var title = res.properties["title"];
             var dropdownPlaceholder = res.properties["dropdownPlaceholder"];
             var textPlaceholder = res.properties["textPlaceholder"];
+            var manuallyTypedError = res.properties["manuallyTypedError"];
+
 
             var itemData = {};
             itemData.label = label;
@@ -22,6 +24,8 @@ use(function () {
             itemData.title = title;
             itemData.dropdownPlaceholder = dropdownPlaceholder;
             itemData.textPlaceholder = textPlaceholder;
+            itemData.manuallyTypedError = manuallyTypedError;
+
 
             listValues.push(itemData);
         }

@@ -117,6 +117,11 @@
 												fieldDescription="Enter Text Placeholder "
 												fieldLabel="Text Placeholder "
 												name="./textPlaceholder"/>
+										<manuallyTypedError
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Enter Custom Error Message"
+												name="./manuallyTypedError"/>
 									</items>
 								</column>
 							</items>
