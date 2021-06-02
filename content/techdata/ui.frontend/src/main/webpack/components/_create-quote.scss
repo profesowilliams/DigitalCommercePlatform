@@ -1,4 +1,3 @@
-@import "main";
 .cmp-widget .cmp-title--small{
   font-size: rem(14px);
   margin-bottom: rem(15.5px);
@@ -100,20 +99,22 @@
   }
 }
 
-.cmp-widget .cmp-text-input{
-  width: 100%;
-  display: block;
-  border: rem(1px) solid get-color(brand-light-gray2);
-  font-size: rem(12px);
-  padding: rem( 7px 10px );
-  color: get-color(text-mid-gray);
-
-  &_bottom-margin{
-    margin-bottom: rem(15px);
-  }
-}
-
 .cmp-widget{
+
+  .cmp-text-input{
+    width: 100%;
+    display: block;
+    border: rem(1px) solid get-color(brand-light-gray2);
+    font-size: rem(12px);
+    padding: rem( 7px 10px );
+    color: get-color(text-mid-gray);
+    margin-bottom: rem(18px);
+
+    &_bottom-margin{
+      margin-bottom: rem(18px);
+    }
+  }
+
   .cmp-radio-buttons{
     margin-bottom: rem(12px);
   }
