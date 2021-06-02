@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
         public TypeModel Type { get; set; }
         public LevelModel Level { get; set; }
         public string Creator { get; set; }
-
+        public ResellerModel Reseller { get; set; }
         public ShipToModel ShipTo { get; set; }
         public EndUserModel EndUser { get; set; }
         public VendorReferenceModel VendorReference { get; set; }
