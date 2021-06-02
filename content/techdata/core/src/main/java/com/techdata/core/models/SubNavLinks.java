@@ -74,13 +74,11 @@ public class SubNavLinks {
         {
             this.pageTitle = map.get(Constants.CATALOG_OVERRIDE_NAME).isEmpty() ? map.get(Constants.CATALOG_NAME)  : map.get( Constants.CATALOG_OVERRIDE_NAME);
             this.docCount = map.containsKey(Constants.CATALOG_DOCCOUNT) && !map.get(Constants.CATALOG_DOCCOUNT).isEmpty() ? map.get(Constants.CATALOG_DOCCOUNT) : StringUtils.EMPTY;
-            this.pageIcon = map.containsKey(Constants.CATALOG_MENU_ICON) ? map.get(Constants.CATALOG_MENU_ICON) : StringUtils.EMPTY;
+            this.pageIcon = map.containsKey(Constants.CATALOG_MENU_ICON) ? map.get(Constants.CATALOG_MENU_ICON) :DEFAULT_FONT_AWESOME_ICON;
             log.debug("this.pageTitle is {}", this.pageTitle);
         }else{
             this.pageTitle = Constants.CATALOG_NO_NAME;
         }
-
-        this.pageIcon = DEFAULT_FONT_AWESOME_ICON;
 
 //        Does CF have any children
         ResourceResolver resourceResolver = cfResource.getResourceResolver();
