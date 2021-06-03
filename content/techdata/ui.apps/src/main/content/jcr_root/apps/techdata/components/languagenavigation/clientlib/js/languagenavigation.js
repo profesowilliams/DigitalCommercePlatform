@@ -1,0 +1,15 @@
+$(document).on('load', function (e) {
+    function regionSelectDropdown() {
+        document.getElementById("regionSelectDropdown").classList.toggle("cmp-show");
+    }
+
+    function countriesListPopup() {
+        document.getElementById("countriesListModal").style.display = 'block';
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.cmp-button__region-select') && document.getElementById("countriesListModal").style.display == 'block') {
+            document.getElementById("countriesListModal").style.display = 'none';
+        }
+    }
+});

@@ -68,3 +68,114 @@
   text-decoration: none;
   color: get-color(brand-black);
 }
+
+
+.cmp-region-list {
+  &__title {
+      font-size: $font-size-medium;
+      color: get-color(brand-text-gray);
+      display: flex;
+      flex-direction: column;
+      line-height: 1.8;
+      margin-bottom: rem(20px);
+      &.eu {
+          padding-left: rem(35px);
+      }
+  }
+
+  &__countries {
+      font-size: $font-size-custom-xxsmall;
+      color: get-color(brand-text-gray);
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.8;
+      margin-bottom: rem(20px);
+      a {
+          color: get-color(brand-text-gray) !important;
+          text-decoration: none !important;
+      }
+  }
+
+  &__language {
+      font-size: $font-size-xsmall;
+      color: get-color(brand-text-lightgray) !important;
+      text-transform: none !important;
+      a {
+          color: get-color(brand-text-lightgray) !important;
+          text-decoration: none !important;
+      }
+  }
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  /* Modal Content */
+  &__content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid get-color(td-dark-blue);
+    width: 90%;
+    height: 500px;
+    box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
+
+    /* The Close Button */
+    &__close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    &__row {
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    }
+
+    &__column {
+      float: left;
+      width: 50%;
+      padding: 20px;
+      height: 450px;
+
+      &__seperator {
+        border-right: 1px solid get-color(brand-text-lightgray);
+        height: 300px;
+        column-width: 250px;
+      }
+
+      &:first-child,
+      &:last-child {
+        width: 25%;
+        padding: 20px 35px;
+      }
+
+      &:last-child > &__seperator{
+        border-right: none;
+      }
+    }
+  }
+}

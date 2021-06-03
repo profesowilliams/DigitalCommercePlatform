@@ -1,18 +1,15 @@
 <script>
-  function regionSelect() {
+  function regionSelectDropdown() {
     document.getElementById("regionSelectDropdown").classList.toggle("cmp-show");
   }
 
+  function countriesListPopup() {
+    document.getElementById("countriesListModal").style.display = 'block';
+  }
+
   window.onclick = function (event) {
-    if (!event.target.matches('.cmp-dropbtn')) {
-      var dropdowns = document.getElementsByClassName("cmp-dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('cmp-show')) {
-          openDropdown.classList.remove('cmp-show');
-        }
-      }
+    if (!event.target.matches('.cmp-button__region-select') && document.getElementById("countriesListModal").style.display == 'block') {
+      document.getElementById("countriesListModal").style.display = 'none';
     }
   }
 </script>
