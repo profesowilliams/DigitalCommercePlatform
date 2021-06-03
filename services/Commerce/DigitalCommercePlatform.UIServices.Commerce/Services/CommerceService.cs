@@ -271,6 +271,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     item.Product = new List<ProductModel> {
                         new ProductModel {
                             Id = cartLine.ProductId,
+                            Manufacturer = cartLine.ProductId,
                             Name = cartLine.ProductId,
                             Type = "1",
                         }
@@ -300,7 +301,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     var itemModel = new ItemModel();
                     itemModel.Id = cartLine.ItemId;
-                    itemModel.Product = new List<ProductModel> { new ProductModel { Id = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", } };
+                    itemModel.Product = new List<ProductModel> {
+                        new ProductModel { Id = cartLine.ProductId, Manufacturer = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", }
+                    };
                     itemModel.Quantity = cartLine.Quantity;
                     createQuoteFrom.Items.Add(itemModel);
                 }
