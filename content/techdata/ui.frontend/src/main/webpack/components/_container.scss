@@ -6,7 +6,7 @@
   float: unset !important;
 
   &--max-1440 {
-    max-width: $container-max-width;
+    max-width: rem(1440px);
     margin: 0 auto !important;
     float: unset !important;
   }
