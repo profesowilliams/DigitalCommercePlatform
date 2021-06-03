@@ -11,6 +11,7 @@
     var ActiveItemClass = 'cmp-megamenu__item--active';
     var ActiveTabClass = 'cmp-megamenu__tab--active';
     var ActiveTabPanelClass = 'cmp-megamenu__tabpanel--active';
+    var selected = '.cmp-megamenu__tabpanel.cmp-megamenu__tabpanel--active ';
     var MouseLeaveFlag = false;
     if( navigation ) init();
 
@@ -97,16 +98,16 @@
       if( target.dataset.cmpClickable !== 'true' || target.className.indexOf(ActiveItemClass) >=0 ) return; // avoid everything if there is no menu attached to this item
       event.preventDefault();
       MouseLeaveFlag = true;
-      clearItems(MenuSecondary, ' li a.' + ActiveItemClass, ActiveItemClass);
+      clearItems(selected + MenuSecondary, ' li a.' + ActiveItemClass, ActiveItemClass);
       target.classList.add(ActiveItemClass);
-      var navTertiaryItems = navigation.querySelectorAll(MenuTertiary + ' .' + itemToSelect);
+      var navTertiaryItems = navigation.querySelectorAll(selected+MenuTertiary + ' .' + itemToSelect);
       navTertiaryItems.forEach(function(n){
         if( n.dataset.cmpParent === target.dataset.cmpChildren ){
           n.classList.add(ActiveWrappClass);
         }else{
           n.classList.remove(ActiveWrappClass);
-          clearItems(MenuQuaternary, ' .' + itemToSelect, ActiveWrappClass);
-          clearItems(MenuTertiary, ' li a.' + ActiveItemClass, ActiveItemClass);
+          clearItems(selected + MenuQuaternary, ' .' + itemToSelect, ActiveWrappClass);
+          clearItems(selected + MenuTertiary, ' li a.' + ActiveItemClass, ActiveItemClass);
         }
       })
     }
