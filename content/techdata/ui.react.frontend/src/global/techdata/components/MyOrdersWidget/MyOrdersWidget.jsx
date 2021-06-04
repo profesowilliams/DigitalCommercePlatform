@@ -5,10 +5,31 @@ import { get } from "../../../../utils/api";
 
 // import "./style.css";
 
+
+
 const MyOrdersWidget = ({ componentProp }) => {
     const chartRef = createRef();
     const [myOrders, setMyOrders] = useState(false);
-    const { endpoint } = JSON.parse(componentProp);
+    const [toggle, setToggle] = useState(false);
+    const { label, endpoint } = JSON.parse(componentProp);
+
+    async function  toDateToggle() {
+        let updatedEndPoint = endpoint;
+
+        console.log("toggle mtd");
+
+        if (!toggle)
+            updatedEndPoint = endpoint.replace("true", "false")
+
+            const {
+                data: {
+                    content: { items },
+                },
+            } = await get(updatedEndPoint);
+            setMyOrders(items);
+            setToggle(!toggle);
+
+    }
 
     const createChart = (node, data) => {
         const randomValue = (data) =>
@@ -74,7 +95,7 @@ const MyOrdersWidget = ({ componentProp }) => {
             <>
                 <div className='cmp-gauge-chart-wrap'>
                     <div className='cmp-gauge-chart'>
-                        <div className='cmp-gauge-chart__title'>My Orders</div>
+                        <div className='cmp-gauge-chart__title'>{label}</div>
                     </div>
                     <div id='canvas-holder'>
                         <canvas id='chart' ref={chartRef} />
@@ -91,10 +112,10 @@ const MyOrdersWidget = ({ componentProp }) => {
                     </div>
                     <div className='cmp-gauge-chart-period'>
                         <div>
-                            <div>MDT</div>
+                            <div>MTD</div>
                             <div className='cmp-gauge-chart-period--toggle'>
                                 <label className='switch'>
-                                    <input type='checkbox' />
+                                    <input type='checkbox' checked={toggle} onChange={toDateToggle}/>
                                     <span className='dot round' />
                                 </label>
                             </div>

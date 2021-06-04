@@ -765,6 +765,9 @@ app.get("/details", (req, res) => {
 });
 
 app.get("/myorders", (req, res) => {
+
+    console.log(utils.getRandomValues(100) + 1.0)
+
     if (!req.headers["sessionid"])
         return res.status(500).json({
             error: {
@@ -782,8 +785,8 @@ app.get("/myorders", (req, res) => {
                 processedOrderPercentage: "26",
                 processedOrdersAmount: 268,
                 totalOrderAmount: 529,
-                totalFormattedAmount: "529.00",
-                processedFormattedAmount: "268.00",
+                totalFormattedAmount: utils.getRandomValues(100) + ".00",
+                processedFormattedAmount: utils.getRandomValues(100) + ".00",
             },
         },
         error: {
