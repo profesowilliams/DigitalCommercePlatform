@@ -21,11 +21,6 @@
 					   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 					   fieldLabel="ID"
 					   name="./id"/>
-					<endpoint
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="End Point"
-						name="./endpoint"/>
 					<shopUrl
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

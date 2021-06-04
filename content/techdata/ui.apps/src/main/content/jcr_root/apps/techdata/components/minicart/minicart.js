@@ -6,9 +6,9 @@ use(function () {
     if (properties.get("cutOffValue") != null) {
         jsonObject.put("maxItems", properties.get("cutOffValue"));
     }
-    if (properties.get("endpoint") != null) {
-        jsonObject.put("endpoint", properties.get("endpoint"));
-    }
+
+    jsonObject.put("endpoint", this.uiServiceDomain+this.savedCartsEndpoint);
+
     if (properties.get("shopUrl") != null) {
         jsonObject.put("shopUrl", properties.get("shopUrl"));
     }
