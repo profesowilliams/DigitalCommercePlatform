@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Common.Cart.Services
                 {
                     return null;
                 }
-                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetActiveCart));
+                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetActiveCartAsync));
                 throw;
             }
         }
@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Common.Cart.Services
                 {
                     return null;
                 }
-                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetSavedCartDetails));
+                _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetSavedCartDetailsAsync));
                 throw;
             }
         }
