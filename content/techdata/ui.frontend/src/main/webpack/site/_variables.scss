@@ -15,7 +15,7 @@ $color-link:           #00B1E2;
 // Dark mode
 $color-foreground-dark: invert($color-foreground);
 $color-background-dark: invert($color-background);
-$color-link-dark:       invert($color-link);
+$color-link-dark:       ($color-link);
 
 // Width
 $container-max-width: 1440px;
