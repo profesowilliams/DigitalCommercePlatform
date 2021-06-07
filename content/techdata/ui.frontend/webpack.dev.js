@@ -10,6 +10,12 @@ module.exports = (env) => {
     const writeToDisk = env && Boolean(env.writeToDisk);
 
     return merge(common, {
+        entry: {
+            us: SOURCE_ROOT + '/international/us/main.ts',
+            global: SOURCE_ROOT + '/global/main.js',
+            site: SOURCE_ROOT + '/site/main.ts',
+            devOnly: SOURCE_ROOT + '/static/js/devOnly.js',
+        },
         mode: "development",
         devtool: "inline-source-map",
         performance: { hints: "warning" },
