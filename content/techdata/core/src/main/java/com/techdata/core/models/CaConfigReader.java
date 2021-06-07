@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.techdata.core.models;
 
@@ -19,6 +19,8 @@ import com.day.cq.wcm.api.Page;
 
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 
+import com.techdata.core.slingcaconfig.MiniCartConfiguration;
+
 
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
@@ -26,6 +28,8 @@ public class CaConfigReader {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private ServiceEndPointsConfiguration serviceEndPointsConfiguration = null;
+
+	private MiniCartConfiguration mcConfiguration = null;
 
 	@ScriptVariable(name = "currentPage")
 	private Page page;
@@ -64,10 +68,17 @@ public class CaConfigReader {
 
 	private String orderGridEndpoint;
 
+	private  String shopDomain;
+
+	private String cartURL;
+
+	private String tdPartSmart;
+
 
 	@PostConstruct
 	public void init() {
 		serviceEndPointsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
+		mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
 		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
 		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
 		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
@@ -85,6 +96,9 @@ public class CaConfigReader {
 		savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
 		quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
 		orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
+		shopDomain = mcConfiguration.shopDomain();
+		cartURL = mcConfiguration.cartURL();
+		tdPartSmart = mcConfiguration.tdPartSmart();
 	}
 
 	public String getUiServiceDomain() {
@@ -153,6 +167,18 @@ public class CaConfigReader {
 
 	public String getOrderGridEndpoint() {
 		return orderGridEndpoint;
+	}
+
+	public String getShopDomain() {
+		return shopDomain;
+	}
+
+	public String getCartURL() {
+		return cartURL;
+	}
+
+	public String getTdPartSmart() {
+		return tdPartSmart;
 	}
 
 

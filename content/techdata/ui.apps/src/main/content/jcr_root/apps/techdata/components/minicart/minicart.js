@@ -9,9 +9,9 @@ use(function () {
 
     jsonObject.put("endpoint", this.uiServiceDomain+this.savedCartsEndpoint);
 
-    if (properties.get("shopUrl") != null) {
-        jsonObject.put("shopUrl", properties.get("shopUrl"));
-    }
+
+    jsonObject.put("shopUrl", this.shopDomain+this.cartURL);
+
 
     return {
         configJson: jsonObject.toString()
