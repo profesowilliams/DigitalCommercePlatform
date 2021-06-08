@@ -1,29 +1,215 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
 
-  <button onclick="regionSelect()" class="cmp-dropbtn">USA</button>
+<head>
+  <script type="text/javascript" src="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.js">
+  </script>
+  <script type="text/javascript" src="../../../global/td-components/region-select/region-select.js"></script>
+</head>
+
+<body>
+
+  <button class="cmp-dropbtn">USA</button>
   <div id="regionSelectDropdown" class="cmp-dropdown-content">
     <div class="container responsivegrid">
-      <form method="POST" action="/content/core-components-examples/library/form/button.html" id="new_form" name="new_form" enctype="multipart/form-data" class="cmp-form aem-Grid aem-Grid--12 aem-Grid--default--12  cmp-region-select-dropdown">
-        <input type="hidden" name=":formstart" value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
+      <form method="POST" action="/content/core-components-examples/library/form/button.html" id="new_form"
+        name="new_form" enctype="multipart/form-data"
+        class="cmp-form aem-Grid aem-Grid--12 aem-Grid--default--12  cmp-region-select-dropdown">
+        <input type="hidden" name=":formstart"
+          value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
         <input type="hidden" name="_charset_" value="utf-8">
         <div class="options aem-GridColumn aem-GridColumn--default--12">
           <fieldset class="cmp-form-options cmp-form-options--radio">
             <label class="cmp-form-options__field-label cmp-radio-btn">
-              <input type="radio"  checked="checked" name="radio">
+              <input type="radio" checked="checked" name="radio">
               <span class="cmp-form-options__field-description">English - EN</span>
               <span class="checkmark"></span>
-              
+
             </label>
             <label class="cmp-form-options__field-label cmp-radio-btn">
               <input type="radio" name="radio">
               <span class="cmp-form-options__field-description" lang="es">Espanol - ES</span>
               <span class="checkmark"></span>
-              
+
             </label>
           </fieldset>
         </div>
         <div class="button aem-GridColumn aem-GridColumn--default--12">
-          <button type="BUTTON" id="form-button-1117902125" class="cmp-button__region-select" name="button">Change Location</button>
+          <button type="BUTTON" id="form-button-1117902125" class="cmp-button__region-select"
+            data-target="#countriesListModal" name="button">
+            Change Location
+          </button>
+        </div>
+
+        <div id="countriesListModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal__content">
+            <span class="modal__content__close" href="#"></span>
+            <div class="modal__content__row">
+
+              <div class="modal__content__column">
+                <h2 class="cmp-region-list__title">AMERICAS</h2>
+                <div class="">
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/americas/brazil.html">BRAZIL</a>
+                    <span class="cmp-region-list__language">
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/americas/canada/en.html">CANADA</a>
+                    <span class="cmp-region-list__language">
+                      <a href="/content/techdata/countries-list/americas/canada/en.html">English</a> |
+                      <a href="/content/techdata/countries-list/americas/canada/fr.html">Français</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/americas/mexico/en.html">MEXICO</a>
+                    <span class="cmp-region-list__language">
+                      <a href="/content/techdata/countries-list/americas/mexico/en.html">English</a> |
+                      <a href="/content/techdata/countries-list/americas/mexico/es.html"> Espanol</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/americas/USA/en.html">UNITED STATES</a>
+                    <span class="cmp-region-list__language">
+                      <a href="/content/techdata/countries-list/americas/USA/en.html">English</a> |
+                      <a href="/content/techdata/countries-list/americas/USA/es.html"> Espanol</a>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="modal__content__column">
+                <h2 class="cmp-region-list__title eu">EUROPE</h2>
+                <div class="modal__content__column__seperator-l">
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/belgium.html">Belgium</a>
+                    <span class="cmp-region-list__language">
+                      <a href="#" lang="fr-BE">België</a> |
+                      <a href="#">Belgique</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/denmark.html">DENMARK</a>
+                    <span class="cmp-region-list__language">
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/finland.html">Finland</a>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/france/en.html">FRANCE</a>
+                    <span class="cmp-region-list__language">
+                      <a href="/content/techdata/countries-list/europe/france/en.html">English</a> |
+                      <a href="/content/techdata/countries-list/europe/france/fr.html">Français</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/germany.html">Germany</a>
+                    <span class="cmp-region-list__language">
+                      <a href="#">Deutsche</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/ireland.html">Ireland</a>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/italy.html">Italy</a>
+                    <span class="cmp-region-list__language">
+                      <a href="#">Italiano</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/europe/Netherlands.html">Netherlands</a>
+                  </div>
+                </div>
+
+                  <div class="modal__content__column__seperator-r">
+                  <div class="cmp-region-list__countries">
+                    Poland
+                    <span class="cmp-region-list__language">
+                      <a href="#">Polska</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+                  <div class="cmp-region-list__countries">
+                    Portugal
+                    <span class="cmp-region-list__language">
+                      <a href="#" lang="pt-PT">Português</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+                  <div class="cmp-region-list__countries">
+                    Russia
+                    <span class="cmp-region-list__language">
+                      <a href="#" lang="ru">Россия</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+                  <div class="cmp-region-list__countries">
+                    Spain
+                    <span class="cmp-region-list__language">
+                      <a href="#" lang="es">Español</a> |
+                      <a href="#">English</a>
+                    </span>
+                  </div>
+                  <div class="cmp-region-list__countries">Sweden</div>
+                  <div class="cmp-region-list__countries">
+                    Switzerland
+                    <span class="cmp-region-list__language">
+                      <a href="#">Schweiz</a> |
+                      <a href="#">Suisse</a> |
+                      <a href="#">Svizzero</a> |
+                      <a href="#">Rumantsch</a>
+                    </span>
+                  </div>
+                  <div class="cmp-region-list__countries">United Kingdom</div>
+
+                </div>
+              </div>
+
+              <div class="modal__content__column">
+                <h2 class="cmp-region-list__title">ASIA PACIFIC</h2>
+                <div class="">
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/asia-pacific/australia.html">AUSTRALIA</a>
+                    <span class="cmp-region-list__language">
+                    </span>
+                  </div>
+
+                  <div class="cmp-region-list__countries">
+                    <a href="/content/techdata/countries-list/asia-pacific/china/en.html">CHINA</a>
+                    <span class="cmp-region-list__language">
+                      <a href="/content/techdata/countries-list/asia-pacific/china/en.html">English</a> |
+                      <a href="/content/techdata/countries-list/asia-pacific/china/ch.html">中國人</a>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </form>
+    </div>
   </div>
-  </div>
+</body>
+
+</html>
