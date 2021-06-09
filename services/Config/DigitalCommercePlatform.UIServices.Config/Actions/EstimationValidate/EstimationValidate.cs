@@ -52,7 +52,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
         {
             public Validator()
             {
-
             }
         }
     }

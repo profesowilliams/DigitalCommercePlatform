@@ -18,12 +18,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public DateTime? NetPriceProtectionDate { get; set; }
         public string VendorStatus { get; set; }
         public DateTime? ExpiryDate { get; set; }
+        public decimal TotalListPrice { get; set; }
+        public decimal TotalCost { get; set; }
         public ResellerDto Reseller { get; set; }
         public EndUserDto EndUser { get; set; }
         public VendorDto Vendor { get; set; }
-
-        public decimal TotalListPrice { get; set; }
-        public decimal TotalCost { get; set; }
         public IEnumerable<ItemDto> Items { get; set; }
     }
 }
