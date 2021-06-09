@@ -153,11 +153,16 @@
       width: 50%;
       padding: 20px;
 
+      &__seperator {
+        border-right: 1px solid get-color(brand-text-lightgray);
+        height: 300px;
+        column-width: 200px;
+      }
 
       &__seperator-l {
         float: left;
         width: 50%;
-        padding: 0 0 0 rem(35px) !important;        
+        padding: 0 0 0 rem(35px) !important;
       }
 
       &__seperator-r {

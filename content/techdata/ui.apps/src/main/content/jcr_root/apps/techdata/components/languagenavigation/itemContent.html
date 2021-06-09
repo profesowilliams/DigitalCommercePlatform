@@ -17,7 +17,8 @@
   <a data-sly-test="${!hasChildren}" data-cmp-clickable="${item.data ? true : false}"
     aria-current="${item.current && 'page'}" class="cmp-languagenavigation__item-link" href="${item.URL}"
     lang="${item.language}" rel="alternate" title="${item.title}">
-    <input type="radio" data-sly-test="${!hasChildren}" checked="checked" href="${item.URL}" name="radio">
+    <input type="radio" data-sly-test="${!hasChildren && item.isCurrentLanguage}" checked="checked" href="${item.URL}"
+      name="radio">
     <span class="cmp-form-options__field-description" data-sly-test="${!hasChildren}" href="${item.URL}"
       hreflang="${item.language}" lang="${item.language}" title="${item.title}">${item.title}</span>
     <span class="checkmark" data-sly-test="${!hasChildren}"></span>

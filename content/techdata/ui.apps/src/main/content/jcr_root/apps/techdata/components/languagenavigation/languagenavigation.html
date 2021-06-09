@@ -1,7 +1,7 @@
 <sly data-sly-include="languagenavigationscript.html" />
 <sly data-sly-use.languageNavigation="com.adobe.cq.wcm.core.components.models.LanguageNavigation"
   data-sly-use.languageNavigationImpl="${'com.techdata.core.models.LanguageNavigationImpl' @items=languageNavigation.items}">
-  <button onclick="regionSelectDropdown()" class="cmp-dropbtn">${languageNavigationImpl.localePageTitle}</button>
+  <button class="cmp-dropbtn">${languageNavigationImpl.localePageTitle}</button>
   <div id="regionSelectDropdown" class="cmp-dropdown-content">
     <form method="POST" action="/content/core-components-examples/library/form/button.html"
       enctype="multipart/form-data" class="cmp-languagenavigation cmp-region-select-dropdown" id="${component.id}"
@@ -17,8 +17,8 @@
           value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
         <input type="hidden" name="_charset_" value="utf-8">
       </div>
-      <div class="button aem-GridColumn aem-GridColumn--default--12">
-        <button type="button" id="form-button-1117902125" class="cmp-button__region-select" onclick="countriesListPopup()"
+      <div class="button">
+        <button type="button" id="form-button-1117902125" class="cmp-button__region-select"
           data-target="#countriesListModal" name="button">${properties.changeLocationLabel}</button>
       </div>
       <div id="countriesListModal" class="modal">
@@ -35,7 +35,8 @@
                       <a href="${countryItems.path}.html">${countryItems.title}</a>
                       <span class="cmp-region-list__language">
                         <sly data-sly-list.LanguageItems="${countryItems.children}">
-                          <a href="${LanguageItems.path}.html">${LanguageItems.title}</a>${LanguageItemsList.last ? '' : ' | '}
+                          <a href="${LanguageItems.path}.html">${LanguageItems.title}</a>${LanguageItemsList.last ? '' :
+                          ' | '}
                         </sly>
                       </span>
                     </div>
