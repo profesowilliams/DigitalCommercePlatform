@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.day.cq.wcm.api.Page;
 
+import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
@@ -30,6 +31,8 @@ public class CaConfigReader {
 	private ServiceEndPointsConfiguration serviceEndPointsConfiguration = null;
 
 	private MiniCartConfiguration mcConfiguration = null;
+
+	private AnalyticsConfiguration analyticsConfiguration = null;
 
 	@ScriptVariable(name = "currentPage")
 	private Page page;
@@ -74,11 +77,13 @@ public class CaConfigReader {
 
 	private String tdPartSmart;
 
+	private String analyticsSnippet;
 
 	@PostConstruct
 	public void init() {
 		serviceEndPointsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
 		mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
+		analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
 		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
 		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
 		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
@@ -99,6 +104,7 @@ public class CaConfigReader {
 		shopDomain = mcConfiguration.shopDomain();
 		cartURL = mcConfiguration.cartURL();
 		tdPartSmart = mcConfiguration.tdPartSmart();
+		analyticsSnippet = analyticsConfiguration.analyticsSnippet();
 	}
 
 	public String getUiServiceDomain() {
@@ -181,5 +187,8 @@ public class CaConfigReader {
 		return tdPartSmart;
 	}
 
+	public String getAnalyticsSnippet() {
+		return analyticsSnippet;
+	}
 
 }
