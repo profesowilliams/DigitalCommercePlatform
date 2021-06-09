@@ -1,7 +1,7 @@
 <sly data-sly-include="languagenavigationscript.html" />
-<sly data-sly-use.languageNavigation="com.adobe.cq.wcm.core.components.models.LanguageNavigation"
-  data-sly-use.languageNavigationImpl="${'com.techdata.core.models.LanguageNavigationImpl' @items=languageNavigation.items}">
-  <button class="cmp-dropbtn">${languageNavigationImpl.localePageTitle}</button>
+<sly
+  data-sly-use.languageNavigationImpl="com.techdata.core.models.LanguageDropDownImpl">
+  <button class="cmp-dropbtn">${languageNavigationImpl.countryRootPageTitle}</button>
   <div id="regionSelectDropdown" class="cmp-dropdown-content">
     <form method="POST" action="/content/core-components-examples/library/form/button.html"
       enctype="multipart/form-data" class="cmp-languagenavigation cmp-region-select-dropdown" id="${component.id}"
@@ -10,8 +10,8 @@
       <div class="options" data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
         data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
         data-sly-use.groupTemplate="group.html"
-        data-sly-call="${groupTemplate.group @ items=languageNavigationImpl.languageItems}"
-        data-sly-test.hasContent="${languageNavigationImpl.languageItems && languageNavigationImpl.languageItems.size > 0}"
+        data-sly-call="${groupTemplate.group @ items=languageNavigationImpl.activeLanguageItems}"
+        data-sly-test.hasContent="${languageNavigationImpl.items && languageNavigationImpl.items.size > 0}"
         data-cmp-data-layer="${languageNavigation.data.json}">
         <input type="hidden" name=":formstart"
           value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
@@ -23,29 +23,6 @@
       </div>
       <div id="countriesListModal" class="modal">
         <!-- Modal content -->
-        <div class="modal__content">
-          <span class="modal__content__close" href="#"></span>
-          <div class="modal__content__row">
-            <sly data-sly-list.continentItems="${languageNavigationImpl.countriesListItems}">
-              <div class="modal__content__column">
-                <h2 class="cmp-region-list__title">${continentItems.title}</h2>
-                <div class="modal__content__column__seperator">
-                  <sly data-sly-list.countryItems="${continentItems.children}">
-                    <div class="cmp-region-list__countries">
-                      <a href="${countryItems.path}.html">${countryItems.title}</a>
-                      <span class="cmp-region-list__language">
-                        <sly data-sly-list.LanguageItems="${countryItems.children}">
-                          <a href="${LanguageItems.path}.html">${LanguageItems.title}</a>${LanguageItemsList.last ? '' :
-                          ' | '}
-                        </sly>
-                      </span>
-                    </div>
-                  </sly>
-                </div>
-              </div>
-            </sly>
-          </div>
-        </div>
       </div>
     </form>
   </div>

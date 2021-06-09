@@ -14,7 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.group="${@ items='The language navigation items for the current level'}" data-sly-use.itemTemplate="item.html">
-	<fieldset class="cmp-form-options cmp-form-options--radio" data-sly-list.item="${items}">
-    	<sly data-sly-call="${itemTemplate.item @ item = item}"></sly>
-    </fieldset>
+		<fieldset class="cmp-form-options cmp-form-options--radio" data-sly-list.item=${items}>
+			<sly data-sly-call="${itemTemplate.item @ item = item}"></sly>
+		</fieldset>
 </template>
