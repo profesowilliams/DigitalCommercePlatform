@@ -9,65 +9,10 @@ import EstimatedId from './EstimatedId';
 import { usPost } from '../../../../utils/api';
 
 const fixedPayload = { 
-  salesOrg:"0100",
-  TargetSystem:"R3",
-  Creator:"700303",
-  Type:{
-    Id:"ss",
-    Value: "test",
-  },
-  CustomerPO:"test",
-  EndUserPo:"Test1",
-  EndUser:{
-    Id:"1",
-    Contact:[
-      {
-        Email:"test@df.com",
-        Name:"qwe user",
-        Phone:"1"
-      },
-      {
-        Email:"test@df.com",
-        Name:"qwe user2",
-        Phone:"123"
-      }
-    ]
-  },
-  VendorReference:{
-    Type:"1"
-  },
-  Reseller:{
-    Id:"0038048612",
-    Contact:[
-      {
-        Email:"test2@df.com",
-        Name:null,
-        Phone:"1"
-      },
-      {
-        Email:"test2@df.com",
-        Name:"tdos1 tdos2",
-        Phone:"123"
-      }
-    ]
-  },
-  ShipTo:{
-    Id:"1"
-  },
-  Items:[
-    {
-      Id:"1",
-      Quantity:5,
-      Product:[
-        {
-          Id:"10487448",
-          Manufacturer:"10487448",
-          Name:"Test1",
-          Type:"1"
-        }
-      ]
-    }
-  ]
+    "createFromId": "96722368",
+    "createFromType": 2,
+    "targetSystem": "R3",  
+    "pricingCondition": "0"
 }
 
 const QuoteCreate = ({ 
