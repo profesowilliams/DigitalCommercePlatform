@@ -34,7 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models
     [ExcludeFromCodeCoverage]
     public class ActiveCustomerRequest
     {
-        public string CompanyNumber { get; set; }
-        public string CompanyName { get; set; }
+        public string CustomerNumber { get; set; }
     }
 }

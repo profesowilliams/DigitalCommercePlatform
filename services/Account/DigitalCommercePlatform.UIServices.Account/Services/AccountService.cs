@@ -290,17 +290,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request)
         {
-            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            var customerId = _uiContext.User.ActiveCustomer?.CustomerNumber;
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
             var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
             if (response.Any())
             {
+                // Current requirement is if system is 2 to take the 0100 as sales org
+                var salesOrg = _uiContext.User.ActiveCustomer?.System == "2" ? "0100" : string.Empty;
+
                 if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == "0100").ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == salesOrg).ToList(); 
                 else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); 
                 else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == "0100").ToList(); // use sales organization from user context
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == salesOrg).ToList(); 
                 else
                     return response;
             }

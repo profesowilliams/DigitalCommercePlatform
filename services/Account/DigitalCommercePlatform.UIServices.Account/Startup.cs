@@ -6,7 +6,6 @@ using DigitalFoundation.Common.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using RenewalsService;
 using System;
 using System.Collections.Generic;
@@ -47,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Account
 
                 return new RenewalsServiceClient(binding, endpointAddress);
             });
+
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();

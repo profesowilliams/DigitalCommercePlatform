@@ -213,7 +213,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
-            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
+            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = ""}).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -232,7 +232,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
-            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CompanyName = "", CompanyNumber = "" }).ConfigureAwait(false);
+            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = "" }).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }

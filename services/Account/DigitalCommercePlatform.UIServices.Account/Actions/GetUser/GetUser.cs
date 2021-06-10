@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalFoundation.Common.Cache.UI;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
@@ -41,10 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
-                var activeCustomerFromCache = _sessionIdBasedCacheProvider.Get<Customer>(userFromCache.ID);
-
                 var user = _mapper.Map<User>(userFromCache);
-                user.ActiveCustomer = activeCustomerFromCache;
 
                 var response = new ResponseBase<Response> { Content = new Response { User = user } };
                 return await Task.FromResult(response);

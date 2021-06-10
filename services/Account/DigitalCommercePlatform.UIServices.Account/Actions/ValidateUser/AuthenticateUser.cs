@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Contexts;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -84,14 +85,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                         Error = new ErrorInformation
                         {
                             IsError = true,
-                            Messages = new List<string> { "Something went wrong" }, 
-                            Code =tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111 
+                            Messages = new List<string> { "Something went wrong" },
+                            Code = tokenResponse.Exception is RemoteServerHttpException remoteTokenException ? (int)remoteTokenException.Code : 11111
                             // we should agree about code and message
                         }
                     };
                 }
 
-                _context.SetAccessToken(tokenResponse.AccessToken);
+                _context.SetAccessToken(tokenResponse.AccessToken); 
 
                 var userResponse = await _securityService.GetUser(request.ApplicationName);
 
@@ -112,6 +113,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 }
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
+
+                // Current requirement is to take the first customer from the list
+                userResponse.User.ActiveCustomer = userResponse.User.CustomerList?.FirstOrDefault();
 
                 _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
 

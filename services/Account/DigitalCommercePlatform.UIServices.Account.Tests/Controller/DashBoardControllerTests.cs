@@ -12,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -41,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
 
             _context = new Mock<IUIContext>();
+            _context.SetupGet(x => x.User).Returns(new User { ActiveCustomer = new Customer { CustomerNumber = "123", System = "2" } });
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<SecurityController>>();
             _siteSettings = new Mock<ISiteSettings>();

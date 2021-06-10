@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
@@ -150,10 +151,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         [Route("renewals")]
         public async Task<IActionResult> GetRenewals()
         {
+            var customerNumber = Context.User.ActiveCustomer?.CustomerNumber;
+            // Current requirement is if system is 2 to take the 0100 as sales org
+            var salesOrg = Context.User.ActiveCustomer?.System == "2" ? "0100" : string.Empty;
+
             var renewalsSummaryRequest = new GetRenewalsSummary.Request
             {
-                CustomerNumber = "0038048612", // in future this will be here:     Context.User.ActiveCustomer
-                SalesOrganization = "0100",    // in future this will be here:        Context.User.SalesOrganization
+                CustomerNumber = customerNumber,
+                SalesOrganization = salesOrg,    
                 Days = 30                         // in future this will be from param - ([FromQuery] int days)
             };
 

@@ -1,10 +1,10 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Cache.UI;
 using FluentValidation;
 using MediatR;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,8 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string CompanyNumber { get; init; }
-            public string CompanyName { get; init; }
+            public string CustomerNumber { get; init; }
         }
 
         public class Response
@@ -26,9 +25,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
 
         public class RequestValidator : AbstractValidator<Request>
         {
+            private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
             public RequestValidator(ISessionIdBasedCacheProvider sessionIdBasedCacheProvider)
             {
-                RuleFor(p => p.CompanyNumber).NotEmpty().WithMessage("CompanyNumber is required.");
+                _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));
+
+                RuleFor(p => p.CustomerNumber).NotEmpty().WithMessage("CustomerNumber is required.");
+                RuleFor(i => i.CustomerNumber).Must(IsCustomerNumberValid).WithMessage(i => $"Customer number : {i.CustomerNumber} is not valid customer number for this user");
+            }
+
+            private bool IsCustomerNumberValid(string customerNumber)
+            {
+                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
+                bool isCustomerNumberValid = userFromCache.CustomerList.Any(i => i.CustomerNumber == customerNumber);
+                return isCustomerNumberValid;
             }
         }
 
@@ -44,8 +54,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
-                var customer = new Customer { Name = request.CompanyName, Number = request.CompanyNumber };
-                _sessionIdBasedCacheProvider.Put(userFromCache.ID, customer, 86400);
+                var customer = userFromCache.CustomerList.Where(i => i.CustomerNumber == request.CustomerNumber).SingleOrDefault();
+                userFromCache.ActiveCustomer = customer;
+                _sessionIdBasedCacheProvider.Remove("User");
+                _sessionIdBasedCacheProvider.Put("User", userFromCache, 86400);
 
                 return await Task.FromResult(new ResponseBase<Response> { Content = new Response { Message = "Active customer stored" } });
             }

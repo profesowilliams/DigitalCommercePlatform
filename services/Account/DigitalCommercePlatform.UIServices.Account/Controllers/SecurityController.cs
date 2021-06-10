@@ -90,8 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             var response = await Mediator.Send(new ActiveCustomer.Request
             {
-                CompanyNumber = activeCustomerRequest.CompanyNumber,
-                CompanyName = activeCustomerRequest.CompanyName
+                CustomerNumber = activeCustomerRequest.CustomerNumber
             });
 
             if (response.Error.IsError)
