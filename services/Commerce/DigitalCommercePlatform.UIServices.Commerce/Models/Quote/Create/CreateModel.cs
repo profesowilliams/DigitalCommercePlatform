@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
 {
     [ExcludeFromCodeCoverage]
-    public class CreateModel
+    public class CreateQuoteModel
     {
         public string SalesOrg { get; set; }
         public string TargetSystem { get; set; }

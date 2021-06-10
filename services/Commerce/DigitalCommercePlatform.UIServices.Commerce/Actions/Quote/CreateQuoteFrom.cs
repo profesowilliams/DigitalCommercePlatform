@@ -26,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public class Response
         {
             public string QuoteId { get; set; }

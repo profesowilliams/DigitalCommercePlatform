@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
@@ -11,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
@@ -28,22 +30,35 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<CommerceService> _logger;
+        private readonly IHelperService _helperService;
         private readonly ICartService _cartService;
-        private readonly string _appOrderServiceUrl;
-        private readonly string _appQuoteServiceUrl;
+        private readonly IUIContext _uiContext;
+        private readonly IAppSettings _appSettings;
+        private string _appOrderServiceUrl;
+        private string _appQuoteServiceUrl;
+        private string _customerServiceURL;
         private static readonly Random getrandom = new Random();
-
-        public CommerceService(IMiddleTierHttpClient middleTierHttpClient, ILogger<CommerceService> logger, IAppSettings appSettings, ICartService cartService)
+        private readonly IMapper _mapper;
+        public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
+            ILogger<CommerceService> logger,
+            IAppSettings appSettings,
+            ICartService cartService,
+            IUIContext uiContext,
+            IMapper mapper,
+            IHelperService helperService)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _cartService = cartService;
-            _appOrderServiceUrl = appSettings.GetSetting("App.Order.Url");
-            _appQuoteServiceUrl = appSettings.GetSetting("App.Quote.Url");
+            _helperService = helperService;
+            _uiContext = uiContext;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _appSettings = appSettings;
         }
 
         public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
         {
+            _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
             var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<Models.Order.Internal.OrderModel>>(url);
             return getOrderByIdResponse?.FirstOrDefault();
@@ -51,6 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
+            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
 
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
@@ -64,6 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
         {
+            _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
                         {
@@ -187,39 +204,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return getrandom.Next(min, max);
         }
 
-        private string GetParameterName(string parameter)
-        {
-            var sortBy = string.Empty;
-            if (string.IsNullOrEmpty(parameter))
-            {
-                return sortBy;
-            }
-            if (parameter.ToLower() == "id")
-            {
-                sortBy = "Source.OriginId";
-            }
-            else if (parameter.ToLower() == "created")
-            {
-                sortBy = "Created";
-            }
-            else if (parameter.ToLower() == "quotevalue" || parameter.ToLower() == "formatedquotevalue")
-            {
-                sortBy = "Price";
-            }
-            else if (parameter.ToLower() == "updated")
-            {
-                sortBy = "Updated";
-            }
-            else
-            {
-                sortBy = "Created";
-            }
-            return sortBy;
-        }
-
         public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query)
         {
-            query.SortBy = GetParameterName(query.SortBy);
+            query.SortBy = _helperService.GetParameterName(query.SortBy);
+            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
             //we need to fix this issue
             quoteURL = quoteURL.ToString().Replace("=False", "=false");
@@ -253,6 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuote(CreateQuote.Request request)
         {
+            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, request.CreateModel);
             return response;
@@ -260,6 +249,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
+            CreateQuoteRequest(request.CreateModelFrom);
             ActiveCartModel activeCart = await _cartService.GetActiveCart();
             if (activeCart.Items != null)
             {
@@ -271,7 +261,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     item.Product = new List<ProductModel> {
                         new ProductModel {
                             Id = cartLine.ProductId,
-                            Manufacturer = cartLine.ProductId,
+                            Manufacturer = cartLine.ProductId, // call product service to get mfg part #
                             Name = cartLine.ProductId,
                             Type = "1",
                         }
@@ -286,12 +276,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
         {
+            CreateQuoteRequest(request.CreateModelFrom);
             var createQuoteFrom = request.CreateModelFrom;
-            var savedCartId = request.CreateModelFrom.CreateFromId;
-            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetails(savedCartId);
+
+            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetails(request.CreateModelFrom.CreateFromId);
             if (savedCart == null)
             {
-                throw new UIServiceException("Invalid savedCartId: " + savedCartId, (int)UIServiceExceptionCode.GenericBadRequestError);
+                throw new UIServiceException("Invalid savedCartId: " + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
 
             if (savedCart.Items != null)
@@ -308,20 +299,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     createQuoteFrom.Items.Add(itemModel);
                 }
             }
-            var response = await CallCreateQuote(createQuoteFrom);
-            return response;
-        }
+            //get order LEVEL and Type 
 
-        private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
-        {
-            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
-            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
+
+
+            var response = await CallCreateQuote(createQuoteFrom);
             return response;
         }
 
         public async Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
         {
-            // TO_DO: Missing implementation, so we return dummy response for now
+            // TO_DO: Missing implementation, so we return dummy response for now           
+
             var response = new CreateModelResponse
             {
                 Id = "TIW777" + GetRandomNumber(10000, 60000),
@@ -333,10 +322,83 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
         {
             // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
+            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var url = _appQuoteServiceUrl + "/Update";
             var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
             var response = new UpdateQuote.Response(result);
             return await Task.FromResult(response);
+        }
+
+
+        private void CreateQuoteRequest(CreateModelFrom createModelFrom)
+        {
+            if (_uiContext.User != null)
+            {
+                var contactList = new List<ContactModel>
+                {
+                    new ContactModel { Email =  _uiContext.User.Email, Name = _uiContext.User.FirstName + " " + _uiContext.User.LastName, Phone = _uiContext.User.Phone }
+                };
+                _helperService.GetOrderPricingConditions(createModelFrom.PricingCondition, out TypeModel orderType, out LevelModel orderLevel);
+                createModelFrom.Type = orderType;
+                createModelFrom.Level = createModelFrom.PricingCondition.Equals("0") ? null : orderLevel;
+                createModelFrom.SalesOrg = "0100"; // read from user context once it is available
+                var customerAddress = GetAddress("CUS", false).Result;
+                // map customer address 
+                createModelFrom.ShipTo = _mapper.Map<ShipToModel>(customerAddress.ToList().FirstOrDefault().addresses.ToList().FirstOrDefault());
+                createModelFrom.Reseller = new ResellerModel
+                {
+                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Id = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerNumber : _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Contact = contactList
+                };
+                createModelFrom.EndUser = new EndUserModel
+                {
+                    Address = createModelFrom.ShipTo.Address,
+                    Contact = contactList,
+                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Id = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerNumber : _uiContext.User.ActiveCustomer.CustomerNumber,
+                };
+                createModelFrom.Creator = _uiContext.User.ID;
+            }
+               
+                createModelFrom.CustomerPo = "";
+                createModelFrom.EndUserPo = "";
+                createModelFrom.Agreements = null;
+                createModelFrom.VendorReference = new VendorReferenceModel
+                {
+                    Type = "",
+                    Value = ""
+                };
+                createModelFrom.TargetSystem = "R3"; // verify logic for this
+            
+        }
+
+        private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
+        {
+            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
+            return response;
+        }
+
+        private async Task<IEnumerable<AccountAddressDetails>> GetAddress(string criteria, bool ignoreSalesOrganization)
+        {
+            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
+            var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
+            var response = await _middleTierHttpClient.GetAsync<IEnumerable<AccountAddressDetails>>(customerURL);
+            if (response.Any())
+            {
+                if (response.FirstOrDefault().addresses.Any() && criteria != "ALL" && ignoreSalesOrganization == false)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == criteria && t.SalesOrganization == "0100").ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                else if (response.FirstOrDefault().addresses.Any() && criteria != "ALL" && ignoreSalesOrganization == true)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == criteria).ToList(); //t.SalesOrganization == "0100" read from uiContext once it is available
+                else if (response.FirstOrDefault().addresses.Any() && ignoreSalesOrganization == false)
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == "0100").ToList(); // use sales organization from user context
+                else
+                    return response;
+            }
+            return response;
         }
     }
 }

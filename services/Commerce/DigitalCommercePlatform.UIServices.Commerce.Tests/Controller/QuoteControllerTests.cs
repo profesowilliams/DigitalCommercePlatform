@@ -51,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                 .ReturnsAsync(expected);
 
             var controller = GetController();
-            var createModel = new CreateModel();
+            var createModel = new CreateQuoteModel();
             // Act
             var result = await controller.Create(createModel).ConfigureAwait(false);
             // Assert

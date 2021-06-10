@@ -19,9 +19,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public CreateModel CreateModel { get; set; }
+            public CreateQuoteModel CreateModel { get; set; }
 
-            public Request(CreateModel createModel)
+            public Request(CreateQuoteModel createModel)
             {
                 CreateModel = createModel;
             }

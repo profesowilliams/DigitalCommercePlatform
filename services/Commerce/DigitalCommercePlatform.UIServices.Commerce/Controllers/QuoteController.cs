@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> Create([FromBody] CreateModel create)
+        public async Task<IActionResult> Create([FromBody] CreateQuoteModel create)
         {
             var response = await Mediator.Send(new CreateQuote.Request(create)).ConfigureAwait(false);
             return Ok(response);

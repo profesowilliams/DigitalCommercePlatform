@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
 {
     [ExcludeFromCodeCoverage]
-    public class CreateModelFrom
+    public class CreateModelFrom // rename to CreateQuoteModel
     {
         public string CreateFromId { get; set; }
         public QuoteCreationSourceType CreateFromType { get; set; }
@@ -23,6 +23,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
         public VendorReferenceModel VendorReference { get; set; }
         public List<ItemModel> Items { get; set; }
         public List<AgreementModel> Agreements { get; set; }
-        public int PricingCondition { get; set; }
+        public string PricingCondition { get; set; }
     }
 }

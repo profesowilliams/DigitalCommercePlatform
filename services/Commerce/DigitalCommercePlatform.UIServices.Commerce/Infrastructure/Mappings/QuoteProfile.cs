@@ -79,6 +79,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotesForGrid.Response>()
                  .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data));
+
+            CreateMap<AccountAddress, ShipToModel>()
+              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
+              .ForPath(dest => dest.Address, opt => opt.MapFrom(src => src))             
+              ;
+
+            CreateMap<AccountAddress, AddressModel>()
+             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
+             .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.AddressLine1))
+             .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.AddressLine2))
+             .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.AddressLine3))
+             .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.Zip))
+             .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
+             .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City))
+
+             ;
+
         }
     }
 }
