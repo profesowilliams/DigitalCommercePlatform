@@ -15,7 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.item="${@ item='The language navigation item'}"
           data-sly-use.groupTemplate="group.html" data-sly-use.itemContentTemplate="itemContent.html">
-    <label class="cmp-form-options__field-label cmp-radio-btn" data-cmp-data-layer="${item.children.size > 0 ? '' : item.data.json}">
+    <label class="cmp-form-options__field-label cmp-radio-btn" >
     	    <sly data-sly-call="${itemContentTemplate.itemContent @ item = item}"></sly>
     </label>
 </template>
