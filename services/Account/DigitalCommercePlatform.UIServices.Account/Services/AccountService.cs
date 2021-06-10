@@ -269,21 +269,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)
         {
-            var totalAmount = GetRandomNumber(500, 700);
-            var processedAmount = GetRandomNumber(100, 500);
-            var percentage = (totalAmount - processedAmount) * 10 / 100;
-            var formatedTotalAmount = string.Format(totalAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", totalAmount);
-            var formatedProcessced = string.Format(processedAmount % 1 == 0 ? "{0:N2}" : "{0:N2}", processedAmount);
+            int maxForTotalOrders = 43_000;
+            var randomGenerator = new Random();
+
+            var totalAmount = randomGenerator.Next(maxForTotalOrders);
+            var processedAmount = randomGenerator.Next(totalAmount);
+            var shippedAmount = randomGenerator.Next(processedAmount);
+
+            var processedPercentage = ((processedAmount / (float)totalAmount) * 100).ToString("F") + "%";
+            var shippedPercentage = ((shippedAmount / (float)totalAmount) * 100).ToString("F") + "%";
+
             var myOrders = new MyOrdersDashboard
             {
                 CurrencyCode = "USD",
                 CurrencySymbol = "$",
                 IsMonthly = request.IsMonthly,
-                ProcessedOrderPercentage = percentage.ToString(),
-                ProcessedOrdersAmount = processedAmount,
-                TotalOrderAmount = totalAmount,
-                TotalFormattedAmount = formatedTotalAmount,
-                ProcessedFormattedAmount = formatedProcessced,
+                Total = new OrderData { Amount = totalAmount, FormattedAmount = string.Format("{0:N2}", totalAmount), Percentage = "100%" },
+                Processed = new OrderData { Amount = processedAmount, FormattedAmount = string.Format("{0:N2}", processedAmount), Percentage = processedPercentage },
+                Shipped = new OrderData { Amount = shippedAmount, FormattedAmount = string.Format("{0:N2}", shippedAmount), Percentage = shippedPercentage }
             };
             return await Task.FromResult(myOrders);
         }
