@@ -2,7 +2,7 @@
     <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
         <div class="cq-placeholder" data-emptyText="${component.title}"></div>
     </sly>
-    <sly data-sly-use.model="${'minicart.js' @uiServiceDomain=serviceData.uiServiceDomain,savedCartsEndpoint=serviceData.savedCartsEndpoint,shopDomain=serviceData.shopDomain,cartURL=serviceData.cartURL,tdPartSmart=serviceData.tdPartSmart}">
+    <sly data-sly-use.model="${'minicart.js' @uiServiceDomain=serviceData.uiServiceDomain,activeCartEndpoint=serviceData.activeCartEndpoint,shopDomain=serviceData.shopDomain,cartURL=serviceData.cartURL,tdPartSmart=serviceData.tdPartSmart}">
 
         <div id="${properties.id}" data-observe-mutation>
             <div data-component="MiniCart"

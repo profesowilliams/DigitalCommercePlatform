@@ -7,7 +7,7 @@ use(function () {
         jsonObject.put("maxItems", properties.get("cutOffValue"));
     }
 
-    jsonObject.put("endpoint", this.uiServiceDomain+this.savedCartsEndpoint);
+    jsonObject.put("endpoint", this.uiServiceDomain+this.activeCartEndpoint);
 
 
     jsonObject.put("shopUrl", this.shopDomain+this.cartURL);
