@@ -33,7 +33,7 @@
 		background-color: get-color(td-lighter-gray);
 		opacity: 0.5;
 		z-index: 89;
-		position: absolute;
+		position: fixed;
 		height: auto;
 		bottom: 0;
 		top: 0;
@@ -44,7 +44,7 @@
 		border: 1px solid get-color(td-lighter-gray);
 		background-color: get-color(brand-white);
 		box-sizing: border-box;
-		position: absolute;
+		position: fixed;
 		z-index: 90;
 		margin: auto;
 		left: 0;
