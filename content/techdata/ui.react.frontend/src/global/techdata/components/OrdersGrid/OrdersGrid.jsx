@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '../Grid/Grid';
+import Modal from '../Modal/Modal';
+import DetailsInfo from '../DetailsInfo/DetailsInfo';
 
 function OrdersGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
+	const [modal, setModal] = useState(null);
 
 	const STATUS = {
 		onHold: 'onHold',
@@ -25,6 +28,39 @@ function OrdersGrid(props) {
 		{ iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
 	];
 
+	const labelList = [
+		{
+			labelKey: 'multiple',
+			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'multiple')?.labelValue ?? 'Multiple',
+		},
+		{
+			labelKey: 'pending',
+			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
+		},
+	];
+
+	const invoicesModal = {
+		title: componentProp.invoicesModal?.title ?? 'Order',
+		buttonLabel: componentProp.invoicesModal?.buttonLabel ?? 'Download All Related Invoices',
+		buttonIcon: componentProp.invoicesModal?.buttonIcon ?? 'fas fa-download',
+		content:
+			componentProp.invoicesModal?.content ??
+			'There are multiple Invoices associated with this Order. Click an invoice number to preview with the option to print or Download All for a zip file of all shown here',
+		pendingInfo:
+			componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
+	};
+
+	function invokeModal(modal) {
+		setModal(
+			<Modal
+				modalAction={modal.action}
+				modalContent={modal.content}
+				modalProperties={modal.properties}
+				onModalClosed={() => setModal(null)}
+			></Modal>
+		);
+	}
+
 	function applyStatusIcon(statusKey) {
 		let icon = componentProp.iconList?.find((icon) => icon.iconKey === statusKey);
 		if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
@@ -40,8 +76,34 @@ function OrdersGrid(props) {
 		return trackingArray.length ? trackingArray.length > 0 : false;
 	}
 
-	function nullFormatter(value) {
-		return value === null ? 'N/A' : value;
+	function getInvoices(line) {
+		if (line.invoices.length && line.invoices.length > 1) {
+			return (
+				<div
+					onClick={() => {
+						invokeModal({
+							content: (
+								<DetailsInfo
+									info={invoicesModal.content}
+									line={line}
+									pendingInfo={invoicesModal.pendingInfo}
+									pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
+								></DetailsInfo>
+							),
+							properties: {
+								title: `${invoicesModal.title}: ${line.id} `,
+								buttonIcon: invoicesModal.buttonIcon,
+								buttonLabel: invoicesModal.buttonLabel,
+							},
+						});
+					}}
+				>
+					{labelList.find((label) => label.labelKey === 'multiple').labelValue}
+				</div>
+			);
+		} else {
+			return line.invoices[0]?.id ?? null;
+		}
 	}
 
 	const columnDefs = [
@@ -100,10 +162,10 @@ function OrdersGrid(props) {
 		},
 		{
 			headerName: 'Invoice #',
-			field: 'invoice',
+			field: 'invoices',
 			sortable: true,
 			cellRenderer: (props) => {
-				return <div>{nullFormatter(props.value)}</div>;
+				return <div className='cmp-grid-url-underlined'>{getInvoices(props.data)}</div>;
 			},
 		},
 		{
@@ -144,6 +206,7 @@ function OrdersGrid(props) {
 			<div className='cmp-orders-grid'>
 				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
 			</div>
+			{modal}
 		</section>
 	);
 }

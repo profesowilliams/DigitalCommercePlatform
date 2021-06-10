@@ -9,6 +9,15 @@
 		"itemsPerPage":"25",
 		"paginationStyle": "scroll",
 		"options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"},
+		"invoicesModal":{
+		"title":"Order",
+		"buttonLabel":"Download All Related Invoices",
+		"buttonIcon":"fas fa-download",
+		"content": "There are multiple Invoices associated with this Order. Click an invoice number to preview with the option to print or Download All for a zip file of all shown here",
+		"pendingInfo": "Invoice is pending and will appear here after shipment is processed"},
+		"labelList": [
+		{"labelKey":"multiple","labelValue":"Multiple"},
+		{"labelKey":"pending","labelValue":"Pending"}],
 		"iconList": [
 		{"iconKey":"onHold","iconValue":"fas fa-hand-paper","iconText":"On Hold"},
 		{"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
@@ -23,7 +32,7 @@
 		{"columnLabel":"Ship To","columnKey":"shipTo", "sortable": true},
 		{"columnLabel":"Order Type 34","columnKey":"type", "sortable": false},
 		{"columnLabel":"Order Value","columnKey":"priceFormatted", "sortable": true},
-		{"columnLabel":"Invoice #","columnKey":"invoiceNum", "sortable": true},
+		{"columnLabel":"Invoice #","columnKey":"invoices", "sortable": false},
 		{"columnLabel":"Status","columnKey":"status", "sortable": true},
 		{"columnLabel":"Track","columnKey":"trackings", "sortable": false},
 		{"columnLabel":"Returns","columnKey":"isReturn", "sortable": false}]}'

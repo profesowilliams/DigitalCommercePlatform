@@ -34,7 +34,6 @@
 		background-color: get-color(td-lighter-gray);
 		opacity: 0.5;
 		z-index: 89;
-		display: block;
 		position: absolute;
 		height: auto;
 		bottom: 0;
@@ -49,14 +48,15 @@
 		position: absolute;
 		z-index: 90;
 		margin: auto;
-		margin-top: rem(140px);
 		left: 0;
 		right: 0;
 		top: 0;
+		bottom: 0;
 		text-align: center;
-		max-height: rem(400px);
+		max-height: 100%;
+		height: fit-content;
 		overflow: auto;
-		max-width: 80%;
+		max-width: 100%;
 		width: fit-content;
 		min-width: 30%;
 		box-shadow: 2px 2px 4px;
@@ -84,6 +84,9 @@
 		&_text {
 			margin: 1rem;
 		}
+		&-icon {
+			margin-right: 0.5rem;
+		}
 	}
 	&_close {
 		font-size: 1.5rem;
@@ -95,5 +98,53 @@
 	}
 	&_footer {
 		height: rem(50px);
+	}
+}
+
+.cmp-details-info {
+	max-width: rem(500px);
+	&__info {
+		font-size: $font-size-small;
+		margin-bottom: rem(20px);
+		color: get-color('brand-text-gray');
+	}
+	&__line {
+		display: grid;
+		grid-template-columns: 30% 40% 30%;
+		min-height: rem(53px);
+		height: fit-content;
+		align-items: flex-start;
+		padding-top: rem(16px);
+		border-top: 1px solid get-color('secondary-light-grey');
+		text-align: left;
+		color: get-color('brand-text-gray');
+		& .value {
+			text-align: right;
+		}
+		& .ongoing {
+			text-decoration: underline;
+			color: get-color(brand-button-blue);
+			cursor: pointer;
+		}
+		&:last-child {
+			border-bottom: 1px solid get-color('secondary-light-grey');
+		}
+	}
+	& .cmp-show-more {
+		&__label {
+			cursor: pointer;
+			& .icon {
+				margin-left: rem(5px);
+				color: get-color('td-primary-blue');
+			}
+			& .expanded svg {
+				transform: rotate(90deg);
+			}
+		}
+		&__content {
+			margin-top: rem(10px);
+			margin-bottom: rem(5px);
+			font-size: $font-size-xsmall;
+		}
 	}
 }

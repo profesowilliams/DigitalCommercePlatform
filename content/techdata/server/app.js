@@ -227,9 +227,9 @@ app.get("/quote/MyQuote", function (req, res) {
     });
 });
 app.post("/quote/create", function (req, res) {
-    
+
     if (!req.headers["sessionid"]) return res.status(401);
-    
+
     res.json({
         content: {
             quoteId: "121752813",
@@ -427,6 +427,21 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
+
+    function getInvoices(noOfInvoices) {
+        const invoices = [];
+        for (let i = 0; i <= noOfInvoices; i++) {
+            const invoice = {
+                id: i % 2 ? Number(`${pageNumber}${4009754974 + i + getRandom(10)}`) : "Pending",
+                line: i % 2 ? 1 + getRandom(10) : "",
+                quantity: 1 + getRandom(100),
+                price: 4750.70 + getRandom(1000),
+                created: i % 2 ? new Date().toISOString() : null,
+            }
+            invoices.push(invoice);
+        }
+        return invoices;
+    }
     for (let i = 0; i < pageSize; i++) {
         items.push({
             id: Number(`${pageNumber}${4009754974 + i}`),
@@ -435,7 +450,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
             shipTo: "UPS",
             type: "Manual",
             priceFormatted: 73002.31 + getRandom(1000),
-            invoice: Number(`${pageNumber}${4009754974 + i}`),
+            invoices: getInvoices(getRandom(10) - 1),
             status: status[getRandom(5)],
             trackings: i % 2 ? ['track1', 'track2'] : [],
             isReturn: i % 2 ? true : false,
@@ -957,7 +972,7 @@ app.get("/estimates", function (req, res) {
 });
 app.get("/estimations/validate/:id", function (req, res) {
     const { id } = req.params;
-    if (!req.headers["sessionid"] || !id )
+    if (!req.headers["sessionid"] || !id)
         return res.status(500).json({
             error: {
                 code: 0,
