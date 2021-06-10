@@ -1,14 +1,15 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -22,22 +23,24 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly string _appCartURL;
-#pragma warning disable CS0414 // The field is assigned but its value is never used
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _typeSearchUrl;
-#pragma warning restore CS0414
+        private readonly string _appCartUrl;
         private readonly ILogger<ContentService> _logger;
+        private readonly IUIContext _context;
 
         public ContentService(IMiddleTierHttpClient middleTierHttpClient,
-            ILogger<ContentService> logger, IAppSettings appSettings)
+            ILogger<ContentService> logger, IAppSettings appSettings, IUIContext context)
         {
             _logger = logger;
+            _context = context;
             _middleTierHttpClient = middleTierHttpClient;
             _appCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
             _typeSearchUrl = appSettings.GetSetting("Core.Search.Url");
+            _appCartUrl = appSettings.GetSetting("App.Cart.Url");
         }
 
         public async Task<ActiveCartModel> GetActiveCartDetails()
@@ -67,8 +70,27 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         public async Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request)
         {
             var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/GetTypeAheadTerms").BuildQuery(request);
-            var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
-            return getTypeAheadResponse;
+            try
+            {
+                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);
+                return getTypeAheadResponse;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting GetTypeAhead : " + nameof(ContentService));
+                throw ex;
+            }
+        }
+
+
+        //The middleTierHttpClient returns null
+        //middleTierHttpClient needs to be fixed to return the right HTTP Response of a PATCH
+        public async Task<AddCartItem.Response> AddItemCart(AddCartItem.Request request)
+        {
+            var url = _appCartUrl + "/AddItems";
+            var result = await _middleTierHttpClient.PatchAsync<CartItemModel>(url, null, request.Items);
+            var response = new AddCartItem.Response(result);
+            return await Task.FromResult(response);
         }
     }
 }

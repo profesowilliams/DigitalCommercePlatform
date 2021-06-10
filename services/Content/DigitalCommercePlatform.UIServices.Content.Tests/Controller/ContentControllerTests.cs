@@ -1,8 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
@@ -10,6 +12,7 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -89,6 +92,22 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
             var result = await controller.TypeAheadSearch("12", 123).ConfigureAwait(false);
 
             result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task AddItremsToCart(ResponseBase<AddCartItem.Response> expected)
+        {
+            // Arrange
+            _mockMediator.Setup(x => x.Send(It.IsAny<AddCartItem.Request>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var itemModels = new List<CartItemModel>();
+            // Act
+            var result = await controller.AddItemsToCart(itemModels).ConfigureAwait(false);
+            // Assert
+            _mockMediator.Verify(x => x.Send(It.IsAny<AddCartItem.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

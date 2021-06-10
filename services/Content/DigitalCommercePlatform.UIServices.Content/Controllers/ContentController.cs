@@ -1,7 +1,9 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -9,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Controllers
@@ -51,6 +54,14 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         public async Task<ActionResult<GetSavedCartDetails.Response>> GetActiveCartDetails()
         {
             var response = await Mediator.Send(new GetActiveCart.Request()).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpPatch]
+        [Route("addItems")]
+        public async Task<IActionResult> AddItemsToCart([FromBody] List<CartItemModel> itemModels)
+        {
+            var response = await Mediator.Send(new AddCartItem.Request(itemModels)).ConfigureAwait(false);
             return Ok(response);
         }
     }
