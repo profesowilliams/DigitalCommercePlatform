@@ -12,18 +12,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 {
     public class HelperServiceTests
     {
-        private readonly Mock<IUIContext> _context;        
+        private readonly Mock<IUIContext> _context;
         private readonly Mock<ILogger<HelperService>> _logger;
 
         public HelperServiceTests()
         {
-            _context = new Mock<IUIContext>();           
+            _context = new Mock<IUIContext>();
             _logger = new Mock<ILogger<HelperService>>();
         }
 
         private HelperService GetHelperService()
         {
-            return new HelperService( _logger.Object, _context.Object);
+            return new HelperService(_logger.Object, _context.Object);
         }
 
         [Fact]
@@ -41,12 +41,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void GetOrderPricingConditionsNull()
+        {
+            // Arrange
+            TypeModel orderType = new TypeModel();
+            LevelModel orderLevel = new LevelModel();
+            // Act
+            var result = GetHelperService().GetOrderPricingConditions(null, out orderType, out orderLevel);
+            // Assert
+            Assert.True(result);
+            Assert.NotNull(orderType);
+            Assert.NotNull(orderLevel);
+        }
+
+        [Fact]
         public void GetParameterName()
         {
             TypeModel orderType = new TypeModel();
             LevelModel orderLevel = new LevelModel();
 
-            var result = GetHelperService().GetParameterName("id");          
+            var result = GetHelperService().GetParameterName("id");
             Assert.NotNull(result);
         }
 

@@ -17,6 +17,7 @@ using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -340,7 +341,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 _helperService.GetOrderPricingConditions(createModelFrom.PricingCondition, out TypeModel orderType, out LevelModel orderLevel);
                 createModelFrom.Type = orderType;
-                createModelFrom.Level = createModelFrom.PricingCondition.Equals("0") ? null : orderLevel;
+                createModelFrom.Level = orderLevel;
                 createModelFrom.SalesOrg = "0100"; // read from user context once it is available
                 var customerAddress = GetAddress("CUS", false).Result;
                 // map customer address 
@@ -360,23 +361,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 createModelFrom.Creator = _uiContext.User.ID;
             }
-               
-                createModelFrom.CustomerPo = "";
-                createModelFrom.EndUserPo = "";
-                createModelFrom.Agreements = null;
-                createModelFrom.VendorReference = new VendorReferenceModel
-                {
-                    Type = "",
-                    Value = ""
-                };
-                createModelFrom.TargetSystem = "R3"; // verify logic for this
-            
+
+            createModelFrom.CustomerPo = "";
+            createModelFrom.EndUserPo = "";
+            createModelFrom.Agreements = null;
+            createModelFrom.VendorReference = new VendorReferenceModel
+            {
+                Type = "",
+                Value = ""
+            };
+            createModelFrom.TargetSystem = "R3"; // verify logic for this
+
         }
 
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
         {
             _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteFrom, Formatting.Indented));
             var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
             return response;
         }

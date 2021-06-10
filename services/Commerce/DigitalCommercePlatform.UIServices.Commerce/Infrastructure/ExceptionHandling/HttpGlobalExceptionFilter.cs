@@ -1,8 +1,10 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -23,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHa
 
         public void OnException(ExceptionContext context)
         {
+            var traceId = context?.HttpContext?.Request?.Headers["TraceId"];
             if (context.Exception is ValidationException validationException)
             {
                 _logger.LogError(context.Exception, "Validation Exception at: " + nameof(HttpGlobalExceptionFilter));
@@ -43,13 +46,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHa
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
-            else
+            else if (context.Exception is RemoteServerHttpException remoteServerHttpException)
             {
-                _logger.LogError(context.Exception, "Exception at: " + nameof(HttpGlobalExceptionFilter));
-
+                _logger.LogError(context.Exception, "RemoteServerHttpException - traceId:" + traceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = (int)UIServiceExceptionCode.GenericServerError }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "An unexpected RemoteServerHttpException. See logs for traceId:" + traceId + "." }, Code = (int)UIServiceExceptionCode.GenericServerError }
+                });
+                context.HttpContext.Response.StatusCode = (int)remoteServerHttpException.Code;
+            }
+            else
+            {
+                _logger.LogError(context.Exception, "traceId:" + traceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
+                context.Result = new ObjectResult(new ResponseBase<object>
+                {
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "An unexpected error occurred. See logs for traceId:" + traceId + "." }, Code = (int)UIServiceExceptionCode.GenericServerError }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

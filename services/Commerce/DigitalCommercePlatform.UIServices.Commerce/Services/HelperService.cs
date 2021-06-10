@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 orderLevel = new LevelModel
                 {
                     Id = response.LevelId,
-                    Value = response.Level
+                    Value = response.LevelId,
                 };
 
             }
@@ -82,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 orderLevel = new LevelModel
                 {
                     Id = "",
-                    Value = ""
+                    Value = "0",
                 };
             }
 
