@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -15,6 +16,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -169,6 +171,33 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var result = await controller.GetProduct(data, false).ConfigureAwait(false);
 
             result.Should().NotBeNull();
+        }
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductCatalogService(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalog model)
+        {
+            mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductCatalogHandler.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+           
+            var controller = GetController();
+            var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductCatalogService_BadRequest(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalog model)
+        {
+            mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductCatalogHandler.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.BadRequest);
         }
     }
 }

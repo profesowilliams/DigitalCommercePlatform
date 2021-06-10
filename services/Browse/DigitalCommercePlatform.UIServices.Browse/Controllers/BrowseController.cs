@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -132,6 +133,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 var response = await Mediator.Send(new FindSummaryHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false);
                 return Ok(response);
             }
+        }
+
+        [HttpGet]
+        [Route("getProductCatalog")]
+        public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalog input)
+        {
+            var response = await Mediator.Send(new GetProductCatalogHandler.Request(input)).ConfigureAwait(false);
+            return Ok(response);
         }
     }
 }

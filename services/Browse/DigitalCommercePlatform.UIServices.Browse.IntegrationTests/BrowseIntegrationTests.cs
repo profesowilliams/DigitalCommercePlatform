@@ -176,5 +176,18 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
             var response = await client.RunTest<ResponseBase<FindSummaryHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
+
+        [Theory]
+        [InlineDomainData("/v1/getProductCatalog?IsSourceDF=true&id=ALT&level=3&shortenSubcategories=true&cultureName=&corporateCode=0100")]
+        public async Task GetProductCatalogService(string input)
+        {
+            using var scope = fixture.CreateChildScope();
+            scope.OverrideClient<object>()
+                .MatchContains("IsSourceDF=false")
+                .Returns<ResponseBase<GetProductCatalogHandler.Response>>();
+            var client = fixture.CreateClient().SetDefaultHeaders();
+            var response = await client.RunTest<ResponseBase<GetProductCatalogHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            response.Should().NotBeNull();
+        }
     }
 }

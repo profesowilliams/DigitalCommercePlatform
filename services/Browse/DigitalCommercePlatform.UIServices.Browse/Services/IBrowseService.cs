@@ -29,5 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsHandler.Request request);
 
         Task<SummaryModel> GetProductSummary(GetProductSummaryHandler.Request request);
+
+        Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request);
     }
 }

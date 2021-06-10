@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
+
     [ExcludeFromCodeCoverage]
     public class BrowseService : IBrowseService
     {
@@ -28,7 +29,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _coreCartURL;
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
+        private readonly string _productCatalogURL;
         private readonly string _appProductURL;
+        private readonly string _productCatalogFeature;
         private readonly ICachingService _cachingService;
         private readonly IUIContext _uiContext;
         private readonly IMapper _mapper;
@@ -47,6 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
             _appProductURL = appSettings.GetSetting("App.Product.Url");
+            _productCatalogURL = appSettings.GetSetting("External.Product.Catalog.Url");
+            _productCatalogFeature = appSettings.GetSetting("Feature.DF.ProuctCatalog");
         }
 
         public async Task<GetHeaderHandler.Response> GetHeader(GetHeaderHandler.Request request)
@@ -149,6 +154,57 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var ProductURL = _appProductURL.BuildQuery(request);
             var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<SummaryModel>>(ProductURL);
             return getProductResponse.FirstOrDefault();
+        }
+
+        public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)
+        {
+            string catalogURL = _appCatalogURL.BuildQuery(request);
+            List<CatalogResponse> catalog ;
+            bool IsSourceDF = Boolean.TryParse(_productCatalogFeature,out bool output);
+            if (IsSourceDF)
+            {
+                catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
+                if (catalog == null)
+                {
+                    var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
+                    if (response != null && response.Catalogs.Any())
+                    {
+                        var tempResponse = _mapper.Map<CatalogModel>(response);
+                        catalog = new List<CatalogResponse>();
+                        var objCatalogResponse = new CatalogResponse
+                        {
+                            Key = request.Input.Id,
+                            Name = null,
+                            DocCount = 0, //Fix This
+                            Children = tempResponse.Catalogs
+                        };
+
+                        catalog.Add(objCatalogResponse);
+                        await _cachingService.SetCatalogCache(catalog, request.Input.Id);
+                    }
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(_productCatalogURL))
+                {
+                    throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
+                }
+                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
+                List <CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
+
+                catalog = new List<CatalogResponse>();
+                var objCatalogResponse = new CatalogResponse
+                {
+                    Key = request.Input.Id,
+                    Name = null,
+                    DocCount = 0, //Fix This
+                    Children = _mapper.Map<List<CatalogResponse>>(tempcatalog)
+                };
+
+                catalog.Add(objCatalogResponse);
+            }
+            return catalog;
         }
     }
 }

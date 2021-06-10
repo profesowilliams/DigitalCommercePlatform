@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Catalogue
 
 
     [ExcludeFromCodeCoverage]
-    public class CatalogResponse    {        
+    public class CatalogResponse    { 
         public string Key { get; set; }
         public string Name { get; set; }
         public long? DocCount { get; set; }
