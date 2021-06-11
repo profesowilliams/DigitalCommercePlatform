@@ -6,6 +6,7 @@ using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -61,6 +62,13 @@ namespace DigitalCommercePlatform.UIServices.Common.Cart.Services
                 _logger.LogError(ex, "Exception at getting Cart  : " + nameof(GetSavedCartDetailsAsync));
                 throw;
             }
+        }
+
+        public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync()
+        {
+            var savedCartURL = _appCartURL.AppendPathSegment("listsavedcarts");
+            var response = await _middleTierHttpClient.GetAsync<List<SavedCartDetailsModel>>(savedCartURL);
+            return response;
         }
     }
 }
