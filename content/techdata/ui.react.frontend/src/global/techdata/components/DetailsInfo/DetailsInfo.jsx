@@ -37,9 +37,7 @@ function DetailsInfo({ line, info, pendingInfo, pendingLabel }) {
 									<ShowMore label={pendingLabel} content={pendingInfo}></ShowMore>
 								)}
 							</div>
-							<div className='value'>
-								{invoice.price} {line.currencySymbol}
-							</div>
+							<div className='value'>{line.currencySymbol + '' + invoice.price}</div>
 						</div>
 					))}
 				</div>
