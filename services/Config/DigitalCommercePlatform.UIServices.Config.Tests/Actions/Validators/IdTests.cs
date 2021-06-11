@@ -13,17 +13,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
     {
         internal class ValidIdData : TheoryData<EV.EstimationValidate.Request>
         {
-            protected static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            protected static readonly string ValidChars = EV.EstimationValidate.Validator.ValidChars;
+            protected static readonly int Min = EV.EstimationValidate.Validator.MinIdLength;
+            protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
 
             public ValidIdData()
             {
-                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(EV.EstimationValidate.Validator.MinIdLength) });
+                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(Min) });
                 Add(new EV.EstimationValidate.Request
                 {
-                    Id = GenerateValidId((int)Math.Floor(
-                        0.5 * (EV.EstimationValidate.Validator.MinIdLength + EV.EstimationValidate.Validator.MaxIdLength)))
+                    Id = GenerateValidId((int)Math.Floor(0.5 * (Min + Max)))
                 });
-                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(EV.EstimationValidate.Validator.MaxIdLength) });
+                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(Max) });
             }
 
             private static string GenerateValidId(int length)
@@ -50,23 +51,23 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
             protected static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             protected static readonly string InvalidChars = " @%";
 
+            protected static readonly int Min = EV.EstimationValidate.Validator.MinIdLength;
+            protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
+
             public InvalidIdData()
             {
                 Add(new EV.EstimationValidate.Request { Id = string.Empty });
                 Add(new EV.EstimationValidate.Request
                 {
-                    Id = GenerateInvalidId(
-                        EV.EstimationValidate.Validator.MinIdLength < 1 ? 0 : EV.EstimationValidate.Validator.MinIdLength - 1)
+                    Id = GenerateInvalidId(Min < 1 ? 0 : Min - 1)
                 });
-                Add(new EV.EstimationValidate.Request { Id = GenerateInvalidId(EV.EstimationValidate.Validator.MaxIdLength + 1) });
+                Add(new EV.EstimationValidate.Request { Id = GenerateInvalidId(Max + 1) });
 
                 foreach(char c in InvalidChars)
                 {
                     Add(new EV.EstimationValidate.Request
                     {
-                        Id = GenerateInvalidId((int)Math.Floor(
-                            0.5 * (EV.EstimationValidate.Validator.MinIdLength + EV.EstimationValidate.Validator.MaxIdLength)),
-                        c)
+                        Id = GenerateInvalidId((int)Math.Floor(0.5 * (Min + Max)), c)
                     });
                 }
             }
