@@ -50,8 +50,32 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
 
         public class Validator : AbstractValidator<Request>
         {
+            public static readonly int MinIdLength = 2;
+            public static readonly int MaxIdLength = 255;
+            public static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
             public Validator()
             {
+                RuleFor(x => x.Id)
+                    .NotEmpty()
+                    .MinimumLength(MinIdLength)
+                    .MaximumLength(MaxIdLength);
+
+                RuleFor(x => x.Id).Must(CheckAllChars).WithMessage("Id contains invalid characters");
+            }
+
+            public bool CheckAllChars(string id)
+            {
+                var result = true;
+                foreach (char c in id)
+                {
+                    if (!ValidChars.Contains(c))
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                return result;
             }
         }
     }
