@@ -4,8 +4,10 @@ use(function () {
     var jsonObject = {};
     var iconValues = [];
     var listValues = [];
+	var labelValues = [];
     var optionData = {};
     var resourceResolver = resource.getResourceResolver();
+ var invoicesModalData = {};
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
 
@@ -44,6 +46,24 @@ use(function () {
 
 
     }
+       var labelListNode = resourceResolver.getResource(currentNode.getPath() + "/labelList");
+
+    if (labelListNode !== null) {
+        var childrenList = labelListNode.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var labelKey = res.properties["labelKey"];
+            var labelValue = res.properties["labelValue"];
+            var labelData = {};
+            labelData.labelKey = labelKey;
+            labelData.labelValue = labelValue;
+            labelValues.push(labelData);
+
+        }
+
+
+    }
+
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
     }
@@ -68,7 +88,26 @@ use(function () {
     if (properties && properties["defaultSortingDirection"]) {
         optionData.defaultSortingDirection = properties["defaultSortingDirection"];
     }
-    
+     if (properties && properties["title"]) {
+        invoicesModalData.title = properties["title"];
+    }
+
+     if (properties && properties["buttonIcon"]) {
+        invoicesModalData.buttonIcon = properties["buttonIcon"];
+    }
+
+     if (properties && properties["buttonLabel"]) {
+        invoicesModalData.buttonLabel = properties["buttonLabel"];
+    }
+
+     if (properties && properties["content"]) {
+        invoicesModalData.content = properties["content"];
+    }
+
+     if (properties && properties["pendingInfo"]) {
+        invoicesModalData.pendingInfo = properties["pendingInfo"];
+    }
+
     if (listValues != null) {
         jsonObject["columnList"] = listValues;
     }
@@ -77,9 +116,18 @@ use(function () {
         jsonObject["options"] = optionData;
     }
 
+     if (invoicesModalData != null) {
+        jsonObject["invoicesModal"] = invoicesModalData;
+    }
+
     if (iconValues != null) {
         jsonObject["iconList"] = iconValues;
     }
+
+     if (labelValues != null) {
+        jsonObject["labelList"] = labelValues;
+    }
+
 
     return {
         configJson: JSON.stringify(jsonObject)
