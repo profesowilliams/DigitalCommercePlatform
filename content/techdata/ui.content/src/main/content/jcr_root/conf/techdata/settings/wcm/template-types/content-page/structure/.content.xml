@@ -3,6 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         jcr:primaryType="cq:PageContent"
+        cq:deviceGroups="[mobile/groups/responsive]"
         sling:resourceType="techdata/components/page">
         <root
             jcr:primaryType="nt:unstructured"

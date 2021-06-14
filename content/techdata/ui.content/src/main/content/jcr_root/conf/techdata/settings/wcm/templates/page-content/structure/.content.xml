@@ -34,14 +34,22 @@
         </root>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
-                <phone
-                    jcr:primaryType="nt:unstructured"
-                    title="Smaller Screen"
-                    width="{Long}768"/>
-                <tablet
-                    jcr:primaryType="nt:unstructured"
-                    title="Tablet"
-                    width="{Long}1200"/>
+                <phone-portrait
+                        jcr:primaryType="nt:unstructured"
+                        title="480px"
+                        width="{Long}480"/>
+                <tablet-portrait
+                        jcr:primaryType="nt:unstructured"
+                        title="768px"
+                        width="{Long}768"/>
+                <phone-landscape
+                        jcr:primaryType="nt:unstructured"
+                        title="992px"
+                        width="{Long}992"/>
+                <tablet-landscape
+                        jcr:primaryType="nt:unstructured"
+                        title="1200px"
+                        width="{Long}1200"/>
             </breakpoints>
         </cq:responsive>
     </jcr:content>
