@@ -30,8 +30,9 @@
 }
 
 .cmp-dropbtn {
-	padding: 0 1rem;
-  font-size: .9rem;
+  font-size: $font-size-small;
+	margin: 0 rem(16px);
+  padding: 0;
   min-height: 30px;
   background: none;
   color: get-color(brand-black);;
