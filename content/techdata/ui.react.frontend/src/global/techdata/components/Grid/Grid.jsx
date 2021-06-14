@@ -3,7 +3,7 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
-function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
+function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -11,15 +11,16 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	const pagination = config.paginationStyle && config.paginationStyle !== 'none' && config.paginationStyle !== 'scroll';
 	const serverSide = config.serverSide || true;
 	const gridNodeRef = useRef(null);
-	const domInfoRef = useRef(null);
 	const gridId = useRef(null);
 	const gridApi = useRef(null);
+
 	/*
-			function that returns AG grid vnode outside main return function
-			to keep that node on useState hook and set it once per component lifecycle
+			function that returns AG grid vnode outside main return function to keep that
+			node on useState hook and set it once per component lifecycle or on demand
 	*/
 	const AgGrid = () => (
 		<AgGridReact
+			key={Math.floor(1000 * Math.random()).toString()}
 			frameworkComponents={renderers}
 			pagination={pagination}
 			paginationPageSize={config.itemsPerPage}
@@ -93,6 +94,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		options = config.options;
 	}
 
+	function resetGrid() {
+		setAgGrid(<AgGrid />);
+	}
+
 	function createDataSource() {
 		return {
 			getRows: (params) => {
@@ -122,10 +127,23 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			pathName.slice(-1) === '/' ? (pathName = pathName.slice(0, -1)) : null;
 			let apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}`;
 			url.search !== '' ? (apiUrl += `&${pages}${sortParams}`) : (apiUrl += `?${pages}${sortParams}`);
-			globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
-			const response = await get(apiUrl);
+			let response = null;
+			// check if request interceptor is attached and use it.
+			// otherwise get data according to grid state
+			if (typeof requestInterceptor === 'function') {
+				response = await requestInterceptor({
+					url: apiUrl,
+					get: async (_url) => {
+						globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(_url);
+						return get(_url);
+					},
+				});
+			} else {
+				globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
+				response = await get(apiUrl);
+			}
 			globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
-			return response.data.content;
+			return response?.data?.content;
 		}
 	}
 
@@ -145,15 +163,20 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 			});
 		}
 		// expose this instance of grid object globally for debug purposes
+		// keep custom hooks after grid refresh
 		globalThis[`$$tdGrid${gridId.current}`] = {
 			node: gridNodeRef.current,
 			api: data.api,
-			onAjaxCall: (apiUrl) => {},
-			onNewGridDataLoaded: (response) => {},
+			onAjaxCall: globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall
+				? globalThis[`$$tdGrid${gridId.current}`].onAjaxCall
+				: (apiUrl) => {},
+			onNewGridDataLoaded: globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded
+				? globalThis[`$$tdGrid${gridId.current}`].onNewGridDataLoaded
+				: (response) => {},
 		};
 		// fire onAfterGridInit callback and pass AG grid object to parent
 		if (typeof onAfterGridInit === 'function') {
-			onAfterGridInit({ node: gridNodeRef.current, api: data.api });
+			onAfterGridInit({ node: gridNodeRef.current, api: data.api, gridResetRequest: () => resetGrid() });
 		}
 	}
 
@@ -162,16 +185,11 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 	}
 
 	function onViewportChanged(data) {
-		if (config.paginationStyle === 'scroll' && domInfoRef.current) {
+		if (config.paginationStyle === 'scroll') {
 			const renderedNodes = data.api.getRenderedNodes();
 			const firstIndex = renderedNodes[0].rowIndex;
 			const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
-			/*
-				  React "useState" inside AG grid callbacks causes unstable behaviour and refresh of component
-					on some environments.
-			*/
-			// update page-info after scrolling in "scroll" pagination style
-			domInfoRef.current.textContent = `${firstIndex + 1} - ${lastIndex + 1} of ${data.api.getDisplayedRowCount()}`;
+			setActualRange({ from: firstIndex + 1, to: lastIndex + 1, total: data.api.getDisplayedRowCount() });
 		}
 	}
 
@@ -188,9 +206,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit }) {
 		<div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
 			<Fragment>
 				<div className={`page-info ${config.paginationStyle === 'scroll' ? 'visible' : 'hidden'}`}>
-					<span ref={domInfoRef}>
-						{actualRange.from} - {actualRange.to} of {actualRange.total}
-					</span>
+					{actualRange.from} - {actualRange.to} of {actualRange.total}
 				</div>
 				{agGrid}
 			</Fragment>
