@@ -10,7 +10,8 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
-using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
+using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
@@ -251,7 +252,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
             CreateQuoteRequest(request.CreateModelFrom);
-            ActiveCartModel activeCart = await _cartService.GetActiveCart();
+            ActiveCartModel activeCart = await _cartService.GetActiveCartAsync();
             if (activeCart.Items != null)
             {
                 request.CreateModelFrom.Items = new List<ItemModel>();
@@ -277,14 +278,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
         {
-            CreateQuoteRequest(request.CreateModelFrom);
-            var createQuoteFrom = request.CreateModelFrom;
-
-            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetails(request.CreateModelFrom.CreateFromId);
+            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetailsAsync(request.CreateModelFrom.CreateFromId);
             if (savedCart == null)
             {
                 throw new UIServiceException("Invalid savedCartId: " + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
+            CreateQuoteRequest(request.CreateModelFrom);
+            var createQuoteFrom = request.CreateModelFrom;
 
             if (savedCart.Items != null)
             {

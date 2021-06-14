@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
