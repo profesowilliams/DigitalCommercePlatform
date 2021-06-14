@@ -2,15 +2,12 @@ package com.techdata.core.models;
 
 
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
-import com.adobe.cq.wcm.core.components.models.LanguageNavigationItem;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Style;
-import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
@@ -22,9 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +30,11 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 
 	public static final String RESOURCE_TYPE = "techdata/components/languagenavigation";
 	private static final String DEFAULT_NAVIGATION_ROOT = "/content";
+//	how many levels below nav root
+	private static final int COUNTRY_ROOT_OFFSET = 2;
+//	how many levels below nav root
+	private static final int REGION_ROOT_OFFSET = 0;
+
 
 	@Self
 	private SlingHttpServletRequest request;
@@ -69,30 +69,45 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 		items = delegateLanguageNavigation.getItems();
 	}
 
-	public List<LanguageDropDownItem> getLanguageListItems() {
+	public List<LanguageDropDownItem> getRegionListItems() {
+		List<LanguageDropDownItem> test = getDropDownItems(currentPage.getParent(getRegionRootPageDepthFromCurrentPage()), true);
+		return test;
+	}
+
+	private List<LanguageDropDownItem> getDropDownItems(Page root, boolean getChildren) {
+
 		List<LanguageDropDownItem> pages = new ArrayList<>();
-		Page countryRootPage = currentPage.getParent(getCountryPageDepthFromCurrentPage());
-		log.debug("inside depth for. country root is {}", getCountryPageDepthFromCurrentPage());
-		log.debug("root is {}, currentPage is {}", currentPage.getPageManager().getPage(navigationRoot).getPath(), currentPage.getPath());
-		log.debug("inside getLanguageList. country root is path is {}", null == countryRootPage || countryRootPage.getPath().isEmpty());
-
-		if (countryRootPage.getDepth() > currentPage.getPageManager().getPage(navigationRoot).getDepth()) {
-			Iterator<Page> it = countryRootPage.listChildren(new PageFilter());
+		if (root.getDepth() >= currentPage.getPageManager().getPage(navigationRoot).getDepth()) {
+			Iterator<Page> it = root.listChildren(new PageFilter());
 			while (it.hasNext()) {
-				Page page = it.next();
-				log.debug("inside getLanguageList. current path is {}", page.getPath());
-				boolean active = currentPage.getPath().equals(page.getPath()) || currentPage.getPath().startsWith(page.getPath() + "/");
 
-				pages.add(new LanguageDropDownItem(page, active));
+				Page page = it.next();
+				boolean active = currentPage.getPath().equals(page.getPath()) || currentPage.getPath().startsWith(page.getPath() + "/");
+				if (getChildren)
+				{
+					pages.add(new LanguageDropDownItem(page, active, 3));
+				}else{
+					pages.add(new LanguageDropDownItem(page, active));
+				}
+
 			}
 		}
 
 		return pages;
 	}
 
+	public List<LanguageDropDownItem> getLanguageListItems() {
+		return getDropDownItems(currentPage.getParent(getCountryPageDepthFromCurrentPage()), false);
+	}
+
 	private int getCountryPageDepthFromCurrentPage() {
 		PageManager pageManager = currentPage.getPageManager();
-		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - 1 : 0);
+		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - COUNTRY_ROOT_OFFSET : 0);
+	}
+
+	private int getRegionRootPageDepthFromCurrentPage() {
+		PageManager pageManager = currentPage.getPageManager();
+		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - REGION_ROOT_OFFSET : 0);
 	}
 
 	@Override
@@ -106,7 +121,6 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	}
 	
 	public String getCountryRootPageTitle() {
-		log.debug("path of the country page is {}, depth of the country page is {}, currentPage depth is {}", currentPage.getParent(getCountryPageDepthFromCurrentPage()).getPath(), getCountryPageDepthFromCurrentPage(), currentPage.getDepth());
 		return currentPage.getParent(getCountryPageDepthFromCurrentPage()).getPageTitle();
 	}
 }
