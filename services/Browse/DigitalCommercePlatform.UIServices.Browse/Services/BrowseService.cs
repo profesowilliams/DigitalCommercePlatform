@@ -193,7 +193,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 {
                     throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
                 }
-                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>("http://usdevmtap04.us.tdworldwide.com/ProductService/api/VendorProduct/getProductCatalog", null, request);
+                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
                 List <CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
 
                 catalog = new List<CatalogResponse>();
