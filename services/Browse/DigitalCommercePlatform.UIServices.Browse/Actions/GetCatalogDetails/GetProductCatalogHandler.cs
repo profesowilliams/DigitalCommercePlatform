@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
         {
             public Validator()
             {
-                RuleFor(i => i.Input.Level).NotEmpty().WithMessage("Please enter the input");
+                RuleFor(i => i.Input.Id).NotEmpty().WithMessage("Id can not be null");
             }
         }
     }

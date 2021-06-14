@@ -158,10 +158,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)
         {
+            request.Input.CorporateCode = "0100"; //Need to fix this
             string catalogURL = _appCatalogURL.BuildQuery(request);
             List<CatalogResponse> catalog ;
-            bool IsSourceDF = Boolean.TryParse(_productCatalogFeature,out bool output);
-            if (IsSourceDF)
+            bool IsSourceDF = false;
+            var result = Boolean.TryParse(_productCatalogFeature, out IsSourceDF);
+            
+            if (IsSourceDF && result)
             {
                 catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
                 if (catalog == null)
@@ -190,7 +193,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 {
                     throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
                 }
-                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
+                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>("http://usdevmtap04.us.tdworldwide.com/ProductService/api/VendorProduct/getProductCatalog", null, request);
                 List <CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
 
                 catalog = new List<CatalogResponse>();
