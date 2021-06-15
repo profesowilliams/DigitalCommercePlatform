@@ -26,14 +26,14 @@ class SocialLinksTest {
     void getSocialLinks() {
         context.currentResource("/component");
         links = context.request().adaptTo(SocialLinks.class);
-        assertEquals("item1", links.getSocialLinks().getChild("item0").getName());
+        assertEquals("item0", links.getSocialLinks().getChild("item0").getName());
     }
 
     @Test
     void getSocialLinkList() {
         context.currentResource("/component");
         links = context.request().adaptTo(SocialLinks.class);
-        assertEquals(2, links.getSocialLinkList().size());
+        assertEquals(3, links.getSocialLinkList().size());
     }
 
 }

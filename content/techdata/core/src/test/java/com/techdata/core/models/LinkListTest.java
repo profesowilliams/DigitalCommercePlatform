@@ -26,20 +26,20 @@ class LinkListTest {
     void initModel() {
         context.currentResource("/linklist");
         links = context.request().adaptTo(LinkList.class);
-        assertEquals("item1", links.getLinks().getChild("item0").getName());
+        assertEquals("item0", links.getLinks().getChild("item0").getName());
     }
 
     @Test
     void getLinks() {
         context.currentResource("/linklist");
         links = context.request().adaptTo(LinkList.class);
-        assertEquals("Techdata", links.getLinks().getChild("item0").getValueMap().get("platformName"));
+        assertEquals("©2021 Tech Data Corp.", links.getLinks().getChild("item0").getValueMap().get("platformName"));
     }
 
     @Test
     void getLinkList() {
         context.currentResource("/linklist");
         links = context.request().adaptTo(LinkList.class);
-        assertEquals(2, links.getLinkList().size());
+        assertEquals(6, links.getLinkList().size());
     }
 }
