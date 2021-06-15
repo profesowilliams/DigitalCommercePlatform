@@ -123,17 +123,15 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     }
 
-    private JsonArray buildShopJSON() {
+    private JsonObject buildShopJSON() {
 
-        JsonArray shopJSONList = new JsonArray();
+        JsonObject shopJSON  = new JsonObject();
+        shopJSON.add("shopHeader-menuItemsJson", combinedMenuItemsJson());
+        shopJSON.add("shopHeader-accountSettingsJson", createAccountSettingsJsonObject());
+        shopJSON.add("shopHeader-shopOptionsJson", createShopOptionsJSONObject());
+        shopJSON.add("shopHeader-authenticationStatusJson", createAuthJSONObject());
 
-
-        shopJSONList.add(combinedMenuItemsJson());
-
-        shopJSONList.add(createAccountSettingsJsonObject());
-        shopJSONList.add(createShopOptionsJSONObject());
-        shopJSONList.add(createAuthJSONObject());
-        return shopJSONList;
+        return shopJSON;
     }
 
     private JsonObject combinedMenuItemsJson() {
@@ -665,4 +663,3 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private static final String ETC_CLIENTLIBS = "/etc.clientlibs/";
     private static final Logger LOG = LoggerFactory.getLogger(ExperienceFragmentJSServlet.class);
 }
-
