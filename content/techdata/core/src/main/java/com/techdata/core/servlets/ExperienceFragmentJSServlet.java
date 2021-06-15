@@ -134,13 +134,11 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return shopJSON;
     }
 
-    private JsonObject combinedMenuItemsJson() {
-        JsonObject menuItemsJson = new JsonObject();
+    private JsonArray combinedMenuItemsJson() {
         JsonArray jsonArray = new JsonArray();
         jsonArray.add(buildSystemObject());
         jsonArray.add(buildProjectorObject());
-        menuItemsJson.add("shopHeader-menuItemsJson", jsonArray);
-        return menuItemsJson;
+        return jsonArray;
     }
 
     private JsonObject buildSystemObject() {
@@ -524,7 +522,6 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     }
 
     private JsonObject createAccountSettingsJsonObject() {
-        JsonObject accountSettingsJson = new JsonObject();
         JsonObject accountSettingsJsonData = new JsonObject();
         accountSettingsJsonData.addProperty("userId","Anonymous");
         accountSettingsJsonData.addProperty("orderLevel",0);
@@ -557,12 +554,10 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         accountSettingsJsonData.addProperty("marketTerritoryCode","");
         accountSettingsJsonData.addProperty("customerNumber","");
         accountSettingsJsonData.addProperty("productSearchItemsPerPage",25);
-        accountSettingsJson.add("shopHeader-accountSettingsJson", accountSettingsJsonData);
-        return accountSettingsJson;
+        return accountSettingsJsonData;
     }
 
     private JsonObject createShopOptionsJSONObject() {
-        JsonObject shopOptionsJson = new JsonObject();
         JsonObject shopOptionsJsonData = new JsonObject();
         shopOptionsJsonData.addProperty("shopUrl"," http,//localhost,63018");
         shopOptionsJsonData.addProperty("corporateUrl","http,//exwb11preview.dev.web.us.tdworldwide.com");
@@ -587,12 +582,9 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         shopOptionsJsonData.addProperty("cNETInlineContentEnabled","true");
         shopOptionsJsonData.addProperty("webTrendsEnabled","true");
         shopOptionsJsonData.addProperty("productCategoriesMegaMenu","false");
-        shopOptionsJson.add("shopHeader-shopOptionsJson", shopOptionsJsonData);
-        return shopOptionsJson;
+        return shopOptionsJsonData;
     }
     private JsonObject createAuthJSONObject() {
-        JsonObject authenticationStatusJson = new JsonObject();
-
         JsonObject authenticationStatusJsonData = new JsonObject();
         authenticationStatusJsonData.addProperty("userId", StringUtils.EMPTY);
         authenticationStatusJsonData.addProperty("password", StringUtils.EMPTY);
@@ -606,8 +598,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         authenticationStatusJsonData.addProperty("passwordExpired", Boolean.FALSE);
         authenticationStatusJsonData.addProperty("token", StringUtils.EMPTY);
         authenticationStatusJsonData.addProperty("customerGroup", StringUtils.EMPTY);
-        authenticationStatusJson.add("shopHeader-authenticationStatusJson", authenticationStatusJsonData);
-        return authenticationStatusJson;
+        return authenticationStatusJsonData;
     }
 
     private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType, String[] categories) {
