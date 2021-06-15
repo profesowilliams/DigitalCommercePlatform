@@ -837,6 +837,14 @@ module.exports = (env) => {
                         "/static/partials/region-select/region-select-dropdown.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "jump-to-top",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/buttons/jump-to-top.html"
+                    
+                ),
+            }),
         ],
         devServer: {
             inline: true,

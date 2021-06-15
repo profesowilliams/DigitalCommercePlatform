@@ -1,17 +1,18 @@
 @import "main";
 
-
 .cmp-button {
 	cursor: pointer !important;
 }
 
-button {border: none !important;}
+button {
+	border: none !important;
+}
 .cmp-button--background-enabled {
 	& .cmp-button {
 		border-radius: rem(3px);
-		background-color: get-color(header-links-blue);;
+		background-color: get-color(header-links-blue);
 		&:hover {
-			background-color: get-color(td-lightblue);;
+			background-color: get-color(td-lightblue);
 		}
 	}
 	.cmp-button__icon {
@@ -24,7 +25,7 @@ button {border: none !important;}
 
 .cmp-button__clear {
 	background-color: transparent !important;
-	cursor: pointer !important;	
+	cursor: pointer !important;
 }
 .cmp-button__text--disabled {
 	& .cmp-button__text {
@@ -58,7 +59,8 @@ button {border: none !important;}
 		margin-top: rem(18px);
 	}
 
-	&:active, &:focus {
+	&:active,
+	&:focus {
 		outline: none;
 		border: none;
 	}
@@ -70,12 +72,12 @@ button {border: none !important;}
 		height: rem(40px);
 		box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
 
-	&.btn-xxsmall {
-		font-size: $font-size-custom-xxsmall;
-		width: 100%;
-		padding: rem(6px);
-		margin-top: rem(18px);
-	}
+		&.btn-xxsmall {
+			font-size: $font-size-custom-xxsmall;
+			width: 100%;
+			padding: rem(6px);
+			margin-top: rem(18px);
+		}
 	}
 
 	&__primary {
@@ -124,8 +126,8 @@ button {border: none !important;}
 		&:checked {
 			~ {
 				.checkmark {
-					background-color: get-color(td-primary-blue);					
-    				box-shadow: inset 0 0 0 0;
+					background-color: get-color(td-primary-blue);
+					box-shadow: inset 0 0 0 0;
 					&:after {
 						display: block;
 					}
@@ -156,4 +158,15 @@ button {border: none !important;}
 	}
 }
 
-
+.cmp-jump-to-top {
+	box-sizing: border-box;
+	height: rem(60px);
+	width: rem(60px);
+	border: rem(1px) solid get-color(brand-light-gray2);
+	background-color: get-color(brand-white);
+	box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
+	text-align: center;
+	font-size: 30px;
+	color: get-color(brand-blue);
+	padding-top: rem(12px);
+}
