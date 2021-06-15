@@ -1,13 +1,13 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
-using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {

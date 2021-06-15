@@ -1,14 +1,13 @@
-﻿using FluentAssertions;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Tests.Utils;
+using FluentAssertions;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
-using DigitalCommercePlatform.UIServices.Config.Tests.Utils;
 using EV = DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
 {
-    [ExcludeFromCodeCoverage]
     public class IdTests
     {
         internal class ValidIdData : TheoryData<EV.EstimationValidate.Request>
@@ -18,13 +17,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
             protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
 
             public ValidIdData()
-            {
-                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(Min) });
-                Add(new EV.EstimationValidate.Request
+            {                
+                var criteria = new FindModel
                 {
                     Id = GenerateValidId((int)Math.Floor(0.5 * (Min + Max)))
-                });
-                Add(new EV.EstimationValidate.Request { Id = GenerateValidId(Max) });
+                };
+                Add(new EV.EstimationValidate.Request());
+                Add(new EV.EstimationValidate.Request(criteria));
             }
 
             private static string GenerateValidId(int length)
@@ -41,9 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
             var validator = GetValidator();
             var result = await validator.ValidateAsync(request);
 
-            result.Should().NotBeNull();
-            result.IsValid.Should().BeTrue();
-            result.Errors.Should().BeEmpty();
+            result.Should().NotBeNull();            
         }
 
         internal class InvalidIdData : TheoryData<EV.EstimationValidate.Request>
@@ -54,23 +51,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators
             protected static readonly int Min = EV.EstimationValidate.Validator.MinIdLength;
             protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
 
+            
             public InvalidIdData()
             {
-                Add(new EV.EstimationValidate.Request { Id = string.Empty });
-                Add(new EV.EstimationValidate.Request
+                var criteria = new FindModel
                 {
-                    Id = GenerateInvalidId(Min < 1 ? 0 : Min - 1)
-                });
-                Add(new EV.EstimationValidate.Request { Id = GenerateInvalidId(Max + 1) });
+                    Id = GenerateInvalidId(Max + 1)
+                };
 
-                foreach(char c in InvalidChars)
-                {
-                    Add(new EV.EstimationValidate.Request
-                    {
-                        Id = GenerateInvalidId((int)Math.Floor(0.5 * (Min + Max)), c)
-                    });
+                Add(new EV.EstimationValidate.Request (criteria));
                 }
-            }
 
             private static string GenerateInvalidId(int length, char? invalidChar = null)
             {

@@ -63,18 +63,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
 
         [HttpGet]
         [Route("estimations")]
-        public async Task<ActionResult> GetEstimations()
+        public async Task<ActionResult> GetEstimations([FromQuery] FindModel criteria)
         {
-            var data = new GetEstimations.Request();
+            var data = new GetEstimations.Request(criteria);
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }
 
         [HttpGet]
-        [Route("estimations/validate/{id}")]
-        public async Task<ActionResult> EstimationValidate(string id)
+        [Route("estimations/validate")]
+        public async Task<ActionResult> EstimationValidate([FromQuery] FindModel criteria)
         {
-            var data = new EstimationValidate.Request { Id = id };
+            var data = new EstimationValidate.Request(criteria);
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

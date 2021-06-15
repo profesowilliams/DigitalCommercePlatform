@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
 using MediatR;
@@ -15,7 +16,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Id { get; set; }
+            public FindModel Criteria { get; set; }
+
+            public Request()
+            {
+                Criteria = new FindModel();
+            }
+
+            public Request(FindModel model)
+            {
+                Criteria = model;
+            }
         }
 
         public class Response
@@ -36,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
                 _configService = configService;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(EstimationValidate.Request request, CancellationToken cancellationToken)
             {
                 var isValid = await _configService.EstimationValidate(request).ConfigureAwait(false);
                 var estimationValidateContent = new Response
@@ -55,16 +66,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
 
             public Validator()
             {
-                RuleFor(x => x.Id)
+                RuleFor(x => x.Criteria.Id)
                     .NotEmpty()
                     .MinimumLength(MinIdLength)
                     .MaximumLength(MaxIdLength);
 
-                RuleFor(x => x.Id).Must(CheckAllChars).WithMessage("Id contains invalid characters");
+                RuleFor(x => x.Criteria.Id).Must(CheckAllChars).WithMessage("Id contains invalid characters");
             }
 
             public bool CheckAllChars(string id)
             {
+                if (string.IsNullOrWhiteSpace(id)) return true;
+
                 var result = true;
                 foreach (char c in id)
                 {

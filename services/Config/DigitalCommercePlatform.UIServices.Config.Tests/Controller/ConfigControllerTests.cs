@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -22,7 +23,6 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 {
-    [ExcludeFromCodeCoverage]
     public class ConfigControllerTests
     {
         private readonly Mock<IMediator> _mockMediator;
@@ -184,7 +184,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetEstimations(ResponseBase<GetEstimations.Response> expected)
+        public async Task GetEstimations(ResponseBase<GetEstimations.Response> expected,FindModel model)
         {
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<GetEstimations.Request>(),
@@ -192,14 +192,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetEstimations().ConfigureAwait(false);
+            var result = await controller.GetEstimations(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task EstimationValidate(ResponseBase<EstimationValidate.Response> expected)
+        public async Task EstimationValidate(ResponseBase<EstimationValidate.Response> expected,FindModel model)
         {
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<EstimationValidate.Request>(),
@@ -207,7 +207,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.EstimationValidate("xyz").ConfigureAwait(false);
+            var result = await controller.EstimationValidate(model).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

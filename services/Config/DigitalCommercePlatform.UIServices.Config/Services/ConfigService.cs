@@ -211,9 +211,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
         }
 
-        public Task<bool> EstimationValidate(EstimationValidate.Request request)
+        public async Task<bool> EstimationValidate(EstimationValidate.Request request)
         {
-            return Task.FromResult(true);
+            try
+            {
+                var result = await FindEstimations(_mapper.Map<GetEstimations.Request>(request));
+
+                return result?.ToList().Count > 0 ? true : false;
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Exception at getting Estimation Validate: " + nameof(ConfigService));
+                _logger.LogInformation("$Record's not found for " + request.Criteria.Id + " and " + request.Criteria.Type);
+                if (ex.Message.ToLower().Contains("reported an error: notfound"))//need to fix this
+                {
+                    return false;
+                }
+                throw ex;
+            }
         }
 
         public async Task<string> GetPunchOutURLAsync(PunchInModel request)
