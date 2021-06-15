@@ -13,6 +13,7 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using Flurl;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -32,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _productCatalogURL;
         private readonly string _appProductURL;
         private readonly string _productCatalogFeature;
+        private readonly ILogger<BrowseService> _logger;
         private readonly ICachingService _cachingService;
         private readonly IUIContext _uiContext;
         private readonly IMapper _mapper;
@@ -40,12 +42,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             ICachingService cachingService,
             IAppSettings appSettings,
             IUIContext uiContext,
-            IMapper mapper)
+            IMapper mapper, ILogger<BrowseService> logger)
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _cachingService = cachingService;
             _mapper = mapper;
+            _logger = logger;
             _coreCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
@@ -158,54 +161,64 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)
         {
-            request.Input.CorporateCode = "0100"; //Need to fix this
-            string catalogURL = _appCatalogURL.BuildQuery(request);
-            List<CatalogResponse> catalog ;
-            bool IsSourceDF = false;
-            var result = Boolean.TryParse(_productCatalogFeature, out IsSourceDF);
-            
-            if (IsSourceDF && result)
+            List<CatalogResponse> catalog;
+            try
             {
-                catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
-                if (catalog == null)
-                {
-                    var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
-                    if (response != null && response.Catalogs.Any())
-                    {
-                        var tempResponse = _mapper.Map<CatalogModel>(response);
-                        catalog = new List<CatalogResponse>();
-                        var objCatalogResponse = new CatalogResponse
-                        {
-                            Key = request.Input.Id,
-                            Name = null,
-                            DocCount = 0, //Fix This
-                            Children = tempResponse.Catalogs
-                        };
+                request.Input.CorporateCode = "0100"; //Need to fix this
+                string catalogURL = _appCatalogURL.BuildQuery(request);
 
-                        catalog.Add(objCatalogResponse);
-                        await _cachingService.SetCatalogCache(catalog, request.Input.Id);
+                bool IsSourceDF = false;
+                var result = Boolean.TryParse(_productCatalogFeature, out IsSourceDF);
+
+                if (IsSourceDF && result)
+                {
+                    catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
+                    if (catalog == null)
+                    {
+                        var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
+                        if (response != null && response.Catalogs.Any())
+                        {
+                            var tempResponse = _mapper.Map<CatalogModel>(response);
+                            catalog = new List<CatalogResponse>();
+                            var objCatalogResponse = new CatalogResponse
+                            {
+                                Key = request.Input.Id,
+                                Name = null,
+                                DocCount = 0, //Fix This
+                                Children = tempResponse.Catalogs
+                            };
+
+                            catalog.Add(objCatalogResponse);
+                            await _cachingService.SetCatalogCache(catalog, request.Input.Id);
+                        }
                     }
                 }
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(_productCatalogURL))
+                else
                 {
-                    throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
+                    if (string.IsNullOrWhiteSpace(_productCatalogURL))
+                    {
+                        throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
+                    }
+                    var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
+                    List<CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
+
+                    catalog = new List<CatalogResponse>();
+                    var objCatalogResponse = new CatalogResponse
+                    {
+                        Key = request.Input.Id,
+                        Name = null,
+                        DocCount = 0, //Fix This
+                        Children = _mapper.Map<List<CatalogResponse>>(tempcatalog)
+                    };
+
+                    catalog.Add(objCatalogResponse);
                 }
-                var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
-                List <CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
 
-                catalog = new List<CatalogResponse>();
-                var objCatalogResponse = new CatalogResponse
-                {
-                    Key = request.Input.Id,
-                    Name = null,
-                    DocCount = 0, //Fix This
-                    Children = _mapper.Map<List<CatalogResponse>>(tempcatalog)
-                };
-
-                catalog.Add(objCatalogResponse);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Exception Values at  {request.Input.CorporateCode}: {"Product Catalog Input"}:{_productCatalogFeature} ");
+                throw ex;
             }
             return catalog;
         }
