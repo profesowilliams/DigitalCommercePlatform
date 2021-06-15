@@ -1,0 +1,100 @@
+@import 'main';
+
+// simple drop down widget style
+.cmp-simple-drop-down {
+	position: relative;
+	border: 1px solid get-color(brand-light-gray2);
+	min-width: fit-content;
+	height: rem(30px);
+	cursor: pointer;
+	&--expanded {
+		& svg {
+			transform: rotate(180deg);
+		}
+	}
+	&__selection {
+		color: get-color(text-mid-gray);
+		background-color: get-color(brand-white);
+		display: flex;
+		justify-content: space-between;
+		margin-top: 0.1rem;
+		padding-left: 0.5rem;
+		min-width: fit-content;
+		width: rem(140px);
+		& svg {
+			color: get-color(td-primary-blue);
+			margin-right: 5px;
+			margin-top: 4px;
+		}
+	}
+	&__list {
+		position: absolute;
+		min-width: fit-content;
+		width: rem(140px);
+		background-color: get-color(brand-white);
+		border: 1px solid get-color(brand-light-gray2);
+		max-height: rem(300px);
+		overflow: auto;
+		z-index: 80;
+		&__content {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			&__item {
+				:hover,
+				:focus {
+					background-color: get-color(brand-light-gray2);
+				}
+				border-bottom: 1px solid get-color(brand-light-gray2);
+				&:last-child {
+					border-bottom: none;
+				}
+				cursor: pointer;
+				&__container {
+					padding: 3px 0.5rem 3px 0.5rem;
+					color: get-color(text-mid-gray);
+				}
+			}
+		}
+	}
+}
+
+//query input style
+.cmp-query-input {
+	display: flex;
+	width: 100%;
+	& .cmp-simple-drop-down {
+		border-right: none;
+	}
+	& .cmp-text-input {
+		color: get-color(text-mid-gray);
+		min-width: rem(140px);
+		&::placeholder {
+			padding-left: rem(5px);
+		}
+	}
+}
+
+//base button style
+.cmp-quote-button {
+	border: rem(1px) solid get-color(td-dark-blue);
+	background-color: get-color(td-dark-blue);
+	color: get-color(brand-white);
+	font-size: rem(13px);
+	padding: rem(6px) rem(25px);
+	width: 100%;
+	transition: all 0.3s;
+	cursor: pointer;
+	&--active,
+	&:hover {
+		background-color: get-color(td-dark-blue);
+		color: get-color(brand-white);
+	}
+	&:disabled {
+		opacity: 0.7;
+		cursor: default;
+		color: get-color(brand-text-gray);
+		background-color: get-color(v-divider-gray);
+		border: rem(1px) solid get-color(brand-light-gray2);
+	}
+}

@@ -1,0 +1,24 @@
+.cmp-search-criteria {
+	display: flex;
+	justify-content: space-between;
+	&__query-input {
+		display: flex;
+		margin: 0 rem(16px) 0 rem(16px);
+		&__prefix {
+			margin-right: rem(5px);
+		}
+		&__search {
+			display: flex;
+			align-items: center;
+			white-space: nowrap;
+			margin: 0 rem(16px) 0 rem(16px);
+			&__clear {
+				text-decoration: underline;
+				font-size: $font-size-xsmall;
+				color: get-color(brand-button-blue);
+				margin: 0 rem(16px) 0 rem(16px);
+				cursor: pointer;
+			}
+		}
+	}
+}

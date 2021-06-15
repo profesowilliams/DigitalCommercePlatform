@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Grid from '../Grid/Grid';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
+import SearchCriteria from './SearchCriteria';
 
 function OrdersGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
 	const [modal, setModal] = useState(null);
+	const filter = useRef(null);
 
 	const STATUS = {
 		onHold: 'onHold',
@@ -61,6 +63,19 @@ function OrdersGrid(props) {
 		);
 	}
 
+	async function requestInterceptor(request) {
+		const url = filter ? request.url + filter.current : request.url;
+		let response = await request.get(url);
+		return response;
+	}
+
+	let resetCallback = useRef(null);
+	function onAfterGridInit(config) {
+		resetCallback.current = () => {
+			config.gridResetRequest();
+		};
+	}
+
 	function applyStatusIcon(statusKey) {
 		let icon = componentProp.iconList?.find((icon) => icon.iconKey === statusKey);
 		if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
@@ -102,7 +117,11 @@ function OrdersGrid(props) {
 				</div>
 			);
 		} else {
-			return line.invoices[0]?.id ?? null;
+			if (line.invoices[0]?.id === 'Pending') {
+				return labelList.find((label) => label.labelKey === 'pending').labelValue;
+			} else {
+				return line.invoices[0]?.id ?? null;
+			}
 		}
 	}
 
@@ -201,10 +220,35 @@ function OrdersGrid(props) {
 		},
 	];
 
+	function onSearchRequest(query) {
+		filter.current = query.queryString;
+		if (resetCallback.current) {
+			resetCallback.current();
+		}
+	}
+
+	function onClearRequest() {
+		filter.current = null;
+		if (resetCallback.current) {
+			resetCallback.current();
+		}
+	}
+
 	return (
 		<section>
 			<div className='cmp-orders-grid'>
-				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
+				<SearchCriteria
+					componentProp={componentProp.searchCriteria}
+					onSearchRequest={onSearchRequest}
+					onClearRequest={onClearRequest}
+				></SearchCriteria>
+				<Grid
+					columnDefinition={columnDefs}
+					options={options}
+					config={componentProp}
+					onAfterGridInit={(config) => onAfterGridInit(config)}
+					requestInterceptor={(request) => requestInterceptor(request)}
+				></Grid>
 			</div>
 			{modal}
 		</section>
