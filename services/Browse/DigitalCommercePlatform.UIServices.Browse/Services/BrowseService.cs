@@ -213,11 +213,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
                     catalog.Add(objCatalogResponse);
                 }
+                _logger.LogInformation($"URL used is {_productCatalogURL}:{"Feature toggle input"}:{_productCatalogFeature} ");
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Exception Values at  {request.Input.CorporateCode}: {"Product Catalog Input"}:{_productCatalogFeature} ");
+                _logger.LogError(ex, $"Exception Value at  {nameof(GetProductCatalogDetails)} ");
                 throw ex;
             }
             return catalog;
