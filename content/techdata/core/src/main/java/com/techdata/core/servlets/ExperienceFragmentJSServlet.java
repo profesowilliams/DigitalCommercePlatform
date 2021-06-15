@@ -139,74 +139,392 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private JsonObject combinedMenuItemsJson() {
         JsonObject menuItemsJson = new JsonObject();
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add(createMenuItemsJson());
-        jsonArray.add(createMenuItemsJson2());
+        jsonArray.add(buildSystemObject());
+        jsonArray.add(buildProjectorObject());
         menuItemsJson.add("shopHeader-menuItemsJson", jsonArray);
         return menuItemsJson;
     }
 
-    private JsonObject createMenuItemsJson() {
+    private JsonObject buildSystemObject() {
 
-        JsonObject menuItemsJsonData2 = new JsonObject();
+        // systems main level start here
+        // ------ "Desktops & Workstations" -----
+        JsonObject level1 = new JsonObject();
+        level1.addProperty("text","Desktops & Workstations");
+        level1.addProperty("id","pc-2");
+        level1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100101&amp;refinements=500100101");
+        level1.addProperty("thisWindow",true);
+        level1.addProperty("highlight",false);
+        level1.addProperty("auth",false);
+        JsonArray level1Children = new JsonArray();
 
-        JsonArray jsonElementsMenuItems2 = new JsonArray();
+        JsonObject child1 = new JsonObject();
 
-        JsonObject careersData = new JsonObject();
-        careersData.add("children", new JsonArray());
-        careersData.addProperty("text", "Careers");
-        careersData.addProperty("id", "Careers");
-        careersData.addProperty("url", "https://qa5.ctenet.com/careers.html");
-        careersData.addProperty("thisWindow", true);
-        careersData.addProperty("highlight", false);
-        careersData.addProperty("auth", false);
-        jsonElementsMenuItems2.add(careersData);
+        child1.add("children",new JsonArray());
+        child1.addProperty("text","Desktops");
+        child1.addProperty("id","pc-3");
+        child1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010101&amp;refinements=510010101");
+        child1.addProperty("thisWindow",true);
+        child1.addProperty("highlight",false);
+        child1.addProperty("auth",false);
+        level1Children.add(child1);
 
-        JsonObject newsRoomData = new JsonObject();
-        newsRoomData.add("children", new JsonArray());
-        newsRoomData.addProperty("text", "Company Overview");
-        newsRoomData.addProperty("id", "company-overview");
-        newsRoomData.addProperty("url", "https,//qa5.ctenet.com/about.html");
-        newsRoomData.addProperty("thisWindow", true);
-        newsRoomData.addProperty("highlight", false);
-        newsRoomData.addProperty("auth", false);
-        jsonElementsMenuItems2.add(newsRoomData);
+        JsonObject child2 = new JsonObject();
+        child2.add("children",new JsonArray());
+        child2.addProperty("text","Workstations");
+        child2.addProperty("id","pc-4");
+        child2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010102&amp;refinements=510010102");
+        child2.addProperty("thisWindow",true);
+        child2.addProperty("highlight",false);
+        child2.addProperty("auth",false);
+        level1Children.add(child2);
 
-        JsonObject companyOverview = new JsonObject();
-        companyOverview.add("children", new JsonArray());
-        companyOverview.addProperty("text", "News Room");
-        companyOverview.addProperty("id", "news-room");
-        companyOverview.addProperty("url", "https,//qa5.ctenet.com/news.html");
-        companyOverview.addProperty("thisWindow", true);
-        companyOverview.addProperty("highlight", false);
-        companyOverview.addProperty("auth", false);
-        jsonElementsMenuItems2.add(companyOverview);
+        JsonObject child3 = new JsonObject();
+        child3.add("children",new JsonArray());
+        child3.addProperty("text","Barebone Systems");
+        child3.addProperty("id","pc-5");
+        child3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010103&amp;refinements=510010103");
+        child3.addProperty("thisWindow",true);
+        child3.addProperty("highlight",false);
+        child3.addProperty("auth",false);
+        level1Children.add(child3);
 
-        menuItemsJsonData2.add("children", jsonElementsMenuItems2);
+        JsonObject child4 = new JsonObject();
+        child4.add("children",new JsonArray());
+        child4.addProperty("text","Thin Clients");
+        child4.addProperty("id","pc-6");
+        child4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010104&amp;refinements=510010104");
+        child4.addProperty("thisWindow",true);
+        child4.addProperty("highlight",false);
+        child4.addProperty("auth",false);
+        level1Children.add(child4);
+        level1.add("children", level1Children);
 
-        menuItemsJsonData2.addProperty("text", "About");
-        menuItemsJsonData2.addProperty("id", "about");
-        menuItemsJsonData2.addProperty("url", "https://qa5.ctenet.com/about.html");
-        menuItemsJsonData2.addProperty("thisWindow", false);
-        menuItemsJsonData2.addProperty("highlight", false);
-        menuItemsJsonData2.addProperty("auth", false );
+        // ------ "Notebooks & Accessories" -----
+        JsonObject level2 = new JsonObject();
+        JsonArray level2Array = new JsonArray();
+        level2.addProperty("text","Notebooks & Accessories");
+        level2.addProperty("id","pc-7");
+        level2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100102&amp;refinements=500100102");
+        level2.addProperty("thisWindow",true);
+        level2.addProperty("highlight",false);
+        level2.addProperty("auth",false);
 
-        return menuItemsJsonData2;
+        JsonObject child5 = new JsonObject();
+        child5.add("children",new JsonArray());
+        child5.addProperty("text","Chromebooks");
+        child5.addProperty("id","pc-15");
+        child5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010216&amp;refinements=510010216");
+        child5.addProperty("thisWindow",true);
+        child5.addProperty("highlight",false);
+        child5.addProperty("auth",false);
+        level2Array.add(child5);
 
+        JsonObject child6 = new JsonObject();
+        child6.add("children",new JsonArray());
+        child6.addProperty("text","Notebook & Tablet Accessories");
+        child6.addProperty("id","pc-14");
+        child6.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010215&amp;refinements=510010215");
+        child6.addProperty("thisWindow",true);
+        child6.addProperty("highlight",false);
+        child6.addProperty("auth",false);
+        level2Array.add(child6);
+
+        JsonObject child7 = new JsonObject();
+        child7.add("children",new JsonArray());
+        child7.addProperty("text","Notebook Carrying Cases");
+        child7.addProperty("id","pc-13");
+        child7.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010211&amp;refinements=510010211");
+        child7.addProperty("thisWindow",true);
+        child7.addProperty("highlight",false);
+        child7.addProperty("auth",false);
+        level2Array.add(child7);
+
+        JsonObject child8 = new JsonObject();
+        child8.add("children",new JsonArray());
+        child8.addProperty("text","Notebook Docking Stations");
+        child8.addProperty("id","pc-12");
+        child8.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010210&amp;refinements=510010210");
+        child8.addProperty("thisWindow",true);
+        child8.addProperty("highlight",false);
+        child8.addProperty("auth",false);
+        level2Array.add(child8);
+
+        JsonObject child9 = new JsonObject();
+        child9.add("children",new JsonArray());
+        child9.addProperty("text","Thin Client Notebooks");
+        child9.addProperty("id","pc-11");
+        child9.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010209&amp;refinements=510010209");
+        child9.addProperty("thisWindow",true);
+        child9.addProperty("highlight",false);
+        child9.addProperty("auth",false);
+        level2Array.add(child9);
+
+        JsonObject child10 = new JsonObject();
+        child10.add("children",new JsonArray());
+        child10.addProperty("text","Mobile Workstations");
+        child10.addProperty("id","pc-10");
+        child10.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010205&amp;refinements=510010205");
+        child10.addProperty("thisWindow",true);
+        child10.addProperty("highlight",false);
+        child10.addProperty("auth",false);
+        level2Array.add(child10);
+
+        JsonObject child11 = new JsonObject();
+        child11.add("children",new JsonArray());
+        child11.addProperty("text","Notebooks");
+        child11.addProperty("id","pc-8");
+        child11.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010201&amp;refinements=510010201");
+        child11.addProperty("thisWindow",true);
+        child11.addProperty("highlight",false);
+        child11.addProperty("auth",false);
+        level2Array.add(child11);
+
+        JsonObject child12 = new JsonObject();
+        child12.add("children",new JsonArray());
+        child12.addProperty("text","Ultrabooks");
+        child12.addProperty("id","pc-9");
+        child12.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010202&amp;refinements=510010202");
+        child12.addProperty("thisWindow",true);
+        child12.addProperty("highlight",false);
+        child12.addProperty("auth",false);
+        level2Array.add(child12);
+        level2.add("children", level2Array);
+
+        // ------ "Tablets & Ebook readers" -----
+        JsonObject level3 = new JsonObject();
+        JsonArray level3Array = new JsonArray();
+        JsonObject child13 = new JsonObject();
+        child13.add("children",new JsonArray());
+        child13.addProperty("text","Tablets & Handhelds");
+        child13.addProperty("id","pc-17");
+        child13.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010301&amp;refinements=510010301");
+        child13.addProperty("thisWindow",true);
+        child13.addProperty("highlight",false);
+        child13.addProperty("auth",false);
+        level3Array.add(child13);
+
+        level3.addProperty("text","Tablets & eBook readers");
+        level3.addProperty("id","pc-16");
+        level3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100103&amp;refinements=500100103");
+        level3.addProperty("thisWindow",true);
+        level3.addProperty("highlight",false);
+        level3.addProperty("auth",false);
+        level3.add("children", level3Array);
+
+        // ------ "Servers" -----
+        JsonObject level4 = new JsonObject();
+        JsonArray level4Array = new JsonArray();
+        JsonObject child14 = new JsonObject();
+        child14.add("children",new JsonArray());
+        child14.addProperty("text","Tower");
+        child14.addProperty("id","pc-19");
+        child14.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010401&amp;refinements=510010401");
+        child14.addProperty("thisWindow",true);
+        child14.addProperty("highlight",false);
+        child14.addProperty("auth",false);
+        level4Array.add(child14);
+
+        JsonObject child15 = new JsonObject();
+        child15.add("children",new JsonArray());
+        child15.addProperty("text","Rack");
+        child15.addProperty("id","pc-20");
+        child15.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010402&amp;refinements=510010402");
+        child15.addProperty("thisWindow",true);
+        child15.addProperty("highlight",false);
+        child15.addProperty("auth",false);
+        level4Array.add(child15);
+
+        JsonObject child16 = new JsonObject();
+        child16.add("children",new JsonArray());
+        child16.addProperty("text","Blade");
+        child16.addProperty("id","pc-21");
+        child16.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010403&amp;refinements=510010403");
+        child16.addProperty("thisWindow",true);
+        child16.addProperty("highlight",false);
+        child16.addProperty("auth",false);
+        level4Array.add(child16);
+
+        JsonObject child17 = new JsonObject();
+        child17.add("children",new JsonArray());
+        child17.addProperty("text","Traffic Balancers & Optimizers");
+        child17.addProperty("id","pc-22");
+        child17.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010407&amp;refinements=510010407");
+        child17.addProperty("thisWindow",true);
+        child17.addProperty("highlight",false);
+        child17.addProperty("auth",false);
+        level4Array.add(child17);
+
+        level4.addProperty("text","Servers");
+        level4.addProperty("id","pc-18");
+        level4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100104&amp;refinements=500100104");
+        level4.addProperty("thisWindow",true);
+        level4.addProperty("highlight",false);
+        level4.addProperty("auth",false);
+        level4Array.add(child1);
+        level4.add("children", level4Array);
+
+        // point of sale
+        JsonObject level5 = new JsonObject();
+        JsonArray level5Array = new JsonArray();
+        JsonObject child18 = new JsonObject();
+        child18.add("children",new JsonArray());
+        child18.addProperty("text","POS Monitors");
+        child18.addProperty("id","pc-24");
+        child18.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010503&amp;refinements=510010503");
+        child18.addProperty("thisWindow",true);
+        child18.addProperty("highlight",false);
+        child18.addProperty("auth",false);
+        level5Array.add(child18);
+
+        JsonObject child19 = new JsonObject();
+        child19.add("children",new JsonArray());
+        child19.addProperty("text","Cash Drawers");
+        child19.addProperty("id","pc-25");
+        child19.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010505&amp;refinements=510010505");
+        child19.addProperty("thisWindow",true);
+        child19.addProperty("highlight",false);
+        child19.addProperty("auth",false);
+        level5Array.add(child19);
+
+        level5.addProperty("text","Point Of Sale Equipment");
+        level5.addProperty("id","pc-23");
+        level5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100105&amp;refinements=500100105");
+        level5.addProperty("thisWindow",true);
+        level5.addProperty("highlight",false);
+        level5.addProperty("auth",false);
+        level5.add("children", level5Array);
+
+        // systems
+        JsonObject systems = new JsonObject();
+        systems.addProperty("text","Systems");
+        systems.addProperty("id","pc-1");
+        systems.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500001001&amp;refinements=500001001");
+        systems.addProperty("thisWindow",true);
+        systems.addProperty("highlight",false);
+        systems.addProperty("auth",false);
+        JsonArray systemsChildren = new JsonArray();
+        systemsChildren.add(level1);
+        systemsChildren.add(level2);
+        systemsChildren.add(level3);
+        systemsChildren.add(level4);
+        systemsChildren.add(level5);
+        systems.add("children", systemsChildren);
+
+        return systems;
     }
 
-    private JsonObject createMenuItemsJson2() {
-        JsonObject menuItemsJsonData = new JsonObject();
-        menuItemsJsonData.add("children", new JsonArray());
-        menuItemsJsonData.addProperty("text", "Dashboard");
-        menuItemsJsonData.addProperty("id", "dashboard");
-        menuItemsJsonData.addProperty("url", "https,//shop.cstenet.com/");
-        menuItemsJsonData.addProperty("thisWindow", true);
-        menuItemsJsonData.addProperty("highlight", false);
-        menuItemsJsonData.addProperty("auth", false );
+    private JsonObject buildProjectorObject() {
 
-        return menuItemsJsonData;
+        // monitors object
+        JsonObject monitors = new JsonObject();
+        JsonArray monitorsChildren = new JsonArray();
+        monitors.addProperty("text","Monitors");
+        monitors.addProperty("id","pc-27");
+        monitors.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100201&refinements=500100201");
+        monitors.addProperty("thisWindow",true);
+        monitors.addProperty("highlight",false);
+        monitors.addProperty("auth",false);
 
+        JsonObject mChild2 = new JsonObject();
+        mChild2.add("children",new JsonArray());
+        mChild2.addProperty("text","Computer");
+        mChild2.addProperty("id","pc-28");
+        mChild2.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020101&refinements=510020101");
+        mChild2.addProperty("thisWindow",true);
+        mChild2.addProperty("highlight",false);
+        mChild2.addProperty("auth",false);
+        monitorsChildren.add(mChild2);
+
+        JsonObject mChild3 = new JsonObject();
+        mChild3.add("children",new JsonArray());
+        mChild3.addProperty("text","Accessories");
+        mChild3.addProperty("id","pc-29");
+        mChild3.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020106&refinements=510020106");
+        mChild3.addProperty("thisWindow",true);
+        mChild3.addProperty("highlight",false);
+        mChild3.addProperty("auth",false);
+        monitorsChildren.add(mChild3);
+        monitors.add("children", monitorsChildren);
+
+        // projector object
+        JsonObject projector = new JsonObject();
+        JsonArray projectorChildren = new JsonArray();
+        JsonObject child1 = new JsonObject();
+
+        child1.add("children",new JsonArray());
+        child1.addProperty("text","DLP");
+        child1.addProperty("id","pc-31");
+        child1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020301&amp;refinements=510020301");
+        child1.addProperty("thisWindow",true);
+        child1.addProperty("highlight",false);
+        child1.addProperty("auth",false);
+        projectorChildren.add(child1);
+
+        JsonObject child2 = new JsonObject();
+
+        child2.add("children",new JsonArray());
+        child2.addProperty("text","LCD");
+        child2.addProperty("id","pc-32");
+        child2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020302&amp;refinements=510020302");
+        child2.addProperty("thisWindow",true);
+        child2.addProperty("highlight",false);
+        child2.addProperty("auth",false);
+        projectorChildren.add(child2);
+
+        JsonObject child3 = new JsonObject();
+        child3.add("children",new JsonArray());
+        child3.addProperty("text","Cables");
+        child3.addProperty("id","pc-33");
+        child3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020307&amp;refinements=510020307");
+        child3.addProperty("thisWindow",true);
+        child3.addProperty("highlight",false);
+        child3.addProperty("auth",false);
+        projectorChildren.add(child3);
+
+        JsonObject child4 = new JsonObject();
+        child4.add("children",new JsonArray());
+        child4.addProperty("text","Accessories");
+        child4.addProperty("id","pc-34");
+        child4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020309&amp;refinements=510020309");
+        child4.addProperty("thisWindow",true);
+        child4.addProperty("highlight",false);
+        child4.addProperty("auth",false);
+        projectorChildren.add(child4);
+
+        JsonObject child5 = new JsonObject();
+        child5.add("children",new JsonArray());
+        child5.addProperty("text","Lamps");
+        child5.addProperty("id","pc-35");
+        child5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020311&amp;refinements=510020311");
+        child5.addProperty("thisWindow",true);
+        child5.addProperty("highlight",false);
+        child5.addProperty("auth",false);
+        projectorChildren.add(child5);
+
+        projector.addProperty("text","Projectors");
+        projector.addProperty("id","pc-30");
+        projector.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100203&amp;refinements=500100203");
+        projector.addProperty("thisWindow",true);
+        projector.addProperty("highlight",false);
+        projector.addProperty("auth",false);
+        projector.add("children", projectorChildren);
+
+        // displays and monitors object
+        JsonObject displaysMonitorsProjectors = new JsonObject();
+        JsonArray displaysMonitorsChildren = new JsonArray();
+        displaysMonitorsProjectors.addProperty("text","Display & Projectors");
+        displaysMonitorsProjectors.addProperty("id","pc-25");
+        displaysMonitorsProjectors.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100201&refinements=500100201");
+        displaysMonitorsProjectors.addProperty("thisWindow",true);
+        displaysMonitorsProjectors.addProperty("highlight",false);
+        displaysMonitorsProjectors.addProperty("auth",false);
+        displaysMonitorsChildren.add(monitors);
+        displaysMonitorsChildren.add(projector);
+        displaysMonitorsProjectors.add("children", displaysMonitorsChildren);
+        return displaysMonitorsProjectors;
     }
+
     private JsonObject createAccountSettingsJsonObject() {
         JsonObject accountSettingsJson = new JsonObject();
         JsonObject accountSettingsJsonData = new JsonObject();
@@ -345,10 +663,6 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private static final String APPS = "/apps/";
     private static final String LIBS = "/libs/";
     private static final String ETC_CLIENTLIBS = "/etc.clientlibs/";
-    // Sample JSON data for navigation
-    private static final String MENU_HEADER_JSON_VALUE_DEFAULT =
-            "[{\"children\": [],\"text\": \"dashboard\",\"id\": \"dashboard\",\"url\": \"https://shop.cstenet.com/\",\"thisWindow\": true,\"highlight\": false,\"auth\": false }, {\"children\": [{\"children\": [{\"children\": [{\"children\": [{\"children\": [],\"text\": \"Desktops\",\"id\": \"pc-3\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010101&amp;refinements=510010101\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Workstations\",\"id\": \"pc-4\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010102&amp;refinements=510010102\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Barebone Systems\",\"id\": \"pc-5\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010103&amp;refinements=510010103\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Thin Clients\",\"id\": \"pc-6\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010104&amp;refinements=510010104\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Desktops & Workstations\",\"id\": \"pc-2\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100101&amp;refinements=500100101\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [],\"text\": \"Notebooks\",\"id\": \"pc-8\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010201&amp;refinements=510010201\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Ultrabooks\",\"id\": \"pc-9\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010202&amp;refinements=510010202\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Mobile Workstations\",\"id\": \"pc-10\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010205&amp;refinements=510010205\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Thin Client Notebooks\",\"id\": \"pc-11\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010209&amp;refinements=510010209\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Notebook Docking Stations\",\"id\": \"pc-12\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010210&amp;refinements=510010210\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Notebook Carrying Cases\",\"id\": \"pc-13\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010211&amp;refinements=510010211\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Notebook & Tablet Accessories\",\"id\": \"pc-14\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010215&amp;refinements=510010215\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Chromebooks\",\"id\": \"pc-15\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010216&amp;refinements=510010216\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Notebooks & Accessories\",\"id\": \"pc-7\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100102&amp;refinements=500100102\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [],\"text\": \"Tablets & Handhelds\",\"id\": \"pc-17\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010301&amp;refinements=510010301\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Tablets & eBook readers\",\"id\": \"pc-16\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100103&amp;refinements=500100103\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [],\"text\": \"Tower\",\"id\": \"pc-19\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010401&amp;refinements=510010401\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Rack\",\"id\": \"pc-20\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010402&amp;refinements=510010402\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Blade\",\"id\": \"pc-21\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010403&amp;refinements=510010403\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Traffic Balancers & Optimizers\",\"id\": \"pc-22\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010407&amp;refinements=510010407\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Servers\",\"id\": \"pc-18\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100104&amp;refinements=500100104\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [],\"text\": \"POS Monitors\",\"id\": \"pc-24\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010503&amp;refinements=510010503\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Cash Drawers\",\"id\": \"pc-25\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510010505&amp;refinements=510010505\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Point Of Sale Equipment\",\"id\": \"pc-23\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100105&amp;refinements=500100105\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Systems\",\"id\": \"pc-1\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500001001&amp;refinements=500001001\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [{\"children\": [],\"text\": \"Computer\",\"id\": \"pc-28\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020101&amp;refinements=510020101\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Accessories\",\"id\": \"pc-29\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020106&amp;refinements=510020106\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Monitors\",\"id\": \"pc-27\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100201&amp;refinements=500100201\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [{\"children\": [],\"text\": \"DLP\",\"id\": \"pc-31\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020301&amp;refinements=510020301\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"LCD\",\"id\": \"pc-32\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020302&amp;refinements=510020302\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Cables\",\"id\": \"pc-33\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020307&amp;refinements=510020307\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Accessories\",\"id\": \"pc-34\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020309&amp;refinements=510020309\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Lamps\",\"id\": \"pc-35\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=510020311&amp;refinements=510020311\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Projectors\",\"id\": \"pc-30\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500100203&amp;refinements=500100203\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Displays & Projectors\",\"id\": \"pc-26\",\"url\": \"https://shop.cstenet.com/products/category/category?cs=500001002&amp;refinements=500001002\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Product Categories\",\"id\": \"product-categories\",\"thisWindow\": false,\"highlight\": false,\"auth\": false}],\"text\": \"Buy\",\"id\": \"buy\",\"thisWindow\": false,\"highlight\": false,\"auth\": false },{\"children\": [{\"children\": [],\"text\": \"Account Maintenance (EC Admin)\",\"id\": \"account-maint\",\"url\": \"https://shop.cstenet.com/AccountAdmin/ECAdminHelp/\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Address Book\",\"id\": \"address-book\",\"url\": \"https://shop.cstenet.com/addressbook\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Become a Reseller\",\"id\": \"become-reseller\",\"url\": \"https://shop.cstenet.com/account/become_a_reseller\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Commercial Invoices\",\"id\": \"comm-inv\",\"url\": \"https://shop.cstenet.com/commercialinvoices\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Contact Your Main Administrator\",\"id\": \"contact-admin\",\"url\": \"https://shop.cstenet.com/Customer/Account/ContactMainAdministrator\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Credit Information\",\"id\": \"credit-info\",\"url\": \"https://shop.cstenet.com/credit/search\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Password Maintenance\",\"id\": \"password-maint\",\"url\": \"https://shop.cstenet.com/ContentPages/PasswordMaintenance\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"Site Options\",\"id\": \"site-options\",\"url\": \"https://shop.cstenet.com/settings\",\"thisWindow\": true,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"TD DirectPay\",\"id\": \"directpay\",\"url\": \"https://secure.billtrust.com/tddirectpay/ig/signin\",\"thisWindow\": false,\"highlight\": false,\"auth\": true}, {\"children\": [],\"text\": \"2-Step Verification\",\"id\": \"2-step-verification\",\"url\": \"https://www.techdata.com/2step-verification.aspx\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"Account\",\"id\": \"account\",\"thisWindow\": false,\"highlight\": false,\"auth\": false },{\"children\": [{\"children\": [],\"text\": \"Careers\",\"id\": \"careers\",\"url\": \"https://qa5.ctenet.com/careers.html\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"Company Overview\",\"id\": \"company-overview\",\"url\": \"https://qa5.ctenet.com/about.html\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}, {\"children\": [],\"text\": \"News Room\",\"id\": \"news-room\",\"url\": \"https://qa5.ctenet.com/news.html\",\"thisWindow\": true,\"highlight\": false,\"auth\": false}],\"text\": \"About\",\"id\": \"about\",\"url\": \"https://qa5.ctenet.com/about.html\",\"thisWindow\": false,\"highlight\": false,\"auth\": false }]";
     private static final Logger LOG = LoggerFactory.getLogger(ExperienceFragmentJSServlet.class);
-
 }
 
