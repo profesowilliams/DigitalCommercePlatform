@@ -4,7 +4,7 @@ use(function () {
         FILE: 'file',
         EXTERNAL_IMAGE_PATH: 'file/jcr:content/dam:thumbnails/dam:thumbnail_48.png',
         FILE_REFERENCE: 'fileReference',
-		FILE_REFERENCE_IMAGE_PATH: '/jcr:content/renditions/cq5dam.thumbnail.140.100.png'
+		FILE_REFERENCE_IMAGE_PATH: '/jcr:content/renditions/original'
     };
 
     var imageResource = resolver.getResource(this.item.path + Constants.JCR_CONTENT_IMAGE);
