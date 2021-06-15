@@ -139,7 +139,25 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             var data = findConfigurationResponse.Data;
             var result = _mapper.Map<List<Configuration>>(data);
+            result.ForEach(c => GenerateConfigurationDetails(c));
+            
             return result;
+        }
+
+        private void GenerateConfigurationDetails(Configuration c)
+        {
+            c.Details = new List<TdQuoteIdDetails>();
+            for (int i = 0; i < GetRandomNumber(2, 6); i++)
+            {
+                c.Details.Add(new TdQuoteIdDetails
+                {
+                    Created = DateTime.UtcNow.AddDays(-1 * GetRandomNumber(1, 10)),
+                    Id = $"CD_ID_{c.ConfigId}_{i + 1}",
+                    Line = $"Line_{GetRandomNumber(1, 1000)}",
+                    Price = GetRandomNumber(2, 100),
+                    Quantity = GetRandomNumber(1, 10)
+                });
+            }
         }
 
         private List<Estimation> MapAppResponseToEstimations<T>(FindResponse<T> findConfigurationResponse)

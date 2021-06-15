@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
@@ -15,5 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string TdQuoteId { get; set; }
         public string VendorQuoteId { get; set; }
         public string Action { get; set; }
+
+        public IList<TdQuoteIdDetails> Details { get; set; }
     }
 }
