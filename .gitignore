@@ -439,3 +439,5 @@ ASALocalRun/
 /Order/Publisher/DigitalFoundation.Core.Publishers.Order/log.txt
 /Catalog/Publisher/logs
 *.txt
+content/techdata/server/.vscode/settings.json
+content/techdata/ui.react.frontend/.vscode/settings.json
