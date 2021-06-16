@@ -8,6 +8,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string Manufacturer { get; }
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
+            public string Status { get; }
             public string SortBy { get; }
             public string SortDirection { get; set; }
             public int PageNumber { get; }
@@ -36,6 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 Manufacturer = filtering.Manufacturer;
                 CreatedFrom = filtering.CreatedFrom;
                 CreatedTo = filtering.CreatedTo;
+                Status = filtering.Status;
                 SortBy = paging.SortBy;
                 SortDirection = paging.SortDirection;
                 PageNumber = paging.PageNumber;
@@ -65,13 +68,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class FilteringDto
         {
-            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo)
+            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,string status)
             {
                 Id = id;
                 CustomerPO = customerPO;
                 Manufacturer = manufacturer;
                 CreatedFrom = createdFrom;
                 CreatedTo = createdTo;
+                Status = status;
             }
 
             public string Id { get; }
@@ -79,6 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string Manufacturer { get; }
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
+            public string Status { get; }
         }
 
 
@@ -94,21 +99,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
         public class GetOrderHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ISortingService _sortingService;
+            private readonly IStatusMappingService _statusMappingService;
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
 
             public GetOrderHandler(ICommerceService commerceQueryService,
                 ISortingService sortingService,
+                IStatusMappingService statusMappingService,
                 IMapper mapper)
             {
                 _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
+                _statusMappingService = statusMappingService ?? throw new ArgumentNullException(nameof(statusMappingService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var sortingProperty = _sortingService.GetSortingProperty(request.SortBy);
+                var sortingProperty = _sortingService.GetSortingPropertyValue(request.SortBy);
                 var sortAscending = _sortingService.IsSortingDirectionAscending(request.SortDirection);
+                var status = _statusMappingService.GetMappingPropertyValue(request.Status);
 
                 var orderParameters = new SearchCriteria
                 {
@@ -117,6 +126,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     Manufacturer = request.Manufacturer,
                     CreatedFrom = request.CreatedFrom,
                     CreatedTo = request.CreatedTo,
+                    Status = status,
                     SortBy = sortingProperty,
                     SortAscending = sortAscending,
                     PageNumber = request.PageNumber,
@@ -142,18 +152,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
         public class GetOrdersValidator : AbstractValidator<Request>
         {
             private readonly ISortingService _sortingService;
+            private readonly IStatusMappingService _statusMappingService;
 
-            public GetOrdersValidator(ISortingService sortingService)
+
+            public GetOrdersValidator(ISortingService sortingService, IStatusMappingService statusMappingService)
             {
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
+                _statusMappingService = statusMappingService ?? throw new ArgumentNullException(nameof(statusMappingService));
+
 
                 var validProperties = _sortingService.GetValidProperties();
                 var validSortingValues = _sortingService.GetValidSortingValues();
+                var validStatuses = _statusMappingService.GetValidStatusValues();
 
                 RuleFor(i => i.SortBy).Must(IsPropertyValidForSorting).WithMessage(i => $"You can't sort by {i.SortBy} property. Valid properties are: {validProperties}");
                 RuleFor(i => i.SortDirection).Must(IsSortingDirectionValid).WithMessage(i => $"You can't order by {i.SortDirection} value. Valid values are: {validSortingValues}");
                 RuleFor(i => i.PageSize).GreaterThan(0).WithMessage("Page Size must be greater than 0.");
                 RuleFor(i => i.PageNumber).GreaterThanOrEqualTo(0).WithMessage("PageNumber must be greater than or equal to 0.");
+                RuleFor(i => i.Status).Must(IsStatusValid).WithMessage(i => $"You can't filter by {i.Status} value. Valid statuses are: {validStatuses}");
             }
 
             private bool IsPropertyValidForSorting(string propertyValue)
@@ -164,6 +180,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             private bool IsSortingDirectionValid(string sortingValue)
             {
                 return _sortingService.IsSortingDirectionValid(sortingValue);
+            }
+
+            private bool IsStatusValid(string status)
+            {
+                return _statusMappingService.IsStatusValid(status);
             }
         }
     }

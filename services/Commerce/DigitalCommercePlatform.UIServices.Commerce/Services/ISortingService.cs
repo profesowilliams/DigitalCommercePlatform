@@ -6,7 +6,7 @@
         bool IsSortingDirectionValid(string sortingValue);
         string GetValidProperties();
         string GetValidSortingValues();
-        string GetSortingProperty(string sortingValue);
+        string GetSortingPropertyValue(string sortingValue);
         bool IsSortingDirectionAscending(string sortingValue);
     }
 }

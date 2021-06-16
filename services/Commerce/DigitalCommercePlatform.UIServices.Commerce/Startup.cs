@@ -27,7 +27,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce
         {
             services.AddTransient<ICommerceService, CommerceService>();
             services.AddTransient<ICartService, CartService>();
-            services.AddTransient<ISortingService, SortingService>();
+            services.AddSingleton<ISortingService, SortingService>();
+            services.AddSingleton<IStatusMappingService, StatusMappingService>(); 
             services.AddTransient<IHelperService, HelperService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }

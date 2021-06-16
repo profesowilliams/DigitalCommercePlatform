@@ -91,6 +91,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             orderParameters.Manufacturer,
                             orderParameters.CreatedFrom,
                             orderParameters.CreatedTo,
+                            orderParameters.Status,
                             Sort = orderParameters.SortBy,
                             SortAscending = orderParameters.SortAscending.ToString(),
                             orderParameters.PageSize,

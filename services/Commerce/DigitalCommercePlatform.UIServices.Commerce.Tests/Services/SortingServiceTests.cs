@@ -87,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             var sut = new SortingService();
 
-            var sortingProperty = sut.GetSortingProperty(sortingValue);
+            var sortingProperty = sut.GetSortingPropertyValue(sortingValue);
 
             Assert.Equal("CREATED", sortingProperty);
         }
@@ -98,7 +98,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             var sut = new SortingService();
 
-            var sortingProperty = sut.GetSortingProperty("wrong");
+            var sortingProperty = sut.GetSortingPropertyValue("wrong");
 
             Assert.Equal("CREATED", sortingProperty);
         }
@@ -116,7 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             var sut = new SortingService();
 
-            var sortingProperty = sut.GetSortingProperty(argument);
+            var sortingProperty = sut.GetSortingPropertyValue(argument);
 
             Assert.Equal(matchingValue, sortingProperty);
         }

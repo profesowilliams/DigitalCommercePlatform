@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return isValid;
         }
 
-        public string GetSortingProperty(string sortingValue)
+        public string GetSortingPropertyValue(string sortingValue)
         {
             if (string.IsNullOrWhiteSpace(sortingValue))
             {
