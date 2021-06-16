@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
 
-        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell" };
+        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell" , "vendor.test" };
 
         public VendorService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
             ILogger<AccountService> logger, IUIContext uiContext)
@@ -85,18 +86,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request)
         {
-            bool vendorRefreshValue = true;
-            var response = new VendorRefreshToken.Response();
-            if (vendorRefreshValue == true)
-            {
-                response.IsSuccess = true;
-            }
-            else
-            {
-                response.IsSuccess = false;
-            }
+            var url = _coreSecurityUrl.AppendPathSegment("VendorRefreshToken")
+                        .SetQueryParams(new
+                        {
+                            request.Vendor
+                        });
 
-            return await Task.FromResult(response);
+            await _middleTierHttpClient.GetAsync<string>(url);
+            return new VendorRefreshToken.Response { IsSuccess = true };
         }
     }
 }
