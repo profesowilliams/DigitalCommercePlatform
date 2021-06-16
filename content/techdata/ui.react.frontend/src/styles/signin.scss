@@ -13,7 +13,7 @@
 		cursor: pointer;
 		height: 35px;
 		max-width: 175px;
-		color: #1798D1;
+		color: #1798d1;
 		font-family: 'Open Sans', sans-serif;
 		font-size: 14px;
 		letter-spacing: 0;
@@ -37,14 +37,13 @@
 
 	&-list {
 		background-color: #fff;
-		top: 45px;
-		right: 0;
 		z-index: 9999;
 		border-top: 2px solid darkblue;
 		box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
 		box-sizing: border-box;
 		padding-top: 10px;
 		width: 175px;
+		position: absolute;
 
 		p {
 			height: 20px;
@@ -66,21 +65,21 @@
 			}
 		}
 
-		&-content{
+		&-content {
 			list-style: none;
 			padding: 0 15px;
-			&--item{
+			&--item {
 				margin-bottom: 10px;
 				display: flex;
-				&-link{
+				&-link {
 					text-decoration: none;
 
-					&--icon{
-						color: #1798D1;
+					&--icon {
+						color: #1798d1;
 						margin-right: 13px;
 					}
 
-					span{
+					span {
 						color: #555555;
 						font-size: 13px;
 					}

@@ -1,23 +1,51 @@
 .cmp-search-criteria {
-	display: flex;
-	justify-content: space-between;
-	&__query-input {
+	font-size: $font-size-xsmall;
+	font-family: $font-family-sans-serif;
+	z-index: 1;
+	position: absolute;
+	margin-top: rem(6px);
+	&--expanded {
+		position: relative;
+	}
+	&__header {
+		cursor: pointer;
 		display: flex;
-		margin: 0 rem(16px) 0 rem(16px);
-		&__prefix {
-			margin-right: rem(5px);
+		& svg {
+			color: get-color(td-primary-blue);
+			margin-top: rem(4px);
 		}
-		&__search {
+		&__title {
+			font-size: $font-size-small;
+			font-weight: $font-weight-semi-bold;
+			text-transform: uppercase;
+			margin-left: rem(8px);
+		}
+	}
+	&__content {
+		display: flex;
+		margin-top: rem(16px);
+		margin-bottom: rem(16px);
+		justify-content: space-between;
+		&--hidden {
+			display: none;
+		}
+		&__query-input {
 			display: flex;
-			align-items: center;
-			white-space: nowrap;
-			margin: 0 rem(16px) 0 rem(16px);
-			&__clear {
-				text-decoration: underline;
-				font-size: $font-size-xsmall;
-				color: get-color(brand-button-blue);
-				margin: 0 rem(16px) 0 rem(16px);
-				cursor: pointer;
+			margin-right: rem(16px);
+			&__prefix {
+				margin-right: rem(5px);
+			}
+			&__search {
+				display: flex;
+				align-items: center;
+				white-space: nowrap;
+				&__clear {
+					text-decoration: underline;
+					font-size: $font-size-xsmall;
+					color: get-color(brand-button-blue);
+					margin: 0 rem(16px) 0 rem(16px);
+					cursor: pointer;
+				}
 			}
 		}
 	}

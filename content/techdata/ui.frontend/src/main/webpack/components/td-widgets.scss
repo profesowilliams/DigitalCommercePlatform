@@ -13,26 +13,30 @@
 		}
 	}
 	&__selection {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
 		color: get-color(text-mid-gray);
 		background-color: get-color(brand-white);
 		display: flex;
 		justify-content: space-between;
-		margin-top: 0.1rem;
 		padding-left: 0.5rem;
 		min-width: fit-content;
 		width: rem(140px);
 		& svg {
 			color: get-color(td-primary-blue);
-			margin-right: 5px;
-			margin-top: 4px;
+			margin-right: rem(5px);
+			margin-top: 0.2rem;
 		}
 	}
 	&__list {
 		position: absolute;
+		top: 100%;
 		min-width: fit-content;
 		width: rem(140px);
 		background-color: get-color(brand-white);
 		border: 1px solid get-color(brand-light-gray2);
+		box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
 		max-height: rem(300px);
 		overflow: auto;
 		z-index: 80;

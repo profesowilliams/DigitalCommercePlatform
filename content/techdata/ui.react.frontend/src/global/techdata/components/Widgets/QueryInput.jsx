@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SimpleDropDown from './SimpleDropDown';
 import TextInput from './TextInput';
 
 function QueryInput({ items, placeholder, onQueryChanged }) {
-	let _filterValue = null;
 	const [filterKey, setFilterKey] = useState(null);
-
-	function isEmptyOrSpaces(str) {
-		return str === null || str.match(/^ *$/) !== null;
-	}
+	const [filterValue, setFilterValue] = useState(null);
 
 	function textInputChanged(value) {
-		_filterValue = value;
-		if (filterKey) {
-			onQueryChanged({ key: filterKey, value: _filterValue });
-		}
+		setFilterValue(value);
 	}
 
 	function dropDownValueChanged(item) {
 		setFilterKey(item.key);
-		if (!isEmptyOrSpaces(_filterValue)) {
-			onQueryChanged({ key: filterKey, value: _filterValue });
-		}
 	}
+
+	useEffect(() => {
+		if (filterKey) {
+			onQueryChanged({ key: filterKey, value: filterValue });
+		}
+	}, [filterKey, filterValue]);
 
 	return (
 		<span className='cmp-query-input'>

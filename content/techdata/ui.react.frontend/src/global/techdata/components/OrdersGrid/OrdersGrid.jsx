@@ -2,12 +2,34 @@ import React, { useState, useRef } from 'react';
 import Grid from '../Grid/Grid';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
-import SearchCriteria from './SearchCriteria';
+import SearchCriteria from '../SearchCriteria/SearchCriteria';
+import OrdersGridSearch from './OrdersGridSearch';
 
 function OrdersGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
-	const [modal, setModal] = useState(null);
 	const filter = useRef(null);
+	const resetCallback = useRef(null);
+
+	function onAfterGridInit(config) {
+		resetCallback.current = () => {
+			config.gridResetRequest();
+		};
+	}
+
+	function onQueryChanged(query) {
+		query ? (filter.current = query.queryString) : (filter.current = null);
+		if (resetCallback.current) {
+			resetCallback.current();
+		}
+	}
+
+	async function requestInterceptor(request) {
+		const url = filter?.current ? request.url + filter.current : request.url;
+		let response = await request.get(url);
+		return response;
+	}
+
+	const [modal, setModal] = useState(null);
 
 	const STATUS = {
 		onHold: 'onHold',
@@ -61,19 +83,6 @@ function OrdersGrid(props) {
 				onModalClosed={() => setModal(null)}
 			></Modal>
 		);
-	}
-
-	async function requestInterceptor(request) {
-		const url = filter ? request.url + filter.current : request.url;
-		let response = await request.get(url);
-		return response;
-	}
-
-	let resetCallback = useRef(null);
-	function onAfterGridInit(config) {
-		resetCallback.current = () => {
-			config.gridResetRequest();
-		};
 	}
 
 	function applyStatusIcon(statusKey) {
@@ -220,27 +229,14 @@ function OrdersGrid(props) {
 		},
 	];
 
-	function onSearchRequest(query) {
-		filter.current = query.queryString;
-		if (resetCallback.current) {
-			resetCallback.current();
-		}
-	}
-
-	function onClearRequest() {
-		filter.current = null;
-		if (resetCallback.current) {
-			resetCallback.current();
-		}
-	}
-
 	return (
 		<section>
 			<div className='cmp-orders-grid'>
 				<SearchCriteria
+					Filters={OrdersGridSearch}
 					componentProp={componentProp.searchCriteria}
-					onSearchRequest={onSearchRequest}
-					onClearRequest={onClearRequest}
+					onSearchRequest={onQueryChanged}
+					onClearRequest={onQueryChanged}
 				></SearchCriteria>
 				<Grid
 					columnDefinition={columnDefs}
