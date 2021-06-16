@@ -5,6 +5,7 @@ use(function () {
     var iconValues = [];
     var listValues = [];
 	var labelValues = [];
+	var keywordDropdownValues = [];
     var optionData = {};
     var resourceResolver = resource.getResourceResolver();
  var invoicesModalData = {};
@@ -46,7 +47,8 @@ use(function () {
 
 
     }
-       var labelListNode = resourceResolver.getResource(currentNode.getPath() + "/labelList");
+
+	var labelListNode = resourceResolver.getResource(currentNode.getPath() + "/labelList");
 
     if (labelListNode !== null) {
         var childrenList = labelListNode.getChildren();
@@ -58,6 +60,40 @@ use(function () {
             labelData.labelKey = labelKey;
             labelData.labelValue = labelValue;
             labelValues.push(labelData);
+
+        }
+
+
+    }
+
+	 var keywordDropdownListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordDropdownList");
+
+    if (keywordDropdownListNode !== null) {
+        var childrenList = keywordDropdownListNode.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var label = res.properties["keywordDropdownLabel"];
+            var keywordDropdownData = {};
+            keywordDropdownData.label = label;
+			var labelListNode = resourceResolver.getResource(res.getPath() + "/labelList");
+
+				if (labelListNode !== null) {
+					var childrenList = labelListNode.getChildren();
+					var keyValues = [];
+					for (var [key, res] in Iterator(childrenList)) {
+						var labelKey = res.properties["key"];
+						var labelValue = res.properties["value"];
+						var labelData = {};
+						labelData.key = labelKey;
+						labelData.value = labelValue;
+						keyValues.push(labelData);
+						keywordDropdownData.items = keyValues;
+
+					}
+
+
+				}
+            keywordDropdownValues.push(keywordDropdownData);
 
         }
 
@@ -124,8 +160,11 @@ use(function () {
         jsonObject["iconList"] = iconValues;
     }
 
-     if (labelValues != null) {
+	if (labelValues != null) {
         jsonObject["labelList"] = labelValues;
+    }
+     if (keywordDropdownValues != null) {
+        jsonObject["keywordDropdown"] = keywordDropdownValues;
     }
 
 
