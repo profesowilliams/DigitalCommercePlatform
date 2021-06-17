@@ -71,13 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
                     .MinimumLength(MinIdLength)
                     .MaximumLength(MaxIdLength);
 
-                RuleFor(x => x.Criteria.Id).Must(CheckAllChars).WithMessage("Id contains invalid characters");
+                RuleFor(x => x.Criteria.Id).Must(CheckAllChars)
+                    .WithMessage("Id contains invalid characters");
             }
 
-            public bool CheckAllChars(string id)
+            private bool CheckAllChars(string id)
             {
-                if (string.IsNullOrWhiteSpace(id)) return true;
-
                 var result = true;
                 foreach (char c in id)
                 {

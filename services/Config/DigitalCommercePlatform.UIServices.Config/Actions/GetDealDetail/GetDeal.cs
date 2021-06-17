@@ -17,9 +17,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-           public string DealId { get; set; }
-           public string VendorId { get; set; }
-            public Request(string dealId,string vendorId)
+            public string DealId { get; set; }
+            public string VendorId { get; set; }
+
+            public Request(string dealId, string vendorId)
             {
                 DealId = dealId;
                 VendorId = vendorId;
@@ -37,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             private readonly IMapper _mapper;
             private readonly ILogger<GetDealHandler> _logger;
 
-            public GetDealHandler(IConfigService configService, 
+            public GetDealHandler(IConfigService configService,
                 IMapper mapper,
                 ILogger<GetDealHandler> logger)
             {
