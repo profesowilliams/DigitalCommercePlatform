@@ -32,6 +32,9 @@ use(function () {
     if (properties.get("uiServiceEndPoint") != null) {
         jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
     }
+    if (properties.get("logoutURL") != null) {
+            jsonObject.put("logoutURL", properties.get("logoutURL"));
+        }
     if (properties.get("clientId") != null) {
         jsonObject.put("clientId", properties.get("clientId"));
     }
