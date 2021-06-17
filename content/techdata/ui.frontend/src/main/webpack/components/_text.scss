@@ -1,34 +1,42 @@
 .cmp-text {
   ul, ol {
-    padding-top: 0.9375rem;
+    padding-top: rem(15px);
     list-style: none;
+
     li {
-      font-size: 1rem;
-      line-height: 1.1875rem;
-      padding-bottom: 0.375rem;
+      font-size: rem(16px);
+      text-align: left;
+      margin-left: rem(-40px);
       &::before {
         color: #02b0e2;
         display: inline-block;
-        width: 1.3em;
-        margin-left: -2.5rem;
       }
     }
   }
   ol {
     counter-reset: li;
+
     li {
       counter-increment: li;
+      line-height: rem(22px);
+      padding-bottom: rem(5.44px);
+
       &::before {
         content: counter(li);
+        width: rem(20.8px);
       }
     }
   }
   ul {
     li {
+      line-height: rem(20px);
+      padding-bottom: rem(5.12px);
+
       &::before {
         content: "\2022";
         font-weight: bold;
-        font-size: 1.375rem;
+        width: rem(20px);
+        font-size: rem(22px);
       }
     }
 
@@ -65,30 +73,37 @@
 
 .dp-text--xsmall {
   &, .cmp-text li {
-    font-size: .6875rem;
+    font-size: rem(11px);
   }
 }
 
 .dp-text--small {
   &, .cmp-text li {
-    font-size: .875rem;
+    font-size: rem(14px);
   }
 }
 
 .dp-text--big  {
   &, .cmp-text li {
-    font-size: 1.25rem;
+    font-size: rem(20px);
   }
 }
 
 .dp-text--align-center {
-
-    text-align: center;
-
+  text-align: center;
+  .cmp-text {
+    ul, ol {
+      margin: auto;
+      width: 50%;
+    }
+  }
 }
 
 .dp-text--align-right {
-
-    text-align: right;
-
+  text-align: right;
+  .cmp-text {
+    ul, ol {
+      float: right;
+    }
+  }
 }
