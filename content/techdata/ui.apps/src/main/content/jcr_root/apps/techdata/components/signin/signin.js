@@ -6,7 +6,8 @@ use(function () {
     var listValues = [];
     var resourceResolver = resource.getResourceResolver();
     var session = resourceResolver.adaptTo(Packages.javax.jcr.Session);
-    var node = resourceResolver.getResource(currentNode.getPath() + "/itemLinks");
+    var node = resourceResolver.getResource(resource.getPath() + "/itemLinks");
+    console.error("brumoon error");
 
     if (node !== null) {
         var childrenList = node.getChildren();
@@ -46,6 +47,10 @@ use(function () {
     }
     if (listValues != null) {
         jsonObject.put("items", listValues);
+    }
+
+    if (this.editMode) {
+        jsonObject.put("editMode", this.editMode);
     }
     return {
         listValues: jsonObject.toString()
