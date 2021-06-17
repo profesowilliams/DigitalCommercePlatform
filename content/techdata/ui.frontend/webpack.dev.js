@@ -562,6 +562,13 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/teaser-bigcards.html"
                 ),
+            }),            
+            new HtmlWebpackPlugin({
+                filename: "triptych-teaser",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/teaser/triptych-teaser.html" 
+                ),
             }),
             new HtmlWebpackPlugin({
                 filename: "top-five-open-config",
