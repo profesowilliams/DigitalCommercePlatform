@@ -852,6 +852,13 @@ module.exports = (env) => {
                     
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "cardView-carousel",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/cardView-carousel/cardView-carousel.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
