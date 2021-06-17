@@ -43,7 +43,7 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 				}}
 			>
 				<i className='fas fa-sliders-h'></i>
-				<div className='cmp-search-criteria__header__title'>{componentProp.title}</div>
+				<div className='cmp-search-criteria__header__title'>{componentProp?.title ?? 'Filter'}</div>
 			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
@@ -57,10 +57,10 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>
 					<Button disabled={!filterActive} onClick={() => onSearch()}>
-						{componentProp.searchButtonLabel}
+						{componentProp?.searchButtonLabel ?? 'Apply'}
 					</Button>
 					<div className='cmp-search-criteria__content__query-input__search__clear' onClick={() => onClear()}>
-						{componentProp.clearButtonLabel}
+						{componentProp?.clearButtonLabel ?? 'Clear All Filters'}
 					</div>
 				</div>
 			</div>

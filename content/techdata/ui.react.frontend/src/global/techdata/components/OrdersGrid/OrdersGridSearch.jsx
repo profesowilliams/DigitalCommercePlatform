@@ -14,11 +14,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 	};
 
 	const config = {
-		title: componentProp.title ?? 'Filter Orders',
-		searchButtonLabel: componentProp.searchButtonLabel ?? 'Apply',
-		inputPlaceholder: componentProp.inputPlaceholder ?? 'Enter Your Search',
-		clearButtonLabel: componentProp.clearButtonLabel ?? 'Clear All Filters',
-		keywordDropdown: componentProp.keywordDropdown ?? defaultKeywordDropdown,
+		keywordDropdown: componentProp?.keywordDropdown ?? defaultKeywordDropdown,
 	};
 
 	const _query = useRef({});
