@@ -8,14 +8,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL
+namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
 {
     [ExcludeFromCodeCoverage]
-    public sealed class GetPunchOutURL
+    public sealed class GetPunchOutUrl
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string PostBackURL { get; init; }
+            public string PostBackUrl { get; init; }
             public string Vendor { get; init; }
             public string ConfigurationId { get; init; }
             public string Action { get; init; }
@@ -27,11 +27,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL
             public string Url { get; set; }
         }
 
-        public class GetPunchOutURLHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IConfigService _configService;
 
-            public GetPunchOutURLHandler(IConfigService configService)
+            public Handler(IConfigService configService)
             {
                 _configService = configService ?? throw new ArgumentNullException(nameof(configService));
             }
@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL
             {
                 var punchInDto = new PunchInModel
                 {
-                    PostBackURL = request.PostBackURL,
+                    PostBackUrl = request.PostBackUrl,
                     VendorName = request.Vendor,
                     IdValue = request.ConfigurationId,
                     ActionName = request.Action,
@@ -50,20 +50,25 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL
                     DefaultOrdering = null
                 };
 
-                var url = await _configService.GetPunchOutURLAsync(punchInDto);
+                var url = await _configService.GetPunchOutUrlAsync(punchInDto);
                 return new ResponseBase<Response> { Content = new Response { Url = url } };
             }
         }
 
-        public class GetPunchOutURLValidator : AbstractValidator<Request>
+        public class Validator : AbstractValidator<Request>
         {
-            public GetPunchOutURLValidator()
+            public Validator()
             {
-                RuleFor(i => i.PostBackURL).NotEmpty().WithMessage("PostBackURL is required.");
-                RuleFor(i => i.Vendor).NotEmpty().WithMessage("Vendor  is required.");
-                RuleFor(i => i.ConfigurationId).NotEmpty().WithMessage("ConfigurationId is required.");
-                RuleFor(i => i.Function).NotEmpty().WithMessage("Function is required.");
-                RuleFor(i => i.Action).NotEmpty().WithMessage("Action is required.");
+                RuleFor(i => i.PostBackUrl)
+                    .NotEmpty().WithMessage("PostBackUrl is required.");
+                RuleFor(i => i.Vendor)
+                    .NotEmpty().WithMessage("Vendor  is required.");
+                RuleFor(i => i.ConfigurationId)
+                    .NotEmpty().WithMessage("ConfigurationId is required.");
+                RuleFor(i => i.Function)
+                    .NotEmpty().WithMessage("Function is required.");
+                RuleFor(i => i.Action)
+                    .NotEmpty().WithMessage("Action is required.");
             }
         }
 

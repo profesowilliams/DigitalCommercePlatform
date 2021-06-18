@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
-using DigitalCommercePlatform.UIServices.Config.Models.Estimations;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
@@ -144,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return result;
         }
 
-        private void GenerateConfigurationDetails(Configuration c)
+        private static void GenerateConfigurationDetails(Configuration c)
         {
             c.Details = new List<TdQuoteIdDetails>();
             for (int i = 0; i < GetRandomNumber(2, 6); i++)
@@ -160,65 +158,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
         }
 
-        private List<Estimation> MapAppResponseToEstimations<T>(FindResponse<T> findConfigurationResponse)
-        {
-            var data = findConfigurationResponse.Data;
-            var result = _mapper.Map<List<Estimation>>(data);
-            return result;
-        }
-
         private Models.Configurations.Internal.FindModel PrepareConfigurationsAppServiceRequest(GetConfigurations.Request request)
         {
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
             return result;
         }
 
-        private Models.Configurations.Internal.FindModel PrepareEstimationsAppServiceRequest(GetEstimations.Request request)
-        {
-            var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
-            result.Type = "Estimate";
-            return result;
-        }
-
-        public async Task<List<Estimation>> FindEstimations(GetEstimations.Request request)
-        {
-            try
-            {
-                var appServiceRequest = PrepareEstimationsAppServiceRequest(request);
-                var findConfigurationUrl = _appConfigurationUrl
-                    .AppendPathSegment("find")
-                    .SetQueryParams(appServiceRequest);
-
-                if (appServiceRequest.Details)
-                {
-                    var findConfigurationResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl);
-                    var result = MapAppResponseToEstimations(findConfigurationResponse);
-                    return result;
-                }
-                else
-                {
-                    var findConfigurationResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl);
-                    var result = MapAppResponseToEstimations(findConfigurationResponse);
-                    return result;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at getting estimations: " + nameof(ConfigService));
-                throw;
-            }
-        }
-
         public async Task<bool> EstimationValidate(EstimationValidate.Request request)
         {
             try
             {
-                var result = await FindEstimations(_mapper.Map<GetEstimations.Request>(request));
-
-                return result?.ToList().Count > 0 ? true : false;
-
+                var result = await FindConfigurations(new GetConfigurations.Request { Criteria = request.Criteria });
+                return result?.ToList().Count > 0;
             }
             catch (Exception ex)
             {
@@ -229,20 +180,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     return false;
                 }
-                throw ex;
+                throw;
             }
         }
 
-        public async Task<string> GetPunchOutURLAsync(PunchInModel request)
+        public async Task<string> GetPunchOutUrlAsync(PunchInModel request)
         {
             const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
             var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
 
-            _logger.LogInformation($"Requested URL is: {requestUrl}");
-
+            _logger.LogInformation($"Requested url is: {requestUrl}");
 
             var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
-
             var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
             var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
 

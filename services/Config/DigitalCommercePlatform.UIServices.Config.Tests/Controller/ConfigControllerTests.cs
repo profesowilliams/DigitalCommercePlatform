@@ -1,8 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
@@ -15,7 +14,6 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -137,21 +135,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().Equals(HttpStatusCode.OK);
         }
 
-        //[Theory]
-        //[AutoDomainData]
-        //public async Task GetConfigurations_BadRequest(GetConfigurations.Response expected)
-        //{
-        //    _mockMediator.Setup(x => x.Send(
-        //               It.IsAny<GetConfigurations.Request>(),
-        //               It.IsAny<CancellationToken>()))
-        //           .ReturnsAsync(expected);
-
-        //    var controller = GetController();
-
-        //    var result = await controller.GetConfigurations(null).ConfigureAwait(false);
-
-        //    result.Should().Equals(HttpStatusCode.BadRequest);
-        //}
         [Theory]
         [AutoDomainData]
         public async Task GetDeals_BadRequest(ResponseBase<GetDeals.Response> expected)
@@ -165,36 +148,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var result = await controller.GetDeals(null).ConfigureAwait(false);
             result.Should().Equals(HttpStatusCode.BadRequest);
-        }
-
-        //[Theory]
-        //[AutoDomainData]
-        //public async Task GetDeal_BadRequest(GetDeal.Response expected)
-        //{
-        //    _mockMediator.Setup(x => x.Send(
-        //               It.IsAny<GetDeal.Request>(),
-        //               It.IsAny<CancellationToken>()))
-        //           .ReturnsAsync(expected);
-
-        //    var controller = GetController();
-
-        //    var result = await controller.GetDeal(null).ConfigureAwait(false);
-        //    result.Should().Equals(HttpStatusCode.BadRequest);
-        //}
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetEstimations(ResponseBase<GetEstimations.Response> expected,FindModel model)
-        {
-            _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetEstimations.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-            var result = await controller.GetEstimations(model).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
         }
 
         [Theory]
@@ -215,15 +168,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetPunchOutURL_OKResponse(ResponseBase<GetPunchOutURL.Response> expected)
+        public async Task GetPunchOutUrl_OKResponse(ResponseBase<GetPunchOutUrl.Response> expected)
         {
             _mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetPunchOutURL.Request>(),
+                       It.IsAny<GetPunchOutUrl.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetPunchOutURL(new GetPunchOutURL.Request()).ConfigureAwait(false);
+            var result = await controller.GetPunchOutUrl(new GetPunchOutUrl.Request()).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }

@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
                 _configService = configService;
             }
 
-            public async Task<ResponseBase<Response>> Handle(EstimationValidate.Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var isValid = await _configService.EstimationValidate(request).ConfigureAwait(false);
                 var estimationValidateContent = new Response
@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
                     .WithMessage("Id contains invalid characters");
             }
 
-            private bool CheckAllChars(string id)
+            private static bool CheckAllChars(string id)
             {
                 var result = true;
                 foreach (char c in id)

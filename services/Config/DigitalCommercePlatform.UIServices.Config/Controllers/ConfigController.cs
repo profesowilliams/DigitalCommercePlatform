@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetEstimations;
-using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutURL;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
@@ -62,15 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpGet]
-        [Route("estimations")]
-        public async Task<ActionResult> GetEstimations([FromQuery] FindModel criteria)
-        {
-            var data = new GetEstimations.Request(criteria);
-            var response = await Mediator.Send(data).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-        [HttpGet]
         [Route("estimations/validate")]
         public async Task<ActionResult> EstimationValidate([FromQuery] FindModel criteria)
         {
@@ -80,8 +70,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpPost]
-        [Route("getPunchOutURL")]
-        public async Task<ActionResult> GetPunchOutURL(GetPunchOutURL.Request request)
+        [Route("getPunchOutUrl")]
+        public async Task<ActionResult> GetPunchOutUrl(GetPunchOutUrl.Request request)
         {
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);

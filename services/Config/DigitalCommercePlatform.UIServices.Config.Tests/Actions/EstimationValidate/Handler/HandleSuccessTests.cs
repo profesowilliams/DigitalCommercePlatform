@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 using EV = DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Handlers.EstimationValidate
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.EstimationValidate.Handler
 {
     [ExcludeFromCodeCoverage]
     public class HandleSuccessTests
@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Handlers.Estim
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
-        public async Task Should_return_valid_response_with_expected_value(bool expected)
+        public async Task ShouldReturnValidResponseWithExpectedValue(bool expected)
         {
             _mockConfigService.Setup(x => x.EstimationValidate(
                        It.IsAny<EV.EstimationValidate.Request>()

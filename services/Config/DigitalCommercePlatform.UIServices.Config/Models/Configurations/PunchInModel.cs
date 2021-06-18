@@ -5,7 +5,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
     [ExcludeFromCodeCoverage]
     public class PunchInModel
     {
-        public string PostBackURL { get; set; } 
+        public string PostBackUrl { get; set; } 
         public string FunctionName { get; set; } 
         public string ActionName { get; set; }        
         public string IdValue { get; set; }

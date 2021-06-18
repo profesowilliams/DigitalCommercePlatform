@@ -6,17 +6,20 @@ using Xunit;
 using FluentValidation.TestHelper;
 using EV = DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators.EstimationValidate
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.EstimationValidate.Validator
 {
     public class IdTests
     {
+        protected static readonly int Min = EV.EstimationValidate.Validator.MinIdLength;
+        protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
+
         internal class ValidIdData : TheoryData<EV.EstimationValidate.Request>
         {
             public ValidIdData()
             {
                 Add(new EV.EstimationValidate.Request(FindModelFactory.CreateValid()));
-                Add(new EV.EstimationValidate.Request(FindModelFactory.CreateValid(2)));
-                Add(new EV.EstimationValidate.Request(FindModelFactory.CreateValid(255)));
+                Add(new EV.EstimationValidate.Request(FindModelFactory.CreateValid(Min)));
+                Add(new EV.EstimationValidate.Request(FindModelFactory.CreateValid(Max)));
             }
         }
 
@@ -28,17 +31,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Validators.Est
             var result = await validator.TestValidateAsync(request);
 
             result.Should().NotBeNull();
-            result.ShouldNotHaveAnyValidationErrors();
+            result.ShouldNotHaveValidationErrorFor(x => x.Criteria.Id);
         }
 
         internal class InvalidIdData : TheoryData<EV.EstimationValidate.Request>
         {
-            protected static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            protected static readonly string ValidChars = EV.EstimationValidate.Validator.ValidChars;
             protected static readonly string InvalidChars = " @%";
-
-            protected static readonly int Min = EV.EstimationValidate.Validator.MinIdLength;
-            protected static readonly int Max = EV.EstimationValidate.Validator.MaxIdLength;
-
             
             public InvalidIdData()
             {
