@@ -44,4 +44,20 @@ steps:
    
 - task: SonarQubeAnalyze@4
   displayName: 'Run Code Analysis'
-  continueOnError: true     
+  continueOnError: true 
+
+- task: ms-omex.prmetrics.prmetrics.PRMetrics@1
+  displayName: 'PR Metrics'
+  inputs:
+    BaseSize: 200
+    GrowthRate: 2.0
+    TestFactor: 1.0
+    FileMatchingPatterns: |
+      **/*
+      !Ignore.cs
+    CodeFileExtensions: |
+      cs
+      ps1
+  continueOnError: true       
+  env:
+    SYSTEM_ACCESSTOKEN: $(system.accesstoken)         
