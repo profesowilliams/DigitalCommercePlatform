@@ -639,6 +639,14 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/megamenu.html"
                 ),
+            }),            
+            new HtmlWebpackPlugin({
+                filename: "adbutler",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/megamenu/adButler.html"                                   
+                                   
+                ),
             }),
             new HtmlWebpackPlugin({
                 filename: "my-renewals",
