@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
-    [ExcludeFromCodeCoverage]
     public class CatalogProfile : Profile
     {
         public CatalogProfile()

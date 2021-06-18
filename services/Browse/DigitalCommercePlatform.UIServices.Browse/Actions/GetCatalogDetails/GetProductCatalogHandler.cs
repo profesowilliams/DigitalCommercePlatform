@@ -4,18 +4,17 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 {
-    [ExcludeFromCodeCoverage]
     public class GetProductCatalogHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
             public ProductCatalog Input { get; set; }
+
             public Request(ProductCatalog input)
             {
                 Input = input;
@@ -38,8 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-
-                var CatalogDetails = await _CatalogRepositoryService.GetProductCatalogDetails(request);    
+                var CatalogDetails = await _CatalogRepositoryService.GetProductCatalogDetails(request);
                 return new ResponseBase<Response> { Content = new Response { Items = CatalogDetails } };
             }
         }

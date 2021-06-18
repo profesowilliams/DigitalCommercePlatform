@@ -16,14 +16,11 @@ using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
-
-    [ExcludeFromCodeCoverage]
     public class BrowseService : IBrowseService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
@@ -214,7 +211,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                     catalog.Add(objCatalogResponse);
                 }
                 _logger.LogInformation($"URL used is {_productCatalogURL}:{"Feature toggle input"}:{_productCatalogFeature} ");
-
             }
             catch (Exception ex)
             {

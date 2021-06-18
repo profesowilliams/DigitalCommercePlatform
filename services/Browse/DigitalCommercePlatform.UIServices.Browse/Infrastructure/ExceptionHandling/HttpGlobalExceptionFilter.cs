@@ -5,13 +5,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHandling
 {
-    [ExcludeFromCodeCoverage]
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<HttpGlobalExceptionFilter> _logger;

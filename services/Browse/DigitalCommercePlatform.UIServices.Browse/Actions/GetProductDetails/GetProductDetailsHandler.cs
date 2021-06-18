@@ -5,13 +5,11 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
-    [ExcludeFromCodeCoverage]
     public static class GetProductDetailsHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -44,9 +42,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<Response>(productDetails);
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
+                var getProductResponse = _mapper.Map<Response>(productDetails);
+                return new ResponseBase<Response> { Content = getProductResponse };
             }
         }
 

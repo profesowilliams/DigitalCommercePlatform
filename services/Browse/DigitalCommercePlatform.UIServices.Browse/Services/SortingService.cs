@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
-    [ExcludeFromCodeCoverage]
     public class SortingService : ISortingService
     {
         private readonly Dictionary<string, string> _propertiesMapping;

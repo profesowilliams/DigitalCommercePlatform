@@ -4,13 +4,11 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 {
-    [ExcludeFromCodeCoverage]
     public static class GetCatalogHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -41,16 +39,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
+                //get catalog from cache
+                var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
 
-                    //get catalog from cache
-                    var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
-
-                   if (getCatalogResponse == null)
-                   {
-                        var CatalogDetails = await _CatalogRepositoryService.GetCatalogDetails(request);
-                        getCatalogResponse = CatalogDetails;
-                   }
-                   return new ResponseBase<Response> { Content = new Response { Items = getCatalogResponse } };
+                if (getCatalogResponse == null)
+                {
+                    var CatalogDetails = await _CatalogRepositoryService.GetCatalogDetails(request);
+                    getCatalogResponse = CatalogDetails;
+                }
+                return new ResponseBase<Response> { Content = new Response { Items = getCatalogResponse } };
             }
         }
 

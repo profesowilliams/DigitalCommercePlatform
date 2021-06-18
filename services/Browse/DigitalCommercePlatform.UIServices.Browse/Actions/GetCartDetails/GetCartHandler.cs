@@ -2,13 +2,11 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
-    [ExcludeFromCodeCoverage]
     public static class GetCartHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -39,10 +37,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
-            {  
-                    var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
-                    var getcartResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content=getcartResponse };
+            {
+                var cartDetails = await _cartRepositoryServices.GetCartDetails(request);
+                var getcartResponse = _mapper.Map<Response>(cartDetails);
+                return new ResponseBase<Response> { Content = getcartResponse };
             }
         }
     }

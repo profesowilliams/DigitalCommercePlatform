@@ -16,12 +16,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 {
-    [ExcludeFromCodeCoverage]
     [SetContextFromHeader]
     [ApiController]
     [ApiVersion("1")]

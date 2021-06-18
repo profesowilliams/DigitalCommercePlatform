@@ -5,13 +5,11 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
 {
-    [ExcludeFromCodeCoverage]
     public static class GetHeaderHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -19,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
             public string CatalogCriteria { get; set; }
             public bool IsDefault { get; set; } = true;
 
-            public Request( string catalogCriteria,bool isDefault)
+            public Request(string catalogCriteria, bool isDefault)
             {
                 CatalogCriteria = catalogCriteria;
                 IsDefault = isDefault;
@@ -52,10 +50,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var headerDetails = await _headerRepositoryServices.GetHeader(request);
-                    var headerResponse = _mapper.Map<Response>(headerDetails);
-                    return new ResponseBase<Response> { Content = headerResponse };
+                var headerResponse = _mapper.Map<Response>(headerDetails);
+                return new ResponseBase<Response> { Content = headerResponse };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

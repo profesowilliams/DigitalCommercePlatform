@@ -3,12 +3,10 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
-    [ExcludeFromCodeCoverage]
     public class CachingService : ICachingService
     {
         // keep it simpele, if additonal cahing is required write generic method

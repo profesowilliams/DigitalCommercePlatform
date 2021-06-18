@@ -3,19 +3,16 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 {
-    [ExcludeFromCodeCoverage]
     public static class GetCustomerHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-
         }
 
         public class Response
@@ -38,9 +35,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var customerDetails = await _customerRepositoryServices.GetCustomerDetails();
-                    var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
-                    return new ResponseBase<Response> { Content = getCustomerResponse };
+                var customerDetails = await _customerRepositoryServices.GetCustomerDetails();
+                var getCustomerResponse = _mapper.Map<IEnumerable<Response>>(customerDetails)?.FirstOrDefault();
+                return new ResponseBase<Response> { Content = getCustomerResponse };
             }
         }
     }

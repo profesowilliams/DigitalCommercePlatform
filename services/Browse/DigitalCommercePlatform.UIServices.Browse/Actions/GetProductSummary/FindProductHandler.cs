@@ -7,13 +7,11 @@ using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 {
-    [ExcludeFromCodeCoverage]
     public static class FindProductHandler
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -32,12 +30,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
             public string System { get; set; }
             public bool Details { get; set; } = true;
             public bool WithPaginationInfo { get; set; }
-            public int? Page { get; set; } 
+            public int? Page { get; set; }
             public int? PageSize { get; set; }
             public Sort SortBy { get; set; } = Sort.ID;
             public bool SortAscending { get; set; } = true;
 
-            public Request(FindProductModel query,bool withPaginationInfo)
+            public Request(FindProductModel query, bool withPaginationInfo)
             {
                 MaterialNumber = query.MaterialNumber;
                 OldMaterialNumber = query.OldMaterialNumber;
@@ -78,11 +76,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var productDetails = await _productRepositoryServices.FindProductDetails(request).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<Response>(productDetails);
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                var productDetails = await _productRepositoryServices.FindProductDetails(request).ConfigureAwait(false);
+                var getProductResponse = _mapper.Map<Response>(productDetails);
+                return new ResponseBase<Response> { Content = getProductResponse };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             private readonly ISortingService _sortingService;
