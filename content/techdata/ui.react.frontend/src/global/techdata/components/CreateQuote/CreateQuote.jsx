@@ -61,7 +61,6 @@ const QuoteCreate = ({
     return `${text} ${messages.join(' -- ')}`
   }
   const createQuote = async () => {
-    try{
       const { endpoint } = endpoints;
       const createFromTypes = {
         saved: 'savedCart',
@@ -79,9 +78,6 @@ const QuoteCreate = ({
       const { quoteId } = content;
       alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${quoteId}`);
       window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
-    }catch{
-      alert( `Unexpected Error in create quote` )
-    }
   }
 
 	useEffect(async () => {
