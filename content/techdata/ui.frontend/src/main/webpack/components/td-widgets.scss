@@ -8,7 +8,8 @@
 	height: rem(30px);
 	cursor: pointer;
 	&--expanded {
-		& svg {
+		& svg,
+		i {
 			transform: rotate(180deg);
 		}
 	}
@@ -23,7 +24,8 @@
 		padding-left: 0.5rem;
 		min-width: fit-content;
 		width: rem(140px);
-		& svg {
+		& svg,
+		i {
 			color: get-color(td-primary-blue);
 			margin-right: rem(5px);
 			margin-top: 0.2rem;
@@ -70,11 +72,14 @@
 	& .cmp-simple-drop-down {
 		border-right: none;
 	}
-	& .cmp-text-input {
+	&__input {
 		color: get-color(text-mid-gray);
+		border: 1px solid get-color(brand-light-gray2);
 		min-width: rem(140px);
 		&::placeholder {
 			padding-left: rem(5px);
+			font-size: $font-size-custom-xxsmall;
+			font-style: italic;
 		}
 	}
 }

@@ -23,11 +23,13 @@ function QueryInput({ items, placeholder, onQueryChanged }) {
 	return (
 		<span className='cmp-query-input'>
 			<SimpleDropDown items={items} onItemSelected={(item) => dropDownValueChanged(item)}></SimpleDropDown>
-			<TextInput
-				label={placeholder}
-				value={null}
+			<input
+				className='cmp-query-input__input'
+				type='text'
+				placeholder={placeholder}
 				onChange={(event) => textInputChanged(event.target.value)}
-			></TextInput>
+				value={null}
+			/>
 		</span>
 	);
 }

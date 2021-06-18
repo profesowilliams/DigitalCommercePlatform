@@ -21,6 +21,7 @@
 	}
 }
 .cmp-modal {
+	font-family: $font-family-sans-serif;
 	&.visible {
 		animation: a-fade-in 0.15s linear;
 		visibility: visible;
@@ -43,6 +44,7 @@
 	&_content {
 		border: 1px solid get-color(td-lighter-gray);
 		background-color: get-color(brand-white);
+		line-height: 1.5;
 		box-sizing: border-box;
 		position: fixed;
 		z-index: 90;
@@ -62,7 +64,7 @@
 	}
 	&_header {
 		color: get-color(brand-blue);
-		font-size: rem(24px);
+		font-size: $font-size-large;
 		display: flex;
 		justify-content: space-between;
 		height: 2rem;
@@ -73,6 +75,7 @@
 	&_body {
 		margin: 2rem;
 		min-height: rem(100px);
+		font-size: $font-size-medium;
 	}
 	&_btn {
 		color: get-color(brand-white);
@@ -82,6 +85,7 @@
 		cursor: pointer;
 		&_text {
 			margin: 1rem;
+			font-size: $font-size-small;
 		}
 		&-icon {
 			margin-right: 0.5rem;
@@ -100,6 +104,7 @@
 	}
 }
 
+///details info modal content style///
 .cmp-details-info {
 	max-width: rem(500px);
 	&__info {
@@ -144,6 +149,41 @@
 			margin-top: rem(10px);
 			margin-bottom: rem(5px);
 			font-size: $font-size-xsmall;
+		}
+	}
+}
+
+///vendor connection modal content style///
+.cmp-vendor-connection {
+	max-width: rem(500px);
+	&__header {
+		font-size: $font-size-medium;
+		font-weight: $font-weight-bold;
+		margin-bottom: rem(20px);
+		color: get-color('brand-text-gray');
+		text-align: left;
+	}
+	&__vendors {
+		&__vendor {
+			display: grid;
+			grid-template-columns: 30% 50% 20%;
+			min-height: rem(53px);
+			height: fit-content;
+			align-items: center;
+			border-top: 1px solid get-color('secondary-light-grey');
+			text-align: left;
+			color: get-color('brand-text-gray');
+
+			border-top: 1px solid get-color('secondary-light-grey');
+			&.logo {
+			}
+			&.status {
+			}
+			&.toggler {
+			}
+			&:last-child {
+				border-bottom: 1px solid get-color('secondary-light-grey');
+			}
 		}
 	}
 }

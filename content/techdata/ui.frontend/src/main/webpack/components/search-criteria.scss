@@ -10,7 +10,8 @@
 	&__header {
 		cursor: pointer;
 		display: flex;
-		& svg {
+		& svg,
+		i {
 			color: get-color(td-primary-blue);
 			margin-top: rem(4px);
 		}

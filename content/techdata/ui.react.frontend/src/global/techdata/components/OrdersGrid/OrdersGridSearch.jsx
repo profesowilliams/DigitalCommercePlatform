@@ -15,6 +15,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 
 	const config = {
 		keywordDropdown: componentProp?.keywordDropdown ?? defaultKeywordDropdown,
+		inputPlaceholder: componentProp?.inputPlaceholder ?? 'Enter Your Search',
 	};
 
 	const _query = useRef({});
