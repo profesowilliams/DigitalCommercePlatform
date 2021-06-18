@@ -59,5 +59,6 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint", order = 17)
     String orderGridEndpoint();
 
-
+    @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ", order = 18)
+    String vendorConnectionEndpoint();
 }

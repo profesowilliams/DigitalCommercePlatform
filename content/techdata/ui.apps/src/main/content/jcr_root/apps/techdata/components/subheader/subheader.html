@@ -163,17 +163,19 @@
                 </sly>
             </sly>
         </ol>
-        <div
-                data-component="Subheader"
-                data-cmp-type="react"
-                class="cmp-sub-header__wrapper"
-                data-config='{ "minified": true, "accountnumberLabel": "${properties.accountNumber}" }'
-        ></div>
+        <sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+            <sly data-sly-use.model="${'subheader.js' @uiServiceDomain=serviceData.uiServiceDomain,vendorConnectionEndpoint=serviceData.vendorConnectionEndpoint}">
+                <div
+                        data-component="Subheader"
+                        data-cmp-type="react"
+                        class="cmp-sub-header__wrapper"
+                        data-config="${model.configJson}"
+                ></div>
     </div>
     <div data-sly-repeat.item="${tabs.items}"
          data-sly-resource="${item.name @ decorationTagName='div'}"
          id="${item.id}" role="tabpanel" aria-labelledby="${item.id}" tabindex="0"
          class="cmp-tabs__tabpanel${item.name == tabs.activeItem ? ' cmp-tabs__tabpanel--active' : ''}"
-        data-cmp-hook-tabs="tabpanel" data-cmp-data-layer="${item.data.json}"></div>
+         data-cmp-hook-tabs="tabpanel" data-cmp-data-layer="${item.data.json}"></div>
     <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}" data-sly-test="${(wcmmode.edit || wcmmode.preview) && tabs.items.size < 1}"></sly>
 </div>
