@@ -16,6 +16,7 @@ using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -23,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -246,7 +248,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
-            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, request.CreateModel);
+            CreateModelResponse response;
+            try
+            {
+                response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, request.CreateModel);
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Code == HttpStatusCode.BadRequest && ex.InnerException is RemoteServerHttpException innerException)
+                {
+                    object exceptionDetails = innerException?.Details;
+                    object body = exceptionDetails?.GetType().GetProperty("Body")?.GetValue(exceptionDetails, null);
+                    response = JsonConvert.DeserializeObject<CreateModelResponse>(body as string);
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return response;
         }
 
