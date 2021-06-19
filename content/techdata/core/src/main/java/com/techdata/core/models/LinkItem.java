@@ -54,6 +54,12 @@ public class LinkItem {
     private String enableSecondaryIcon;
 
     @Inject
+    private String adbutlerHeading;
+
+    @Inject
+    private String adbutlerJSScript;
+
+    @Inject
     private ResourceResolver resolver;
 
     @Inject
@@ -133,6 +139,13 @@ public class LinkItem {
         return this.subLinks!=null && this.subLinks.size() > 0;
     }
 
+    public String getAdbutlerHeading() {
+        return adbutlerHeading;
+    }
+
+    public String getAdbutlerJSScript() {
+        return adbutlerJSScript;
+    }
 
     public List<SubNavLinks> getTertiaryMenuItems(){
         return this.tertiarySubNavLinks;

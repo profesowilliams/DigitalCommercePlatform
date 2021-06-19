@@ -32,8 +32,6 @@
                             </ul>
                         </div>
 
-
-
                     </div>
                     <div class="cmp-megamenu__wrapper cmp-megamenu__quaternary" data-sly-list="${nav.tertiaryMenuItems}">
                         <div class="cmp-megamenu__wrapper-item" data-cmp-parent="menu ${item.menuID}">
@@ -45,6 +43,17 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="cmp-adbutler" data-sly-test="${nav.adbutlerJSScript}">
+
+                        <div class="cmp-adbutler__content">
+                            <div class="cmp-adbutler__content-title">
+                                ${nav.adbutlerHeading}
+                            </div>
+                            <div class="cmp-adbutler__content-ad">
+                                ${nav.adbutlerJSScript @ context='unsafe'}
+                            </div>
                         </div>
                     </div>
                 </nav>

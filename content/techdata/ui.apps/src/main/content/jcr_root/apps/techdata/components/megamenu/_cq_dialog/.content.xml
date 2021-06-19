@@ -76,7 +76,21 @@
 														uncheckedValue="false"
                                                         value="true"
                                                         name="./enableSecondaryIcon" />
-											</items>
+                                                <adbutlerHeading
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Adbutler Heading"
+                                                        fieldDescription="Provide heading for Adbutler."
+                                                        jcr:primaryType="nt:unstructured"
+                                                        name="./adbutlerHeading" />
+                                                <adbutlerJSScript
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldLabel="Adbutler Javascript Text"
+                                                    fieldDescription="Provide only Javascript script code."
+                                                    name="./adbutlerJSScript"
+                                                    resize="{Boolean}true"
+                                                    rows="3"/>
+                                            </items>
                                         </column>
                                     </items>
                                 </field>
