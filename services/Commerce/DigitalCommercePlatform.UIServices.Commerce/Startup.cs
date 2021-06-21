@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce
         {
             services.AddTransient<ICommerceService, CommerceService>();
             services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.AddSingleton<ISortingService, SortingService>();
             services.AddSingleton<IStatusMappingService, StatusMappingService>(); 
             services.AddTransient<IHelperService, HelperService>();

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using FluentValidation;
 using MediatR;
@@ -48,59 +49,59 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
 
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly ICommerceService _quoteService;
+            private readonly IOrderService _orderService;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(ICommerceService quoteService, IMapper mapper, ILogger<Handler> logger)
+            public Handler(IOrderService orderService, IMapper mapper, ILogger<Handler> logger)
             {
-                _quoteService = quoteService;
+                _orderService = orderService;
                 _mapper = mapper;
                 _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
+                var listInvoiceIds = new List<string>();
+                if (request.InvoiceId != null)
                 {
-                    var filenames = new List<string>()
+                    listInvoiceIds.Add(request.InvoiceId);
+                }
+                else
+                {
+                    var listInvoices = await _orderService.GetInvoicesFromOrderIdAsync(request.OrderId);
+                    foreach (var invoice in listInvoices)
                     {
-                        "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample.pdf",
-                        "DigitalCommercePlatform.UIServices.Commerce.data.invoice-sample-2.pdf"
-                    };
-
-                    var response = new Response();
-                    if (request.DownloadAll)
-                    {
-                        response.BinaryContent = GenerateZipFile(filenames);
-                        response.MimeType = "application/zip";
-                        return await Task.FromResult(new ResponseBase<Response> { Content = response });
-                    }
-                    else
-                    {
-                        var filename = filenames.First();
-                        // Temporary solution to let QA test with at least 2 different PDFs
-                        if (request.OrderId == "6021771625")
-                        {
-                            filename = filenames.Last();
-                        }
-                        using (var resourceStream = GetType().Assembly.GetManifestResourceStream(filename))
-                        {
-                            BinaryReader reader = new BinaryReader(resourceStream);
-                            response.BinaryContent = reader.ReadBytes((int)reader.BaseStream.Length);
-                        }
-                        response.MimeType = "application/pdf";
-                        return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                        listInvoiceIds.Add(invoice.ID);
                     }
                 }
-                catch (Exception ex)
+
+                var listFiles = new List<DownloadableFile>();
+                foreach (var invoiceId in listInvoiceIds)
                 {
-                    _logger.LogError(ex, $"Error getting quote data in {nameof(DownloadInvoice)}");
-                    throw;
+                    var binaryContentPdf = await _orderService.GetPdfInvoiceAsync(invoiceId);
+                    var invoiceFile = new DownloadableFile(binaryContentPdf, request.InvoiceId + ".pdf", "application/pdf");
+                    listFiles.Add(invoiceFile);
+                }
+
+                var response = new Response();
+                if (listFiles.Count == 0) { return await Task.FromResult(new ResponseBase<Response> { Content = response }); }
+                if (listFiles.Count == 1 && !request.DownloadAll)
+                {
+                    var file = listFiles.Single();
+                    response.BinaryContent = file.BinaryContent;
+                    response.MimeType = file.MimeType;
+                    return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                }
+                else
+                {
+                    response.BinaryContent = GenerateZipFile(listFiles);
+                    response.MimeType = "application/zip";
+                    return await Task.FromResult(new ResponseBase<Response> { Content = response });
                 }
             }
 
-            private byte[] GenerateZipFile(List<string> filenames)
+            private byte[] GenerateZipFile(List<DownloadableFile> listDownloadableFiles)
             {
                 byte[] archiveFile;
                 using (MemoryStream zipStream = new MemoryStream())
@@ -108,19 +109,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
 
                     using (ZipArchive zip = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
                     {
-                        foreach (var filename in filenames)
+                        foreach (var file in listDownloadableFiles)
                         {
-                            var entry = zip.CreateEntry(filename);
-                            using (var resourceStream = this.GetType().Assembly.GetManifestResourceStream(filename))
+                            var entry = zip.CreateEntry(file.Filename);
+                            using (var sourceStream = new MemoryStream(file.BinaryContent))
                             {
                                 using (StreamWriter entryStream = new StreamWriter(entry.Open()))
                                 {
-                                    resourceStream.CopyTo(entryStream.BaseStream);
+                                    sourceStream.CopyTo(entryStream.BaseStream);
                                 }
                             }
                         }
                     }
-                    zipStream.Position = 0;
                     archiveFile = zipStream.ToArray();
                     return archiveFile;
                 }

@@ -51,9 +51,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHa
                 _logger.LogError(context.Exception, "RemoteServerHttpException - traceId:" + traceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "An unexpected RemoteServerHttpException. See logs for traceId:" + traceId + "." }, Code = (int)UIServiceExceptionCode.GenericServerError }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "A RemoteServerHttpException occurred: " + remoteServerHttpException.Code }, Code = (int)remoteServerHttpException.Code }
                 });
-                context.HttpContext.Response.StatusCode = (int)remoteServerHttpException.Code;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
             else
             {

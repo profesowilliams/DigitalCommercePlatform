@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
@@ -106,6 +107,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
             var response = await Mediator.Send(new DownloadInvoice.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);
+            if (response?.Content?.BinaryContent == null) { return new NotFoundResult(); }
             return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
         }
     }
