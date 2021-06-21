@@ -1,32 +1,21 @@
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
-using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
-using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
+namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
 {
     public class BrowseServiceTests
     {

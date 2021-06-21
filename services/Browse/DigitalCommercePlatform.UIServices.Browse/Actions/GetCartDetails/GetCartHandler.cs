@@ -2,11 +2,13 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using MediatR;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails
 {
+    [ExcludeFromCodeCoverage]
     public static class GetCartHandler
     {
         public class Request : IRequest<ResponseBase<Response>>

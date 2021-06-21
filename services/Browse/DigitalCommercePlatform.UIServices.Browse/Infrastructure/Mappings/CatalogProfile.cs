@@ -14,20 +14,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                .ForMember(dest => dest.DocCount, opt => opt.MapFrom(src => src.ProductCount));
 
             CreateMap<CatalogDto, CatalogModel>()
-                .ForPath(dest => dest.Catalogs, opt => opt.MapFrom(src => src.Catalogs.FirstOrDefault().Categories));
+                .ForPath(dest => dest.Catalogs, opt => opt.MapFrom(src => src.Catalogs.FirstOrDefault().Categories))
+                .ForMember(dest => dest.Key, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.Ignore())
+                .ForMember(dest => dest.DocCount, opt => opt.Ignore());
 
             CreateMap<CategoryDto, CatalogResponse>()
+                .ForMember(dest => dest.DocCount, opt => opt.Ignore())
                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                .ForMember(dest => dest.Children, opt => opt.MapFrom(src => src.Subcategories))
                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Id.ToString()));
 
             CreateMap<CategoryDto, CatalogModel>()
-                           .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                           .ForMember(dest => dest.Catalogs, opt => opt.MapFrom(src => src.Subcategories))
-                           .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Id.ToString()));
+                .ForMember(dest => dest.DocCount, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Catalogs, opt => opt.MapFrom(src => src.Subcategories))
+                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Id.ToString()));
 
             CreateMap<CatalogModel, CatalogResponse>()
                 .ForMember(dest => dest.Children, opt => opt.MapFrom(src => src.Catalogs));
+
         }
     }
 }
