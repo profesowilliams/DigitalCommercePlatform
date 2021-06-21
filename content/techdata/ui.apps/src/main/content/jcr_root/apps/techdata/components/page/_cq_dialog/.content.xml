@@ -16,6 +16,13 @@
                                         fieldLabel="Menu Icon to be displayed on Mega Menu"
                                         value="fas fa-server"
                                         name="./pageMenuIcon"/>
+                                    <contentFragmentPath
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            fieldLabel="Vendor Content fragment path"
+                                            name="./cfPath"
+                                            rootPath="/content/dam/techdata">
+                                    </contentFragmentPath>
                                     <errorPages
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

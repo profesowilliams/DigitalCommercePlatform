@@ -1,0 +1,17 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<sly class="vendor-listing" data-sly-use.listUse="com.adobe.cq.wcm.core.components.models.List">
+    Vendor Listing
+    <sly data-sly-list.item="${listUse.listItems}">
+
+        <div>
+			<span>${item.title}</span><br>
+			<span>${item.overview @ context = 'html'}</span><br>
+            <span class="vendor-icon">
+            	<img src="${item.vendorIcon}" style="background-color:black"></img></span>
+            <a href="${item.pageLink}">${item.vendorPageLabel}</a>
+        </div>
+		<hr>
+    </sly>
+</sly>
