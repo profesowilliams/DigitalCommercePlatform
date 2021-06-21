@@ -9,7 +9,7 @@
 	cursor: pointer;
 	&--expanded {
 		& svg,
-		i {
+		i:before {
 			transform: rotate(180deg);
 		}
 	}
@@ -29,6 +29,9 @@
 			color: get-color(td-primary-blue);
 			margin-right: rem(5px);
 			margin-top: 0.2rem;
+			&:before {
+				display: inline-block;
+			}
 		}
 	}
 	&__list {

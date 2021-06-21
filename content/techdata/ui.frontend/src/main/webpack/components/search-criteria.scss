@@ -10,10 +10,14 @@
 	&__header {
 		cursor: pointer;
 		display: flex;
+		margin-left: rem(8px);
 		& svg,
 		i {
 			color: get-color(td-primary-blue);
 			margin-top: rem(4px);
+			&:before {
+				display: inline-block;
+			}
 		}
 		&__title {
 			font-size: $font-size-small;
