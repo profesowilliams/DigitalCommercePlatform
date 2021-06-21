@@ -58,11 +58,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
     public class UIFixture : TestServerFixture<Startup, UISetup>
     { }
 
-    public class CatalogUIIntegrationTests : IClassFixture<UIFixture>
+    public class BrowseUIIntegrationTests : IClassFixture<UIFixture>
     {
         private readonly UIFixture fixture;
 
-        public CatalogUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
+        public BrowseUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
         {
             this.fixture = fixture;
             TestOutput.Output = output;

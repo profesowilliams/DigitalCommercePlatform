@@ -12,11 +12,14 @@ using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
@@ -158,11 +161,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)
         {
-            List<CatalogResponse> catalog;
+            List<CatalogResponse> catalog = new List<CatalogResponse>();
             try
             {
                 request.Input.CorporateCode = "0100"; //Need to fix this
-                string catalogURL = _appCatalogURL.BuildQuery(request);
+
+                string featureFromCache = await _cachingService.GetFeatureFromCache("useDFeatureToggle", _productCatalogFeature);
+                if (featureFromCache != _productCatalogFeature)
+                {
+                    var clearResult = await _cachingService.ClearFromCache(request.Input.Id);
+                }
 
                 bool IsSourceDF = false;
                 var result = Boolean.TryParse(_productCatalogFeature, out IsSourceDF);
@@ -170,53 +178,81 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 if (IsSourceDF && result)
                 {
                     catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
-                    if (catalog == null)
-                    {
-                        var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
-                        if (response != null && response.Catalogs.Any())
-                        {
-                            var tempResponse = _mapper.Map<CatalogModel>(response);
-                            catalog = new List<CatalogResponse>();
-                            var objCatalogResponse = new CatalogResponse
-                            {
-                                Key = request.Input.Id,
-                                Name = null,
-                                DocCount = 0, //Fix This
-                                Children = tempResponse.Catalogs
-                            };
+                    if (catalog != null) return catalog;
 
-                            catalog.Add(objCatalogResponse);
-                            await _cachingService.SetCatalogCache(catalog, request.Input.Id);
-                        }
-                    }
+                    catalog = await GetCatalogUsingDF(request).ConfigureAwait(false);
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(_productCatalogURL))
-                    {
-                        throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
-                    }
-                    var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
-                    List<CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
+                    catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
+                    if (catalog != null) return catalog;
 
-                    catalog = new List<CatalogResponse>();
-                    var objCatalogResponse = new CatalogResponse
-                    {
-                        Key = request.Input.Id,
-                        Name = null,
-                        DocCount = 0, //Fix This
-                        Children = _mapper.Map<List<CatalogResponse>>(tempcatalog)
-                    };
-
-                    catalog.Add(objCatalogResponse);
+                    catalog = await GetCatalogUsingProductService(request);
                 }
+
+                await _cachingService.SetCatalogCache(catalog, request.Input.Id);
                 _logger.LogInformation($"URL used is {_productCatalogURL}:{"Feature toggle input"}:{_productCatalogFeature} ");
             }
-            catch (Exception ex)
+            catch (RemoteServerHttpException ex)
             {
-                _logger.LogError(ex, $"Exception Value at  {nameof(GetProductCatalogDetails)} ");
-                throw ex;
+                if (ex.Code == HttpStatusCode.BadRequest && ex.InnerException is RemoteServerHttpException innerException)
+                {
+                    object exceptionDetails = innerException?.Details;
+                    object body = exceptionDetails?.GetType().GetProperty("Body")?.GetValue(exceptionDetails, null);
+                    catalog = JsonConvert.DeserializeObject<List<CatalogResponse>>(body as string);
+                }
+                else
+                {
+                    throw ex; // fix this
+                }
             }
+
+            return catalog;
+        }
+
+        private async Task<List<CatalogResponse>> GetCatalogUsingProductService(GetProductCatalogHandler.Request request)
+        {
+            if (string.IsNullOrWhiteSpace(_productCatalogURL))
+            {
+                throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
+            }
+            var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>("http://usdevmtap04.us.tdworldwide.com/ProductService/api/VendorProduct/getProductCatalog", null, request);
+            List<CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
+
+            List<CatalogResponse> catalog = new List<CatalogResponse>();
+            var objCatalogResponse = new CatalogResponse
+            {
+                Key = request.Input.Id,
+                Name = null,
+                DocCount = 0, //Fix This
+                Children = _mapper.Map<List<CatalogResponse>>(tempcatalog)
+            };
+
+            catalog.Add(objCatalogResponse);
+
+            return catalog;
+        }
+
+        private async Task<List<CatalogResponse>> GetCatalogUsingDF(GetProductCatalogHandler.Request request)
+        {
+            List<CatalogResponse> catalog = new List<CatalogResponse>();
+            string catalogURL = _appCatalogURL.BuildQuery(request);
+            var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
+
+            if (response != null && response.Catalogs.Any())
+            {
+                var tempResponse = _mapper.Map<CatalogModel>(response);
+                var objCatalogResponse = new CatalogResponse
+                {
+                    Key = request.Input.Id,
+                    Name = null,
+                    DocCount = 0, //Fix This
+                    Children = tempResponse.Catalogs
+                };
+
+                catalog.Add(objCatalogResponse);
+            }
+
             return catalog;
         }
     }

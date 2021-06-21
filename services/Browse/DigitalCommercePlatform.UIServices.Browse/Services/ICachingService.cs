@@ -7,7 +7,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     public interface ICachingService
     {
         Task<List<CatalogResponse>> GetCatalogFromCache(string cacheKey);
-
         Task<bool> SetCatalogCache(List<CatalogResponse> Catalog, string cacheKey);
+        Task<string> GetFeatureFromCache(string cacheKey, string keyValue);
+        Task<bool> ClearFromCache(string cacheKey);
     }
 }

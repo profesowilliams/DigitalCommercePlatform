@@ -35,6 +35,45 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return Task.FromResult(catalog);
         }
 
+        public Task<string> GetFeatureFromCache(string cacheKey, string keyValue)
+        {
+            try
+            {
+                string value = string.Empty;
+                _cache.TryGetValue(cacheKey, out value);
+                if (!keyValue.Equals(value))
+                    _cache.Remove(cacheKey);
+                else
+                    return Task.FromResult(keyValue);
+
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(TimeSpan.FromMinutes(720)); // expires every 12 hours
+                _cache.Set(cacheKey, keyValue, cacheEntryOptions);
+                return Task.FromResult(keyValue);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting Cache from Feature value " + nameof(CachingService));
+            }
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> ClearFromCache(string cacheKey)
+        {
+            try
+            {
+                _cache.Remove(cacheKey);
+                return Task.FromResult(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at clearing Cache from Feature value " + nameof(CachingService));
+                return Task.FromResult(false);
+            }
+
+        }
+
         public Task<bool> SetCatalogCache(List<CatalogResponse> Catalog, string cacheKey)
         {
             try
