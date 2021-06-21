@@ -4,11 +4,11 @@
     list-style: none;
 
     li {
-      font-size: rem(16px);
+      font-size: rem($font-size-medium);
       text-align: left;
       margin-left: rem(-40px);
       &::before {
-        color: #02b0e2;
+        color: get-color(td-lightblue);
         display: inline-block;
       }
     }
@@ -36,7 +36,7 @@
         content: "\2022";
         font-weight: bold;
         width: rem(20px);
-        font-size: rem(22px);
+        font-size: $font-size-custom-medium;
       }
     }
 
@@ -73,19 +73,19 @@
 
 .dp-text--xsmall {
   &, .cmp-text li {
-    font-size: rem(11px);
+    font-size: rem($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
   &, .cmp-text li {
-    font-size: rem(14px);
+    font-size: rem($font-size-small);
   }
 }
 
 .dp-text--big  {
   &, .cmp-text li {
-    font-size: rem(20px);
+    font-size: $font-size-custom-midi;
   }
 }
 
