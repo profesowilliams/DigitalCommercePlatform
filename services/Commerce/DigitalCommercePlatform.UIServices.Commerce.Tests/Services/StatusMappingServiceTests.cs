@@ -11,8 +11,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [InlineData("onHold", "ON_HOLD")]
         [InlineData("shipped", "SHIPPED")]
         [InlineData("inProcess", "IN_PROCESS")]
-        [InlineData("", "")]
-        [InlineData(null, "")]
+        [InlineData("", null)]
+        [InlineData("         ", null)]
+        [InlineData("wrong", null)]
+        [InlineData(null, null)]
         public void ValidStatusValueIsSuccessfullyGenerated(string argument, string matchingValue)
         {
             var sut = new StatusMappingService();

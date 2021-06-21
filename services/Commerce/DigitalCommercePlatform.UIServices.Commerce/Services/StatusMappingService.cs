@@ -23,14 +23,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (string.IsNullOrWhiteSpace(mappingValue))
             {
-                return string.Empty;
+                return null;
             }
 
             mappingValue = mappingValue.Trim();
 
             if (!_mappings.ContainsKey(mappingValue))
             {
-                return string.Empty;
+                return null;
             }
 
             var statusValue = _mappings[mappingValue];
