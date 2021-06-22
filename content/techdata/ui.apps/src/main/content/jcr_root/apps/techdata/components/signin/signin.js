@@ -7,7 +7,7 @@ use(function () {
     var resourceResolver = resource.getResourceResolver();
     var session = resourceResolver.adaptTo(Packages.javax.jcr.Session);
     var node = resourceResolver.getResource(resource.getPath() + "/itemLinks");
-    console.error("brumoon error");
+    var pageProps = currentPage.getContentResource();
 
     if (node !== null) {
         var childrenList = node.getChildren();
@@ -24,6 +24,19 @@ use(function () {
 
         }
     }
+
+    if (pageProps) {
+        var isPrivatePage = pageProps.properties["isPrivatePage"];
+        if (isPrivatePage)
+        {
+            jsonObject.put("isPrivatePage", true);
+        }else{
+            jsonObject.put("isPrivatePage", false);
+        }
+    }else{
+        jsonObject.put("isPrivatePage", false);
+    }
+
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
@@ -34,8 +47,8 @@ use(function () {
         jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
     }
     if (properties.get("logoutURL") != null) {
-            jsonObject.put("logoutURL", properties.get("logoutURL"));
-        }
+        jsonObject.put("logoutURL", properties.get("logoutURL"));
+    }
     if (properties.get("clientId") != null) {
         jsonObject.put("clientId", properties.get("clientId"));
     }

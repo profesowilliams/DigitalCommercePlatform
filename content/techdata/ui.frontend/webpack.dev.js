@@ -543,6 +543,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "signin-redirect-editor.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/sign-in-redirect.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "signin-aem",
                 template: path.resolve(
                     __dirname,

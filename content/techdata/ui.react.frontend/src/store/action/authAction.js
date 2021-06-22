@@ -22,19 +22,19 @@ export const signInError = () => {
 };
 
 export const signOutRequest = () => {
-  return {
-    type: SIGN_OUT_REQUEST
-  };
+	return {
+		type: SIGN_OUT_REQUEST
+	};
 };
 
 export const signInAsynAction = (apiUrl) => {
-  let code = localStorage.getItem("signInCode");
+	let code = localStorage.getItem("signInCode");
 	const signInUrl = apiUrl;
 
-  const  prepareSignInHeader = () => {
-	  let code = localStorage.getItem("signInCode");
-	  const sessionId = createSessionId();
-	  setSessionId(sessionId);
+	const  prepareSignInHeader = () => {
+		let code = localStorage.getItem("signInCode");
+		const sessionId = createSessionId();
+		setSessionId(sessionId);
 		return {
 			"TraceId" : "NA",
 			"Site": "NA",
@@ -45,7 +45,7 @@ export const signInAsynAction = (apiUrl) => {
 		}
 	};
 
-  const  prepareSignInBody = () => {
+	const  prepareSignInBody = () => {
 		let code = localStorage.getItem("signInCode");
 		return {
 			"code": code,
@@ -54,22 +54,27 @@ export const signInAsynAction = (apiUrl) => {
 		}
 	};
 
-  let headerJson = prepareSignInHeader();
-  let postData = prepareSignInBody();
-  return dispatch => {
-    dispatch(signInRequest());
-    axios
-    .post(signInUrl, postData, {headers:headerJson})
-      .then(response => {
-        dispatch(signInResponse(response.data.content.user));
-        localStorage.setItem('userData', JSON.stringify(response.data.content.user));
-      })
-      .catch(err => {
-        dispatch(signInError(err));
-      });
-  };
+	let headerJson = prepareSignInHeader();
+	let postData = prepareSignInBody();
+	return dispatch => {
+		dispatch(signInRequest());
+		axios
+			.post(signInUrl, postData, {headers:headerJson})
+			.then(response => {
+				dispatch(signInResponse(response.data.content.user));
+				localStorage.setItem('userData', JSON.stringify(response.data.content.user));
+			})
+			.catch(err => {
+				dispatch(signInError(err));
+			});
+	};
 };
 
+
+export const isAlreadySignedIn = () => {
+	// TODO this needs to check if user is alreday signed in, and return accordingly
+	return false;
+}
 export const getLocalStorageUser = () => {
 	return dispatch => {
 		let user = JSON.parse(localStorage.getItem("userData"));

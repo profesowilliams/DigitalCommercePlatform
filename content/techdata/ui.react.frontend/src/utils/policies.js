@@ -9,10 +9,16 @@ export const redirectUnauthenticatedUser = (authUrl, clientId) => {
     window.location.href = authUrlLocal;
 };
 
-export const isAuthenticated = (authUrl, clientId) => {
+export const isAuthenticated = (authUrl, clientId, isPrivatePage) => {
     const user = getUser();
     const signinCode = localStorage.getItem("signInCode");
-    return user || signinCode
+
+    const getIsEditMode = () => {
+        return window.location.href.includes("editor.html");
+    }
+
+    const isEditMode = getIsEditMode();
+    return user || signinCode || !isPrivatePage || isEditMode
         ? refreshPage()
         : redirectUnauthenticatedUser(authUrl, clientId);
 };

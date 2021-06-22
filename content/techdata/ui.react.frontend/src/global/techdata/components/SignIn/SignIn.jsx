@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { signInAsynAction } from '../../../../store/action/authAction';
-import { getQueryStringValue } from '../../../../utils/utils';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
-import SpinnerCode from '../spinner/spinner';
+import React, {useEffect, useState} from "react";
+import { bindActionCreators } from "redux";
+import {connect, useDispatch, useSelector} from "react-redux";
+import { signInAsynAction } from "../../../../store/action/authAction";
+import { getQueryStringValue } from "../../../../utils/utils";
+import {
+	isAuthenticated,
+	redirectUnauthenticatedUser,
+} from "../../../../utils/policies";
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import SpinnerCode from "../spinner/spinner";
 
 const FA = require('react-fontawesome');
 
@@ -17,7 +21,7 @@ const SignIn = (props) => {
 	});
 
 	const codeQueryParam = 'code';
-	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items } = configDataAEM;
+	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage } = configDataAEM;
 	const requested = props.data.auth.requested;
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
@@ -26,8 +30,9 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 		localStorage.setItem('signin', constructSignInURL());
-		isCodePresent();
+		// isCodePresent();
 		routeChange();
+		isAuthenticated(authUrl, clientId, isPrivatePage);
 	}, []);
 
 	const isCodePresent = () => {
@@ -40,7 +45,6 @@ const SignIn = (props) => {
 		// SigIn Code Check from URL
 		if (window.location.search) {
 			let getCode = getQueryStringValue(codeQueryParam);
-			// let params = new URLSearchParams(getCode);
 			localStorage.setItem('signInCode', getCode);
 			signInCode = getCode;
 		}
@@ -54,19 +58,18 @@ const SignIn = (props) => {
 	};
 
 	const onSignIn = () => {
-		let authUrlLocal = authUrl + '?redirect_uri=' + window.location.href;
-		authUrlLocal = authUrlLocal + '&client_id=' + clientId;
-		authUrlLocal = authUrlLocal + '&response_type=code';
-		authUrlLocal = authUrlLocal + '&pfidpadapterId=ShieldBaseAuthnAdaptor';
-
-		window.location.href = authUrlLocal;
+		redirectUnauthenticatedUser(authUrl, clientId);
 	};
 
 	const routeChange = () => {
 		let params = getQueryStringValue(codeQueryParam);
 		if (params) {
 			localStorage.setItem('signin', constructSignInURL());
-			dispatch(signInAsynAction(constructSignInURL()));
+			if(!isAlreadySignedIn())
+			{
+				dispatch(signInAsynAction(constructSignInURL()));
+			}
+
 		} else {
 			console.log('no query param in browser URL');
 		}
