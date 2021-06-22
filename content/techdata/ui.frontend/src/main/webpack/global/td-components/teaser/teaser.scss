@@ -509,7 +509,9 @@ $teaser-headings-mobile: (
 
 // Triptych Teaser
 .cmp-light-theme {
-  .cmp-teaser {
+  
+    // width: 100%; this is a temporary line for  testing in AEM
+   .cmp-teaser {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -547,6 +549,7 @@ $teaser-headings-mobile: (
 }
 
 .cmp-dark-theme {
+  // width: 100%; this is a temporary line for  testing in AEM
   .cmp-teaser {
     display: flex;
     flex-direction: row;
@@ -572,7 +575,7 @@ $teaser-headings-mobile: (
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 100%; 
       height: rem(70px);
 
       &:hover {
