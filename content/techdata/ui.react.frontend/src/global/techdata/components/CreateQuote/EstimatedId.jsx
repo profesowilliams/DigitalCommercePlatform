@@ -8,6 +8,9 @@ import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 
 const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
+	estimatedIdlistEndpoint = `${estimatedIdlistEndpoint}/v1/configurations?Details=true&PageNumber=1&PageSize=100&WithPaginationInfo=true&Type=Estimate`;
+	estimatedIdDetailsEndpoint = `${estimatedIddetailsEndpoint}/validate?id=${selected.id}&Type=Estimate`;
+
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
 		{ id: 'browse', name: 'Browse Estimates' },
