@@ -508,9 +508,7 @@ $teaser-headings-mobile: (
 }
 
 // Triptych Teaser
-
-.cmp-triptych-teaser {
-
+.cmp-light-theme {
   .cmp-teaser {
     display: flex;
     flex-direction: row;
@@ -529,52 +527,64 @@ $teaser-headings-mobile: (
     }
 
     &__title {
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      background-color: get-color(brand-blue);
+      color: get-color(brand-white);
+      font-size: $font-size-custom-medium;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: rem(70px);
+
+      &:hover {
+        background-color: get-color(brand-light-blue);
         width: 100%;
         height: rem(70px);
-
-      &--light {
-        background-color: get-color(brand-blue);
-        color: get-color(brand-white);
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: rem(70px);
-
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
-        }
-      }
-
-      &--dark {
-        background-color: get-color(light-see-through-background);
-        color: get-color(brand-blue);
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: rem(70px);
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
-        }
       }
     }
   }
-
 }
+
+.cmp-dark-theme {
+  .cmp-teaser {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: rem(35px) rem(10px);
+
+    &__content {
+      width: rem(460px);
+      height: rem(300px);
+      box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    }
+
+    img {
+      width: 100%;
+      height: rem(230px);
+    }
+
+    &__title {
+      background-color: get-color(light-see-through-background);
+      color: get-color(brand-blue);
+      font-size: $font-size-custom-medium;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: rem(70px);
+
+      &:hover {
+        background-color: get-color(brand-light-blue);
+        width: 100%;
+        height: rem(70px);
+      }
+    }
+  }
+}
+
+
 
 // Quadriptych Teaser
 
