@@ -26,6 +26,9 @@
         cursor: pointer;
         .cmp-teaser__title-link {
           color: get-color(brand-blue) !important;
+          font-weight: 400;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
         .cmp-teaser__image img {
           border-color: get-color(brand-blue) !important;
@@ -54,7 +57,10 @@
         &-link {
           text-decoration: none;
           line-height: 1.5rem;
-          color: get-color(text-mid-gray);
+          color: get-color(text-dark-gray);
+          font-weight: 300;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
         }
       }
       &__image {
