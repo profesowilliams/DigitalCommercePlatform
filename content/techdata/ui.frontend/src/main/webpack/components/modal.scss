@@ -173,13 +173,14 @@
 			border-top: 1px solid get-color('secondary-light-grey');
 			text-align: left;
 			color: get-color('brand-text-gray');
-
 			border-top: 1px solid get-color('secondary-light-grey');
-			&.logo {
+			& .logo {
 			}
-			&.status {
+			& .status {
 			}
-			&.toggler {
+			& .toggler {
+				justify-self: right;
+				align-self: center;
 			}
 			&:last-child {
 				border-bottom: 1px solid get-color('secondary-light-grey');

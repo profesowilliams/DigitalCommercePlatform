@@ -110,3 +110,67 @@
 		border: rem(1px) solid get-color(brand-light-gray2);
 	}
 }
+
+//slide toggle style
+.cmp-slide-toggle {
+	$height: rem(14px);
+	$width: rem(22px);
+	$slider-diameter: rem(14px);
+	$border-width: rem(2px);
+	width: $width;
+	height: $height;
+	&--read-only {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+	&__switch {
+		position: relative;
+		display: inline-block;
+		width: $width;
+		height: $height;
+		&__input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+			&:checked {
+				+ .cmp-slide-toggle__switch__slider {
+					background-color: get-color(td-primary-blue);
+					border-color: get-color(td-primary-blue);
+					&:before {
+						transform: translateX(calc(#{$width} - #{$slider-diameter}));
+						border-color: get-color(td-primary-blue);
+					}
+				}
+			}
+		}
+		&__slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: none;
+			border: #{$border-width} solid get-color(secondary-dark-grey);
+			transition: 0.4s;
+			&:before {
+				box-sizing: border-box;
+				position: absolute;
+				content: '';
+				top: calc((#{$height} - #{$slider-diameter}) / 2 - #{$border-width});
+				left: -#{$border-width};
+				height: $slider-diameter;
+				width: $slider-diameter;
+				background-color: white;
+				transition: 0.4s;
+				border: #{$border-width} solid get-color(secondary-dark-grey);
+			}
+			&--round {
+				border-radius: $height;
+				&:before {
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+}

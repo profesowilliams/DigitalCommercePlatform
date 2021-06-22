@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import SimpleDropDown from './SimpleDropDown';
-import TextInput from './TextInput';
 
 function QueryInput({ items, placeholder, onQueryChanged }) {
 	const [filterKey, setFilterKey] = useState(null);
