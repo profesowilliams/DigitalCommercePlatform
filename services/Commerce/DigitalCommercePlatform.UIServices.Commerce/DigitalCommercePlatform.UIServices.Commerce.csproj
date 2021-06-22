@@ -15,10 +15,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="data\invoice-sample-2.pdf" />
-    <None Remove="data\invoice-sample.pdf" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-Commerce-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
@@ -34,11 +30,6 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-
-  <ItemGroup>
-    <EmbeddedResource Include="data\invoice-sample-2.pdf" />
-    <EmbeddedResource Include="data\invoice-sample.pdf" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DigitalCommercePlatform.UIServices.Common.Cart" Version="2021.6.11.14" />

@@ -101,7 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 }
             }
 
-            private byte[] GenerateZipFile(List<DownloadableFile> listDownloadableFiles)
+            private static byte[] GenerateZipFile(List<DownloadableFile> listDownloadableFiles)
             {
                 byte[] archiveFile;
                 using (MemoryStream zipStream = new MemoryStream())

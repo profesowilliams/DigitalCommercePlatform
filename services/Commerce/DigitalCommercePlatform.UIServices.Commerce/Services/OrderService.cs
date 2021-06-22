@@ -25,7 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly ILogger<OrderService> _logger;
         private readonly IUIContext _uiContext;
         private readonly IAppSettings _appSettings;
-        private string _appOrderServiceUrl;
         private readonly IMapper _mapper;
 
         public OrderService(IMiddleTierHttpClient middleTierHttpClient,
@@ -76,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<List<InvoiceModel>> GetInvoicesFromOrderIdAsync(string orderId)
         {
-            _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
+            var _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.AppendPathSegment("invoice/find").SetQueryParams(new { orderId });
             var listInvoices = await _middleTierHttpClient.GetAsync<InvoiceFindResponse>(url);
             return listInvoices?.Data?.ToList();
