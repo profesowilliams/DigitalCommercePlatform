@@ -27,13 +27,17 @@ const QuoteCreate = ({
   const [pricing, setPricing] = useState(false);
   const [step, setStep] = useState(0);
   const [cartID, setCartID] = useState(false);
+  const [createQuoteButtonEnabled, setCreateQuoteButtonEnabled] = useState(false);
+
   const methods = optionsList;
 
   const validateActiveCart = () => {
     if(currentCart ){
       if( currentCart.totalQuantity > 0 ){
+        setCreateQuoteButtonEnabled(true);
         return { isError: false, message: '' };
       }else{
+        setCreateQuoteButtonEnabled(false);
         return { isError: true, message: 'The cart is empty' };
       }
     }else{
@@ -94,6 +98,7 @@ const QuoteCreate = ({
       { 
         (!methodSelected || (methodSelected&&methodSelected.key ==='active')) &&  step === 0 &&
         <SelectMethod 
+          id='SelectedMethod'
           title={label}
           method={methodSelected}
           setMethod={setMethodSelected}
@@ -124,6 +129,7 @@ const QuoteCreate = ({
       {
         step === 1 &&
         <Pricing 
+          enabled={createQuoteButtonEnabled}
           createQuote={createQuote} 
           buttonTitle={buttonTitle}
           method={pricing}
