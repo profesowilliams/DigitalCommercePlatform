@@ -31,7 +31,7 @@ const SignIn = (props) => {
 	useEffect(() => {
 		console.log(`edit mode is ${editMode}`);
 		localStorage.setItem('signin', constructSignInURL());
-		// isCodePresent();
+		isCodePresent();
 		routeChange();
 		isAuthenticated(authUrl, clientId, isPrivatePage);
 	}, []);
