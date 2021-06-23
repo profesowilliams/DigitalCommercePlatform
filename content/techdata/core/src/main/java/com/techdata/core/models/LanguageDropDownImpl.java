@@ -77,7 +77,7 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	private List<LanguageDropDownItem> getDropDownItems(Page root, boolean getChildren) {
 
 		List<LanguageDropDownItem> pages = new ArrayList<>();
-		if (root.getDepth() >= currentPage.getPageManager().getPage(navigationRoot).getDepth()) {
+		if (root != null && root.getDepth() >= currentPage.getPageManager().getPage(navigationRoot).getDepth()) {
 			Iterator<Page> it = root.listChildren(new PageFilter());
 			while (it.hasNext()) {
 
