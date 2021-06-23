@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { bindActionCreators } from "redux";
 import {connect, useDispatch, useSelector} from "react-redux";
-import { signInAsynAction } from "../../../../store/action/authAction";
+import {isAlreadySignedIn, signInAsynAction} from "../../../../store/action/authAction";
 import { getQueryStringValue } from "../../../../utils/utils";
 import {
 	isAuthenticated,
@@ -21,7 +21,7 @@ const SignIn = (props) => {
 	});
 
 	const codeQueryParam = 'code';
-	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage } = configDataAEM;
+	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode } = configDataAEM;
 	const requested = props.data.auth.requested;
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
@@ -29,6 +29,7 @@ const SignIn = (props) => {
 	const userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem('userData'));
 
 	useEffect(() => {
+		console.log(`edit mode is ${editMode}`);
 		localStorage.setItem('signin', constructSignInURL());
 		// isCodePresent();
 		routeChange();
