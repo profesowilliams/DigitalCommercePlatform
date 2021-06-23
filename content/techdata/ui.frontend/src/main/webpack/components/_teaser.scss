@@ -359,11 +359,16 @@
       flex-direction: row;
       justify-content: space-between;
       margin: rem(35px) rem(10px);
+
+      &__description {
+          display: none;
+      }
   
       &__content {
         width: rem(460px);
         height: rem(300px);
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        position: relative;
       }
   
       img {
@@ -381,6 +386,8 @@
         justify-content: center;
         width: 100%;
         height: rem(70px);
+        position: absolute;
+        bottom: 0;
   
         &:hover {
           background-color: get-color(brand-light-blue);
@@ -397,11 +404,16 @@
       flex-direction: row;
       justify-content: space-between;
       margin: rem(35px) rem(10px);
+
+      &__description {
+          display: none;
+      }
   
       &__content {
         width: rem(460px);
         height: rem(300px);
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        position: relative;
       }
   
       img {
@@ -419,6 +431,8 @@
         justify-content: center;
         width: 100%;
         height: rem(70px);
+        position: absolute;
+        bottom: 0;
   
         &:hover {
           background-color: get-color(brand-light-blue);
