@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
 {
+    [ExcludeFromCodeCoverage]
     public class SetContextFromHeaderAttribute : TypeFilterAttribute
     {
         public SetContextFromHeaderAttribute() : base(typeof(SetContextFromHeaderFilter))
@@ -17,6 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class SetContextFromHeaderFilter : IAsyncActionFilter
     {
         private readonly IUIContext _uiContext;
@@ -59,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
             _uiContext.SetLanguage(language);
             _uiContext.SetConsumer(consumer);
             _uiContext.SetTraceId(traceId);
+            _uiContext.SetCustomerId(_uiContext.User.Customers?.FirstOrDefault());
             _uiContext.SetAccessToken(_uiContext.User.AccessToken);
 
             await next();

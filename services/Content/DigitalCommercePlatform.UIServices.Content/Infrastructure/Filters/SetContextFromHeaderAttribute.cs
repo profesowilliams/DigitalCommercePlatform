@@ -62,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters
             _uiContext.SetLanguage(language);
             _uiContext.SetConsumer(consumer);
             _uiContext.SetTraceId(traceId);
+            _uiContext.SetCustomerId(_uiContext.User.Customers?.FirstOrDefault());
             _uiContext.SetAccessToken(_uiContext.User.AccessToken);
             await next();
         }
