@@ -68,12 +68,14 @@
                             <artifactId>techdata.core</artifactId>
                             <target>/apps/techdata-packages/application/install</target>
                         </embedded>
-                        <embedded>
-                            <groupId>com.techdata</groupId>
-                            <artifactId>techdata.ui.content</artifactId>
-                            <type>zip</type>
-                            <target>/apps/techdata-packages/content/install</target>
-                        </embedded>
+                        <!-- due to issues in policies getting overwritten, commenting out this module -->
+
+                        <!--                        <embedded>-->
+<!--                            <groupId>com.techdata</groupId>-->
+<!--                            <artifactId>techdata.ui.content</artifactId>-->
+<!--                            <type>zip</type>-->
+<!--                            <target>/apps/techdata-packages/content/install</target>-->
+<!--                        </embedded>-->
                         <embedded>
                             <groupId>com.techdata</groupId>
                             <artifactId>techdata.ui.config</artifactId>
