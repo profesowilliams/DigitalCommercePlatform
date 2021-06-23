@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
 
             _context = new Mock<IUIContext>();
+            _context.Setup(s => s.Site).Returns("US"); // Necessary for getting activeCart and savedCart
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<QuoteController>>();
             _siteSettings = new Mock<ISiteSettings>();

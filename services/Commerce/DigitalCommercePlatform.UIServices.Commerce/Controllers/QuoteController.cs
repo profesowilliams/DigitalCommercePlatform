@@ -45,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         [Route("createFrom")]
         public async Task<ActionResult> CreateFrom([FromBody] CreateModelFrom createFrom)
         {
+            if (Context.Site != "US") { return BadRequest("The header parameter Site must be equal to 'US'"); }
             var response = await Mediator.Send(new CreateQuoteFrom.Request(createFrom)).ConfigureAwait(false);
             return Ok(response);
         }
