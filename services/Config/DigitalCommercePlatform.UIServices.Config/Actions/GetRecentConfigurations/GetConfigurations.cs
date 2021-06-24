@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
@@ -31,17 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
 
         }
 
-        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
-            private readonly IConfigService _configService;
-
             public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _mapper = mapper;
-                _logger = logger;
-                _configService = configService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)

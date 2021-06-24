@@ -2,7 +2,7 @@
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using EV = DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Utils.Factories
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories
 {
     internal static class FindModelFactory
     {

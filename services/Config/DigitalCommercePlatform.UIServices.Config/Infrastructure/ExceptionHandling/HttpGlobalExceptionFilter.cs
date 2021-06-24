@@ -39,7 +39,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.ExceptionHand
                 _logger.LogError(context.Exception, "UI Service Exception at: " + nameof(HttpGlobalExceptionFilter));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { uiServiceException.Message }, Code = uiServiceException.ErrorCode }
+                    Error = new ErrorInformation { 
+                        IsError = true,
+                        Messages = new List<string> 
+                        { 
+                            uiServiceException.Message
+                        }, 
+                        Code = uiServiceException.ErrorCode
+                    }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -49,7 +56,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.ExceptionHand
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "Something went wrong" }, Code = 500 }
+                    Error = new ErrorInformation 
+                    { 
+                        IsError = true,
+                        Messages = new List<string> 
+                        {
+                            "Something went wrong" 
+                        },
+                        Code = 500
+                    }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }

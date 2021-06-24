@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Utils
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Common
 {
     public static class StringUtils
     {

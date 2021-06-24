@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
@@ -34,17 +35,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
             public bool IsValid { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IMapper _mapper;
-            private readonly ILogger<Handler> _logger;
-            private readonly IConfigService _configService;
-
             public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _mapper = mapper;
-                _logger = logger;
-                _configService = configService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -66,16 +61,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
 
             public Validator()
             {
-                RuleFor(x => x.Criteria.Id)
+                RuleFor(x => x.Criteria.Id).Cascade(CascadeMode.Stop)
                     .NotEmpty()
                     .MinimumLength(MinIdLength)
-                    .MaximumLength(MaxIdLength);
-
-                RuleFor(x => x.Criteria.Id).Must(CheckAllChars)
-                    .WithMessage("Id contains invalid characters");
+                    .MaximumLength(MaxIdLength)
+                    .Must(ContainsValidCharsOnly)
+                        .WithMessage("Id contains invalid characters");
             }
 
-            private static bool CheckAllChars(string id)
+            private static bool ContainsValidCharsOnly(string id)
             {
                 var result = true;
                 foreach (char c in id)

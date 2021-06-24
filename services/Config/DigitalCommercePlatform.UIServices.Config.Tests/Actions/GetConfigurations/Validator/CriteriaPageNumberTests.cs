@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Tests.Utils.Factories;
+﻿using DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System.Threading.Tasks;
@@ -7,21 +7,27 @@ using GRC = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigura
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurations.Validator
 {
-    public class CriteriaPageNumberTests
+    public class CriteriaPageNumberTests : GetConfigurationsValidatorTestsBase
     {
+        private readonly GRC.GetConfigurations.Validator _validator;
+
+        public CriteriaPageNumberTests()
+        {
+            _validator = GetValidator();
+        }
+
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
         public async Task PageNumberShouldBeInvalid(int pageNumber)
         {
-            var validator = GetValidator();
             var model = new GRC.GetConfigurations.Request
             {
                 Criteria = FindModelFactory.CreateValid()
             };
             model.Criteria.PageNumber = pageNumber;
 
-            var result = await validator.TestValidateAsync(model);
+            var result = await _validator.TestValidateAsync(model);
 
             result.Should().NotBeNull();
             result.IsValid.Should().BeFalse();
@@ -34,22 +40,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurati
         [InlineData(255)]
         public async Task PageNumberShouldBeValid(int pageNumber)
         {
-            var validator = GetValidator();
             var model = new GRC.GetConfigurations.Request
             {
                 Criteria = FindModelFactory.CreateValid()
             };
             model.Criteria.PageNumber = pageNumber;
 
-            var result = await validator.TestValidateAsync(model);
+            var result = await _validator.TestValidateAsync(model);
 
             result.Should().NotBeNull();
             result.ShouldNotHaveValidationErrorFor(x => x.Criteria.PageNumber);
-        }
-
-        private static GRC.GetConfigurations.Validator GetValidator()
-        {
-            return new GRC.GetConfigurations.Validator();
-        }
+        }        
     }
 }

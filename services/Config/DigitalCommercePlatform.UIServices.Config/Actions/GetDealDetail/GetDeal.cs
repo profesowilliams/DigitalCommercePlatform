@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
@@ -32,20 +33,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             public DealsDetailModel Deals { get; internal set; }
         }
 
-        public class GetDealHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configService;
-            private readonly IMapper _mapper;
-            private readonly ILogger<GetDealHandler> _logger;
-
-            public GetDealHandler(IConfigService configService,
-                IMapper mapper,
-                ILogger<GetDealHandler> logger)
+            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _configService = configService;
-                _mapper = mapper;
-                _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 try

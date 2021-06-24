@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
@@ -21,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
         {
             public FindModel Criteria { get; set; }
         }
+
         public class Response
         {
             public long? TotalItems { get; set; }
@@ -30,19 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
             public List<Deal> Items { get; internal set; }
         }
 
-        public class GetDealsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configService;
-            private readonly IMapper _mapper;
-            private readonly ILogger<GetDealsHandler> _logger;
-            public GetDealsHandler(IConfigService configService, 
-                IMapper mapper,
-                ILogger<GetDealsHandler> logger
-                )
+            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _configService = configService;
-                _mapper = mapper;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -80,9 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                         RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
                     });
                 }
-                
             }
-        
         }
     }
 }

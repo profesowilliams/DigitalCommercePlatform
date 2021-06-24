@@ -1,9 +1,11 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
 using MediatR;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,13 +29,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
             public string Url { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request, ResponseBase<Response>>
+        public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly IConfigService _configService;
-
-            public Handler(IConfigService configService)
+            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _configService = configService ?? throw new ArgumentNullException(nameof(configService));
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)

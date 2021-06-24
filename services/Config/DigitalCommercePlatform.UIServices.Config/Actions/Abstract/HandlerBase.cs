@@ -1,26 +1,22 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Services;
+
 namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
 {
     [ExcludeFromCodeCoverage]
     public abstract class HandlerBase<T> where T : class
     {
+        protected readonly IMapper _mapper;
+        protected readonly ILogger<T> _logger;
+        protected readonly IConfigService _configService;
 
-        protected readonly ILogger _logger;
-
-        public HandlerBase(ILoggerFactory loggerFactory, IHttpClientFactory httpClientFactory)
+        public HandlerBase(IMapper mapper, ILogger<T> logger, IConfigService configService)
         {
-            _logger = loggerFactory.CreateLogger<T>();
+            _mapper = mapper;
+            _logger = logger;
+            _configService = configService;
         }
-
-        protected async Task<U> GetAsync<U>(string url, string token, CancellationToken cancellationToken)
-        {
-            return await Task.FromResult(default(U));
-        }
-
-        
     }
 }
