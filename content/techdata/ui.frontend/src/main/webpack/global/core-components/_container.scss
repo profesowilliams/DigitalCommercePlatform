@@ -1,4 +1,5 @@
 .cmp-container {
+    float: unset !important;
     &--fixed > .cmp-container {
         margin: 0 auto;
         max-width: rem(1170px);
@@ -32,5 +33,22 @@
                 }
             }
         }
+    }
+
+    // ported over from ui.frontend/src/main/webpack/components/_container.scss
+    &__full-width > .cmp-container,
+    &--max-1440 {
+        max-width: rem(1440px);
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
+    }
+
+    &__full-width--max-1600 > .cmp-container,
+    &--max-1600 {
+        max-width: 1600px;
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
     }
 }

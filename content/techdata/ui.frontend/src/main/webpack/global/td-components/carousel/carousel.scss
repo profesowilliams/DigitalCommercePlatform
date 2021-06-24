@@ -1,5 +1,6 @@
+// TODO: Remove unwanted comments and commented out styles.
 .dp-carousel{
-    position: relative;
+    position: relative; // this property isn't found on old carousal.scss, revisit if this causes issues.
   &.dp-carousel__navigation--hero1{
     //default
     .dp-carousel__nav{
