@@ -11,4 +11,9 @@
 		margin-top: rem(11px);
 		margin-right: rem(5px);
 	}
+	&__search {
+		display: flex;
+		gap: rem(20px);
+		width: 100%;
+	}
 }

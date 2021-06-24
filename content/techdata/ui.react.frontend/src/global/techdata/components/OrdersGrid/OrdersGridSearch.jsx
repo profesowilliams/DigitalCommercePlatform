@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import QueryInput from '../Widgets/QueryInput';
+import SimpleDropDown from '../Widgets/SimpleDropDown';
 
 function OrdersGridSearch({ componentProp, onQueryChanged }) {
 	const defaultKeywordDropdown = {
@@ -7,14 +8,20 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 		items: [
 			{ key: 'id', value: 'TD Order #' },
 			{ key: 'customerPO', value: 'Customer PO' },
-			{ key: 'manufacturer', value: 'Manufacturer' },
-			{ key: 'createdFrom', value: 'From' },
-			{ key: 'createdTo', value: 'To' },
+		],
+	};
+
+	const defaultVendorsDropdown = {
+		label: 'Vendors',
+		items: [
+			{ key: 'allVendors', value: 'All Vendors' },
+			{ key: 'cisco', value: 'Cisco' },
 		],
 	};
 
 	const config = {
 		keywordDropdown: componentProp?.keywordDropdown ?? defaultKeywordDropdown,
+		vendorsDropdown: componentProp?.vendorsDropdown ?? defaultVendorsDropdown,
 		inputPlaceholder: componentProp?.inputPlaceholder ?? 'Enter Your Search',
 	};
 
@@ -22,10 +29,14 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 
 	function dispatchQueryChange(query) {
 		let keywordQuery =
-			query.keywordQuery.key && query.keywordQuery.value
+			query.keywordQuery?.key && query.keywordQuery?.value
 				? `&${query.keywordQuery.key}=${query.keywordQuery.value}`
 				: '';
-		let concatedQuery = `${keywordQuery}`;
+		let manufacturer =
+			query.manufacturer?.key && query.manufacturer?.key !== 'allVendors'
+				? `&manufacturer=${query.manufacturer.key}`
+				: '';
+		let concatedQuery = `${keywordQuery}${manufacturer}`;
 		onQueryChanged(concatedQuery);
 	}
 
@@ -36,16 +47,26 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 		}
 	}
 
+	function handleVendorFilterChange(change) {
+		if (change) {
+			_query.current.manufacturer = change;
+			dispatchQueryChange(_query.current);
+		}
+	}
+
 	return (
 		<div className='cmp-orders-grid__search'>
 			<QueryInput
-				key={componentProp}
+				key={'keyword'}
 				items={config.keywordDropdown.items}
 				placeholder={config.inputPlaceholder}
-				onQueryChanged={(query) => {
-					handleKeywordFilterChange(query);
-				}}
+				onQueryChanged={handleKeywordFilterChange}
 			></QueryInput>
+			<SimpleDropDown
+				key={'vendors'}
+				items={config.vendorsDropdown.items}
+				onItemSelected={handleVendorFilterChange}
+			></SimpleDropDown>
 		</div>
 	);
 }

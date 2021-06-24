@@ -27,7 +27,6 @@ function QueryInput({ items, placeholder, onQueryChanged }) {
 				type='text'
 				placeholder={placeholder}
 				onChange={(event) => textInputChanged(event.target.value)}
-				value={null}
 			/>
 		</span>
 	);

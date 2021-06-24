@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from '../Widgets/Button';
 
 function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearRequest }) {
-	let _filter = null;
+	const filter = useRef(null);
 	let [filterActive, setFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
 	const [expanded, setExpanded] = useState(false);
@@ -12,8 +12,8 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 	}
 
 	function handleChange(change) {
-		_filter = change;
-		if (_filter && !isEmptyOrSpaces(_filter)) {
+		if (change && !isEmptyOrSpaces(change)) {
+			filter.current = change;
 			setFilterActive(true);
 		} else {
 			setFilterActive(false);
@@ -21,8 +21,8 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 	}
 
 	function onSearch() {
-		if (typeof onSearchRequest === 'function' && !isEmptyOrSpaces(_filter)) {
-			onSearchRequest({ queryString: _filter });
+		if (typeof onSearchRequest === 'function' && filter.current) {
+			onSearchRequest({ queryString: filter.current });
 		}
 	}
 
@@ -47,13 +47,7 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
-					<div className='cmp-search-criteria__content__query-input__container'>
-						<Filters
-							key={reset}
-							componentProp={componentProp}
-							onQueryChanged={(query) => handleChange(query)}
-						></Filters>
-					</div>
+					<Filters key={reset} componentProp={componentProp} onQueryChanged={(query) => handleChange(query)}></Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>
 					<Button disabled={!filterActive} onClick={() => onSearch()}>
