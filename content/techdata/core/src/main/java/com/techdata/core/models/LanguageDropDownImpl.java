@@ -92,12 +92,14 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 
 	private int getCountryPageDepthFromCurrentPage() {
 		PageManager pageManager = currentPage.getPageManager();
-		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - COUNTRY_ROOT_OFFSET : 0);
+		int depth = currentPage.getDepth() - pageManager.getPage(navigationRoot).getDepth() - COUNTRY_ROOT_OFFSET;
+		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth()) ? depth : 0;
 	}
 
 	private int getRegionRootPageDepthFromCurrentPage() {
 		PageManager pageManager = currentPage.getPageManager();
-		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - REGION_ROOT_OFFSET : 0);
+		int depth = currentPage.getDepth() - pageManager.getPage(navigationRoot).getDepth() - REGION_ROOT_OFFSET;
+		return currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? depth : 0;
 	}
 
 	@SuppressWarnings("squid:S2384")

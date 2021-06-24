@@ -53,7 +53,7 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
             jsonData = myJSON.toString();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error occurred in getUIServiceJSONResponse", e);
         }
 
         JsonElement jsonElement = new JsonParser().parse(jsonData);

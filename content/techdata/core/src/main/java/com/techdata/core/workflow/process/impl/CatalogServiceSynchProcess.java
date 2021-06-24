@@ -59,11 +59,11 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
 
             ResourceResolver resourceResolver = getResourceResolver(workflowSession);
             JsonArray items = jsonObject.getAsJsonObject("content").getAsJsonArray("items");
+
             processSynchContentFragments(items, Constants.CATALOG_ROOT_PARENT_PATH, resourceResolver);
-        } catch (Exception e) {
+        } catch (PersistenceException | RepositoryException e) {
             log.error("Error in execute", e);
         }
-
     }
 
     private Resource getParentResource(String path, ResourceResolver resolver) throws PersistenceException, RepositoryException {
@@ -111,7 +111,7 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
             resourceResolver.commit();
             resourceResolver.refresh();
         } catch (ContentFragmentException | PersistenceException e) {
-            e.printStackTrace();
+            log.error("Error occurred during saveContentFragment", e);
         }
     }
 

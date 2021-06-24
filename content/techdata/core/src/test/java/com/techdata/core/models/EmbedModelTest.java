@@ -1,6 +1,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.designer.Style;
+import com.techdata.core.workflow.process.impl.CatalogServiceSynchProcess;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 
@@ -43,7 +46,7 @@ class EmbedModelTest {
             field2.setAccessible(true);
             field2.set(embedModel, EXPECTED_JS_SCRIPT);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("Error occurred in EmbedModelTest setup", e);
         }
         ctx.addModelsForClasses(EmbedModel.class);
 
@@ -64,4 +67,6 @@ class EmbedModelTest {
             "document.write('<'+'div id=\"placement_214424_'+plc214424+'\"></'+'div>');\n" +
             "AdButler.ads.push({handler: function(opt){ AdButler.register(168525, 214424, [226,200], 'placement_214424_'+opt.place, opt); }, opt: { place: plc214424++, keywords: abkw, domain: 'servedbyadbutler.com', click:'CLICK_MACRO_PLACEHOLDER' }});\n" +
             "</script>";
+    private static final Logger log = LoggerFactory.getLogger(EmbedModelTest.class);
+
 }
