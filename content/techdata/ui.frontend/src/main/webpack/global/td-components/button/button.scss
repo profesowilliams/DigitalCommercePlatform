@@ -233,6 +233,15 @@ button {
 	justify-content: center;
 	margin: 0 rem(48px) rem(48px) 0;
 
+	a {
+		height: rem(60px);
+		width: rem(60px);
+		color: get-color(brand-blue) !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	&:hover {
 		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
 	}
