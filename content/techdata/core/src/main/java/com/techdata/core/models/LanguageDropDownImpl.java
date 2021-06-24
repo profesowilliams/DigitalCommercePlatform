@@ -13,7 +13,6 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
-
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,6 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	protected static final Logger log = LoggerFactory.getLogger(LanguageDropDownImpl.class);
 
 	public static final String RESOURCE_TYPE = "techdata/components/languagenavigation";
-	private static final String DEFAULT_NAVIGATION_ROOT = "/content";
 //	how many levels below nav root
 	private static final int COUNTRY_ROOT_OFFSET = 2;
 //	how many levels below nav root
@@ -40,7 +38,6 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	private SlingHttpServletRequest request;
 
 	private String navigationRoot;
-	private int structureDepth;
 
 	@Self
 	@Via(type = ResourceSuperType.class)
@@ -56,22 +53,15 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	private Style currentStyle;
 
 	private List<NavigationItem> items;
-	private List<NavigationItem> countryItems;
-
-
-
 
 	@PostConstruct
 	private void initModel() {
 		navigationRoot = properties.get(PN_NAVIGATION_ROOT, currentStyle.get(PN_NAVIGATION_ROOT, String.class));
-		structureDepth = properties.get(PN_STRUCTURE_DEPTH, currentStyle.get(PN_STRUCTURE_DEPTH, 1));
-
 		items = delegateLanguageNavigation.getItems();
 	}
 
 	public List<LanguageDropDownItem> getRegionListItems() {
-		List<LanguageDropDownItem> test = getDropDownItems(currentPage.getParent(getRegionRootPageDepthFromCurrentPage()), true);
-		return test;
+		return getDropDownItems(currentPage.getParent(getRegionRootPageDepthFromCurrentPage()), Boolean.TRUE);
 	}
 
 	private List<LanguageDropDownItem> getDropDownItems(Page root, boolean getChildren) {
@@ -110,6 +100,7 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 		return (currentPage.getDepth() > pageManager.getPage(navigationRoot).getDepth() ? currentPage.getDepth() - (pageManager.getPage(navigationRoot).getDepth()) - REGION_ROOT_OFFSET : 0);
 	}
 
+	@SuppressWarnings("squid:S2384")
 	@Override
 	public List<NavigationItem> getItems()
 	{

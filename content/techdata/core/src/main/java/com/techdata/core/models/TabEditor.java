@@ -1,11 +1,7 @@
 package com.techdata.core.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
+import com.day.cq.wcm.api.components.Component;
+import com.day.cq.wcm.api.components.ComponentManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -15,8 +11,10 @@ import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.day.cq.wcm.api.components.Component;
-import com.day.cq.wcm.api.components.ComponentManager;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Defines an {@code Editor} Sling Model used by the {@code /apps/core/wcm/components/commons/editor/dialog/childreneditor/v1/childreneditor} dialog component.
@@ -49,15 +47,19 @@ public class TabEditor {
             if (container != null) {
                 ComponentManager componentManager = request.getResourceResolver().adaptTo(ComponentManager.class);
                 if (componentManager != null){
-                    for (Resource resource : container.getChildren()) {
-                        logger.info("resource Path from TabEditor" + resource.getPath());
-                        if (resource != null) {
-                            Component component = componentManager.getComponentOfResource(resource);
-                            if (component != null) {
-                                items.add(new TabItem(request, resource));
-                            }
-                        }
-                    }
+                    populateItems(componentManager);
+                }
+            }
+        }
+    }
+
+    private void populateItems(ComponentManager componentManager) {
+        for (Resource resource : container.getChildren()) {
+            if (resource != null) {
+                logger.info("Resource Path from TabEditor {}=", resource.getPath());
+                Component component = componentManager.getComponentOfResource(resource);
+                if (component != null) {
+                    items.add(new TabItem(request, resource));
                 }
             }
         }

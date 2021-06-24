@@ -1,11 +1,9 @@
 package com.techdata.core.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
+import com.adobe.cq.wcm.core.components.models.NavigationItem;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.designer.Style;
+import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -13,9 +11,10 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 
-import com.adobe.cq.wcm.core.components.models.NavigationItem;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.designer.Style;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @Model(adaptables = SlingHttpServletRequest.class, resourceType = { LanguageNavigationImpl.RESOURCE_TYPE })
 public class LanguageNavigationImpl {
@@ -39,8 +38,6 @@ public class LanguageNavigationImpl {
 	@ScriptVariable
 	private Style currentStyle;
 
-	private String navigationRoot;
-	
 	private int structureDepth;
 	
 	Resource rootPage;
@@ -50,9 +47,14 @@ public class LanguageNavigationImpl {
 
 	@PostConstruct
 	private void initModel() {
-		this.navigationRoot = (String) this.properties.get(NAVIGATION_ROOT, this.currentStyle.get(NAVIGATION_ROOT, String.class));
-		this.structureDepth = ((Integer) this.properties.get(STRUCTURE_DEPTH, this.currentStyle.get(STRUCTURE_DEPTH, Integer.valueOf(1)))).intValue();
-		rootPage = navigationRoot != null ? request.getResourceResolver().getResource(navigationRoot) : request.getResourceResolver().getResource(DEFAULT_NAVIGATION_ROOT);
+		String navDefaultCurrentStyle = this.currentStyle.get(NAVIGATION_ROOT, String.class);
+		String navigationRoot = this.properties.get(NAVIGATION_ROOT, navDefaultCurrentStyle);
+		int depthDefaultToCurrStyle = this.currentStyle.get(STRUCTURE_DEPTH, 1);
+		this.structureDepth = this.properties.get(STRUCTURE_DEPTH, depthDefaultToCurrStyle);
+		rootPage = request.getResourceResolver().getResource(DEFAULT_NAVIGATION_ROOT);
+		if(StringUtils.isNotEmpty(navigationRoot)) {
+			rootPage = request.getResourceResolver().getResource(navigationRoot);
+		}
 	}
 
 	public String getLocalePageTitle() {
@@ -61,7 +63,7 @@ public class LanguageNavigationImpl {
 
 	public List<NavigationItem> getLanguageItems() {
 		List<NavigationItem> languageItems = items;
-		while(getNavItems(languageItems).size()>0) {
+		while(!languageItems.isEmpty()) {
 			languageItems=getNavItems(languageItems);
 		}
 		
@@ -69,7 +71,7 @@ public class LanguageNavigationImpl {
 	}
 	
 	public List<NavigationItem> getCountriesListItems() {
-		List<NavigationItem> countriesList = new ArrayList<NavigationItem>();
+		List<NavigationItem> countriesList = new ArrayList<>();
 
 		for (NavigationItem item : items) {
 			if (item.getPath().contains(PATH_SEPERATOR + currentPage.getAbsoluteParent(this.structureDepth-2).getName() + PATH_SEPERATOR)) {				
@@ -82,7 +84,7 @@ public class LanguageNavigationImpl {
 	
 
 	public List<NavigationItem> getNavItems(List<NavigationItem> navitems) {
-		List<NavigationItem> navItems = new ArrayList<NavigationItem>();
+		List<NavigationItem> navItems = new ArrayList<>();
 
 		for (NavigationItem item : navitems) {
 			if (item.getPath().contains(PATH_SEPERATOR + currentPage.getAbsoluteParent(this.structureDepth).getName() + PATH_SEPERATOR)) {				

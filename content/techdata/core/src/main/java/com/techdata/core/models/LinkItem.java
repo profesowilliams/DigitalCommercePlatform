@@ -2,7 +2,6 @@ package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import com.techdata.core.util.Constants;
 import com.techdata.core.util.ContentFragmentHelper;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Model(adaptables = Resource.class,
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -62,6 +58,7 @@ public class LinkItem {
     @Inject
     private ResourceResolver resolver;
 
+    @SuppressWarnings("java:S116")
     @Inject
     private String UIServiceEndPoint;
 
@@ -82,26 +79,12 @@ public class LinkItem {
             log.debug("UI Service enabled to generate megamenu");
 
             Resource cfRootParent = resolver.getResource(navigationCatalogRoot);
-            if (null != cfRootParent)
-            {
-                for(Resource child : cfRootParent.getChildren())
-                {
-                    if (ContentFragmentHelper.isContentFragment(child))
-                    {
-                        log.debug("processing resource at path {}", child.getPath());
-                        SubNavLinks link = new SubNavLinks(child, platformName);
-                        this.subLinks.add(link);
-                        for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
-                        {
-                            this.tertiarySubNavLinks.add(tertiaryLink);
-                        }
-                    }
+            if (null != cfRootParent) {
+                for(Resource child : cfRootParent.getChildren()) {
+                    populateTertiarySubnavLinks(child);
                 }
-
                 log.debug("sublink size is {}",this.subLinks.size());
             }
-
-
         }
 
         if(resolver != null && navigationRoot != null){
@@ -111,19 +94,24 @@ public class LinkItem {
                 Iterator<Page> children = rootPage.listChildren();
                 while(children.hasNext()){
                     Page childPage = children.next();
-                    Resource pageResource = childPage.getContentResource();
                     SubNavLinks link = new SubNavLinks(childPage, resolver, platformName);
                     subLinks.add(link);
-                    for(SubNavLinks tertiaryLink : link.getSubNavLinkslist())
-                    {
-                        this.tertiarySubNavLinks.add(tertiaryLink);
-                    }
+                    tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
                 }
-
             }
         }
 
 
+
+    }
+
+    private void populateTertiarySubnavLinks(Resource child) {
+        if (ContentFragmentHelper.isContentFragment(child)) {
+            log.debug("processing resource at path {}", child.getPath());
+            SubNavLinks link = new SubNavLinks(child, platformName);
+            this.subLinks.add(link);
+            tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
+        }
 
     }
 
@@ -136,7 +124,7 @@ public class LinkItem {
     }
 
     public boolean getHasSecondaryMenuItems() {
-        return this.subLinks!=null && this.subLinks.size() > 0;
+        return this.subLinks!=null && !subLinks.isEmpty();
     }
 
     public String getAdbutlerHeading() {
@@ -147,7 +135,8 @@ public class LinkItem {
         return adbutlerJSScript;
     }
 
+    @SuppressWarnings("squid:S2384")
     public List<SubNavLinks> getTertiaryMenuItems(){
-        return this.tertiarySubNavLinks;
+        return tertiarySubNavLinks;
     }
 }

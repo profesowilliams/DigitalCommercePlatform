@@ -1,22 +1,16 @@
 package com.techdata.core.models;
 
-import com.adobe.cq.wcm.core.components.models.NavigationItem;
-import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
-import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
-import com.adobe.cq.wcm.core.components.util.ComponentUtils;
-import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
-import org.apache.sling.api.resource.Resource;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class LanguageDropDownItem  {
 
     private Page page;
     private boolean active;
-    private ComponentData componentData;
-    private Boolean dataLayerEnabled;
     private String title;
 
     private List<LanguageDropDownItem> children;
@@ -87,8 +81,9 @@ public class LanguageDropDownItem  {
         return this.page.getLanguage().getDisplayLanguage();
     }
 
+    @SuppressWarnings("squid:S2384")
     public List<LanguageDropDownItem> getChildren() {
-        return this.children;
+        return children;
     }
 
 }

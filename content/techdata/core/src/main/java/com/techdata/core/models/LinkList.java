@@ -7,7 +7,6 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ChildResource;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,14 +25,14 @@ public class LinkList {
     @ChildResource
     private Resource links;
 
-    private List<LinkItem> linkList = new ArrayList<>();
+    private List<LinkItem> linkItemList = new ArrayList<>();
 
     @PostConstruct
     protected void initModel() {
         if (links != null) {
             for (Resource item : links.getChildren()) {
                 LinkItem link =  item.adaptTo(LinkItem.class);
-                linkList.add(link);
+                linkItemList.add(link);
             }
         }
     }

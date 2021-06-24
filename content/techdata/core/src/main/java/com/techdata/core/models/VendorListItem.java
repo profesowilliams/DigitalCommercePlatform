@@ -19,8 +19,7 @@ public class VendorListItem implements ListItem {
     private String pageLink;
     private String vendorPageLabel;
 
-
-
+    @Override
     public String getTitle() {
         return title;
     }
@@ -59,7 +58,7 @@ public class VendorListItem implements ListItem {
 
         for (Iterator<ContentElement> it = cf.getElements(); it.hasNext(); ) {
             ContentElement ce = it.next();
-            String tagElement = ce.getName().toString();
+            String tagElement = ce.getName();
             if(tagElement.equals("vendor-name")){
                 title = ce.getContent();
             }else if(tagElement.equals("overview")){
@@ -74,7 +73,7 @@ public class VendorListItem implements ListItem {
             }
         }
         VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel);
-        log.debug(" CF Data From Vendor List Item class = " + title + " " + overview);
+        log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
         return v1;
     }
 }

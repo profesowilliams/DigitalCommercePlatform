@@ -1,6 +1,11 @@
 package com.techdata.core.util;
 
 public class Constants {
+
+    private Constants() {
+        //private constructors
+    }
+
     public static final String SLASH = "/";
     public static final String HTTP = "http";
     public static final String CATALOG_NAME = "name";

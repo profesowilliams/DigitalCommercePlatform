@@ -1,21 +1,19 @@
 package com.techdata.core.models;
 
-import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.day.cq.wcm.api.Page;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.techdata.core.util.Constants;
 import com.techdata.core.util.ContentFragmentHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
-import com.google.gson.*;
 
 public class SubNavLinks {
     protected static final Logger log = LoggerFactory.getLogger(SubNavLinks.class);
@@ -67,10 +65,29 @@ public class SubNavLinks {
         log.debug("inside subnavlinks constructor for CF. Path {} is being processed", cfResource.getPath());
         this.rootParentTitle = rootParentTitle;
         ContentFragment cf = cfResource.adaptTo(ContentFragment.class);
-        Map<String, String> map = ContentFragmentHelper.convertCFElementsToMap(cf);
-        log.debug("map is {}", map.toString());
 
-        if (map.containsKey((String) Constants.CATALOG_OVERRIDE_NAME) && map.containsKey(Constants.CATALOG_NAME))
+        populatePageData(ContentFragmentHelper.convertCFElementsToMap(cf));
+
+//        Does CF have any children
+        ResourceResolver resourceResolver = cfResource.getResourceResolver();
+        Resource cfChildrenRoot = resourceResolver.getResource(cfResource.getPath() + Constants.CATALOG_CF_CHILDREN_FOLDER_SUFFIX);
+//        The children CFs are within a folder named with suffix '-children'
+        if (null != cfChildrenRoot) {
+//            This CF has children
+            log.debug("Children found for path {}", cfChildrenRoot.getPath());
+            for(Resource child : cfChildrenRoot.getChildren()) {
+                if (ContentFragmentHelper.isContentFragment(child)) {
+                    this.hasChildPages = "true";
+                    log.debug("processing resource at path {}", child.getPath());
+                    SubNavLinks link = new SubNavLinks(child, rootParentTitle);
+                    this.subNavLinkslist.add(link);
+                }
+            }
+        }// else no children for this CF
+    }
+
+    private void populatePageData(Map<String, String> map) {
+        if (map.containsKey(Constants.CATALOG_OVERRIDE_NAME) && map.containsKey(Constants.CATALOG_NAME))
         {
             this.pageTitle = map.get(Constants.CATALOG_OVERRIDE_NAME).isEmpty() ? map.get(Constants.CATALOG_NAME)  : map.get( Constants.CATALOG_OVERRIDE_NAME);
             this.docCount = map.containsKey(Constants.CATALOG_DOCCOUNT) && !map.get(Constants.CATALOG_DOCCOUNT).isEmpty() ? map.get(Constants.CATALOG_DOCCOUNT) : StringUtils.EMPTY;
@@ -79,26 +96,6 @@ public class SubNavLinks {
         }else{
             this.pageTitle = Constants.CATALOG_NO_NAME;
         }
-
-//        Does CF have any children
-        ResourceResolver resourceResolver = cfResource.getResourceResolver();
-        Resource cfChildrenRoot = resourceResolver.getResource(cfResource.getPath() + Constants.CATALOG_CF_CHILDREN_FOLDER_SUFFIX);
-//        The children CFs are within a folder named with suffix '-children'
-        if (null != cfChildrenRoot)
-        {
-//            This CF has children
-            log.debug("Children found for path {}", cfChildrenRoot.getPath());
-            for(Resource child : cfChildrenRoot.getChildren())
-            {
-                if (ContentFragmentHelper.isContentFragment(child))
-                {
-                    this.hasChildPages = "true";
-                    log.debug("processing resource at path {}", child.getPath());
-                    SubNavLinks link = new SubNavLinks(child, rootParentTitle);
-                    this.subNavLinkslist.add(link);
-                }
-            }
-        }// else no children for this CF
     }
 
 
@@ -166,6 +163,7 @@ public class SubNavLinks {
         }
     }
 
+    @SuppressWarnings("squid:S2384")
     public List<SubNavLinks> getSubNavLinkslist(){
         return subNavLinkslist;
     }

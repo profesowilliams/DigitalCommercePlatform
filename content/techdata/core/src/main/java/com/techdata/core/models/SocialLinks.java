@@ -7,7 +7,6 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ChildResource;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +22,7 @@ public class SocialLinks {
 
     protected static final Logger log = LoggerFactory.getLogger(SocialLinks.class);
 
+    @SuppressWarnings("squid:S1700")
     @ChildResource
     private Resource socialLinks;
 

@@ -42,6 +42,7 @@ public class MegaMenu {
         return "hello from model" + menuLinkList.size();
     }
 
+    @SuppressWarnings("squid:S2384")
     public List<LinkItem> getFirstLevelMenuItems() {
         return this.menuLinkList;
     }

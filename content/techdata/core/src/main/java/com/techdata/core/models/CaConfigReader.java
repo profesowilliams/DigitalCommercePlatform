@@ -3,36 +3,21 @@
  */
 package com.techdata.core.models;
 
-import java.util.Arrays;
-
-import javax.annotation.PostConstruct;
-
+import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
+import com.techdata.core.slingcaconfig.MiniCartConfiguration;
+import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.day.cq.wcm.api.Page;
-
-import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
-import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
-
-import com.techdata.core.slingcaconfig.MiniCartConfiguration;
+import javax.annotation.PostConstruct;
 
 
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
-
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-
-	private ServiceEndPointsConfiguration serviceEndPointsConfiguration = null;
-
-	private MiniCartConfiguration mcConfiguration = null;
-
-	private AnalyticsConfiguration analyticsConfiguration = null;
 
 	@ScriptVariable(name = "currentPage")
 	private Page page;
@@ -83,9 +68,10 @@ public class CaConfigReader {
 
 	@PostConstruct
 	public void init() {
-		serviceEndPointsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
-		mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
-		analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
+		ServiceEndPointsConfiguration serviceEndPointsConfiguration =
+				page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
+		MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
+		AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
 		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
 		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
 		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();

@@ -40,6 +40,6 @@ class LinkListTest {
     void getLinkList() {
         context.currentResource("/linklist");
         links = context.request().adaptTo(LinkList.class);
-        assertEquals(6, links.getLinkList().size());
+        assertEquals(6, links.getLinkItemList().size());
     }
 }

@@ -1,6 +1,8 @@
 package com.techdata.core.util.impl;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.techdata.core.util.UIServiceHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
@@ -11,8 +13,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 @Component(service = UIServiceHelper.class)
@@ -20,16 +20,18 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
     protected static final Logger log = LoggerFactory.getLogger(UIServiceHelperImpl.class);
 
     @Override
-    public JsonObject getUIServiceJSONResponse(String UIServiceEndpoint, String sessionID) {
-        log.debug("Endpoint {}, session ID {}", UIServiceEndpoint, sessionID);
+    public JsonObject getUIServiceJSONResponse(String uiServiceEndpoint, String sessionID) {
+        log.debug("Endpoint {}, session ID {}", uiServiceEndpoint, sessionID);
         String jsonData = StringUtils.EMPTY;
 
         URL url = null;
         try {
-            url = new URL(UIServiceEndpoint);
+            url = new URL(uiServiceEndpoint);
 
             HttpURLConnection conn = null;
             conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5 * 1000);
+            conn.setReadTimeout(5 * 1000);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
             conn.setRequestProperty("TraceId", "35345345-Browse");
@@ -38,7 +40,7 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
             conn.setRequestProperty("Accept-Language", "en-us");
             conn.setRequestProperty("sessionid", sessionID);
             if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                throw new UIServiceException("Failed : HTTP error code : " + conn.getResponseCode());
             }
             BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
             String output;
@@ -50,17 +52,11 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
 
             jsonData = myJSON.toString();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         JsonElement jsonElement = new JsonParser().parse(jsonData);
-        JsonObject jobject = jsonElement.getAsJsonObject();
-
-        return jobject;
+        return jsonElement.getAsJsonObject();
     }
 }

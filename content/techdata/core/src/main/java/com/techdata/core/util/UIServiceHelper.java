@@ -1,9 +1,9 @@
 package com.techdata.core.util;
 
+import com.google.gson.JsonObject;
 import org.osgi.annotation.versioning.ProviderType;
-import com.google.gson.*;
 
 @ProviderType
 public interface UIServiceHelper {
-    JsonObject getUIServiceJSONResponse(String UIServiceEndpoint, String sessionID);
+    JsonObject getUIServiceJSONResponse(String uiServiceEndpoint, String sessionID);
 }

@@ -8,12 +8,8 @@ import com.adobe.cq.dam.cfm.FragmentTemplate;
 import com.adobe.granite.workflow.WorkflowException;
 import com.adobe.granite.workflow.WorkflowSession;
 import com.adobe.granite.workflow.exec.WorkItem;
-import com.adobe.granite.workflow.exec.WorkflowData;
 import com.adobe.granite.workflow.exec.WorkflowProcess;
 import com.adobe.granite.workflow.metadata.MetaDataMap;
-import com.adobe.granite.workflow.model.WorkflowNode;
-import com.day.cq.commons.jcr.JcrUtil;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import java.util.Iterator;
-import java.util.Map;
 
 @Component(
         service = WorkflowProcess.class,
@@ -48,7 +43,6 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
 
     public final void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap metaDataMap) throws WorkflowException {
         try  {
-            log.debug("metadata map is... {}", metaDataMap.toString());
             String arguments = metaDataMap.containsKey(Constants.WORKFLOW_ARGS_KEY) ?  metaDataMap.get(Constants.WORKFLOW_ARGS_KEY, String.class) : StringUtils.EMPTY;
             log.debug("inside execute args is {}", arguments);
             String[] argumentsSplit = arguments.split(Constants.COMMA);
@@ -65,7 +59,6 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
 
             ResourceResolver resourceResolver = getResourceResolver(workflowSession);
             JsonArray items = jsonObject.getAsJsonObject("content").getAsJsonArray("items");
-
             processSynchContentFragments(items, Constants.CATALOG_ROOT_PARENT_PATH, resourceResolver);
         } catch (Exception e) {
             log.error("Error in execute", e);
@@ -73,14 +66,16 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
 
     }
 
+    private Resource getParentResource(String path, ResourceResolver resolver) throws PersistenceException, RepositoryException {
+        Resource parent = resolver.getResource(path);
+        if(parent != null) return parent;
+        createFolder(path, resolver);
+        return resolver.getResource(path);
+    }
+
     private void processSynchContentFragments(JsonArray items, String parentPath, ResourceResolver resourceResolver) throws PersistenceException, RepositoryException {
         log.debug("inside processSynchContentFragments. Processing path {}", parentPath);
-        Resource parent = resourceResolver.getResource(parentPath);
-        if (null == parent)
-        {
-            createFolder(parentPath, resourceResolver);
-            parent = resourceResolver.getResource(parentPath);
-        }
+        Resource parent = getParentResource(parentPath, resourceResolver);
 
         Resource template = resourceResolver.getResource(Constants.CATALOG_CF_MODEL_PATH);
 
@@ -90,16 +85,7 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
             if (null != jsonItemObject && jsonItemObject.has(Constants.CATALOG_JSON_KEY_FIELD_NAME)) {
                 String key = jsonItemObject.get(Constants.CATALOG_JSON_KEY_FIELD_NAME).getAsString();
                 String name = jsonItemObject.get(Constants.CATALOG_JSON_NAME_FIELD_NAME).isJsonNull() ? "" : jsonItemObject.get(Constants.CATALOG_JSON_NAME_FIELD_NAME).getAsString();
-                String docCount = jsonItemObject.get(Constants.CATALOG_JSON_DOCCOUNT_FIELD_NAME).isJsonNull() ? "" : jsonItemObject.get(Constants.CATALOG_JSON_DOCCOUNT_FIELD_NAME).getAsString();
-                try {
-                    ContentFragment cf = getOrCreateFragment(parent, template, key, name);
-                    setContentElements(cf,jsonItemObject);
-                    resourceResolver.commit();
-                    resourceResolver.refresh();
-                } catch (ContentFragmentException e) {
-                    e.printStackTrace();
-                }
-
+                saveContentFragment(parent, template, key, name, jsonItemObject, resourceResolver);
                 if (jsonItemObject.has(Constants.CATALOG_JSON_CHILDREN_FIELD_NAME) )
                 {
                     JsonArray children = jsonItemObject.getAsJsonArray(Constants.CATALOG_JSON_CHILDREN_FIELD_NAME);
@@ -115,6 +101,18 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
 
         }
 
+    }
+
+    private void saveContentFragment(Resource parent, Resource template, String key, String name,
+                                     JsonObject jsonItemObject, ResourceResolver resourceResolver) {
+        try {
+            ContentFragment cf = getOrCreateFragment(parent, template, key, name);
+            setContentElements(cf,jsonItemObject);
+            resourceResolver.commit();
+            resourceResolver.refresh();
+        } catch (ContentFragmentException | PersistenceException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean createFolder(String path, ResourceResolver resourceResolver) throws RepositoryException, PersistenceException {
@@ -166,16 +164,6 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
         }
     }
 
-
-    private String getString(Map<String, Object> row, String attr) {
-        Object o = row.get(attr.toLowerCase());
-        if (o != null) {
-            return (String) o;
-        } else {
-            return null;
-        }
-    }
-
     protected ContentFragment getOrCreateFragment(Resource parent, Resource template, String name, String title) throws ContentFragmentException {
 
         Resource fragmentResource = parent.getChild(name);
@@ -189,15 +177,6 @@ public class CatalogServiceSynchProcess implements WorkflowProcess {
             }
         } else {
             return fragmentResource.adaptTo(ContentFragment.class);
-        }
-    }
-
-    private Resource getFragmentTemplateResource(ResourceResolver rr, String templatePath) {
-        Resource template = rr.resolve(templatePath);
-        if (template.adaptTo(FragmentTemplate.class) != null) {
-            return template;
-        } else {
-            return template.getChild("jcr:content");
         }
     }
 
