@@ -31,10 +31,8 @@ const MyOrdersWidget = ({ componentProp }) => {
 
     }
 
-    const createChart = (node, data) => {
-        const randomValue = (data) =>
-            Math.max.apply(null, data) * Math.random();
-        var value = randomValue(data);
+    const createChart = (node, data, value) => {
+
         return new Chart(node, {
             type: "gauge",
             data: {
@@ -71,11 +69,13 @@ const MyOrdersWidget = ({ componentProp }) => {
     };
     useEffect(() => {
         if (myOrders) {
-            const { processedOrdersAmount, totalOrderAmount } = myOrders;
+
+            const processedOrdersAmount = myOrders.processed.amount;
+            const totalOrdersAmount = myOrders.total.amount;
             createChart(chartRef.current.getContext("2d"), [
                 processedOrdersAmount,
-                totalOrderAmount,
-            ]);
+                totalOrdersAmount,
+            ], myOrders.shipped.amount);
         }
     }, [myOrders]);
 
@@ -88,7 +88,6 @@ const MyOrdersWidget = ({ componentProp }) => {
         setMyOrders(items);
     }, []);
 
-    const { processedFormattedAmount, currencySymbol } = myOrders;
 
     return (
         myOrders && (
@@ -103,7 +102,7 @@ const MyOrdersWidget = ({ componentProp }) => {
                     <div className='cmp-gauge-chart'>
                         <div className='cmp-gauge-chart__orders-processed'>
                             <div className='cmp-gauge-chart__orders-processed--number'>
-                                {`${currencySymbol}${processedFormattedAmount}`}
+                                {`${myOrders.currencySymbol}${myOrders.processed.formattedAmount}`}
                             </div>
                             <div className='cmp-gauge-chart__orders-processed--title'>
                                 Orders Processed

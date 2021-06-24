@@ -791,25 +791,75 @@ app.get("/myorders", (req, res) => {
                 isError: true,
             },
         });
-    res.json({
-        content: {
-            items: {
-                isMonthly: false,
-                currencyCode: "USD",
-                currencySymbol: "$",
-                processedOrderPercentage: "26",
-                processedOrdersAmount: 268,
-                totalOrderAmount: 529,
-                totalFormattedAmount: utils.getRandomValues(100) + ".00",
-                processedFormattedAmount: utils.getRandomValues(100) + ".00",
+
+    if (req.query.isMonthly === "true")
+    {
+        res.json({
+            content: {
+                items: {
+                    isMonthly: false,
+                    currencyCode: "USD",
+                    currencySymbol: "$",
+                    total: {
+                        amount: 42037,
+                        formattedAmount: "42,037.00",
+                        percentage: "100%"
+                    },
+                    processed: {
+                        amount: 12700,
+                        formattedAmount: "12,700.00",
+                        percentage: "30.211%"
+                    },
+                    shipped: {
+                        amount: 5877,
+                        formattedAmount: "5,877.00",
+                        percentage: "13.981%"
+                    },
+                    processedOrderPercentage: "26",
+                    processedOrdersAmount: 268,
+                    totalOrderAmount: 529,
+                    totalFormattedAmount: utils.getRandomValues(100) + ".00",
+                    processedFormattedAmount: utils.getRandomValues(100) + ".00",
+                },
             },
-        },
-        error: {
-            code: 0,
-            messages: [],
-            isError: false,
-        },
-    });
+            error: {
+                code: 0,
+                messages: [],
+                isError: false,
+            },
+        });
+    }else{
+        res.json({
+            content: {
+                items: {
+                    isMonthly: false,
+                    currencyCode: "USD",
+                    currencySymbol: "$",
+                    total: {
+                        amount: 126921,
+                        formattedAmount: "126,921.00",
+                        percentage: "100%"
+                    },
+                    processed: {
+                        amount: 38100,
+                        formattedAmount: "38,100.00",
+                        percentage: "30.018%"
+                    },
+                    shipped: {
+                        amount: 34000,
+                        formattedAmount: "34,000.00",
+                        percentage: "26.788%"
+                    },
+                },
+            },
+            error: {
+                code: 0,
+                messages: [],
+                isError: false,
+            },
+        })
+    }
+
 });
 
 app.get("/getAddress", (req, res) => {
