@@ -1,5 +1,3 @@
-
-
 .cmp-button {
 	cursor: pointer !important;
 }
@@ -158,76 +156,94 @@ button {
 	}
 }
 
+.cmp-button__text--align-right {
+	text-align: right;
+}
 
-.cmp-jump-to-top-wrap {
-	width:100%;
-	display: flex;
-	justify-content: flex-end;
-    align-items: flex-end;
-	padding: 16px;
+.cmp-button__text {
+	&--dark-blue,
+	&--light-blue,
+	&--white,
+	&--grey {
+		padding-top: rem(20px);
 
-	.cmp-jump-to-top {
-		box-sizing: border-box;
-		height: rem(60px);
-		width: rem(60px);
-		border: rem(1px) solid get-color(brand-light-gray2);
-		background-color: get-color(brand-white);
-		box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
-		text-align: center;
-		font-size: 30px;
-		color: get-color(brand-blue);
+		.cmp-button {
+			padding-left: 0;
+			padding-right: 0;
 
-		&:hover {
-			box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
+			.cmp-button__text::after {
+				@include font-awesome-custom-icon;
+
+				content: "\f054";
+				padding-left: rem(10px);
+			}
 		}
+	}
 
-		a {
-			height: rem(60px);
-			width: rem(60px);
-			color: get-color(brand-blue) !important;
+	&--dark-blue {
+		.cmp-button__text {
+			color: get-color(td-dark-blue);
+		}
+	}
+	&--light-blue {
+		.cmp-button__text {
+			color: get-color(brand-light-blue);
+		}
+	}
+	&--white {
+		.cmp-button__text {
+			color: get-color(brand-white);
+		}
+	}
+	&--grey {
+		.cmp-button__text {
+			color: get-color(brand-text-gray);
 		}
 	}
 }
 
-.cmp-button__text--align-right {
-  text-align: right;
+.cmp-class-for-uiFrontend-only {
+	width: rem(450px);
+	padding: rem(16px);
+	margin: 75vh auto;
+	font-size: $font-size-large;
+	font-weight: $font-weight-normal;
+	line-height: 1.2;
+	text-align: center;
 }
 
-.cmp-button__text{
-  &--dark-blue, &--light-blue, &--white, &--grey {
-    padding-top: rem(20px);
+.cmp-jump-to-top {
+	box-sizing: border-box;
+	height: rem(60px);
+	width: rem(60px);
+	border: rem(1px) solid get-color(brand-light-gray2);
+	background-color: get-color(brand-white);
+	box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
+	text-align: center;
+	font-size: 30px;
+	color: get-color(brand-blue);
+	transition: all 0.05s ease-in-out;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	display: inline-flex;
 
-    .cmp-button {
-      padding-left: 0;
-      padding-right: 0;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	margin: 0 rem(48px) rem(48px) 0;
 
-      .cmp-button__text::after {
-        @include font-awesome-custom-icon;
+	&:hover {
+		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
+	}
 
-        content: "\f054";
-        padding-left: rem(10px);
-      }
-    }
-  }
+	&.show {
+		visibility: visible;
+		opacity: 1;
+	}
 
-  &--dark-blue{
-    .cmp-button__text {
-      color: get-color(td-dark-blue);
-    }
-  }
-  &--light-blue{
-    .cmp-button__text {
-      color: get-color(brand-light-blue);
-    }
-  }
-  &--white{
-    .cmp-button__text {
-      color: get-color(brand-white);
-    }
-  }
-  &--grey{
-    .cmp-button__text {
-      color: get-color(brand-text-gray);
-    }
-  }
+	&.hide {
+		visibility: hidden;
+		opacity: 0;
+	}
 }
