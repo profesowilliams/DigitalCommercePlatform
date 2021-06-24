@@ -61,8 +61,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
-        [Theory]
-        [AutoDomainData]
+        [Fact]
         public async Task GetCustomerDetails()
         {
             // Act

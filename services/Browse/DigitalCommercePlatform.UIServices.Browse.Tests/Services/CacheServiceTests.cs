@@ -1,6 +1,5 @@
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -24,8 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _cachingService = new CachingService(_memoryCache, _cachelogger.Object);
         }
 
-        [Theory]
-        [AutoDomainData]
+        [Fact]
         public async Task GetCatalogFromCache()
         {
             // Act
@@ -34,8 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             Assert.Null(result);
         }
 
-        [Theory]
-        [AutoDomainData]
+        [Fact]
         public async Task GetFeatureFromCache()
         {
             // Act
@@ -44,8 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             Assert.NotNull(result);
         }
 
-        [Theory]
-        [AutoDomainData]
+        [Fact]
         public async Task ClearFromCache()
         {
             // Act
@@ -54,8 +50,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             result.Should().BeTrue();
         }
 
-        [Theory]
-        [AutoDomainData]
+        [Fact]
         public async Task SetCatalogCache()
         {
             List<CatalogResponse> catalog = new List<CatalogResponse>();
