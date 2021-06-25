@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Static Frontend file</title>
+        <meta name="template" content="page-content" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+
+    <body class="page basicpage">
+        <button type="button" data-component="hamburger-menu" aria-label="Hamburger Menu" class="cmp-td-hamburgerMenu">
+            <i class="fas fa-bars"></i>
+         </button>
+         <%= require('html-loader!./partials/hamburger-content/hamburger-content.html') %>
+    </body>
+</html>

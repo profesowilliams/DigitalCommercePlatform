@@ -881,6 +881,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/partials/cardView-carousel/cardView-carousel.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "hamburger-menu",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/hamburger-menu.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
