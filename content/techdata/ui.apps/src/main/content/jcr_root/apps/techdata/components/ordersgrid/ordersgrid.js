@@ -7,6 +7,9 @@ use(function () {
 	var labelValues = [];
 	var keywordDropdownValues = [];
     var optionData = {};
+    var searchCriteriaData = {};
+	var keywordDropdownData = {};
+	var vendorDropdownData = {};
     var resourceResolver = resource.getResourceResolver();
  var invoicesModalData = {};
 
@@ -65,40 +68,50 @@ use(function () {
 
 
     }
+	if (properties && properties["keywordDropdownLabel"]) {
+		keywordDropdownData.label = properties["keywordDropdownLabel"];
+	}
+	var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
 
-	 var keywordDropdownListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordDropdownList");
+		if (keywordListNode !== null) {
+			var childrenList = keywordListNode.getChildren();
+			var keyValues = [];
+			for (var [key, res] in Iterator(childrenList)) {
+				var labelKey = res.properties["key"];
+				var labelValue = res.properties["value"];
+				var labelData = {};
+				labelData.key = labelKey;
+				labelData.value = labelValue;
+				keyValues.push(labelData);
+				keywordDropdownData.items = keyValues;
 
-    if (keywordDropdownListNode !== null) {
-        var childrenList = keywordDropdownListNode.getChildren();
-
-        for (var [key, res] in Iterator(childrenList)) {
-            var label = res.properties["keywordDropdownLabel"];
-            var keywordDropdownData = {};
-            keywordDropdownData.label = label;
-			var labelListNode = resourceResolver.getResource(res.getPath() + "/labelList");
-
-				if (labelListNode !== null) {
-					var childrenList = labelListNode.getChildren();
-					var keyValues = [];
-					for (var [key, res] in Iterator(childrenList)) {
-						var labelKey = res.properties["key"];
-						var labelValue = res.properties["value"];
-						var labelData = {};
-						labelData.key = labelKey;
-						labelData.value = labelValue;
-						keyValues.push(labelData);
-						keywordDropdownData.items = keyValues;
-
-					}
+			}
 
 
-				}
-            keywordDropdownValues.push(keywordDropdownData);
+		}
 
-        }
+	if (properties && properties["vendorDropdownLabel"]) {
+		vendorDropdownData.label = properties["vendorDropdownLabel"];
+	}
+	var vendorListNode = resourceResolver.getResource(currentNode.getPath() + "/vendorList");
+
+		if (vendorListNode !== null) {
+			var childrenList = vendorListNode.getChildren();
+			var vendorValues = [];
+			for (var [key, res] in Iterator(childrenList)) {
+				var labelKey = res.properties["vendorKey"];
+				var labelValue = res.properties["vendorValue"];
+				var labelData = {};
+				labelData.key = labelKey;
+				labelData.value = labelValue;
+				vendorValues.push(labelData);
+				vendorDropdownData.items = vendorValues;
+
+			}
 
 
-    }
+		}
+
 
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
@@ -163,9 +176,33 @@ use(function () {
 	if (labelValues != null) {
         jsonObject["labelList"] = labelValues;
     }
-     if (keywordDropdownValues != null) {
-        jsonObject["keywordDropdown"] = keywordDropdownValues;
+	if (properties && properties["searchTitle"]) {
+        searchCriteriaData.title = properties["searchTitle"];
     }
+
+    if (properties && properties["searchButtonLabel"]) {
+        searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
+    }
+
+	if (properties && properties["clearButtonLabel"]) {
+        searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
+    }
+
+    if (properties && properties["inputPlaceholder"]) {
+        searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
+    }
+     if (keywordDropdownData != null) {
+        searchCriteriaData["keywordDropdown"] = keywordDropdownData;
+    }
+
+	if (vendorDropdownData != null) {
+        searchCriteriaData["vendorDropdown"] = vendorDropdownData;
+    }
+
+    if (searchCriteriaData != null) {
+        jsonObject["searchCriteria"] = searchCriteriaData;
+    }
+
 
 
     return {

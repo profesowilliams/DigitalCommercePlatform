@@ -321,62 +321,78 @@
                                                     fieldDescription="Enter Input"
                                                     fieldLabel="Input Placeholder"
                                                     name="./inputPlaceholder"/>
-                                            <keywordDropdownList
+                                            <keywordDropdownLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Label"
+                                                    name="./keywordDropdownLabel"/>
+                                            <actions
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                     composite="{Boolean}true"
-                                                    fieldDescription="Click 'Add' to add items for drop down">
+                                                    fieldDescription="Click 'Add' to add key and value for drop down">
                                                 <field
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./keywordDropdownList">
+                                                        name="./keywordList">
                                                     <items jcr:primaryType="nt:unstructured">
                                                         <column
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
                                                             <items jcr:primaryType="nt:unstructured">
-                                                                <keywordDropdownLabel
+                                                                <key
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter Icon Value"
-                                                                        fieldLabel="Label"
-                                                                        name="./keywordDropdownLabel"/>
-                                                                <actions
+                                                                        fieldDescription="Enter Key"
+                                                                        fieldLabel="Key"
+                                                                        name="./key"/>
+                                                                <labelValue
                                                                         jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                                        composite="{Boolean}true"
-                                                                        fieldDescription="Click 'Add' to add key and value for drop down">
-                                                                    <field
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                                            name="./labelList">
-                                                                        <items jcr:primaryType="nt:unstructured">
-                                                                            <column
-                                                                                    jcr:primaryType="nt:unstructured"
-                                                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                                <items jcr:primaryType="nt:unstructured">
-                                                                                    <key
-                                                                                            jcr:primaryType="nt:unstructured"
-                                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                                            fieldDescription="Enter Key"
-                                                                                            fieldLabel="Key"
-                                                                                            name="./key"/>
-                                                                                    <labelValue
-                                                                                            jcr:primaryType="nt:unstructured"
-                                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                                            fieldDescription="Enter Value"
-                                                                                            fieldLabel="Value"
-                                                                                            name="./value"/>
-                                                                                </items>
-                                                                            </column>
-                                                                        </items>
-                                                                    </field>
-                                                                </actions>
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Value"
+                                                                        fieldLabel="Value"
+                                                                        name="./value"/>
                                                             </items>
                                                         </column>
                                                     </items>
                                                 </field>
-                                            </keywordDropdownList>
+                                            </actions>
+                                            <vendorDropdownLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Vendor Label"
+                                                    name="./vendorDropdownLabel"/>
+                                            <vendorActions
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldDescription="Click 'Add' to add key and value for drop down">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./vendorList">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Key"
+                                                                        fieldLabel="Vendor Key"
+                                                                        name="./vendorKey"/>
+                                                                <labelValue
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Value"
+                                                                        fieldLabel="Vednor Value"
+                                                                        name="./vendorValue"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </vendorActions>
                                         </items>
                                     </column>
                                 </items>
