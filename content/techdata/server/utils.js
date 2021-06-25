@@ -23,8 +23,10 @@ module.exports = {
         }
         return ids;
     },
-    getRandomValues(range)
-    {
-        return  String(1.0 * Math.floor(Math.random() * (range + 1)));
+    getRandomValues(range) {
+        return String(1.0 * Math.floor(Math.random() * (range + 1)));
+    },
+    getRandomNumber(maxValue) {
+        return Math.floor(Math.random() * maxValue + 1);
     }
 };

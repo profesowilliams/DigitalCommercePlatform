@@ -15,7 +15,8 @@ const DashboardSubheader = ({ componentProp }) => {
 
 	const vendorModal = {
 		uiServiceEndPoint:
-			vendorConnectionsModal?.uiServiceEndPoint ?? 'http://localhost:3000/ui-commerce/v1/orders/?details=true',
+			vendorConnectionsModal?.uiServiceEndPoint ??
+			'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/getVendorConnections',
 		title: vendorConnectionsModal?.title ?? 'Vendor Connections',
 		buttonLabel: vendorConnectionsModal?.buttonLabel ?? 'Connect All',
 		buttonIcon: vendorConnectionsModal?.buttonIcon ?? null,

@@ -1,35 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import SlideToggle from '../Widgets/SlideToggle';
+import React from 'react';
+import Loader from '../Widgets/Loader';
+import Vendor from './Vendor';
+import { usePromise } from '../../hooks/usePromise';
 
 function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnectedLabel }) {
-	const [vendorStatus, setVendorStatus] = useState(null);
-	const [vendorToggled, setVendorToggled] = useState(false);
-
-	function toggleStateChanged(state) {
-		setVendorToggled(state);
-	}
+	const fetchedVendors = usePromise(apiUrl)?.content?.items;
 
 	return (
 		<section>
 			<div className='cmp-vendor-connection'>
 				<div className='cmp-vendor-connection__header'>{header}</div>
-				{vendors && (
+				{fetchedVendors ? (
 					<div className='cmp-vendor-connection__vendors'>
-						{vendors.map((vendor, index) => (
-							<div className='cmp-vendor-connection__vendors__vendor' key={index}>
-								<div className='logo'>
-									{/* <img src={vendor.value}></img> */}
-									{vendor.key}
-								</div>
-								<div className='status'>
-									{vendorToggled ? connectedLabel ?? 'Connected' : disconnectedLabel ?? 'Disconnected'}
-								</div>
-								<div className='toggler'>
-									<SlideToggle toggled={vendorToggled} onToggleChanged={toggleStateChanged}></SlideToggle>
-								</div>
-							</div>
+						{fetchedVendors.map((vendor, index) => (
+							<Vendor
+								key={index}
+								fetchedVendor={vendor}
+								vendorsConfig={vendors}
+								connectedLabel={connectedLabel}
+								disconnectedLabel={disconnectedLabel}
+							></Vendor>
 						))}
 					</div>
+				) : (
+					<Loader visible={true}></Loader>
 				)}
 			</div>
 		</section>

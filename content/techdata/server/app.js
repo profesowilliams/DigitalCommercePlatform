@@ -792,8 +792,7 @@ app.get("/myorders", (req, res) => {
             },
         });
 
-    if (req.query.isMonthly === "true")
-    {
+    if (req.query.isMonthly === "true") {
         res.json({
             content: {
                 items: {
@@ -828,7 +827,7 @@ app.get("/myorders", (req, res) => {
                 isError: false,
             },
         });
-    }else{
+    } else {
         res.json({
             content: {
                 items: {
@@ -1044,3 +1043,39 @@ app.get("/catalog", (req, res) => {
     // res.json(mockResponses.shortResponse());
 
 })
+//---VENDOR CONNECTIONS MOCK API---//
+app.get("/ui-account/v1/getVendorConnections", function (req, res) {
+    const response = {
+        content: {
+            items: [
+                {
+                    vendor: "Cisco",
+                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    connectionDate: utils.getRandomDate(),
+                    isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+                },
+                {
+                    vendor: "HP",
+                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    connectionDate: utils.getRandomDate(),
+                    isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+                },
+                {
+                    vendor: "Dell",
+                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    connectionDate: utils.getRandomDate(),
+                    isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+                }
+            ]
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false
+        }
+    };
+    setTimeout(() => {
+        res.json(response);
+    }, 2000)
+});
+
