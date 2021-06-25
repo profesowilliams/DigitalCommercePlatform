@@ -159,6 +159,7 @@ button {
 }
 
 .cmp-jump-to-top {
+	display: none;
 	box-sizing: border-box;
 	height: rem(60px);
 	width: rem(60px);
@@ -172,7 +173,7 @@ button {
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	display: inline-flex;
+	transition: all .25s;
 
 	cursor: pointer;
 	align-items: center;
@@ -183,24 +184,14 @@ button {
 		height: rem(60px);
 		width: rem(60px);
 		color: get-color(brand-blue) !important;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		text-decoration: none;
+		display: contents;
+		transition: all .25s;
 	}
 
 
 	&:hover {
 		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
-	}
-
-	&.show {
-		visibility: visible;
-		opacity: 1;
-	}
-
-	&.hide {
-		visibility: hidden;
-		opacity: 0;
 	}
 }
 
