@@ -78,6 +78,7 @@
 		color: get-color(text-mid-gray);
 		border: 1px solid get-color(brand-light-gray2);
 		min-width: rem(140px);
+		height: rem(30px);
 		&::placeholder {
 			padding-left: rem(5px);
 			font-size: $font-size-custom-xxsmall;
