@@ -41,24 +41,36 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "My Renewals Endpoint", description = "My Renewals Endpoint", order = 11)
     String myRenewalsEndpoint();
 
-    @Property(label = "Top Configurations Endpoint", description = "Top Configurations Endpoint", order = 12)
-    String topConfigurationsEndpoint();
+    @Property(label = "Top Items Endpoint", description = "Top Items Endpoint", order = 12)
+    String topItemsEndpoint();
 
-    @Property(label = "Top Quotes Endpoint", description = "Top Quotes Endpoint", order = 13)
-    String topQuotesEndpoint();
+    @Property(label = "Create Quote Endpoint", description = "Create Quote Endpoint", order = 13)
+    String createQuoteEndpoint();
 
     @Property(label = "Cart Details Endpoint", description = "Cart Details Endpoint", order = 14)
     String cartDetailsEndpoint();
 
-    @Property(label = "Saved Carts Endpoint", description = "Saved Carts Endpoint", order = 15)
+    @Property(label = "Pricing Conditions Endpoint", description = "Pricing Conditions Endpoint", order = 15)
+    String pricingConditionsEndPoint();
+
+    @Property(label = "Estimated Id List Endpoint", description = "Estimated Id List Endpoint", order = 16)
+    String estimatedIdListEndpoint();
+
+    @Property(label = "Estimated Id Details Endpoint", description = "Estimated Id Details Endpoint", order = 17)
+    String estimatedIdDetailsEndpoint();
+
+    @Property(label = "Saved Carts Endpoint", description = "Saved Carts Endpoint", order = 18)
     String savedCartsEndpoint();
 
-    @Property(label = "Quote Grid Endpoint", description = "Quote Grid Endpoint", order = 16)
+    @Property(label = "Quote Grid Endpoint", description = "Quote Grid Endpoint", order = 19)
     String quoteGridEndpoint();
 
-    @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint", order = 17)
+    @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint", order = 20)
     String orderGridEndpoint();
 
-    @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ", order = 18)
+    @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint", order = 21)
+    String quoteDetailEndpoint();
+
+    @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ", order = 22)
     String vendorConnectionEndpoint();
 }

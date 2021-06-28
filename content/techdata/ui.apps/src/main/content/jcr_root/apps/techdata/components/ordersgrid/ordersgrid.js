@@ -116,10 +116,10 @@ use(function () {
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
     }
-
-    if (properties && properties["uiServiceEndPoint"]) {
-        jsonObject["uiServiceEndPoint"] = properties["uiServiceEndPoint"];
+    if (this.uiServiceDomain != null) {
+    jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderGridEndpoint;
     }
+
     if (properties && properties["itemsPerPage"]) {
         jsonObject["itemsPerPage"]= properties["itemsPerPage"];
     }

@@ -12,9 +12,9 @@ use(function () {
 	 if (properties && properties["accountNumber"]) {
         jsonObject["accountnumberLabel"] = properties["accountNumber"];
     }
-
+    if (this.uiServiceDomain != null) {
     vendorConnectionsModalObject["uiServiceEndPoint"] = this.uiServiceDomain+this.vendorConnectionEndpoint;
-	;
+	}
     if (properties && properties["title"]) {
         vendorConnectionsModalObject["title"] = properties["title"];
     }

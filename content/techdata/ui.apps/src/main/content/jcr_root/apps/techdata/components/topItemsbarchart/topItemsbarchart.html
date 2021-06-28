@@ -1,14 +1,14 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+    <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+        <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+    </sly>
+    <sly data-sly-use.model="${'topItemsbarchart.js' @ uiServiceDomain=serviceData.uiServiceDomain,topItemsEndpoint=serviceData.topItemsEndpoint}">
 
-<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
-    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
-</sly>
-<sly data-sly-use.model="topItemsbarchart.js">
-
-    <div id="TopItemsBarChart" data-observe-mutation>
-        <div data-component="TopItemsBarChart" data-cmp-type="react" className="cmp-topConfig" data-config="${model.configJson}">
+        <div id="TopItemsBarChart" data-observe-mutation>
+            <div data-component="TopItemsBarChart" data-cmp-type="react" className="cmp-topConfig" data-config="${model.configJson}">
+            </div>
         </div>
-    </div>
- </sly>
+    </sly>
 
 
- 
+

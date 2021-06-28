@@ -6,8 +6,9 @@ use(function () {
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
-    if (properties.get("endpoint") != null) {
-        jsonObject.put("endpoint", properties.get("endpoint"));
+
+    if (this.uiServiceDomain != null) {
+    jsonObject.put("endpoint", this.uiServiceDomain+this.myDealsEndpoint);
     }
 
     return {

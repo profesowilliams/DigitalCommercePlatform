@@ -16,11 +16,6 @@
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Label"
 						name="./label"/>
-					<endpoint
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="End Point"
-						name="./endpoint"/>
 				</items>
 			</column>
 		</items>

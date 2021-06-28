@@ -16,8 +16,8 @@ use(function () {
     if (properties && properties["todayLabel"]) {
         jsonObject["todayLabel"] = properties["todayLabel"];
     }
-    if (properties && properties["uiServiceEndPoint"]) {
-        jsonObject["uiServiceEndPoint"] = properties["uiServiceEndPoint"];
+    if (this.uiServiceDomain != null) {
+    jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.myRenewalsEndpoint;
     }
     return {
         configJson: JSON.stringify(jsonObject)

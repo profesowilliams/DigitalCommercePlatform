@@ -1,10 +1,12 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+    <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+        <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+    </sly>
+    <sly data-sly-use.model="${'myorders.js' @uiServiceDomain=serviceData.uiServiceDomain,myOrdersEndpoint=serviceData.myOrdersEndpoint}">
 
-<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
-    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
-</sly>
 
-<div id="MyQuotes" data-observe-mutation>
-    <div data-component="MyOrdersWidget" data-cmp-type="react" className="cmp-mydeals-widget" data-config='{"label" : "${properties.label @ i18n}", "endpoint": "${properties.uiServiceEndPoint}"}'>
+    <div id="MyQuotes" data-observe-mutation>
+    <div data-component="MyOrdersWidget" data-cmp-type="react" className="cmp-mydeals-widget" data-config='${model.configJson}'>
     </div>
 </div>
 

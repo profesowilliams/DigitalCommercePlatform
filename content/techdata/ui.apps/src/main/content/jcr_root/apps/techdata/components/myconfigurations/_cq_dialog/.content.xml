@@ -31,13 +31,6 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Label"
                                                 name="./label"/>
-										
-											<uiService
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="UI Service End Point"
-                                                name="./uiServiceEndPoint"/>
-											
 										</items>
 									</column>
 								</items>

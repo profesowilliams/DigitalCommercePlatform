@@ -17,10 +17,9 @@ use(function () {
     if (properties && properties["subtotalLabel"]) {
         jsonObject["subtotalLabel"] = properties["subtotalLabel"];
     }
-    if (properties && properties["uiServiceEndPoint"]) {
-        jsonObject["uiServiceEndPoint"] = properties["uiServiceEndPoint"];
+     if (this.uiServiceDomain != null) {
+    jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quoteDetailEndpoint;
     }
-
     return {
         configJson: JSON.stringify(jsonObject)
     };

@@ -34,10 +34,6 @@ use(function () {
         jsonObject.put("label", properties.get("label"));
     }
 
-    if (properties.get("endpoint") != null) {
-        jsonObject.put("endpoint", properties.get("endpoint"));
-    }
-
     if (properties.get("buttonTitle") != null) {
         jsonObject.put("buttonTitle", properties.get("buttonTitle"));
     }
@@ -45,21 +41,16 @@ use(function () {
     if (properties.get("quotePreviewUrl") != null) {
         jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));
     }
-    if (properties.get("cartslistEndpoint") != null) {
-        jsonObject.put("cartslistEndpoint", properties.get("cartslistEndpoint"));
-    }
-    if (properties.get("cartdetailsEndpoint") != null) {
-        jsonObject.put("cartdetailsEndpoint", properties.get("cartdetailsEndpoint"));
-    }
-     if (properties.get("pricingConditions") != null) {
-         jsonObject.put("pricingConditions", properties.get("pricingConditions"));
+
+     if (this.uiServiceDomain != null) {
+        jsonObject.put("endpoint", this.uiServiceDomain+this.createQuoteEndpoint);
+        jsonObject.put("cartslistEndpoint", this.uiServiceDomain+this.savedCartsEndpoint);
+        jsonObject.put("cartdetailsEndpoint", this.uiServiceDomain+this.cartDetailsEndpoint);
+        jsonObject.put("pricingConditions", this.uiServiceDomain+this.pricingConditionsEndPoint);
+        jsonObject.put("estimatedIdListEndpoint", this.uiServiceDomain+this.estimatedIdListEndpoint);
+        jsonObject.put("estimatedIdDetailsEndpoint", this.uiServiceDomain+this.estimatedIdDetailsEndpoint);
         }
-     if (properties.get("estimatedIdListEndpoint") != null) {
-         jsonObject.put("estimatedIdListEndpoint", properties.get("estimatedIdListEndpoint"));
-         }
-      if (properties.get("estimatedIdDetailsEndpoint") != null) {
-         jsonObject.put("estimatedIdDetailsEndpoint", properties.get("estimatedIdDetailsEndpoint"));
-         }
+
 
     if (listValues != null) {
         jsonObject.put("optionsList", listValues);

@@ -25,10 +25,9 @@ use(function () {
         jsonObject.put("label", properties.get("label"));
     }
 
-    if (properties.get("uiServiceEndPoint") != null) {
-        jsonObject.put("endpoint", properties.get("uiServiceEndPoint"));
+    if (this.uiServiceDomain != null) {
+    jsonObject.put("endpoint", this.uiServiceDomain+this.myConfigurationsEndpoint);
     }
-
 
     if (listValues != null) {
         jsonObject.put("orderLabels", listValues);

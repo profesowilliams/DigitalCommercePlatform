@@ -1,10 +1,18 @@
-
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 
-<sly data-sly-use.model="${'createquote.js' @ multifieldName='optionsList'}" />
-<div id="CreateQuoteWidget" data-observe-mutation>
+<sly data-sly-use.model="${'createquote.js' @ multifieldName='optionsList',
+uiServiceDomain=serviceData.uiServiceDomain,
+createQuoteEndpoint=serviceData.createQuoteEndpoint,
+ savedCartsEndpoint=serviceData.savedCartsEndpoint,
+ cartDetailsEndpoint=serviceData.cartDetailsEndpoint,
+ pricingConditionsEndPoint=serviceData.pricingConditionsEndPoint ,
+ estimatedIdListEndpoint=serviceData.estimatedIdListEndpoint ,
+ estimatedIdDetailsEndpoint=serviceData.estimatedIdDetailsEndpoint}">
+
+    <div id="CreateQuoteWidget" data-observe-mutation>
     <div data-component="CreateQuote"
          data-cmp-type="react"
          className="createquotewidget"

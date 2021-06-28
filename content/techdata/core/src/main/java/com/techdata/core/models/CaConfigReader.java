@@ -44,15 +44,23 @@ public class CaConfigReader {
 
 	private String myRenewalsEndpoint;
 
-	private String topConfigurationsEndpoint;
+	private String topItemsEndpoint;
 
-	private String topQuotesEndpoint;
+	private String createQuoteEndpoint;
 
 	private String cartDetailsEndpoint;
+
+	private String pricingConditionsEndPoint;
+
+	private String estimatedIdListEndpoint;
+
+	private String estimatedIdDetailsEndpoint;
 
 	private String savedCartsEndpoint;
 
 	private String quoteGridEndpoint;
+
+	private String quoteDetailEndpoint;
 
 	private String orderGridEndpoint;
 
@@ -83,11 +91,15 @@ public class CaConfigReader {
 		myQuotesEndpoint = serviceEndPointsConfiguration.myQuotesEndpoint();
 		myDealsEndpoint = serviceEndPointsConfiguration.myDealsEndpoint();
 		myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
-		topConfigurationsEndpoint = serviceEndPointsConfiguration.topConfigurationsEndpoint();
-		topQuotesEndpoint = serviceEndPointsConfiguration.topQuotesEndpoint();
+		topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
+		createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
 		cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
+		pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();
+		estimatedIdListEndpoint = serviceEndPointsConfiguration.estimatedIdListEndpoint();
+		estimatedIdDetailsEndpoint = serviceEndPointsConfiguration.estimatedIdDetailsEndpoint();
 		savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
 		quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
+		quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
 		vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
 		orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
 		shopDomain = mcConfiguration.shopDomain();
@@ -140,16 +152,28 @@ public class CaConfigReader {
 		return myRenewalsEndpoint;
 	}
 
-	public String getTopConfigurationsEndpoint() {
-		return topConfigurationsEndpoint;
+	public String getTopItemsEndpoint() {
+		return topItemsEndpoint;
 	}
 
-	public String getTopQuotesEndpoint() {
-		return topQuotesEndpoint;
+	public String getCreateQuoteEndpoint() {
+		return createQuoteEndpoint;
 	}
 
 	public String getCartDetailsEndpoint() {
 		return cartDetailsEndpoint;
+	}
+
+	public String getPricingConditionsEndPoint() {
+		return pricingConditionsEndPoint;
+	}
+
+	public String getEstimatedIdListEndpoint() {
+		return estimatedIdListEndpoint;
+	}
+
+	public String getEstimatedIdDetailsEndpoint() {
+		return estimatedIdDetailsEndpoint;
 	}
 
 	public String getSavedCartsEndpoint() {
@@ -158,6 +182,10 @@ public class CaConfigReader {
 
 	public String getQuoteGridEndpoint() {
 		return quoteGridEndpoint;
+	}
+
+	public String getQuoteDetailEndpoint() {
+		return quoteDetailEndpoint;
 	}
 
 	public String getVendorConnectionEndpoint() {
