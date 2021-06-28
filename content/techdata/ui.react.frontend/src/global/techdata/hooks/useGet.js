@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { get } from '../../../utils/api';
 
-export function usePromise(url) {
-  const [value, setState] = useState(null);
-
+export function useGet(url) {
+  const [response, setResponse] = useState(null);
+  // hook for getting data from API, checks if component is mounted before call
   useEffect(() => {
     let isMounted = true;
     get(url)
       .then(result => {
         if (isMounted) {
-          setState(result.data);
+          setResponse(result.data);
         }
       });
     return () => {
       isMounted = false;
     };
   }, []);
-  return value;
+  return response;
 }

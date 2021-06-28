@@ -1,10 +1,10 @@
 import React from 'react';
 import Loader from '../Widgets/Loader';
 import Vendor from './Vendor';
-import { usePromise } from '../../hooks/usePromise';
+import { useGet } from '../../hooks/useGet';
 
 function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnectedLabel }) {
-	const fetchedVendors = usePromise(apiUrl)?.content?.items;
+	const fetchedVendors = useGet(apiUrl)?.content?.items;
 
 	return (
 		<section>
