@@ -46,7 +46,7 @@
     function selectPrimaryItem(event){
       var target = event.target;
       if( target.dataset.cmpClickable !== 'true') return; // avoid everything if there is no menu attached to this item
-      
+
       if( event.type === 'click' && target.href === '' )
         event.preventDefault();
       clearItems(MenuPrimary, ' li a.' + ActiveTabClass, ActiveTabClass);
@@ -55,11 +55,21 @@
       navSecondaryItems.forEach(function(n){
         if( n.dataset.cmpParent === target.dataset.cmpChildren ){
           n.classList.add(ActiveTabPanelClass);
+          preselectFirstSecondLevelItem(n);
         }else{
           n.classList.remove(ActiveTabPanelClass);
         }
       })
 
+    }
+    function preselectFirstSecondLevelItem(parentMenuItem) {
+      var selectedSecondLevelElement = parentMenuItem.querySelector(selected + MenuSecondary + ' li a.' + ActiveItemClass);
+
+      if(!selectedSecondLevelElement) {
+        var firstSubmenuElement = parentMenuItem.querySelector(selected + MenuSecondary + ' li a');
+
+        firstSubmenuElement.classList.add(ActiveItemClass);
+      }
     }
     function navMouseLeave(event){
       if( !MouseLeaveFlag ) return;
