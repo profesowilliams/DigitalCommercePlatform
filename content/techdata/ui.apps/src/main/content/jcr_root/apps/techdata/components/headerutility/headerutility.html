@@ -1,9 +1,12 @@
-	<div class="signin aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--1">
-		<sly data-sly-resource="${'signin' @ resourceType='techdata/components/signin'}" />
-	</div>
-	<div class="minicart aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--1">
-		<sly data-sly-resource="${'minicart' @ resourceType='techdata/components/minicart'}" />
-	</div>
-	<div class="languagenavigation aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--1">
-		<sly data-sly-resource="${'languagenavigation' @ resourceType='techdata/components/languagenavigation'}" />
-	</div>
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+	<div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<div class="signin headerutility" >
+	<sly data-sly-resource="${'signin' @ resourceType='techdata/components/signin'}" />
+</div>
+<div class="minicart headerutility" >
+	<sly data-sly-resource="${'minicart' @ resourceType='techdata/components/minicart'}" />
+</div>
+<div class="languagenavigation headerutility" >
+	<sly data-sly-resource="${'languagenavigation' @ resourceType='techdata/components/languagenavigation'}" />
+</div>

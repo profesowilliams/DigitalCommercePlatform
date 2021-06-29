@@ -1,3 +1,19 @@
-.headerutility > div {
-  display: inline-block;
+@import 'main';
+
+.headerutility {
+
+  float: left;
+  padding: rem(5px);
+
+  .minicart {
+    width: 10%;
+  }
+
+  .signin {
+    width: 35%
+  }
+
+  .languagenavigation {
+    width: 55%;
+  }
 }
