@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
@@ -25,6 +26,7 @@ using RenewalsService;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,13 +45,16 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly ILogger<AccountService> _logger;
         private static readonly Random getrandom = new Random();
         private readonly IRenewalsService _renewalsService;
+        private readonly IMapper _mapper;
+
 
         public AccountService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
-            ILogger<AccountService> logger, IRenewalsService renewalsService, IUIContext uiContext)
+            ILogger<AccountService> logger, IMapper mapper, IRenewalsService renewalsService, IUIContext uiContext)
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
+            _mapper = mapper;
             _configurationsServiceUrl = appSettings.GetSetting("App.Quote.Url");
             _dealsServiceUrl = appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
@@ -194,61 +199,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(response);
         }
 
-        public async Task<ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request)
+        public async Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
-            //Returning dummy data for now as App-Service is not yet ready
-            var url = _quoteServiceURL
-                    .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready
-                    .SetQueryParams(new
-                    {
-                    });
+            var customerId = _uiContext.User?.ActiveCustomer.CustomerNumber;
+            TextInfo setTextCase = CultureInfo.CurrentCulture.TextInfo;
 
-            //using var getQuoteRequestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Sortby = string.IsNullOrWhiteSpace(request.Sortby) ? "Price" : request.Sortby;
+            request.SortDirection = string.IsNullOrWhiteSpace(request.SortDirection) ? "desc" : request.SortDirection;
+            bool sortDirection = request.SortDirection.ToLower() == "asc" ? true : false;
 
-            //var apiQuoteSummaryClient = _clientFactory.CreateClient("apiServiceClient");
-
-            //var response = await apiProductSummaryClient.SendAsync(getQuoteRequestMessage).ConfigureAwait(false);
-            //response.EnsureSuccessStatusCode();
-
-            //var getQuoteResponse = await response.Content.ReadAsAsync<IEnumerable<OpenResellerItems>>().ConfigureAwait(false);
-            // return getQuoteResponse;
-
-            var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 5; i++)
-            {
-                OpenResellerItems openItem = new OpenResellerItems();
-                var randomNumber = GetRandomNumber(100, 600);
-                openItem.EndUserName = "End User " + randomNumber.ToString();
-                openItem.Amount = (randomNumber * 100);
-                openItem.CurrencyCode = "USD";
-                openItem.CurrencySymbol = "$";
-                openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
-                openItems.Add(openItem);
-            }
-
-            openItems = AddSequenceNumber(openItems);
-
-            var response = new ActiveOpenQuotesModel
-            {
-                Items = openItems
-            };
-            return await Task.FromResult(response);
+            var quoteURL = _quoteServiceURL.AppendPathSegment("find").SetQueryParams("CustomerNumber=" + customerId+ "&SortBy="+ setTextCase.ToTitleCase(request.Sortby)+ "&SortAscending=" + sortDirection+ "&pageSize=" +request.Top);
+            var topQuotes = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
+            return topQuotes;
         }
 
-        public async Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
+        public async Task<QuoteStatistics> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
         {
-            var MyQuotes = new MyQuotes();
-            {
-                var randomNumber = GetRandomNumber(100, 600);
-                MyQuotes.QuoteToOrder = "5:2";
-                MyQuotes.Open = GetRandomNumber(10, 60);
-                MyQuotes.Converted = string.Format("{0:N2}", (randomNumber / 100)) + " %";
-                MyQuotes.ActiveQuoteValue = (randomNumber * 350);
-                MyQuotes.CurrencyCode = "USD";
-                MyQuotes.CurrencySymbol = "$";
-                MyQuotes.FormattedAmount = string.Format("{0:N2}", MyQuotes.ActiveQuoteValue);
-            }
-            return await Task.FromResult(MyQuotes);
+            var quoteURL = _quoteServiceURL.AppendPathSegment("/GetQuoteStatistics"); 
+            var MyQuotes = await _middleTierHttpClient.GetAsync<QuoteStatistics>(quoteURL);
+            return MyQuotes;
         }
 
         public async Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract)

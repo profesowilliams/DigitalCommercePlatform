@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,11 +19,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
         public class Request : IRequest<ResponseBase<Response>>
         {
             public int? Top { get; set; }
+            public string SortDirection { get; set; } = "desc";
+            public string Sortby{ get; set; }
         }
 
         public class Response
         {
-            public ActiveOpenQuotesModel Summary { get; set; }
+            public IEnumerable<OpenResellerItems> Summary { get; set; }
         }
 
         public class GetTopQuotesQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -40,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                ActiveOpenQuotesModel quotes = await _accountQueryService.GetTopQuotesAsync(request);
+                FindResponse<IEnumerable<QuoteModel>> quotes = await _accountQueryService.GetTopQuotesAsync(request);
                 var getQuotes = _mapper.Map<Response>(quotes);
                 return new ResponseBase<Response> { Content = getQuotes };
             }

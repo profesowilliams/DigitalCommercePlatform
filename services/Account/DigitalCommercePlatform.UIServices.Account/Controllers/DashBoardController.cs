@@ -77,9 +77,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("topQuotes")]
-        public async Task<IActionResult> GetTopQuotes([FromQuery] int top)
+        public async Task<IActionResult> GetTopQuotes([FromQuery] int top,string sortby,string sortDirection)
         {
-            var request = new GetTopQuotes.Request { Top = top };
+            var request = new GetTopQuotes.Request { Top = top,Sortby=sortby,SortDirection=sortDirection };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)

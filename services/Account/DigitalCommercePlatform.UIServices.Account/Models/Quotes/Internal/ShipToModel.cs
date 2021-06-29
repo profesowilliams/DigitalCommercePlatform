@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Account.Models.Quote.Internal
+{
+    [ExcludeFromCodeCoverage]
+    public class ShipToModel
+    {
+        public string Name { get; set; }
+    }
+}

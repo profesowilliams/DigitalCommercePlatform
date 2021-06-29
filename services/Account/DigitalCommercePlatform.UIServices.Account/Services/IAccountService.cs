@@ -28,8 +28,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
         Task <ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
-        Task<MyQuotes> MyQuotesSummaryAsync(MyQuoteDashboard.Request request);
-        Task <ActiveOpenQuotesModel> GetTopQuotesAsync(GetTopQuotes.Request request);
+        Task<QuoteStatistics> MyQuotesSummaryAsync(MyQuoteDashboard.Request request);
+        Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request);
         Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract);
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
         Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
