@@ -122,7 +122,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     }
 
-    private JsonObject buildShopJSON() {
+    public JsonObject buildShopJSON() {
 
         JsonObject shopJSON  = new JsonObject();
         shopJSON.add("shopHeader-menuItemsJson", combinedMenuItemsJson());
