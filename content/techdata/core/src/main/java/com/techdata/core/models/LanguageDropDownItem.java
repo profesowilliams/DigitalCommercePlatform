@@ -34,15 +34,15 @@ public class LanguageDropDownItem  {
 
 
         Iterator<Page> it = page.listChildren(new PageFilter());
-        while (it.hasNext()) {
-            Page nextPage = it.next();
-            if (level - 1 > 0)
-            {
-                childPages.add(new LanguageDropDownItem(nextPage, active, level - 1));
-            }else{
-                childPages.add(new LanguageDropDownItem(nextPage, active));
+        if(it != null) {
+            while (it.hasNext()) {
+                Page nextPage = it.next();
+                if (level - 1 > 0) {
+                    childPages.add(new LanguageDropDownItem(nextPage, active, level - 1));
+                } else {
+                    childPages.add(new LanguageDropDownItem(nextPage, active));
+                }
             }
-
         }
         this.children = childPages;
     }

@@ -58,6 +58,8 @@ public class TabItem {
      */
     static final String NN_ICON_SVG = "cq:icon.svg";
 
+    public TabItem(){}
+
     public TabItem(SlingHttpServletRequest request, Resource resource) {
         String translationContext = null;
         String titleI18n = null;

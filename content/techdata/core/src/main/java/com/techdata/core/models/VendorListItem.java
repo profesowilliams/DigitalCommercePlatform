@@ -40,6 +40,8 @@ public class VendorListItem implements ListItem {
         return vendorPageLabel;
     }
 
+    public VendorListItem(){}
+
     public VendorListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel) {
         this.title = title;
         this.overview = overview;

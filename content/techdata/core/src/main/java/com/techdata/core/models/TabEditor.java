@@ -34,7 +34,7 @@ public class TabEditor {
     private List<TabItem> items;
 
     @PostConstruct
-    private void initModel() {
+    public void initModel() {
         readChildren();
     }
 
