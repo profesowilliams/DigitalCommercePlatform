@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { get } from '../../../utils/api';
 
+// hook for getting data from API on component init, checks if component is mounted before call
 export function useGet(url) {
   const [response, setResponse] = useState(null);
-  // hook for getting data from API, checks if component is mounted before call
   useEffect(() => {
     let isMounted = true;
     get(url)

@@ -15,6 +15,7 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 						{fetchedVendors.map((vendor, index) => (
 							<Vendor
 								key={index}
+								apiUrl={apiUrl}
 								fetchedVendor={vendor}
 								vendorsConfig={vendors}
 								connectedLabel={connectedLabel}

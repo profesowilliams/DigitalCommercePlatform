@@ -140,9 +140,15 @@
 			& .icon {
 				margin-left: rem(5px);
 				color: get-color('td-primary-blue');
+				& i:before {
+					display: inline-block;
+				}
 			}
-			& .expanded svg {
-				transform: rotate(90deg);
+			& .expanded {
+				& svg,
+				i:before {
+					transform: rotate(90deg);
+				}
 			}
 		}
 		&__content {
