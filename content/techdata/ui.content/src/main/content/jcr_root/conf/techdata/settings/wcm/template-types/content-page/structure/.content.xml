@@ -12,7 +12,7 @@
             <experiencefragment-header
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="techdata/components/experiencefragment"
-                fragmentVariationPath="/content/experience-fragments/techdata/language-masters/en/site/header/master"/>
+                fragmentVariationPath=""/>
             <container
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="techdata/components/container"
@@ -21,7 +21,7 @@
             <experiencefragment-footer
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="techdata/components/experiencefragment"
-                fragmentVariationPath="/content/experience-fragments/techdata/language-masters/en/site/footer/master"/>
+                fragmentVariationPath=""/>
         </root>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
