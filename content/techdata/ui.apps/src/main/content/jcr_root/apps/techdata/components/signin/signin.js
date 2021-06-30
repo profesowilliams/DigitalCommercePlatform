@@ -40,9 +40,10 @@ use(function () {
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
-    if (this.uiServiceDomain != null) {
-    jsonObject.put("authenticationURL", this.uiServiceDomain+this.authorizationPageURL);
-
+   if (this.authorizationPageURL != null) {
+    jsonObject.put("authenticationURL", this.authorizationPageURL);
+    }
+if (this.uiServiceDomain != null) {
     jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
 
 }
