@@ -45,7 +45,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _appConfigurationUrl = _appSettings.GetSetting("App.Configuration.Url");
         }
 
-        public async Task<List<Deal>> GetDeals(GetDeals.Request request)
+        private Models.Deals.Internal.FindModel PrepareDealsFindAppServiceRequest(GetDeals.Request request)
+        {
+            var result = _mapper.Map<Models.Deals.Internal.FindModel>(request.Criteria);
+            return result;
+        }
+
+        private async Task<List<Deal>> MapAppResponseToDeals(/*FindResponse<AppServiceDeal> dealsFindResponse*/)
+        {
+            //var data = dealsFindResponse.Data;
+            //var result = _mapper.Map<List<Deal>>(data);
+            var result = GenerateDeals();
+            return await Task.FromResult(result);
+        }
+
+        private static List<Deal> GenerateDeals()
         {
             var lstDeals = new List<Deal>();
             for (int i = 0; i < 30; i++)
@@ -62,7 +76,20 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 lstDeals.Add(objDeal);
             }
 
-            return await Task.FromResult(lstDeals.ToList());
+            return lstDeals.ToList();
+        }
+
+        public async Task<List<Deal>> GetDeals(GetDeals.Request request)
+        {
+            var appServiceRequest = PrepareDealsFindAppServiceRequest(request);
+            var dealsFindUrl = _appConfigurationUrl
+                .AppendPathSegment("find") //change it to deals related segment
+                .SetQueryParams(appServiceRequest);
+            _ = dealsFindUrl + string.Empty;
+            //var dealsFindResponse = await _middleTierHttpClient
+            //    .GetAsync<FindResponse<AppServiceDeal>>(dealsFindUrl);
+            var result = await MapAppResponseToDeals(/*dealsFindResponse*/);
+            return result;
         }
 
         public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
@@ -70,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var lstMaterials = new List<MaterialInformation>();
             for (int i = 1; i < 16; i++)
             {
-                MaterialInformation material = new MaterialInformation();
+                MaterialInformation material = new();
                 material.Allowance = i % 2 == 0 ? GetRandomNumber(50, 10000).ToString() + ".65" : GetRandomNumber(10, 40).ToString() + ".36";
                 material.AllowanceType = i % 2 == 0 ? "% OFF LIST PRICE" : i % 5 == 0 ? "$ OFF LIST PRICE" : "";
                 material.MaximumQuantityPerCustomer = GetRandomNumber(50, 1000);
@@ -83,16 +110,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 material.TDPartNumber = "1227948" + i;
                 lstMaterials.Add(material);
             }
-            var objResponse = new DealsDetailModel();
-
-            objResponse.EndUserName = "OPEN TO ALL END USERS";
-            objResponse.Vendor = "ERGOTRON INC";
-            objResponse.VendorBidNumber = "3072898";
-            objResponse.Reference = "0002989968";
-            objResponse.ReferenceNumber = "028";
-            objResponse.TotalResultCount = lstMaterials.Count();
-            objResponse.Prodcuts = lstMaterials;
-            objResponse.InvalidTDPartNumbers = null;
+            var objResponse = new DealsDetailModel
+            {
+                EndUserName = "OPEN TO ALL END USERS",
+                Vendor = "ERGOTRON INC",
+                VendorBidNumber = "3072898",
+                Reference = "0002989968",
+                ReferenceNumber = "028",
+                TotalResultCount = lstMaterials.Count(),
+                Prodcuts = lstMaterials,
+                InvalidTDPartNumbers = null
+            };
 
             return await Task.FromResult(objResponse);
         }
@@ -107,22 +135,22 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             try
             {
                 var appServiceRequest = PrepareConfigurationsAppServiceRequest(request);
-                var findConfigurationUrl = _appConfigurationUrl
+                var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
 
                 if (appServiceRequest.Details)
                 {
-                    var findConfigurationResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<DetailedDto>>(findConfigurationUrl);
-                    var result = MapAppResponseToConfigurations(findConfigurationResponse);
+                    var configurationFindResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<DetailedDto>>(configurationFindUrl);
+                    var result = MapAppResponseToConfigurations(configurationFindResponse);
                     return result;
                 }
                 else
                 {
-                    var findConfigurationResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<SummaryDto>>(findConfigurationUrl);
-                    var result = MapAppResponseToConfigurations(findConfigurationResponse);
+                    var configurationFindResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
+                    var result = MapAppResponseToConfigurations(configurationFindResponse);
                     return result;
                 }
             }

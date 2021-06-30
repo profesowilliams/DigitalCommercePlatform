@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
+namespace DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal
 {
     [ExcludeFromCodeCoverage]
     public class FindModel
@@ -11,8 +11,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public string DealId { get; set; }
         public string VendorBid { get; set; }
         public string VendorName { get; set; }
-        public PricingCondition Pricing { get; set; }
+        public string Pricing { get; set; }
         public string EndUserName { get; set; }
+        public string DealTyp { get; set; }
         public string Market { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
