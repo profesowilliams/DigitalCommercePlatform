@@ -196,7 +196,7 @@ use(function () {
     }
 
 	if (vendorDropdownData != null) {
-        searchCriteriaData["vendorDropdown"] = vendorDropdownData;
+        searchCriteriaData["vendorsDropdown"] = vendorDropdownData;
     }
 
     if (searchCriteriaData != null) {
