@@ -27,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request);
         Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
-        Task <ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
+        Task <TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
         Task<QuoteStatistics> MyQuotesSummaryAsync(MyQuoteDashboard.Request request);
         Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request);
         Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract);

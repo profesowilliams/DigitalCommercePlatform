@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +18,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public int? Top { get; set; }
+            public int? Top { get; init; }
+            public string SortDirection { get; init; }
+            public string SortBy { get; init; }
         }
 
         public class Response
@@ -41,9 +45,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                ActiveOpenConfigurationsModel configurations = await _accountService.GetTopConfigurationsAsync(request);
-                var getConfigurations = _mapper.Map<Response>(configurations);
-                return new ResponseBase<Response> { Content = getConfigurations };
+                var topConfigurations = await _accountService.GetTopConfigurationsAsync(request);
+
+                var openResellerItems = topConfigurations?.Data?.Select(i => new OpenResellerItems
+                {
+                    CurrencyCode = "USD",
+                    CurrencySymbol = "$",
+                    Amount = i.TotalListPrice,
+                    FormattedAmount = string.Format("{0:N2}", i.TotalListPrice),
+                    EndUserName = i.EndUser?.Name ?? i.Source?.Id ?? string.Empty
+                }).ToList();
+
+                var activeOpenConfigurationsModel = new Response { Summary = new ActiveOpenConfigurationsModel { Items = openResellerItems } };
+                return new ResponseBase<Response> { Content = activeOpenConfigurationsModel };
             }
         }
         public class Validator : AbstractValidator<Request>

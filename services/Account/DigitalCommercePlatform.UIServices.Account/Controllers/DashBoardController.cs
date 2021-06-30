@@ -92,9 +92,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("topConfigurations")]
-        public async Task<IActionResult> GetTopConfigurations([FromQuery] int top)
+        public async Task<IActionResult> GetTopConfigurations([FromQuery] int? top, string sortBy, string sortDirection)
         {
-            var request = new GetTopConfigurations.Request { Top = top };
+            var request = new GetTopConfigurations.Request { Top = top, SortBy = sortBy, SortDirection = sortDirection };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)

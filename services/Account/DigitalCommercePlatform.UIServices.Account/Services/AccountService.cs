@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _mapper = mapper;
-            _configurationsServiceUrl = appSettings.GetSetting("App.Quote.Url");
+            _configurationsServiceUrl = appSettings.GetSetting("App.Configuration.Url");
             _dealsServiceUrl = appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
             _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
@@ -175,28 +175,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return await Task.FromResult(actionItems);
         }
 
-        public async Task<ActiveOpenConfigurationsModel> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
+        public async Task<TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
         {
-            var openItems = new List<OpenResellerItems>();
-            for (int i = 0; i < 5; i++)
-            {
-                OpenResellerItems openItem = new OpenResellerItems();
-                var randomNumber = GetRandomNumber(100, 600);
-                openItem.EndUserName = "End User " + randomNumber.ToString();
-                openItem.Amount = (randomNumber * 100);
-                openItem.CurrencyCode = "USD";
-                openItem.CurrencySymbol = "$";
-                openItem.FormattedAmount = string.Format(openItem.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", openItem.Amount);
-                openItems.Add(openItem);
-            }
+            var customerId = _uiContext.User?.ActiveCustomer?.CustomerNumber;
 
-            openItems = AddSequenceNumber(openItems);
+            var url = _configurationsServiceUrl.AppendPathSegment("find")
+                        .SetQueryParams(new
+                        {
+                            CustomerNumber = customerId,
+                            Details = false,
+                            SortBy = string.IsNullOrWhiteSpace(request.SortBy) ? "TotalListPrice" : request.SortBy,
+                            SortByAscending = request.SortDirection?.ToLower() == "asc",
+                            Page = 1,
+                            PageSize = request.Top
+                        });
 
-            var response = new ActiveOpenConfigurationsModel
-            {
-                Items = openItems
-            };
-            return await Task.FromResult(response);
+            var topConfigurationDto = await _middleTierHttpClient.GetAsync<TopConfigurationDto>(url);
+            return topConfigurationDto;
         }
 
         public async Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request)
@@ -271,7 +266,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 var salesOrg = _uiContext.User.ActiveCustomer?.System == "2" ? "0100" : string.Empty;
 
                 if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria & t.SalesOrganization == salesOrg).ToList(); 
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria && t.SalesOrganization == salesOrg).ToList(); 
                 else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
                     response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); 
                 else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)

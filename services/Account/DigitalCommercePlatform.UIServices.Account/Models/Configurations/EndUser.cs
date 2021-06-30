@@ -1,0 +1,12 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Account.Models.Configurations
+{
+    [ExcludeFromCodeCoverage]
+
+    public class EndUser
+    {
+        public string Name { get; set; }
+
+    }
+}
