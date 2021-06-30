@@ -2,32 +2,13 @@ import React, { useState, useRef } from 'react';
 import Grid from '../Grid/Grid';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
+import useGridFiltering from '../../hooks/useGridFiltering';
 import SearchCriteria from '../SearchCriteria/SearchCriteria';
 import OrdersGridSearch from './OrdersGridSearch';
 
 function OrdersGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
-	const filter = useRef(null);
-	const resetCallback = useRef(null);
-
-	function onAfterGridInit(config) {
-		resetCallback.current = () => {
-			config.gridResetRequest();
-		};
-	}
-
-	function onQueryChanged(query) {
-		query ? (filter.current = query.queryString) : (filter.current = null);
-		if (resetCallback.current) {
-			resetCallback.current();
-		}
-	}
-
-	async function requestInterceptor(request) {
-		const url = filter?.current ? request.url + filter.current : request.url;
-		let response = await request.get(url);
-		return response;
-	}
+	const filteringExtension = useGridFiltering();
 
 	const [modal, setModal] = useState(null);
 
@@ -235,15 +216,15 @@ function OrdersGrid(props) {
 				<SearchCriteria
 					Filters={OrdersGridSearch}
 					componentProp={componentProp.searchCriteria ?? { title: 'Filter Orders' }}
-					onSearchRequest={onQueryChanged}
-					onClearRequest={onQueryChanged}
+					onSearchRequest={filteringExtension.onQueryChanged}
+					onClearRequest={filteringExtension.onQueryChanged}
 				></SearchCriteria>
 				<Grid
 					columnDefinition={columnDefs}
 					options={options}
 					config={componentProp}
-					onAfterGridInit={(config) => onAfterGridInit(config)}
-					requestInterceptor={(request) => requestInterceptor(request)}
+					onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
+					requestInterceptor={(request) => filteringExtension.requestInterceptor(request)}
 				></Grid>
 			</div>
 			{modal}

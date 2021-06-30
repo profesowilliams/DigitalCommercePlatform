@@ -1,8 +1,13 @@
 import React from 'react';
 import Grid from '../Grid/Grid';
+import useGridFiltering from '../../hooks/useGridFiltering';
+import SearchCriteria from '../SearchCriteria/SearchCriteria';
+import QuotesGridSearch from './QuotesGridSearch';
 
 function QuotesGrid(props) {
 	const componentProp = JSON.parse(props.componentProp);
+	const filteringExtension = useGridFiltering();
+
 	const { spaDealsIdLabel } = componentProp;
 
 	const getDateTransformed = (dateUTC) => {
@@ -107,7 +112,19 @@ function QuotesGrid(props) {
 	return (
 		<section>
 			<div className='cmp-quotes-grid'>
-				<Grid columnDefinition={columnDefs} options={options} config={componentProp}></Grid>
+				<SearchCriteria
+					Filters={QuotesGridSearch}
+					componentProp={componentProp.searchCriteria ?? { title: 'Filter Quotes' }}
+					onSearchRequest={filteringExtension.onQueryChanged}
+					onClearRequest={filteringExtension.onQueryChanged}
+				></SearchCriteria>
+				<Grid
+					columnDefinition={columnDefs}
+					options={options}
+					config={componentProp}
+					onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
+					requestInterceptor={(request) => filteringExtension.requestInterceptor(request)}
+				></Grid>
 			</div>
 		</section>
 	);

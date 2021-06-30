@@ -3,12 +3,13 @@ import QueryInput from '../Widgets/QueryInput';
 import SimpleDropDown from '../Widgets/SimpleDropDown';
 import isNotEmpty from '../../helpers/IsNotNullOrEmpty';
 
-function OrdersGridSearch({ componentProp, onQueryChanged }) {
+function QuotesGridSearch({ componentProp, onQueryChanged }) {
 	const defaultKeywordDropdown = {
 		label: 'Keyword',
 		items: [
-			{ key: 'id', value: 'TD Order #' },
-			{ key: 'customerPO', value: 'Customer PO' },
+			{ key: 'quoteIdFilter', value: 'TD Quote ID' },
+			{ key: 'createdBy', value: 'End User Name' },
+			{ key: 'configID', value: 'Deal ID' },
 		],
 	};
 
@@ -76,4 +77,4 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 	);
 }
 
-export default OrdersGridSearch;
+export default QuotesGridSearch;
