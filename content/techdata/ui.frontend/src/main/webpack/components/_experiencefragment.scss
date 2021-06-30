@@ -1,23 +1,49 @@
 .cmp-experiencefragment {}
 // .cmp-experiencefragment--<name> {}
 
+.experiencefragment {
+    &.cmp-experiencefragment--header {
+        z-index: 1030;
+        position: relative;
+        max-height: 80px;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding-left: 0px;
+        padding-right: 0px;
 
-.experiencefragment.cmp-experiencefragment--header {
-    z-index: 1030;
-    position: relative;
-    max-height: 80px;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding-left: 0px;
-    padding-right: 0px;
+        .search {
+            margin-top: 17px;
+        }
 
-    .search {
-        margin-top: 17px;
-    }
+        .button {
+            margin-top: 17px;
+        }
 
-    .button {
-        margin-top: 17px;
+        .cmp-header--logo-small {
+            width: 27px;
+            height: auto;
+            object-fit: cover;
+            display: none;
+        }
+
+        // hide language switcher and others on lower resolution
+        @include tablet {
+            // this classname 'button' is too generic. Use language-switcher-btn or 
+            // something similar
+            .button,
+            .megamenu,
+            .cmp-search--dark-blue,
+            .signin {
+                display: none;
+            }
+        }
+
+        @include desktop {
+            .cmp-td-hamburgerMenu,
+            .cmp-hamburger-container {
+                display: none;
+            }
+        }
     }
 }
-
