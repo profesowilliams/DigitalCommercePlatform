@@ -2,6 +2,11 @@
 @import '../../../site/variables';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+// Ported from ui.frontend/src/main/webpack/components/_icons.scss
+.info-icon {
+    color: get-color(brand-light-blue);
+}
+
 .cmp-td-quote-subtotal {
     display: flex;
     // flex-direction: column;

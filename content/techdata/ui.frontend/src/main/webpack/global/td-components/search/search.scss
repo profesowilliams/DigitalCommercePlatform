@@ -93,3 +93,81 @@
         background-color: #ccc;
     }
 }
+
+// ported from ui.frontend/src/main/webpack/components/_search.scss
+// TODO: Merge common styles together 
+
+@mixin cmp-search__input {
+	border: 1px solid #000c21;
+	border-radius: unset;
+	&::placeholder {
+		font-style: normal;
+	}
+}
+
+.cmp-search--dark-blue {
+	& .cmp-search__input {
+		@include cmp-search__input;
+	}
+	& .cmp-search__icon {
+		color: #21314d;
+	}
+}
+.cmp-search--light-blue {
+	& .cmp-search__input {
+		@include cmp-search__input;
+	}
+	& .cmp-search__icon {
+		color: #02b8dc;
+	}
+}
+.cmp-search--grey {
+	& .cmp-search__input {
+		@include cmp-search__input;
+	}
+	& .cmp-search__icon {
+		color: #979797;
+	}
+}
+.cmp-search--white {
+	& .cmp-search__input {
+		@include cmp-search__input;
+	}
+	& .cmp-search__icon {
+		color: #ffffff;
+	}
+}
+//default view
+.cmp-search__field {
+	height: 1.97em;
+	display: flex;
+}
+.cmp-search__icon {
+	background-image: unset;
+	right: 0.8rem;
+	left: unset;
+}
+.cmp-search__input {
+	border: 1px solid lightgray;
+	outline: none;
+	&::placeholder {
+		font-style: normal;
+		font-family: 'Open Sans';
+		font-size: 0.84em;
+		font-weight: 300;
+		letter-spacing: 0;
+		color: #153B51;
+	}
+}
+.cmp-search__loading-indicator {
+	right: 0.8rem;
+	left: unset;
+}
+.cmp-search__clear {
+	display: none;
+}
+.cmp-search__clear-icon {
+	left: 0.5rem;
+	right: unset;
+}
+

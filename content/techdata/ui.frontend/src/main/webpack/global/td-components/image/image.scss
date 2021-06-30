@@ -1,3 +1,7 @@
+// .dp-figure ported from ui.frontend/src/main/webpack/components/_image.scss
+// TODO: Cleanup important with proper CSS specificity, correct indentation.
+
+.dp-figure,
 .cmp-image {
 	margin: 0;
 	&--spacing-header {
