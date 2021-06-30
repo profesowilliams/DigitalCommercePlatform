@@ -15,7 +15,7 @@ function Vendor({ apiUrl, fetchedVendor, vendorsConfig, connectedLabel, disconne
 		//V1/VendorDisconnect?Vendor={Vendor}
 		const url = apiUrl.replace('getVendorConnections', 'vendorDisconnect');
 		try {
-			await get(get(url + `?vendor=${vendor}`));
+			await get(url + `?vendor=${vendor}`);
 			return true;
 		} catch (e) {
 			console.error(`${vendor} disconnect failed:`);
@@ -62,7 +62,7 @@ function Vendor({ apiUrl, fetchedVendor, vendorsConfig, connectedLabel, disconne
 	}, [vendorToggled]);
 
 	useEffect(() => {
-		if (mounted & error) {
+		if (mounted && error) {
 			setVendorToggled(!vendorToggled);
 		}
 	}, [error]);
