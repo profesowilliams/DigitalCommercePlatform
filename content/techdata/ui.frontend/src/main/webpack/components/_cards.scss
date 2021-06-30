@@ -1,3 +1,4 @@
+@import "main";
 .cmp-teaser,
 .dp-teaser {
     &__card {
@@ -11,16 +12,16 @@
             min-height: rem(297px);
             background-color: get-color(brand-white);
             background-clip: border-box;
-            color: get-color(text-mid-gray) !important;
+            color: get-color(text-dark-grey) !important;
             cursor: pointer;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
 
-            .cmp-teaser__image img {
-                border-color: get-color(brand-blue) !important;
-                filter: grayscale(100%);
-                opacity: 0.15;
-            }
+          .cmp-teaser__image img {
+            border-color: get-color(brand-blue) !important;
+            filter: grayscale(100%);
+            opacity: 0.15;
+          }
             &:hover {
                 color: get-color(brand-blue) !important;
                 cursor: pointer;
@@ -57,7 +58,7 @@
                 &-link {
                     text-decoration: none;
                     line-height: 1.5rem;
-                    color: get-color(text-dark-gray);
+                    color: get-color(text-dark-grey);
                     font-weight: 300;
                     -webkit-font-smoothing: antialiased;
                     -moz-osx-font-smoothing: grayscale;
@@ -77,7 +78,6 @@
                 }
             }
             &__description {
-                // flex: 1 1 auto;
                 padding: 0 1.5rem;
                 word-wrap: break-word;
                 text-overflow: ellipsis;
@@ -97,17 +97,15 @@
                 }
             }
         }
-
         &--aboutus {
             padding: 3.18rem 0.5rem;
             .cmp-teaser {
-                box-shadow: inset rem(-1px) 0 0 0 get-color(brand-light-gray);
+                box-shadow: unset;
                 position: relative;
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
-                min-height: rem(297px);
-                background-color: get-color(brand-white);
+                min-height: rem(100px);
                 background-clip: border-box;
                 color: get-color(text-dark-grey) !important;
                 cursor: pointer;
@@ -115,10 +113,11 @@
                     color: get-color(brand-blue) !important;
                     cursor: pointer;
                     .cmp-teaser__title-link {
-                        color: get-color(brand-blue) !important;
+                        color: get-color(brand-white) !important;
                     }
                     .cmp-teaser__image img {
                         border-color: get-color(brand-blue) !important;
+                        filter: grayscale(0%);
                     }
                 }
 
@@ -141,7 +140,7 @@
                     &-link {
                         text-decoration: none;
                         line-height: 1.5rem;
-                        color: get-color(text-dark-grey);
+                        color: get-color(brand-white);
                     }
                 }
                 &__image {

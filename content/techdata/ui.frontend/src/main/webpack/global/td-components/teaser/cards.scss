@@ -11,21 +11,24 @@
 			min-height: rem(297px);
 			background-color: get-color(brand-white);
 			background-clip: border-box;
-			color: get-color(text-mid-gray) !important;
+			color: get-color(text-dark-grey) !important;
 			cursor: pointer;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
-      
+
 			.cmp-teaser__image img {
-			  border-color: get-color(brand-blue) !important;
-			  filter: grayscale(100%);
-			  opacity: 0.15;
+				border-color: get-color(brand-blue) !important;
+				filter: grayscale(100%);
+				opacity: 0.15;
 			}
 			&:hover {
 				color: get-color(brand-blue) !important;
 				cursor: pointer;
 				.cmp-teaser__title-link {
 					color: get-color(brand-blue) !important;
+					font-weight: 400;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
 				}
 				.cmp-teaser__image img {
 					border-color: get-color(brand-blue) !important;
@@ -54,7 +57,10 @@
 				&-link {
 					text-decoration: none;
 					line-height: 1.5rem;
-					color: get-color(text-mid-gray);
+					color: get-color(text-dark-grey);
+					font-weight: 300;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
 				}
 			}
 			&__image {
@@ -71,7 +77,6 @@
 				}
 			}
 			&__description {
-				// flex: 1 1 auto;
 				padding: 0 1.5rem;
 				word-wrap: break-word;
 				text-overflow: ellipsis;
@@ -88,6 +93,71 @@
 					-webkit-line-clamp: unset !important;
 					display: block !important;
 					overflow: unset !important;
+				}
+			}
+		}
+		&--aboutus {
+			padding: 3.18rem 0.5rem;
+			.cmp-teaser {
+				box-shadow: unset;
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				min-width: 0;
+				min-height: rem(100px);
+				background-clip: border-box;
+				color: get-color(text-dark-grey) !important;
+				cursor: pointer;
+				&:hover {
+					color: get-color(brand-blue) !important;
+					cursor: pointer;
+					.cmp-teaser__title-link {
+						color: get-color(brand-white) !important;
+					}
+					.cmp-teaser__image img {
+						border-color: get-color(brand-blue) !important;
+						filter: grayscale(0%);
+					}
+				}
+
+				&__content {
+					display: flex;
+					flex-grow: 1;
+					flex-direction: column;
+					justify-content: space-between;
+				}
+				&__title {
+					text-align: center;
+					min-height: 4.375rem;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					font-size: 1.31rem;
+					margin: 0;
+					line-height: 1.5rem;
+					color: #fff;
+					&-link {
+						text-decoration: none;
+						line-height: 1.5rem;
+						color: get-color(brand-white);
+					}
+				}
+				&__image {
+					position: relative;
+					margin-bottom: 4.625rem;
+
+					img {
+						border-radius: 50%;
+						width: 6.62rem;
+						height: 6.62rem;
+						position: absolute;
+						left: 50%;
+						top: 0;
+						transform: translateX(-50%) translateY(-33%);
+					}
+				}
+				&__description {
+					display: none;
 				}
 			}
 		}
