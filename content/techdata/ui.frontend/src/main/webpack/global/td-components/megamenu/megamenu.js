@@ -125,7 +125,9 @@ import { hasSomeParentTheClass } from '../../../common-utils/js/helper';
       if(!selectedSecondLevelElement) {
         var firstSubmenuElement = parentMenuItem.querySelector(selected + MenuSecondary + ' li a');
 
-        firstSubmenuElement.classList.add(ActiveItemClass);
+        if (firstSubmenuElement) {
+          firstSubmenuElement.classList.add(ActiveItemClass);
+        }
       }
     }
     function navMouseLeave(event){
