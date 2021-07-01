@@ -32,10 +32,10 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="DigitalCommercePlatform.UIServices.Common.Cart" Version="2021.6.11.14" />
-    <PackageReference Include="DigitalFoundation.Common" Version="5.1.19" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.19" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.19" />
+    <PackageReference Include="DigitalCommercePlatform.UIServices.Common.Cart" Version="2021.6.28.1" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.1.33" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.33" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.33" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="5.0.6" />
