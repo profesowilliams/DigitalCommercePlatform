@@ -4,7 +4,15 @@ import Vendor from './Vendor';
 import { useGet } from '../../hooks/useGet';
 
 function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnectedLabel }) {
-	const fetchedVendors = useGet(apiUrl)?.content?.items;
+	const ENDPOINTS = {
+		VendorDisconnect: apiUrl + '/VendorDisconnect',
+		VendorPortalLogin: apiUrl + '/VendorPortalLogin',
+		VendorRefreshToken: apiUrl + '/VendorRefreshToken',
+		GetValidAccessToken: apiUrl + '/GetValidAccessToken',
+		GetVendorConnections: apiUrl + '/GetVendorConnections',
+	};
+
+	const fetchedVendors = useGet(ENDPOINTS.GetVendorConnections)?.content?.items;
 
 	return (
 		<section>
@@ -15,7 +23,7 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 						{fetchedVendors.map((vendor, index) => (
 							<Vendor
 								key={index}
-								apiUrl={apiUrl}
+								endpoints={ENDPOINTS}
 								fetchedVendor={vendor}
 								vendorsConfig={vendors}
 								connectedLabel={connectedLabel}

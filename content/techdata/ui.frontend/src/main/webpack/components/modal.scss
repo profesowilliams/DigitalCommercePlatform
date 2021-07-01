@@ -33,7 +33,7 @@
 	&_backdrop {
 		background-color: get-color(td-lighter-gray);
 		opacity: 0.5;
-		z-index: 89;
+		z-index: 1030;
 		position: fixed;
 		height: auto;
 		bottom: 0;
@@ -47,7 +47,7 @@
 		line-height: 1.5;
 		box-sizing: border-box;
 		position: fixed;
-		z-index: 90;
+		z-index: 1031;
 		margin: auto;
 		left: 0;
 		right: 0;

@@ -3,7 +3,7 @@ import SlideToggle from '../Widgets/SlideToggle';
 import { get } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
-function Vendor({ apiUrl, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
+function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
 	let { vendor, isConnected, connectionDate, isValidRefreshToken } = fetchedVendor;
 	const [vendorToggled, setVendorToggled] = useState(isConnected);
 	const [toggleInProcess, setToggleInProcess] = useState(false);
@@ -13,7 +13,7 @@ function Vendor({ apiUrl, fetchedVendor, vendorsConfig, connectedLabel, disconne
 	// API calls
 	async function vendorDisconnect(vendor) {
 		//V1/VendorDisconnect?Vendor={Vendor}
-		const url = apiUrl.replace('getVendorConnections', 'vendorDisconnect');
+		const url = endpoints.VendorDisconnect;
 		try {
 			await get(url + `?vendor=${vendor}`);
 			return true;
@@ -44,7 +44,8 @@ function Vendor({ apiUrl, fetchedVendor, vendorsConfig, connectedLabel, disconne
 				return result;
 			default:
 				// connect vendor
-				return true;
+				// not yet implemented
+				await new Promise((resolve) => setTimeout(resolve, 500));
 		}
 	}
 
