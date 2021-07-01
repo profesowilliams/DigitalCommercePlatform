@@ -514,6 +514,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "tabs-core-styled.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/tabs/tabs-core-styled.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "tabs-default-active.html",
                 template: path.resolve(
                     __dirname,
