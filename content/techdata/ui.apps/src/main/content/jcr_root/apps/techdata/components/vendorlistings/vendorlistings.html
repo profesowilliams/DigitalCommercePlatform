@@ -1,17 +1,27 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<sly class="vendor-listing" data-sly-use.listUse="com.adobe.cq.wcm.core.components.models.List">
-    Vendor Listing
-    <sly data-sly-list.item="${listUse.listItems}">
-
-        <div>
-			<span>${item.title}</span><br>
-			<span>${item.overview @ context = 'html'}</span><br>
-            <span class="vendor-icon">
-            	<img src="${item.vendorIcon}" style="background-color:black"></img></span>
-            <a href="${item.pageLink}">${item.vendorPageLabel}</a>
+<div class="vendor-listing" data-sly-use.listUse="com.adobe.cq.wcm.core.components.models.List">
+    <div class="vendor-listing--container">
+        <div class="vendor-listing--left-section">
+            <sly data-sly-list.item1="${listUse.listItems}">
+                <div class="vendor-icon  ${itemList.count == 1 ? 'activeIcon' : ''}" data-type="${item1.title}">
+                    <div class="vendor-icon__container">
+                        <img src="${item1.vendorIcon}" />
+                    </div>
+                </div>
+            </sly>
         </div>
-		<hr>
-    </sly>
-</sly>
+        <div class="vendor-listing--right-section">
+            <sly data-sly-list.item="${listUse.listItems}">
+                <div class="vendor-content-section ${itemList.count == 1 ? 'active' : ''}" data-type="${item.title}">
+                    <h2 class="vendor-section-title">${item.title}</h2>
+                    <div class="vendor-section-desc">
+                        <p>${item.overview @ context = 'html'}</p>
+                    </div>
+                    <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                </div>
+            </sly>
+        </div>
+    </div>
+</div>

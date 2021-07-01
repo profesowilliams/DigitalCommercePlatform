@@ -670,6 +670,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "vendorlistings.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/vendorlistings.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "my-renewals",
                 template: path.resolve(
                     __dirname,

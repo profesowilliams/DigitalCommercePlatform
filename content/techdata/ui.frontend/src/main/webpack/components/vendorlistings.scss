@@ -1,0 +1,132 @@
+.vendor-listing {
+  &--container {
+    display: flex;
+  }
+
+  &--left-section {
+    padding: 10px 30px;
+    flex: 0 0 50%;
+    display: flex;
+    flex-wrap: wrap;
+    border-right: 1px solid #D9D9D9;
+    .vendor-icon {
+      text-align: center;
+      img {
+        display: inline-block;
+      }
+    }
+  }
+
+  &--right-section {
+    padding: 10px 30px;
+    flex: 0 0 50%;
+    .vendor-section-title {
+      font-size: 24px;
+      line-height: 26px;
+      margin-bottom: 32px;
+    }
+    .vendor-section-desc {
+      margin-bottom: 40px;
+    }
+    .vendor-content-section {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+    .vendor-section-link {
+      text-decoration: none;
+      color: black;
+      position: relative;
+      padding-right: 15px;
+      font-weight: 600;
+      &:after {
+        content: '\203A';
+        font-size: 32px;
+        line-height: 14px;
+        position: absolute;
+        right: 0;
+        top: 2px;
+        color: #00B1E2;
+      }
+    }
+  }
+}
+
+.vendor-left-align {
+  .vendor-listing--container {
+    flex-direction: row;
+  }
+}
+
+.vendor-right-align {
+  .vendor-listing--container {
+    flex-direction: row-reverse;
+  }
+  .vendor-listing--left-section {
+    border-right: none;
+    border-left: 1px solid #D9D9D9;
+  }
+}
+
+.vendor-five-column {
+  .vendor-listing--container {
+    .vendor-listing--left-section {
+      .vendor-icon {
+        flex: 0 0 18%;
+        margin: 5px;
+        &.activeIcon {
+          img {
+            filter: grayscale(0);
+          }
+        }
+        img {
+          width: 94px;
+          filter: grayscale(1);
+        }
+      }
+    }
+  }
+  &.vendor-logo-grid {
+    .vendor-listing--left-section {
+      .vendor-icon {
+        img:hover {
+          filter: grayscale(0);
+        }
+      }
+    }
+  }
+}
+
+.vendor-two-column {
+  .vendor-listing--container {
+    .vendor-listing--left-section {
+      .vendor-icon {
+        flex: 0 0 42%;
+        margin: 20px;
+        cursor: pointer;
+        &.activeIcon {
+          .vendor-icon__container {
+            border-color: #000C21;
+          }
+        }
+        .vendor-icon__container {
+          background-color: white;
+          border: 1px solid #D9D9D9;
+          box-sizing: border-box;
+          box-shadow:  2px 2px 4px 0 rgba(0,0,0,0.5);
+          width: 244px;
+          height: 111px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        img {
+          width: 144px;
+          height: auto;
+          max-height: 111px;
+        }
+      }
+    }
+  }
+}
