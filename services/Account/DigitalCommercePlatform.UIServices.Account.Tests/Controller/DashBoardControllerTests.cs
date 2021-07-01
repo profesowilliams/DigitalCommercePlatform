@@ -170,7 +170,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetActionItems("1").ConfigureAwait(false);
+            var result = await controller.GetActionItems(1).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

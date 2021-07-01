@@ -16,7 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string Days { get; set; }
+            public int? Days { get; set; }
         }
 
         public class Response

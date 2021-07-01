@@ -20,6 +20,7 @@ using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using RenewalsService;
@@ -28,6 +29,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -36,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public class AccountService : IAccountService
     {
         private readonly string _configurationsServiceUrl;
-        private readonly string _dealsServiceUrl;
+        private readonly string _ordersServiceUrl;
         private readonly string _quoteServiceURL;
         private readonly string _cartServiceURL;
         private readonly string _customerServiceURL;
@@ -56,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _logger = logger;
             _mapper = mapper;
             _configurationsServiceUrl = appSettings.GetSetting("App.Configuration.Url");
-            _dealsServiceUrl = appSettings.GetSetting("App.Order.Url");
+            _ordersServiceUrl = appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
             _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
             _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
@@ -166,13 +168,39 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActionItemsModel> GetActionItemsSummaryAsync(GetActionItems.Request request)
         {
-            var actionItems = new ActionItemsModel
+            int daysToGoInPast = request.Days.Value * -1;
+
+            var url = _ordersServiceUrl.AppendPathSegment("Find")
+                        .SetQueryParams(new
+                        {
+                            CreatedFrom = DateTime.Now.AddDays(daysToGoInPast).ToString("yyyy-MM-dd"),
+                            CreatedTo = DateTime.Now.ToString("yyyy-MM-dd"),
+                            Status = "ON_HOLD",
+                            WithPaginationInfo = true,
+                        });
+
+            try
             {
-                ExpiringDeals = GetRandomNumber(0, 4),
-                NewOpportunities = GetRandomNumber(1, 8),
-                OrdersBlocked = GetRandomNumber(10, 20)
-            };
-            return await Task.FromResult(actionItems);
+                var orderNumberDto = await _middleTierHttpClient.GetAsync<OrderNumberDto>(url);
+                var actionItems = new ActionItemsModel
+                {
+                    ExpiringDeals = GetRandomNumber(0, 4),
+                    NewOpportunities = GetRandomNumber(1, 8),
+                    OrdersBlocked = orderNumberDto.Count
+                };
+                
+                return actionItems;
+            }
+            catch (RemoteServerHttpException ex) when (ex.Code == HttpStatusCode.NotFound)
+            {
+                var actionItems = new ActionItemsModel
+                {
+                    ExpiringDeals = GetRandomNumber(0, 4),
+                    NewOpportunities = GetRandomNumber(1, 8),
+                    OrdersBlocked = 0
+                };
+                return actionItems;
+            }
         }
 
         public async Task<TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
