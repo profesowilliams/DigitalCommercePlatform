@@ -31,8 +31,7 @@
 		visibility: hidden;
 	}
 	&_backdrop {
-		background-color: get-color(td-lighter-gray);
-		opacity: 0.5;
+		background-color: rgba(217, 217, 217, 0.7);
 		z-index: 1030;
 		position: fixed;
 		height: auto;
@@ -59,7 +58,7 @@
 		overflow: auto;
 		max-width: 100%;
 		width: fit-content;
-		min-width: 30%;
+		min-width: 20%;
 		box-shadow: 2px 2px 4px;
 	}
 	&_header {
@@ -180,11 +179,14 @@
 			text-align: left;
 			color: get-color('brand-text-gray');
 			border-top: 1px solid get-color('secondary-light-grey');
-			& .logo {
+			&__logo {
+				&__img {
+					height: rem(30px);
+				}
 			}
-			& .status {
+			&__status {
 			}
-			& .toggler {
+			&__toggler {
 				justify-self: right;
 				align-self: center;
 			}

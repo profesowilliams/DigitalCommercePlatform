@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SlideToggle from '../Widgets/SlideToggle';
-import { get } from '../../../../utils/api';
+import { get, post } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
 function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
@@ -9,6 +9,7 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
 	const mounted = useMounted();
+	const config = vendorsConfig?.find((v) => v.key.toLowerCase() === vendor.toLowerCase());
 
 	// API calls
 	async function vendorDisconnect(vendor) {
@@ -70,14 +71,17 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 
 	return (
 		<div className='cmp-vendor-connection__vendors__vendor'>
-			<div className='logo'>
-				{/* <img src={vendor.value}></img> */}
-				{vendor}
+			<div className='cmp-vendor-connection__vendors__vendor__logo'>
+				{config ? (
+					<img className={'cmp-vendor-connection__vendors__vendor__logo__img'} src={config.value}></img>
+				) : (
+					<div className={'cmp-vendor-connection__vendors__vendor__logo__text'}>{vendor}</div>
+				)}
 			</div>
-			<div className='status'>
+			<div className='cmp-vendor-connection__vendors__vendor__status'>
 				{vendorToggled ? connectedLabel ?? 'Connected' : disconnectedLabel ?? 'Disconnected'}
 			</div>
-			<div className='toggler'>
+			<div className='cmp-vendor-connection__vendors__vendor__toggler'>
 				<SlideToggle
 					key={vendorToggled}
 					readOnly={toggleInProcess}
