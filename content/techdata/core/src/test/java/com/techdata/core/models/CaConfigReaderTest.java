@@ -1,6 +1,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.SearchBarConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
@@ -37,6 +38,9 @@ class CaConfigReaderTest {
     @Mock
     private MiniCartConfiguration mcConfiguration;
 
+    @Mock
+    private SearchBarConfiguration searchBarConfiguration;
+
     @BeforeEach
     void setUp() {
         underTest = new CaConfigReader();
@@ -56,6 +60,8 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(ServiceEndPointsConfiguration.class)).thenReturn(serviceEndPointsConfiguration);
         when(configurationBuilder.as(AnalyticsConfiguration.class)).thenReturn(analyticsConfiguration);
         when(configurationBuilder.as(MiniCartConfiguration.class)).thenReturn(mcConfiguration);
+        when(configurationBuilder.as(SearchBarConfiguration.class)).thenReturn(searchBarConfiguration);
+
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");
         when(serviceEndPointsConfiguration.catalogEndpoint()).thenReturn("catalogEndpoint");
@@ -77,6 +83,13 @@ class CaConfigReaderTest {
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.tdPartSmart()).thenReturn("tdPartSmart");
         when(analyticsConfiguration.analyticsSnippet()).thenReturn("analyticsSnippet");
+        when(searchBarConfiguration.allSearchEndpoint()).thenReturn("allSearchEndpoint");
+        when(searchBarConfiguration.productSearchEndpoint()).thenReturn("productSearchEndpoint");
+        when(searchBarConfiguration.contentSearchEndpoint()).thenReturn("contentSearchEndpoint");
+        when(searchBarConfiguration.quoteSearchEndpoint()).thenReturn("quoteSearchEndpoint");
+        when(searchBarConfiguration.orderSearchEndpoint()).thenReturn("orderSearchEndpoint");
+        when(searchBarConfiguration.spaSearchEndpoint()).thenReturn("spaSearchEndpoint");
+
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -99,6 +112,14 @@ class CaConfigReaderTest {
         assertEquals("cartURL", underTest.getCartURL());
         assertEquals("tdPartSmart", underTest.getTdPartSmart());
         assertEquals("analyticsSnippet", underTest.getAnalyticsSnippet());
+        assertEquals("allSearchEndpoint", underTest.getAllSearchEndpoint());
+        assertEquals("productSearchEndpoint", underTest.getProductSearchEndpoint());
+        assertEquals("contentSearchEndpoint", underTest.getContentSearchEndpoint());
+        assertEquals("quoteSearchEndpoint", underTest.getQuoteSearchEndpoint());
+        assertEquals("orderSearchEndpoint", underTest.getOrderSearchEndpoint());
+        assertEquals("spaSearchEndpoint", underTest.getSpaSearchEndpoint());
+
+
 
 
     }

@@ -4,6 +4,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.SearchBarConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
@@ -74,12 +75,27 @@ public class CaConfigReader {
 
 	private String analyticsSnippet;
 
+	private String allSearchEndpoint;
+
+	private String productSearchEndpoint;
+
+	private String contentSearchEndpoint;
+
+	private String quoteSearchEndpoint;
+
+	private String orderSearchEndpoint;
+
+	private String spaSearchEndpoint;
+
+
+
 	@PostConstruct
 	public void init() {
 		ServiceEndPointsConfiguration serviceEndPointsConfiguration =
 				page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
 		MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
 		AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
+		SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
 		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
 		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
 		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
@@ -106,6 +122,13 @@ public class CaConfigReader {
 		cartURL = mcConfiguration.cartURL();
 		tdPartSmart = mcConfiguration.tdPartSmart();
 		analyticsSnippet = analyticsConfiguration.analyticsSnippet();
+		allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
+		productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
+		contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
+		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
+		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
+		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
+
 	}
 
 	public String getUiServiceDomain() {
@@ -210,6 +233,30 @@ public class CaConfigReader {
 
 	public String getAnalyticsSnippet() {
 		return analyticsSnippet;
+	}
+
+	public String getAllSearchEndpoint() {
+		return allSearchEndpoint;
+	}
+
+	public String getProductSearchEndpoint() {
+		return productSearchEndpoint;
+	}
+
+	public String getContentSearchEndpoint() {
+		return contentSearchEndpoint;
+	}
+
+	public String getQuoteSearchEndpoint() {
+		return quoteSearchEndpoint;
+	}
+
+	public String getOrderSearchEndpoint() {
+		return orderSearchEndpoint;
+	}
+
+	public String getSpaSearchEndpoint() {
+		return spaSearchEndpoint;
 	}
 
 }

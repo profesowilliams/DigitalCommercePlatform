@@ -1,3 +1,7 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+	<sly class="label-list" data-sly-use.labelList="${'helper.js' @ allSearchEndpoint=serviceData.allSearchEndpoint,productSearchEndpoint=serviceData.productSearchEndpoint,contentSearchEndpoint=serviceData.contentSearchEndpoint,quoteSearchEndpoint=serviceData.quoteSearchEndpoint,orderSearchEndpoint=serviceData.orderSearchEndpoint,spaSearchEndpoint=serviceData.spaSearchEndpoint }">
+
+	</sly>
 <section
 	data-sly-use.search="com.adobe.cq.wcm.core.components.models.Search"
 	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
@@ -7,6 +11,7 @@
 	data-cmp-is="search"
 	data-cmp-min-length="${search.searchTermMinimumLength}"
 	data-cmp-results-size="${search.resultsSize}"
+	data-config="${labelList.configJson}"
 >
 	<form
 		class="cmp-search__form"
@@ -37,3 +42,4 @@
 	<div class="cmp-search__results" data-cmp-hook-search="results" role="listbox" aria-multiselectable="false"></div>
 	<sly data-sly-include="itemTemplate.html" />
 </section>
+</sly>
