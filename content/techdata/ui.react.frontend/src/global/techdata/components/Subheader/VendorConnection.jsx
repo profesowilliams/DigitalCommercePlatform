@@ -5,8 +5,8 @@ import { useGet } from '../../hooks/useGet';
 
 function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnectedLabel }) {
 	const ENDPOINTS = {
+		GetPunchOutURL: apiUrl + '/getPunchOutURL',
 		VendorDisconnect: apiUrl + '/VendorDisconnect',
-		VendorPortalLogin: apiUrl + '/VendorPortalLogin',
 		VendorRefreshToken: apiUrl + '/VendorRefreshToken',
 		GetValidAccessToken: apiUrl + '/GetValidAccessToken',
 		GetVendorConnections: apiUrl + '/GetVendorConnections',

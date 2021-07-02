@@ -25,8 +25,32 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 		}
 	}
 
-	async function vendorPortalLogin() {
-		//V1/VendorPortalLogin?code={Code Received from VendorPortal Login}&Vendor={Vendor}
+	async function vendorPortalLogin(vendorName, configurationId = 'ZU125923843DQ', vendorFunction = 'CCW_ESTIMATE') {
+		try {
+			const url = new URL(window.location.href);
+			url.searchParams.append('vendorLoginSource', vendorName);
+			const redirectData = {
+				PostBackURL: url.toString(),
+				Vendor: vendorName,
+				ConfigurationId: configurationId,
+				Function: vendorFunction,
+				Action: 'edit',
+			};
+			const punchoutData = await post(endpoints.GetPunchOutURL, redirectData);
+			const redirectUrl = punchoutData?.data?.content?.url;
+			if (redirectUrl) {
+				window.location.replace(redirectUrl);
+			} else {
+				console.error(`No redirect URL for ${vendor}:`);
+				console.error(punchoutData);
+				return false;
+			}
+			return true;
+		} catch (e) {
+			console.error(`${vendor} login failed:`);
+			console.error(e);
+			return false;
+		}
 	}
 
 	async function vendorRefreshToken() {
@@ -39,14 +63,14 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 
 	// Component specific functions
 	async function toggleStateChanged(state) {
+		let result = false;
 		switch (state) {
 			case false:
-				const result = await vendorDisconnect(vendor);
+				result = await vendorDisconnect(vendor);
 				return result;
 			default:
-				// connect vendor
-				// not yet implemented
-				await new Promise((resolve) => setTimeout(resolve, 500));
+				result = await vendorPortalLogin(vendor);
+				return result;
 		}
 	}
 
