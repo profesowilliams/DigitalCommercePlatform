@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import QueryInput from '../Widgets/QueryInput';
 import SimpleDropDown from '../Widgets/SimpleDropDown';
+import SimpleDatePicker from '../Widgets/SimpleDatePicker';
 import isNotEmpty from '../../helpers/IsNotNullOrEmpty';
 
 function QuotesGridSearch({ componentProp, onQueryChanged }) {
@@ -29,6 +30,9 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
 			? componentProp?.vendorsDropdown
 			: defaultVendorsDropdown,
 		inputPlaceholder: componentProp?.inputPlaceholder ?? 'Enter Your Search',
+		fromLabel: componentProp?.fromLabel ?? 'From',
+		toLabel: componentProp?.toLabel ?? 'To',
+		datePlaceholder: componentProp?.datePlaceholder ?? 'MM/DD/YYYY',
 	};
 
 	const _query = useRef({});
@@ -42,7 +46,9 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
 			query.manufacturer?.key && query.manufacturer?.key !== 'allVendors'
 				? `&manufacturer=${query.manufacturer.key}`
 				: '';
-		let concatedQuery = `${keywordQuery}${manufacturer}`;
+		let from = query.from?.key && query.from?.value ? `&from=${new Date(query.from.value).toISOString()}` : '';
+		let to = query.to?.key && query.to?.value ? `&to=${new Date(query.to.value).toISOString()}` : '';
+		let concatedQuery = `${keywordQuery}${manufacturer}${from}${to}`;
 		onQueryChanged(concatedQuery);
 	}
 
@@ -60,6 +66,16 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
 		}
 	}
 
+	function handleFromFilterChange(change) {
+		_query.current.from = change;
+		dispatchQueryChange(_query.current);
+	}
+
+	function handleToFilterChange(change) {
+		_query.current.to = change;
+		dispatchQueryChange(_query.current);
+	}
+
 	return (
 		<div className='cmp-orders-grid__search'>
 			<QueryInput
@@ -73,6 +89,18 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
 				items={config.vendorsDropdown.items}
 				onItemSelected={handleVendorFilterChange}
 			></SimpleDropDown>
+			<SimpleDatePicker
+				pickerKey={'from'}
+				placeholder={config.datePlaceholder}
+				label={config.fromLabel}
+				onSelectedDateChanged={handleFromFilterChange}
+			></SimpleDatePicker>
+			<SimpleDatePicker
+				pickerKey={'to'}
+				placeholder={config.datePlaceholder}
+				label={config.toLabel}
+				onSelectedDateChanged={handleToFilterChange}
+			></SimpleDatePicker>
 		</div>
 	);
 }

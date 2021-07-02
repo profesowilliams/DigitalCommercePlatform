@@ -261,3 +261,35 @@
 		}
 	}
 }
+
+//simple date picker style
+.cmp-simple-date-picker {
+	display: flex;
+	color: get-color(text-mid-gray);
+
+	&__label {
+		margin-right: rem(8px);
+		align-self: center;
+	}
+	&__picker {
+		.react-datepicker__input-container input {
+			border: 1px solid get-color(brand-light-gray2);
+			color: get-color(text-mid-gray);
+			height: rem(30px);
+			width: rem(100px);
+			font-size: $font-size-custom-xxsmall;
+		}
+	}
+	&__icon {
+		align-self: center;
+		padding-left: rem(8px);
+		transform: scale(1.6);
+		cursor: pointer;
+		& svg,
+		i {
+			color: get-color(brand-blue);
+			margin-right: rem(5px);
+			margin-top: 0.2rem;
+		}
+	}
+}
