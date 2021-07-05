@@ -1,5 +1,4 @@
 import bp from '../../../common-utils/js/media-match';
-import { hasSomeParentTheClass } from '../../../common-utils/js/helper';
 
 (function(bp) {
 
@@ -46,58 +45,6 @@ import { hasSomeParentTheClass } from '../../../common-utils/js/helper';
       titlesCloseTertiary.forEach(function(item){
         item.addEventListener('click',closeQuaternaryMenus)
       })
-
-      headerResize();
-      window.addEventListener('resize', headerResize);
-
-      var searchEl = document.querySelector('.cmp-experiencefragment--header .search');
-      if (searchEl) {
-        searchEl.addEventListener('click', () => toggleSearch(searchEl));
-        document.addEventListener('click', (event) => showSearchIconOnly(event, searchEl));
-      }
-
-      initSecondaryImage();
-
-    }
-
-    function headerResize() {
-      const headerEl = (() => {
-        let el = document.querySelector('.cmp-experiencefragment--header')
-        if (el) return el;
-      })();
-
-      if (bp.tablet()) {
-        headerEl.classList.add('cmp-experiencefragment--header-mobile');
-      } else {
-        headerEl.classList.remove('cmp-experiencefragment--header-mobile');
-      }
-    }
-
-    function toggleSearch(el) {
-      if (hasSomeParentTheClass(el, 'cmp-experiencefragment--header-mobile')) {
-        el.classList.add('active');
-        document.querySelector('.cmp-header--logo-small').classList.add('active');
-        document.querySelector('.dp-figure').style.display = 'none';
-      }
-    }
-
-    function showSearchIconOnly(event, el) {
-      if (hasSomeParentTheClass(el, 'cmp-experiencefragment--header-mobile')) {
-          if (!el.contains(event.target)) {
-            el.classList.remove('active');
-            document.querySelector('.cmp-header--logo-small').classList.remove('active');
-            document.querySelector('.dp-figure').style.display = 'block';
-          }
-      }
-    }
-
-    function initSecondaryImage() {
-      var imgEl = document.querySelectorAll('[data-mobileLogo]')[0];
-      if (imgEl) {
-        var smallLogo = imgEl.dataset.mobilelogo;
-        var smallImgEl = document.querySelector('.cmp-header--logo-small');
-        smallImgEl.src = smallLogo;
-      }
     }
 
     function selectPrimaryItem(event){
@@ -184,7 +131,9 @@ import { hasSomeParentTheClass } from '../../../common-utils/js/helper';
   function onDocumentReady(){
     var navigators = document.querySelectorAll('#megamenu');
     navigators.forEach(function(navigation){
-      new Navigation({navigation});
+      if (bp.desktop()) {
+        new Navigation({navigation});
+      }
     });
   };
   document.addEventListener("DOMContentLoaded", onDocumentReady);

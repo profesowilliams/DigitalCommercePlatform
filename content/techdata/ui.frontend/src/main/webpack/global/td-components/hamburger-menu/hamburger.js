@@ -2,12 +2,12 @@ export default class Hamburger {
     constructor(el) {
         const classObj = {
             active: 'active',
-            open: 'cmp-hamburger-container--open',
+            open: 'megamenu--open',
         }
 
         this.el = el;
         this.open = false;
-        this.containerEl = document.querySelector('#simpleContainer');
+        this.containerEl = document.querySelector('.megamenu');
 
         this.el.addEventListener('click', () => this.handleClick(classObj));
     }
