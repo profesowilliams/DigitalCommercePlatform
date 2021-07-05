@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SlideToggle from '../Widgets/SlideToggle';
-import { get, post } from '../../../../utils/api';
+import { get } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
 function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
@@ -25,32 +25,9 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 		}
 	}
 
-	async function vendorPortalLogin(vendorName, configurationId = 'ZU125923843DQ', vendorFunction = 'CCW_ESTIMATE') {
-		try {
-			const url = new URL(window.location.href);
-			url.searchParams.append('vendorLoginSource', vendorName);
-			const redirectData = {
-				PostBackURL: url.toString(),
-				Vendor: vendorName,
-				ConfigurationId: configurationId,
-				Function: vendorFunction,
-				Action: 'edit',
-			};
-			const punchoutData = await post(endpoints.GetPunchOutURL, redirectData);
-			const redirectUrl = punchoutData?.data?.content?.url;
-			if (redirectUrl) {
-				window.location.replace(redirectUrl);
-			} else {
-				console.error(`No redirect URL for ${vendor}:`);
-				console.error(punchoutData);
-				return false;
-			}
-			return true;
-		} catch (e) {
-			console.error(`${vendor} login failed:`);
-			console.error(e);
-			return false;
-		}
+	function redirectToVendorPortal(href) {
+		window.location.replace(href);
+		return true;
 	}
 
 	async function vendorRefreshToken() {
@@ -69,7 +46,7 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 				result = await vendorDisconnect(vendor);
 				return result;
 			default:
-				result = await vendorPortalLogin(vendor);
+				result = redirectToVendorPortal(config?.logInUrl);
 				return result;
 		}
 	}

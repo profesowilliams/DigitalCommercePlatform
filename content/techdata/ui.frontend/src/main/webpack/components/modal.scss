@@ -161,6 +161,10 @@
 ///vendor connection modal content style///
 .cmp-vendor-connection {
 	max-width: rem(500px);
+	&__error {
+		color: get-color('brand-secondary-text');
+		margin-top: rem(50px);
+	}
 	&__header {
 		font-size: $font-size-medium;
 		font-weight: $font-weight-bold;
@@ -180,6 +184,7 @@
 			color: get-color('brand-text-gray');
 			border-top: 1px solid get-color('secondary-light-grey');
 			&__logo {
+				padding: 0 rem(8px) 0 0;
 				&__img {
 					height: rem(30px);
 				}
