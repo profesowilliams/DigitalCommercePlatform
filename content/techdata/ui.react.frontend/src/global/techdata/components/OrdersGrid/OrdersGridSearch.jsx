@@ -45,10 +45,22 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 			query.manufacturer?.key && query.manufacturer?.key !== 'allVendors'
 				? `&manufacturer=${query.manufacturer.key}`
 				: '';
-		let from = query.from?.key && query.from?.value ? `&from=${new Date(query.from.value).toISOString()}` : '';
-		let to = query.to?.key && query.to?.value ? `&to=${new Date(query.to.value).toISOString()}` : '';
+		let from = query.from?.key && query.from?.value ? `&createdFrom=${new Date(query.from.value).toISOString()}` : '';
+		let to = query.to?.key && query.to?.value ? `&createdTo=${new Date(query.to.value).toISOString()}` : '';
 		let concatedQuery = `${keywordQuery}${manufacturer}${from}${to}`;
-		onQueryChanged(concatedQuery);
+		if (isQueryValid(query)) {
+			onQueryChanged(concatedQuery);
+		} else {
+			onQueryChanged('');
+		}
+	}
+
+	function isQueryValid(query) {
+		if (query.from?.value && query.to?.value && query.to?.value < query.from?.value) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	function handleKeywordFilterChange(change) {
