@@ -105,7 +105,8 @@
         flex: 0 0 42%;
         margin: 20px;
         cursor: pointer;
-        &.activeIcon {
+        &.activeIcon,
+        &:hover {
           .vendor-icon__container {
             border-color: #000C21;
           }
