@@ -9,7 +9,7 @@ export default class Header {
         
         this.headerResize();
         window.addEventListener('resize', () => this.headerResize());
-        this.searchEl.addEventListener('click', () => this.toggleSearch(this.searchEl));
+        this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
         document.addEventListener('click', (event) => this.showSearchIconOnly(event, this.searchEl));
         this.initSecondaryImage();
     }
