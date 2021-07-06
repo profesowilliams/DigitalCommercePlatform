@@ -19,6 +19,16 @@
 		letter-spacing: 0;
 		line-height: 13px;
 		border-bottom: 2px solid transparent;
+		@include tablet {
+			font-size: 0; // hide text on tablet and below
+			color: #231F20;
+			&.active {
+				color: #000C21;
+			}
+			&.clicked {
+				color: #1798d1;
+			}
+		}
 		&.active {
 			&:hover {
 				border-bottom: 2px solid #04b0e2;

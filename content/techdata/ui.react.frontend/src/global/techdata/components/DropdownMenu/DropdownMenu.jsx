@@ -10,7 +10,9 @@ const DropdownMenu = ({ items, userDataCheck, config }) => {
 		<>
 			<button
 				data-component='DropdownMenu'
-				className={`cmp-sign-in-button ${userId ? 'active' : ''}`}
+				className={
+					`cmp-sign-in-button ${userId ? 'active' : ''} ${isActive ? 'clicked' : ''}`
+				}
 				onClick={userDropDown}
 			>
 				<i className='fas fa-user-alt'></i>
