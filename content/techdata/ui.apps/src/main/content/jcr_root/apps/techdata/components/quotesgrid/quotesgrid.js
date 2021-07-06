@@ -61,7 +61,7 @@ use(function () {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
     if (properties && properties["quoteDetailUrl"]) {
-        jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"];
+        jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + ".html";
     }
     if (properties && properties["defaultSortingColumnKey"]) {
         optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
