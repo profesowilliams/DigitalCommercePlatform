@@ -342,10 +342,12 @@
 .cmp-text-color {
     &--onDark-theme {
         color: #ffffff;
+        font-weight: 400;
     }
 
     &--onLight-theme {
         color: #7c8388;
+        font-weight: 400;
     }
 }
 
