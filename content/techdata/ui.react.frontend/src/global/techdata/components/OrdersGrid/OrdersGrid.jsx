@@ -215,7 +215,8 @@ function OrdersGrid(props) {
 			<div className='cmp-orders-grid'>
 				<SearchCriteria
 					Filters={OrdersGridSearch}
-					componentProp={componentProp.searchCriteria ?? { title: 'Filter Orders' }}
+					label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
+					componentProp={componentProp.searchCriteria}
 					onSearchRequest={filteringExtension.onQueryChanged}
 					onClearRequest={filteringExtension.onQueryChanged}
 				></SearchCriteria>

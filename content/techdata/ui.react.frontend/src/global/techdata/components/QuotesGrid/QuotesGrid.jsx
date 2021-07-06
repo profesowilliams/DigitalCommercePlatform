@@ -114,7 +114,8 @@ function QuotesGrid(props) {
 			<div className='cmp-quotes-grid'>
 				<SearchCriteria
 					Filters={QuotesGridSearch}
-					componentProp={componentProp.searchCriteria ?? { title: 'Filter Quotes' }}
+					label={componentProp.searchCriteria?.title ?? 'Filter Quotes'}
+					componentProp={componentProp.searchCriteria}
 					onSearchRequest={filteringExtension.onQueryChanged}
 					onClearRequest={filteringExtension.onQueryChanged}
 				></SearchCriteria>

@@ -31,7 +31,7 @@ const DashboardSubheader = ({ componentProp }) => {
 
 	function checkIfVendorSignedIn() {
 		const url = new URL(window.location.href);
-		if (url.searchParams.has('code')) {
+		if (String(url.pathname).includes('vendorlogin.html') && url.searchParams.has('code')) {
 			invokeModal({
 				content: (
 					<VendorConnection

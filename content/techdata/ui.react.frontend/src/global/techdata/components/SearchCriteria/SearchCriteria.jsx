@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Button from '../Widgets/Button';
 
-function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearRequest }) {
+function SearchCriteria({ label, componentProp, Filters, onSearchRequest, onClearRequest }) {
 	const filter = useRef(null);
 	let [filterActive, setFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
@@ -43,7 +43,7 @@ function SearchCriteria({ componentProp, Filters, onSearchRequest, onClearReques
 				}}
 			>
 				<i className='fas fa-sliders-h'></i>
-				<div className='cmp-search-criteria__header__title'>{componentProp?.title ?? 'Filter'}</div>
+				<div className='cmp-search-criteria__header__title'>{label ?? 'Filter'}</div>
 			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
