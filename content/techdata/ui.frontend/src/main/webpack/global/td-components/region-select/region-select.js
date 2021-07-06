@@ -20,6 +20,9 @@
 // / })();
 (function () {
   "use strict";
+  var countriesListModal = document.getElementById("countriesListModal");
+  if (!countriesListModal) return;
+
   function regionSelectDropdown() {
     document.getElementById("regionSelectDropdown").classList.toggle("cmp-show");
   }

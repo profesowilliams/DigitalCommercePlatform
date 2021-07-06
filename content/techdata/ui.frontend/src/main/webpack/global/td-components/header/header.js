@@ -1,5 +1,5 @@
 import bp from '../../../common-utils/js/media-match';
-import { hasSomeParentTheClass } from '../../../common-utils/js/helper';
+import insertAfter, { hasSomeParentTheClass } from '../../../common-utils/js/helper';
 
 export default class Header {
     constructor() {
@@ -23,11 +23,16 @@ export default class Header {
     }
 
     initSecondaryImage() {
-        const imgEl = document.querySelector('[data-mobileLogo]');
+        const imgEl = document.querySelector('[data-mobile-logo]');
         if (imgEl) {
-            const smallLogo = imgEl.dataset.mobilelogo;
-            const smallImgEl = document.querySelector('.cmp-header--logo-small');
-            smallImgEl.src = smallLogo;
+            const smallLogo = imgEl.dataset.mobileLogo;
+            const img = document.createElement('img');
+            img.classList.add('cmp-header--logo-small');
+
+            const figure = document.querySelector('.dp-figure');
+            if (!figure) return;
+            insertAfter(img, figure);
+            img.src = smallLogo;
         }
     }
 
