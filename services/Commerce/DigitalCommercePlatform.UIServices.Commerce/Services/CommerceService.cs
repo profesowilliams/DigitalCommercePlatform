@@ -99,7 +99,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             orderParameters.PageSize,
                             Page = orderParameters.PageNumber,
                             WithPaginationInfo = orderParameters.WithPaginationInfo,
-                            Details = true
+                            Details = true,
+                            orderParameters.OrderMethod
                         });
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);

@@ -17,5 +17,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
+        public string OrderMethod { get; set; }
     }
 }

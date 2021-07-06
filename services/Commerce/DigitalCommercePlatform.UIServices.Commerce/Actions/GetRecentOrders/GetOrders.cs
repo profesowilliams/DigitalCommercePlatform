@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public int PageNumber { get; }
             public int PageSize { get; }
             public bool WithPaginationInfo { get; set; }
+            public string OrderMethod { get; set; }
 
             public Request(FilteringDto filtering, PagingDto paging)
             {
@@ -43,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 PageNumber = paging.PageNumber;
                 PageSize = paging.PageSize == 0 ? 25 : paging.PageSize;
                 WithPaginationInfo = paging.WithPaginationInfo;
+                OrderMethod = filtering.OrderMethod;
             }
         }
 
@@ -67,7 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class FilteringDto
         {
-            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,string status)
+            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,string status,string orderMethod)
             {
                 Id = id;
                 CustomerPO = customerPO;
@@ -75,6 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 CreatedFrom = createdFrom;
                 CreatedTo = createdTo;
                 Status = status;
+                OrderMethod = orderMethod;
             }
 
             public string Id { get; }
@@ -83,6 +86,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public DateTime? CreatedFrom { get; }
             public DateTime? CreatedTo { get; }
             public string Status { get; }
+            public string OrderMethod { get; }
         }
 
 
@@ -130,7 +134,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     SortAscending = sortAscending,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
-                    WithPaginationInfo = request.WithPaginationInfo
+                    WithPaginationInfo = request.WithPaginationInfo,
+                    OrderMethod=request.OrderMethod
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
