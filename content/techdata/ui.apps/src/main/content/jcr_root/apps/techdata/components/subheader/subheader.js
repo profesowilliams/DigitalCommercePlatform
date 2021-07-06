@@ -48,9 +48,11 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var key = res.properties["key"];
             var iconPath = res.properties["iconPath"];
+            var logInUrl = res.properties["logInUrl"];
             var itemData = {};
             itemData.key = key;
             itemData.value = iconPath;
+            itemData.logInUrl = logInUrl;
             iconValues.push(itemData);
 
         }
