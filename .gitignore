@@ -177,6 +177,9 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+# Visual Studio Settings
+.vscode/settings.json
+
 # Chutzpah Test files
 _Chutzpah*
 
@@ -442,6 +445,8 @@ ASALocalRun/
 content/techdata/server/.vscode/settings.json
 content/techdata/ui.react.frontend/.vscode/settings.json
 
-#Mac files
+# Mac files
 .DS_Store
-content/techdata/ui.apps/.vscode/settings.json
+
+# jEnv (Java Version Management)
+.java-version
