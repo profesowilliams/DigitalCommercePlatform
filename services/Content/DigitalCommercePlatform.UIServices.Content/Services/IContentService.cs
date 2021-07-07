@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
@@ -15,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         public Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request);
         public Task<ActiveCartModel> GetActiveCartDetails();
         Task<AddCartItem.Response> AddItemCart(AddCartItem.Request request);
+        Task<GetCreateCartByQuote.Response> CreateCartByQuote(string QuoteId);
     }
 }

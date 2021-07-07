@@ -1,13 +1,16 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
+using DigitalCommercePlatform.UIServices.Content.Models.Cart.Internal;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -91,6 +94,28 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             var result = await _middleTierHttpClient.PatchAsync<CartItemModel>(url, null, request.Items);
             var response = new AddCartItem.Response(result);
             return await Task.FromResult(response);
+        }
+
+        public async Task<GetCreateCartByQuote.Response> CreateCartByQuote(string QuoteId)
+        {
+            var cartURL = _appCartUrl.AppendPathSegment("/CreateByQuote").AppendPathSegment(QuoteId);
+            try
+            {
+                var createByQuote = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(cartURL,null,null);
+                var response = new GetCreateCartByQuote.Response();
+                response.IsSuccess = createByQuote.StatusCode == System.Net.HttpStatusCode.OK ? true : false;
+                return response;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                _logger.LogError(ex, "Exception from the App-Service : " + nameof(ContentService));
+                throw new UIServiceException("Error while calling App-Cart Service" + ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at Create cart by Quote : " + nameof(ContentService));
+                throw ex;
+            }
         }
     }
 }

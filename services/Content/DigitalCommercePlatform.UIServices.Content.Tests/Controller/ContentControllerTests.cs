@@ -1,6 +1,7 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions;
 using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
@@ -108,6 +109,34 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
             var result = await controller.AddItemsToCart(itemModels).ConfigureAwait(false);
             // Assert
             _mockMediator.Verify(x => x.Send(It.IsAny<AddCartItem.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateCartByQuote(ResponseBase<GetCreateCartByQuote.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetCreateCartByQuote.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.CreateByQuote("12").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+        [Fact]
+        public async Task CreateCartByQuoteValidation()
+        {
+            // Arrange
+            var validator = new GetCreateCartByQuote.Validator();
+            string QuoteId = "1234";
+           var cmd = new GetCreateCartByQuote.Request(QuoteId);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.True(validationResult.IsValid);
         }
     }
 }

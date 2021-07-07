@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
@@ -62,6 +63,14 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
         public async Task<IActionResult> AddItemsToCart([FromBody] List<CartItemModel> itemModels)
         {
             var response = await Mediator.Send(new AddCartItem.Request(itemModels)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("CreateByQuote")]
+        public async Task<IActionResult> CreateByQuote([FromQuery] string QuoteId)
+        {
+            var response = await Mediator.Send(new GetCreateCartByQuote.Request(QuoteId)).ConfigureAwait(false);
             return Ok(response);
         }
     }
