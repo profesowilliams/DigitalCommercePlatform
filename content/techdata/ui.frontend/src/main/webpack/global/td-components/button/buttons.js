@@ -4,6 +4,7 @@
   "use strict";
 
   const scrollToTopButton = document.getElementById("js-jumptotop");
+  if (!scrollToTopButton) return;
   
   // On scrolls down the document, the button appear
   window.onscroll = function () {

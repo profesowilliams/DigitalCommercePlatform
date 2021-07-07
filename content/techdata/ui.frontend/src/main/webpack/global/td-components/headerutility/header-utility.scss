@@ -1,33 +1,27 @@
 @import 'main';
 
 .headerutility {
-    float: left;
-    padding: rem(5px);
-
-    .minicart {
-        width: 10%;
+    &.aem-GridColumn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 0;
+        margin-left: auto;
     }
-
     .signin {
-        width: 35%;
+        white-space: nowrap;
     }
-
+    .minicart,
+    .signin,
     .languagenavigation {
-        width: 55%;
+        padding: 0 10px;
     }
-
-    @include tablet {
-        &.aem-GridColumn {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            float: unset;
-            padding: unset;
-            .minicart,
-            .signin,
-            .languagenavigation {
-                width: auto;
-            }
+    .languagenavigation {
+        position: relative;
+        #regionSelectDropdown {
+            position: absolute;
+            right: 2px;
+            top: 53px;
         }
     }
 }

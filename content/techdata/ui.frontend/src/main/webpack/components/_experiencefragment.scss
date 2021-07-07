@@ -12,8 +12,16 @@
         padding-left: 0px;
         padding-right: 0px;
 
+        >.cmp-container {
+            display: flex;
+            align-items: center;
+        }
+
         .search {
-            margin-top: 17px;
+            margin-top: 0;
+            @include desktop {
+                margin-left: auto;
+            }
         }
 
         .button {
