@@ -1,17 +1,33 @@
+@import 'main';
+
 .headerutility {
+    float: left;
+    padding: rem(5px);
 
-  float: left;
-  padding: rem(5px);
+    .minicart {
+        width: 10%;
+    }
 
-  .minicart {
-    width: 10%;
-  }
+    .signin {
+        width: 35%;
+    }
 
-  .signin {
-    width: 35%
-  }
+    .languagenavigation {
+        width: 55%;
+    }
 
-  .languagenavigation {
-    width: 55%;
-  }
+    @include tablet {
+        &.aem-GridColumn {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            float: unset;
+            padding: unset;
+            .minicart,
+            .signin,
+            .languagenavigation {
+                width: auto;
+            }
+        }
+    }
 }
