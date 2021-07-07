@@ -28,10 +28,6 @@ Initializer.prototype.getRoutes = () => ([
         module: Tabs,
         componentId: 'tabs'
     },
-    {
-        module: Hamburger,
-        componentId: 'hamburger-menu'
-    },
 ]);
 
 Initializer.prototype.initComponents = function () {
@@ -44,6 +40,7 @@ Initializer.prototype.initComponents = function () {
 
 // manually initialized components - ones without data-component attribute
 Initializer.prototype.manualInitComponents = function () {
+    new Hamburger();
     new Header();
     if (bp.tablet()) {
         new MegamenuMobile();
