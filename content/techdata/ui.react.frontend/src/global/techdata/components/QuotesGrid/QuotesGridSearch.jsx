@@ -1,120 +1,113 @@
-import React, { useRef } from 'react';
-import QueryInput from '../Widgets/QueryInput';
-import SimpleDropDown from '../Widgets/SimpleDropDown';
-import SimpleDatePicker from '../Widgets/SimpleDatePicker';
-import isNotEmpty from '../../helpers/IsNotNullOrEmpty';
+import React, { useRef } from "react";
+import QueryInput from "../Widgets/QueryInput";
+import SimpleDropDown from "../Widgets/SimpleDropDown";
+import SimpleDatePicker from "../Widgets/SimpleDatePicker";
+import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 
 function QuotesGridSearch({ componentProp, onQueryChanged }) {
-	const defaultKeywordDropdown = {
-		label: 'Keyword',
-		items: [
-			{ key: 'quoteIdFilter', value: 'TD Quote ID' },
-			{ key: 'createdBy', value: 'End User Name' },
-			{ key: 'configID', value: 'Deal ID' },
-		],
-	};
+  const defaultKeywordDropdown = {
+    label: "Keyword",
+    items: [
+      { key: "quoteIdFilter", value: "TD Quote ID" },
+      { key: "createdBy", value: "End User Name" },
+      { key: "configID", value: "Deal ID" },
+    ],
+  };
 
-	const defaultVendorsDropdown = {
-		label: 'Vendors',
-		items: [
-			{ key: 'allVendors', value: 'All Vendors' },
-			{ key: 'cisco', value: 'Cisco' },
-		],
-	};
+  const defaultVendorsDropdown = {
+    label: "Vendors",
+    items: [
+      { key: "allVendors", value: "All Vendors" },
+      { key: "cisco", value: "Cisco" },
+    ],
+  };
 
-	const config = {
-		keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
-			? componentProp?.keywordDropdown
-			: defaultKeywordDropdown,
-		vendorsDropdown: isNotEmpty(componentProp?.vendorsDropdown)
-			? componentProp?.vendorsDropdown
-			: defaultVendorsDropdown,
-		inputPlaceholder: componentProp?.inputPlaceholder ?? 'Enter Your Search',
-		fromLabel: componentProp?.fromLabel ?? 'From',
-		toLabel: componentProp?.toLabel ?? 'To',
-		datePlaceholder: componentProp?.datePlaceholder ?? 'MM/DD/YYYY',
-	};
+  const config = {
+    keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
+      ? componentProp?.keywordDropdown
+      : defaultKeywordDropdown,
+    vendorsDropdown: isNotEmpty(componentProp?.vendorsDropdown)
+      ? componentProp?.vendorsDropdown
+      : defaultVendorsDropdown,
+    inputPlaceholder: componentProp?.inputPlaceholder ?? "Enter Your Search",
+    fromLabel: componentProp?.fromLabel ?? "From",
+    toLabel: componentProp?.toLabel ?? "To",
+    datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
+  };
 
-	const _query = useRef({});
+  const _query = useRef({});
 
-	function dispatchQueryChange(query) {
-		let keywordQuery =
-			query.keywordQuery?.key && query.keywordQuery?.value
-				? `&${query.keywordQuery.key}=${query.keywordQuery.value}`
-				: '';
-		let manufacturer =
-			query.manufacturer?.key && query.manufacturer?.key !== 'allVendors'
-				? `&manufacturer=${query.manufacturer.key}`
-				: '';
-		let from = query.from?.key && query.from?.value ? `&createdFrom=${new Date(query.from.value).toISOString()}` : '';
-		let to = query.to?.key && query.to?.value ? `&createdTo=${new Date(query.to.value).toISOString()}` : '';
-		let concatedQuery = `${keywordQuery}${manufacturer}${from}${to}`;
-		if (isQueryValid(query)) {
-			onQueryChanged(concatedQuery);
-		} else {
-			onQueryChanged('');
-		}
-	}
+  function dispatchQueryChange(query) {
+    let keyword =
+      query.keyword?.key && query.keyword?.value
+        ? `&${query.keyword.key}=${query.keyword.value}`
+        : "";
+    let manufacturer =
+      query.manufacturer?.key && query.manufacturer?.key !== "allVendors"
+        ? `&manufacturer=${query.manufacturer.key}`
+        : "";
+    let from =
+      query.from?.key && query.from?.value
+        ? `&createdFrom=${new Date(query.from.value).toISOString()}`
+        : "";
+    let to =
+      query.to?.key && query.to?.value
+        ? `&createdTo=${new Date(query.to.value).toISOString()}`
+        : "";
+    let concatedQuery = `${keyword}${manufacturer}${from}${to}`;
+    if (isQueryValid(query)) {
+      onQueryChanged(concatedQuery);
+    } else {
+      onQueryChanged("");
+    }
+  }
 
-	function isQueryValid(query) {
-		if (query.from?.value && query.to?.value && query.to?.value < query.from?.value) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+  function isQueryValid(query) {
+    if (
+      query.from?.value &&
+      query.to?.value &&
+      query.to?.value < query.from?.value
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-	function handleKeywordFilterChange(change) {
-		if (change) {
-			_query.current.keywordQuery = change;
-			dispatchQueryChange(_query.current);
-		}
-	}
+  function handleFilterChange(change, filterName) {
+    if (change) {
+      _query.current[filterName] = change;
+      dispatchQueryChange(_query.current);
+    }
+  }
 
-	function handleVendorFilterChange(change) {
-		if (change) {
-			_query.current.manufacturer = change;
-			dispatchQueryChange(_query.current);
-		}
-	}
-
-	function handleFromFilterChange(change) {
-		_query.current.from = change;
-		dispatchQueryChange(_query.current);
-	}
-
-	function handleToFilterChange(change) {
-		_query.current.to = change;
-		dispatchQueryChange(_query.current);
-	}
-
-	return (
-		<div className='cmp-orders-grid__search'>
-			<QueryInput
-				key={'keyword'}
-				items={config.keywordDropdown.items}
-				placeholder={config.inputPlaceholder}
-				onQueryChanged={handleKeywordFilterChange}
-			></QueryInput>
-			<SimpleDropDown
-				key={'vendors'}
-				items={config.vendorsDropdown.items}
-				onItemSelected={handleVendorFilterChange}
-			></SimpleDropDown>
-			<SimpleDatePicker
-				pickerKey={'from'}
-				placeholder={config.datePlaceholder}
-				label={config.fromLabel}
-				onSelectedDateChanged={handleFromFilterChange}
-			></SimpleDatePicker>
-			<SimpleDatePicker
-				pickerKey={'to'}
-				placeholder={config.datePlaceholder}
-				label={config.toLabel}
-				onSelectedDateChanged={handleToFilterChange}
-			></SimpleDatePicker>
-		</div>
-	);
+  return (
+    <div className="cmp-orders-grid__search">
+      <QueryInput
+        key={"keyword"}
+        items={config.keywordDropdown.items}
+        placeholder={config.inputPlaceholder}
+        onQueryChanged={(change) => handleFilterChange(change, "keyword")}
+      ></QueryInput>
+      <SimpleDropDown
+        key={"manufacturer"}
+        items={config.vendorsDropdown.items}
+        onItemSelected={(change) => handleFilterChange(change, "manufacturer")}
+      ></SimpleDropDown>
+      <SimpleDatePicker
+        pickerKey={"from"}
+        placeholder={config.datePlaceholder}
+        label={config.fromLabel}
+        onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
+      ></SimpleDatePicker>
+      <SimpleDatePicker
+        pickerKey={"to"}
+        placeholder={config.datePlaceholder}
+        label={config.toLabel}
+        onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
+      ></SimpleDatePicker>
+    </div>
+  );
 }
 
 export default QuotesGridSearch;
