@@ -105,11 +105,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 				const sortKey = params.request.sortModel?.[0]?.colId;
 				const sortDir = params.request.sortModel?.[0]?.sort;
 				getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then((response) => {
-					if (response)
 						params.success({
-							rowData: response.items,
-							lastRow: response.totalItems,
-							rowCount: response.totalItems,
+							rowData: response?.items ?? 0,
+							lastRow: response?.totalItems ?? 0,
+							rowCount: response?.totalItems ?? 0
 						});
 				});
 			},
@@ -187,9 +186,13 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 	function onViewportChanged(data) {
 		if (config.paginationStyle === 'scroll') {
 			const renderedNodes = data.api.getRenderedNodes();
-			const firstIndex = renderedNodes[0].rowIndex;
-			const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
-			setActualRange({ from: firstIndex + 1, to: lastIndex + 1, total: data.api.getDisplayedRowCount() });
+			if (renderedNodes.length > 0) {
+				const firstIndex = renderedNodes[0].rowIndex;
+				const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
+				setActualRange({ from: firstIndex + 1, to: lastIndex + 1, total: data.api.getDisplayedRowCount() });
+			} else {
+				setActualRange({ from: 0, to: 0, total: 0 });
+			}
 		}
 	}
 

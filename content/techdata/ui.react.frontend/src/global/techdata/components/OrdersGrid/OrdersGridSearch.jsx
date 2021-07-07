@@ -28,7 +28,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
       { key: "web", value: "Web" },
       { key: "edi", value: "EDI" },
       { key: "xml", value: "XML" },
-      { key: "phoneOrEmail", value: "Phone/Email" },
+      { key: "PE", value: "Phone/Email" },
     ],
   };
 
