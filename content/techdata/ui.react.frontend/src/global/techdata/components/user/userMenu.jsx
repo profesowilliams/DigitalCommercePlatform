@@ -22,7 +22,7 @@ const userMenu = (props) => {
       {isActive ? 
         <div className='cmp-sign-in-list'>
           <p className='ec-id'>
-            <span>MY EC ID: {props.id}</span>
+            <span>EC ID: {props.id}</span>
           </p>
           <p>{props.firstName}</p>
           <p>{props.lastName}</p>

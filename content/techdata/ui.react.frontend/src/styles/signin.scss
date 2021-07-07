@@ -45,39 +45,50 @@
 		}
 	}
 
+	$offset-lg: 30px;
+	$offset-sm: 14px;
+
 	&-list {
 		background-color: #fff;
 		z-index: 9999;
-		border-top: 2px solid darkblue;
 		box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
 		box-sizing: border-box;
-		padding-top: 10px;
-		width: 175px;
+		padding: 0 $offset-sm;
 		position: absolute;
+		top: 47px;
+		white-space: nowrap;
+		min-width: 200px;
+		@include tablet {
+			padding: 0 $offset-lg;
+		}
 
 		p {
-			height: 20px;
-			width: 148px;
 			color: #555555;
 			font-family: 'Open Sans', sans-serif;
 			font-size: 13px;
 			letter-spacing: 0;
 			line-height: 16px;
-			word-break: break-all;
-			padding-bottom: 10px;
-			margin: 0px 15px 15px;
+			padding: 14px 0;
 			text-align: left;
 			box-sizing: border-box;
+			white-space: nowrap;
+			overflow: hidden;
 
 			&.ec-id {
 				border-bottom: 1px solid #d6d6d6;
 				display: block;
 			}
+			&.user-greet {
+				@include desktop {
+					display: none;
+				}
+				border-bottom: 1px solid #d6d6d6;
+			}
 		}
 
 		&-content {
 			list-style: none;
-			padding: 0 15px;
+			padding: 0;
 			&--item {
 				margin-bottom: 10px;
 				display: flex;
@@ -87,6 +98,9 @@
 					&--icon {
 						color: #1798d1;
 						margin-right: 13px;
+						@include tablet {
+							display: none;
+						}
 					}
 
 					span {
@@ -101,16 +115,24 @@
 	&-signout {
 		border: none;
 		background-color: transparent;
-		padding: 5px;
+		padding: inherit;
+		padding-top: 10px;
+		padding-bottom: 10px;
 		cursor: pointer;
-		height: 35px;
-		width: 175px;
+		width: calc(100% + #{$offset-sm} * 2);
+		margin-left: -#{$offset-sm};
 		color: white;
 		font-family: 'Open Sans', sans-serif;
 		font-size: 14px;
 		letter-spacing: 0;
-		line-height: 13px;
 		background-color: #1699d1;
+		@include tablet {
+			background-color: #F6F6F6;
+			color: #555555;
+			text-align: left;
+			width: calc(100% + #{$offset-lg} * 2);
+			margin-left: -#{$offset-lg};
+		}
 	}
 
 	.active {

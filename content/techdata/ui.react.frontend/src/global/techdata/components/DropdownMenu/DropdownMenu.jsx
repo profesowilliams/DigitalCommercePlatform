@@ -20,8 +20,11 @@ const DropdownMenu = ({ items, userDataCheck, config }) => {
 			</button>
 			{isActive ? (
 				<div className='cmp-sign-in-list'>
+					<p className='user-greet'>
+						<span>Welcome {userName}!</span>
+					</p>
 					<p className='ec-id'>
-						<span>MY EC ID: {userId}</span>
+						<span>EC ID: {userId}</span>
 					</p>
 					<ul className='cmp-sign-in-list-content'>
 						{items.map(({ linkTitle, linkUrl, iconUrl }) => (
