@@ -1,6 +1,123 @@
-.cmp-tabs {}
-.cmp-tabs__tablist {}
-.cmp-tabs__tab {}
-.cmp-tabs__tab--active {}
-.cmp-tabs__tabpanel {}
-.cmp-tabs__tabpanel--active {}
+.tmp-bg {
+  background-color: get-color(brand-blue);
+}
+.top-nav {
+  .nav {
+    border: none;
+  }
+  .li,
+  [role="tab"] {
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    border-bottom: transparent 3px solid;
+    &:active,
+    &:hover,
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      border-bottom: #00b1e2 3px solid;
+    }
+    min-height: 30px;
+  }
+
+  .cmp-tabs__tab--active {
+    border-bottom: #00b1e2 3px solid;
+  }
+  .cmp-tabs__tabpanel {
+    padding: 2rem 0;
+  }
+  .cmp-tabs__tabpanel--active {
+    display: block;
+  }
+}
+
+.cmp-tabs__tablist {
+  margin-bottom: 4rem;
+}
+
+.cmp-tabs__tab {
+  text-align: center;
+  padding: 0 0.5rem;
+  border-bottom: 0;
+  font-size: 1rem;
+
+  .cmp-tabs__tab-image {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    border: 6px solid transparent;
+    padding: 1.5rem;
+    margin-top: 0.9rem;
+    transition: border-color 0.3s;
+  }
+
+  &.cmp-tabs__tab--active,
+  &:hover,
+  &:active {
+    outline: 0 none;
+
+    .cmp-tabs__tab-image {
+      border-color: #cfcaca;
+    }
+  }
+}
+
+.cmp-tabs__tabpanel--text {
+  height: 36px;
+  width: 133px;
+
+  font-family: "Open Sans";
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-align: center;
+}
+
+.cmp-text__white {
+  &.cmp-tabs__tabpanel--text,
+  cmp-tabs__tab,
+  cmp-tabs__tab--active {
+    color: #ffffff;
+  }
+}
+
+.tab-center {
+  .cmp-tabs__tablist {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.tab-divider {
+  .cmp-tabs__tablist {
+    display: flex;
+    justify-content: center;
+
+    .cmp-tabs__tab {
+      padding: 0;
+
+      &:not(:first-child):before {
+        content: "|";
+        font-weight: $font-weight-normal;
+        padding: 0 2rem;
+      }
+
+      &.cmp-tabs__tab--active {
+        font-weight: $font-weight-bold;
+      }
+
+      &:not(.cmp-tabs__tab--active) {
+        font-weight: $font-weight-light;
+      }
+
+      &:hover {
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
