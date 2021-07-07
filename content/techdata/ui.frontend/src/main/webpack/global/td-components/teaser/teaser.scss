@@ -507,100 +507,99 @@ $teaser-headings-mobile: (
   }
 }
 
-
 // Triptych Teaser
 .cmp-light-theme {
-    // width: 100%; this is a temporary line for  testing in AEM
-   .cmp-teaser {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin: rem(35px) rem(10px);
+  // width: 100%; this is a temporary line for  testing in AEM
+  .cmp-teaser {
+    display: flex;
+    flex-direction: column;
+    margin: rem(35px) rem(10px);
+    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    width: min-content;
 
-      &__description {
-          display: none;
-      }
-  
-      &__content {
-        width: rem(460px);
-        height: rem(300px);
-        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
-        position: relative;
-      }
-  
-      img {
-        width: 100%;
-        height: rem(230px);
-      }
-  
-      &__title {
-        background-color: get-color(brand-blue);
-        color: get-color(brand-white);
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &__description {
+      display: none;
+    }
+
+    &__content {
+      width: rem(460px);
+      height: rem(300px);
+      position: relative;
+    }
+
+    &__image {
+      width: fit-content;
+    }
+
+    &__title {
+      background-color: get-color(brand-blue);
+      color: get-color(brand-white);
+      font-size: $font-size-custom-medium;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: rem(70px);
+      position: absolute;
+      bottom: 0;
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background-color: get-color(brand-light-blue);
         width: 100%;
         height: rem(70px);
-        position: absolute;
-        bottom: 0;
-  
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
-        }
-      }
-    } 
-  }
-  
-  .cmp-dark-theme {
-    .cmp-teaser {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin: rem(35px) rem(10px);
-
-      &__description {
-          display: none;
-      }
-  
-      &__content {
-        width: rem(460px);
-        height: rem(300px);
-        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
-        position: relative;
-      }
-  
-      img {
-        width: 100%;
-        height: rem(230px);
-      }
-  
-      &__title {
-        background-color: get-color(light-see-through-background);
-        color: get-color(brand-blue);
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: rem(70px);
-        position: absolute;
-        bottom: 0;
-  
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
-        }
       }
     }
   }
-  
-  
+}
+
+.cmp-dark-theme {
+  .cmp-teaser {
+    display: flex;
+    flex-direction: column;
+    margin: rem(35px) rem(10px);
+    box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+    width: min-content;
+
+    &__description {
+      display: none;
+    }
+
+    &__content {
+      width: rem(460px);
+      height: rem(300px);
+      position: relative;
+    }
+
+    &__image {
+      width: fit-content;
+    }
+
+    &__title {
+      background-color: get-color(light-see-through-background);
+      color: get-color(brand-blue);
+      font-size: $font-size-custom-medium;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: rem(70px);
+      position: absolute;
+      bottom: 0;
+      padding: 0;
+      margin: 0;
+
+      &:hover {
+        background-color: get-color(brand-light-blue);
+        width: 100%;
+        height: rem(70px);
+      }
+    }
+  }
+}
 
 // Quadriptych Teaser
 

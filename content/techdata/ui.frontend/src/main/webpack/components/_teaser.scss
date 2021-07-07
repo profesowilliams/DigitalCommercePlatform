@@ -68,7 +68,7 @@
     }
 
     .cmp-teaser__content {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         padding-top: 3.125rem;
         padding-bottom: 3.125rem;
         padding-left: 7.375rem;
@@ -81,13 +81,13 @@
     }
 
     .cmp-teaser__pretitle {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         font-size: 3.125rem;
     }
 
     .cmp-teaser__title {
         display: flex;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         margin-left: 2.125rem;
         font-size: 4.375rem;
         position: relative;
@@ -95,13 +95,13 @@
     }
 
     .cmp-teaser__title-link {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         text-decoration: none;
         color: #ffffff;
     }
 
     .cmp-teaser__description {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         font-size: 1.875rem;
         margin-left: 12.125rem;
         position: relative;
@@ -109,18 +109,18 @@
     }
 
     .cmp-teaser__action-container {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
     }
 
     .cmp-teaser__action-link {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
     }
 }
 
 /* end hero 1 */
 
 .hero-style-2 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     position: relative;
     height: 25rem;
     overflow: hidden;
@@ -132,7 +132,7 @@
     }
 
     .cmp-teaser__content {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         padding-top: 6rem;
         padding-bottom: 3.125rem;
         padding-left: 2.188rem;
@@ -145,13 +145,13 @@
 
     .cmp-teaser__pretitle {
         font-size: 3.125rem;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
     }
 
     .cmp-teaser__title {
         display: flex;
         font-size: 2.813rem;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
     }
 
     .cmp-teaser__title-link {
@@ -162,7 +162,7 @@
     .cmp-teaser__description {
         font-size: 1.375rem;
         width: 42%;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
     }
 
     .cmp-teaser__action-container {
@@ -173,7 +173,7 @@
 }
 
 .hero-style-3 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     position: relative;
     height: 25rem;
     overflow: hidden;
@@ -185,7 +185,7 @@
     }
 
     .cmp-teaser__content {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         padding-top: 4.875rem;
         padding-bottom: 3.125rem;
         padding-left: 3.75rem;
@@ -201,24 +201,24 @@
 
     .cmp-teaser__title {
         display: flex;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         font-size: 2.5rem;
     }
 
     .cmp-teaser__title-link {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         text-decoration: none;
         color: #fff;
     }
 
     .cmp-teaser__description {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         font-size: 1.375rem;
         width: 42%;
     }
 
     .cmp-teaser__action-container {
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         width: 14.125rem;
     }
 
@@ -244,9 +244,9 @@
         padding: 3.438rem;
     }
 
-    .cmp-teaser__pretitle{
-        display:none;
-     }
+    .cmp-teaser__pretitle {
+        display: none;
+    }
     .cmp-teaser__title {
         //width: 3rem(50px
         float: left;
@@ -290,23 +290,22 @@
 }
 
 .cmp-buttons__plus {
-
     &-white {
         .cmp-buttons__plus {
             margin-top: 9.3px;
             height: 25px;
             width: 25px;
-            background-color: #00B1E2;
+            background-color: #00b1e2;
             position: absolute;
             font-size: 1rem;
             line-height: 1.2rem;
             text-align: center;
-            margin-left: .5rem;
+            margin-left: 0.5rem;
         }
 
         .cmp-buttons__plus:before {
             content: "+";
-            color: #FFFF;
+            color: #ffff;
             font-family: "Open Sans";
             font-size: 32px;
             font-weight: 600;
@@ -325,12 +324,12 @@
             font-size: 1rem;
             line-height: 1.2rem;
             text-align: center;
-            margin-left: .5rem;
+            margin-left: 0.5rem;
         }
 
         .cmp-buttons__plus:before {
             content: "+";
-            color: #00B1E2;
+            color: #00b1e2;
             font-family: "Open Sans";
             font-size: 32px;
             font-weight: 600;
@@ -351,98 +350,96 @@
     }
 }
 
-
-
 // Triptych Teaser
 .cmp-light-theme {
     // width: 100%; this is a temporary line for  testing in AEM
-   .cmp-teaser {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin: rem(35px) rem(10px);
-
-      &__description {
-          display: none;
-      }
-  
-      &__content {
-        width: rem(460px);
-        height: rem(300px);
-        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
-        position: relative;
-      }
-  
-      img {
-        width: 100%;
-        height: rem(230px);
-      }
-  
-      &__title {
-        background-color: get-color(brand-blue);
-        color: get-color(brand-white);
-        font-size: $font-size-custom-medium;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: rem(70px);
-        position: absolute;
-        bottom: 0;
-  
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
-        }
-      }
-    } 
-  }
-  
-  .cmp-dark-theme {
     .cmp-teaser {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin: rem(35px) rem(10px);
-
-      &__description {
-          display: none;
-      }
-  
-      &__content {
-        width: rem(460px);
-        height: rem(300px);
-        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
-        position: relative;
-      }
-  
-      img {
-        width: 100%;
-        height: rem(230px);
-      }
-  
-      &__title {
-        background-color: get-color(light-see-through-background);
-        color: get-color(brand-blue);
-        font-size: $font-size-custom-medium;
-        text-align: center;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: rem(70px);
-        position: absolute;
-        bottom: 0;
-  
-        &:hover {
-          background-color: get-color(brand-light-blue);
-          width: 100%;
-          height: rem(70px);
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        width: min-content;
+
+        &__description {
+            display: none;
         }
-      }
+
+        &__content {
+            width: rem(460px);
+            height: rem(300px);
+            position: relative;
+        }
+
+        &__image {
+            width: fit-content;
+        }
+
+        &__title {
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            font-size: $font-size-custom-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: rem(70px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+
+            &:hover {
+                background-color: get-color(brand-light-blue);
+                width: 100%;
+                height: rem(70px);
+            }
+        }
     }
-  }
-  
-  
+}
+
+.cmp-dark-theme {
+    .cmp-teaser {
+        display: flex;
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        width: min-content;
+    
+        &__description {
+          display: none;
+        }
+    
+        &__content {
+          width: rem(460px);
+          height: rem(300px);
+          position: relative;
+        }
+    
+        &__image {
+          width: fit-content;
+        }
+    
+        &__title {
+            background-color: get-color(light-see-through-background);
+            color: get-color(brand-blue);
+            font-size: $font-size-custom-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: rem(70px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+
+            &:hover {
+                background-color: get-color(brand-light-blue);
+                width: 100%;
+                height: rem(70px);
+            }
+        }
+    }
+}
