@@ -76,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.EstimationVali
 
         [Theory]
         [ClassData(typeof(InvalidIdData))]
-        public async Task IdValidationShouldReturnErrors(EV.EstimationValidate.Request request)
+        public async Task IdValidationShouldReturnError(EV.EstimationValidate.Request request)
         {
             var result = await _validator.TestValidateAsync(request);
 

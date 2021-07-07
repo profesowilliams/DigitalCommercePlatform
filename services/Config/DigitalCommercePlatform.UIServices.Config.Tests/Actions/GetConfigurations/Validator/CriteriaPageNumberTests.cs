@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation.TestHelper;
 using System.Threading.Tasks;
 using Xunit;
@@ -10,24 +9,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurati
     public class CriteriaPageNumberTests : GetConfigurationsValidatorTestsBase
     {
         private readonly GRC.GetConfigurations.Validator _validator;
+        private readonly GRC.GetConfigurations.Request _request;
 
         public CriteriaPageNumberTests()
         {
             _validator = GetValidator();
+            _request = GetValidRequest();
         }
 
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
-        public async Task PageNumberShouldBeInvalid(int pageNumber)
+        public async Task PageNumberValidationShouldReturnError(int pageNumber)
         {
-            var model = new GRC.GetConfigurations.Request
-            {
-                Criteria = FindModelFactory.CreateValid()
-            };
-            model.Criteria.PageNumber = pageNumber;
-
-            var result = await _validator.TestValidateAsync(model);
+            _request.Criteria.PageNumber = pageNumber;
+            var result = await _validator.TestValidateAsync(_request);
 
             result.Should().NotBeNull();
             result.IsValid.Should().BeFalse();
@@ -38,15 +34,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurati
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(255)]
-        public async Task PageNumberShouldBeValid(int pageNumber)
+        public async Task PageNumberValidationShouldReturnNoErrors(int pageNumber)
         {
-            var model = new GRC.GetConfigurations.Request
-            {
-                Criteria = FindModelFactory.CreateValid()
-            };
-            model.Criteria.PageNumber = pageNumber;
-
-            var result = await _validator.TestValidateAsync(model);
+            _request.Criteria.PageNumber = pageNumber;
+            var result = await _validator.TestValidateAsync(_request);
 
             result.Should().NotBeNull();
             result.ShouldNotHaveValidationErrorFor(x => x.Criteria.PageNumber);

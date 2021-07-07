@@ -11,14 +11,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal
         public string DealId { get; set; }
         public string VendorBid { get; set; }
         public string VendorName { get; set; }
-        public string Pricing { get; set; }
         public string EndUserName { get; set; }
-        public string DealTyp { get; set; }
         public string Market { get; set; }
-        public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        public PricingCondition Pricing { get; set; }
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
+        public DateTime? ExpiresFrom { get; set; }
+        public DateTime? ExpiresTo { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
         public bool? WithPaginationInfo { get; set; }
     }
 }

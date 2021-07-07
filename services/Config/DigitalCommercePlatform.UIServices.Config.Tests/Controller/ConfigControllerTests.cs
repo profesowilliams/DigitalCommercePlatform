@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
@@ -51,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var criteria = new Models.Configurations.FindModel
+            var criteria = new FindModel
             {
                 SortBy = "createdOn",
                 SortDirection = "asc",
@@ -76,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Deals.FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = "asc",
+                SortDirection = Models.Deals.SortDirection.asc,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Deals.FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = "asc",
+                SortDirection = Models.Deals.SortDirection.asc,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);

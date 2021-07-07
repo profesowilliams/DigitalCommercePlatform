@@ -9,10 +9,8 @@
         EducationERateK12 = 4,
         Federal = 5,
         FederalGSA = 6,
-        Local = 7,
+        State = 7,
         Medical = 8,
-        SEWPContract = 9,
-        State = 10,
+        SEWPContract = 11,
     }
-
 }

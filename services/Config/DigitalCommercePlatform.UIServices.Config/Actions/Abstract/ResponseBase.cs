@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract
+namespace DigitalCommercePlatform.UIServices.Config.Actions.Abstract
 {
     [ExcludeFromCodeCoverage]
     public class ResponseBase<T>

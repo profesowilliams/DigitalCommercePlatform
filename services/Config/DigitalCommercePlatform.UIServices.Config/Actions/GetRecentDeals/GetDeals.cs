@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
@@ -63,17 +62,24 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                     throw;
                 }
             }
-        
-            public class Validator : AbstractValidator<FindModel>
+        }
+
+        public class Validator : AbstractValidator<FindModel>
+        {
+            public Validator()
             {
-                public Validator()
+                When(x => x.WithPaginationInfo.HasValue && x.WithPaginationInfo.Value, () =>
                 {
-                    When(x => x.WithPaginationInfo.HasValue && x.WithPaginationInfo.Value, () =>
-                    {
-                        RuleFor(x => x.Page).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
-                        RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
-                    });
-                }
+                    RuleFor(x => x.Page).NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
+                    RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
+                });
+
+                RuleFor(x => x.SortDirection).IsInEnum();
+                When(x => x.Pricing.HasValue, () =>
+                {
+                    RuleFor(x => x.Pricing).IsInEnum();
+                });
+                
             }
         }
     }

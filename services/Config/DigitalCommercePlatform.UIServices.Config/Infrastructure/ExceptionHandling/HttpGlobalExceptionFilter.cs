@@ -1,4 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
