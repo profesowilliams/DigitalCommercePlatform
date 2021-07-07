@@ -902,6 +902,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/hamburger-menu.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "about-us",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/teaser-card/about-us.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

@@ -97,12 +97,14 @@
 			}
 		}
 		&--aboutus {
-			padding: 3.18rem 0.5rem;
+            padding: rem(15px) rem(35px) 0;
+            background-color: get-color(brand-blue) !important;
 			.cmp-teaser {
 				box-shadow: unset;
 				position: relative;
 				display: flex;
 				flex-direction: column;
+				align-items: center;
 				min-width: 0;
 				min-height: rem(100px);
 				background-clip: border-box;
@@ -143,17 +145,11 @@
 					}
 				}
 				&__image {
-					position: relative;
-					margin-bottom: 4.625rem;
 
 					img {
 						border-radius: 50%;
 						width: 6.62rem;
 						height: 6.62rem;
-						position: absolute;
-						left: 50%;
-						top: 0;
-						transform: translateX(-50%) translateY(-33%);
 					}
 				}
 				&__description {
