@@ -903,6 +903,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "logos-layout",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/logos/logos-layout.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "about-us",
                 template: path.resolve(
                     __dirname,
