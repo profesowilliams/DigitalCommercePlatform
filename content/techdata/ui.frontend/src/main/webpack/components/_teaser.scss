@@ -405,21 +405,21 @@
         margin: rem(35px) rem(10px);
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
         width: min-content;
-    
+
         &__description {
-          display: none;
+            display: none;
         }
-    
+
         &__content {
-          width: rem(460px);
-          height: rem(300px);
-          position: relative;
+            width: rem(460px);
+            height: rem(300px);
+            position: relative;
         }
-    
+
         &__image {
-          width: fit-content;
+            width: fit-content;
         }
-    
+
         &__title {
             background-color: get-color(light-see-through-background);
             color: get-color(brand-blue);
@@ -502,6 +502,68 @@
             .cmp-teaser__description {
                 padding: rem(25px);
                 line-height: rem(16px);
+            }
+        }
+    }
+}
+
+.cmp-six-teasers {
+    position: relative;
+    .cmp-teaser {
+        display: flex;
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        width: rem(215px);
+        height: rem(353px);
+
+        &__description {
+            color: get-color(text-light-charcoal);
+            font-size: $font-size-xsmall;
+            font-weight: normal;
+            padding: rem(10px) rem(18px);
+            height: rem(186px);
+            line-height: rem(14px);
+            &--title {
+                color: get-color(brand-blue);
+                font-size: $font-size-small;
+                padding-bottom: rem(8px);
+                font-weight: 600 !important;
+                margin: 0;
+            }
+        }
+
+        &__content {
+            position: relative;
+        }
+
+        &__image {
+            img {
+                width: rem(215px);
+                height: rem(135px);
+            }
+            overflow: hidden;
+        }
+
+        &__button {
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            font-size: $font-size-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(215px);
+            height: rem(35px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+
+            &:hover {
+                background-color: get-color(brand-light-blue);
+                width: rem(215px);
+                height: rem(35px);
             }
         }
     }
