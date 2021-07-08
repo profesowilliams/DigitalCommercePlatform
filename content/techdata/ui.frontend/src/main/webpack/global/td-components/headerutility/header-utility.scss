@@ -1,4 +1,8 @@
 .headerutility {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
     &.aem-GridColumn {
         display: flex;
         align-items: center;
@@ -23,3 +27,5 @@
         }
     }
 }
+
+

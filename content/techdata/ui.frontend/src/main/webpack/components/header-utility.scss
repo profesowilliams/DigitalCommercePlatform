@@ -1,13 +1,17 @@
-@import 'main';
+@import "main";
 
 .headerutility {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
     &.aem-GridColumn {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         flex: 0;
         margin-left: auto;
-    }
+    } 
     .signin {
         white-space: nowrap;
     }
