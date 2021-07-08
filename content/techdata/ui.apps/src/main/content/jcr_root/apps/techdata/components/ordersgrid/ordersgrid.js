@@ -10,6 +10,7 @@ use(function () {
     var searchCriteriaData = {};
 	var keywordDropdownData = {};
 	var vendorDropdownData = {};
+	var methodDropdownData = {};
     var resourceResolver = resource.getResourceResolver();
  var invoicesModalData = {};
 
@@ -112,6 +113,28 @@ use(function () {
 
 		}
 
+	if (properties && properties["methodDropdownLabel"]) {
+		methodDropdownData.label = properties["methodDropdownLabel"];
+	}
+	var methodListNode = resourceResolver.getResource(currentNode.getPath() + "/methodList");
+
+		if (methodListNode !== null) {
+			var childrenList = methodListNode.getChildren();
+			var keyValues = [];
+			for (var [key, res] in Iterator(childrenList)) {
+				var labelKey = res.properties["methodKey"];
+				var labelValue = res.properties["methodValue"];
+				var labelData = {};
+				labelData.key = labelKey;
+				labelData.value = labelValue;
+				keyValues.push(labelData);
+				methodDropdownData.items = keyValues;
+
+			}
+
+
+		}
+
 
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
@@ -199,9 +222,24 @@ use(function () {
         searchCriteriaData["vendorsDropdown"] = vendorDropdownData;
     }
 
+	if (vendorDropdownData != null) {
+        searchCriteriaData["methodsDropdown"] = methodDropdownData;
+    }
+
     if (searchCriteriaData != null) {
         jsonObject["searchCriteria"] = searchCriteriaData;
     }
+
+    if (properties && properties["fromLabel"]) {
+                searchCriteriaData.fromLabel = properties["fromLabel"];
+    }
+    if (properties && properties["toLabel"]) {
+                searchCriteriaData.toLabel = properties["toLabel"];
+    }
+    if (properties && properties["datePlaceholder"]) {
+                searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
+    }
+
 
 
 

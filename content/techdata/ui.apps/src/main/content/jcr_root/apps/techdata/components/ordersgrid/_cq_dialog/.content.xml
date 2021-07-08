@@ -388,6 +388,60 @@
                                                     </items>
                                                 </field>
                                             </vendorActions>
+                                            <methodDropdownLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="method Label"
+                                                    name="./methodDropdownLabel"/>
+                                            <methodActions
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldDescription="Click 'Add' to add key and value for method drop down">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./methodList">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Key"
+                                                                        fieldLabel="Method Key"
+                                                                        name="./methodKey"/>
+                                                                <labelValue
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Value"
+                                                                        fieldLabel="Method Value"
+                                                                        name="./methodValue"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </methodActions>
+                                            <fromLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter From Label"
+                                                    fieldLabel="From Label"
+                                                    name="./fromLabel"/>
+                                            <toLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter To Label"
+                                                    fieldLabel="To Label"
+                                                    name="./toLabel"/>
+                                            <datePlaceholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Date Placeholder"
+                                                    fieldLabel="Date Placeholder"
+                                                    name="./datePlaceholder"/>
                                         </items>
                                     </column>
                                 </items>
