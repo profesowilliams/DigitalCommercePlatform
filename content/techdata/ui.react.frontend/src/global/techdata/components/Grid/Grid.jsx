@@ -4,6 +4,7 @@ import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
+	const componentVersion = '1.0.1';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -164,6 +165,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 		// expose this instance of grid object globally for debug purposes
 		// keep custom hooks after grid refresh
 		globalThis[`$$tdGrid${gridId.current}`] = {
+			version: componentVersion,
 			node: gridNodeRef.current,
 			api: data.api,
 			onAjaxCall: globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall

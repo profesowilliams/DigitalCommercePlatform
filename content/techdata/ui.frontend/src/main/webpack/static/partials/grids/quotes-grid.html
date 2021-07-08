@@ -3,6 +3,22 @@
         data-component="QuotesGrid"
         data-cmp-type="react"
         className="cmp-quotes-grid"
-        data-config='{"label":"Quotes grid","uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/quote", "quoteDetailUrl":"/language-masters/en/dcp/quote-details", "itemsPerPage":"25", "paginationStyle": "scroll", "options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"}, "columnList":[{"columnLabel":"TD Quote ID","columnKey":"id", "sortable": true},{"columnLabel":"Quote Reference","columnKey":"quoteReference", "sortable": false}, {"columnLabel":"Vendor","columnKey":"vendor", "sortable": false}, {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false}, {"columnLabel":"SPA/Deal IDs","columnKey":"dealId", "sortable": false}, {"columnLabel":"Created","columnKey":"created", "sortable": true}, {"columnLabel":"Expires","columnKey":"expires", "sortable": false}, {"columnLabel":"Quote Value","columnKey":"quoteValue", "sortable": true}, {"columnLabel":"Checkout","columnKey":"canCheckOut", "sortable": false}], "spaDealsIdLabel": "multiple"}'
+        data-config='{"label":"Quotes grid",
+        "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/quote", 
+        "quoteDetailUrl":"/language-masters/en/dcp/quote-details", 
+        "itemsPerPage":"25", "paginationStyle": "pages", 
+        "options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"},
+        "columnList":[{"columnLabel":"TD Quote ID","columnKey":"id", "sortable": true},
+        {"columnLabel":"Quote Reference","columnKey":"quoteReference", "sortable": false},
+        {"columnLabel":"Vendor","columnKey":"vendor", "sortable": false},
+        {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
+        {"columnLabel":"SPA/Deal IDs","columnKey":"dealId", "sortable": false},
+        {"columnLabel":"Created","columnKey":"created", "sortable": true},
+        {"columnLabel":"Expires","columnKey":"expires", "sortable": false},
+        {"columnLabel":"Quote Value","columnKey":"quoteValue", "sortable": true},
+        {"columnLabel":"Checkout","columnKey":"canCheckOut", "sortable": false}],
+        "checkout":{"uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
+        "redirectUrl": "https://shop.techdata.com/cart"},
+        "spaDealsIdLabel": "multiple"}'
     ></div>
 </div>
