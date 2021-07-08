@@ -153,7 +153,7 @@
               min-height: rem(287px);
               &:hover {
                 .cmp-teaser__title-link {
-                  font-weight: 600;
+                  font-weight: $font-weight-bold;
                 }
                 .cmp-image__image {
                   filter: none;
@@ -168,7 +168,7 @@
                   color: get-color(text-dark-grey);
                   font-size: $font-size-custom-medium;
                   line-height: rem(24px);
-                  font-weight: 400;
+                  font-weight: $font-weight-semi-bold;
                 }
               }
               .cmp-image__image  {
