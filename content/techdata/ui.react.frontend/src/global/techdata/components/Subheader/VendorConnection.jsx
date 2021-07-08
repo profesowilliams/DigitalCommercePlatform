@@ -7,18 +7,17 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 	const [fetchedVendors, setFetchedVendors] = useState(null);
 	const [error, setError] = useState(null);
 	const ENDPOINTS = {
-		VendorDisconnect: apiUrl + '/VendorDisconnect',
-		VendorPortalLogin: apiUrl + '/VendorPortalLogin',
-		VendorRefreshToken: apiUrl + '/VendorRefreshToken',
-		GetValidAccessToken: apiUrl + '/GetValidAccessToken',
-		GetVendorConnections: apiUrl + '/GetVendorConnections',
+		VendorConnect: apiUrl + '/vendor/connect',
+		VendorDisconnect: apiUrl + '/vendorDisconnect',
+		VendorRefreshToken: apiUrl + '/vendorRefreshToken',
+		GetValidAccessToken: apiUrl + '/getValidAccessToken',
+		GetVendorConnections: apiUrl + '/getVendorConnections',
 	};
 
-	async function vendorPortalLogin(code, vendorName = 'Cisco') {
-		//V1/VendorPortalLogin?code={Code Received from VendorPortal Login}&Vendor={Vendor}
-		const url = ENDPOINTS.VendorPortalLogin;
+	async function vendorLogin(code, vendorName) {
+		const url = ENDPOINTS.VendorConnect;
 		try {
-			await get(url + `?code=${code}&vendor=${vendorName}`);
+			await get(url + `?code=${code}&vendor=${vendorName}&redirectUri=${window.location.href}`);
 			const response = await get(ENDPOINTS.GetVendorConnections);
 			return response;
 		} catch (e) {
@@ -34,7 +33,7 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 		async function _() {
 			let response = null;
 			if (signInRequest) {
-				response = await vendorPortalLogin(signInRequest.code, signInRequest.vendor);
+				response = await vendorLogin(signInRequest.code, signInRequest.vendor);
 			} else {
 				response = await get(ENDPOINTS.GetVendorConnections);
 			}

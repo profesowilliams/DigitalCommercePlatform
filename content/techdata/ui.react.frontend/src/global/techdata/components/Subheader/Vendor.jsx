@@ -30,14 +30,6 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 		return true;
 	}
 
-	async function vendorRefreshToken() {
-		//V1/VendorRefreshToken?Vendor={Vendor}
-	}
-
-	async function getValidAccessToken() {
-		//V1/GetValidAccessToken?Vendor={Vendor}&UserID={userid}
-	}
-
 	// Component specific functions
 	async function toggleStateChanged(state) {
 		let result = false;
