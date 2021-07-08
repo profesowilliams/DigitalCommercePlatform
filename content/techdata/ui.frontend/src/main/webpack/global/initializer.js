@@ -45,4 +45,16 @@ Initializer.prototype.manualInitComponents = function () {
     if (bp.tablet()) {
         new MegamenuMobile();
     }
+
+    const mediaQueryList = window.matchMedia("(max-width:1023px)");
+
+
+    function triggerOnMobile(mql) {
+        if (mql.matches) {
+            new MegamenuMobile();
+        }
+    }
+
+    // triggers navigation only once when resize reach Mobile.
+    mediaQueryList.addEventListener('change', triggerOnMobile);
 }

@@ -109,6 +109,12 @@
                     display: none;
                 }
             }
+            &--title {
+                display: none;
+            }
+            &--sub-title {
+                display: none;
+            }
         }
         .cmp-megamenu-level-title {
             color: get-color(td-dark-blue);
@@ -176,6 +182,12 @@
                 line-height: rem(50px);
                 color: get-color(text-light-charcoal);
                 font-size: rem(14px);
+                &.inactive-md {
+                    display: none;
+                }
+                &.active-md {
+                    display: block;
+                }
             }
             &__body {
                 .fa-chevron-left {
@@ -189,12 +201,27 @@
             }
             &__primary {
                 padding: 0;
+                &.inactive-md {
+                    display: none;
+                }
+                &.active-md {
+                    display: block;
+                }
             }
             &__tabpanel {
                 div {
                     display: none;
+                    &.active-md {
+                        display: block;
+                    }
                 }
                 .cmp-megamenu__secondary {
+                    &.inactive-md {
+                        display: none;
+                    }
+                    &.active-md {
+                        display: block;
+                    }
                     &--title {
                         display: block;
                         text-align: center;

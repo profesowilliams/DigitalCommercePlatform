@@ -130,10 +130,21 @@ import bp from '../../../common-utils/js/media-match';
   };
   function onDocumentReady(){
     var navigators = document.querySelectorAll('#megamenu');
-    navigators.forEach(function(navigation){
+    navigators.forEach(function(navigation) {
+      var mediaQueryList = window.matchMedia("(min-width:1024px)");
+
       if (bp.desktop()) {
         new Navigation({navigation});
       }
+
+      function triggerNavigationOnDesktop(mql) {
+        if (mql.matches) {
+          new Navigation({navigation});
+        }
+      }
+
+      // triggers navigation only once when resize reach Desktop.
+      mediaQueryList.addEventListener('change', triggerNavigationOnDesktop);
     });
   };
   document.addEventListener("DOMContentLoaded", onDocumentReady);

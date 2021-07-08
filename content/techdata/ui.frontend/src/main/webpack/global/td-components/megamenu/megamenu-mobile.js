@@ -1,7 +1,10 @@
 export default class MegamenuMobile {
     constructor() {
+        this.log('initialized mobile megamenu');
         const mm = this.mm = document.querySelector('.megamenu');
         this.init(mm);
+        this.showCls = 'active-md';
+        this.hideCls = 'inactive-md';
         mm.addEventListener('click', (e) => this.handleNavigationClick(e));
         mm.addEventListener('click', (e) => this.handleBackBtnClick(e, mm));
     }
@@ -10,6 +13,24 @@ export default class MegamenuMobile {
         if (!el) return;
         
         this.handlePrimary(el);
+    }
+
+    log(str) {
+        console.info(str);
+    }
+
+    toggleClass(el, action) {
+        if (action === 'show') {
+            if (el.classList.contains(this.hideCls)) {
+                el.classList.remove(this.hideCls);
+            }
+            el.classList.add(this.showCls);
+        } else {
+            if (el.classList.contains(this.showCls)) {
+                el.classList.remove(this.showCls);
+            }
+            el.classList.add(this.hideCls);
+        }
     }
 
     handleBackBtnClick(event, el) {
@@ -22,10 +43,10 @@ export default class MegamenuMobile {
 
         const allSecondaryMenu = el.querySelectorAll('.cmp-megamenu__secondary');
         allSecondaryMenu?.forEach(menu => {
-            menu.style.display = 'none';
+            this.toggleClass(menu, 'hide');
         })
-        el.querySelector('.cmp-megamenu__primary').style.display = 'block';
-        el.querySelector('.cmp-megamenu__title').style.display = 'block';
+        this.toggleClass(el.querySelector('.cmp-megamenu__primary'), 'show');
+        this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'show');
     }
 
     handlePrimary(el) {
@@ -33,15 +54,15 @@ export default class MegamenuMobile {
         mmPrimaryList.forEach(list => {
             list.addEventListener('click', () => {
                 const primary = list.querySelector('[data-cmp-children]')?.dataset.cmpChildren;
-                list.parentNode.style.display = 'none';
-                el.querySelector('.cmp-megamenu__title').style.display = 'none';
+                this.toggleClass(list.parentNode, 'hide');
+                this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'hide');
 
                 // grab chevron and show it.
                 const backBtn = el.querySelector('.cmp-megamenu__back');
                 backBtn.style.opacity = 1;
                 
                 // show secondary
-                el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`).style.display = 'block';
+                this.toggleClass(el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`), 'show');
                 this.appendTitleAndSubTitle(el, primary);
                 this.checkSubMenu(el, primary);
             })
