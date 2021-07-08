@@ -1,16 +1,17 @@
 @import "main";
 
 .headerutility {
-    display: flex;
-    justify-content: space-evenly;
+    display: flex !important;
+    justify-content: space-evenly !important;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     &.aem-GridColumn {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex: 0;
-        margin-left: auto;
+        // display: flex;
+        // align-items: center;
+        // justify-content: flex-end;
+        // flex: 0;
+        // margin-left: auto;
+        // Commenting out the styles above to fix headerutility alignment - OP
     } 
     .signin {
         white-space: nowrap;

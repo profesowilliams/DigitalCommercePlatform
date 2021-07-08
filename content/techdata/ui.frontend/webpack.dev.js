@@ -486,7 +486,7 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "tabs-comp.html",
+                filename: "tabs",
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/partials/tabs/tabs.html"
