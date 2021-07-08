@@ -18,6 +18,9 @@ public class VendorListItem implements ListItem {
     private String vendorIcon;
     private String pageLink;
     private String vendorPageLabel;
+    private String vendorProductLabel;
+    private String vendorProductLink;
+
 
     @Override
     public String getTitle() {
@@ -39,15 +42,23 @@ public class VendorListItem implements ListItem {
     public String getVendorPageLabel() {
         return vendorPageLabel;
     }
+    public String getVendorProductLabel() {
+        return vendorProductLabel;
+    }
+    public String getVendorProductLink() {
+        return vendorProductLink;
+    }
 
     public VendorListItem(){}
 
-    public VendorListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel) {
+    public VendorListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink) {
         this.title = title;
         this.overview = overview;
         this.vendorIcon = vendorIcon;
         this.pageLink = pageLink;
         this.vendorPageLabel = vendorPageLabel;
+        this.vendorProductLabel = vendorProductLabel;
+        this.vendorProductLink = vendorProductLink;
     }
 
     public static VendorListItem getVendorListItem(ContentFragment cf){
@@ -57,6 +68,9 @@ public class VendorListItem implements ListItem {
         String vendorIcon = StringUtils.EMPTY;
         String pageLink = StringUtils.EMPTY;
         String vendorPageLabel = StringUtils.EMPTY;
+        String vendorProductLabel = StringUtils.EMPTY;
+        String vendorProductLink = StringUtils.EMPTY;
+
 
         for (Iterator<ContentElement> it = cf.getElements(); it.hasNext(); ) {
             ContentElement ce = it.next();
@@ -73,8 +87,14 @@ public class VendorListItem implements ListItem {
             else if (tagElement.equals("vendor-page-label")){
                 vendorPageLabel = ce.getContent();
             }
+            else if (tagElement.equals("vendor-product-label")){
+                vendorProductLabel = ce.getContent();
+            }
+            else if (tagElement.equals("vendor-product-link")){
+                vendorProductLink = ce.getContent();
+            }
         }
-        VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel);
+        VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
         return v1;
     }

@@ -19,7 +19,13 @@
                     <div class="vendor-section-desc">
                         <p>${item.overview @ context = 'html'}</p>
                     </div>
-                    <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                    <div class="vendor-section-link-section">
+                        <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                    </div>
+                    <div class="vendor-section-link-section">
+                        <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
+                    </div>
+
                 </div>
             </sly>
         </div>
