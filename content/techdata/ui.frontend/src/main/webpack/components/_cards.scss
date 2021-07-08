@@ -14,14 +14,7 @@
             background-clip: border-box;
             color: get-color(text-dark-grey) !important;
             cursor: pointer;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
 
-            .cmp-teaser__image img {
-                border-color: get-color(brand-blue) !important;
-                filter: grayscale(100%);
-                opacity: 0.15;
-            }
             &:hover {
                 color: get-color(brand-blue) !important;
                 cursor: pointer;
@@ -33,8 +26,6 @@
                 }
                 .cmp-teaser__image img {
                     border-color: get-color(brand-blue) !important;
-                    filter: grayscale(0%);
-                    opacity: 2;
                 }
             }
 
@@ -53,8 +44,6 @@
                 font-size: 1.31rem;
                 margin: 0;
                 line-height: 1.5rem;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
                 &-link {
                     text-decoration: none;
                     line-height: 1.5rem;
@@ -156,6 +145,37 @@
                     display: none;
                 }
             }
+          }
+        &--image-highlight {
+          &.cmp-teaser__card{
+
+            .cmp-teaser {
+              min-height: rem(287px);
+              &:hover {
+                .cmp-teaser__title-link {
+                  font-weight: 600;
+                }
+                .cmp-image__image {
+                  filter: none;
+                }
+                .cmp-teaser__description {
+                  color: get-color(text-dark-grey);
+                }
+              }
+
+              &__title {
+                &-link {
+                  color: get-color(text-dark-grey);
+                  font-size: $font-size-custom-medium;
+                  line-height: rem(24px);
+                  font-weight: 400;
+                }
+              }
+              .cmp-image__image  {
+                filter: brightness(10) invert(10);
+              }
+            }
+          }
         }
     }
     &__card-image--rounded {
