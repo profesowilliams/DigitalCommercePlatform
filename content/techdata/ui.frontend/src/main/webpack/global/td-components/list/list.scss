@@ -237,3 +237,50 @@
     }
   }
 }
+
+.dp-list--products-with-icons {
+    ul.cmp-list{
+        flex-wrap: wrap;
+        display: flex;
+        li.cmp-list__item{
+            width: 16%;
+            list-style-type:none;
+            transition: all 0.3s;
+            padding-bottom: 20px;
+            &:hover {
+                article{
+                    a.cmp-list__item-link {
+                        span.cmp-list__item-title{
+                            color: #000C21;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+            article {
+                a.cmp-list__item-link {
+                    display: flex;
+                    flex-direction: column;
+                    text-decoration: none;
+                    figure.cmp-image__image-figure {
+                        justify-content: center;
+                        display: flex;
+                        img.cmp-image__image {
+                            width: 60px;
+                            height: 60px;
+                        }
+                    }
+                   span.cmp-list__item-title{
+                    text-decoration: none;
+                    font-size: 13px;
+                    line-height: 15px;
+                    text-align: center;
+                    color: rgba(0,0,0,.55);
+                    margin: 0 5px;
+                   }
+                }
+                span.cmp-list__item-description{}
+            }
+        }
+    }
+}
