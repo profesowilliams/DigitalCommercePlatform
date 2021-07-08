@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
@@ -101,9 +102,11 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             var cartURL = _appCartUrl.AppendPathSegment("/CreateByQuote").AppendPathSegment(QuoteId);
             try
             {
-                var createByQuote = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(cartURL,null,null);
+                var createByQuote = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(cartURL,null,null).ConfigureAwait(false);
+                var result = createByQuote?.StatusCode ?? HttpStatusCode.OK;
+
                 var response = new GetCreateCartByQuote.Response();
-                response.IsSuccess = createByQuote.StatusCode == System.Net.HttpStatusCode.OK ? true : false;
+                response.IsSuccess = result == HttpStatusCode.OK ? true : false;
                 return response;
             }
             catch (RemoteServerHttpException ex)
