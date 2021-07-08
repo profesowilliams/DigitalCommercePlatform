@@ -3,7 +3,7 @@
 namespace DigitalCommercePlatform.UIServices.Account.Models.Vendors
 {
     [ExcludeFromCodeCoverage]
-    public class VendorReferenceModel
+    public class VendorConnect
     {
         public string Vendor { get; set; }
         public bool IsConnected { get; set; }

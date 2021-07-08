@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
@@ -32,10 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [HttpGet]
-        [Route("vendorReference")]
-        public async Task<ActionResult> GetVendorReference()
+        [Route("vendor/connect")]
+        public async Task<ActionResult> SetVendorConnections(string code, string vendor, string redirectURL)
         {
-            var response = await Mediator.Send(new GetVendorReference.Request()).ConfigureAwait(false);
+            SetVendorConnection.Request request = new SetVendorConnection.Request { Code = code, Vendor= vendor, RedirectURL = redirectURL };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
 

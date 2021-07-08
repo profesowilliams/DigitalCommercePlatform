@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 {
     public interface IVendorService
     {
-        Task<List<VendorReferenceModel>> GetVendorReference();
+        Task<bool> SetVendorConnection(Actions.ConnectToVendor.SetVendorConnection.Request request);
         Task<List<VendorConnection>> GetVendorConnectionsAsync();
         Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request);
     }

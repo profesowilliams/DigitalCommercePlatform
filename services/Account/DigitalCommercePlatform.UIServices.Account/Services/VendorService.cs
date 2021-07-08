@@ -1,9 +1,12 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -37,28 +40,33 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return _allowedVendorValues;
         }
 
-        public async Task<List<VendorReferenceModel>> GetVendorReference()
+        public async Task<bool> SetVendorConnection(SetVendorConnection.Request request)
         {
-            //Returning dummy data for now as App-Service is not yet ready
-            //var Vendorurl = _quoteServiceURL
-            //        .AppendPathSegment("find")  //Change the actuall method when the App-Service is ready
-            //        .SetQueryParams(new{});
-
-            //var getVendorResponse = await _middleTierHttpClient.GetAsync<List<VendorReferenceModel>>(Vendorurl);
-            //return getVendorResponse;
-
-            var response = new List<VendorReferenceModel>();
-
-            for (int i = 0; i < 2; i++)
+            try
             {
-                var Vendors = new VendorReferenceModel();
-                Vendors.Vendor = _allowedVendorValues[i];
-                Vendors.IsConnected = true;
-                Vendors.IsValidRefreshToken = false;
-                Vendors.ConnectionDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                response.Add(Vendors);
+                var url = _coreSecurityUrl.AppendPathSegment("/VendorPortalLogin")
+                      .SetQueryParams(new
+                      {
+                          Code = request.Code,
+                          Vendor = request.Vendor,
+                          RedirectUri = request.RedirectURL,
+                      });
+
+                var response = await _middleTierHttpClient.GetAsync<bool>(url).ConfigureAwait(false);
+
+                return await Task.FromResult(response);
             }
-            return await Task.FromResult(response);
+            catch (RemoteServerHttpException ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw new UIServiceException("Error while calling Core-Security Service" + ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw ex;
+            }
+
         }
 
         public Task<List<VendorConnection>> GetVendorConnectionsAsync()

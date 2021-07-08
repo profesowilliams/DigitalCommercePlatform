@@ -1,5 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Actions.VendorReference;
+using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -43,16 +43,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetVendorReference(ResponseBase<GetVendorReference.Response> expected)
+        public async Task GetVendorReference(ResponseBase<SetVendorConnection.Response> expected)
         {
             _mediator.Setup(x => x.Send(
-                      It.IsAny<GetVendorReference.Request>(),
+                      It.IsAny<SetVendorConnection.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
             var controller = GetController();
-
-            var result = await controller.GetVendorReference().ConfigureAwait(false);
+            var result = await controller.SetVendorConnections("72TAdk1yNvHjXBJlQoEkrLmRHvOZvSvD470AAABr", "Cisco", "https://dit.dc.tdebusiness.cloud/content/techdata/us/vendorlogin.html").ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

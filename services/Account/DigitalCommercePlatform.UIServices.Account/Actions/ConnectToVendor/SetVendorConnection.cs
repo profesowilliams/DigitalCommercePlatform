@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorReference
+namespace DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor
 {
     [ExcludeFromCodeCoverage]
-    public class GetVendorReference
+    public sealed class SetVendorConnection
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            
+            public string Code { get; set; }
+            public string Vendor { get; set; }
+            public string RedirectURL { get; set; }
         }
 
         public class Response
         {
-            public List<VendorReferenceModel> Items { get; set; }
+            public bool Items { get; set; }
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -37,9 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorReference
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var vendorReference = await _vendorService.GetVendorReference();
-                    var vendorMappedDeals = _mapper.Map<Response>(vendorReference);
-                    return new ResponseBase<Response> { Content = vendorMappedDeals };
+                    var isConnected = await _vendorService.SetVendorConnection(request);
+                    var response = _mapper.Map<Response>(isConnected);
+                    return new ResponseBase<Response> { Content = response };
             }
         }
     }
