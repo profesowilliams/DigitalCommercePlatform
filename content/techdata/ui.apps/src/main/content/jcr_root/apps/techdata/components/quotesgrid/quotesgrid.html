@@ -1,11 +1,11 @@
 <sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
-<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
-    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
-</sly>
-<sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,quoteGridEndpoint=serviceData.quoteGridEndpoint}">
+    <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+        <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+    </sly>
+    <sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,quoteGridEndpoint=serviceData.quoteGridEndpoint,createQuoteEndpoint=serviceData.createQuoteEndpoint,shopDomain=serviceData.shopDomain,cartURL=serviceData.cartURL}">
 
-<div data-component="QuotesGrid" data-cmp-type="react" className="cmp-quotes-grid" data-config="${listUse.configJson}">
-            </div>
- </sly>
+        <div data-component="QuotesGrid" data-cmp-type="react" className="cmp-quotes-grid" data-config="${listUse.configJson}">
+        </div>
+    </sly>
 
 

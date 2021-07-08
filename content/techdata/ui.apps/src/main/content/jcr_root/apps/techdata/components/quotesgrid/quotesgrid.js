@@ -9,6 +9,7 @@ use(function () {
     var searchCriteriaData = {};
     var keywordDropdownData = {};
     var vendorDropdownData = {};
+    var checkoutData = {};
     var resourceResolver = resource.getResourceResolver();
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
@@ -163,6 +164,18 @@ if (properties && properties["keywordDropdownLabel"]) {
         if (searchCriteriaData != null) {
             jsonObject["searchCriteria"] = searchCriteriaData;
         }
+     if (this.createQuoteEndpoint != null) {
+
+                    checkoutData.uiServiceEndPoint = this.uiServiceDomain+this.createQuoteEndpoint;
+        }
+
+     if (this.shopDomain != null) {
+                    checkoutData.redirectUrl = this.shopDomain+this.cartURL;
+        }
+      if (checkoutData != null) {
+            jsonObject["checkout"] = checkoutData;
+        }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
