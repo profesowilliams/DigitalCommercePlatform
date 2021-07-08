@@ -45,34 +45,36 @@
 .tmp-bg {
   background-color: get-color(brand-blue);
 }
+
 .top-nav {
   .nav {
     border: none;
   }
-  .li,
-  [role="tab"] {
-    padding: 0 1rem;
-    font-size: 0.9rem;
-    //  color: #00B1E2;
-    border-bottom: transparent 3px solid;
-    &:active,
-    &:hover,
-    &:focus {
-      //  border: none !important;
-      outline: none;
+  > .cmp-tabs > .cmp-tabs__tablist {
+    .li,
+    [role="tab"] {
+      padding: 0 1rem;
+      font-size: 0.9rem;
+      border-bottom: transparent 3px solid;
+      &:active,
+      &:hover,
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        border-bottom: get-color(brand-light-blue) 3px solid;
+      }
+      min-height: 30px;
     }
-    &:hover {
-      border-bottom: #00b1e2 3px solid;
+    .cmp-tabs__tab--active {
+      border-bottom: get-color(brand-light-blue) 3px solid;
     }
-    min-height: 30px;
   }
 
-  .cmp-tabs__tab--active {
-    border-bottom: #00b1e2 3px solid;
-  }
   .cmp-tabs__tabpanel {
     padding: 2rem 0;
   }
+
   .cmp-tabs__tabpanel--active {
     display: block;
   }
@@ -113,7 +115,41 @@
       outline: 0 none;
 
       .cmp-tabs__tab-image {
-        border-color: #cfcaca;
+        border-color: get-color(secondary-light-grey);
+      }
+    }
+  }
+}
+
+.tab-divider {
+  > .cmp-tabs > .cmp-tabs__tablist {
+    display: flex;
+    justify-content: center;
+
+    .cmp-tabs__tab {
+      padding: 0;
+
+      &:not(:first-child) {
+        padding-left: rem(16px);
+      }
+
+      &:not(:last-child)::after {
+        content: "|";
+        font-weight: $font-weight-normal;
+        float: right;
+        padding-left: rem(16px);
+      }
+
+      &.cmp-tabs__tab--active {
+        font-weight: $font-weight-bold;
+      }
+
+      &:not(.cmp-tabs__tab--active) {
+        font-weight: $font-weight-light;
+      }
+
+      &:hover {
+        font-weight: $font-weight-bold;
       }
     }
   }
@@ -182,7 +218,7 @@
     outline: 0 none;
 
     .cmp-tabs__tab-image {
-      border-color: #cfcaca;
+      border-color: get-color(secondary-light-grey);
     }
   }
 }
@@ -202,7 +238,7 @@
   &.cmp-tabs__tabpanel--text,
   cmp-tabs__tab,
   cmp-tabs__tab--active {
-    color: #ffffff;
+    color: get-color(brand-white);
   }
 }
 
