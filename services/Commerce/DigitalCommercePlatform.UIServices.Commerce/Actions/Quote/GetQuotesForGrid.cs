@@ -30,6 +30,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public int? PageSize { get; set; } = 25;
             public int? PageNumber { get; set; } = 1;
             public bool? WithPaginationInfo { get; set; } = true;
+            public string manufacturer { get; set; }
+
 
             public Request()
             {
@@ -71,6 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         Id = request.QuoteIdFilter,
                         // ??? = request.ConfigIdFilter, // JH: I'm not able to find which field allows me to filter by ConfigId in App-Quote
                         CreatedTo = request.CreatedFrom,
+                        Manufacturer = request.manufacturer,
                         ExpiresTo = request.CreatedTo,
                     };
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
