@@ -122,6 +122,33 @@
   }
 }
 
+.tab-circles {
+  > .cmp-tabs > .cmp-tabs__tablist {
+    display: flex;
+    justify-content: center;
+
+    .cmp-tabs__tab {
+      background: $color-foreground;
+      border-radius: 50%;
+      color: $color-background;
+      font-weight: $font-weight-bold;
+      height: rem(60px);
+      line-height: rem(60px);
+      margin: 0 1.5rem;
+      text-align: center;
+      width: rem(60px);
+
+      &.cmp-tabs__tab--active {
+        background: $color-link;
+      }
+
+      &:hover {
+        background: $color-link;
+      }
+    }
+  }
+}
+
 .cmp-tabs--services-nested {
   .cmp-tabs {
     display: flex;
