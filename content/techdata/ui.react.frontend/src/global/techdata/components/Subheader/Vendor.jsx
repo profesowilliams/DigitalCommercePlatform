@@ -9,7 +9,7 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
 	const mounted = useMounted();
-	const config = vendorsConfig?.find((v) => v.key.toLowerCase() === vendor.toLowerCase());
+	const config = vendorsConfig?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
 
 	// API calls
 	async function vendorDisconnect(vendor) {
