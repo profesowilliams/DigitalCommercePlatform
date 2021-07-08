@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -82,6 +83,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var validationResult = await validator.ValidateAsync(cmd);
             // Assert
             Assert.False(validationResult.IsValid);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task VendorDisconnect(ResponseBase<GetVendorDisconnect.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetVendorDisconnect.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.VendorDisconnect("Cisco").ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
         }
     }
 }

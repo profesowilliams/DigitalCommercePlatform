@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -102,6 +104,32 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             await _middleTierHttpClient.GetAsync<string>(url);
             return new VendorRefreshToken.Response { IsSuccess = true };
+        }
+
+        public async Task<bool> VendorDisconnect(GetVendorDisconnect.Request request)
+        {
+            try
+            {
+                var url = _coreSecurityUrl.AppendPathSegment("/VendorDisconnect")
+                      .SetQueryParams(new
+                      {
+                          Vendor = request.Vendor
+                      });
+
+                var response = await _middleTierHttpClient.GetAsync<bool>(url).ConfigureAwait(false);
+
+                return await Task.FromResult(response);
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw new UIServiceException("Error while calling Core-Security Service " + ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw ex;
+            }
         }
     }
 }

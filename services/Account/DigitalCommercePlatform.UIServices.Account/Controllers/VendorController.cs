@@ -1,5 +1,6 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
@@ -53,6 +54,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<ActionResult> VendorRefreshToken(string Vendor)
         {
             var response = await Mediator.Send(new VendorRefreshToken.Request(Vendor)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("vendorDisconnect")]
+        public async Task<ActionResult> VendorDisconnect([FromQuery] string vendor)
+        {
+            GetVendorDisconnect.Request request = new GetVendorDisconnect.Request { Vendor = vendor};
+            var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
     }
