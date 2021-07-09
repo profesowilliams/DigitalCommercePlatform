@@ -478,7 +478,7 @@
 
     .cmp-teaser__title {
       width: 100%;
-      height: rem(45px);
+      min-height: rem(45px);
       background-color: get-color(brand-blue);
       color: get-color(brand-white);
       text-align: center;
