@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { get } from "../../../../utils/api";
+import { usGet } from "../../../../utils/api";
 import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 
 function Checkout({ line, checkoutConfig }) {
@@ -14,7 +14,7 @@ function Checkout({ line, checkoutConfig }) {
 
   async function redirectToCart(quoteId) {
     try {
-      await get(config.uiServiceEndPoint + `?QuoteId=${quoteId}`);
+      await usGet(config.uiServiceEndPoint + `?QuoteId=${quoteId}`);
       window.location.replace(config.redirectUrl);
     } catch (e) {
       console.error(`Quote ${quoteId} checkout failed:`);
