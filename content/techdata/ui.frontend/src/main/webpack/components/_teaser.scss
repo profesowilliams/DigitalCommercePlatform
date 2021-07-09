@@ -518,26 +518,29 @@
     height: rem(353px);
 
     &__content {
-      padding: rem(10px) rem(18px);
-      height: rem(186px);
+      height: 100%;
       line-height: rem(14px);
       position: relative;
     }
-      &__title, h2 {
-        color: get-color(brand-blue);
-        font-size: $font-size-small !important;
-        padding-bottom: rem(8px);
-        font-weight: 600 !important;
-        margin: 0 !important;
-      }
-      &__description {
-        color: get-color(text-light-charcoal);
-        font-size: $font-size-xsmall;
-        font-weight: normal;
-      }
-      &__action-link {
-        text-decoration: none !important;
-      }
+    &__title,
+    h2 {
+      color: get-color(brand-blue);
+      font-size: $font-size-small !important;
+      margin-bottom: rem(8px);
+      padding: 0 rem(18px);
+      font-weight: 600 !important;
+      margin: 0 !important;
+    }
+    &__description {
+      color: get-color(text-light-charcoal);
+      font-size: $font-size-xsmall;
+      font-weight: normal;
+      padding: 0 rem(18px);
+    }
+    &__action-link, &__title-link {
+      text-decoration: none !important;
+      color: get-color(brand-white);
+    }
 
     &__image {
       img {
