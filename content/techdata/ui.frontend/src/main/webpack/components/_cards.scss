@@ -3,6 +3,11 @@
 .dp-teaser {
     &__card {
         padding: 3.18rem 0.5rem;
+        &:last-child {
+          .cmp-teaser {
+            box-shadow: unset;
+          }
+        }
         .cmp-teaser {
             box-shadow: inset rem(-1px) 0 0 0 get-color(brand-light-gray);
             position: relative;
