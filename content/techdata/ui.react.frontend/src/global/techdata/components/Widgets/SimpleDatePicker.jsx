@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 
-function SimpleDatePicker({ pickerKey, label, placeholder, selectedDate, onSelectedDateChanged }) {
+function SimpleDatePicker({ pickerKey, label, placeholder, selectedDate, forceZeroUTC, onSelectedDateChanged }) {
 	const [pickedDate, setPickedDate] = useState(selectedDate);
 	const pickerRef = useRef(null);
 
@@ -10,8 +10,9 @@ function SimpleDatePicker({ pickerKey, label, placeholder, selectedDate, onSelec
 	}
 
 	function pickerValueChanged(date) {
+		const _date = forceZeroUTC ? new Date(date.setTime(date.getTime() - date.getTimezoneOffset() * 60 * 1000)) : date;
 		setPickedDate(date);
-		onSelectedDateChanged({ key: pickerKey, value: date });
+		onSelectedDateChanged({ key: pickerKey, value: _date });
 	}
 
 	return (
