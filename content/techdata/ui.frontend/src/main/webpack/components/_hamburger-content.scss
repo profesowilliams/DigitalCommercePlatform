@@ -9,8 +9,11 @@
             position: fixed;
             top: rem(44px);
             width: 100%;
-            &--open {
+            &--open.aem-GridColumn {
                 display: block;
+                width: 100%;
+                float: unset;
+                margin: unset;
             }
         }
         .cmp-megamenu {

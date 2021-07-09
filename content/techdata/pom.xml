@@ -52,8 +52,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <componentGroupName>Tech Data</componentGroupName>
-        <npmVersion>6.9.0</npmVersion>
-        <nodeVersion>v10.13.0</nodeVersion>
+        <npmVersion>6.14.3</npmVersion>
+        <nodeVersion>v14.17.3</nodeVersion>
         <build.environment>:prod-no-lint</build.environment>
     </properties>
 
