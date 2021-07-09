@@ -91,8 +91,8 @@
 			}
 		}
 		&--aboutus {
-            padding: rem(15px) rem(35px) 0;
-            background-color: get-color(brand-blue) !important;
+			padding: rem(15px) rem(35px) 0;
+			background-color: get-color(brand-blue) !important;
 			.cmp-teaser {
 				box-shadow: unset;
 				position: relative;
@@ -128,7 +128,8 @@
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
-					font-size: 1.31rem;
+					font-size: $font-size-medium;
+					font-weight: 600;
 					margin: 0;
 					line-height: 1.5rem;
 					color: #fff;
@@ -139,7 +140,6 @@
 					}
 				}
 				&__image {
-
 					img {
 						border-radius: 50%;
 						width: 6.62rem;
@@ -151,37 +151,36 @@
 				}
 			}
 		}
-    &--image-highlight {
-      &.cmp-teaser__card{
+		&--image-highlight {
+			&.cmp-teaser__card {
+				.cmp-teaser {
+					min-height: rem(287px);
+					&:hover {
+						.cmp-teaser__title-link {
+							font-weight: $font-weight-bold;
+						}
+						.cmp-image__image {
+							filter: none;
+						}
+						.cmp-teaser__description {
+							color: get-color(text-dark-grey);
+						}
+					}
 
-        .cmp-teaser {
-          min-height: rem(287px);
-          &:hover {
-            .cmp-teaser__title-link {
-              font-weight: $font-weight-bold;
-            }
-            .cmp-image__image {
-              filter: none;
-            }
-            .cmp-teaser__description {
-              color: get-color(text-dark-grey);
-            }
-          }
-
-          &__title {
-            &-link {
-              color: get-color(text-dark-grey);
-              font-size: $font-size-custom-medium;
-              line-height: rem(24px);
-              font-weight: $font-weight-semi-bold;
-            }
-          }
-          .cmp-image__image  {
-            filter: brightness(10) invert(10);
-          }
-        }
-      }
-    }
+					&__title {
+						&-link {
+							color: get-color(text-dark-grey);
+							font-size: $font-size-custom-medium;
+							line-height: rem(24px);
+							font-weight: $font-weight-semi-bold;
+						}
+					}
+					.cmp-image__image {
+						filter: brightness(10) invert(10);
+					}
+				}
+			}
+		}
 	}
 	&__card-image--rounded {
 		padding: 8.56rem 0.56rem 1.25rem;

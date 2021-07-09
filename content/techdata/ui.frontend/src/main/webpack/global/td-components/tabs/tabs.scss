@@ -184,6 +184,14 @@
 
 .cmp-tabs__tablist {
   margin-bottom: 4rem;
+  //tabs with bottom tabTitle
+  &.five-tabs {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      padding: 0 190px;
+  }
 }
 
 // without tab-icon wrapper as per old styles

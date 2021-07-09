@@ -268,6 +268,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "tabs-sample",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/tabs/tabs-sample.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "list-brand-comp",
                 template: path.resolve(
                     __dirname,
