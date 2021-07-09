@@ -10,6 +10,8 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Client;
@@ -41,6 +43,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private string _appOrderServiceUrl;
         private string _appQuoteServiceUrl;
         private string _customerServiceURL;
+        private string _appConfigServiceURL;
+        private string _appProductServiceURL;
         private static readonly Random getrandom = new Random();
         private readonly IMapper _mapper;
         public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
@@ -107,103 +111,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return findOrdersDto;
         }
 
-        public async Task<QuotePreviewModel> CreateQuotePreview(GetQuotePreviewDetails.Request request)
+
+        public async Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request)
         {
-            var lineItems = new List<Line>();
-
-            for (int i = 0; i < 15; i++)
+            if (request.IsEstimateId)
             {
-                Line lineItem = new Line();
-                var randomNumber = GetRandomNumber(10, 60);
-
-                lineItem.Id = "IN000000" + randomNumber;
-                lineItem.Parent = "TR123YU66" + randomNumber;
-                lineItem.Quantity = randomNumber;
-                lineItem.TotalPrice = randomNumber;
-                lineItem.MSRP = randomNumber;
-                lineItem.UnitPrice = randomNumber;
-                lineItem.Invoice = $"IHT128763K0987{i}";
-                lineItem.Description = "Description of the Product is very good";
-                lineItem.ShortDescription = "Product Short Description";
-                lineItem.MFRNumber = $"{i}PUT9845011123";
-                lineItem.TDNumber = $"{i}ITW398765243";
-                lineItem.UPCNumber = $"924378465{i}";
-                lineItem.UnitListPrice = "2489.00";
-                lineItem.ExtendedPrice = "2349.00";
-                lineItem.Availability = randomNumber.ToString();
-                lineItem.RebateValue = randomNumber.ToString();
-                lineItem.URLProductImage = "https://Product/Image";
-                lineItem.URLProductSpecs = "https://Product/details";
-                lineItems.Add(lineItem);
-            };
-
-            var quoteNumber = "TIW777" + GetRandomNumber(10000, 60000);
-            var orderNumber = new List<Models.Quote.Quote.Internal.OrderModel>();
-            for (int i = 0; i < 2; i++)
-            {
-                Models.Quote.Quote.Internal.OrderModel newSavedCart = new Models.Quote.Quote.Internal.OrderModel();
-                var randomNumber = GetRandomNumber(10, 60);
-
-                newSavedCart.Id = "IN000000" + randomNumber;
-                newSavedCart.System = "2";
-                newSavedCart.SalesOrg = "0100";
-                orderNumber.Add(newSavedCart);
+                QuotePreviewModel preview = await CreateResponseUsingEstimateId(request);
+                return preview;
             }
-            var poNumber = "PO" + GetRandomNumber(10000, 60000);
-            var endUserNumber = "EPO" + GetRandomNumber(10000, 60000);
+            return await Task.FromResult(new QuotePreviewModel());
 
-            var quotePreview = new QuotePreview
-            {
-                ShipTo = GenerateAddress("ShipTo"),
-                EndUser = GenerateAddress("EndUser"),
-                //GeneralInformation = new QuoteGeneralInformation()
-                //{
-                //    QuoteReference = GetRandomNumber(1000000, 6000000).ToString(),
-                //    Source = $"Estimate ID" + GetRandomNumber(10000, 60000).ToString(),
-                //    SPAId = GetRandomNumber(1000000, 6000000).ToString(),
-                //    Tier = GetRandomNumber(1, 6).ToString()
-                //},
-                Notes = "Descrption of Internal Notes",
-                Id = quoteNumber,
-                //OrderNumber = orderNumber,
-                CustomerPO = poNumber,
-                EndUserPO = endUserNumber,
-                PODate = "12/04/2020",
-                Items = lineItems,
-                Currency = "USD",
-                CurrencySymbol = "$"
-            };
-
-            List<Address> GenerateAddress(string prefix)
-            {
-                var addressList = new List<Address>();
-
-                for (var i = 0; i < 3; i++)
-                {
-                    var address = new Address
-                    {
-                        Name = prefix + i,
-                        Email = $"myemail{i}@example.com",
-                        Line1 = $"Line 1{i} Road",
-                        Line2 = $"Line 2{i} Road",
-                        Line3 = $"Line 3{i} Road",
-                        City = $"City{i}",
-                        State = $"State{i}",
-                        Zip = $"{i}{i - 0}{i}{i - 0}{i}",
-                        Country = $"Country{i}"
-                    };
-
-                    addressList.Add(address);
-                }
-
-                return addressList;
-            }
-            var response = new QuotePreviewModel()
-            {
-                QuoteDetails = quotePreview,
-            };
-            return await Task.FromResult(response);
         }
+
+
 
         public static int GetRandomNumber(int min, int max)
         {
@@ -351,6 +271,126 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return await Task.FromResult(response);
         }
 
+        #region Private Methods
+
+        private async Task<QuotePreviewModel> CreateResponseUsingEstimateId(GetQuotePreviewDetails.Request request)
+        {
+            _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
+            _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
+
+
+            try
+            {
+                var url = _appConfigServiceURL.AppendPathSegment("find")
+                      .SetQueryParams(new
+                      {
+                          Id = request.Id,
+                          Details = true,
+                          PageSize = 1,
+                          PageNumber = 1,
+                          WithPaginationInfo = false
+                      });
+
+                var configurationFindResponse = await _middleTierHttpClient
+                        .GetAsync<FindResponse<List<DetailedDto>>>(url);
+                var data = configurationFindResponse.Data;
+
+                var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
+
+
+                MapEndUserAndReseller(configurationFindResponse, quotePreview); // Fix this using AutoMapper
+               
+                string productUrl = "";
+                string productId = "";
+                string[] productIds = new string[quotePreview.Items.Count];
+                ProductData productDetails;
+
+                int i = 0;
+                foreach (var item in quotePreview.Items)
+                {
+                    productId = item?.VendorPartNo ?? "CON-OSP-WS6548SL"; // Fix this once app service is ready
+                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                    productIds[i] = productId;
+                    i++;
+                }
+
+                // call product app service
+                productUrl = _appProductServiceURL.AppendPathSegment("Find")
+                 .SetQueryParams(new
+                 {
+                     MfrPartNumber = productIds,
+                     Details = true,
+                     SalesOrganization = "0100" //_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
+                 });
+               
+                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
+
+                ProductsModel product;
+                foreach (var line in quotePreview.Items)
+                {
+
+                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
+                    if (product != null && line != null)
+                    {
+                        line.TDNumber = product?.Source.ID;
+                        line.URLProductImage = product?.Images?.Where(a => a.Key == "75x75")?.FirstOrDefault().Value?.FirstOrDefault().Url;
+                        line.MSRP = product?.Price?.UnpromotedPrice;
+                        line.MFRNumber = product?.ManufacturerPartNumber;
+                    }
+                }
+                
+                QuotePreviewModel response = new QuotePreviewModel
+                {
+                    QuoteDetails = quotePreview
+                };
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at searching configurations : " + nameof(CommerceService));
+                throw;
+            }
+        }
+
+        private bool MapEndUserAndReseller(FindResponse<List<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
+        {
+            if (configurationFindResponse.Data?.FirstOrDefault().EndUser != null)
+            {
+                var objEndUser = configurationFindResponse.Data?.FirstOrDefault().EndUser;
+                Address endUser = new Address
+                {
+                    Line1 = objEndUser?.Address.Address1,
+                    Line2 = objEndUser?.Address.Address2,
+                    Line3 = objEndUser?.Address.Address3,
+                    State = objEndUser?.Address.City,
+                    Country = objEndUser?.Address.Country,
+                    PostalCode = objEndUser?.Address.PostalCode,
+                    Email = objEndUser?.Contact?.EmailAddress,
+                    Name = objEndUser?.Contact?.FirstName + " " + objEndUser?.Contact?.LastName,
+                };
+                quotePreview.EndUser = new List<Address> { endUser };
+            }
+
+            if (configurationFindResponse.Data?.FirstOrDefault().Reseller != null)
+            {
+                var objReseller = configurationFindResponse.Data?.FirstOrDefault().Reseller;
+                Address reseller = new Address
+                {
+                    Line1 = objReseller?.Address?.Address1,
+                    Line2 = objReseller?.Address?.Address2,
+                    Line3 = objReseller?.Address?.Address3,
+                    State = objReseller?.Address?.City,
+                    Country = objReseller?.Address?.Country,
+                    PostalCode = objReseller?.Address?.PostalCode,
+                    Email = objReseller?.ContactModel?.EmailAddress,
+                    CompanyName = objReseller?.Name,
+                    Name = objReseller?.ContactModel?.FirstName + " " + objReseller?.ContactModel?.LastName,
+                };
+                quotePreview.Reseller = new List<Address> { reseller };
+            }
+            return true;
+        }
 
         private void CreateQuoteRequest(CreateModelFrom createModelFrom)
         {
@@ -423,5 +463,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             return response;
         }
+
+        #endregion
     }
 }

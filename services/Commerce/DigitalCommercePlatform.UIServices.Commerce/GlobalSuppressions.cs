@@ -29,3 +29,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA1801:Review unused parameters")]
 [assembly: SuppressMessage("Security", "CA5394:Do not use insecure randomness")]
 [assembly: SuppressMessage("Design", "CA1056:URI-like properties should not be strings")]
+[assembly: SuppressMessage("Major Bug", "S2259:Null pointers should not be dereferenced", Justification = "<Pending>", Scope = "member", Target = "~M:DigitalCommercePlatform.UIServices.Commerce.Services.CommerceService.CreateResponseUsingEstimateId(DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail.GetQuotePreviewDetails.Request)~System.Threading.Tasks.Task{DigitalCommercePlatform.UIServices.Commerce.Models.Quote.QuotePreviewModel}")]

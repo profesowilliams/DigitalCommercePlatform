@@ -6,7 +6,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
     {
         public string Id { get; set; }
         public string Parent { get; set; }
-        public string VendorPartNO { get; set; }
+        public string VendorPartNo { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal? UnitPrice { get; set; }

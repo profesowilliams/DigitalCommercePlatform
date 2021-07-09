@@ -13,16 +13,20 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
 {
     [ExcludeFromCodeCoverage]
-    public class GetQuotePreviewDetails
+    public sealed class GetQuotePreviewDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
-            public bool Details => true;
+            public bool Details { get; set; }= true;
+            public bool IsEstimateId { get; set; }
+            public string Vendor { get; set; }
 
-            public Request(string id)
+            public Request(string id,bool isEstimateId,string vendor)
             {
-                this.Id = id;
+                Id = id;
+                IsEstimateId = isEstimateId;
+                Vendor = vendor;
             }
         }
 
@@ -50,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var quoteDetailsModel = await _quoteService.CreateQuotePreview(request);
+                    var quoteDetailsModel = await _quoteService.QuotePreview(request);
                     // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
                     var response = new Response(quoteDetailsModel);
                     return new ResponseBase<Response> { Content = response };
