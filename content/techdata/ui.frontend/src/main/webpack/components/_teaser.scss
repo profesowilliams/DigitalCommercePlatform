@@ -517,25 +517,27 @@
     width: rem(215px);
     height: rem(353px);
 
-    &__description {
-      color: get-color(text-light-charcoal);
-      font-size: $font-size-xsmall;
-      font-weight: normal;
+    &__content {
       padding: rem(10px) rem(18px);
       height: rem(186px);
       line-height: rem(14px);
-      &--title {
-        color: get-color(brand-blue);
-        font-size: $font-size-small;
-        padding-bottom: rem(8px);
-        font-weight: 600 !important;
-        margin: 0;
-      }
-    }
-
-    &__content {
       position: relative;
     }
+      &__title, h2 {
+        color: get-color(brand-blue);
+        font-size: $font-size-small !important;
+        padding-bottom: rem(8px);
+        font-weight: 600 !important;
+        margin: 0 !important;
+      }
+      &__description {
+        color: get-color(text-light-charcoal);
+        font-size: $font-size-xsmall;
+        font-weight: normal;
+      }
+      &__action-link {
+        text-decoration: none !important;
+      }
 
     &__image {
       img {
@@ -545,7 +547,7 @@
       overflow: hidden;
     }
 
-    &__button {
+    &__action-container {
       background-color: get-color(brand-blue);
       color: get-color(brand-white);
       font-size: $font-size-medium;
