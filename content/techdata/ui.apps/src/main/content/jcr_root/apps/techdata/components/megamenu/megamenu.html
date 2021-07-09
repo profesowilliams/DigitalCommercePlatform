@@ -16,18 +16,27 @@
                                 <a href="${urlHelper.url  @ context='html'}" title="Config" data-cmp-clickable="true" data-cmp-children="menu ${item.menuID}" class="cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}">
                                     <i data-sly-test="${nav.enableSecondaryIcon == 'true'}" class="${item.pageIcon}"></i>${item.pageTitle}
                                 </a>
+                                <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
+                                    <li class="cmp-navigation__item cmp-navigation__item--level-1" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">
+                                        <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" data-cmp-clickable="${item.hasChildPages}" class="cmp-navigation__item-link" data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
+                                            ${item.pageTitle}<i class="fas fa-chevron-right"></i>
+                                        </a>
+                                        <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
+                                            <li class="cmp-navigation__item cmp-navigation__item--level-2" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}" data-cmp-data-layer="{&quot;navigation-0e123bccd2-item-734f73b286&quot;:{&quot;@type&quot;:&quot;core/wcm/components/navigation/v1/navigation/item&quot;,&quot;repo:modifyDate&quot;:&quot;2021-03-17T08:17:44Z&quot;,&quot;dc:title&quot;:&quot;Config&quot;,&quot;xdm:linkURL&quot;:&quot;/content/core-components-examples/config.html&quot;}}">
+                                                <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" class="cmp-navigation__item-link">
+                                                    ${item.pageTitle}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="cmp-megamenu__wrapper cmp-megamenu__tertiary" data-sly-list="${nav.secondaryMenuItems}">
 
                         <div class="cmp-megamenu__wrapper-item ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}" data-cmp-parent="menu ${item.menuID}" data-sly-test="${item.hasChildPages}">
-                            <h4 class="cmp-megamenu-level-title">
-
-                                <a href="${nav.linkUrl}.html" title="${item.rootParentTitle} Home"  class="cmp-navigation__item-link">
-                                    ${item.rootParentTitle} Home
-                                </a>
-                            </h4>
+                            <h4 class="cmp-megamenu-level-title">${item.rootParentTitle} Home</h4>
                             <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
                                 <li class="cmp-navigation__item cmp-navigation__item--level-1" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">
                                     <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" data-cmp-clickable="${item.hasChildPages}" class="cmp-navigation__item-link" data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
