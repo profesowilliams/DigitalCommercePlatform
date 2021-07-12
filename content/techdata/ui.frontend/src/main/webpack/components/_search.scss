@@ -25,9 +25,22 @@
 .cmp-search__item-title {
 }
 
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+    margin-left: unset !important;
+    margin-right: auto;
+	// this is only a temporary fix to order to meet the sprinnt deadline. I will refactore it in the next sprint. - OP 7.12.21
+}
+
+
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+    margin-left: unset !important;
+    margin-right: auto;
+	// this is only a temporary fix to order to meet the sprinnt deadline. I will refactore it in the next sprint. - OP 7.12.21
+}
+
 @mixin cmp-search__input {
-	border: 1px solid #000c21;
-	border-radius: unset;
+	border: 1px solid get-color(input-border);
+	border-radius: rem(3px);	
 	&::placeholder {
 		font-style: normal;
 	}
