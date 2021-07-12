@@ -1,7 +1,7 @@
 <sly data-sly-use.model="com.techdata.core.models.LinkList"
-     data-sly-test.hasContent="${model.linkList ? model.linkList.size > 0 : false}">
+     data-sly-test.hasContent="${model.links ? model.links.size > 0 : false}">
     <div data-sly-test=${hasContent} class="cmp-list">
-        <ul data-sly-list.item="${model.linkList}" class="cmp-link-list">
+        <ul data-sly-list.item="${model.links}" class="cmp-link-list">
 
 
             <li class="cmp-link-list__item">

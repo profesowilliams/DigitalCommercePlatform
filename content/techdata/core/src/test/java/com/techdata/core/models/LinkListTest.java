@@ -14,32 +14,28 @@ class LinkListTest {
 
     private final AemContext context = new AemContext();
 
-    private LinkList links;
+    private LinkList linkList;
 
     @BeforeEach
     void setUp() {
         context.addModelsForClasses(LinkList.class);
         context.load().json("/com.techdata.core.models/linklist.json", "/linklist");
+        context.currentResource("/linklist");
+        linkList = context.request().adaptTo(LinkList.class);
     }
 
     @Test
-    void initModel() {
-        context.currentResource("/linklist");
-        links = context.request().adaptTo(LinkList.class);
-        assertEquals("item0", links.getLinks().getChild("item0").getName());
+    void getSize() {
+        assertEquals(6, linkList.getLinks().size());
     }
 
     @Test
-    void getLinks() {
-        context.currentResource("/linklist");
-        links = context.request().adaptTo(LinkList.class);
-        assertEquals("©2021 Tech Data Corp.", links.getLinks().getChild("item0").getValueMap().get("platformName"));
+    void getLinkName() {
+        assertEquals("©2021 Tech Data Corp.", linkList.getLinks().get(0).getPlatformName());
     }
 
     @Test
-    void getLinkList() {
-        context.currentResource("/linklist");
-        links = context.request().adaptTo(LinkList.class);
-        assertEquals(6, links.getLinkItemList().size());
+    void getLinkUrl() {
+        assertEquals("https://www.techdata.com/privacy/", linkList.getLinks().get(1).getLinkUrl());
     }
 }
