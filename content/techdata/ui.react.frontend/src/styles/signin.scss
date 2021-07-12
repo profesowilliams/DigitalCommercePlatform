@@ -21,6 +21,9 @@
 		@include tablet {
 			font-size: 0; // hide text on tablet and below
 			color: #231F20;
+			>i, svg {
+				font-size: 14px;	
+			}
 			&.active {
 				color: #000C21;
 			}
