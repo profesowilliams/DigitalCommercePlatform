@@ -676,17 +676,13 @@ $teaser-headings-mobile: (
       color: get-color(brand-blue);
       font-size: $font-size-small !important;
       margin-bottom: rem(8px);
-      padding: 0 rem(18px);
+      padding: rem(8px) rem(18px) rem(8px) 0;
       font-weight: 600 !important;
       margin: 0 !important;
 
       a {
-        color: get-color(brand-blue);
         font-size: $font-size-small !important;
-        margin-bottom: rem(8px);
-        padding: rem(8px) rem(18px) rem(8px) 0;
-        font-weight: 600!important;
-        margin: 0!important;
+        color: get-color(brand-blue);
         text-decoration: none;
       }
     }
