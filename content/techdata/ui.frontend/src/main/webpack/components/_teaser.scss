@@ -530,6 +530,16 @@
       padding: 0 rem(18px);
       font-weight: 600 !important;
       margin: 0 !important;
+
+      a {
+        color: get-color(brand-blue);
+        font-size: $font-size-small !important;
+        margin-bottom: rem(8px);
+        padding: rem(8px) rem(18px) rem(8px) 0;
+        font-weight: 600!important;
+        margin: 0!important;
+        text-decoration: none;
+      }
     }
     &__description {
       color: get-color(text-light-charcoal);
