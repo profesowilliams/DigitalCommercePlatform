@@ -44,17 +44,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 try
                 {
                     var deals = await _configService.GetDeals(request);
-                    var recentDealResponse = _mapper.Map<Response>(deals);
-                    recentDealResponse = new Response
+                    var response = new Response
                     {
-                        Items = recentDealResponse.Items,
-                        TotalItems = recentDealResponse.Items.Count(),
+                        Items = deals,
+                        TotalItems = deals.Count(),
                         PageNumber = request.Criteria.Page,
                         PageSize = request.Criteria.PageSize,
-                        PageCount = (recentDealResponse.Items.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize,
+                        PageCount = (deals.Count() + request.Criteria.PageSize - 1) / request.Criteria.PageSize,
 
                     };
-                    return new ResponseBase<Response> { Content = recentDealResponse };
+                    return new ResponseBase<Response> { Content = response };
                 }
                 catch (Exception ex)
                 {
