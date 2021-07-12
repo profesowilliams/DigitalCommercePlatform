@@ -28,6 +28,7 @@ export const signOutRequest = () => {
 };
 
 export const signInAsynAction = (apiUrl) => {
+
 	let code = localStorage.getItem("signInCode");
 	const signInUrl = apiUrl;
 
@@ -70,10 +71,20 @@ export const signInAsynAction = (apiUrl) => {
 	};
 };
 
+export const processSignInRedirect =  (signInCode, signInUrl) => {
+	console.log(`inside processSignInRedirect`);
+	if (signInCode) {
+
+	}
+	setTimeout('', 10000);
+	console.log(`after wait`)
+	return false;
+}
 
 export const isAlreadySignedIn = () => {
 	// TODO this needs to check if user is alreday signed in, and return accordingly
-	return false;
+	let userData = localStorage.getItem('userData');
+	return userData;
 }
 export const getLocalStorageUser = () => {
 	return dispatch => {
