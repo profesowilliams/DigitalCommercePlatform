@@ -132,14 +132,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query)
         {
-            query.SortBy = _helperService.GetParameterName(query.SortBy);
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
-            //we need to fix this issue
-            quoteURL = quoteURL.ToString().Replace("=False", "=false");
-            quoteURL = quoteURL.ToString().Replace("=True", "=true");
-            var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
-            return getQuoteResponse;
+            try
+            {
+                query.SortBy = _helperService.GetParameterName(query.SortBy);
+                _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+                var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
+                //we need to fix this issue
+                quoteURL = quoteURL.ToString().Replace("=False", "=false");
+                quoteURL = quoteURL.ToString().Replace("=True", "=true");
+                var getQuoteResponse = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
+                return getQuoteResponse;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                _logger.LogError(ex, "Exception at : " + nameof(CommerceService));
+                throw new UIServiceException( ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at Generating Quote grid: " + nameof(CommerceService));
+                throw ex;
+            }
+
         }
 
         public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
@@ -304,7 +318,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 string productId = "";
                 string[] productIds = new string[quotePreview.Items.Count];
                 ProductData productDetails;
-
+                //convert for-each statment to linq statment after App-Service is ready.
                 int i = 0;
                 foreach (var item in quotePreview.Items)
                 {
@@ -320,7 +334,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                  {
                      MfrPartNumber = productIds,
                      Details = true,
-                     SalesOrganization = "0100" //_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
+                     SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
+                     Manufacturer = "CISCO" // needs to fix the hardcoded values once app-service is ready .
                  });
                
                 productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);

@@ -32,6 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce
             services.AddSingleton<IStatusMappingService, StatusMappingService>(); 
             services.AddTransient<IHelperService, HelperService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                options.SerializerSettings.DateFormatString = "MM-dd-yyyy";
+            });
         }
 
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)

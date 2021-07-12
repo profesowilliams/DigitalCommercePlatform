@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,7 +62,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var query = new FindModel()
+                
+                var createdFrom = request.CreatedFrom?.ToShortDateString();
+                var createdTo = request.CreatedTo?.ToShortDateString();
+                var dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true));
+                var dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true));
+
+                var query = new FindModel()
                     {
                         CreatedBy = request.CreatedBy,
                         SortBy = request.SortBy,
@@ -72,16 +79,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         // Filters
                         Id = request.QuoteIdFilter,
                         // ??? = request.ConfigIdFilter, // JH: I'm not able to find which field allows me to filter by ConfigId in App-Quote
-                        CreatedTo = request.CreatedFrom,
+                        CreatedFrom = dateFrom,
                         Manufacturer = request.manufacturer,
-                        ExpiresTo = request.CreatedTo,
+                        CreatedTo = dateTo,
                     };
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
 
                     getProductResponse = new Response
                     {
-                        Items = GetDummyAgreements(getProductResponse), // getProductResponse.Items,
+                        Items = GetDummyAgreements(getProductResponse),
                         TotalItems = quoteDetails?.Count,
                         PageNumber = request.PageNumber,
                         PageSize = request.PageSize,
