@@ -39,7 +39,7 @@ export default class Header {
     toggleSearch(el) {
         if (hasSomeParentTheClass(el, this.HEADER_MOBILE)) {
             el.classList.add('active');
-            document.querySelector('.cmp-header--logo-small').classList.add('active');
+            document.querySelector('.cmp-header--logo-small')?.classList.add('active');
             document.querySelector('.dp-figure').style.display = 'none';
         }
     }
@@ -52,7 +52,7 @@ export default class Header {
         if (hasSomeParentTheClass(el, this.HEADER_MOBILE)) {
             if (!el.contains(event.target)) {
                 el.classList.remove('active');
-                document.querySelector('.cmp-header--logo-small').classList.remove('active');
+                document.querySelector('.cmp-header--logo-small')?.classList.remove('active');
                 document.querySelector('.dp-figure').style.display = 'block';
             }
         }

@@ -1,0 +1,7 @@
+// making overriding of AEM-styles easier
+
+@mixin reset-aemgrid {
+    float: unset !important;
+    width: auto !important;
+    @content;
+}

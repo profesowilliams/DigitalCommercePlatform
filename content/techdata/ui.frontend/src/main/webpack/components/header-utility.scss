@@ -14,6 +14,7 @@
         flex: 0;
         margin-left: auto;
         flex-wrap: nowrap;
+        @include reset-aemgrid;
     } 
     .signin {
         white-space: nowrap;
