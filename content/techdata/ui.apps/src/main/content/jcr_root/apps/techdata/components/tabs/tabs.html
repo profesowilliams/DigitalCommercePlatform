@@ -35,14 +35,24 @@
             aria-controls="${tab.id}-tabpanel"
             tabindex="${isActive ? '0' : '-1'}"
             data-cmp-hook-tabs="tab">
-            <sly data-sly-test="${!properties.tabIcon}">
-                ${tab.title}
+            <sly data-sly-test="${!properties.iconWithLabel}">
+                <sly data-sly-test="${!properties.tabIcon}">
+                    ${tab.title}
+                </sly>
+                <sly data-sly-test="${properties.tabIcon}">
+                    <p class="cmp-tabs__tabpanel--text">${tab.title}</p>
+                    <span class="cmp-tabs__tab-image">
+                        <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+                    </span>
+                </sly>
             </sly>
-            <sly data-sly-test="${properties.tabIcon}">
-                <p class="cmp-tabs__tabpanel--text">${tab.title}</p>
-                <span class="cmp-tabs__tab-image">
-                    <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
-                </span>
+            <sly data-sly-test="${properties.iconWithLabel}">
+                <sly data-sly-test="${properties.tabIcon}">
+                    <span class="cmp-tabs__tab-image">
+                        <sly data-sly-resource="${ tabuse.path @ resourceType='/apps/techdata/components/image'}" />
+                    </span>
+                    <p class="cmp-tabs__tabpanel--text">${tab.title}</p>
+                </sly>
             </sly>
         </li>
     </ol>

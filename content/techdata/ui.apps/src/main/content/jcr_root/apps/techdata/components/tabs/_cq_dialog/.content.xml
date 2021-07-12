@@ -39,6 +39,14 @@
                                                 name="./tabIcon"
                                                 text="Select Tab Icon"
                                                 value="true"/>
+                                            <iconWithLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Check to enable icon with label"
+                                                fieldLabel="Icon With Label"
+                                                name="./iconWithLabel"
+                                                text="Icon With Label"
+                                                value="true"/>
                                         </items>
                                     </column>
                                 </items>
