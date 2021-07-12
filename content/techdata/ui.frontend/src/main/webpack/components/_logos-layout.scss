@@ -2,19 +2,30 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-content: center;
     justify-content: center;
     align-items: center;
-    
-    img {
-        &.rectangle-logo {
-            width: rem(75px);
-            height: auto;
-        }
-        &.square-circle-logo {
-            width: auto;
-            height: rem(48px);
+
+    ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        flex-direction: row;
+        li {
+            list-style: none;
+
+            img {
+                &.rectangle-logo {
+                    width: rem(75px);
+                    height: auto;
+                }
+                &.square-circle-logo {
+                    width: auto;
+                    height: rem(48px);
+                }
+            }
         }
     }
 
