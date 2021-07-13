@@ -42,10 +42,6 @@
   }
 }
 
-.tmp-bg {
-  background-color: get-color(brand-blue);
-}
-
 .top-nav {
   .nav {
     border: none;
@@ -186,11 +182,11 @@
   margin-bottom: 4rem;
   //tabs with bottom tabTitle
   &.five-tabs {
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-      align-items: center;
-      padding: 0 190px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 190px;
   }
 }
 
@@ -297,6 +293,75 @@
         color: get-color(brand-white);
         height: 137px;
         letter-spacing: 0;
+      }
+    }
+  }
+}
+
+// Wrapped 5 tabs in a row
+
+.cmp-five-icon-tabs {
+  width: unset; //test for AEM local
+  .cmp-tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    &__tablist {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 0;
+      list-style: none;
+      width: rem(1150px);
+      &--text {
+        width: 100%;
+      }
+    }
+
+    &__tab-image {
+      padding: 0;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: rem(100px);
+      height: rem(100px);
+      border-radius: 50%;
+      border: 0 solid transparent;
+      padding: 0;
+      margin-top: rem(14px);
+      margin-bottom: rem(18px);
+      transition: border-color 0.3s;
+      img {
+        width: auto;
+        margin: 0 auto;
+      }
+    }
+    &__tabpanel--text {
+      height: rem(36px);
+      width: 100%;
+      font-family: $font-family-sans-serif;
+      font-size: rem(16px);
+      letter-spacing: 0;
+      line-height: rem(16px);
+      text-align: center;
+      font-weight: 600;
+    }
+    &__tab {
+      text-align: center;
+      padding: 0 rem(8px);
+      border-bottom: 0;
+      font-size: $font-size-medium;
+      width: rem(230px);
+
+      &.cmp-tabs__tab--active,
+      &:hover,
+      &:active {
+        outline: 0 none;
+
+        .cmp-tabs__tab-image {          
+          border-color: transparent !important;
+        }
       }
     }
   }
