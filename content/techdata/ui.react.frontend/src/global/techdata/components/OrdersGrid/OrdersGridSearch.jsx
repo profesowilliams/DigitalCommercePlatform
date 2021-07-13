@@ -57,7 +57,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
         : "";
     let manufacturer =
       query.manufacturer?.key && query.manufacturer?.key !== "allVendors"
-        ? `&manufacturer=${query.manufacturer.key}`
+        ? `&vendor=${query.manufacturer.key}`
         : "";
     let method =
       query.method?.key && query.method?.key !== "allMethods"
