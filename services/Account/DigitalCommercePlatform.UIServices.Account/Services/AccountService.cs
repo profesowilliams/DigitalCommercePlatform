@@ -205,12 +205,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
         {
-            var customerId = _uiContext.User?.ActiveCustomer?.CustomerNumber;
-
             var url = _configurationsServiceUrl.AppendPathSegment("find")
                         .SetQueryParams(new
                         {
-                            CustomerNumber = customerId,
                             Details = false,
                             SortBy = string.IsNullOrWhiteSpace(request.SortBy) ? "TotalListPrice" : request.SortBy,
                             SortByAscending = request.SortDirection?.ToLower() == "asc",
@@ -224,14 +221,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request)
         {
-            var customerId = _uiContext.User?.ActiveCustomer.CustomerNumber;
             TextInfo setTextCase = CultureInfo.CurrentCulture.TextInfo;
 
             request.Sortby = string.IsNullOrWhiteSpace(request.Sortby) ? "Price" : request.Sortby;
             request.SortDirection = string.IsNullOrWhiteSpace(request.SortDirection) ? "desc" : request.SortDirection;
             bool sortDirection = request.SortDirection.ToLower() == "asc" ? true : false;
 
-            var quoteURL = _quoteServiceURL.AppendPathSegment("find").SetQueryParams("CustomerNumber=" + customerId+ "&SortBy="+ setTextCase.ToTitleCase(request.Sortby)+ "&SortAscending=" + sortDirection+ "&pageSize=" +request.Top);
+            var quoteURL = _quoteServiceURL.AppendPathSegment("find").SetQueryParams("&SortBy="+ setTextCase.ToTitleCase(request.Sortby)+ "&SortAscending=" + sortDirection+ "&pageSize=" +request.Top);
             var topQuotes = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
             return topQuotes;
         }
