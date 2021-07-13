@@ -46,3 +46,10 @@
         }
     }
 }
+
+@include desktop {
+    .cmp-td-hamburgerMenu,
+    .cmp-hamburger-container {
+        display: none;
+    }
+}
