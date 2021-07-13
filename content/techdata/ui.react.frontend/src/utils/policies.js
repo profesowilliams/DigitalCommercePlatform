@@ -18,13 +18,9 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage) => {
     }
 
     const isEditMode = getIsEditMode();
-    console.log(`signinCode is ${signinCode}`);
-    console.log(`user is ${user}`);
-    console.log(`isPrivatePage is ${isPrivatePage}`);
-    console.log(`isEditMode is ${isEditMode}`);
 
     return user || signinCode || !isPrivatePage || isEditMode
-        ? refreshPage()
+        ? null
         : redirectUnauthenticatedUser(authUrl, clientId);
 };
 

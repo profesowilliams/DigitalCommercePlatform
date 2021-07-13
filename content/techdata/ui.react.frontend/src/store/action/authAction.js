@@ -1,6 +1,7 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
 import { createSessionId, setSessionId } from '../../utils';
+import {refreshPage} from "../../utils/policies";
 
 export const signInRequest = () => {
 	return {
@@ -64,22 +65,13 @@ export const signInAsynAction = (apiUrl) => {
 			.then(response => {
 				dispatch(signInResponse(response.data.content.user));
 				localStorage.setItem('userData', JSON.stringify(response.data.content.user));
+				refreshPage();
 			})
 			.catch(err => {
 				dispatch(signInError(err));
 			});
 	};
 };
-
-export const processSignInRedirect =  (signInCode, signInUrl) => {
-	console.log(`inside processSignInRedirect`);
-	if (signInCode) {
-
-	}
-	setTimeout('', 10000);
-	console.log(`after wait`)
-	return false;
-}
 
 export const isAlreadySignedIn = () => {
 	// TODO this needs to check if user is alreday signed in, and return accordingly
