@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public int? PageNumber { get; set; } = 1;
             public bool? WithPaginationInfo { get; set; } = true;
             public string manufacturer { get; set; }
+            public string endUserName { get; set; }
 
 
             public Request()
@@ -62,11 +63,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                
-                var createdFrom = request.CreatedFrom?.ToShortDateString();
+                DateTime? dateFrom = null;
+                DateTime? dateTo = null;
+                 var createdFrom = request.CreatedFrom?.ToShortDateString();
                 var createdTo = request.CreatedTo?.ToShortDateString();
-                var dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true));
-                var dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true));
+                if (createdFrom != null) { dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true)); };
+                if (createdTo != null) { dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true)); };
 
                 var query = new FindModel()
                     {
@@ -82,6 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         CreatedFrom = dateFrom,
                         Manufacturer = request.manufacturer,
                         CreatedTo = dateTo,
+                        EndUserName=request.endUserName,
                     };
                     var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                     var getProductResponse = _mapper.Map<Response>(quoteDetails);
