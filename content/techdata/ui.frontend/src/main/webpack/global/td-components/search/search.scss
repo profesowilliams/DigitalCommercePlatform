@@ -148,8 +148,13 @@
 	left: unset;
 }
 .cmp-search__input {
-	border: 1px solid lightgray;
-	outline: none;
+    border: 1px solid lightgray;
+    outline: none;
+    padding: 0;
+    padding-right: rem(44px);
+    padding-left: rem(10px);
+    text-overflow: ellipsis;
+    min-width: 200px;
 	&::placeholder {
 		font-style: normal;
 		font-family: 'Open Sans';

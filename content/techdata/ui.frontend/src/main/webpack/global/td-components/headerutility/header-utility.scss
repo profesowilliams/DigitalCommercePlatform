@@ -29,6 +29,9 @@
             right: 2px;
             top: 53px;
             z-index: 1;
+            @include tablet {
+                position: fixed;
+            }
         }
     }
 }

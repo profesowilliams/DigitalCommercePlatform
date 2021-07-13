@@ -1,10 +1,14 @@
+$header-height: 47px;
+
 .experiencefragment {
     &.cmp-experiencefragment--header-mobile {
+        // compensating for the fixed position of header
+        padding-top: $header-height;
         .cmp-experiencefragment {
             >.cmp-container >div {
                 display: flex;
                 align-items: center;
-                height: 47px;
+                height: $header-height;
                 width: 100%;
                 border: 1px solid get-color(brand-white);
                 background-color: get-color(brand-white);

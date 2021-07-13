@@ -20,6 +20,7 @@
 		border-bottom: 2px solid transparent;
 		@include tablet {
 			font-size: 0; // hide text on tablet and below
+			line-height: 0; // to balance the height when hidden
 			color: #231F20;
 			>i, svg {
 				font-size: 14px;	
@@ -58,9 +59,11 @@
 		padding: 0 $offset-sm;
 		position: absolute;
 		top: 47px;
+		right: 1px;
 		white-space: nowrap;
 		min-width: 200px;
 		@include tablet {
+			position: fixed;
 			padding: 0 $offset-lg;
 		}
 
@@ -102,6 +105,9 @@
 						margin-right: 13px;
 						@include tablet {
 							display: none;
+							&.fa, &.fa-user {
+								display: none;
+							}
 						}
 					}
 
