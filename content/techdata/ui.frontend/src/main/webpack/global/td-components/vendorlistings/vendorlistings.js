@@ -8,9 +8,11 @@
                 const activeIcon = e.target.closest('.vendor-icon').dataset.type;
                 const vendorIconsList = e.target.closest('.vendor-listing--left-section').querySelectorAll('.vendor-icon');
                 vendorIconsList && vendorIconsList.forEach(function(icon) {
-                    icon.classList.remove('activeIcon');
+                    icon.querySelector('.vendor-icon__container').classList.remove('activeIcon');
+                    icon.querySelector('.vendor-icon__container').classList.add('nonActiveIcon');
                 });
-                e.target.closest('.vendor-icon').classList.add('activeIcon');
+                e.target.closest('.vendor-icon').querySelector('.vendor-icon__container').classList.add('activeIcon');
+                e.target.closest('.vendor-icon').querySelector('.vendor-icon__container').classList.remove('nonActiveIcon');
                 vendorRightSections = e.target.closest('.vendor-listing--container').querySelectorAll('.vendor-content-section');
                 vendorRightSections && vendorRightSections.forEach(function(section) {
                     const sectionType = section.dataset.type;

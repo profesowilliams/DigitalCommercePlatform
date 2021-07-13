@@ -8,6 +8,7 @@ import com.day.cq.wcm.api.PageManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
@@ -38,6 +39,7 @@ public class VendorComponentList implements List {
     public Collection<ListItem> getListItems() {
         Collection<ListItem> listOfVendorItems = new ArrayList<>();
         Resource resource = request.getResource();
+        ResourceResolver resolver = resource.getResourceResolver();
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Collection<ListItem> cfListItems = delegateList.getListItems();
         log.debug(" Content Fragment List Item Size  = {}", cfListItems.size());
@@ -51,7 +53,7 @@ public class VendorComponentList implements List {
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
                 ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
                 if(contentFragment != null){
-                    VendorListItem vi = VendorListItem.getVendorListItem(contentFragment);
+                    VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource);
                     listOfVendorItems.add(vi);
                 }
             }

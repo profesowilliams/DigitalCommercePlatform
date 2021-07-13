@@ -4,6 +4,7 @@ import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,9 @@ class VendorListItemTest {
     private ContentFragment contentFragment;
 
     @Mock
+    private Resource resource;
+
+    @Mock
     private ContentElement ce;
 
     @Mock
@@ -42,7 +46,7 @@ class VendorListItemTest {
 
         when(ce.getName()).thenReturn("vendor-name");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
         assertEquals("ce-content", v1.getTitle());
     }
 
@@ -50,7 +54,7 @@ class VendorListItemTest {
     void getVendorListItemOverview() {
         when(ce.getName()).thenReturn("overview");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
         assertEquals("ce-content", v1.getOverview());
     }
 
@@ -58,7 +62,7 @@ class VendorListItemTest {
     void getVendorListItemVendorIcon() {
         when(ce.getName()).thenReturn("vendor-icon");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
         assertEquals("ce-content", v1.getVendorIcon());
     }
 
@@ -66,7 +70,7 @@ class VendorListItemTest {
     void getVendorListItemVendorPageLink() {
         when(ce.getName()).thenReturn("vendor-page-link");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
         assertEquals("ce-content", v1.getPageLink());
     }
 
@@ -74,7 +78,7 @@ class VendorListItemTest {
     void getVendorListItemVendorPageLabel() {
         when(ce.getName()).thenReturn("vendor-page-label");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
         assertEquals("ce-content", v1.getVendorPageLabel());
     }
 }
