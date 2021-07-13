@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpGet]
-        [Route("deals/find")]
+        [Route("deals")]
         public async Task<ActionResult> GetDeals([FromQuery] Models.Deals.FindModel criteria)
         {
             var data = new GetDeals.Request { Criteria = criteria };
@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         }
 
         [HttpGet]
-        [Route("deals")]
+        [Route("deal")]
         public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
         {
             var data = new GetDeal.Request(dealId, vendorId);
