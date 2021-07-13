@@ -26,6 +26,16 @@
                     height: rem(48px);
                 }
             }
+
+            span {
+                display: none;
+            }
+
+            a {
+                span {
+                    display: none;
+                }
+            }
         }
     }
 
