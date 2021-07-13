@@ -135,7 +135,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
                     WithPaginationInfo = request.WithPaginationInfo,
-                    OrderMethod=request.OrderMethod
+                    Origin=request.OrderMethod
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);

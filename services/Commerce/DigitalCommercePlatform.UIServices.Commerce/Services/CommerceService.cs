@@ -88,6 +88,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
         {
+            var origin = string.IsNullOrWhiteSpace(orderParameters.Origin)?null: orderParameters.Origin.ToLower();
+
+            if (origin == "web")
+                orderParameters.Origin = "Web";
+            else if (origin == "edi")
+                orderParameters.Origin = "B2B";
+            else if (origin == "pe" )
+                orderParameters.Origin = "Manual";
+            else if (origin == "xml")
+                orderParameters.Origin = "Web";
+            else
+                orderParameters.Origin = null;
+            
             _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
@@ -104,7 +117,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Page = orderParameters.PageNumber,
                             WithPaginationInfo = orderParameters.WithPaginationInfo,
                             Details = true,
-                            orderParameters.OrderMethod
+                            orderParameters.Origin
                         });
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);

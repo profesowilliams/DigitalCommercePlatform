@@ -69,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 var createdTo = request.CreatedTo?.ToShortDateString();
                 if (createdFrom != null) { dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true)); };
                 if (createdTo != null) { dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true)); };
+                request.endUserName = string.IsNullOrWhiteSpace(request.endUserName) ? null : request.endUserName + "*";
 
                 var query = new FindModel()
                     {
