@@ -518,18 +518,30 @@ $teaser-headings-mobile: (
     box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
     width: min-content;
 
+    &:hover {
+      .cmp-teaser__title {
+        background-color: get-color(brand-light-blue);
+        width: 100%;
+        height: rem(70px);
+      }
+    }
+
     &__description {
       display: none;
     }
 
     &__content {
       width: rem(460px);
-      height: rem(300px);
+      height: rem(70px);
       position: relative;
     }
 
     &__image {
       width: fit-content;
+      img {
+        object-fit: fill;
+        width: rem(460px);
+      }
     }
 
     &__title {
@@ -546,12 +558,11 @@ $teaser-headings-mobile: (
       bottom: 0;
       padding: 0;
       margin: 0;
+    }
 
-      &:hover {
-        background-color: get-color(brand-light-blue);
-        width: 100%;
-        height: rem(70px);
-      }
+    &__title-link {
+      color: get-color(brand-white);
+      text-decoration: none;
     }
   }
 }
@@ -564,18 +575,30 @@ $teaser-headings-mobile: (
     box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
     width: min-content;
 
+    &:hover {
+      .cmp-teaser__title {
+        background-color: get-color(brand-light-blue);
+        width: 100%;
+        height: rem(70px);
+      }
+    }
+
     &__description {
       display: none;
     }
 
     &__content {
       width: rem(460px);
-      height: rem(300px);
+      height: rem(70px);
       position: relative;
     }
 
     &__image {
       width: fit-content;
+      img {
+        object-fit: fill;
+        width: rem(460px);
+      }
     }
 
     &__title {
@@ -592,12 +615,6 @@ $teaser-headings-mobile: (
       bottom: 0;
       padding: 0;
       margin: 0;
-
-      &:hover {
-        background-color: get-color(brand-light-blue);
-        width: 100%;
-        height: rem(70px);
-      }
     }
   }
 }
