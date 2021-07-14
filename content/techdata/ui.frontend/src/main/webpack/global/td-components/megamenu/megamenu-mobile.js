@@ -11,7 +11,7 @@ export default class MegamenuMobile {
 
     init(el) {
         if (!el) return;
-        
+
         this.handlePrimary(el);
     }
 
@@ -37,7 +37,7 @@ export default class MegamenuMobile {
         event.preventDefault();
 
         const backBtn = event.target.closest('.cmp-megamenu__back');
-        
+
         if (!backBtn) return;
         backBtn.style.opacity = 0;
 
@@ -47,20 +47,52 @@ export default class MegamenuMobile {
         })
         this.toggleClass(el.querySelector('.cmp-megamenu__primary'), 'show');
         this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'show');
+        this.removeOpenedMenus(el, this.primary);
+    }
+
+    removeOpenedMenus(el, primary) {
+        if (primary.length <= 0) {
+            return;
+        }
+
+        const secondary = el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`);
+        const navGroup = secondary?.querySelector('.cmp-navigation__group');
+
+        if (navGroup) {
+            this.removeActiveClass(navGroup);
+        }
+    }
+
+    removeActiveClass(activeEl) {
+        const listArray = Array.from(activeEl.children);
+        listArray.forEach(item => {
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+            }
+
+            const navGroup = item.querySelector('.cmp-navigation__group');
+            if(navGroup) {
+                if (navGroup.classList.contains('active-md')) {
+                    navGroup.classList.remove('active-md');
+                }
+                this.removeActiveClass(navGroup);
+            };
+        });
     }
 
     handlePrimary(el) {
         const mmPrimaryList = el?.querySelectorAll('.cmp-megamenu__primary li');
         mmPrimaryList.forEach(list => {
             list.addEventListener('click', () => {
-                const primary = list.querySelector('[data-cmp-children]')?.dataset.cmpChildren;
+                // capturing primary as I need a reference later to close by opened menu
+                const primary = this.primary = list.querySelector('[data-cmp-children]')?.dataset.cmpChildren;
                 this.toggleClass(list.parentNode, 'hide');
                 this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'hide');
 
                 // grab chevron and show it.
                 const backBtn = el.querySelector('.cmp-megamenu__back');
                 backBtn.style.opacity = 1;
-                
+
                 // show secondary
                 this.toggleClass(el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`), 'show');
                 this.appendTitleAndSubTitle(el, primary);
@@ -71,8 +103,8 @@ export default class MegamenuMobile {
 
     appendTitleAndSubTitle(el, type) {
         const secondaryEl = el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary`);
-        
-        if (el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--title`) || 
+
+        if (el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--title`) ||
             el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--sub-title`)) {
             return;
         }
@@ -80,7 +112,7 @@ export default class MegamenuMobile {
         const title = document.createElement('div');
         title.className = 'cmp-megamenu__secondary--title';
         title.innerHTML = type;
-        
+
         const subTitle = document.createElement('div');
         subTitle.className = 'cmp-megamenu__secondary--sub-title';
         subTitle.innerHTML = `${type} home`;
@@ -107,7 +139,7 @@ export default class MegamenuMobile {
 
     handleNavigationClick(event) {
         event.preventDefault();
-        
+
         let isList = event.target.closest('.cmp-navigation__item');
         const ACTIVE_CLASS = 'active';
 
@@ -119,10 +151,10 @@ export default class MegamenuMobile {
         if (subMenu) {
             if (isList.classList.contains(ACTIVE_CLASS)) {
                 isList.classList.remove(ACTIVE_CLASS);
-                subMenu.style.display = 'none';
+                this.toggleClass(subMenu, 'hide');
             } else {
                 isList.classList.add(ACTIVE_CLASS);
-                subMenu.style.display = 'block';
+                this.toggleClass(subMenu, 'show');
             }
         }
     }

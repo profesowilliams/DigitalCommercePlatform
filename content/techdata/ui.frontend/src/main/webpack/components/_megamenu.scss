@@ -255,6 +255,12 @@
                                             .cmp-navigation__group {
                                                 padding-left: rem(30px);
                                                 display: none;
+                                                &.inactive-md {
+                                                    display: none;
+                                                }
+                                                &.active-md {
+                                                    display: block;
+                                                }
                                             }
                                             li {
                                                 list-style: none;
