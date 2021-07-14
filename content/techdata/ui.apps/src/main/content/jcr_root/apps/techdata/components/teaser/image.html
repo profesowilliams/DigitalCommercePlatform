@@ -1,0 +1,16 @@
+<sly data-sly-template.image="${@ teaser}">
+  <sly 
+    data-sly-use.svgModel="com.techdata.core.models.ExtractSVGModel"
+    data-sly-test="${teaser.imageResource}">
+    <sly data-sly-test="${svgModel.isSvg}">
+      <div class="cmp-teaser__image">
+        <a class="cmp-image__link" href="${teaser.linkURL}" data-cmp-clickable="" data-cmp-hook-image="link">
+          <div class="cmp-image__image" data-cmp-hook-image="image">
+            ${svgModel.getBinary @ context='unsafe'}
+          </div>
+        </a>
+      </div>
+    </sly>
+    <div class="cmp-teaser__image" data-sly-test="${!svgModel.isSvg}" data-sly-resource="${teaser.imageResource}"></div>
+  </sly>
+</sly>

@@ -60,7 +60,7 @@
 			&__image {
 				position: relative;
 				margin-bottom: 5.625rem;
-				img {
+				img, svg {
 					border-radius: 50%;
 					width: 6.62rem;
 					height: 6.62rem;
@@ -162,6 +162,13 @@
 						.cmp-image__image {
 							filter: none;
 						}
+						.cmp-image__image {
+							svg {
+								path, polygon {
+									fill: get-color(td-lightblue);
+								}
+							}
+						}
 						.cmp-teaser__description {
 							color: get-color(text-dark-grey);
 						}
@@ -176,7 +183,11 @@
 						}
 					}
 					.cmp-image__image {
-						filter: brightness(10) invert(10);
+						svg {
+								path, polygon {
+										fill: get-color(td-dark-blue);
+								}
+						}
 					}
 				}
 			}
