@@ -329,15 +329,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                
                 string productUrl = "";
                 string productId = "";
-                string[] productIds = new string[quotePreview.Items.Count];
+                string manufacturer = "";
+                string system = configurationFindResponse?.Data?.FirstOrDefault()?.Source.System;
+                string[] arrProductIds = new string[quotePreview.Items.Count];
+                string[] arrManufacturer = new string[quotePreview.Items.Count];
                 ProductData productDetails;
+
                 //convert for-each statment to linq statment after App-Service is ready.
                 int i = 0;
                 foreach (var item in quotePreview.Items)
                 {
-                    productId = item?.VendorPartNo ?? "CON-OSP-WS6548SL"; // Fix this once app service is ready
-                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                    productIds[i] = productId;
+                    productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
+                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready                    
+                    item.Manufacturer = item.Manufacturer ??system;
+                    manufacturer = item.Manufacturer ?? system;
+                    arrManufacturer[i] = manufacturer;
+                    arrProductIds[i] = productId;
                     i++;
                 }
 
@@ -345,10 +352,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 productUrl = _appProductServiceURL.AppendPathSegment("Find")
                  .SetQueryParams(new
                  {
-                     MfrPartNumber = productIds,
+                     MfrPartNumber = arrProductIds,
                      Details = true,
                      SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
-                     Manufacturer = "CISCO" // needs to fix the hardcoded values once app-service is ready .
+                     Manufacturer = arrManufacturer
                  });
                
                 productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);

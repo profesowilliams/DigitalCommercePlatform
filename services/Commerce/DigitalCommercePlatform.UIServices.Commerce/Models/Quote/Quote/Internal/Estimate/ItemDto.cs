@@ -9,6 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string Id { get; set; }
         public string Parent { get; set; }
         public string VendorPartNo { get; set; }
+        public string Vendor { get; set; }
         public string Description { get; set; }
         public decimal Qty { get; set; }
         public decimal PurchaseCost { get; set; }

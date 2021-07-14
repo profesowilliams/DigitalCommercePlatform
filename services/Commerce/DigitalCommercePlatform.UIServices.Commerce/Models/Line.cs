@@ -1,12 +1,15 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Line
     {
         public string Id { get; set; }
         public string Parent { get; set; }
         public string VendorPartNo { get; set; }
+        public string Manufacturer { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal? UnitPrice { get; set; }

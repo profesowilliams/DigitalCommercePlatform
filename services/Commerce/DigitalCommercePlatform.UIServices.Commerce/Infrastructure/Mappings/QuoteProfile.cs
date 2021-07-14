@@ -105,6 +105,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.ExtendedPrice, opt => opt.MapFrom(src => src.TotalPurchaseCost))
                 .ForMember(dest => dest.ExtendedPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPurchaseCost)))
                 .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.Parent))
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Vendor))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 ;
 
