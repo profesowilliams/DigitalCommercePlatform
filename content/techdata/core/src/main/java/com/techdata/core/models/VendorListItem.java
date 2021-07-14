@@ -1,20 +1,19 @@
 package com.techdata.core.models;
 
-import com.day.cq.tagging.Tag;
-import com.day.cq.tagging.TagManager;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.wcm.core.components.models.ListItem;
+import com.day.cq.tagging.TagManager;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 public class VendorListItem implements ListItem {
 
@@ -27,26 +26,21 @@ public class VendorListItem implements ListItem {
     private String vendorPageLabel;
     private String vendorProductLabel;
     private String vendorProductLink;
-    private List<String> categoryTag = new ArrayList();
-
+    private List<String> categoryTag = new ArrayList<>();
 
     @Override
     public String getTitle() {
         return title;
     }
-
     public String getOverview() {
         return overview;
     }
-
     public String getVendorIcon() {
         return vendorIcon;
     }
-
     public String getPageLink() {
         return pageLink;
     }
-
     public String getVendorPageLabel() {
         return vendorPageLabel;
     }
@@ -62,7 +56,15 @@ public class VendorListItem implements ListItem {
 
     public VendorListItem(){}
 
-    public VendorListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags) {
+    public VendorListItem(
+        final String title,
+        final String overview,
+        final String vendorIcon,
+        final String pageLink,
+        final String vendorPageLabel,
+        final String vendorProductLabel,
+        final String vendorProductLink,
+        final List<String> tags) {
         this.title = title;
         this.overview = overview;
         this.vendorIcon = vendorIcon;
@@ -70,7 +72,7 @@ public class VendorListItem implements ListItem {
         this.vendorPageLabel = vendorPageLabel;
         this.vendorProductLabel = vendorProductLabel;
         this.vendorProductLink = vendorProductLink;
-        this.categoryTag = tags;
+        this.categoryTag = Collections.unmodifiableList(tags);
     }
 
     public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource){

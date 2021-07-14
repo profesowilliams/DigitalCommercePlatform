@@ -17,12 +17,17 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Model(
   adaptables = SlingHttpServletRequest.class,
   defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
 )
 public class ExtractSVGModel {
+
+  private static final Logger LOG = LoggerFactory.getLogger(VendorListItem.class);
+
 
   private static final String FILE_REFERENCE_PN = "fileReference";
   private static final String SVG_EXTENSION = ".svg";
@@ -67,7 +72,7 @@ public class ExtractSVGModel {
         strBuilder.append(readLine);
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      LOG.error("Unable to read the SVG's XML from InputStream: ", e);
     }
     return strBuilder.toString();
   }
