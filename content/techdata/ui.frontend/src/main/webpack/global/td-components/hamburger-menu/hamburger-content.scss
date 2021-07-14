@@ -35,6 +35,13 @@
                 max-width: rem(310px);
                 overflow-x: hidden;
                 overflow-y: auto;
+                // disable scrollbar, but retain scroll.
+                &::-webkit-scrollbar {
+                    width: 0;
+                }
+                // disable scrollbar for other browsers - not tested
+                overflow: -moz-scrollbars-none;
+                -ms-overflow-style: none;
             }
             &__primary {
                 display: flex;
