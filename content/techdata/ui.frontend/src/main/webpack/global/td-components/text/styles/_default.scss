@@ -60,10 +60,10 @@
 
 .cmp-text-color {
   &--onDark-theme {
-    color: get-color(brand-white);
+    color: get-color(brand-white)!important;
   }
   &--onLight-theme {
-    color: get-color(text-light-gray);
+    color: get-color(text-light-gray)!important;
   }
 }
 

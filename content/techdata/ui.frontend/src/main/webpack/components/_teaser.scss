@@ -339,15 +339,13 @@
     }
   }
 }
+
 .cmp-text-color {
   &--onDark-theme {
-    color: #ffffff;
-    font-weight: 400;
+    color: get-color(brand-white)!important;
   }
-
   &--onLight-theme {
-    color: #7c8388;
-    font-weight: 400;
+    color: get-color(text-light-gray)!important;
   }
 }
 
