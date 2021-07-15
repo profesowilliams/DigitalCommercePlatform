@@ -155,6 +155,9 @@
     padding-left: rem(10px);
     text-overflow: ellipsis;
     min-width: 200px;
+    @include tablet {
+        min-width: 0;
+    }
 	&::placeholder {
 		font-style: normal;
 		font-family: 'Open Sans';
