@@ -33,6 +33,11 @@
   }
 
   &--menu-grid {
+    @include tablet {
+      .cmp-list {
+        justify-content: space-evenly;
+      }
+    }
     .cmp-list__item-title {
       display: block;
     }
@@ -52,8 +57,17 @@
       }
     }
     &-fixed {
+      .cmp-list {
+        @include tablet {
+          justify-content: space-evenly;
+        }
+      }
       .cmp-list__item {
         width: 16.66%;
+        @include tablet {
+          width: 200px;
+        }
+
         article {
           margin: 0 auto;
           max-width: rem(180px);
@@ -84,9 +98,15 @@
   &--brand-grid {
     .cmp-list {
       align-items: center;
+      @include tablet {
+        justify-content: space-evenly;
+      }
     }
     .cmp-list__item {
       width: calc(100% / 8);
+      @include tablet {
+        width: 150px;
+      }
       article {
         margin-top: rem(8px);
         margin-bottom: rem(8px);
@@ -116,9 +136,15 @@
   &--brand-grid-2 {
     .cmp-list {
       align-items: center;
+      @include tablet {
+        justify-content: space-evenly;
+      }
     }
     .cmp-list__item {
       width: calc(100% / 8);
+      @include tablet {
+        width: 150px;
+      }
       article {
         margin-top: rem(8px);
         margin-bottom: rem(8px);
@@ -199,8 +225,17 @@
       }
     }
     &-fixed {
+      .cmp-list {
+        @include tablet {
+          justify-content: space-evenly;
+        }
+      }
       .cmp-list__item {
         width: 16.66%;
+        @include tablet {
+          width: 200px;
+        }
+
         article {
           margin: 0 auto;
           max-width: rem(180px);
@@ -239,48 +274,59 @@
 }
 
 .dp-list--products-with-icons {
-    ul.cmp-list{
-        flex-wrap: wrap;
-        display: flex;
-        li.cmp-list__item{
-            width: 16%;
-            list-style-type:none;
-            transition: all 0.3s;
-            padding-bottom: 20px;
-            &:hover {
-                article{
-                    a.cmp-list__item-link {
-                        span.cmp-list__item-title{
-                            color: #000C21;
-                            font-weight: bold;
-                        }
-                    }
-                }
-            }
-            article {
-                a.cmp-list__item-link {
-                    display: flex;
-                    flex-direction: column;
-                    text-decoration: none;
-                    figure.cmp-image__image-figure {
-                        justify-content: center;
-                        display: flex;
-                        img.cmp-image__image {
-                            width: 60px;
-                            height: 60px;
-                        }
-                    }
-                   span.cmp-list__item-title{
-                    text-decoration: none;
-                    font-size: 13px;
-                    line-height: 15px;
-                    text-align: center;
-                    color: rgba(0,0,0,.55);
-                    margin: 0 5px;
-                   }
-                }
-                span.cmp-list__item-description{}
-            }
-        }
+  .cmp-list{
+    display: flex;
+    flex-wrap: wrap;
+    @include tablet {
+      justify-content: space-between;
+      align-items: center;
+      margin: 0;
+      padding: 0;
     }
+    &__item {
+      display: flex;
+      width: 16%;
+      list-style-type:none;
+      transition: all 0.3s;
+      padding-bottom: 20px;
+      @include tablet {
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+      }
+      &:hover {
+          article{
+              a.cmp-list__item-link {
+                  span.cmp-list__item-title{
+                      color: #000C21;
+                      font-weight: bold;
+                  }
+              }
+          }
+      }
+      article {
+          a.cmp-list__item-link {
+              display: flex;
+              flex-direction: column;
+              text-decoration: none;
+              figure.cmp-image__image-figure {
+                  justify-content: center;
+                  display: flex;
+                  img.cmp-image__image {
+                      width: 60px;
+                      height: 60px;
+                  }
+              }
+              span.cmp-list__item-title{
+              text-decoration: none;
+              font-size: 13px;
+              line-height: 15px;
+              text-align: center;
+              color: rgba(0,0,0,.55);
+              margin: 0 5px;
+              }
+          }
+      }
+    }
+  }
 }
