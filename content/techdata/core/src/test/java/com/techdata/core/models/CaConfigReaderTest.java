@@ -2,6 +2,7 @@ package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.SearchBarConfiguration;
+import com.techdata.core.slingcaconfig.RedirectConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
@@ -41,6 +42,9 @@ class CaConfigReaderTest {
     @Mock
     private SearchBarConfiguration searchBarConfiguration;
 
+    @Mock
+    private RedirectConfiguration redirectConfiguration;
+
     @BeforeEach
     void setUp() {
         underTest = new CaConfigReader();
@@ -61,6 +65,7 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(AnalyticsConfiguration.class)).thenReturn(analyticsConfiguration);
         when(configurationBuilder.as(MiniCartConfiguration.class)).thenReturn(mcConfiguration);
         when(configurationBuilder.as(SearchBarConfiguration.class)).thenReturn(searchBarConfiguration);
+        when(configurationBuilder.as(RedirectConfiguration.class)).thenReturn(redirectConfiguration);
 
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");
@@ -89,6 +94,24 @@ class CaConfigReaderTest {
         when(searchBarConfiguration.quoteSearchEndpoint()).thenReturn("quoteSearchEndpoint");
         when(searchBarConfiguration.orderSearchEndpoint()).thenReturn("orderSearchEndpoint");
         when(searchBarConfiguration.spaSearchEndpoint()).thenReturn("spaSearchEndpoint");
+        when(searchBarConfiguration.typeAheadDomain()).thenReturn("typeAheadDomain");
+        when(searchBarConfiguration.typeAheadEndpoint()).thenReturn("typeAheadEndpoint");
+//        when(searchBarConfiguration.typeAheadKeyword()).thenReturn("typeAheadKeyword");
+        when(searchBarConfiguration.searchDomain()).thenReturn("searchDomain");
+        when(searchBarConfiguration.legacySearchEndpoint()).thenReturn("legacySearchEndpoint");
+        when(searchBarConfiguration.searchKeywordParameter()).thenReturn("searchKeywordParameter");
+        when(searchBarConfiguration.searchRefinementsParameter()).thenReturn("searchRefinementsParameter");
+        when(searchBarConfiguration.searchBParameter()).thenReturn("searchBParameter");
+        when(searchBarConfiguration.contentSearchTab()).thenReturn("contentSearchTab");
+        when(redirectConfiguration.dcpDashboardPage()).thenReturn("dcpDashboardPage");
+        when(redirectConfiguration.quoteListingPage()).thenReturn("quoteListingPage");
+        when(redirectConfiguration.quoteDetailPage()).thenReturn("quoteDetailPage");
+        when(redirectConfiguration.quotePreviewPage()).thenReturn("quotePreviewPage");
+        when(redirectConfiguration.orderListingPage()).thenReturn("orderListingPage");
+        when(redirectConfiguration.orderDetailPage()).thenReturn("orderDetailPage");
+
+
+
 
 
         underTest.init();
@@ -118,6 +141,22 @@ class CaConfigReaderTest {
         assertEquals("quoteSearchEndpoint", underTest.getQuoteSearchEndpoint());
         assertEquals("orderSearchEndpoint", underTest.getOrderSearchEndpoint());
         assertEquals("spaSearchEndpoint", underTest.getSpaSearchEndpoint());
+        assertEquals("typeAheadDomain", underTest.getTypeAheadDomain());
+        assertEquals("typeAheadEndpoint", underTest.getTypeAheadEndpoint());
+//        assertEquals("typeAheadKeyword", underTest.getTypeAheadKeyword());
+        assertEquals("searchDomain", underTest.getSearchDomain());
+        assertEquals("legacySearchEndpoint", underTest.getLegacySearchEndpoint());
+        assertEquals("searchKeywordParameter", underTest.getSearchKeywordParameter());
+        assertEquals("searchRefinementsParameter", underTest.getSearchRefinementsParameter());
+        assertEquals("searchBParameter", underTest.getSearchBParameter());
+        assertEquals("contentSearchTab", underTest.getContentSearchTab());
+        assertEquals("dcpDashboardPage", underTest.getDcpDashboardPage());
+        assertEquals("quoteListingPage", underTest.getQuoteListingPage());
+        assertEquals("quoteDetailPage", underTest.getQuoteDetailPage());
+        assertEquals("quotePreviewPage", underTest.getQuotePreviewPage());
+        assertEquals("orderListingPage", underTest.getOrderListingPage());
+        assertEquals("orderDetailPage", underTest.getOrderDetailPage());
+
 
 
 

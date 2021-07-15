@@ -5,6 +5,7 @@ package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.SearchBarConfiguration;
+import com.techdata.core.slingcaconfig.RedirectConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
@@ -87,6 +88,38 @@ public class CaConfigReader {
 
 	private String spaSearchEndpoint;
 
+	private String typeAheadDomain;
+
+	private String typeAheadEndpoint;
+
+	private String typeAheadKeyword;
+
+	private String searchDomain;
+
+	private String legacySearchEndpoint;
+
+	private String searchKeywordParameter;
+
+	private String searchRefinementsParameter;
+
+	private String searchBParameter;
+
+	private String contentSearchTab;
+
+	private String dcpDashboardPage;
+
+	private String quoteListingPage;
+
+	private String quoteDetailPage;
+
+	private String quotePreviewPage;
+
+	private String orderListingPage;
+
+	private String orderDetailPage;
+
+
+
 
 
 	@PostConstruct
@@ -96,6 +129,7 @@ public class CaConfigReader {
 		MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
 		AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
 		SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
+		RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
 		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
 		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
 		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
@@ -128,6 +162,21 @@ public class CaConfigReader {
 		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
 		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
 		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
+		typeAheadKeyword = searchBarConfiguration.typeAheadKeyword();
+		typeAheadDomain = searchBarConfiguration.typeAheadDomain();
+		typeAheadEndpoint = searchBarConfiguration.typeAheadEndpoint();
+		searchDomain = searchBarConfiguration.searchDomain();
+		legacySearchEndpoint = searchBarConfiguration.legacySearchEndpoint();
+		searchKeywordParameter = searchBarConfiguration.searchKeywordParameter();
+		searchRefinementsParameter = searchBarConfiguration.searchRefinementsParameter();
+		searchBParameter = searchBarConfiguration.searchBParameter();
+		contentSearchTab = searchBarConfiguration.contentSearchTab();
+		dcpDashboardPage = redirectConfiguration.dcpDashboardPage();
+		quoteListingPage = redirectConfiguration.quoteListingPage();
+		quoteDetailPage = redirectConfiguration.quoteDetailPage();
+		quotePreviewPage = redirectConfiguration.quotePreviewPage();
+		orderListingPage = redirectConfiguration.orderListingPage();
+		orderDetailPage = redirectConfiguration.orderDetailPage();
 
 	}
 
@@ -258,5 +307,50 @@ public class CaConfigReader {
 	public String getSpaSearchEndpoint() {
 		return spaSearchEndpoint;
 	}
+
+	public String getTypeAheadDomain() {
+		return typeAheadDomain;
+	}
+
+	public String getTypeAheadEndpoint() {
+		return typeAheadEndpoint;
+	}
+
+	public String getTypeAheadKeyword() {
+		return typeAheadKeyword;
+	}
+
+	public String getSearchDomain() {
+		return searchDomain;
+	}
+
+	public String getSearchKeywordParameter() {
+		return searchKeywordParameter;
+	}
+
+	public String getLegacySearchEndpoint() {
+		return legacySearchEndpoint;
+	}
+
+	public String getSearchRefinementsParameter() {
+		return searchRefinementsParameter;
+	}
+
+	public String getSearchBParameter(){return searchBParameter;}
+
+	public String getContentSearchTab(){return contentSearchTab;}
+
+	public String getDcpDashboardPage(){return dcpDashboardPage;}
+
+	public String getQuoteListingPage(){return quoteListingPage;}
+
+	public String getQuoteDetailPage(){return quoteDetailPage;}
+
+	public String getQuotePreviewPage(){return quotePreviewPage;}
+
+	public String getOrderListingPage(){return orderListingPage;}
+
+	public String getOrderDetailPage(){return orderDetailPage;}
+
 
 }
