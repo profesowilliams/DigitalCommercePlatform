@@ -22,6 +22,7 @@ public class FilmStripItem implements ListItem {
 		return imagePath;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -46,7 +47,7 @@ public class FilmStripItem implements ListItem {
 
         for (Iterator<ContentElement> it = cf.getElements(); it.hasNext(); ) {
             ContentElement ce = it.next();
-            String tagElement = ce.getName().toString();
+            String tagElement = ce.getName();
             if(tagElement.equals("photo")){
             	imagePath = ce.getContent();
             }else if(tagElement.equals("name")){
@@ -57,7 +58,6 @@ public class FilmStripItem implements ListItem {
             	profileLink = profilePath;
             }
         }
-        FilmStripItem v1 = new FilmStripItem(imagePath, name, position, profileLink);
-        return v1;
+        return new FilmStripItem(imagePath, name, position, profileLink);
     }
 }

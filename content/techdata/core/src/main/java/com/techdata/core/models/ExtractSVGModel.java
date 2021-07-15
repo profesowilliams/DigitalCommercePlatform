@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 )
 public class ExtractSVGModel {
 
-  private static final Logger LOG = LoggerFactory.getLogger(VendorListItem.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ExtractSVGModel.class);
 
 
   private static final String FILE_REFERENCE_PN = "fileReference";

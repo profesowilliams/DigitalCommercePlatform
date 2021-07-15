@@ -50,12 +50,15 @@ public class VendorListItem implements ListItem {
     public String getVendorProductLink() {
         return vendorProductLink;
     }
+
+    @SuppressWarnings("squid:S2384")
     public List<String> getCategoryTag() {
         return categoryTag;
     }
 
     public VendorListItem(){}
 
+    @SuppressWarnings("java:S107")
     public VendorListItem(
         final String title,
         final String overview,
@@ -110,20 +113,26 @@ public class VendorListItem implements ListItem {
                 vendorProductLink = ce.getContent();
             }
             else if (tagElement.equals("vendor-category")){
-                String Vtags = ce.getContent();
-                String[] vendorCategoryTags = Vtags.split("\\r?\\n");
-                log.debug(" Vendor category Tags " + Vtags);
-                TagManager tagManager = resource.getResourceResolver().adaptTo(TagManager.class);
-                for(int i = 0; i < vendorCategoryTags.length; i++){
-                    log.debug(" Inside for loop " + vendorCategoryTags[i]);
-                    String tag = tagManager.resolve(vendorCategoryTags[i]).getTitle();
-                    log.debug(" Vendor category Tag Name " + tag);
-                    if(tag != null){tags.add(tag);}
-                }
+                tags = prepareTags(ce, resource);
             }
         }
         VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
         return v1;
+    }
+
+    private static List<String> prepareTags(ContentElement ce, Resource resource) {
+        List<String> tags = new ArrayList<>();
+        String vTags = ce.getContent();
+        String[] vendorCategoryTags = vTags.split("\\r?\\n");
+        log.debug(" Vendor category Tags {}", vTags);
+        TagManager tagManager = resource.getResourceResolver().adaptTo(TagManager.class);
+        for(int i = 0; i < vendorCategoryTags.length; i++){
+            log.debug(" Inside for loop {}", vendorCategoryTags[i]);
+            String tag = tagManager.resolve(vendorCategoryTags[i]).getTitle();
+            log.debug(" Vendor category Tag Name {}", tag);
+            if(tag != null){tags.add(tag);}
+        }
+        return tags;
     }
 }
