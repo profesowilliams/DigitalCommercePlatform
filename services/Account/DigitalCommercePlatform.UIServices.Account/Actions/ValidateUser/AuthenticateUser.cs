@@ -113,6 +113,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 }
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
+                var roles = userResponse.User.Roles;
+                if (roles == null)
+                    roles = new List<string>();
+
+                if (roles.ToList().Count > 0 && userResponse.User.ID.Equals("516514"))
+                    roles.ToList().Add("hasDCPAccess");
+
+                else
+                    roles = userResponse.User.ID.Equals("516514") ? new List<string> { "hasDCPAccess" } : new List<string>();
+
+                userResponse.User.Roles = roles;
 
                 // Current requirement is to take the first customer from the list
                 userResponse.User.ActiveCustomer = userResponse.User.CustomerList?.FirstOrDefault();
