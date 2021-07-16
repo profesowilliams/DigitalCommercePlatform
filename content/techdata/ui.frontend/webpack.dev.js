@@ -923,6 +923,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/partials/teaser-card/about-us.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "quote-preview",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/quote-preview-demo.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
