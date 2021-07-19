@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.HttpConstants;
@@ -68,7 +69,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         @AttributeDefinition(name = "JQuery Library")
         String jqueryPath() default JQUERY_DEFAULT;
         @AttributeDefinition(name = "ClientLib Categories")
-        String[] clientlibCategories() default {"techdata.base", "techdata.dependencies", "techdata.site"};
+        String[] clientlibCategories() default {"techdata.base", "techdata.dependencies", "techdata.site", "techdata.react"};
 
     }
 
@@ -118,11 +119,21 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
             LOG.debug("Added clientlibs...");
         }
 
+        RequestParameter requestParameter = request.getRequestParameter("disableEncrption");
+        boolean disableEncryption = false;
+        if(requestParameter != null && requestParameter.getString().equals("true")) {
+            disableEncryption = true;
+        }
         // get html
         String contentHtml = getPageContentHtml(request);
-//        contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink(request, "/content")));
-//        String formattedString = new String(Base64.getEncoder().encode(contentHtml.getBytes()));
-        xfJson.addProperty("content", xssapi.encodeForHTML(contentHtml));
+        String formattedString;
+        if(!disableEncryption) {
+            contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink(request, "/content")));
+            formattedString = new String(Base64.getEncoder().encode(contentHtml.getBytes()));
+        } else {
+            formattedString = xssapi.encodeForHTML(contentHtml);
+        }
+        xfJson.addProperty("content", formattedString);
 
         out.print(xfJson);
 
