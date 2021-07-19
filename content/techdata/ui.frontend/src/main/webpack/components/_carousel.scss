@@ -25,6 +25,9 @@
       padding: .5rem 1.5rem;
       box-sizing: border-box;
       //m-0 px-4 py-2 position-absolute w-100 bottom-0
+      @include tablet {
+        justify-content: center;
+      }
     }
     .dp-carousel__nav-labels{
       //d-flex font-12
@@ -34,12 +37,22 @@
     .dp-carousel__nav-label{
       font-size: .75rem;
       cursor: pointer;
-      color: #D6D6D6!important;
+      color: get-color(secondary-light-grey) !important;
       //text-decoration-none position-relative mx-3 py-1
       padding: .25rem 0;
       margin: 0 1rem;
       position: relative;
       text-decoration: none;
+      @include tablet {
+        font-size: 0;
+        margin: 0 5px;
+        border: 1px solid get-color(secondary-light-grey);
+        background: get-color(brand-black);
+        border-radius: 50%;
+        width: 10px;
+        height: auto;
+        text-indent: -3000px;
+      }
       &::before{
         content: "";
         position: absolute;
@@ -47,18 +60,25 @@
         bottom: 0;
         height: 2px;
         width: 0;
-        background-color: #048FC8;
+        background-color: get-color(brand-nav-blue);
         transition: width .3s;
         display: block;
+        @include tablet {
+          background-color: unset;
+        }
       }
       &:focus{
         outline: 0 none;
       }
       &.cmp-carousel__indicator--active,
       &:hover{
-        color: #fff;
+        color: get-color(brand-white);
         background-color: transparent;
         opacity: 1;
+        @include tablet {
+          background-color: get-color(brand-white);
+          opacity: 0.5;
+        }
         &::before{
           width: 100%;
         }
@@ -100,6 +120,10 @@
     .dp-carousel__alert-container{
       display: flex;
       align-items: center;
+      @include tablet {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     .dp-carousel__alert-text{
       //col position-relative h5 m-0 text-shadow-1
@@ -109,7 +133,7 @@
       font-weight: 500;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  
+      margin-bottom: rem(10px);
     }
     .dp-carousel__alert-buttons{
       //col-md-auto d-flex align-items-end position-relative
@@ -117,6 +141,10 @@
       position: relative;
       display: flex;
       align-items: flex-end;
+      @include tablet {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     .dp-carousel__alert-button{
       //text-uppercase btn btn-light rounded-0 font-weight-bold mr-4
@@ -129,6 +157,7 @@
       font-weight: bold;
       text-transform: uppercase;
       margin-right: 1.5rem;
+      margin-bottom: rem(10px);
     }
     .dp-carousel__alert-button-color{
       color: #00B1E2;

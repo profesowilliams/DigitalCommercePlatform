@@ -157,6 +157,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "carousel-core.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/carousel/carousel-core.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "carousel-demo.html",
                 template: path.resolve(
                     __dirname,
@@ -396,6 +403,13 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/teaser-hero.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "teaser-alert.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/teaser-hero/teaser-alert.html"
                 ),
             }),
             new HtmlWebpackPlugin({

@@ -26,6 +26,16 @@
       margin: 0 rem(16px);
       position: relative;
       text-decoration: none;
+      @include tablet {
+        font-size: 0;
+        margin: 0 5px;
+        border: 1px solid get-color(secondary-light-grey);
+        background: get-color(brand-black);
+        border-radius: 50%;
+        width: 10px;
+        height: auto;
+        text-indent: -3000px;
+      }
       &::before{
         content: "";
         position: absolute;
@@ -36,6 +46,9 @@
         background-color: get-color(brand-nav-blue);
         transition: width .3s;
         display: block;
+        @include tablet {
+          background-color: unset;
+        }
       }
       &:focus{
         outline: 0 none;
@@ -45,6 +58,10 @@
         color: get-color(brand-white);
         background-color: transparent;
         opacity: 1;
+        @include tablet {
+          background-color: get-color(brand-white);
+          opacity: 0.5;
+        }
         &::before{
           width: 100%;
         }
@@ -86,6 +103,10 @@
     .dp-carousel__alert-container{
       display: flex;
       align-items: center;
+      @include tablet {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     .dp-carousel__alert-text{
       //col position-relative h5 m-0 text-shadow-1
@@ -95,7 +116,7 @@
       font-weight: 500;
       color: get-color(brand-white);
       text-shadow: 0 rem(2px) rem(4px) rgba(0,0,0,0.5);
-  
+      margin-bottom: rem(10px);
     }
     .dp-carousel__alert-buttons{
       //col-md-auto d-flex align-items-end position-relative
@@ -103,6 +124,10 @@
       position: relative;
       display: flex;
       align-items: flex-end;
+      @include tablet {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
     .dp-carousel__alert-button{
       //text-uppercase btn btn-light rounded-0 font-weight-bold mr-4
@@ -115,6 +140,7 @@
       font-weight: bold;
       text-transform: uppercase;
       margin-right: rem(24px);
+      margin-bottom: rem(10px);
     }
     .dp-carousel__alert-button-color{
       color: get-color(brand-light-blue);
