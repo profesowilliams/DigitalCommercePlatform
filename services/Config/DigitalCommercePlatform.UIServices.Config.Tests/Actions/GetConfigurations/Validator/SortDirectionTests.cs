@@ -1,23 +1,24 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
-using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using static DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations.GetConfigurations;
+using GRC = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Validator
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurations.Validator
 {
-    public class SortDirectionTests : GetDealsValidatorTestsBase
+    public class SortDirectionTests : GetConfigurationsValidatorTestsBase
     {
-        private readonly GRD.GetDeals.Validator _validator;
-        private readonly FindModel _model;
+        private readonly GRC.GetConfigurations.Validator _validator;
+        private readonly Request _model;
 
         public SortDirectionTests()
         {
             _validator = GetValidator();
-            _model = GetValidModel();
+            _model = GetValidRequest();
         }
 
         internal class ValidSortDirectionValues : TheoryData<int>
@@ -35,11 +36,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
         [ClassData(typeof(ValidSortDirectionValues))]
         public async Task SortDirectionIntValidationShouldReturnNoErrors(int x)
         {
-            _model.SortDirection = (SortDirection)x;
+            _model.Criteria.SortDirection = (SortDirection)x;
             var result = await _validator.TestValidateAsync(_model);
 
             result.Should().NotBeNull();
-            result.ShouldNotHaveValidationErrorFor(x => x.SortDirection);
+            result.ShouldNotHaveValidationErrorFor(x => x.Criteria.SortDirection);
         }
 
         [Theory]
@@ -49,12 +50,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
         [InlineData(4)]
         public async Task SortDirectionIntValidationShouldReturnError(int x)
         {
-            _model.SortDirection = (SortDirection)x;
+            _model.Criteria.SortDirection = (SortDirection)x;
             var result = await _validator.TestValidateAsync(_model);
 
             result.Should().NotBeNull();
             result.Errors.Should().NotBeEmpty();
-            result.ShouldHaveValidationErrorFor(x => x.SortDirection);
+            result.ShouldHaveValidationErrorFor(x => x.Criteria.SortDirection);
         }
 
         [Theory]
@@ -63,11 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
         [InlineData("desc")]
         public async Task SortDirectionStringValidationShouldReturnNoErrors(string s)
         {
-            _model.SortDirection = Enum.Parse<SortDirection>(s);
+            _model.Criteria.SortDirection = Enum.Parse<SortDirection>(s);
             var result = await _validator.TestValidateAsync(_model);
 
             result.Should().NotBeNull();
-            result.ShouldNotHaveValidationErrorFor(x => x.SortDirection);
+            result.ShouldNotHaveValidationErrorFor(x => x.Criteria.SortDirection);
         }
 
         [Theory]
@@ -83,12 +84,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
         public async Task InvalidStringSortDirectionValidationShouldSetUndefinded(string s)
         {
             Enum.TryParse(s, out SortDirection stringParsingResult);
-            _model.SortDirection = stringParsingResult;
+            _model.Criteria.SortDirection = stringParsingResult;
             var result = await _validator.TestValidateAsync(_model);
 
             result.Should().NotBeNull();
-            result.ShouldNotHaveValidationErrorFor(x => x.SortDirection);
-            _model.SortDirection.Should().Be(SortDirection.undefined);
+            result.ShouldNotHaveValidationErrorFor(x => x.Criteria.SortDirection);
+            _model.Criteria.SortDirection.Should().Be(SortDirection.undefined);
         }
     }
 }

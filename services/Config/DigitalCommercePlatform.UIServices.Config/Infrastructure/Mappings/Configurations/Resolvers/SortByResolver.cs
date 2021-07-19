@@ -9,10 +9,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                             bool destMember,
                             ResolutionContext context)
         {
-            if (string.IsNullOrWhiteSpace(source.SortDirection))
+            if (source == null)
                 return false;
 
-            if (source.SortDirection.Equals("asc"))
+            if (source.SortDirection == Models.Common.SortDirection.asc)
                 return true;
 
             return false;

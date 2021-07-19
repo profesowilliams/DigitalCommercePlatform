@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Deals

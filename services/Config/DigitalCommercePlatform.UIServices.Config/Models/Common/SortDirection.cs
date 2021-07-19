@@ -1,4 +1,4 @@
-﻿namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
+﻿namespace DigitalCommercePlatform.UIServices.Config.Models.Common
 {
     public enum SortDirection : byte
     {

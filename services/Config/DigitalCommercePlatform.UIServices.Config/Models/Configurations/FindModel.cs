@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
@@ -16,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public DateTime? CreatedTo { get; set; }
         public string EndUser { get; set; }
         public string SortBy { get; set; }
-        public string SortDirection { get; set; }
+        public SortDirection SortDirection { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }

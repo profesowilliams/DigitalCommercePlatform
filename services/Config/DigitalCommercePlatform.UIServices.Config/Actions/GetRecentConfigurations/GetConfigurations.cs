@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentValidation;
@@ -70,6 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
                     .WithMessage("PageNumber must be greater than 0.");
                 RuleFor(x => x.Criteria.PageSize).GreaterThan(0)
                     .WithMessage("PageSize must be greater than 0.");
+                RuleFor(x => x.Criteria.SortDirection).IsInEnum();
             }
         }
     }

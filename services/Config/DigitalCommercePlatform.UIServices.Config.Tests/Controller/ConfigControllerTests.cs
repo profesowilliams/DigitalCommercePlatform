@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = "asc",
+                SortDirection = Models.Common.SortDirection.asc,
                 Id = string.Empty,
             };
 
@@ -76,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Deals.FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = Models.Deals.SortDirection.asc,
+                SortDirection = Models.Common.SortDirection.asc,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new Models.Deals.FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = Models.Deals.SortDirection.asc,
+                SortDirection = Models.Common.SortDirection.asc,
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
