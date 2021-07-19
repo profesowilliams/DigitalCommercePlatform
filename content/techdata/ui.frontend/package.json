@@ -61,7 +61,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "babel-loader": "^8.2.2",
     "bootstrap": "^5.0.0-beta3",
     "chart.js": "^3.2.1",

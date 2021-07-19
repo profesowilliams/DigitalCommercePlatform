@@ -1,0 +1,35 @@
+@import "main";
+
+// OUR PURPOSE TABS
+
+.cmp-tabs-our-purpose {
+    .cmp-tabs {
+        display: flex;
+        &__tablist {
+            display: flex;
+            flex-direction: column;
+            width: -webkit-fill-available;
+            width: 30%;
+        }
+
+        &__tabpanel {
+            margin: 0 !important;
+            width: 70%;
+        }
+
+        &__tab {
+            i, svg {
+                color: transparent;
+            }
+            &--active,
+            &:hover,
+            &:active {
+                color: get-color(brand-light-blue) !important;
+
+                i, svg {
+                    color: get-color(brand-light-blue) !important;
+                }
+            }
+        }
+    }
+}

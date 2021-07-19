@@ -275,10 +275,24 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "tabs-our-purpose-demo",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/tabs-our-purpose.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "tabs-sample",
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/partials/tabs/tabs-sample.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "tabs-our-purpose",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/tabs/tabs-our-purpose.html"
                 ),
             }),
             new HtmlWebpackPlugin({
