@@ -147,5 +147,9 @@ import bp from '../../../common-utils/js/media-match';
       mediaQueryList.addEventListener('change', triggerNavigationOnDesktop);
     });
   };
-  document.addEventListener("DOMContentLoaded", onDocumentReady);
+  if (document.readyState !== "loading") {
+    onDocumentReady();
+  } else {
+    document.addEventListener("DOMContentLoaded", onDocumentReady);
+  }
 })(bp);

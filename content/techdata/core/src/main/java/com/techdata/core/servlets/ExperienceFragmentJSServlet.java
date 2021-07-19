@@ -21,6 +21,7 @@ import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.engine.SlingRequestProcessor;
 import org.apache.sling.settings.SlingSettingsService;
+import org.apache.sling.xss.XSSAPI;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +55,13 @@ import java.util.Collection;
 public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
+    private String tdAllJSLibrary = "/etc.clientlibs/techdata/clientlibs/clientlib-all.js";
+    private String tdContainerJSLibrary = "/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.js";
+    private String tdAllCSSLibrary = "/etc.clientlibs/techdata/clientlibs/clientlib-all.css";
     private String[] htmlClientLibCategories = null;
+
+    @Reference
+    private XSSAPI xssapi;
 
     @ObjectClassDefinition(name = "Techdata XF JS Servlet")
     public @interface XFJSServletConfig {
@@ -95,26 +102,27 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
         LOG.debug("Do get for XFJSServlet...");
         PrintWriter out = response.getWriter();
-
         response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,  "*");
 
         JsonObject xfJson = new JsonObject();
         LOG.debug("JsonObject created...");
-        xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}).getAsString());
-        xfJson.add("shopJson", buildShopJSON());
+        if(request.getResource().getPath().contains("/header/")) {
+            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}, false).getAsString());
+            xfJson.add("shopJson", buildShopJSON());
 
-        // get page clientlibs
-        xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories));
-        xfJson.add("jsLibs", getMainLibraries(request, LibraryType.JS, htmlClientLibCategories));
+            // get page clientlibs
+            xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories, true));
+            xfJson.add("jsLibs", getMainLibraries(request, LibraryType.JS, htmlClientLibCategories, true));
 
-        LOG.debug("Added clientlibs...");
+            LOG.debug("Added clientlibs...");
+        }
 
         // get html
         String contentHtml = getPageContentHtml(request);
-        contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink(request, "/content")));
-        String formattedString = new String(Base64.getEncoder().encode(contentHtml.getBytes()));
-        xfJson.addProperty("content", formattedString);
+//        contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink(request, "/content")));
+//        String formattedString = new String(Base64.getEncoder().encode(contentHtml.getBytes()));
+        xfJson.addProperty("content", xssapi.encodeForHTML(contentHtml));
 
         out.print(xfJson);
 
@@ -147,7 +155,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         JsonObject level1 = new JsonObject();
         level1.addProperty("text","Desktops & Workstations");
         level1.addProperty("id","pc-2");
-        level1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100101&amp;refinements=500100101");
+        level1.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100101&amp;refinements=500100101");
         level1.addProperty(THIS_WINDOW,true);
         level1.addProperty(HIGHLIGHT,false);
         level1.addProperty("auth",false);
@@ -158,7 +166,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child1.add(CHILDREN,new JsonArray());
         child1.addProperty("text","Desktops");
         child1.addProperty("id","pc-3");
-        child1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010101&amp;refinements=510010101");
+        child1.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010101&amp;refinements=510010101");
         child1.addProperty(THIS_WINDOW,true);
         child1.addProperty(HIGHLIGHT,false);
         child1.addProperty("auth",false);
@@ -168,7 +176,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child2.add(CHILDREN,new JsonArray());
         child2.addProperty("text","Workstations");
         child2.addProperty("id","pc-4");
-        child2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010102&amp;refinements=510010102");
+        child2.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010102&amp;refinements=510010102");
         child2.addProperty(THIS_WINDOW,true);
         child2.addProperty(HIGHLIGHT,false);
         child2.addProperty("auth",false);
@@ -178,7 +186,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child3.add(CHILDREN,new JsonArray());
         child3.addProperty("text","Barebone Systems");
         child3.addProperty("id","pc-5");
-        child3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010103&amp;refinements=510010103");
+        child3.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010103&amp;refinements=510010103");
         child3.addProperty(THIS_WINDOW,true);
         child3.addProperty(HIGHLIGHT,false);
         child3.addProperty("auth",false);
@@ -188,7 +196,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child4.add(CHILDREN,new JsonArray());
         child4.addProperty("text","Thin Clients");
         child4.addProperty("id","pc-6");
-        child4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010104&amp;refinements=510010104");
+        child4.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010104&amp;refinements=510010104");
         child4.addProperty(THIS_WINDOW,true);
         child4.addProperty(HIGHLIGHT,false);
         child4.addProperty("auth",false);
@@ -200,7 +208,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         JsonArray level2Array = new JsonArray();
         level2.addProperty("text","Notebooks & Accessories");
         level2.addProperty("id","pc-7");
-        level2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100102&amp;refinements=500100102");
+        level2.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100102&amp;refinements=500100102");
         level2.addProperty(THIS_WINDOW,true);
         level2.addProperty(HIGHLIGHT,false);
         level2.addProperty("auth",false);
@@ -209,7 +217,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child5.add(CHILDREN,new JsonArray());
         child5.addProperty("text","Chromebooks");
         child5.addProperty("id","pc-15");
-        child5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010216&amp;refinements=510010216");
+        child5.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010216&amp;refinements=510010216");
         child5.addProperty(THIS_WINDOW,true);
         child5.addProperty(HIGHLIGHT,false);
         child5.addProperty("auth",false);
@@ -219,7 +227,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child6.add(CHILDREN,new JsonArray());
         child6.addProperty("text","Notebook & Tablet Accessories");
         child6.addProperty("id","pc-14");
-        child6.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010215&amp;refinements=510010215");
+        child6.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010215&amp;refinements=510010215");
         child6.addProperty(THIS_WINDOW,true);
         child6.addProperty(HIGHLIGHT,false);
         child6.addProperty("auth",false);
@@ -229,7 +237,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child7.add(CHILDREN,new JsonArray());
         child7.addProperty("text","Notebook Carrying Cases");
         child7.addProperty("id","pc-13");
-        child7.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010211&amp;refinements=510010211");
+        child7.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010211&amp;refinements=510010211");
         child7.addProperty(THIS_WINDOW,true);
         child7.addProperty(HIGHLIGHT,false);
         child7.addProperty("auth",false);
@@ -239,7 +247,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child8.add(CHILDREN,new JsonArray());
         child8.addProperty("text","Notebook Docking Stations");
         child8.addProperty("id","pc-12");
-        child8.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010210&amp;refinements=510010210");
+        child8.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010210&amp;refinements=510010210");
         child8.addProperty(THIS_WINDOW,true);
         child8.addProperty(HIGHLIGHT,false);
         child8.addProperty("auth",false);
@@ -249,7 +257,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child9.add(CHILDREN,new JsonArray());
         child9.addProperty("text","Thin Client Notebooks");
         child9.addProperty("id","pc-11");
-        child9.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010209&amp;refinements=510010209");
+        child9.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010209&amp;refinements=510010209");
         child9.addProperty(THIS_WINDOW,true);
         child9.addProperty(HIGHLIGHT,false);
         child9.addProperty("auth",false);
@@ -259,7 +267,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child10.add(CHILDREN,new JsonArray());
         child10.addProperty("text","Mobile Workstations");
         child10.addProperty("id","pc-10");
-        child10.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010205&amp;refinements=510010205");
+        child10.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010205&amp;refinements=510010205");
         child10.addProperty(THIS_WINDOW,true);
         child10.addProperty(HIGHLIGHT,false);
         child10.addProperty("auth",false);
@@ -269,7 +277,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child11.add(CHILDREN,new JsonArray());
         child11.addProperty("text","Notebooks");
         child11.addProperty("id","pc-8");
-        child11.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010201&amp;refinements=510010201");
+        child11.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010201&amp;refinements=510010201");
         child11.addProperty(THIS_WINDOW,true);
         child11.addProperty(HIGHLIGHT,false);
         child11.addProperty("auth",false);
@@ -279,7 +287,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child12.add(CHILDREN,new JsonArray());
         child12.addProperty("text","Ultrabooks");
         child12.addProperty("id","pc-9");
-        child12.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010202&amp;refinements=510010202");
+        child12.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010202&amp;refinements=510010202");
         child12.addProperty(THIS_WINDOW,true);
         child12.addProperty(HIGHLIGHT,false);
         child12.addProperty("auth",false);
@@ -293,7 +301,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child13.add(CHILDREN,new JsonArray());
         child13.addProperty("text","Tablets & Handhelds");
         child13.addProperty("id","pc-17");
-        child13.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010301&amp;refinements=510010301");
+        child13.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010301&amp;refinements=510010301");
         child13.addProperty(THIS_WINDOW,true);
         child13.addProperty(HIGHLIGHT,false);
         child13.addProperty("auth",false);
@@ -301,7 +309,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         level3.addProperty("text","Tablets & eBook readers");
         level3.addProperty("id","pc-16");
-        level3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100103&amp;refinements=500100103");
+        level3.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100103&amp;refinements=500100103");
         level3.addProperty(THIS_WINDOW,true);
         level3.addProperty(HIGHLIGHT,false);
         level3.addProperty("auth",false);
@@ -314,7 +322,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child14.add(CHILDREN,new JsonArray());
         child14.addProperty("text","Tower");
         child14.addProperty("id","pc-19");
-        child14.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010401&amp;refinements=510010401");
+        child14.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010401&amp;refinements=510010401");
         child14.addProperty(THIS_WINDOW,true);
         child14.addProperty(HIGHLIGHT,false);
         child14.addProperty("auth",false);
@@ -324,7 +332,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child15.add(CHILDREN,new JsonArray());
         child15.addProperty("text","Rack");
         child15.addProperty("id","pc-20");
-        child15.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010402&amp;refinements=510010402");
+        child15.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010402&amp;refinements=510010402");
         child15.addProperty(THIS_WINDOW,true);
         child15.addProperty(HIGHLIGHT,false);
         child15.addProperty("auth",false);
@@ -334,7 +342,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child16.add(CHILDREN,new JsonArray());
         child16.addProperty("text","Blade");
         child16.addProperty("id","pc-21");
-        child16.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010403&amp;refinements=510010403");
+        child16.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010403&amp;refinements=510010403");
         child16.addProperty(THIS_WINDOW,true);
         child16.addProperty(HIGHLIGHT,false);
         child16.addProperty("auth",false);
@@ -344,7 +352,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child17.add(CHILDREN,new JsonArray());
         child17.addProperty("text","Traffic Balancers & Optimizers");
         child17.addProperty("id","pc-22");
-        child17.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010407&amp;refinements=510010407");
+        child17.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010407&amp;refinements=510010407");
         child17.addProperty(THIS_WINDOW,true);
         child17.addProperty(HIGHLIGHT,false);
         child17.addProperty("auth",false);
@@ -352,7 +360,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         level4.addProperty("text","Servers");
         level4.addProperty("id","pc-18");
-        level4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100104&amp;refinements=500100104");
+        level4.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100104&amp;refinements=500100104");
         level4.addProperty(THIS_WINDOW,true);
         level4.addProperty(HIGHLIGHT,false);
         level4.addProperty("auth",false);
@@ -366,7 +374,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child18.add(CHILDREN,new JsonArray());
         child18.addProperty("text","POS Monitors");
         child18.addProperty("id","pc-24");
-        child18.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010503&amp;refinements=510010503");
+        child18.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010503&amp;refinements=510010503");
         child18.addProperty(THIS_WINDOW,true);
         child18.addProperty(HIGHLIGHT,false);
         child18.addProperty("auth",false);
@@ -376,7 +384,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child19.add(CHILDREN,new JsonArray());
         child19.addProperty("text","Cash Drawers");
         child19.addProperty("id","pc-25");
-        child19.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510010505&amp;refinements=510010505");
+        child19.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510010505&amp;refinements=510010505");
         child19.addProperty(THIS_WINDOW,true);
         child19.addProperty(HIGHLIGHT,false);
         child19.addProperty("auth",false);
@@ -384,7 +392,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         level5.addProperty("text","Point Of Sale Equipment");
         level5.addProperty("id","pc-23");
-        level5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100105&amp;refinements=500100105");
+        level5.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100105&amp;refinements=500100105");
         level5.addProperty(THIS_WINDOW,true);
         level5.addProperty(HIGHLIGHT,false);
         level5.addProperty("auth",false);
@@ -450,7 +458,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child1.add(CHILDREN,new JsonArray());
         child1.addProperty("text","DLP");
         child1.addProperty("id","pc-31");
-        child1.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020301&amp;refinements=510020301");
+        child1.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020301&amp;refinements=510020301");
         child1.addProperty(THIS_WINDOW,true);
         child1.addProperty(HIGHLIGHT,false);
         child1.addProperty("auth",false);
@@ -461,7 +469,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child2.add(CHILDREN,new JsonArray());
         child2.addProperty("text","LCD");
         child2.addProperty("id","pc-32");
-        child2.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020302&amp;refinements=510020302");
+        child2.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020302&amp;refinements=510020302");
         child2.addProperty(THIS_WINDOW,true);
         child2.addProperty(HIGHLIGHT,false);
         child2.addProperty("auth",false);
@@ -471,7 +479,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child3.add(CHILDREN,new JsonArray());
         child3.addProperty("text","Cables");
         child3.addProperty("id","pc-33");
-        child3.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020307&amp;refinements=510020307");
+        child3.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020307&amp;refinements=510020307");
         child3.addProperty(THIS_WINDOW,true);
         child3.addProperty(HIGHLIGHT,false);
         child3.addProperty("auth",false);
@@ -481,7 +489,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child4.add(CHILDREN,new JsonArray());
         child4.addProperty("text","Accessories");
         child4.addProperty("id","pc-34");
-        child4.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020309&amp;refinements=510020309");
+        child4.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020309&amp;refinements=510020309");
         child4.addProperty(THIS_WINDOW,true);
         child4.addProperty(HIGHLIGHT,false);
         child4.addProperty("auth",false);
@@ -491,7 +499,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         child5.add(CHILDREN,new JsonArray());
         child5.addProperty("text","Lamps");
         child5.addProperty("id","pc-35");
-        child5.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=510020311&amp;refinements=510020311");
+        child5.addProperty("url","https://shop.cstenet.com/products/category/category?cs=510020311&amp;refinements=510020311");
         child5.addProperty(THIS_WINDOW,true);
         child5.addProperty(HIGHLIGHT,false);
         child5.addProperty("auth",false);
@@ -499,7 +507,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         projector.addProperty("text","Projectors");
         projector.addProperty("id","pc-30");
-        projector.addProperty("url","https,//shop.cstenet.com/products/category/category?cs=500100203&amp;refinements=500100203");
+        projector.addProperty("url","https://shop.cstenet.com/products/category/category?cs=500100203&amp;refinements=500100203");
         projector.addProperty(THIS_WINDOW,true);
         projector.addProperty(HIGHLIGHT,false);
         projector.addProperty("auth",false);
@@ -561,14 +569,14 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         shopOptionsJsonData.addProperty("shopUrl"," http,//localhost,63018");
         shopOptionsJsonData.addProperty("corporateUrl","http,//exwb11preview.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("legacyUrl","http,//exwb11preview.dev.web.us.tdworldwide.com");
-        shopOptionsJsonData.addProperty("typeAheadUrl","https,//typeahead.dev.web.us.tdworldwide.com");
+        shopOptionsJsonData.addProperty("typeAheadUrl","https://typeahead.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("shopDomain","shop.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("corporateDomain","exwb11preview.dev.web.us.tdworldwide.com/");
         shopOptionsJsonData.addProperty("legacyDomain","exwb11preview.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("cookieDomain",".us.tdworldwide.com");
         shopOptionsJsonData.addProperty("addManufacturerStoresToId","research");
-        shopOptionsJsonData.addProperty("techSelectContentUrl","https,//shop.techdata.com/siteredirect/?referrer=shop.techdata.com&destination=http,//content.techselect.techdata.com&authPage=login.aspx&landingPage=http,//content.techselect.techdata.com");
-        shopOptionsJsonData.addProperty("myOrderTrackerUrl","https,//shop.dev.web.us.tdworldwide.com/siteredirect/?referrer=shop.dev.web.us.tdworldwide.com&destination=http,//www.myordertracker.com&authPage=/us/default.aspx&landingPage=http,//www.myordertracker.com/reseller/MyOrderTracker.aspx");
+        shopOptionsJsonData.addProperty("techSelectContentUrl","https://shop.techdata.com/siteredirect/?referrer=shop.techdata.com&destination=http,//content.techselect.techdata.com&authPage=login.aspx&landingPage=http,//content.techselect.techdata.com");
+        shopOptionsJsonData.addProperty("myOrderTrackerUrl","https://shop.dev.web.us.tdworldwide.com/siteredirect/?referrer=shop.dev.web.us.tdworldwide.com&destination=http,//www.myordertracker.com&authPage=/us/default.aspx&landingPage=http,//www.myordertracker.com/reseller/MyOrderTracker.aspx");
         shopOptionsJsonData.addProperty("debug","true");
         shopOptionsJsonData.addProperty("clickstreamEnabled","true");
         shopOptionsJsonData.addProperty("enableTrackingEvents","true");
@@ -600,14 +608,17 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return authenticationStatusJsonData;
     }
 
-    private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType, String[] categories) {
+    private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType,
+                                         String[] categories, boolean enableReact) {
         JsonArray clientLibs = new JsonArray();
         Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(categories, libraryType, Boolean.TRUE, Boolean.TRUE);
         for (ClientLibrary library : libraries) {
             clientLibs.add(new JsonPrimitive(getLink(request, sanitizeClientLibraryPath(library.getPath() + libraryType.extension))));
         }
-
-
+        if(enableReact) {
+            clientLibs.add(new JsonPrimitive(getLink(request,
+                    sanitizeClientLibraryPath("/etc.clientlibs/techdata/clientlibs/clientlib-react" + libraryType.extension))));
+        }
         return clientLibs;
     }
 
