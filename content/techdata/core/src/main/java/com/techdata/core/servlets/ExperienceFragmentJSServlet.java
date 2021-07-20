@@ -16,6 +16,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
+import org.apache.sling.api.request.RequestPathInfo;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.servlets.HttpConstants;
@@ -39,8 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Base64;
-import java.util.Collection;
+import java.util.*;
 
 @Component(
         immediate = true,
@@ -49,7 +49,9 @@ import java.util.Collection;
                 "service.description=JSXF Servlet",
                 "service.vendor=techdata.com",
                 "sling.servlet.resourcetypes=techdata/components/xfpage",
-                "sling.servlet.extensions=js"
+                "sling.servlet.extensions=js",
+                "sling.servlet.selectors=header",
+                "sling.servlet.selectors=footer"
         }
 )
 @Designate(ocd = ExperienceFragmentJSServlet.XFJSServletConfig.class)
@@ -105,13 +107,13 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         JsonObject xfJson = new JsonObject();
         LOG.debug("JsonObject created...");
-        if(request.getResource().getPath().contains("/header/")) {
-            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}, false).getAsString());
-            xfJson.add("shopJson", buildShopJSON());
 
+        if(isHeader(request)) {
+            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}).getAsString());
+            xfJson.add("shopJson", buildShopJSON());
             // get page clientlibs
-            xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories, true));
-            xfJson.add("jsLibs", getMainLibraries(request, LibraryType.JS, htmlClientLibCategories, true));
+            xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories));
+            xfJson.add("jsLibs", getMainLibraries(request, LibraryType.JS, htmlClientLibCategories));
 
             LOG.debug("Added clientlibs...");
         }
@@ -136,6 +138,13 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
         LOG.debug("Exit XFJSServlet...");
 
+    }
+
+    private boolean isHeader(SlingHttpServletRequest request) {
+        RequestPathInfo requestPathInfo = request.getRequestPathInfo();
+        String[] selectors = requestPathInfo.getSelectors();
+        List<String> selectorList = Arrays.asList(selectors);
+        return selectorList.contains("header");
     }
 
     public JsonObject buildShopJSON() {
@@ -616,16 +625,11 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return authenticationStatusJsonData;
     }
 
-    private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType,
-                                         String[] categories, boolean enableReact) {
+    private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType, String[] categories) {
         JsonArray clientLibs = new JsonArray();
         Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(categories, libraryType, Boolean.TRUE, Boolean.TRUE);
         for (ClientLibrary library : libraries) {
             clientLibs.add(new JsonPrimitive(getLink(request, sanitizeClientLibraryPath(library.getPath() + libraryType.extension))));
-        }
-        if(enableReact) {
-            clientLibs.add(new JsonPrimitive(getLink(request,
-                    sanitizeClientLibraryPath("/etc.clientlibs/techdata/clientlibs/clientlib-react" + libraryType.extension))));
         }
         return clientLibs;
     }
