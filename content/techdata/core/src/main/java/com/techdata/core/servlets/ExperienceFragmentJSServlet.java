@@ -56,13 +56,10 @@ import java.util.Collection;
 public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
-    private String tdAllJSLibrary = "/etc.clientlibs/techdata/clientlibs/clientlib-all.js";
-    private String tdContainerJSLibrary = "/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.js";
-    private String tdAllCSSLibrary = "/etc.clientlibs/techdata/clientlibs/clientlib-all.css";
     private String[] htmlClientLibCategories = null;
 
     @Reference
-    private XSSAPI xssapi;
+    private transient XSSAPI xssapi;
 
     @ObjectClassDefinition(name = "Techdata XF JS Servlet")
     public @interface XFJSServletConfig {
@@ -645,7 +642,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private String getPageContentHtml(SlingHttpServletRequest request) throws ServletException, IOException {
         Resource xfResource = request.getResource();
 
-        String resourcePath = xfResource.getPath() + ".noclientlibs.atoffer.html";
+        String resourcePath = xfResource.getPath() + "/root.noclientlibs.atoffer.html";
         HttpServletRequest req = requestResponseFactory.createRequest(HttpConstants.METHOD_GET, resourcePath);
 
         WCMMode.DISABLED.toRequest(req);

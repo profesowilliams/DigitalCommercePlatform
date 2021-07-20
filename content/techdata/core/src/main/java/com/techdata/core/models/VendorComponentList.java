@@ -39,7 +39,6 @@ public class VendorComponentList implements List {
     public Collection<ListItem> getListItems() {
         Collection<ListItem> listOfVendorItems = new ArrayList<>();
         Resource resource = request.getResource();
-        ResourceResolver resolver = resource.getResourceResolver();
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Collection<ListItem> cfListItems = delegateList.getListItems();
         log.debug(" Content Fragment List Item Size  = {}", cfListItems.size());
