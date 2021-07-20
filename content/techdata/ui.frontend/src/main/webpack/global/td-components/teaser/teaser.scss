@@ -1,5 +1,88 @@
 @import "../../variables";
 
+@mixin teaser-default {
+  .cmp-teaser {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    &__pretitle {
+      color: get-color(brand-white);
+    }
+    &__content {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: rem(20px);
+      padding-top: rem(70px);
+      @include desktop {
+        padding-left: rem(60px);
+        padding-top: rem(78px);
+      }
+    }
+    &__title {
+      margin: 0;
+      font-size: rem(24px);
+      font-weight: bold;
+      letter-spacing: 0;
+      line-height: rem(30px);
+      text-shadow: 0 2px 4px get-color(brand-black);
+      margin-bottom: rem(30px);
+      &:after {
+        font-weight: 600;
+        padding: rem(0px 6px);
+        position: relative;
+        top: -8px;
+        text-shadow: none;
+        font-size: 15px;
+        letter-spacing: 0;
+      }
+      @include desktop {
+        font-size: rem(40px);
+        line-height: rem(60px);
+        &:after {
+          padding: rem(1px 9px);
+          font-size: 20px;
+          top: -27px;
+        }
+      }
+      &-link {
+        color: get-color(brand-white);
+        text-decoration: none;
+      }
+    }
+    &__description {
+      color: get-color(brand-white);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 20px;
+      margin-bottom: rem(30px);
+      text-shadow: 0 2px 4px #000000;
+      @include desktop {
+        font-size: rem(22px);
+        line-height: rem(33px);
+        max-width: 400px;
+      }
+      p {
+        margin: 0;
+      }
+    }
+    &__image {
+      .cmp-image {
+        &__image {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
 .cmp-teaser {
   // Add "cmp-teaser--feature-callout" class for Feature Callout Variation
   &--feature-callout {
@@ -249,39 +332,85 @@
         /* end hero 1 */
         /* hero 2 */
         &--hero-style-2 {
-          font-family: "Open Sans", sans-serif;
-          position: relative;
-          height: rem(500px);
-          box-sizing: border-box;
-          background-size: cover;
-          overflow: hidden;
-
-          &__content {
-            font-family: "Open Sans", sans-serif;
-            padding-top: rem(96px);
-            padding-bottom: rem(50px);
-            padding-left: rem(35px);
-            box-sizing: border-box;
-            color: get-color(text-light-gray);
-            position: absolute;
+          .cmp-teaser {
+            position: relative;
+            display: block;
             width: 100%;
-            top: rem(0);
-          }
-
-          &__pretitle {
-            font-size: rem(50px);
-            font-family: "Open Sans", sans-serif;
-          }
-
-          &__title {
-            display: flex;
-            font-size: rem(45px);
-            font-family: "Open Sans", sans-serif;
-          }
-          &__description {
-            font-size: rem(22px);
-            width: 42%;
-            font-family: "Open Sans", sans-serif;
+            overflow: hidden;
+            &__content {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              padding: rem(20px);
+              padding-top: rem(70px);
+              @include desktop {
+                padding-left: rem(60px);
+                padding-top: rem(78px);
+              }
+            }
+            &__title {
+              margin: 0;
+              font-size: rem(24px);
+              font-weight: bold;
+              letter-spacing: 0;
+              line-height: rem(30px);
+              text-shadow: 0 2px 4px get-color(brand-black);
+              margin-bottom: rem(30px);
+              &:after {
+                content: "+";
+                color:get-color(brand-white);
+                font-weight: 600;
+                background: get-color(brand-light-blue);
+                padding: rem(0px 6px);
+                position: relative;
+                top: -8px;
+                text-shadow: none;
+                font-size: 15px;
+                letter-spacing: 0;
+              }
+              @include desktop {
+                font-size: rem(40px);
+                line-height: rem(60px);
+                &:after {
+                  padding: rem(1px 9px);
+                  font-size: 20px;
+                  top: -27px;
+                }
+              }
+              &-link {
+                color: get-color(brand-white);
+                text-decoration: none;
+              }
+            }
+            &__description {
+              color: get-color(brand-white);
+              font-size: 16px;
+              letter-spacing: 0;
+              line-height: 20px;
+              margin-bottom: rem(30px);
+              text-shadow: 0 2px 4px #000000;
+              @include desktop {
+                font-size: rem(22px);
+                line-height: rem(33px);
+                max-width: 400px;
+              }
+              p {
+                margin: 0;
+              }
+            }
+            &__image {
+              .cmp-image {
+                &__image {
+                  width: 100%;
+                  height: auto;
+                }
+              }
+            }
           }
         }
         /* end hero 2 */
@@ -370,6 +499,7 @@
         }
         /* end hero 4 */
       }
+
       .cmp-teaser__disclaimer {
         color: get-color(secondary-black);
         font-size: rem(11px);
@@ -411,89 +541,6 @@ $teaser-headings-mobile: (
   "h6" rem(16px) bold rem(24px)
 );
 
-.teaser-hero--alert {
-  .cmp-teaser {
-    position: relative;
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    &__content {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: rem(20px);
-      padding-top: rem(70px);
-      @include desktop {
-        padding-left: rem(60px);
-        padding-top: rem(78px);
-      }
-    }
-    &__title {
-      margin: 0;
-      font-size: rem(24px);
-      font-weight: bold;
-      letter-spacing: 0;
-      line-height: rem(30px);
-      text-shadow: 0 2px 4px get-color(brand-black);
-      margin-bottom: rem(30px);
-      &:after {
-        content: "+";
-        color: get-color(brand-white);
-        font-weight: 600;
-        background: #00b1e2;
-        padding: rem(0px 6px);
-        position: relative;
-        top: -8px;
-        text-shadow: none;
-        font-size: 15px;
-        letter-spacing: 0;
-      }
-      @include desktop {
-        font-size: rem(40px);
-        line-height: rem(60px);
-        &:after {
-          padding: rem(1px 9px);
-          font-size: 20px;
-          top: -27px;
-        }
-      }
-      &-link {
-        color: get-color(brand-white);
-        text-decoration: none;
-      }
-    }
-    &__description {
-      color: get-color(brand-white);
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 20px;
-      margin-bottom: rem(30px);
-      text-shadow: 0 2px 4px get-color(brand-black);
-      @include desktop {
-        font-size: rem(22px);
-        line-height: rem(33px);
-        max-width: 400px;
-      }
-      p {
-        margin: 0;
-      }
-    }
-    &__image {
-      .cmp-image {
-        &__image {
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
-  }
-}
-
 .cmp-teaser__content {
   text-align: left;
 
@@ -532,61 +579,52 @@ $teaser-headings-mobile: (
 
 /* END OF TEMP TEASER*/
 
-.cmp-buttons__plus {
-  width: rem(25px);
-  height: rem(25px);
-  font-size: rem(32px);
-  margin: rem(12px) 0 0 rem(12px);
-  position: relative;
-  &.blue {
-    background-color: get-color(brand-light-blue);
-    color: get-color(brand-white);
-    &:before {
-      content: "+";
-      position: absolute;
-      top: 50%;
-      left: 12%;
-      line-height: rem(0);
+// teaser style system classes should be outside - TS
+.hero-style-1 {
+  @include teaser-default();
+}
+
+.hero-style-2 {
+  @include teaser-default();
+  .cmp-teaser {
+    &__pretitle {
+      color: get-color(text-light-gray);
     }
-  }
-  &.white {
-    background-color: get-color(brand-white);
-    color: get-color(brand-light-blue);
-    &:before {
-      content: "+";
-      position: absolute;
-      top: 50%;
-      left: 12%;
-      line-height: rem(0);
+    &__title {
+      text-shadow: none;
+      &-link {
+        color: get-color(text-light-gray);
+      }
+    }
+    &__description {
+      color: get-color(text-light-gray);
+      text-shadow: none;
     }
   }
 }
+
+.hero-style-3 {
+  @include teaser-default();
+}
+
 .cmp-buttons__plus {
-  width: rem(25px);
-  height: rem(25px);
-  font-size: rem(32px);
-  margin: rem(12px) 0 0 rem(12px);
-  position: relative;
-  &.blue {
-    background-color: get-color(brand-light-blue);
-    color: get-color(brand-white);
-    &:before {
-      content: "+";
-      position: absolute;
-      top: 50%;
-      left: 12%;
-      line-height: rem(0);
+  &-white {
+    .cmp-teaser__title {
+      &:after {
+        content: "+";
+        color:get-color(brand-white);
+        background: get-color(brand-light-blue);
+      }
     }
   }
-  &.white {
-    background-color: get-color(brand-white);
-    color: get-color(brand-light-blue);
-    &:before {
-      content: "+";
-      position: absolute;
-      top: 50%;
-      left: 12%;
-      line-height: rem(0);
+
+  &-blue {
+    .cmp-teaser__title {
+      &:after {
+        content: "+";
+        color:get-color(brand-light-blue);
+        background: get-color(brand-white);
+      }
     }
   }
 }
