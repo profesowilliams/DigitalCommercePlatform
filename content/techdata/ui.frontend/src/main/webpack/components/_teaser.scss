@@ -1,12 +1,21 @@
-.cmp-teaser {}
-.cmp-teaser__image {}
-.cmp-teaser__content {}
-.cmp-teaser__pretitle {}
-.cmp-teaser__title {}
-.cmp-teaser__title-link {}
-.cmp-teaser__description {}
-.cmp-teaser__action-container {}
-.cmp-teaser__action-link {}
+.cmp-teaser {
+}
+.cmp-teaser__image {
+}
+.cmp-teaser__content {
+}
+.cmp-teaser__pretitle {
+}
+.cmp-teaser__title {
+}
+.cmp-teaser__title-link {
+}
+.cmp-teaser__description {
+}
+.cmp-teaser__action-container {
+}
+.cmp-teaser__action-link {
+}
 
 @mixin teaser-default {
   .cmp-teaser {
@@ -203,7 +212,7 @@
     .cmp-teaser__title {
       &:after {
         content: "+";
-        color:get-color(brand-white);
+        color: get-color(brand-white);
         background: get-color(brand-light-blue);
       }
     }
@@ -213,7 +222,7 @@
     .cmp-teaser__title {
       &:after {
         content: "+";
-        color:get-color(brand-light-blue);
+        color: get-color(brand-light-blue);
         background: get-color(brand-white);
       }
     }
@@ -472,6 +481,7 @@
       bottom: 0;
       padding: 0;
       margin: 0;
+      cursor: pointer;
 
       &:hover {
         background-color: get-color(brand-light-blue);

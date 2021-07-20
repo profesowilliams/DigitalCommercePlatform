@@ -363,7 +363,7 @@
               margin-bottom: rem(30px);
               &:after {
                 content: "+";
-                color:get-color(brand-white);
+                color: get-color(brand-white);
                 font-weight: 600;
                 background: get-color(brand-light-blue);
                 padding: rem(0px 6px);
@@ -612,7 +612,7 @@ $teaser-headings-mobile: (
     .cmp-teaser__title {
       &:after {
         content: "+";
-        color:get-color(brand-white);
+        color: get-color(brand-white);
         background: get-color(brand-light-blue);
       }
     }
@@ -622,7 +622,7 @@ $teaser-headings-mobile: (
     .cmp-teaser__title {
       &:after {
         content: "+";
-        color:get-color(brand-light-blue);
+        color: get-color(brand-light-blue);
         background: get-color(brand-white);
       }
     }
@@ -864,6 +864,7 @@ $teaser-headings-mobile: (
       bottom: 0;
       padding: 0;
       margin: 0;
+      cursor: pointer;
 
       &:hover {
         background-color: get-color(brand-light-blue);
