@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Element } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
+import QuotePreviewNote from "./QuotePreviewNote";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -9,12 +10,17 @@ function QuotePreview(props) {
   return (
     <div className="cmp-quote-preview">
       {apiResponse && (
-        <div className="cmp-quote-preview__lines">
-          <QuotePreviewGrid
-            gridProps={componentProp.productLinesGrid}
-            data={apiResponse}
-          ></QuotePreviewGrid>
-        </div>
+        <section>
+          <div className="cmp-quote-preview__note">
+            <QuotePreviewNote note={componentProp.note} />
+          </div>
+          <div className="cmp-quote-preview__lines">
+            <QuotePreviewGrid
+              gridProps={componentProp.productLinesGrid}
+              data={apiResponse}
+            ></QuotePreviewGrid>
+          </div>
+        </section>
       )}
     </div>
   );

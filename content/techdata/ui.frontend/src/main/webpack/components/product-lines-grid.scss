@@ -1,15 +1,21 @@
-@import 'main';
+@import "main";
 
 .cmp-product-lines-grid {
 	height: 600px;
 	width: 100%;
 	overflow: auto;
 	&__child-grid {
-		& .ag-root-wrapper-body{
+		& .ag-root-wrapper-body {
 			margin-top: 0;
-			& .ag-header{
+			& .ag-header {
 				display: none;
 			}
+		}
+	}
+	&__item-information {
+		&__image-link {
+			width: 90px;
+			height: 50px;
 		}
 	}
 }

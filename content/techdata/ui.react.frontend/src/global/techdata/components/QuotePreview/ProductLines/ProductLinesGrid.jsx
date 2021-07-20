@@ -1,17 +1,16 @@
 import React from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
+import ProductLinesItemInformation from "./ProductLinesItemInformation";
 
 function ProductLinesGrid({ gridProps, data }) {
   const gridData = data.content?.quotePreview?.quoteDetails.items ?? [];
-  console.log(gridData);
 
   const gridConfig = {
     ...gridProps,
     serverSide: false,
     paginationStyle: "none"
   };
-  console.log(gridConfig);
 
   const columnDefs = [
     {
@@ -35,9 +34,11 @@ function ProductLinesGrid({ gridProps, data }) {
       headerName: "Item Information",
       field: "shortDescription",
       sortable: false,
-      valueFormatter: (props) => {
-        return props.value;
-      },
+      cellRenderer: (props) => {
+        return (
+           <ProductLinesItemInformation line={props.data}/>
+        );
+      }
     },
     {
       headerName: "MSRP/Unit List Price",
