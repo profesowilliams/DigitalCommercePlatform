@@ -277,3 +277,52 @@
     }
   }
 }
+
+.cmp-tabs--ourpurpose {
+  .cmp-tabs {
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    &__tablist {
+      display: flex;
+      flex-direction: column;
+      list-style-type: none;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: rem(0 100px);
+      padding-top: rem(10px);
+      font-family: $open-sans;
+      font-size: rem(16px);
+      flex: 40%;
+      li::after {
+        content: " > ";
+      }
+    }
+    .cmp-tabs {
+      &__tab {
+        flex: 50%;
+        padding: rem(2px 30px);
+        text-align: center;
+        &:hover {
+          color: get-color(brand-light-blue);
+        }
+      }
+      &__tab--active {
+        color: get-color(brand-light-blue);
+      }
+    }
+    &__tabpanel {
+      margin: 0;
+      flex: 60%;
+      padding-top: rem(10px);
+      .text,
+      .text p {
+        font-family: $open-sans;
+        font-size: 14px;
+        color: get-color(brand-black);
+        height: 137px;
+        letter-spacing: 0;
+      }
+    }
+  }
+}
