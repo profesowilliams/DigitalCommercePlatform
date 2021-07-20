@@ -30,8 +30,9 @@
 }
 
 .cmp-dropbtn {
+  display: flex;
+  align-items: center;
   font-size: $font-size-small;
-	margin: 0 rem(16px);
   padding: 0;
   min-height: 30px;
   background: none;

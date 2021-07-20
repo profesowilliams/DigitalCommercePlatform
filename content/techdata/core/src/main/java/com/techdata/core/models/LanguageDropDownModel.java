@@ -1,5 +1,11 @@
 package com.techdata.core.models;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.PostConstruct;
 
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
@@ -7,32 +13,37 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Style;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import lombok.Getter;
 
-@Model(adaptables = SlingHttpServletRequest.class, adapters = LanguageNavigation.class, resourceType = LanguageDropDownImpl.RESOURCE_TYPE)
-public class LanguageDropDownImpl implements LanguageNavigation {
+@Model(
+	adaptables = SlingHttpServletRequest.class,
+	adapters = LanguageNavigation.class,
+	resourceType = LanguageDropDownModel.RESOURCE_TYPE,
+	defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+)
+public class LanguageDropDownModel implements LanguageNavigation {
 
-	protected static final Logger log = LoggerFactory.getLogger(LanguageDropDownImpl.class);
+	protected static final Logger log = LoggerFactory.getLogger(LanguageDropDownModel.class);
 
 	public static final String RESOURCE_TYPE = "techdata/components/languagenavigation";
-//	how many levels below nav root
+	//	how many levels below nav root
 	private static final int COUNTRY_ROOT_OFFSET = 2;
-//	how many levels below nav root
+	//	how many levels below nav root
 	private static final int REGION_ROOT_OFFSET = 0;
-
 
 	@Self
 	private SlingHttpServletRequest request;
@@ -51,6 +62,10 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 
 	@ScriptVariable
 	private Style currentStyle;
+
+	@Getter
+	@ValueMapValue
+	private boolean icon;
 
 	private List<NavigationItem> items;
 
@@ -114,6 +129,10 @@ public class LanguageDropDownImpl implements LanguageNavigation {
 	}
 	
 	public String getCountryRootPageTitle() {
-		return currentPage.getParent(getCountryPageDepthFromCurrentPage()).getPageTitle();
+		final Page countryRootPage = currentPage.getParent(getCountryPageDepthFromCurrentPage());
+		if (Objects.nonNull(countryRootPage)) {
+			return countryRootPage.getTitle();
+		}
+		return StringUtils.EMPTY;
 	}
 }

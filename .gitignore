@@ -454,3 +454,4 @@ content/techdata/ui.react.frontend/.vscode/settings.json
 # Visual Studio Settings
 .vscode/settings.json
 .vscode/launch.json
+.vscode/project.json

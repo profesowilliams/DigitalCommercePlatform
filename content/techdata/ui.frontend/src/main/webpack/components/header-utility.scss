@@ -1,12 +1,6 @@
 @import "main";
 
 .headerutility {
-    // .headerutility class is used for all sub-items, so adding style here will apply to all sub-items
-    // commenting out for now.
-    // display: flex !important;
-    // justify-content: space-evenly !important;
-    // align-items: center;
-    // flex-wrap: nowrap;
     &.aem-GridColumn {
         display: flex !important;
         align-items: center;
@@ -26,6 +20,13 @@
     }
     .languagenavigation {
         position: relative;
+        white-space: nowrap;
+
+        svg {
+            width: 1.5rem;
+            height: 1.3rem;
+        }
+
         #regionSelectDropdown {
             position: absolute;
             right: 2px;
