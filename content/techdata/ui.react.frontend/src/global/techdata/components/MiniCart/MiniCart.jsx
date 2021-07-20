@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { usGet } from '../../../../utils/api';
+import {isAlreadySignedIn} from "../../../../store/action/authAction";
 
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
   const className = `cmp-cart ${cartActive}`;
@@ -14,16 +15,23 @@ const MiniCart = ({componentProp}) => {
   const [cartItems, setCartItems] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   useEffect(() => {
-    const getActiveCart = async () => {
-      try{
-        const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
-        setCartItems(totalQuantity);
-        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
-      }catch{
-        localStorage.setItem('ActiveCart', '' );
+
+    if (isAlreadySignedIn())
+    {
+      const getActiveCart = async () => {
+        try{
+          const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
+          setCartItems(totalQuantity);
+          localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+        }catch{
+          localStorage.setItem('ActiveCart', '' );
+        }
       }
+      getActiveCart();
+    }else{
+
     }
-    getActiveCart();
+
   },[]);
   useEffect(() => {
     const newActive = cartItems ? 'cmp-cart__active' : '';
