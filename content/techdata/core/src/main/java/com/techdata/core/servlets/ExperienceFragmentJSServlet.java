@@ -43,16 +43,16 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @Component(
-        immediate = true,
-        service = Servlet.class,
-        property = {
-                "service.description=JSXF Servlet",
-                "service.vendor=techdata.com",
-                "sling.servlet.resourcetypes=techdata/components/xfpage",
-                "sling.servlet.extensions=js",
-                "sling.servlet.selectors=header",
-                "sling.servlet.selectors=footer"
-        }
+    immediate = true,
+    service = Servlet.class,
+    property = {
+        "service.description=JSXF Servlet",
+        "service.vendor=techdata.com",
+        "sling.servlet.resourcetypes=techdata/components/xfpage",
+        "sling.servlet.extensions=js",
+        "sling.servlet.selectors=header",
+        "sling.servlet.selectors=footer"
+    }
 )
 @Designate(ocd = ExperienceFragmentJSServlet.XFJSServletConfig.class)
 public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
@@ -68,8 +68,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         @AttributeDefinition(name = "JQuery Library")
         String jqueryPath() default JQUERY_DEFAULT;
         @AttributeDefinition(name = "ClientLib Categories")
-        String[] clientlibCategories() default {"techdata.base", "techdata.dependencies", "techdata.site", "techdata.react"};
-
+        String[] clientlibCategories() default {"techdata.base", "techdata.all"};
     }
 
     @Reference
