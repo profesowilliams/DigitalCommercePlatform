@@ -631,7 +631,7 @@
       color: get-color(brand-blue);
       font-size: $font-size-small !important;
       margin-bottom: rem(8px);
-      padding: rem(8px) rem(18px);
+      padding: rem(14px) rem(18px);
       font-weight: 600 !important;
       margin: 0 !important;
 
@@ -655,10 +655,10 @@
 
     &__image {
       img {
-        object-fit: fill;
-        width: 100%;
+        object-fit: cover;
+        width: rem(215px);
+        height: rem(134px);
       }
-      overflow: hidden;
     }
 
     &__action-container {

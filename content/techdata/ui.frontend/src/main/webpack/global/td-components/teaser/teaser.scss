@@ -443,9 +443,9 @@ $teaser-headings-mobile: (
       margin-bottom: rem(30px);
       &:after {
         content: "+";
-        color:get-color(brand-white);
+        color: get-color(brand-white);
         font-weight: 600;
-        background: #00B1E2;
+        background: #00b1e2;
         padding: rem(0px 6px);
         position: relative;
         top: -8px;
@@ -782,7 +782,7 @@ $teaser-headings-mobile: (
       color: get-color(brand-blue);
       font-size: $font-size-small !important;
       margin-bottom: rem(8px);
-      padding: rem(8px) rem(18px);
+      padding: rem(14px) rem(18px);
       font-weight: 600 !important;
       margin: 0 !important;
 
@@ -806,10 +806,10 @@ $teaser-headings-mobile: (
 
     &__image {
       img {
-        object-fit: fill;
-        width: 100%;
+        object-fit: cover;
+        width: rem(215px);
+        height: rem(134px);
       }
-      overflow: hidden;
     }
 
     &__action-container {
