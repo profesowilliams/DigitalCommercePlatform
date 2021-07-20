@@ -1,16 +1,19 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import { 
+	AgGridColumn, 
+	AgGridReact
+} from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
-	const componentVersion = '1.0.1';
+	const componentVersion = '1.0.2';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
 
-	const pagination = config.paginationStyle && config.paginationStyle !== 'none' && config.paginationStyle !== 'scroll';
-	const serverSide = config.serverSide || true;
+	const pagination = config?.paginationStyle && config?.paginationStyle !== 'none' && config?.paginationStyle !== 'scroll';
+	const serverSide = config?.serverSide ?? true;
 	const gridNodeRef = useRef(null);
 	const gridId = useRef(null);
 	const gridApi = useRef(null);
@@ -30,25 +33,29 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			rowModelType={serverSide ? 'serverSide' : 'clientSide'}
 			rowData={gridData}
 			onGridReady={onGridReady}
-			serverSideDatasource={createDataSource()}
+			serverSideDatasource={serverSide && createDataSource()}
 			serverSideStoreType={serverSide ? 'partial' : 'full'}
 			rowSelection='single'
 			onViewportChanged={onViewportChanged}
 			blockLoadDebounceMillis={100}
+			masterDetail= {true}
+			detailCellRenderer={'__detailRenderer'}
+			detailRowAutoHeight= {true}
+			animateRows={false}
+			domLayout={ serverSide? 'normal' : 'autoHeight'}
+			onFirstDataRendered={onFirstDataRendered}
+			onRowGroupOpened={onRowGroupOpened}
+			onExpandOrCollapseAll={onExpandOrCollapseAll}
 		>
 			{filteredColumns.map((column) => {
 				return (
 					<AgGridColumn
-						headerName={column.headerName}
-						field={column.field}
+						{...column}
+						cellRenderer={column.expandable? 'agGroupCellRenderer'
+						: renderers[column.field] ? column.field 
+						: null}
 						suppressMenu={true}
-						sortable={column.sortable}
 						key={column.field}
-						resizable={column.resizable}
-						onCellClicked={column.onCellClicked}
-						cellRenderer={renderers[column.field] ? column.field : null}
-						valueFormatter={column.valueFormatter ?? null}
-						suppressSizeToFit={column.suppressSizeToFit}
 					></AgGridColumn>
 				);
 			})}
@@ -69,8 +76,9 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			// sortable attribute
 			column.sortable !== undefined ? (el.sortable = column.sortable) : null;
 			// check for render function
-			if (el.cellRenderer) {
+			if (el.cellRenderer || el.detailRenderer) {
 				renderers[el.field] = el.cellRenderer;
+				el.expandable? renderers.__detailRenderer = el.detailRenderer : renderers.__detailRenderer = null;
 			}
 			filteredColumns.push(el);
 		}
@@ -198,11 +206,25 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 		}
 	}
 
+	function onFirstDataRendered() {
+		gridApi?.current?.sizeColumnsToFit();
+	}
+
+	function onRowGroupOpened() {
+		gridApi?.current?.sizeColumnsToFit();
+	}
+
+	function onExpandOrCollapseAll() {
+		gridApi?.current?.sizeColumnsToFit();
+	}
+
 	useEffect(() => {
-		getGridData();
+		!data && getGridData();
 		setAgGrid(<AgGrid />);
 		window.addEventListener('resize', onResize);
 		return () => {
+			gridApi?.current?.destroy();
+			delete globalThis[`$$tdGrid${gridId.current}`];
 			window.removeEventListener('resize', onResize);
 		};
 	}, []);
@@ -217,6 +239,6 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			</Fragment>
 		</div>
 	);
+	
 }
-
 export default Grid;
