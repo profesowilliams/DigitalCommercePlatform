@@ -6,7 +6,8 @@ use(function () {
         FILE_REFERENCE: 'fileReference',
         FILE_REFERENCE_IMAGE_PATH: '/jcr:content/renditions/cq5dam.thumbnail.140.100.png',
         FILE_JCR_CONTENT : '/jcr:content/image/file/jcr:content',
-        THUMBNAIL_FOLDER : '/jcr:content/image/file/jcr:content/dam:thumbnails'
+        THUMBNAIL_FOLDER : '/jcr:content/image/file/jcr:content/dam:thumbnails',
+        SVG_EXTENSION : 'svg'
     };
 
     var imageResource = resolver.getResource(this.item.path + Constants.JCR_CONTENT_IMAGE);
@@ -18,7 +19,8 @@ use(function () {
     }else if (imageResource && imageResource.getChild(Constants.FILE)) {
         imagePath = imageResource.path  + '/' + Constants.FILE;
     }else {
-        imagePath = imageResource.properties.get(Constants.FILE_REFERENCE) + Constants.FILE_REFERENCE_IMAGE_PATH;
+        var fileReference = imageResource.properties.get(Constants.FILE_REFERENCE);
+        imagePath = fileReference.toLowerCase().endsWith(Constants.SVG_EXTENSION) ? fileReference : fileReference + Constants.FILE_REFERENCE_IMAGE_PATH;
     }
 
 
