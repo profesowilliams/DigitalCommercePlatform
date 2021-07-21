@@ -7,7 +7,7 @@ import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
-	const componentVersion = '1.0.2';
+	const componentVersion = '1.1.0';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -46,6 +46,8 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			onFirstDataRendered={onFirstDataRendered}
 			onRowGroupOpened={onRowGroupOpened}
 			onExpandOrCollapseAll={onExpandOrCollapseAll}
+			rowSelection={'multiple'}
+			getRowHeight={getRowHeight}
 		>
 			{filteredColumns.map((column) => {
 				return (
@@ -78,7 +80,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			// check for render function
 			if (el.cellRenderer || el.detailRenderer) {
 				renderers[el.field] = el.cellRenderer;
-				el.expandable? renderers.__detailRenderer = el.detailRenderer : renderers.__detailRenderer = null;
+				el.expandable? renderers.__detailRenderer = el.detailRenderer : null;
 			}
 			filteredColumns.push(el);
 		}
@@ -185,7 +187,10 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 		};
 		// fire onAfterGridInit callback and pass AG grid object to parent
 		if (typeof onAfterGridInit === 'function') {
-			onAfterGridInit({ node: gridNodeRef.current, api: data.api, gridResetRequest: () => resetGrid() });
+			onAfterGridInit({ 
+				node: gridNodeRef.current, 
+				api: data.api, 
+				gridResetRequest: () => resetGrid()});
 		}
 	}
 
@@ -216,6 +221,21 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 
 	function onExpandOrCollapseAll() {
 		gridApi?.current?.sizeColumnsToFit();
+	}
+
+	function getRowHeight(props) {
+		const heights = [];
+		const columnKeys = Object.keys(props.data);
+		columnKeys.forEach(key=>{
+			const columnDef = filteredColumns.find((el) => {
+				return el.field === key;
+			});
+			if (typeof columnDef?.setRowHeight === 'function') {
+				heights.push(columnDef.setRowHeight(props));
+			}
+		})
+		const maxHeight = Math.max(...heights);
+		return maxHeight > 0 ? maxHeight : null;
 	}
 
 	useEffect(() => {

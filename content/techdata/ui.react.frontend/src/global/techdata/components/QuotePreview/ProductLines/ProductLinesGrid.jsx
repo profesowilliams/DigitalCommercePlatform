@@ -9,7 +9,7 @@ function ProductLinesGrid({ gridProps, data }) {
   const gridConfig = {
     ...gridProps,
     serverSide: false,
-    paginationStyle: "none"
+    paginationStyle: "none",
   };
 
   const columnDefs = [
@@ -19,6 +19,7 @@ function ProductLinesGrid({ gridProps, data }) {
       sortable: false,
       checkboxSelection: true,
       width: "80px",
+      headerCheckboxSelection: true,
       expandable: true,
       detailRenderer: (props) => {
         return (
@@ -34,11 +35,10 @@ function ProductLinesGrid({ gridProps, data }) {
       headerName: "Item Information",
       field: "shortDescription",
       sortable: false,
+      setRowHeight: () => 80,
       cellRenderer: (props) => {
-        return (
-           <ProductLinesItemInformation line={props.data}/>
-        );
-      }
+        return <ProductLinesItemInformation line={props.data} />;
+      },
     },
     {
       headerName: "MSRP/Unit List Price",

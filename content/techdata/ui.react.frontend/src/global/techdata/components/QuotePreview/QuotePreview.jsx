@@ -16,7 +16,7 @@ function QuotePreview(props) {
           </div>
           <div className="cmp-quote-preview__lines">
             <QuotePreviewGrid
-              gridProps={componentProp.productLinesGrid}
+              gridProps={componentProp.productLines}
               data={apiResponse}
             ></QuotePreviewGrid>
           </div>

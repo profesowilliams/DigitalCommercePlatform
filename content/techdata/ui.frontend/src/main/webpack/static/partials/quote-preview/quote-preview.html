@@ -4,21 +4,46 @@
     data-cmp-type="react"
     className="cmp-quotePreview"
     data-config='{
-	"uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/preview?id=4234213",
-	"productLinesGrid": {
-		"columnList":[
-			{"columnLabel":"Select All","columnKey":"id", "expandable": true, "sortable": false},
-			{"columnLabel":"Item Information","columnKey":"shortDescription", "sortable": false},
-			{"columnLabel":"MSRP/Unit List Price","columnKey":"unitListPriceFormatted", "sortable": false},
-			{"columnLabel":"Quantity","columnKey":"quantity", "sortable": false},
-			{"columnLabel":"Extended Price","columnKey":"extendedPriceFormatted", "sortable": false}
-		]
-	},
-	"note":  {
-		"headerLabel":"Please note",
-		"setupRequiredLabel":"Setup required",
-		"attachmentRequiredLabel": "Attachment required"
-	}
+		"uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/preview?id=4234213",
+		"headerLabel": "Quote Preview: Confirm Details to Quote",
+		"subtotalLabel": "Subtotal of items selected for quote",
+		"confirmButtonLabel": "Continue with Quick Quote",
+		"defaultChoiceLabel": "Make this my default choice",
+		"continueWithStandardPriceLabel": "Continue with Standard Pricing Instead",
+		"information": {
+			"yourCompanyHeaderLabel": "Your Company Information",
+			"endUserHeaderLabel": "End User Information",
+			"generalHeaderLabel": "General Information",
+			"emailLabel": "Email",
+			"phoneLabel": "Phone",
+			"sourceLabel": "Source",
+			"tierLabel": "Tier",
+			"referenceLabel": "Reference",
+			"dealLabel": "Deal"
+		},
+		"productLines": {
+			"label": "Select Line Items to Include",
+			"expandAllLabel": "Expand All",
+			"collapseAllLabel": "Collapse All",
+			"startDateLabel": "Start Date",
+			"autoRenewLabel": "Auto Renew",
+			"durationLabel": "Duration",
+			"billingLabel": "billing",
+			"yesLabel": "Yes",
+			"noLabel": "No",
+			"columnList":[
+				{"columnLabel":"Select All","columnKey":"id", "expandable": true, "sortable": false},
+				{"columnLabel":"Item Information","columnKey":"shortDescription", "sortable": false},
+				{"columnLabel":"MSRP/Unit List Price","columnKey":"unitListPriceFormatted", "sortable": false},
+				{"columnLabel":"Quantity","columnKey":"quantity", "sortable": false},
+				{"columnLabel":"Extended Price","columnKey":"extendedPriceFormatted", "sortable": false}
+			]
+		},
+		"note":  {
+			"headerLabel":"Please note: We are able to provide your quote, however some items will require attention before entering the checkout process.",
+			"setupRequiredLabel":"Setup required",
+			"attachmentRequiredLabel": "Attachment required"
+		}
 	}'
   ></div>
 </div>
