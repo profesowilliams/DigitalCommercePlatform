@@ -1,6 +1,12 @@
 
 @import "main";
 
+.languagenavigation svg {
+  height: rem(18px);
+  width: auto;
+  padding-right: rem(4px); 
+}
+
 #regionSelectDropdown {
   background-color: get-color(brand-white);
 }
