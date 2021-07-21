@@ -924,10 +924,10 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "cardView-carousel",
+                filename: "filmstrip-slider",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/partials/cardView-carousel/cardView-carousel.html"
+                    SOURCE_ROOT + "/static/partials/carousel/filmstrip-slider.html"
                 ),
             }),
             new HtmlWebpackPlugin({
