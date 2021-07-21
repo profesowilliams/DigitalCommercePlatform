@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         {
             public string CreatedBy { get; set; }
             public string QuoteIdFilter { get; set; }
-            public string ConfigIdFilter { get; set; }
+            public string VendorReference { get; set; }
             public DateTime? CreatedFrom { get; set; }
             public DateTime? CreatedTo { get; set; }
             public string SortBy { get; set; }
@@ -81,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         WithPaginationInfo = request.WithPaginationInfo,
                         // Filters
                         Id = request.QuoteIdFilter,
-                        // ??? = request.ConfigIdFilter, // JH: I'm not able to find which field allows me to filter by ConfigId in App-Quote
+                        VendorReference = request.VendorReference,
                         CreatedFrom = dateFrom,
                         Manufacturer = request.manufacturer,
                         CreatedTo = dateTo,

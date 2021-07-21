@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
     public class FindModel
     {
         public string Id { get; set; }
+        public bool? Details { get; set; }
         public string CustomerName { get; set; }
         public string CustomerNumber { get; set; }
         public DateTime? CreatedFrom { get; set; }
@@ -52,6 +53,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
         public int? Page { get; set; } = 1;
         public int? PageSize { get; set; } = 25;
         public bool? WithPaginationInfo { get; set; }
-        public bool? Details { get; set; }
+        public string VendorReference { get; set; }
     }
 }

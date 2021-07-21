@@ -244,7 +244,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             {
                 CreatedBy = "",
                 QuoteIdFilter = "123",
-                ConfigIdFilter = "123",
+                VendorReference = "123",
                 SortBy = "123",
                 SortDirection = "asc",
                 PageSize = 1,
