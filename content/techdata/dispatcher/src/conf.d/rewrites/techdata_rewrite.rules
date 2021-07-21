@@ -1,5 +1,14 @@
 # rewrite for root redirect
 RewriteRule ^/?$ /content/${CONTENT_FOLDER_NAME}/us/en.html [PT,L]
+RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
+RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
+RewriteRule ^/hk/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
+RewriteRule ^/id/en$ /content/${CONTENT_FOLDER_NAME}/apac/id/en.html [PT,L]
+RewriteRule ^/in/en$ /content/${CONTENT_FOLDER_NAME}/apac/in/en.html [PT,L]
+RewriteRule ^/my/en$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
+RewriteRule ^/nz/en$ /content/${CONTENT_FOLDER_NAME}/apac/nz/en.html [PT,L]
+RewriteRule ^/th/en$ /content/${CONTENT_FOLDER_NAME}/apac/th/en.html [PT,L]
+RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME}/apac/vn/en.html [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
