@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             _appCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
-            _typeSearchUrl = appSettings.GetSetting("Core.Search.Url");
+            _typeSearchUrl = appSettings.GetSetting("App.Search.Url");
             _appCartUrl = appSettings.GetSetting("App.Cart.Url");
         }
 
@@ -73,7 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 
         public async Task<IEnumerable<TypeAheadSuggestion>> GetTypeAhead(TypeAheadSearch.Request request)
         {
-            var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/GetTypeAheadTerms").BuildQuery(request);
+            var typeAheadUrl = _typeSearchUrl.AppendPathSegment("/TypeAhead").BuildQuery(request);
             try
             {
                 var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<IEnumerable<TypeAheadSuggestion>>(typeAheadUrl);

@@ -44,9 +44,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<ActionResult<TypeAheadSearch.Response>> TypeAheadSearch(string searchTerm, int? maxResults)
+        public async Task<ActionResult> TypeAheadSearch([FromQuery] string searchTerm, int? maxResults, string Type)
         {
-            var response = await Mediator.Send(new TypeAheadSearch.Request(searchTerm, maxResults)).ConfigureAwait(false);
+            var response = await Mediator.Send(new TypeAheadSearch.Request(searchTerm, maxResults, Type)).ConfigureAwait(false);
             return Ok(response);
         }
 

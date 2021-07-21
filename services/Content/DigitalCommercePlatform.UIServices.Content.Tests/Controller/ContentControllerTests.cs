@@ -90,7 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.TypeAheadSearch("12", 123).ConfigureAwait(false);
+            var result = await controller.TypeAheadSearch("12", 123,"ProductType").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

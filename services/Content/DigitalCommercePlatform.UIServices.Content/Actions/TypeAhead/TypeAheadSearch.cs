@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Content.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -20,11 +19,13 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
         {
             public string SearchTerm { get; set; }
             public int? MaxResults { get; set; }
+            public string Type { get; set; }
 
-            public Request(string searchTerm, int? maxResults)
+            public Request(string searchTerm, int? maxResults, string type)
             {
                 SearchTerm = searchTerm;
                 MaxResults = maxResults;
+                Type = type;
             }
         }
 
@@ -59,6 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
             {
                 RuleFor(c => c.SearchTerm).NotNull();
                 RuleFor(c => c.MaxResults).NotNull().GreaterThanOrEqualTo(0);
+                RuleFor(c => c.Type).NotNull();
             }
         }
     }
