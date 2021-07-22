@@ -1,24 +1,22 @@
-import React from "react";
+import React, { Element } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
-import Loader from '../Widgets/Loader';
 
 function QuotePreview(props) {
-  const {uiServiceEndPoint, note, productLines} = JSON.parse(props.componentProp);
-  const [loading, apiResponse] = useGet(uiServiceEndPoint);
+  const componentProp = JSON.parse(props.componentProp);
+  const apiResponse = useGet(componentProp.uiServiceEndPoint);
 
   return (
     <div className="cmp-quote-preview">
-      {loading && <Loader visible={loading} />}
       {apiResponse && (
         <section>
           <div className="cmp-quote-preview__note">
-            <QuotePreviewNote note={note} />
+            <QuotePreviewNote note={componentProp.note} />
           </div>
           <div className="cmp-quote-preview__lines">
             <QuotePreviewGrid
-              gridProps={productLines}
+              gridProps={componentProp.productLines}
               data={apiResponse}
             ></QuotePreviewGrid>
           </div>
