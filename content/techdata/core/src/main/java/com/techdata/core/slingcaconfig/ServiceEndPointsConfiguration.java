@@ -73,4 +73,9 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ", order = 22)
     String vendorConnectionEndpoint();
+
+    @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ", order = 23)
+    String quotesPreviewEndPoint();
+
+
 }
