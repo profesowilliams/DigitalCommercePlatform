@@ -7,7 +7,7 @@ import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
-	const componentVersion = '1.1.0';
+	const componentVersion = '1.1.1';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -215,23 +215,49 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 		gridApi?.current?.sizeColumnsToFit();
 	}
 
-	function onRowGroupOpened() {
+	function onRowExpandOrCollapse(row){
+		const columnKeys = Object.keys(row.data);
+		columnKeys.forEach(key => {
+			const columnDef = filteredColumns.find((el) => {
+				return el.field === key;
+			});
+			switch (row.expanded) {
+				case true:
+					if (typeof columnDef?.onDetailsShown === 'function') {
+						columnDef.onDetailsShown(row);
+					}
+					break;
+				case false:
+					if (typeof columnDef?.onDetailsHidden === 'function') {
+						columnDef.onDetailsHidden(row);
+					}
+					break;
+				default:
+					break;
+			}
+		})
 		gridApi?.current?.sizeColumnsToFit();
 	}
 
-	function onExpandOrCollapseAll() {
-		gridApi?.current?.sizeColumnsToFit();
+	function onRowGroupOpened(row) {
+		onRowExpandOrCollapse(row);
 	}
 
-	function getRowHeight(props) {
+	function onExpandOrCollapseAll(data) {
+		data.api.forEachNode((node)=>{
+			onRowExpandOrCollapse(node);
+		})
+	}
+
+	function getRowHeight(row) {
 		const heights = [];
-		const columnKeys = Object.keys(props.data);
-		columnKeys.forEach(key=>{
+		const columnKeys = Object.keys(row.data);
+		columnKeys.forEach(key => {
 			const columnDef = filteredColumns.find((el) => {
 				return el.field === key;
 			});
 			if (typeof columnDef?.setRowHeight === 'function') {
-				heights.push(columnDef.setRowHeight(props));
+				heights.push(columnDef.setRowHeight(row));
 			}
 		})
 		const maxHeight = Math.max(...heights);

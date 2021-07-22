@@ -2,9 +2,11 @@ import React from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
+import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
 function ProductLinesGrid({ gridProps, data }) {
   const gridData = data.content?.quotePreview?.quoteDetails.items ?? [];
+  const mutableGridData = JSON.parse(JSON.stringify(gridData));
 
   const gridConfig = {
     ...gridProps,
@@ -25,7 +27,9 @@ function ProductLinesGrid({ gridProps, data }) {
         return (
           <section>
             <div className="cmp-product-lines-grid__row--expanded">
-              <ProductLinesChildGrid data={gridData}></ProductLinesChildGrid>
+              <ProductLinesChildGrid
+                data={mutableGridData}
+              ></ProductLinesChildGrid>
             </div>
           </section>
         );
@@ -49,10 +53,27 @@ function ProductLinesGrid({ gridProps, data }) {
       headerName: "Quantity",
       field: "quantity",
       sortable: false,
+      cellRenderer: ({ rowIndex, api, setValue }) => {
+        return (
+          <ProductLinesQuantityWidget
+            initialValue={gridData[rowIndex].quantity}
+            onValueChanged={(_val) => {
+              setValue(_val);
+              api.refreshCells({
+                columns: ["extendedPriceFormatted"],
+                force: true,
+              });
+            }}
+          ></ProductLinesQuantityWidget>
+        );
+      },
     },
     {
       headerName: "Extended Price",
       field: "extendedPriceFormatted",
+      valueFormatter: ({ data }) => {
+        return data.unitPrice * data.quantity;
+      },
       sortable: false,
     },
   ];
@@ -63,7 +84,7 @@ function ProductLinesGrid({ gridProps, data }) {
         <Grid
           columnDefinition={columnDefs}
           config={gridConfig}
-          data={gridData}
+          data={mutableGridData}
         ></Grid>
       </div>
     </section>
