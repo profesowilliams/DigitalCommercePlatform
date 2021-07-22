@@ -8,7 +8,7 @@ import {
 	redirectUnauthenticatedUser,
 } from "../../../../utils/policies";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
-import SpinnerCode from "../spinner/spinner";
+import SpinnerCode from "../Spinner/Spinner";
 
 const FA = require('react-fontawesome');
 
