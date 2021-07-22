@@ -50,7 +50,7 @@
                                             <icon
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                fieldDescription="Enter the path to the icon to render. If empty, no icon will be displayed."
+                                                fieldDescription="Select whether or not to display the icon."
                                                 name="./icon"
                                                 text="Show Icon?"
                                                 uncheckedValue="{Boolean}false"
