@@ -4,9 +4,9 @@
     &__card {
         padding: 3.18rem 0.5rem;
         &:last-child {
-          .cmp-teaser {
-            box-shadow: unset;
-          }
+            .cmp-teaser {
+                box-shadow: unset;
+            }
         }
         .cmp-teaser {
             box-shadow: inset rem(-1px) 0 0 0 get-color(brand-light-gray);
@@ -25,12 +25,12 @@
                 cursor: pointer;
                 .cmp-teaser__title-link {
                     color: get-color(brand-blue) !important;
-                    font-weight: 400;
+                    font-weight: 600;
                     -webkit-font-smoothing: antialiased;
                     -moz-osx-font-smoothing: grayscale;
                 }
                 .cmp-teaser__image img {
-                    border-color: get-color(brand-blue) !important;
+                    box-shadow: 0 0 0 rem(6px) get-color(brand-blue);
                 }
             }
 
@@ -61,7 +61,8 @@
             &__image {
                 position: relative;
                 margin-bottom: 5.625rem;
-                img, svg {
+                img,
+                svg {
                     border-radius: 50%;
                     width: 6.62rem;
                     height: 6.62rem;
@@ -72,7 +73,7 @@
                 }
             }
             &__description {
-                padding: 0 1.5rem;
+                padding: 0 rem(30px);
                 word-wrap: break-word;
                 text-overflow: ellipsis;
                 display: -webkit-box;
@@ -110,10 +111,6 @@
                     cursor: pointer;
                     .cmp-teaser__title-link {
                         color: get-color(brand-white) !important;
-                    }
-                    .cmp-teaser__image img {
-                        border-color: get-color(brand-blue) !important;
-                        filter: grayscale(0%);
                     }
                 }
 
@@ -162,7 +159,8 @@
                         }
                         .cmp-image__image {
                             svg {
-                                path, polygon {
+                                path,
+                                polygon {
                                     fill: get-color(td-lightblue);
                                 }
                             }
@@ -183,7 +181,8 @@
 
                     .cmp-image__image {
                         svg {
-                            path, polygon {
+                            path,
+                            polygon {
                                 fill: get-color(td-dark-blue);
                             }
                         }
@@ -203,7 +202,7 @@
         .cmp-teaser__image {
             margin-bottom: 9.75rem;
             img {
-                border: rem(6px) solid get-color(border-light-gray);
+                border: 0 solid get-color(border-light-gray);
                 width: 16rem;
                 height: 16rem;
                 transform: translateX(-50%) translateY(-50%);
