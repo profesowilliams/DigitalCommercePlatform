@@ -1,10 +1,5 @@
 .dp-list,
 .cmp-list {
-
-  figure > svg {
-    width: 100%;
-    height: 100%;
-  }
   &--teaser {
     .cmp-list {
       display: flex;
@@ -168,7 +163,7 @@
       transition: all 0.3s;
       &:hover {
         filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg)
-        brightness(114%) contrast(100%);
+          brightness(114%) contrast(100%);
       }
     }
     .cmp-list__item-link {
@@ -179,48 +174,24 @@
 
   &--brand-grid-3 {
     .cmp-list {
-      align-items: center;
-      @include tablet {
-        justify-content: space-evenly;
-      }
+      list-style-type: none;
     }
-    .cmp-list__item {
-      width: calc(100% / 8);
-      @include tablet {
-        width: 150px;
-      }
-      article {
-        margin-top: rem(8px);
-        margin-bottom: rem(8px);
-      }
-    }
-    .cmp-list__item-title {
-      display: none;
-    }
-    .cmp-image__image-figure {
-      height: auto;
-      margin-bottom: 0;
-      justify-content: center;
-      svg path {
-        fill: #000C21 !important;
-      }
+
+    .cmp-list__item-link {
+      text-decoration: none;
       &:hover {
-        svg path {
-          fill: none;
+        .cmp-list__item-title {
+          color: $sky-dark;
+          font-size: $font-size-medium;
+          font-weight: $font-weight-bold;
         }
       }
     }
-    .cmp-image__image {
-      max-width: 100%;
-      transition: all 0.3s;
-      &:hover {
-        filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg)
-        brightness(114%) contrast(100%);
-      }
-    }
-    .cmp-list__item-link {
-      text-decoration: none;
-      padding: rem(10px);
+
+    .cmp-list__item-title {
+      color: get-color(text-light-charcoal);
+      font-size: 13px;
+      font-weight: $font-weight-normal;
     }
   }
 
@@ -233,7 +204,7 @@
       max-width: 100%;
       max-height: 100%;
       filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg)
-      brightness(95%) contrast(88%);
+        brightness(95%) contrast(88%);
       transition: all 0.3s;
     }
     .cmp-list__item-link {
@@ -278,7 +249,7 @@
         max-width: 100%;
         max-height: 100%;
         filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg)
-        brightness(95%) contrast(88%);
+          brightness(95%) contrast(88%);
         transition: all 0.3s;
       }
       .cmp-list__item-link {
@@ -325,37 +296,37 @@
         width: 200px;
       }
       &:hover {
-        article{
-          a.cmp-list__item-link {
-            span.cmp-list__item-title{
-              color: #000C21;
-              font-weight: bold;
-            }
+          article{
+              a.cmp-list__item-link {
+                  span.cmp-list__item-title{
+                      color: #000C21;
+                      font-weight: bold;
+                  }
+              }
           }
-        }
       }
       article {
-        a.cmp-list__item-link {
-          display: flex;
-          flex-direction: column;
-          text-decoration: none;
-          figure.cmp-image__image-figure {
-            justify-content: center;
-            display: flex;
-            img.cmp-image__image {
-              width: rem(75px);
-              height: rem(75px);
-            }
+          a.cmp-list__item-link {
+              display: flex;
+              flex-direction: column;
+              text-decoration: none;
+              figure.cmp-image__image-figure {
+                  justify-content: center;
+                  display: flex;
+                  img.cmp-image__image {
+                      width: rem(75px);
+                      height: rem(75px);
+                  }
+              }
+              span.cmp-list__item-title{
+              text-decoration: none;
+              font-size: 13px;
+              line-height: 15px;
+              text-align: center;
+              color: rgba(0,0,0,.55);
+              margin: 0 5px;
+              }
           }
-          span.cmp-list__item-title{
-            text-decoration: none;
-            font-size: 13px;
-            line-height: 15px;
-            text-align: center;
-            color: rgba(0,0,0,.55);
-            margin: 0 5px;
-          }
-        }
       }
     }
   }
