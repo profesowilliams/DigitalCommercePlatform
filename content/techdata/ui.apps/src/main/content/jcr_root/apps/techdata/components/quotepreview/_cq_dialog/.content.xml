@@ -123,6 +123,48 @@
                                                 fieldDescription="Enter Deal Label"
                                                 fieldLabel="Deal Label"
                                                 name="./dealLabel"/>
+                                            <companyLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Company Label"
+                                                    fieldLabel="Company Label"
+                                                    name="./companyLabel"/>
+                                            <nameLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Name Label"
+                                                    fieldLabel="Name Label"
+                                                    name="./nameLabel"/>
+                                            <addressLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Address Label"
+                                                    fieldLabel="Address Label"
+                                                    name="./addressLabel"/>
+                                            <cityLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter City Label"
+                                                    fieldLabel="City Label"
+                                                    name="./cityLabel"/>
+                                            <stateLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter State Label"
+                                                    fieldLabel="State Label"
+                                                    name="./stateLabel"/>
+                                            <zipLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Zip Label"
+                                                    fieldLabel="Zip Label"
+                                                    name="./zipLabel"/>
+                                            <countryLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Country Label"
+                                                    fieldLabel="Country Label"
+                                                    name="./countryLabel"/>
                                         </items>
                                     </column>
                                 </items>

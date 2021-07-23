@@ -30,7 +30,9 @@ use(function () {
     if (this.uiServiceDomain != null) {
     	jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quotesPreviewEndPoint;
     }
-
+    if (this.uiServiceDomain != null) {
+    	jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
+    }
 
     if (properties && properties["headerLabel"]) {
         jsonObject["headerLabel"] = properties["headerLabel"];
@@ -83,7 +85,30 @@ use(function () {
     if (properties && properties["dealLabel"]) {
         informationTab["dealLabel"]  = properties["dealLabel"];
     }
-
+     if (properties && properties["dealLabel"]) {
+        informationTab["dealLabel"]  = properties["dealLabel"];
+    }
+     if (properties && properties["companyLabel"]) {
+        informationTab["companyLabel"]  = properties["companyLabel"];
+    }
+     if (properties && properties["nameLabel"]) {
+        informationTab["nameLabel"]  = properties["nameLabel"];
+    }
+     if (properties && properties["addressLabel"]) {
+        informationTab["addressLabel"]  = properties["addressLabel"];
+    }
+     if (properties && properties["cityLabel"]) {
+        informationTab["cityLabel"]  = properties["cityLabel"];
+    }
+     if (properties && properties["stateLabel"]) {
+        informationTab["stateLabel"]  = properties["stateLabel"];
+    }
+     if (properties && properties["zipLabel"]) {
+        informationTab["zipLabel"]  = properties["zipLabel"];
+    }
+    if (properties && properties["countryLabel"]) {
+        informationTab["countryLabel"]  = properties["countryLabel"];
+    }
     if (properties && properties["label"]) {
         productLinesGrid["label"]  = properties["label"];
     }
