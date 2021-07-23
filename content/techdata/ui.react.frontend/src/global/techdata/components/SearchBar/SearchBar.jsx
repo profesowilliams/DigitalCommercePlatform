@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import SearchAreas from './SearchAreas'
@@ -13,11 +13,20 @@ const SearchBar = ({ componentProp }) => {
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
 
-  const loadSuggestions = async (searchTerm) => {
-    //const response = await axios.get(`http://typeahead.techdata.com/kw2?keyword=${searchTerm}&searchApplication=shop`);
-    const response = await axios.get(`http://localhost:3000/typeahead?keyword=${searchTerm}&searchApplication=shop`);
+  useEffect(() => {
+    const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 500);
 
-    setTypeAheadSuggestions(response.data)
+    return () => clearTimeout(timeOutId);
+  }, [searchTermText]);
+
+  const loadSuggestions = async (searchTerm) => {
+    if(searchTermText.length >= 3) {
+      if (['all', 'product', 'content'].includes(selectedArea.area)) {
+        const response = await axios.get(`http://localhost:3000/typeahead?keyword=${searchTerm}&searchApplication=shop`);
+
+        setTypeAheadSuggestions(response.data);
+      }
+    }
   }
 
   const getSearchUrl = (searchTerm) => {
@@ -43,8 +52,8 @@ const SearchBar = ({ componentProp }) => {
     gotFocus();
     setSearchTermText(value);
 
-    if(value.length >= 3) {
-      loadSuggestions(value);
+    if(value.length < 3) {
+      setTypeAheadSuggestions([]);
     }
   }
 
@@ -60,6 +69,8 @@ const SearchBar = ({ componentProp }) => {
 
   const changeSelectedArea = (areaConfiguration) => {
     setSelectedArea(areaConfiguration);
+
+    setTypeAheadSuggestions([]);
   }
 
   const gotFocus = () => {
