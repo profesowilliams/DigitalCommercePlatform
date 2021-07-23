@@ -6,8 +6,8 @@ import {
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
-function Grid({ columnDefinition, options, config, data, onAfterGridInit, requestInterceptor }) {
-	const componentVersion = '1.1.1';
+function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowSelected, onSelectionChanged, requestInterceptor }) {
+	const componentVersion = '1.1.2';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -42,12 +42,15 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, reques
 			detailCellRenderer={'__detailRenderer'}
 			detailRowAutoHeight= {true}
 			animateRows={false}
-			domLayout={ serverSide? 'normal' : 'autoHeight'}
+			domLayout={serverSide? 'normal' : 'autoHeight'}
 			onFirstDataRendered={onFirstDataRendered}
 			onRowGroupOpened={onRowGroupOpened}
 			onExpandOrCollapseAll={onExpandOrCollapseAll}
+			onRowSelected={onRowSelected}
+			onSelectionChanged={onSelectionChanged}
 			rowSelection={'multiple'}
 			getRowHeight={getRowHeight}
+			suppressRowClickSelection={true}
 		>
 			{filteredColumns.map((column) => {
 				return (

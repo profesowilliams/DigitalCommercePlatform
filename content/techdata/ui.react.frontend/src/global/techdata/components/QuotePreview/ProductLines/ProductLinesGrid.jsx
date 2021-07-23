@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
-function ProductLinesGrid({ gridProps, data }) {
+function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
   const gridData = data.content?.quotePreview?.quoteDetails.items ?? [];
+  /*
+    grid data can be mutated intentionally by changing quantity in each row. 
+    so in order to not mutate props, mutableGridData is clone of the data that is
+    used in full component lifecycle and orignal data is kept for reference
+  */
   const mutableGridData = JSON.parse(JSON.stringify(gridData));
+  const selectedLinesModel = [];
+  let isDataMutated = false;
+
+  useEffect(() => {
+    if (typeof onQuoteLinesUpdated === "function") {
+      onQuoteLinesUpdated(selectedLinesModel);
+    }
+  }, []);
 
   const gridConfig = {
     ...gridProps,
@@ -58,6 +71,7 @@ function ProductLinesGrid({ gridProps, data }) {
           <ProductLinesQuantityWidget
             initialValue={gridData[rowIndex].quantity}
             onValueChanged={(_val) => {
+              isDataMutated = true;
               setValue(_val);
               api.refreshCells({
                 columns: ["extendedPriceFormatted"],
@@ -71,12 +85,29 @@ function ProductLinesGrid({ gridProps, data }) {
     {
       headerName: "Extended Price",
       field: "extendedPriceFormatted",
-      valueFormatter: ({ data }) => {
+      onDetailsShown: (row) => {},
+      onDetailsHidden: (row) => {},
+      valueFormatter: ({ api, data, node }) => {
+        isDataMutated && node.selected && onSelectionChanged({ api });
         return data.unitPrice * data.quantity;
       },
       sortable: false,
     },
   ];
+
+  function onSelectionChanged({ api }) {
+    selectedLinesModel.length = 0;
+    api.forEachNode((rowNode) => {
+      const _price = rowNode.data.quantity * rowNode.data.unitPrice;
+      rowNode.data.extendedPrice = _price;
+      const _row = Object.assign({}, rowNode.data);
+      delete _row.extendedPriceFormatted;
+      rowNode.selected && selectedLinesModel.push(_row);
+    });
+    if (typeof onQuoteLinesUpdated === "function") {
+      onQuoteLinesUpdated(selectedLinesModel);
+    }
+  }
 
   return (
     <section>
@@ -85,6 +116,7 @@ function ProductLinesGrid({ gridProps, data }) {
           columnDefinition={columnDefs}
           config={gridConfig}
           data={mutableGridData}
+          onSelectionChanged={onSelectionChanged}
         ></Grid>
       </div>
     </section>
