@@ -22,7 +22,7 @@
         }
 
         window.onclick = function(event) {
-            if (!(event.target.matches('.cmp-button') || event.target.matches('.cmp-button__text'))) {
+            if (!(event.target.matches('.cmp-button') || event.target.matches('.cmp-button__text') || event.target.matches('.cmp-button__icon'))) {
                 const dropdowns = document.querySelectorAll(".cmp-button__dropdown");
                 dropdowns && dropdowns.forEach(function(dropdown) {
                     if (dropdown.closest('.dropdownbutton').classList.contains('active')) {
