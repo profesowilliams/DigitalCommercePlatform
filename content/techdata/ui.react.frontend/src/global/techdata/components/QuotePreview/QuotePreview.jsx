@@ -2,6 +2,7 @@ import React, { Element } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
+import QuotePreviewContinue from './QuotePreviewContinue';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -20,6 +21,7 @@ function QuotePreview(props) {
               data={apiResponse}
             ></QuotePreviewGrid>
           </div>
+          <QuotePreviewContinue gridProps={componentProp}/>
         </section>
       )}
     </div>
