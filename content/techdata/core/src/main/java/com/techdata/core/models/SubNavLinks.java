@@ -4,12 +4,14 @@ import com.adobe.cq.dam.cfm.ContentFragment;
 import com.day.cq.wcm.api.Page;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.techdata.core.slingcaconfig.CatalogServiceConfiguration;
 import com.techdata.core.util.Constants;
 import com.techdata.core.util.ContentFragmentHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +63,7 @@ public class SubNavLinks {
         childPageIterator(resolver);
     }
 
-    public SubNavLinks(Resource cfResource, String rootParentTitle) {
+    public SubNavLinks(Resource cfResource, String rootParentTitle, Page currentPage) {
         log.debug("inside subnavlinks constructor for CF. Path {} is being processed", cfResource.getPath());
         this.rootParentTitle = rootParentTitle;
         ContentFragment cf = cfResource.adaptTo(ContentFragment.class);
@@ -79,7 +81,12 @@ public class SubNavLinks {
                 if (ContentFragmentHelper.isContentFragment(child)) {
                     this.hasChildPages = "true";
                     log.debug("processing resource at path {}", child.getPath());
-                    SubNavLinks link = new SubNavLinks(child, rootParentTitle);
+                    SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage);
+                    CatalogServiceConfiguration catalogServiceConfiguration =
+                            currentPage.adaptTo(ConfigurationBuilder.class).as(CatalogServiceConfiguration.class);
+                    String url =
+                            catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + child.getName() + "&refinements=" + child.getName();
+                    link.setPagePath(url);
                     this.subNavLinkslist.add(link);
                 }
             }

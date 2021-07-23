@@ -5,6 +5,7 @@ import com.day.cq.wcm.api.PageManager;
 import com.techdata.core.util.ContentFragmentHelper;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -16,7 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.*;
 
-@Model(adaptables = Resource.class,
+@Model(adaptables = {SlingHttpServletRequest.class,Resource.class},
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 @Getter
 @Setter
@@ -79,9 +80,11 @@ public class LinkItem {
             log.debug("UI Service enabled to generate megamenu");
 
             Resource cfRootParent = resolver.getResource(navigationCatalogRoot);
-            if (null != cfRootParent) {
+            Page rootPage = resolver.adaptTo(PageManager.class).getPage(navigationRoot);
+
+            if (null != cfRootParent && null != rootPage) {
                 for(Resource child : cfRootParent.getChildren()) {
-                    populateTertiarySubnavLinks(child);
+                    populateTertiarySubnavLinks(child, rootPage);
                 }
                 log.debug("sublink size is {}",this.subLinks.size());
             }
@@ -105,10 +108,10 @@ public class LinkItem {
 
     }
 
-    private void populateTertiarySubnavLinks(Resource child) {
+    private void populateTertiarySubnavLinks(Resource child, Page rootPage) {
         if (ContentFragmentHelper.isContentFragment(child)) {
             log.debug("processing resource at path {}", child.getPath());
-            SubNavLinks link = new SubNavLinks(child, platformName);
+            SubNavLinks link = new SubNavLinks(child, platformName, rootPage);
             this.subLinks.add(link);
             tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
         }

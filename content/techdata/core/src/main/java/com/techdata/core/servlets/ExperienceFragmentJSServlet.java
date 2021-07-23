@@ -50,8 +50,8 @@ import java.util.*;
         "service.vendor=techdata.com",
         "sling.servlet.resourcetypes=techdata/components/xfpage",
         "sling.servlet.extensions=js",
-        "sling.servlet.selectors=header",
-        "sling.servlet.selectors=footer"
+        "sling.servlet.selectors=withlibs",
+        "sling.servlet.selectors=withoutlibs"
     }
 )
 @Designate(ocd = ExperienceFragmentJSServlet.XFJSServletConfig.class)
@@ -143,7 +143,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         RequestPathInfo requestPathInfo = request.getRequestPathInfo();
         String[] selectors = requestPathInfo.getSelectors();
         List<String> selectorList = Arrays.asList(selectors);
-        return selectorList.contains("header");
+        return selectorList.contains("withlibs");
     }
 
     public JsonObject buildShopJSON() {
