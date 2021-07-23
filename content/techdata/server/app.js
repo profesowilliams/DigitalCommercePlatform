@@ -1079,6 +1079,66 @@ app.get("/ui-account/v1/getVendorConnections", function (req, res) {
     }, 2000)
 });
 
+app.get("/typeahead", function (req, res) {
+  const { keyword } = req.query;
+
+  res.json({
+    "Request": {
+      "SearchApplication": "shop",
+      "Keyword": `${keyword}`,
+      "MaxResults": 10
+    },
+    "Suggestions": [
+      {
+        "Keyword": `${keyword}`,
+        "Refinements": [
+          {
+            "Description": "Desktops & Workstations > Desktops",
+            "RefinementId": "510010101",
+            "RefinementType": 0
+          }
+        ],
+        "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} optiplex`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} laptop`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} monitor`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} optiplex 3060`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} precision`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} xps`,
+          "Refinements": null,
+          "SuggestionType": 1
+      },
+      {
+          "Keyword": `${keyword} inspiron`,
+          "Refinements": null,
+          "SuggestionType": 1
+      }
+    ]
+  });
+});
+
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     const { id, isEstimateId } = req.params;

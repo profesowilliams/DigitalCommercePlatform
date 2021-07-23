@@ -1,0 +1,16 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+  <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+      <div class="cq-placeholder" data-emptyText="${component.areaList}"></div>
+  </sly>
+
+  <sly data-sly-use.model="${'searchbar.js' @ allSearchEndpoint=serviceData.allSearchEndpoint,productSearchEndpoint=serviceData.productSearchEndpoint,contentSearchEndpoint=serviceData.contentSearchEndpoint,quoteSearchEndpoint=serviceData.quoteSearchEndpoint,orderSearchEndpoint=serviceData.orderSearchEndpoint,spaSearchEndpoint=serviceData.spaSearchEndpoint,typeAheadSearchEndpoint=serviceData.typeAheadSearchEndpoint }">
+
+  <div id="SearchBar" data-observe-mutation>
+    <div
+        data-component="SearchBar"
+        data-cmp-type="react"
+        className="cmp-searchbar"
+        data-config="${model.configJson}"
+    ></div>
+  </div>
+</sly>

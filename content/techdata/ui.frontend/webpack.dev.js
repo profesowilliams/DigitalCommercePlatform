@@ -611,19 +611,19 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/teaser-bigcards.html"
                 ),
-            }), 
+            }),
             new HtmlWebpackPlugin({
                 filename: "triptych-teaser",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/partials/teaser/triptych-teaser.html" 
+                    SOURCE_ROOT + "/static/partials/teaser/triptych-teaser.html"
                 ),
-            }),  
+            }),
             new HtmlWebpackPlugin({
                 filename: "quadriptych-teasers",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/partials/teaser/quadriptych-teasers.html" 
+                    SOURCE_ROOT + "/static/partials/teaser/quadriptych-teasers.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -695,13 +695,13 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/megamenu.html"
                 ),
-            }),            
+            }),
             new HtmlWebpackPlugin({
                 filename: "adbutler",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/partials/megamenu/adButler.html"                                   
-                                   
+                    SOURCE_ROOT + "/static/partials/megamenu/adButler.html"
+
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -774,6 +774,13 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/my-configurations.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "searchbar",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/searchbar.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -927,7 +934,7 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/partials/buttons/jump-to-top.html"
-                    
+
                 ),
             }),
             new HtmlWebpackPlugin({
