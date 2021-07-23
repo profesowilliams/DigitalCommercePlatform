@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "../Grid/Grid";
+import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
-import SearchCriteria from "../SearchCriteria/SearchCriteria";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 
@@ -124,13 +124,13 @@ function QuotesGrid(props) {
   return (
     <section>
       <div className="cmp-quotes-grid">
-        <SearchCriteria
+        <GridSearchCriteria
           Filters={QuotesGridSearch}
           label={componentProp.searchCriteria?.title ?? "Filter Quotes"}
           componentProp={componentProp.searchCriteria}
           onSearchRequest={filteringExtension.onQueryChanged}
           onClearRequest={filteringExtension.onQueryChanged}
-        ></SearchCriteria>
+        ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}
           options={options}

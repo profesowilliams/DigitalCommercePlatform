@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import Grid from '../Grid/Grid';
+import GridSearchCriteria from '../Grid/GridSearchCriteria';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
-import SearchCriteria from '../SearchCriteria/SearchCriteria';
 import OrdersGridSearch from './OrdersGridSearch';
 
 function OrdersGrid(props) {
@@ -213,13 +213,13 @@ function OrdersGrid(props) {
 	return (
 		<section>
 			<div className='cmp-orders-grid'>
-				<SearchCriteria
+				<GridSearchCriteria
 					Filters={OrdersGridSearch}
 					label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
 					componentProp={componentProp.searchCriteria}
 					onSearchRequest={filteringExtension.onQueryChanged}
 					onClearRequest={filteringExtension.onQueryChanged}
-				></SearchCriteria>
+				></GridSearchCriteria>
 				<Grid
 					columnDefinition={columnDefs}
 					options={options}

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Button from '../Widgets/Button';
 
-function SearchCriteria({ label, componentProp, Filters, onSearchRequest, onClearRequest }) {
+function GridSearchCriteria({ label, componentProp, Filters, onSearchRequest, onClearRequest }) {
 	const filter = useRef(null);
 	let [filterActive, setFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
@@ -62,4 +62,4 @@ function SearchCriteria({ label, componentProp, Filters, onSearchRequest, onClea
 	);
 }
 
-export default SearchCriteria;
+export default GridSearchCriteria;
