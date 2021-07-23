@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchRefinements = ({ refinements, getSearchUrl }) => {
+const SearchRefinements = ({ originalKeyword, refinements, itemIndex, getTypeAheadSearchUrl }) => {
   if (!refinements) {
     return null;
   }
@@ -11,7 +11,7 @@ const SearchRefinements = ({ refinements, getSearchUrl }) => {
 
         return (
           <li className="cmp-searchrefinements__refinement" key={index}>
-            <a className="cmp-searchrefinements__link" href={getSearchUrl('test')}>
+            <a className="cmp-searchrefinements__link" href={getTypeAheadSearchUrl(originalKeyword, itemIndex, refinement.RefinementId)}>
               {descriptionItems.map((item, index) => {
                 return (
                   <span key={index} className="cmp-searchrefinements__item">{item}</span>

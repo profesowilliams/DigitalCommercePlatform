@@ -5,7 +5,7 @@ import SearchAreas from './SearchAreas'
 import SearchSuggestions from './SearchSuggestions'
 
 const SearchBar = ({ componentProp }) => {
-  let { id, areaList, placeholder, typeaheadEndpoint } = JSON.parse(componentProp);
+  let { id, areaList, placeholder, searchDomain, typeAheadDomain } = JSON.parse(componentProp);
 
   const [searchTermText, setSearchTermText] = useState('');
   const [searchInputFocused, setSearchInputFocused] = useState(false);
@@ -21,10 +21,20 @@ const SearchBar = ({ componentProp }) => {
   }
 
   const getSearchUrl = (searchTerm) => {
-    const domain = 'https://shop.cstenet.com';
     const path = selectedArea.endpoint.replace('{search-term}', searchTerm);
 
-    return `${domain}${path}`;
+    return `${searchDomain}${path}`;
+  }
+
+  const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
+    let path = '/searchall?kw={search-term}&pks=1&pksi={suggestion-index}'
+                    .replace('{search-term}', searchTerm)
+                    .replace('{suggestion-index}', itemIndex + 1);
+    if (refinementId) {
+      path += `&refinements=${refinementId}`;
+    }
+
+    return `${searchDomain}${path}`;
   }
 
   const onSearchTermTextChange = (e) => {
@@ -66,7 +76,7 @@ const SearchBar = ({ componentProp }) => {
     return (
       <div className="cmp-searchbar__context-menu">
         <SearchAreas areaList={areaList} selectedArea={selectedArea} changeSelectedArea={changeSelectedArea}></SearchAreas>
-        <SearchSuggestions suggestionsList={typeAheadSuggestions.Suggestions} getSearchUrl={getSearchUrl}></SearchSuggestions>
+        <SearchSuggestions suggestionsList={typeAheadSuggestions.Suggestions} getTypeAheadSearchUrl={getTypeAheadSearchUrl}></SearchSuggestions>
       </div>
     );
   }

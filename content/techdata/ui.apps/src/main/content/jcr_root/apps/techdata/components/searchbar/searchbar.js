@@ -12,7 +12,13 @@ use(function () {
     jsonObject.put("placeholder", properties.get("placeholder"));
   }
 
-  jsonObject.put("typeAheadSearchEndpoint", this.typeAheadSearchEndpoint);
+  if (this.searchDomain !== null) {
+    jsonObject.put("searchDomain", this.searchDomain);
+  }
+
+  if (this.typeAheadDomain !== null) {
+    jsonObject.put("typeAheadDomain", this.typeAheadDomain);
+  }
 
   var areaListNode = resourceResolver.getResource(currentNode.getPath() + "/areaList");
 
@@ -25,10 +31,13 @@ use(function () {
       var areaLabel = res.properties["areaLabel"];
 
       var areaconfig = new Packages.org.json.JSONObject();
+      var areaEndpoint = this[area + 'SearchEndpoint'];
 
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);
-      areaconfig.put("endpoint", this[area + 'SearchEndpoint']);
+      if(areaEndpoint !== null) {
+        areaconfig.put("endpoint", areaEndpoint);
+      }
 
       jsonArray.put(areaconfig);
     }

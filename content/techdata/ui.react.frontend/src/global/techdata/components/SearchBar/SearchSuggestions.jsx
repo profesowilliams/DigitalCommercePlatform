@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchRefinements from './SearchRefinements'
 
-const SearchSuggestions = ({ suggestionsList, getSearchUrl }) => {
+const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl }) => {
   if (!suggestionsList) {
     return null;
   }
@@ -10,11 +10,11 @@ const SearchSuggestions = ({ suggestionsList, getSearchUrl }) => {
       {suggestionsList && suggestionsList.map((suggestion, index) => {
         return (
           <li className="cmp-searchsuggestions__suggestion" key={index}>
-            <a className="cmp-searchsuggestions__link" href={getSearchUrl(suggestion.Keyword)}>
+            <a className="cmp-searchsuggestions__link" href={getTypeAheadSearchUrl(suggestion.Keyword, index)}>
               {suggestion.Keyword}
             </a>
 
-            <SearchRefinements refinements={suggestion.Refinements} getSearchUrl={getSearchUrl}></SearchRefinements>
+            <SearchRefinements originalKeyword={suggestion.Keyword} refinements={suggestion.Refinements} itemIndex={index} getTypeAheadSearchUrl={getTypeAheadSearchUrl}></SearchRefinements>
           </li>
         );
       })}

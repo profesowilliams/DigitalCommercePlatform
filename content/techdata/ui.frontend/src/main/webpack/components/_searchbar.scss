@@ -1,0 +1,118 @@
+.cmp-searchbar {
+}
+.cmp-searchbar__form {
+}
+.cmp-searchbar__field {
+}
+.cmp-searchbar__icon {
+}
+.cmp-searchbar__input {
+}
+.cmp-searchbar__loading-indicator {
+}
+.cmp-searchbar__clear {
+}
+.cmp-searchbar__clear-icon {
+}
+.cmp-searchbar__results {
+}
+.cmp-searchbar__item {
+}
+.cmp-searchbar__item--is-focused {
+}
+.cmp-searchbar__item-mark {
+}
+.cmp-searchbar__item-title {
+}
+
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+	// making this desktop only as in mobile search is next to signin.
+	@include desktop {
+		margin-left: unset !important;
+		margin-right: auto;
+	}
+	// this is only a temporary fix to order to meet the sprinnt deadline. I will refactore it in the next sprint. - OP 7.12.21
+}
+
+@mixin cmp-searchbar__input {
+	border: 1px solid get-color(input-border);
+	border-radius: rem(3px);
+	&::placeholder {
+		font-style: normal;
+	}
+}
+
+.cmp-searchbar--dark-blue {
+	& .cmp-searchbar__input {
+		@include cmp-searchbar__input;
+	}
+	& .cmp-searchbar__icon {
+		color: #21314d;
+	}
+}
+.cmp-searchbar--light-blue {
+	& .cmp-searchbar__input {
+		@include cmp-searchbar__input;
+	}
+	& .cmp-searchbar__icon {
+		color: #02b8dc;
+	}
+}
+.cmp-searchbar--grey {
+	& .cmp-searchbar__input {
+		@include cmp-searchbar__input;
+	}
+	& .cmp-searchbar__icon {
+		color: #979797;
+	}
+}
+.cmp-searchbar--white {
+	& .cmp-searchbar__input {
+		@include cmp-searchbar__input;
+	}
+	& .cmp-searchbar__icon {
+		color: #ffffff;
+	}
+}
+//default view
+.cmp-searchbar__field {
+	height: 1.97em;
+	display: flex;
+}
+.cmp-searchbar__icon {
+	background-image: unset;
+	right: 0.8rem;
+	left: unset;
+}
+.cmp-searchbar__input {
+	border: 1px solid lightgray;
+	outline: none;
+	padding: 0;
+	padding-right: rem(44px);
+	padding-left: rem(10px);
+	text-overflow: ellipsis;
+	min-width: 200px;
+	@include tablet {
+        min-width: 0;
+    }
+	&::placeholder {
+		font-style: normal;
+		font-family: 'Open Sans';
+		font-size: 0.84em;
+		font-weight: 300;
+		letter-spacing: 0;
+		color: #153B51;
+	}
+}
+.cmp-searchbar__loading-indicator {
+	right: 0.8rem;
+	left: unset;
+}
+.cmp-searchbar__clear {
+	display: none;
+}
+.cmp-searchbar__clear-icon {
+	left: 0.5rem;
+	right: unset;
+}
+
