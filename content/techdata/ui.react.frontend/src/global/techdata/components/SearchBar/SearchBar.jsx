@@ -14,7 +14,7 @@ const SearchBar = ({ componentProp }) => {
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 500);
+    const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
 
     return () => clearTimeout(timeOutId);
   }, [searchTermText]);
@@ -26,6 +26,9 @@ const SearchBar = ({ componentProp }) => {
 
         setTypeAheadSuggestions(response.data);
       }
+    }
+    else{
+      setTypeAheadSuggestions([]);
     }
   }
 
@@ -51,10 +54,6 @@ const SearchBar = ({ componentProp }) => {
 
     gotFocus();
     setSearchTermText(value);
-
-    if(value.length < 3) {
-      setTypeAheadSuggestions([]);
-    }
   }
 
   const onSearchTermTextKeyPress = (e) => {
