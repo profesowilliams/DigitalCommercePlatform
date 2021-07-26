@@ -4,7 +4,26 @@
   height: auto;
   width: 100%;
   overflow: auto;
-
+  &__header {
+    color: get-color(td-dark-blue);
+    font-family: $font-family-sans-serif;
+    z-index: 1;
+    position: absolute;
+    transform: translate(0px, -6px);
+    &__title {
+      margin-left: rem(16px);
+      font-size: $font-size-large;
+    }
+    &__expand-collapse {
+      margin-left: rem(16px);
+      font-size: $font-size-small;
+      color: get-color(td-primary-blue);
+      & span {
+        cursor: pointer;
+        margin: 0 rem(8px) 0 rem(8px);
+      }
+    }
+  }
   .ag-root-wrapper {
     border: unset;
     border-bottom: 1px solid get-color(brand-scrollbar);

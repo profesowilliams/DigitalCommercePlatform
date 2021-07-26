@@ -1,7 +1,6 @@
 import React from "react";
 
 function ProductLinesItemInformation({ line }) {
- console.log(line);
   return (
     <section>
        <div className="cmp-product-lines-grid__item-information">

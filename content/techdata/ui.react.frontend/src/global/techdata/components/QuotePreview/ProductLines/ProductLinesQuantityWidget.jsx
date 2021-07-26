@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-function ProductLinesQuantityWidget({ initialValue, onValueChanged }) {
-  const [value, setValue] = useState(initialValue);
+function ProductLinesQuantityWidget({
+  initialValue,
+  selectedValue,
+  onValueChanged,
+}) {
+  const [value, setValue] = useState(selectedValue);
   const [shouldUpdate, setShouldUpdate] = useState(false);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ function ProductLinesQuantityWidget({ initialValue, onValueChanged }) {
         {value}
         <button
           onClick={() => {
-            setValue(value + 1);
+            setValue(value < initialValue ? value + 1 : value);
             setShouldUpdate(true);
           }}
         >
@@ -25,7 +29,7 @@ function ProductLinesQuantityWidget({ initialValue, onValueChanged }) {
         </button>
         <button
           onClick={() => {
-            setValue(value - 1);
+            setValue(value > 0 ? value - 1 : value);
             setShouldUpdate(true);
           }}
         >
