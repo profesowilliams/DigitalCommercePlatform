@@ -8,6 +8,7 @@ function ProductLinesChildGrid({ data }) {
       field: "id",
       sortable: false,
       width: "80px",
+      rowClass: ({ node, data }) => "cmp-product-lines-grid__child-grid__row",
       cellRenderer: (props) => {
         return <section style={{ marginLeft: "60px" }}>{props.value}</section>;
       },
@@ -15,7 +16,7 @@ function ProductLinesChildGrid({ data }) {
     {
       field: "shortDescription",
       sortable: false,
-      setRowHeight: () => 80,
+      cellHeight: () => 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation line={props.data} />;
       },

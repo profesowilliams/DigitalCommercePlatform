@@ -35,14 +35,13 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       width: "80px",
       headerCheckboxSelection: true,
       expandable: true,
+      rowClass: ({ node, data }) => "cmp-product-lines-grid__row",
       detailRenderer: (props) => {
         return (
-          <section>
-            <div className="cmp-product-lines-grid__row--expanded">
-              <ProductLinesChildGrid
-                data={mutableGridData}
-              ></ProductLinesChildGrid>
-            </div>
+          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+            <ProductLinesChildGrid
+              data={mutableGridData}
+            ></ProductLinesChildGrid>
           </section>
         );
       },
@@ -51,7 +50,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerName: "Item Information",
       field: "shortDescription",
       sortable: false,
-      setRowHeight: () => 80,
+      cellHeight: () => 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation line={props.data} />;
       },

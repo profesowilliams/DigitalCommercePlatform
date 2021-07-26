@@ -7,7 +7,7 @@ import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
 function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowSelected, onSelectionChanged, requestInterceptor }) {
-	const componentVersion = '1.1.2';
+	const componentVersion = '1.1.3';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -50,6 +50,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			onSelectionChanged={onSelectionChanged}
 			rowSelection={'multiple'}
 			getRowHeight={getRowHeight}
+			getRowClass={getRowClass}
 			suppressRowClickSelection={true}
 		>
 			{filteredColumns.map((column) => {
@@ -253,18 +254,36 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 	}
 
 	function getRowHeight(row) {
-		const heights = [];
-		const columnKeys = Object.keys(row.data);
-		columnKeys.forEach(key => {
-			const columnDef = filteredColumns.find((el) => {
-				return el.field === key;
-			});
-			if (typeof columnDef?.setRowHeight === 'function') {
-				heights.push(columnDef.setRowHeight(row));
-			}
-		})
-		const maxHeight = Math.max(...heights);
-		return maxHeight > 0 ? maxHeight : null;
+		if(row?.data){
+			const heights = [];
+			const columnKeys = Object.keys(row.data);
+			columnKeys.forEach(key => {
+				const columnDef = filteredColumns.find((el) => {
+					return el.field === key;
+				});
+				if (typeof columnDef?.cellHeight === 'function') {
+					heights.push(columnDef.cellHeight(row));
+				}
+			})
+			const maxHeight = Math.max(...heights);
+			return maxHeight > 0 ? maxHeight : null;
+		}
+	}
+
+	function getRowClass(row) {
+		if(row?.data){
+			const classes = [];
+			const columnKeys = Object.keys(row.data);
+			columnKeys.forEach(key => {
+				const columnDef = filteredColumns.find((el) => {
+					return el.field === key;
+				});
+				if (typeof columnDef?.rowClass === 'function') {
+					classes.push(columnDef?.rowClass(row));
+				}
+			})
+			return classes.join(" ");
+		}	
 	}
 
 	useEffect(() => {

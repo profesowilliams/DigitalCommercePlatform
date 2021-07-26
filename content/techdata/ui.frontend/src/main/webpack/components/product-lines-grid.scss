@@ -26,7 +26,7 @@
   }
   .ag-root-wrapper {
     border: unset;
-    border-bottom: 1px solid get-color(brand-scrollbar);
+    border-bottom: rem(1px) solid get-color(brand-scrollbar);
   }
   .ag-root-wrapper-body {
     .ag-header-container {
@@ -35,18 +35,20 @@
         color: get-color(brand-white);
       }
     }
-    .ag-center-cols-container {
-      .ag-row {
+    .ag-cell {
+      border-top: rem(1px) solid get-color(brand-scrollbar);
+      &:first-child {
+        border: none;
+      }
+    }
+    .ag-row-group-expanded {
+      + .cmp-product-lines-grid__row {
         .ag-cell {
-          border-top: 1px solid get-color(brand-scrollbar);
-          &:first-child {
-            border: none;
-          }
+          border-top: none;
         }
       }
     }
     .ag-cell-focus {
-      border: unset !important;
     }
     .ag-row-odd,
     .ag-row-even {
