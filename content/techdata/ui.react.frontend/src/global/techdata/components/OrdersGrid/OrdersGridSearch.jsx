@@ -26,8 +26,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
     items: [
       { key: "allMethods", value: "All Order Methods" },
       { key: "web", value: "Web" },
-      { key: "edi", value: "EDI" },
-      { key: "xml", value: "XML" },
+      { key: "b2b", value: "EDI/XML" },
       { key: "PE", value: "Phone/Email" },
     ],
   };
