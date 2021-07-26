@@ -7,9 +7,8 @@ import ManuallyTyped from './ManuallyTyped';
 import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 
 const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
-	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
-	estimatedIdlistEndpoint = `${estimatedIdlistEndpoint}/v1/configurations?Details=true&PageNumber=1&PageSize=100&WithPaginationInfo=true&Type=Estimate`;
-	estimatedIdDetailsEndpoint = `${estimatedIddetailsEndpoint}/validate?id=${selected.id}&Type=Estimate`;
+	let estimatedIdListEndpoint = `${endpoints.estimatedIdListEndpoint}/v1/configurations?Details=true&PageNumber=1&PageSize=100&WithPaginationInfo=true&Type=Estimate`,
+      estimatedIdDetailsEndpoint = `${endpoints.estimatedIddetailsEndpoint}/validate?id={selected-id}&Type=Estimate`;
 
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
@@ -38,13 +37,13 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
       if( matches ){
         const { 0: match } = matches
         const split = method.manuallyTypedError.split(match);
-        result = { ...result, 
+        result = { ...result,
           msgBeforelink: split[0],
           msgAfterlink: split[1],
           linklabel: match.replace('{','').replace('}',''),
         }
       }
-      
+
     }
     return result
   }
@@ -83,7 +82,7 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 				<EstimatedIdSelectItem
 					onClick={goToNext}
 					buttonTitle='Next'
-					estimatedIdlistEndpoint={estimatedIdListEndpoint}
+					estimatedIdListEndpoint={estimatedIdListEndpoint}
 					estimatedIddetailsEndpoint={estimatedIdDetailsEndpoint}
 					label={method.dropdownPlaceholder}
 				/>
