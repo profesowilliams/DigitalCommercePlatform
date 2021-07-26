@@ -32,16 +32,11 @@ use(function () {
 
       var areaconfig = new Packages.org.json.JSONObject();
       var areaEndpoint = this[area + 'SearchEndpoint'];
-      var areaSuggestionUrl = this.serviceData[area + 'SuggestionUrl'];
 
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);
       if(areaEndpoint !== null) {
         areaconfig.put("endpoint", areaEndpoint);
-      }
-
-      if(areaSuggestionUrl !== null) {
-        areaconfig.put("areaSuggestionUrl", areaSuggestionUrl);
       }
 
       jsonArray.put(areaconfig);

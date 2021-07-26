@@ -17,9 +17,7 @@ import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 
 import javax.annotation.PostConstruct;
 
-import lombok.Getter;
 
-@Getter
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
 
@@ -84,15 +82,9 @@ public class CaConfigReader {
 
 	private String allSearchEndpoint;
 
-	private String allSuggestionUrl;
-
 	private String productSearchEndpoint;
 
-	private String productSuggestionUrl;
-
 	private String contentSearchEndpoint;
-
-	private String contentSuggestionUrl;
 
 	private String quoteSearchEndpoint;
 
@@ -171,11 +163,8 @@ public class CaConfigReader {
 		tdPartSmart = mcConfiguration.tdPartSmart();
 		analyticsSnippet = analyticsConfiguration.analyticsSnippet();
 		allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
-		allSuggestionUrl = searchBarConfiguration.allSuggestionUrl();
 		productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
-		productSuggestionUrl = searchBarConfiguration.productSuggestionUrl();
 		contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
-		contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
 		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
 		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
 		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();

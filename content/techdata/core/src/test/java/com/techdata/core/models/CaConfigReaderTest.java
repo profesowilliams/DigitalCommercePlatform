@@ -91,11 +91,8 @@ class CaConfigReaderTest {
         when(mcConfiguration.tdPartSmart()).thenReturn("tdPartSmart");
         when(analyticsConfiguration.analyticsSnippet()).thenReturn("analyticsSnippet");
         when(searchBarConfiguration.allSearchEndpoint()).thenReturn("allSearchEndpoint");
-        when(searchBarConfiguration.allSuggestionUrl()).thenReturn("allSuggestionUrl");
         when(searchBarConfiguration.productSearchEndpoint()).thenReturn("productSearchEndpoint");
-        when(searchBarConfiguration.productSuggestionUrl()).thenReturn("productSuggestionUrl");
         when(searchBarConfiguration.contentSearchEndpoint()).thenReturn("contentSearchEndpoint");
-        when(searchBarConfiguration.contentSuggestionUrl()).thenReturn("contentSuggestionUrl");
         when(searchBarConfiguration.quoteSearchEndpoint()).thenReturn("quoteSearchEndpoint");
         when(searchBarConfiguration.orderSearchEndpoint()).thenReturn("orderSearchEndpoint");
         when(searchBarConfiguration.spaSearchEndpoint()).thenReturn("spaSearchEndpoint");
@@ -143,11 +140,8 @@ class CaConfigReaderTest {
         assertEquals("tdPartSmart", underTest.getTdPartSmart());
         assertEquals("analyticsSnippet", underTest.getAnalyticsSnippet());
         assertEquals("allSearchEndpoint", underTest.getAllSearchEndpoint());
-        assertEquals("allSuggestionUrl", underTest.getAllSuggestionUrl());
         assertEquals("productSearchEndpoint", underTest.getProductSearchEndpoint());
-        assertEquals("productSuggestionUrl", underTest.getProductSuggestionUrl());
         assertEquals("contentSearchEndpoint", underTest.getContentSearchEndpoint());
-        assertEquals("contentSuggestionUrl", underTest.getContentSuggestionUrl());
         assertEquals("quoteSearchEndpoint", underTest.getQuoteSearchEndpoint());
         assertEquals("orderSearchEndpoint", underTest.getOrderSearchEndpoint());
         assertEquals("spaSearchEndpoint", underTest.getSpaSearchEndpoint());
