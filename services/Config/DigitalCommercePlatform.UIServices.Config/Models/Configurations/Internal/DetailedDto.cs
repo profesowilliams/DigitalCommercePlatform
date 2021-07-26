@@ -9,6 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
     {
         public SourceDto Source { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Published { get; set; }
@@ -23,6 +24,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public ResellerDto Reseller { get; set; }
         public EndUserDto EndUser { get; set; }
         public VendorDto Vendor { get; set; }
+        public CreatedByDto CreatedBy { get; set; }
+        public OwnerDto Owner { get; set; }
         public IEnumerable<ItemDto> Items { get; set; }
     }
 }

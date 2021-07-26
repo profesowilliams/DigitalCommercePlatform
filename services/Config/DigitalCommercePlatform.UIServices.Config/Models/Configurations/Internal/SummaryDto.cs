@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal
@@ -8,11 +9,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
     {
         public SourceDto Source { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Published { get; set; }
         public string SalesOrg { get; set; }
-        public AdditionalIdentifierDto AdditionalIdentifiers { get; set; }
+        public List<AdditionalIdentifierDto> AdditionalIdentifiers { get; set; }
         public string PriceListId { get; set; }
         public DateTime? NetPriceProtectionDate { get; set; }
         public string VendorStatus { get; set; }
@@ -22,5 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public ResellerDto Reseller { get; set; }
         public EndUserDto EndUser { get; set; }
         public VendorDto Vendor { get; set; }
+        public CreatedByDto CreatedBy { get; set; }
+        public OwnerDto Owner { get; set; }
     }
 }
