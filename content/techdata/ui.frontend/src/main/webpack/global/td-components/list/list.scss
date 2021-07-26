@@ -331,3 +331,32 @@
     }
   }
 }
+
+// Brand logos hover state
+
+.square-circle-logo {
+  svg {
+      width: rem(35px);
+      height: auto;
+      path {
+          fill: teal !important;
+          &:hover {
+              fill: initial !important;
+          }
+      }
+  }
+}
+.rectangle-logo {
+  svg {
+      width: rem(75px);
+      height: auto;
+  }
+
+  &:not(:hover) {
+      svg {
+          path {
+              fill: get-color(brand-blue) !important;
+          }
+      }
+  }
+}
