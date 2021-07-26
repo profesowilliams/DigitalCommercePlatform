@@ -25,11 +25,14 @@
     </article>
 </template>
 <template data-sly-template.article="${@ list, item}">
-    <article data-sly-use.tmpl="${'list.js' @ item=item}">
+    <article>
         <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
-            <sly data-sly-test=${tmpl.imagePath}>
+            <sly data-sly-test=${item.vendorIcon}>
                 <figure class="cmp-image__image-figure">
-                    <img class="cmp-image__image" src=${tmpl.imagePath}>
+                    <img data-sly-test="${!item.isIconSVG}" class="cmp-image__image" src=${item.vendorIcon} />
+                    <sly data-sly-test="${item.isIconSVG}" class="cmp-svg-icon">
+                        ${item.vendorIcon @ context = 'scriptComment'}
+                    </sly>
                 </figure>
             </sly>
             <span class="cmp-list__item-title">${item.title}</span>

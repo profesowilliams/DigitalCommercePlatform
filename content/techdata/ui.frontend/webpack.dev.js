@@ -972,6 +972,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/quote-preview-demo.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "new-list",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/list-new.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

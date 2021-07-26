@@ -13,7 +13,7 @@ import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.Rendition;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -21,33 +21,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Model(
-  adaptables = SlingHttpServletRequest.class,
-  defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+        adaptables = Resource.class,
+        defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
 )
 public class ExtractSVGModel {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ExtractSVGModel.class);
+  private static final Logger log = LoggerFactory.getLogger(ExtractSVGModel.class);
 
 
   private static final String FILE_REFERENCE_PN = "fileReference";
   private static final String SVG_EXTENSION = ".svg";
 
   @Self
-  private SlingHttpServletRequest request;
+  private Resource resource;
 
   private Asset asset;
 
   @PostConstruct
   protected void init() {
-    this.asset = Optional.ofNullable(this.request.getResource())
-      .map(imageResource -> imageResource.getValueMap().get(FILE_REFERENCE_PN, String.class))
-      .map(fileReference -> this.request.getResourceResolver().getResource(fileReference))
-      .map(resource -> resource.adaptTo(Asset.class))
-      .orElse(null);
+    log.info("inside init");
+
+    this.asset = Optional.ofNullable(this.resource)
+            .map(imageResource -> imageResource.getValueMap().get(FILE_REFERENCE_PN, String.class))
+            .map(fileReference -> this.resource.getResourceResolver().getResource(fileReference))
+            .map(fileResource -> fileResource.adaptTo(Asset.class))
+            .orElse(null);
+
+    log.debug("resource path is {}", resource!=null ? resource.getPath() : "is null");
+
+
+    log.debug("is asset null ? {}", this.asset == null);
   }
 
   public boolean isSvg() {
     if (Objects.nonNull(asset)) {
+      log.debug("StringUtils.contains(asset.getPath(), SVG_EXTENSION) {} {}", this.asset.getPath(), StringUtils.contains(asset.getPath(), SVG_EXTENSION));
       return StringUtils.contains(asset.getPath(), SVG_EXTENSION);
     }
     return false;
@@ -72,8 +80,12 @@ public class ExtractSVGModel {
         strBuilder.append(readLine);
       }
     } catch (IOException e) {
-      LOG.error("Unable to read the SVG's XML from InputStream: ", e);
+      log.error("Unable to read the SVG's XML from InputStream: ", e);
     }
     return strBuilder.toString();
+  }
+
+  public String getPath() {
+    return this.asset.getPath();
   }
 }

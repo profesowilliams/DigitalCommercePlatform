@@ -4,7 +4,6 @@ import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Iterator;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
 class VendorListItemTest {
