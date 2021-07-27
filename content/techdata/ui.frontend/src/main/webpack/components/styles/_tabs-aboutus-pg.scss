@@ -1,13 +1,18 @@
 // OUR PURPOSE TABS
 
 .cmp-tabs-our-purpose {
+    line-height: rem(30px);
     .cmp-tabs {
         display: flex;
         &__tablist {
             display: flex;
             flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
             width: -webkit-fill-available;
             width: 30%;
+            margin: 0;
         }
 
         &__tabpanel {
@@ -17,15 +22,23 @@
         }
 
         &__tab {
-            i, svg {
+            color: get-color(brand-blue);
+            i,
+            svg {
                 color: transparent;
             }
             &--active,
             &:hover,
             &:active {
+                font-weight: 600;
                 color: get-color(brand-light-blue) !important;
+                &::after {
+                    font-family: "Font Awesome 5 Free";
+                    content: "\f054";
+                }
 
-                i, svg {
+                i,
+                svg {
                     color: get-color(brand-light-blue) !important;
                 }
             }
