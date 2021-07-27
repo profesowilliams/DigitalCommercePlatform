@@ -1,0 +1,293 @@
+//cmp-loader animation
+.cmp-loader-roller {
+	& div {
+		animation: a-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+		transform-origin: 40px 40px;
+		&:after {
+			content: ' ';
+			display: block;
+			position: absolute;
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			background: get-color(td-primary-blue);
+			margin: -4px 0 0 -4px;
+		}
+		&:nth-child(1) {
+			animation-delay: -0.036s;
+			&:after {
+				top: 63px;
+				left: 63px;
+			}
+		}
+		&:nth-child(2) {
+			animation-delay: -0.072s;
+			&:after {
+				top: 68px;
+				left: 56px;
+			}
+		}
+		&:nth-child(3) {
+			animation-delay: -0.108s;
+			&:after {
+				top: 71px;
+				left: 48px;
+			}
+		}
+		&:nth-child(4) {
+			animation-delay: -0.144s;
+			&:after {
+				top: 72px;
+				left: 40px;
+			}
+		}
+		&:nth-child(5) {
+			animation-delay: -0.18s;
+			&:after {
+				top: 71px;
+				left: 32px;
+			}
+		}
+		&:nth-child(6) {
+			animation-delay: -0.216s;
+			&:after {
+				top: 68px;
+				left: 24px;
+			}
+		}
+		&:nth-child(7) {
+			animation-delay: -0.252s;
+			&:after {
+				top: 63px;
+				left: 17px;
+			}
+		}
+		&:nth-child(8) {
+			animation-delay: -0.288s;
+			&:after {
+				top: 56px;
+				left: 12px;
+			}
+		}
+	}
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+}
+
+@keyframes a-roller {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+// simple drop down widget style
+.cmp-simple-drop-down {
+	position: relative;
+	border: 1px solid get-color(brand-light-gray2);
+	min-width: fit-content;
+	height: rem(30px);
+	cursor: pointer;
+	&--expanded {
+		& svg,
+		i:before {
+			transform: rotate(180deg);
+		}
+	}
+	&__selection {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		color: get-color(text-mid-gray);
+		background-color: get-color(brand-white);
+		display: flex;
+		justify-content: space-between;
+		padding-left: 0.5rem;
+		min-width: fit-content;
+		width: rem(140px);
+		& svg,
+		i {
+			color: get-color(td-primary-blue);
+			margin-right: rem(5px);
+			margin-top: 0.2rem;
+			&:before {
+				display: inline-block;
+			}
+		}
+	}
+	&__list {
+		position: absolute;
+		top: 100%;
+		min-width: fit-content;
+		width: rem(140px);
+		background-color: get-color(brand-white);
+		border: 1px solid get-color(brand-light-gray2);
+		box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
+		max-height: rem(300px);
+		overflow: auto;
+		z-index: 80;
+		&__content {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			&__item {
+				:hover,
+				:focus {
+					background-color: get-color(brand-light-gray2);
+				}
+				border-bottom: 1px solid get-color(brand-light-gray2);
+				&:last-child {
+					border-bottom: none;
+				}
+				cursor: pointer;
+				&__container {
+					padding: 3px 0.5rem 3px 0.5rem;
+					color: get-color(text-mid-gray);
+				}
+			}
+		}
+	}
+}
+
+//query input style
+.cmp-query-input {
+	display: flex;
+	& .cmp-simple-drop-down {
+		border-right: none;
+	}
+	&__input {
+		color: get-color(text-mid-gray);
+		border: 1px solid get-color(brand-light-gray2);
+		min-width: rem(140px);
+		height: rem(30px);
+		&::placeholder {
+			padding-left: rem(5px);
+			font-size: $font-size-custom-xxsmall;
+			font-style: italic;
+		}
+	}
+}
+
+//base button style
+.cmp-quote-button {
+	border: rem(1px) solid get-color(td-dark-blue);
+	background-color: get-color(td-dark-blue);
+	color: get-color(brand-white);
+	font-size: rem(13px);
+	padding: rem(6px) rem(25px);
+	width: 100%;
+	transition: all 0.3s;
+	cursor: pointer;
+	&--active,
+	&:hover {
+		background-color: get-color(td-dark-blue);
+		color: get-color(brand-white);
+	}
+	&:disabled {
+		opacity: 0.7;
+		cursor: default;
+		color: get-color(brand-text-gray);
+		background-color: get-color(v-divider-gray);
+		border: rem(1px) solid get-color(brand-light-gray2);
+	}
+}
+
+//slide toggle style
+.cmp-slide-toggle {
+	$height: rem(14px);
+	$width: rem(22px);
+	$slider-diameter: rem(14px);
+	$border-width: rem(2px);
+	width: $width;
+	height: $height;
+	&--read-only {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+	&__switch {
+		position: relative;
+		display: inline-block;
+		width: $width;
+		height: $height;
+		&__input {
+			opacity: 0;
+			width: 0;
+			height: 0;
+			&:checked {
+				+ .cmp-slide-toggle__switch__slider {
+					background-color: get-color(td-primary-blue);
+					border-color: get-color(td-primary-blue);
+					&:before {
+						transform: translateX(calc(#{$width} - #{$slider-diameter}));
+						border-color: get-color(td-primary-blue);
+					}
+				}
+			}
+		}
+		&__slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: none;
+			border: #{$border-width} solid get-color(secondary-dark-grey);
+			transition: 0.4s;
+			&:before {
+				box-sizing: border-box;
+				position: absolute;
+				content: '';
+				top: calc((#{$height} - #{$slider-diameter}) / 2 - #{$border-width});
+				left: -#{$border-width};
+				height: $slider-diameter;
+				width: $slider-diameter;
+				background-color: white;
+				transition: 0.4s;
+				border: #{$border-width} solid get-color(secondary-dark-grey);
+			}
+			&--round {
+				border-radius: $height;
+				&:before {
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+}
+
+//simple date picker style
+.cmp-simple-date-picker {
+	display: flex;
+	color: get-color(text-mid-gray);
+
+	&__label {
+		margin-right: rem(8px);
+		align-self: center;
+	}
+	&__picker {
+		.react-datepicker__input-container input {
+			border: 1px solid get-color(brand-light-gray2);
+			color: get-color(text-mid-gray);
+			height: rem(30px);
+			width: rem(100px);
+			font-size: $font-size-custom-xxsmall;
+		}
+	}
+	&__icon {
+		align-self: center;
+		padding-left: rem(8px);
+		transform: scale(1.6);
+		cursor: pointer;
+		& svg,
+		i {
+			color: get-color(brand-blue);
+			margin-right: rem(5px);
+			margin-top: 0.2rem;
+		}
+	}
+}

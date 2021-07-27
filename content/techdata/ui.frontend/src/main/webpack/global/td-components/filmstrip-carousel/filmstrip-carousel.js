@@ -7,7 +7,7 @@ import $ from "../../main";
         autoplaySpeed: 4000,
         slidesToShow: 3,
         slidesToScroll: 1,
-        speed: 2000,
+        speed: 1000,
         dots: true,
         arrows: false
     });

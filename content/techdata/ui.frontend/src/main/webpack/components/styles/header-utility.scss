@@ -1,0 +1,32 @@
+.headerutility {
+    &.aem-GridColumn {
+        display: flex !important;
+        align-items: center;
+        justify-content: flex-end !important;
+        flex: 0;
+        margin-left: auto;
+        flex-wrap: nowrap;
+        @include reset-aemgrid;
+    } 
+    .signin {
+        white-space: nowrap;
+    }
+    .minicart,
+    .signin,
+    .languagenavigation {
+        padding: 0 10px;
+    }
+    .languagenavigation {
+        position: relative;
+        white-space: nowrap;
+        #regionSelectDropdown {
+            position: absolute;
+            right: 2px;
+            top: 53px;
+            z-index: 1;
+            @include tablet {
+                position: fixed;
+            }
+        }
+    }
+}

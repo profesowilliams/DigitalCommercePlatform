@@ -2,5 +2,6 @@
 // Sequence all the stylesheets 
 @import 'variables';
 @import 'base';
-@import '../components/**/*.scss';
-@import './styles/*.scss';
+@import '../../components/main.scss';
+@import '../../components/styles/*.scss';
+@import '../../site/styles/*.scss';

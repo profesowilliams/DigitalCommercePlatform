@@ -5,3 +5,17 @@
     width: auto !important;
     @content;
 }
+
+@mixin fontdef($font-primary-path, $FontType: "Regular") {
+	src: url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf"),
+		url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf");
+}
+
+@mixin font-awesome-custom-icon {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "FontAwesome";
+}

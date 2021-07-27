@@ -1,0 +1,32 @@
+.cmp-td-quote-subheader {
+  font-family: $open-sans;
+  width: 100%;
+  max-width: rem(1440px);
+  height: rem(42px);
+  display: flex;
+  justify-content: space-between;
+  box-shadow: inset 0 rem(-1px) 0 0 #000c21;
+  padding: rem(4px) rem(20px) 0;
+  box-sizing: border-box;
+  color: get-color(td-dark-blue);
+
+  &__sub-title {
+    padding: 0;
+    margin: 0;
+    font-weight: lighter;
+    font-size: $font-size-custom-midi;
+    span {
+      color: get-color(td-primary-blue);
+      font-weight: 500;;
+    }
+  }
+
+  &__date {
+    font-size: $font-size-xsmall;
+    font-weight: lighter;
+
+    svg {
+      margin-left: rem(32px);
+    }
+  }
+}
