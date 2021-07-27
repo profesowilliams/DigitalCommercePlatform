@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models
@@ -32,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string RebateValue { get; set; }
         public string URLProductImage { get; set; }
         public string URLProductSpecs { get; set; }
+        public List<Line> Children { get; set; }
 
     }
 }

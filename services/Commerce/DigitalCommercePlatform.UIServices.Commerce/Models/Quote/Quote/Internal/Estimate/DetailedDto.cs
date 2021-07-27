@@ -14,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public DateTime? Published { get; set; }
         public string SalesOrg { get; set; }
         public List<ItemDto> Items { get; set; }
-        public AdditionalIdentifierDto AdditionalIdentifiers { get; set; }
+        public List<AdditionalIdentifierDto> AdditionalIdentifiers { get; set; }
         public string PriceListId { get; set; }
         public DateTime? NetPriceProtectionDate { get; set; }
         public string VendorStatus { get; set; }

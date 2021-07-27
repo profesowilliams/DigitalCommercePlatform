@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate
@@ -32,8 +33,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string[] SerialNumbers { get; set; }
         public string Instance { get; set; }
         public string Magickey { get; set; }
-        public DiscountDto Discounts { get; set; }
+        public List<DiscountDto> Discounts { get; set; }
         public ContractDto Contract { get; set; }
+
     }
     public class DiscountDto
     {

@@ -25,6 +25,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<ISubstringService, SubstringService>();
+            services.AddScoped<IQuoteItemChildrenService, QuoteItemChildrenService>();
             services.AddTransient<ICommerceService, CommerceService>();
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IOrderService, OrderService>();

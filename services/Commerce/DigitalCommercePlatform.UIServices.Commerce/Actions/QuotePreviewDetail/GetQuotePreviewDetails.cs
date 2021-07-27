@@ -45,19 +45,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
             private readonly ICommerceService _quoteService;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
+            private readonly IQuoteItemChildrenService _quoteItemChildrenService;
 
-            public Handler(ICommerceService quoteService, IMapper mapper, ILogger<Handler> logger)
+            public Handler(ICommerceService quoteService, IMapper mapper, ILogger<Handler> logger, IQuoteItemChildrenService quoteItemChildrenService)
             {
-                _quoteService = quoteService;
-                _mapper = mapper;
-                _logger = logger;
+                _quoteService = quoteService ?? throw new ArgumentNullException(nameof(quoteService));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+                _quoteItemChildrenService = quoteItemChildrenService ?? throw new ArgumentNullException(nameof(quoteItemChildrenService));
             }
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var quoteDetailsModel = await _quoteService.QuotePreview(request);
-                    // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
-                    var response = new Response(quoteDetailsModel);
-                    return new ResponseBase<Response> { Content = response };
+                var quoteDetailsModel = await _quoteService.QuotePreview(request);
+                if (quoteDetailsModel?.QuoteDetails != null)
+                {
+                    quoteDetailsModel.QuoteDetails.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(quoteDetailsModel);
+                }
+                // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
+                var response = new Response(quoteDetailsModel);
+                return new ResponseBase<Response> { Content = response };
             }
         }
 
