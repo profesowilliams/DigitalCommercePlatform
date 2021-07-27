@@ -33,3 +33,23 @@
         line-height: 16px;
     }
 }
+
+.cmp-qp__subtotal {
+    text-align: right;
+    padding-right: 20px;
+    &>p {
+        color: $brand-blue;
+        font-size: 20px;
+        font-family: inherit;
+        line-height: 27px;
+        text-align: right;
+        margin-bottom: 0;
+        &>span {
+            color: $brand-blue;
+            font-family: inherit;
+            font-size: 24px;
+            letter-spacing: 0;
+            line-height: 33px;
+        }
+    }
+}
