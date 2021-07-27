@@ -36,12 +36,10 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerCheckboxSelection: true,
       expandable: true,
       rowClass: ({ node, data }) => "cmp-product-lines-grid__row",
-      detailRenderer: (props) => {
+      detailRenderer: ({ data }) => {
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
-            <ProductLinesChildGrid
-              data={mutableGridData}
-            ></ProductLinesChildGrid>
+            <ProductLinesChildGrid data={data.children}></ProductLinesChildGrid>
           </section>
         );
       },
@@ -64,7 +62,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerName: "Quantity",
       field: "quantity",
       sortable: false,
-      cellRenderer: ({ rowIndex, api, setValue }) => {
+      cellRenderer: ({ rowIndex, node, api, setValue }) => {
         return (
           <ProductLinesQuantityWidget
             initialValue={gridData[rowIndex]?.quantity}
@@ -76,6 +74,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
                 columns: ["extendedPriceFormatted"],
                 force: true,
               });
+              node.selected && onSelectionChanged({ api });
             }}
           ></ProductLinesQuantityWidget>
         );
@@ -86,8 +85,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       field: "extendedPriceFormatted",
       onDetailsShown: (row) => {},
       onDetailsHidden: (row) => {},
-      valueFormatter: ({ api, data, node }) => {
-        isDataMutated && node.selected && onSelectionChanged({ api });
+      valueFormatter: ({ data }) => {
         return data.unitPrice * data.quantity;
       },
       sortable: false,

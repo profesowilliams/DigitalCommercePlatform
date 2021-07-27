@@ -52,6 +52,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			getRowHeight={getRowHeight}
 			getRowClass={getRowClass}
 			suppressRowClickSelection={true}
+			suppressPropertyNamesCheck= {true}
 		>
 			{filteredColumns.map((column) => {
 				return (

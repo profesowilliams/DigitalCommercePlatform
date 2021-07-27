@@ -24,6 +24,12 @@
       }
     }
   }
+  .ag-layout-auto-height .ag-center-cols-clipper,
+  .ag-layout-auto-height .ag-center-cols-container,
+  .ag-layout-print .ag-center-cols-clipper,
+  .ag-layout-print .ag-center-cols-container {
+    min-height: rem(0px);
+  }
   .ag-root-wrapper {
     border: unset;
     border-bottom: rem(1px) solid get-color(brand-scrollbar);
