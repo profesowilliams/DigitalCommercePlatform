@@ -13,25 +13,25 @@ using System.Net;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHandling
 {
-
     [ExcludeFromCodeCoverage]
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<HttpGlobalExceptionFilter> _logger;
-        private readonly IUIContext _uiContext;
+        private readonly IServiceProvider _serviceProvider;
 
-        public HttpGlobalExceptionFilter(IUIContext uiContext, ILogger<HttpGlobalExceptionFilter> logger)
+        public HttpGlobalExceptionFilter(IServiceProvider serviceProvider, ILogger<HttpGlobalExceptionFilter> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _uiContext = uiContext;
+            _serviceProvider = serviceProvider;
         }
 
         public void OnException(ExceptionContext context)
         {
+            var uiContext = _serviceProvider.GetService(typeof(IUIContext)) as IUIContext;
             if (context.Exception is ValidationException validationException)
             {
                 _logger.LogError(context.Exception, "Validation Exception at: " + nameof(HttpGlobalExceptionFilter));
-                var messages = validationException.Errors.Select(e => "UserId : " + _uiContext.User.ID + " for TraceId : " + _uiContext.TraceId + " " + e.ErrorMessage).ToList();
+                var messages = validationException.Errors.Select(e => "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " " + e.ErrorMessage).ToList();
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
                     Error = new ErrorInformation { IsError = true, Messages = messages, Code = 400 }
@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHand
                 _logger.LogError(remoteServerException.Message, "UI Service Exception at: " + nameof(HttpGlobalExceptionFilter));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + _uiContext.User.ID + " for TraceId : " + _uiContext.TraceId + " " + remoteServerException.Message }, Code = (int)remoteServerException.Code }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " " + remoteServerException.Message }, Code = (int)remoteServerException.Code }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHand
                 _logger.LogError(context.Exception, "UI Service Exception at: " + nameof(HttpGlobalExceptionFilter));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + _uiContext.User.ID + " for TraceId : " + _uiContext.TraceId + " " + uiServiceException.Message }, Code = uiServiceException.ErrorCode }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " " + uiServiceException.Message }, Code = uiServiceException.ErrorCode }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.ExceptionHand
 
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + _uiContext.User.ID + " for TraceId : " + _uiContext.TraceId + " Something went wrong" }, Code = 500 }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
