@@ -748,8 +748,6 @@ $teaser-headings-mobile: (
   flex-direction: row;
   padding: rem(32px);
   &__card {
-    width: rem(300px);
-    height: rem(475px);
     box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
     background-color: get-color(brand-white);
     display: flex;
@@ -768,7 +766,8 @@ $teaser-headings-mobile: (
 
     img {
       width: 100%;
-      height: rem(155px);
+      height: auto;
+      object-fit: cover;
     }
 
     &--title {
@@ -786,7 +785,7 @@ $teaser-headings-mobile: (
       padding: rem(25px);
       font-size: $font-size-custom-xxsmall;
       color: get-color(brand-text-gray);
-      height: rem(275px);
+      min-height: rem(390px);
       &-title {
         font-size: $font-size-medium;
         font-weight: bold;
