@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export default function Acoordion(el) {
     this.el = el;
     // console.log(el);
