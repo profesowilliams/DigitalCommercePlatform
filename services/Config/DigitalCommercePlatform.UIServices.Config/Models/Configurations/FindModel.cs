@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
 {
     [ExcludeFromCodeCoverage]
-    public class FindModel
+    public class FindModel : Paginated
     {
         public string Id { get; set; }
         public bool Details { get; set; }
@@ -18,8 +18,5 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string EndUser { get; set; }
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public bool WithPaginationInfo { get; set; }
     }
 }

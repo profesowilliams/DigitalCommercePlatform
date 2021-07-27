@@ -7,7 +7,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,14 +21,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             public FindModel Criteria { get; set; }
         }
 
-        public class Response
+        public class Response : PaginatedResponse<Configuration>
         {
-            public long? TotalItems { get; set; }
-            public long? PageCount { get; set; }
-            public int? PageNumber { get; set; }
-            public int? PageSize { get; set; }
-            public IEnumerable<Configuration> Items { get; set; }
-
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
@@ -46,12 +39,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
                     var configurations = await _configService.FindConfigurations(request).ConfigureAwait(false);
                     var getRecentConfigurationContent = new Response
                     {
-                        Items = configurations,
-                        TotalItems = configurations?.Count,
+                        TotalItems = configurations.Count,
                         PageNumber = request.Criteria.PageNumber,
                         PageSize = request.Criteria.PageSize,
-                        PageCount = (configurations?.Count + request.Criteria.PageSize - 1) / request.Criteria.PageSize
-
+                        Items = configurations,
                     };
                     return new ResponseBase<Response> { Content = getRecentConfigurationContent };
                 }

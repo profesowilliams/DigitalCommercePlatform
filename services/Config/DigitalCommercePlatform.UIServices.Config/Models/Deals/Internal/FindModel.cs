@@ -8,7 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal
     public class FindModel
     {
         public string SortBy { get; set; }
-        public SortDirection SortDirection { get; set; }
+        public bool SortByAscending { get; set; }
         public string DealId { get; set; }
         public string VendorBid { get; set; }
         public string VendorName { get; set; }

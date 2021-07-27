@@ -48,6 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private Models.Deals.Internal.FindModel PrepareDealsFindAppServiceRequest(GetDeals.Request request)
         {
             var result = _mapper.Map<Models.Deals.Internal.FindModel>(request.Criteria);
+            result.WithPaginationInfo = true;
             return result;
         }
 
@@ -189,6 +190,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private Models.Configurations.Internal.FindModel PrepareConfigurationsAppServiceRequest(GetConfigurations.Request request)
         {
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
+            result.WithPaginationInfo = true;
             return result;
         }
 

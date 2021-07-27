@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations.Resolvers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using System;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Resolvers
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Configurations.Resolvers
 {
     public class SortByResolverTests
     {
@@ -24,9 +25,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
 
         [Theory]
         [AutoDomainData]
-        public void ShouldReturTrue(Models.Configurations.FindModel source)
+        public void ShouldReturnTrue(Models.Configurations.FindModel source)
         {
-            source.SortDirection = Models.Common.SortDirection.asc;
+            source.SortDirection = SortDirection.asc;
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(source);
 
             result.SortByAscending.Should().BeTrue();
@@ -40,13 +41,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
         [InlineData("x")]
         [InlineData("12")]
         [InlineData("desc")]
-        public void ShouldReturFalse(string s)
+        public void ShouldReturnFalse(string s)
         {
             Enum.TryParse(s, out SortDirection parsingResult);
             _source.SortDirection = parsingResult;
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(_source);
 
             result.SortByAscending.Should().BeFalse();
+        }
+
+        [Fact]
+        public void NullSourceShouldReturnFalse()
+        {
+            var result = new SortByResolver().Resolve(null, new Models.Configurations.Internal.FindModel(), false, null);
+
+            result.Should().BeFalse();
         }
     }
 }
