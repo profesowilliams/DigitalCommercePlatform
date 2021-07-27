@@ -82,9 +82,15 @@ public class CaConfigReader {
 
 	private String allSearchEndpoint;
 
+	private String allSuggestionUrl;
+
 	private String productSearchEndpoint;
 
+	private String productSuggestionUrl;
+
 	private String contentSearchEndpoint;
+
+	private String contentSuggestionUrl;
 
 	private String quoteSearchEndpoint;
 
@@ -163,8 +169,11 @@ public class CaConfigReader {
 		tdPartSmart = mcConfiguration.tdPartSmart();
 		analyticsSnippet = analyticsConfiguration.analyticsSnippet();
 		allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
+		allSuggestionUrl = searchBarConfiguration.allSuggestionUrl();
 		productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
+		productSuggestionUrl = searchBarConfiguration.productSuggestionUrl();
 		contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
+		contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
 		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
 		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
 		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
@@ -303,12 +312,24 @@ public class CaConfigReader {
 		return allSearchEndpoint;
 	}
 
+	public String getAllSuggestionUrl() {
+		return allSuggestionUrl;
+	}
+
 	public String getProductSearchEndpoint() {
 		return productSearchEndpoint;
 	}
 
+	public String getProductSuggestionUrl() {
+		return productSuggestionUrl;
+	}
+
 	public String getContentSearchEndpoint() {
 		return contentSearchEndpoint;
+	}
+
+	public String getContentSuggestionUrl() {
+		return contentSuggestionUrl;
 	}
 
 	public String getQuoteSearchEndpoint() {

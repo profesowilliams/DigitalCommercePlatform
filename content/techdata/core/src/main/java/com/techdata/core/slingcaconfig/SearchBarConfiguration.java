@@ -8,49 +8,58 @@ import org.apache.sling.caconfig.annotation.Property;
     description = "Global Serach Configuration can be made per website")
 public @interface SearchBarConfiguration {
 
-    @Property(label = "All Search", description = "All Search", order = 1)
+    @Property(label = "All Search", description = "All Search")
     String allSearchEndpoint();
 
-    @Property(label = "Products Search", description = "Products Search", order = 2)
+    @Property(label = "All Suggestion Url", description = "All Suggestion Url")
+    String allSuggestionUrl();
+
+    @Property(label = "Products Search", description = "Products Search")
     String productSearchEndpoint();
 
-    @Property(label = "Content Search", description = "Content Search", order = 3)
+    @Property(label = "Products Suggestion Url", description = "Products Suggestion Url")
+    String productSuggestionUrl();
+
+    @Property(label = "Content Search", description = "Content Search")
     String contentSearchEndpoint();
 
-    @Property(label = "Quotes Search", description = "Quotes Search", order = 4)
+    @Property(label = "Content Suggestion Url", description = "Content Suggestion Url")
+    String contentSuggestionUrl();
+
+    @Property(label = "Quotes Search", description = "Quotes Search")
     String quoteSearchEndpoint();
 
-    @Property(label = "Orders Search", description = "Orders Search", order = 5)
+    @Property(label = "Orders Search", description = "Orders Search")
     String orderSearchEndpoint();
 
-    @Property(label = "SPA Search", description = "SPA Search", order = 6)
+    @Property(label = "SPA Search", description = "SPA Search")
     String spaSearchEndpoint();
 
-    @Property(label = "Typeahead Domain", description = "Typeahead Domain", order = 7)
+    @Property(label = "Typeahead Domain", description = "Typeahead Domain")
     String typeAheadDomain();
 
-    @Property(label = "Typeahead Endpoint", description = "Typeahead Endpoint", order = 8)
+    @Property(label = "Typeahead Endpoint", description = "Typeahead Endpoint")
     String typeAheadEndpoint();
 
-    @Property(label = "Typeahead Keyword Parameter", description = "Typeahead Keyword Parameter", order = 9)
+    @Property(label = "Typeahead Keyword Parameter", description = "Typeahead Keyword Parameter")
     String typeAheadKeyword();
 
-    @Property(label = "Search Domain", description = "Search Domain", order = 10)
+    @Property(label = "Search Domain", description = "Search Domain")
     String searchDomain();
 
-    @Property(label = "Legacy Search Endpoint", description = "Legacy Search Endpoint", order = 11)
+    @Property(label = "Legacy Search Endpoint", description = "Legacy Search Endpoint")
     String legacySearchEndpoint();
 
-    @Property(label = "Search Keyword Parameter", description = "Search Keyword Parameter", order = 12)
+    @Property(label = "Search Keyword Parameter", description = "Search Keyword Parameter")
     String searchKeywordParameter();
 
-    @Property(label = "Search Refinements Parameter", description = "Search Refinements Parameter", order = 13)
+    @Property(label = "Search Refinements Parameter", description = "Search Refinements Parameter")
     String searchRefinementsParameter();
 
-    @Property(label = "Search b Parameter", description = "Search b Parameter", order = 14)
+    @Property(label = "Search b Parameter", description = "Search b Parameter")
     String searchBParameter();
 
-    @Property(label = "Content Search Tab", description = "Content Search Tab", order = 15)
+    @Property(label = "Content Search Tab", description = "Content Search Tab")
     String contentSearchTab();
 
 

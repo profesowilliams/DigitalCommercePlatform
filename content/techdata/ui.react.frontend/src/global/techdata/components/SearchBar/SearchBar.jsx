@@ -22,7 +22,7 @@ const SearchBar = ({ componentProp }) => {
   const loadSuggestions = async (searchTerm) => {
     if(searchTermText.length >= 3) {
       if (['all', 'product', 'content'].includes(selectedArea.area)) {
-        const response = await axios.get(`http://localhost:3000/typeahead?keyword=${searchTerm}&searchApplication=shop`);
+        const response = await axios.get(typeAheadDomain.replace('{search-term}', searchTerm));
 
         setTypeAheadSuggestions(response.data);
       }
@@ -39,9 +39,10 @@ const SearchBar = ({ componentProp }) => {
   }
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
-    let path = '/searchall?kw={search-term}&pks=1&pksi={suggestion-index}'
+    let path = selectedArea.areaSuggestionUrl
                     .replace('{search-term}', searchTerm)
                     .replace('{suggestion-index}', itemIndex + 1);
+
     if (refinementId) {
       path += `&refinements=${refinementId}`;
     }
