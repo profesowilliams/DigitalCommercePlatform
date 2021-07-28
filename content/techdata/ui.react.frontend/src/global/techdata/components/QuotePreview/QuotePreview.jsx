@@ -9,6 +9,7 @@ import ConfigGrid from "./ConfigGrid/ConfigGrid";
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
   const apiResponse = useGet(componentProp.uiServiceEndPoint);
+  const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
 
   const getSubTotal = (data) => {
@@ -22,7 +23,7 @@ function QuotePreview(props) {
     <div className="cmp-quote-preview">
       {apiResponse && (
         <section>
-          <ConfigGrid />
+          <ConfigGrid gridProps={componentProp}/>
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />
           </div>
@@ -32,7 +33,11 @@ function QuotePreview(props) {
               data={apiResponse}
               onQuoteLinesUpdated={getSubTotal}
             ></QuotePreviewGrid>
-            <QuotePreviewSubTotal subTotal={subTotal}/>
+            <QuotePreviewSubTotal 
+              currencySymbol={currencySymbol} 
+              subTotal={subTotal}
+              subtotalLabel={componentProp.subtotalLabel}
+            />
           </div>
           <QuotePreviewContinue gridProps={componentProp}/>
         </section>

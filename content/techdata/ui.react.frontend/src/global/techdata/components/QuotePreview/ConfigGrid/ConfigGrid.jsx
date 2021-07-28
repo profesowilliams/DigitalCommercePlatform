@@ -1,12 +1,14 @@
 import React from 'react';
 import CompanyInfo from './CompanyInfo';
 
-function ConfigGrid() {
+function ConfigGrid({gridProps}) {
+    const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
+
     return (
         <div className="cmp-qp__config-grid">
-            <p className="cmp-qp__config-grid--title">Quote Preview: <span>Confirm Details to Quote</span></p>
+            <p className="cmp-qp__config-grid--title">{quotePreview}: <span>{confirm}</span></p>
             <div className="info-container">
-                <CompanyInfo />
+                <CompanyInfo info={gridProps.information}/>
             </div>
             {/* <EndUserInfo />
                 <GeneralInfo />

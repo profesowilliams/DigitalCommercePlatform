@@ -1,9 +1,13 @@
 import React from 'react';
 
-function QuotePreviewSubTotal({subTotal}) {
+function QuotePreviewSubTotal({
+    currencySymbol, 
+    subTotal, 
+    subtotalLabel
+}) {
     return (
         <div className="cmp-qp__subtotal">
-            <p>Subtotal of items selected for quote: <span>${subTotal || 0}</span></p>
+            <p>{subtotalLabel}: <span>{currencySymbol}{subTotal || 0}</span></p>
         </div>
     )
 }
