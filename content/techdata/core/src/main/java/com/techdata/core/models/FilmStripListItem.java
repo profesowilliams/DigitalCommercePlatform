@@ -80,6 +80,9 @@ public class FilmStripListItem implements ListItem {
                 case PN_BIO:
                     bio = ce.getContent();
                     break;
+                default:
+                    log.warn("Unexpected tag element {}", tagElement);
+                    break;
             }
         }
         return new FilmStripListItem(imagePath, name, position, profilePath, bio);

@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var utils = require('./utils');
 var mockResponses = require('./responses');
+var mockVendors = require('./vendors');
 
 function checkCreds(user, pass) {
     return (
@@ -1043,6 +1044,12 @@ app.get("/catalog", (req, res) => {
     // res.json(mockResponses.shortResponse());
 
 })
+
+app.get("/vendors", (req, res) => {
+    console.log(req);
+    res.json(mockVendors.vendorsJsonData());
+})
+
 //---VENDOR CONNECTIONS MOCK API---//
 app.get("/ui-account/v1/getVendorConnections", function (req, res) {
     const response = {

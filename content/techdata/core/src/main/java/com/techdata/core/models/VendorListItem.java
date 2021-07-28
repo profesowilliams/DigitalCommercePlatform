@@ -12,6 +12,8 @@ import org.apache.sling.api.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.techdata.core.util.Constants.*;
+
 public class VendorListItem implements ListItem {
 
     private static final Logger log = LoggerFactory.getLogger(VendorListItem.class);
@@ -120,27 +122,34 @@ public class VendorListItem implements ListItem {
         for (Iterator<ContentElement> it = cf.getElements(); it.hasNext(); ) {
             ContentElement ce = it.next();
             String tagElement = ce.getName();
-            if(tagElement.equals("vendor-name")){
-                title = ce.getContent();
-            }else if(tagElement.equals("overview")){
-                overview = ce.getContent();
-            }else if(tagElement.equals("vendor-icon")){
-
-                vendorIcon = ce.getContent();
-            }else if (tagElement.equals("vendor-page-link")){
-                pageLink = ce.getContent();
-            }
-            else if (tagElement.equals("vendor-page-label")){
-                vendorPageLabel = ce.getContent();
-            }
-            else if (tagElement.equals("vendor-product-label")){
-                vendorProductLabel = ce.getContent();
-            }
-            else if (tagElement.equals("vendor-product-link")){
-                vendorProductLink = ce.getContent();
-            }
-            else if (tagElement.equals("vendor-category")){
-                tags = prepareTags(ce, resource);
+            switch (tagElement) {
+                case VENDOR_NAME:
+                    title = ce.getContent();
+                    break;
+                case OVERVIEW:
+                    overview = ce.getContent();
+                    break;
+                case VENDOR_ICON:
+                    vendorIcon = ce.getContent();
+                    break;
+                case VENDOR_PAGE_LINK:
+                    pageLink = ce.getContent();
+                    break;
+                case VENDOR_PAGE_LABEL:
+                    vendorPageLabel = ce.getContent();
+                    break;
+                case VENDOR_PRODUCT_LABEL:
+                    vendorProductLabel = ce.getContent();
+                    break;
+                case VENDOR_PRODUCT_LINK:
+                    vendorProductLink = ce.getContent();
+                    break;
+                case VENDOR_CATEGORY:
+                    tags = prepareTags(ce, resource);
+                    break;
+                default:
+                    log.warn("Invalid vendor key.");
+                    break;
             }
         }
         VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
@@ -154,11 +163,13 @@ public class VendorListItem implements ListItem {
         String[] vendorCategoryTags = vTags.split("\\r?\\n");
         log.debug(" Vendor category Tags {}", vTags);
         TagManager tagManager = resource.getResourceResolver().adaptTo(TagManager.class);
-        for(int i = 0; i < vendorCategoryTags.length; i++){
-            log.debug(" Inside for loop {}", vendorCategoryTags[i]);
-            String tag = tagManager.resolve(vendorCategoryTags[i]).getTitle();
+        for (String vendorCategoryTag : vendorCategoryTags) {
+            log.debug(" Inside for loop {}", vendorCategoryTag);
+            String tag = tagManager.resolve(vendorCategoryTag).getTitle();
             log.debug(" Vendor category Tag Name {}", tag);
-            if(tag != null){tags.add(tag);}
+            if (tag != null) {
+                tags.add(tag);
+            }
         }
         return tags;
     }
