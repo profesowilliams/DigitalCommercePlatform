@@ -57,6 +57,9 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerName: "MSRP/Unit List Price",
       field: "unitListPriceFormatted",
       sortable: false,
+      valueFormatter: ({ value }) => {
+        return "$" + value;
+      },
     },
     {
       headerName: "Quantity",
@@ -86,7 +89,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       onDetailsShown: (row) => {},
       onDetailsHidden: (row) => {},
       valueFormatter: ({ data }) => {
-        return data.unitPrice * data.quantity;
+        return "$" + data.unitPrice * data.quantity;
       },
       sortable: false,
     },
