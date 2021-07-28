@@ -1,5 +1,5 @@
-﻿using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalFoundation.Common.Cache.UI;
 using FluentValidation;
 using MediatR;
 using System;
@@ -26,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
         public class RequestValidator : AbstractValidator<Request>
         {
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
-
             public RequestValidator(ISessionIdBasedCacheProvider sessionIdBasedCacheProvider)
             {
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider ?? throw new ArgumentNullException(nameof(sessionIdBasedCacheProvider));

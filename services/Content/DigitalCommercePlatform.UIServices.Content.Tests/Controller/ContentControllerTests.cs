@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Content.Actions;
+using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
@@ -6,7 +7,6 @@ using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -90,7 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.TypeAheadSearch("12", 123, "ProductType").ConfigureAwait(false);
+            var result = await controller.TypeAheadSearch("12", 123,"ProductType").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -126,14 +126,13 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
 
             result.Should().NotBeNull();
         }
-
         [Fact]
         public async Task CreateCartByQuoteValidation()
         {
             // Arrange
             var validator = new GetCreateCartByQuote.Validator();
             string QuoteId = "1234";
-            var cmd = new GetCreateCartByQuote.Request(QuoteId);
+           var cmd = new GetCreateCartByQuote.Request(QuoteId);
             // Act
             var validationResult = await validator.ValidateAsync(cmd);
             // Assert

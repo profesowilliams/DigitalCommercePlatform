@@ -27,16 +27,12 @@
   <ItemGroup>
     <Compile Remove="Actions\Browse\**" />
     <Compile Remove="Actions\GetMenuDetails\**" />
-    <Compile Remove="Infrastructure\Logging\**" />
     <Content Remove="Actions\Browse\**" />
     <Content Remove="Actions\GetMenuDetails\**" />
-    <Content Remove="Infrastructure\Logging\**" />
     <EmbeddedResource Remove="Actions\Browse\**" />
     <EmbeddedResource Remove="Actions\GetMenuDetails\**" />
-    <EmbeddedResource Remove="Infrastructure\Logging\**" />
     <None Remove="Actions\Browse\**" />
     <None Remove="Actions\GetMenuDetails\**" />
-    <None Remove="Infrastructure\Logging\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +59,7 @@
 
   <ItemGroup>
     <Folder Include="Connected Services\" />
+    <Folder Include="Infrastructure\Logging\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,9 +67,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.1.58" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.58" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.58" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.1.51" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.51" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.51" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />

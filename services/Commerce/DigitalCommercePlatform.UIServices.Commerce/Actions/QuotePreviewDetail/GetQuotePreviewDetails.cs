@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -18,11 +18,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
-            public bool Details { get; set; } = true;
+            public bool Details { get; set; }= true;
             public bool IsEstimateId { get; set; }
             public string Vendor { get; set; }
 
-            public Request(string id, bool isEstimateId, string vendor)
+            public Request(string id,bool isEstimateId,string vendor)
             {
                 Id = id;
                 IsEstimateId = isEstimateId;
@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
         public class Response
         {
             public QuotePreviewModel QuotePreview { get; private set; }
-
+            
             public Response(QuotePreviewModel quotePreview)
             {
                 QuotePreview = quotePreview;
@@ -54,7 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
                 _logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 _quoteItemChildrenService = quoteItemChildrenService ?? throw new ArgumentNullException(nameof(quoteItemChildrenService));
             }
-
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var quoteDetailsModel = await _quoteService.QuotePreview(request);
@@ -76,4 +75,5 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
             }
         }
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
@@ -6,7 +7,6 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;

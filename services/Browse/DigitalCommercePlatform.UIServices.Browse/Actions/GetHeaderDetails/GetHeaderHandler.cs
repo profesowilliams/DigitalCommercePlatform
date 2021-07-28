@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;

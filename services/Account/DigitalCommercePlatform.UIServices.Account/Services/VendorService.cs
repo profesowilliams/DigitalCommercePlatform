@@ -2,10 +2,10 @@
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
 
-        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell", "vendor.test" };
+        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell" , "vendor.test" };
 
         public VendorService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
             ILogger<AccountService> logger, IUIContext uiContext)
@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _logger = logger;
             _coreSecurityUrl = appSettings.GetSetting(Globals.CoreSecurityUrl);
         }
-
+        
         public static string[] GetAllowedVendorValues()
         {
             return _allowedVendorValues;
@@ -68,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
             }
+
         }
 
         public Task<List<VendorConnection>> GetVendorConnectionsAsync()

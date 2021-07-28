@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -34,7 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
             private readonly IRenewalsSummaryService _renewalsSummaryService;
             private readonly IMapper _mapper;
             private readonly ILogger<RenewalsSummaryQueryHandler> _logger;
-
             public RenewalsSummaryQueryHandler(IAccountService accountService, IRenewalsSummaryService renewalsSummaryService,
                 IMapper mapper,
                 ILogger<RenewalsSummaryQueryHandler> logger
@@ -48,13 +47,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var renewalsExpirationDates = await _accountService.GetRenewalsExpirationDatesAsync(request.CustomerNumber, request.SalesOrganization, request.Days);
+                var renewalsExpirationDates = await _accountService.GetRenewalsExpirationDatesAsync(request.CustomerNumber,request.SalesOrganization,request.Days);
                 var summaryItems = _renewalsSummaryService.GetSummaryItemsFrom(renewalsExpirationDates);
                 var response = _mapper.Map<Response>(summaryItems);
                 return new ResponseBase<Response> { Content = response };
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

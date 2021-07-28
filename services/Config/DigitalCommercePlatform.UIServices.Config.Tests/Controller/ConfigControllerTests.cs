@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+﻿using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -7,7 +8,6 @@ using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -152,7 +152,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task EstimationValidate(ResponseBase<EstimationValidate.Response> expected, FindModel model)
+        public async Task EstimationValidate(ResponseBase<EstimationValidate.Response> expected,FindModel model)
         {
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<EstimationValidate.Request>(),
@@ -164,6 +164,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             result.Should().NotBeNull();
         }
+
 
         [Theory]
         [AutoDomainData]

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using MediatR;
@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
             private readonly IUIContext _context;
             private readonly ILogger<AuthenticateUserQueryHandler> _logger;
 
-            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper,
+            public AuthenticateUserQueryHandler(ISecurityService securityService, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider, IMapper mapper, 
                                                     IUIContext context, ILogger<AuthenticateUserQueryHandler> logger)
             {
                 _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
@@ -92,7 +92,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                     };
                 }
 
-                _context.SetAccessToken(tokenResponse.AccessToken);
+                _context.SetAccessToken(tokenResponse.AccessToken); 
 
                 var userResponse = await _securityService.GetUser(request.ApplicationName);
 
@@ -106,7 +106,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                         {
                             IsError = true,
                             Messages = new List<string> { "Something went wrong" },
-                            Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111
+                            Code = userResponse.Exception is RemoteServerHttpException remoteUserException ? (int)remoteUserException.Code : 11111 
                             // we should agree about code and message
                         }
                     };
@@ -119,6 +119,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 if (roles.ToList().Count > 0 && userResponse.User.ID.Equals("516514"))
                     roles.ToList().Add("hasDCPAccess");
+
                 else
                     roles = userResponse.User.ID.Equals("516514") ? new List<string> { "hasDCPAccess" } : new List<string>();
 

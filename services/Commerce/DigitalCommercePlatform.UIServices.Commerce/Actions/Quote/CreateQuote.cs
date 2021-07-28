@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
+using DigitalFoundation.Common.Client;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -38,10 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(
-                ICommerceService quoteService,
-                IMapper mapper,
-                ILogger<Handler> logger)
+            public Handler(ICommerceService quoteService, IMapper mapper, IMiddleTierHttpClient httpClient, ILogger<Handler> logger)
             {
                 _quoteService = quoteService;
                 _mapper = mapper;

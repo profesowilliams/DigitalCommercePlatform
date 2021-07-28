@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;

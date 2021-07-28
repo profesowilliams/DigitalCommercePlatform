@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,19 +28,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            public Handler(
-                IMapper mapper,
-                ILoggerFactory loggerFactory,
-                IConfigService configService,
-                IHttpClientFactory httpClientFactory)
-                : base(loggerFactory, httpClientFactory)
+            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
+                : base(mapper, logger, configService)
             {
-                _mapper = mapper;
-                _configService = configService;
             }
-
-            protected readonly IMapper _mapper;
-            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
@@ -59,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Exception at getting recent Deals for grid : " + nameof(GetDeals));
+                    _logger.LogError(ex, "Exception at getting recent Deals for grid : " + nameof(GetDeals));
                     throw;
                 }
             }
@@ -79,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 {
                     RuleFor(x => x.Pricing).IsInEnum();
                 });
+
             }
         }
     }

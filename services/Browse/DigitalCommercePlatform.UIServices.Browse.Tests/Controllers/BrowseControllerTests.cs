@@ -1,3 +1,4 @@
+using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
@@ -8,7 +9,6 @@ using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -64,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var result = await controller.GetCartDetails(true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
-        }
+        }    
 
         [Theory]
         [AutoDomainData]
@@ -172,7 +172,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             result.Should().NotBeNull();
         }
-
         [Theory]
         [AutoDomainData]
         public async Task GetProductCatalogService(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalog model)
@@ -181,7 +180,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<GetProductCatalogHandler.Request>(),
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
-
+           
             var controller = GetController();
             var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
             result.Should().NotBeNull();

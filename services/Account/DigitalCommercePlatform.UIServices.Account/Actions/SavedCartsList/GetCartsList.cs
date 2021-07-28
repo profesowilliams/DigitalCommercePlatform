@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -29,18 +29,17 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
         public class Response
         {
-            public List<SavedCartsResponse> Items { get; set; }
-            public int? TotalRecords { get; set; }
+           public List<SavedCartsResponse> Items { get; set; }
+           public int? TotalRecords { get; set; }
         }
-
         public class GetSavedCartsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IAccountService _accountServices;
             private readonly IMapper _mapper;
             private readonly ILogger<GetSavedCartsQueryHandler> _logger;
 
-            public GetSavedCartsQueryHandler(IAccountService accountServices,
-                IMapper mapper,
+            public GetSavedCartsQueryHandler(IAccountService accountServices, 
+                IMapper mapper, 
                 ILogger<GetSavedCartsQueryHandler> logger)
             {
                 _accountServices = accountServices;
@@ -50,13 +49,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var cartDetails = await _accountServices.GetSavedCartListAsync(request);
-                var cartResponse = _mapper.Map<List<SavedCartsResponse>>(cartDetails);
-                var getcartResponse = _mapper.Map<Response>(cartResponse);
-                return new ResponseBase<Response> { Content = getcartResponse };
+                    var cartDetails = await _accountServices.GetSavedCartListAsync(request);
+                    var cartResponse = _mapper.Map<List<SavedCartsResponse>>(cartDetails);
+                    var getcartResponse = _mapper.Map<Response>(cartResponse);
+                    return new ResponseBase<Response> { Content = getcartResponse };
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

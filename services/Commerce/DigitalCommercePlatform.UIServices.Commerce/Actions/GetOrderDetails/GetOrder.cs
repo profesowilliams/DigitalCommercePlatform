@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
@@ -18,10 +18,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; }
-
             public Request(string id)
             {
-                Id = id;
+                Id = id;               
             }
         }
 
@@ -52,7 +51,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 _commerceQueryService = commerceQueryService;
                 _mapper = mapper;
             }
-
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
@@ -60,7 +58,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 var response = new Response(orderResponse);
                 return new ResponseBase<Response> { Content = response };
             }
-
             public class Validator : AbstractValidator<Request>
             {
                 public Validator()

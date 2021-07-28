@@ -1,11 +1,12 @@
-﻿using DigitalFoundation.Common.IntegrationTestUtilities;
+﻿using System;
+using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
+using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentAssertions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+
 using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.IntegrationTests.GetDeals

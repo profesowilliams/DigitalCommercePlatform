@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -23,13 +23,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
         {
             public ConfigurationsSummaryModel Summary { get; set; }
         }
-
         public class ConfigurationsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<ConfigurationsSummaryQueryHandler> _logger;
-
             public ConfigurationsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<ConfigurationsSummaryQueryHandler> logger
@@ -39,7 +37,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
                 _mapper = mapper;
                 _logger = logger;
             }
-
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 ConfigurationsSummaryModel configurations = await _accountService.GetConfigurationsSummaryAsync(request);
@@ -47,7 +44,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSumma
                 return new ResponseBase<Response> { Content = getConfigurations };
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

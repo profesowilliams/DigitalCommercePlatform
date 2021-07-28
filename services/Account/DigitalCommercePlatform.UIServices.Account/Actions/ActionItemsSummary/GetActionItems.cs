@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
         public class Response
         {
             public ActionItemsModel Summary { get; set; }
+
         }
 
         public class ActionItemsSummaryQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -29,7 +30,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<ActionItemsSummaryQueryHandler> _logger;
-
             public ActionItemsSummaryQueryHandler(IAccountService accountService,
                 IMapper mapper,
                 ILogger<ActionItemsSummaryQueryHandler> logger
@@ -39,7 +39,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
                 _mapper = mapper;
                 _logger = logger;
             }
-
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 ActionItemsModel actionItems = await _accountService.GetActionItemsSummaryAsync(request);
@@ -47,7 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
                 return new ResponseBase<Response> { Content = getActionItems };
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
         {
             public RequestType RequestType { get; }
             public bool GetAll { get; set; }
-            public int Count { get; set; }
+            public int Count { get; set; } 
 
             public Request(RequestType requestType, bool getAll = false, int count = 100)
             {
@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
 
         public class Response
         {
-            public GetConfigurationsForModel ConfigurationsData { get; internal set; }
+            public GetConfigurationsForModel ConfigurationsData { get; internal set; }            
         }
 
         public class GetConfigurationsForHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -46,8 +46,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
             private readonly IMapper _mapper;
             private readonly ILogger<GetConfigurationsForHandler> _logger;
 
-            public GetConfigurationsForHandler(IAccountService accountServices,
-                IMapper mapper,
+            public GetConfigurationsForHandler(IAccountService accountServices, 
+                IMapper mapper, 
                 ILogger<GetConfigurationsForHandler> logger)
             {
                 _accountServices = accountServices;
@@ -57,11 +57,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var configurationsModel = await _accountServices.GetConfigurationsForAsync(request);
-                return new ResponseBase<Response> { Content = new Response { ConfigurationsData = configurationsModel } };
+                    var configurationsModel = await _accountServices.GetConfigurationsForAsync(request);
+                    return new ResponseBase<Response> { Content = new Response { ConfigurationsData = configurationsModel } };
             }
         }
-
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

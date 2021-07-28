@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -41,7 +42,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
             {
                 BinaryContent = binaryContent;
             }
-
             public Response()
             {
             }
@@ -106,6 +106,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 byte[] archiveFile;
                 using (MemoryStream zipStream = new MemoryStream())
                 {
+
                     using (ZipArchive zip = new ZipArchive(zipStream, ZipArchiveMode.Create, leaveOpen: true))
                     {
                         foreach (var file in listDownloadableFiles)

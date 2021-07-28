@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
@@ -6,7 +7,6 @@ using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -38,7 +38,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             _logger = new Mock<ILogger<SecurityController>>();
             _siteSettings = new Mock<ISiteSettings>();
         }
-
         private SecurityController GetController()
         {
             return new SecurityController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
@@ -214,7 +213,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
-            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = "" }).ConfigureAwait(false);
+            var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = ""}).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

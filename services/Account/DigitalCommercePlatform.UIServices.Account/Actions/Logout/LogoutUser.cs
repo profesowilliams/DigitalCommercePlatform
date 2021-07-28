@@ -1,5 +1,5 @@
-﻿using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
+using DigitalFoundation.Common.Cache.UI;
 using MediatR;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Logout
             {
                 _sessionIdBasedCacheProvider.Remove("User");
 
-                return await Task.FromResult(new ResponseBase<Response> { Content = new Response { Message = "User logged out successfully" } });
+                return await Task.FromResult( new ResponseBase<Response> { Content = new Response { Message = "User logged out successfully" } });
             }
         }
     }

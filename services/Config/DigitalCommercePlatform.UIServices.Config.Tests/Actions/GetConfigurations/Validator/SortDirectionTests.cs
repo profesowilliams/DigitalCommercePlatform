@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System;
