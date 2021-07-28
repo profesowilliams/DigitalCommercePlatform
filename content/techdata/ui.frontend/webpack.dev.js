@@ -719,6 +719,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "form-container.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/form-container.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "my-renewals",
                 template: path.resolve(
                     __dirname,
