@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -17,20 +18,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHa
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<HttpGlobalExceptionFilter> _logger;
+        private readonly IServiceProvider _serviceProvider;
 
-        public HttpGlobalExceptionFilter(ILogger<HttpGlobalExceptionFilter> logger)
+        public HttpGlobalExceptionFilter(IServiceProvider serviceProvider, ILogger<HttpGlobalExceptionFilter> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _serviceProvider = serviceProvider;
         }
 
         public void OnException(ExceptionContext context)
         {
-            var traceId = context?.HttpContext?.Request?.Headers["TraceId"];
+            var uiContext = _serviceProvider.GetService(typeof(IUIContext)) as IUIContext;
             if (context.Exception is ValidationException validationException)
             {
                 _logger.LogError(context.Exception, "Validation Exception at: " + nameof(HttpGlobalExceptionFilter));
-                var messages = validationException.Errors.Select(e => e.ErrorMessage).ToList();
-
+                var messages = validationException.Errors.Select(e => "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " " + e.ErrorMessage).ToList();
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
                     Error = new ErrorInformation { IsError = true, Messages = messages, Code = (int)UIServiceExceptionCode.GenericBadRequestError }
@@ -46,21 +48,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHa
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
-            else if (context.Exception is RemoteServerHttpException remoteServerHttpException)
+            else if (context.Exception is RemoteServerHttpException remoteServerException)
             {
-                _logger.LogError(context.Exception, "RemoteServerHttpException - traceId:" + traceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
+                _logger.LogError(context.Exception, "RemoteServerHttpException - traceId:" + uiContext.TraceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "A RemoteServerHttpException occurred: " + remoteServerHttpException.Code }, Code = (int)remoteServerHttpException.Code }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " " + remoteServerException.Message }, Code = (int)remoteServerException.Code }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
             else
             {
-                _logger.LogError(context.Exception, "traceId:" + traceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
+                _logger.LogError(context.Exception, "traceId:" + uiContext.TraceId + ".\r\n" + JsonConvert.SerializeObject(context.Exception, Formatting.Indented));
                 context.Result = new ObjectResult(new ResponseBase<object>
                 {
-                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "An unexpected error occurred. See logs for traceId:" + traceId + "." }, Code = (int)UIServiceExceptionCode.GenericServerError }
+                    Error = new ErrorInformation { IsError = true, Messages = new List<string> { "UserId : " + uiContext.User.ID + " for TraceId : " + uiContext.TraceId + " Something went wrong" }, Code = 500 }
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             }
