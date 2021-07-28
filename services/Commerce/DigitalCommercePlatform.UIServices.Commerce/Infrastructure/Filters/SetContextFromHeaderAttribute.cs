@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalFoundation.Common.Contexts;
+﻿using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters
         {
             var validationErrors = new List<string>();
 
-            if(!context.HttpContext.Request.Headers.TryGetValue("Accept-Language", out StringValues language) || string.IsNullOrWhiteSpace(language))
+            if (!context.HttpContext.Request.Headers.TryGetValue("Accept-Language", out StringValues language) || string.IsNullOrWhiteSpace(language))
             {
                 validationErrors.Add("The Accept-Language field is required.");
             }

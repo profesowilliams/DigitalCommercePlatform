@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -49,11 +49,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var getTypeAheadDetails = await _contentService.GetTypeAhead(request);
-                    var getResponse = _mapper.Map<Response>(getTypeAheadDetails);
-                    return new ResponseBase<Response> { Content = getResponse };
+                var getTypeAheadDetails = await _contentService.GetTypeAhead(request);
+                var getResponse = _mapper.Map<Response>(getTypeAheadDetails);
+                return new ResponseBase<Response> { Content = getResponse };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

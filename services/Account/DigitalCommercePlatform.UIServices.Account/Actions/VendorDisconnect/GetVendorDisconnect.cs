@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect
         {
             public bool Items { get; set; }
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IVendorService _vendorService;
@@ -33,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var isConnected = await _vendorService.VendorDisconnect(request);

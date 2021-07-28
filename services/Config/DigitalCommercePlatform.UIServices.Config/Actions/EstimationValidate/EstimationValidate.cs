@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,10 +36,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
-            public Handler(IMapper mapper, ILogger<Handler> logger, IConfigService configService)
-                : base(mapper, logger, configService)
+            public Handler(
+                ILoggerFactory loggerFactory,
+                IConfigService configService,
+                IHttpClientFactory httpClientFactory)
+                : base(loggerFactory, httpClientFactory)
             {
+                _configService = configService;
             }
+
+            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {

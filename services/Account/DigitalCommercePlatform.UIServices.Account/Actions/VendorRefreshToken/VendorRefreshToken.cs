@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -30,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken
         {
             public bool IsSuccess { get; set; }
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IVendorService _vendorService;
@@ -42,12 +42,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var vendorRefresh = await _vendorService.VendorRefreshToken(request);
                 return new ResponseBase<Response> { Content = vendorRefresh };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

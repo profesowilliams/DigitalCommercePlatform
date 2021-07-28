@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -18,7 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
     [ExcludeFromCodeCoverage]
     public class FindQuotes
     {
-        public class Request:IRequest<ResponseBase<Response>>
+        public class Request : IRequest<ResponseBase<Response>>
         {
             public FindModel Query { get; set; }
 
@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 Query = query;
             }
         }
+
         public class Response : FindResponse<IEnumerable<QuoteModel>>
         {
         }

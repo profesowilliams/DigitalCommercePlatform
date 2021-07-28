@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System;
@@ -18,9 +18,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; }
+
             public Request(string id)
             {
-                Id = id;                
+                Id = id;
             }
         }
 
@@ -28,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
         {
             public IEnumerable<Line> Items { get; set; }
         }
+
         public class GetOrderLinesHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;
@@ -36,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
             public GetOrderLinesHandler(ICommerceService commerceQueryService,
                 IMapper mapper)
             {
-                _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));                
+                _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
@@ -59,8 +61,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
                         Items = linesDto
                     };
                 }
-                
-                return new ResponseBase<Response> { Content = orderLinesResponse }; 
+
+                return new ResponseBase<Response> { Content = orderLinesResponse };
             }
         }
 

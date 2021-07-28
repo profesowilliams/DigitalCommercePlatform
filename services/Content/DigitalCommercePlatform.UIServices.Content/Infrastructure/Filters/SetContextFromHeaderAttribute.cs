@@ -1,5 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
-using DigitalFoundation.Common.Contexts;
+﻿using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;

@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
@@ -13,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -202,7 +202,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopConfigurations(5,string.Empty,string.Empty).ConfigureAwait(false);
+            var result = await controller.GetTopConfigurations(5, string.Empty, string.Empty).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -234,7 +234,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopConfigurations(0,string.Empty,string.Empty).ConfigureAwait(false);
+            var result = await controller.GetTopConfigurations(0, string.Empty, string.Empty).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
@@ -250,7 +250,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetTopQuotes(5,"price","asc").ConfigureAwait(false);
+            var result = await controller.GetTopQuotes(5, "price", "asc").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

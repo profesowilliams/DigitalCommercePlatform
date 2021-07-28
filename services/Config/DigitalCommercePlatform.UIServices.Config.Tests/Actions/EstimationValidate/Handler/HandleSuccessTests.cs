@@ -2,8 +2,10 @@
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,14 +17,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.EstimationVali
     public class HandleSuccessTests
     {
         private readonly Mock<IMapper> _mockMapper;
-        private readonly Mock<ILogger<EV.EstimationValidate.Handler>> _mockLogger;
+        private readonly NullLoggerFactory _loggerFactory;
         private readonly Mock<IConfigService> _mockConfigService;
+        private readonly Mock<IHttpClientFactory> _mockHttpClientFactory;
 
         public HandleSuccessTests()
         {
+            _loggerFactory = new NullLoggerFactory();
             _mockMapper = new();
-            _mockLogger = new();
-            _mockConfigService = new ();
+            _mockConfigService = new();
+            _mockHttpClientFactory = new();
         }
 
         [Theory]
@@ -45,9 +49,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.EstimationVali
 
         private EV.EstimationValidate.Handler GetHandler()
         {
-            return new EV.EstimationValidate.Handler(_mockMapper.Object,
-                                                     _mockLogger.Object,
-                                                     _mockConfigService.Object);
+            return new EV.EstimationValidate.Handler(
+                _loggerFactory,
+                _mockConfigService.Object,
+                _mockHttpClientFactory.Object);
         }
     }
 }

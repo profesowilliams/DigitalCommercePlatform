@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
+﻿using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
@@ -10,6 +9,7 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

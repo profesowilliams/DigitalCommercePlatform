@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
@@ -17,6 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
         {
             public string Id { get; }
             public bool GetAll { get; } = true;
+
             public Request(bool getAll, string id)
             {
                 Id = id;
@@ -26,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
 
         public class Response
         {
-            public PricingConditionsModel PricingConditions { get; set; }                       
+            public PricingConditionsModel PricingConditions { get; set; }
         }
 
         public class GetPricingConditionsHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -39,6 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
                 _commerceQueryService = commerceQueryService;
                 _mapper = mapper;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var pricing = await _commerceQueryService.GetPricingConditions(request);

@@ -1,9 +1,9 @@
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddSingleton<ISortingService, SortingService>();
-            services.AddSingleton<IStatusMappingService, StatusMappingService>(); 
+            services.AddSingleton<IStatusMappingService, StatusMappingService>();
             services.AddTransient<IHelperService, HelperService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddControllers().AddNewtonsoftJson(options =>
