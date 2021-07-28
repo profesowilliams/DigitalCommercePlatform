@@ -4,6 +4,7 @@ import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
 import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
+import ConfigGrid from "./ConfigGrid/ConfigGrid";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -21,6 +22,7 @@ function QuotePreview(props) {
     <div className="cmp-quote-preview">
       {apiResponse && (
         <section>
+          <ConfigGrid />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />
           </div>

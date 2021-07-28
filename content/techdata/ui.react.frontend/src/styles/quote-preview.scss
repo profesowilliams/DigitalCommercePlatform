@@ -53,3 +53,93 @@
         }
     }
 }
+
+.cmp-qp__config-grid {
+    &--title {
+        border-bottom: 1px solid $brand-blue;
+        padding: 0 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 0;
+        color: $brand-blue;
+        font-size: 18px;
+        span {
+            color: $brand-text-gray;
+            line-height: 30px;
+        }
+    }
+}
+
+.cmp-qp__company-info {
+    &--title {
+        color: $brand-blue;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 19px;
+        position: relative;
+        cursor: pointer;
+        &::before {
+            content: '\f303';
+            position: absolute;
+            left: -22px;
+            font-family: 'Font Awesome 5 Free';
+            color: $brand-light-blue-icon;
+        }
+    }
+    &--sub-title {
+        color: $brand-text-gray;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 18px;
+    }
+    &--address-group {
+        color: $brand-text-gray;
+        font-size: 13px;
+        line-height: 18px;
+        span {
+            display: block;
+        }
+    }
+}
+
+.info-container {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: space-between;
+    padding: 20px 40px;
+}
+
+.cmp-qp__default-address {
+    .form-check {
+        font-size: 13px;
+        line-height: 18px;
+        color: $brand-text-gray;
+        label {
+            display: block;
+        }
+        span {
+            &:not(:first-of-type) {
+                display: block;
+                margin-left: 22px;
+            }
+            &:first-of-type {
+                margin-left: 9px;
+            }
+            &:last-of-type {
+                border-bottom: 1px solid $brand-scrollbar;
+                padding-bottom: 4px;
+                margin-bottom: 6px;
+            }
+        }
+    }
+    .form-group {
+        margin-top: 20px;
+        .cmp-qp--save-address {
+            margin-bottom: 10px;;
+        }
+        .cmp-qp--cancel-address {
+            background-color: $brand-scrollbar;
+            color: $brand-text-gray;
+        }
+    }
+}
