@@ -101,27 +101,29 @@ const SearchBar = ({ componentProp }) => {
       <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
         <i className="cmp-searchbar__clear-icon"></i>
       </button>
-      <input
-        className="cmp-searchbar__input"
-        data-cmp-hook-search="input"
-        type="text"
-        name="fulltext"
-        role="combobox"
-        aria-autocomplete="list"
-        aria-haspopup="true"
-        aria-invalid="false"
-        onChange={onSearchTermTextChange}
-        onKeyPress={onSearchTermTextKeyPress}
-        onFocus={gotFocus}
-        value={searchTermText}
-        placeholder={placeholder}/>
-      <button
-        className="cmp-searchbar__button"
-        onClick={redirectToShop}>
-        <i
-          className="cmp-searchbar__icon fas fa-search"
-          data-cmp-hook-search="icon"></i>
-      </button>
+      <div className="cmp-searchbar__container">
+        <input
+          className="cmp-searchbar__input"
+          data-cmp-hook-search="input"
+          type="text"
+          name="fulltext"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-haspopup="true"
+          aria-invalid="false"
+          onChange={onSearchTermTextChange}
+          onKeyPress={onSearchTermTextKeyPress}
+          onFocus={gotFocus}
+          value={searchTermText}
+          placeholder={placeholder}/>
+        <button
+          className="cmp-searchbar__button"
+          onClick={redirectToShop}>
+          <i
+            className="cmp-searchbar__icon fas fa-search"
+            data-cmp-hook-search="icon"></i>
+        </button>
+      </div>
 
       {renderContextMenu()}
 

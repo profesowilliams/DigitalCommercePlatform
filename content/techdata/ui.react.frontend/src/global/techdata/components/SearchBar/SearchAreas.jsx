@@ -14,24 +14,29 @@ const SearchAreas = ({ areaList, selectedArea, changeSelectedArea }) => {
   }
 
   return (
-    <ul className="cmp-searcharea">
-      <li className="cmp-searcharea__selectedarea">
-        <button
-          className="cmp-searcharea__selectedarea"
-          onClick={toggleAreaSelection}>
-          {selectedArea.areaLabel}
-        </button>
-      </li>
-      {areaSelectionOpen && areaList.map((areaConfiguration, index) => {
-        return (
-          <li className="cmp-searcharea__area" key={areaConfiguration.area} key={index}>
-            <button className="cmp-searcharea__button" onClick={() => onAreaClick(areaConfiguration)}>
-              {areaConfiguration.areaLabel}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+    <div className={areaSelectionOpen === true ? 
+      "cmp-searcharea__selectedarea  cmp-searcharea__selectedarea--checked" : 
+      "cmp-searcharea__selectedarea"}>
+      <button
+        className="cmp-searcharea__selectedarea-button"
+        onClick={toggleAreaSelection}>
+        {' '}{selectedArea.areaLabel}
+        <i className="cmp-searcharea__selectedarea-icon fas	fa-chevron-down"></i>
+      </button>
+    </div>
+      <ul className={areaSelectionOpen === true ? "cmp-searcharea cmp-searcharea--checked" : "cmp-searcharea"}>
+        {areaSelectionOpen && areaList.map((areaConfiguration, index) => {
+          return (
+            <li className="cmp-searcharea__area" key={areaConfiguration.area} key={index}>
+              <button className="cmp-searcharea__button" onClick={() => onAreaClick(areaConfiguration)}>
+                {areaConfiguration.areaLabel}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 
