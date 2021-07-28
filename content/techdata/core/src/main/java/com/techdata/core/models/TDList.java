@@ -37,10 +37,32 @@ public class TDList implements List {
     @Via(type = ResourceSuperType.class)
     List delegateList;
 
-    public String getMessage() {
-        log.debug("test message");
-        return "Hello";
+    @Override
+    public boolean showDescription(){
+        return delegateList.showDescription();
     }
+
+    @Override
+    public boolean showModificationDate() {
+        return delegateList.showModificationDate();
+    }
+
+    @Override
+    public boolean linkItems()
+    {
+        return delegateList.linkItems();
+    }
+
+    @Override
+    public String getDateFormatString(){
+        return delegateList.getDateFormatString();
+    }
+    @Override
+    public String getExportedType() {
+        return delegateList.getExportedType();
+    }
+
+
     @Override
     public Collection<ListItem> getListItems() {
         Collection<ListItem> listOfVendorItems = new ArrayList<>();
@@ -58,12 +80,12 @@ public class TDList implements List {
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
                 ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
                 if(contentFragment != null){
-                    VendorListItem vi = TDListItem.getVendorListItem(contentFragment, resource);
+                    VendorListItem vi = TDListItem.getVendorListItem(contentFragment, resource, cfListItem);
                     listOfVendorItems.add(vi);
                 }
             }else{
                 log.debug("cf path not found");
-                TDListItem tdListItem = TDListItem.getTDListItem(page.getContentResource());
+                TDListItem tdListItem = TDListItem.getTDListItem(page.getContentResource(), cfListItem);
                 listOfVendorItems.add(tdListItem);
             }
 

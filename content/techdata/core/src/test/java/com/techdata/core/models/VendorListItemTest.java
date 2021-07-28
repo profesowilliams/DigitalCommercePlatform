@@ -2,6 +2,7 @@ package com.techdata.core.models;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
+import com.adobe.cq.wcm.core.components.models.ListItem;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.Iterator;
 
 import static org.mockito.Mockito.when;
@@ -18,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
 class VendorListItemTest {
 
-    private VendorListItem vendorListItem;
+    private VendorListItem underTest;
 
     @Mock
     private ContentFragment contentFragment;
@@ -32,28 +34,34 @@ class VendorListItemTest {
     @Mock
     private Iterator<ContentElement> iteratorMock;
 
+    @Mock
+    ListItem listItem;
+
     @BeforeEach
     void setUp() {
-        vendorListItem =  new VendorListItem();
+        underTest =  new VendorListItem();
+
         when(contentFragment.getElements()).thenReturn(iteratorMock);
         when(iteratorMock.hasNext()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(iteratorMock.next()).thenReturn(ce);
+
     }
 
     @Test
     void getVendorListItemVendorName() {
-
-        when(ce.getName()).thenReturn("vendor-name");
-        when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
-        assertEquals("ce-content", v1.getTitle());
+        String returnValueName = "vendor-name";
+        String returnValueTitle = "ce-content";
+        when(ce.getName()).thenReturn(returnValueName);
+        when(ce.getContent()).thenReturn(returnValueTitle);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource, listItem);
+        assertEquals(returnValueTitle, v1.getTitle());
     }
 
     @Test
     void getVendorListItemOverview() {
         when(ce.getName()).thenReturn("overview");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource, listItem);
         assertEquals("ce-content", v1.getOverview());
     }
 
@@ -61,7 +69,7 @@ class VendorListItemTest {
     void getVendorListItemVendorIcon() {
         when(ce.getName()).thenReturn("vendor-icon");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource, listItem);
         assertEquals("ce-content", v1.getVendorIcon());
     }
 
@@ -69,7 +77,7 @@ class VendorListItemTest {
     void getVendorListItemVendorPageLink() {
         when(ce.getName()).thenReturn("vendor-page-link");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource, listItem);
         assertEquals("ce-content", v1.getPageLink());
     }
 
@@ -77,7 +85,7 @@ class VendorListItemTest {
     void getVendorListItemVendorPageLabel() {
         when(ce.getName()).thenReturn("vendor-page-label");
         when(ce.getContent()).thenReturn("ce-content");
-        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource);
+        VendorListItem v1 = VendorListItem.getVendorListItem(contentFragment, resource, listItem);
         assertEquals("ce-content", v1.getVendorPageLabel());
     }
 }

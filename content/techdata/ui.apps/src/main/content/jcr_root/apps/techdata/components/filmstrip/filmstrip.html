@@ -2,49 +2,22 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 
-<div class="carousel">
-    <div id="carousel-d602cb4093" class="cmp-carousel" role="group" data-placeholder-text="false">
-        <div class="cmp-carousel__content" aria-atomic="false" aria-live="off">
+<div class="center slider"
+     data-sly-use.list="com.adobe.cq.wcm.core.components.models.List"
+     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+     data-sly-list="${list.profileItems}"
+>
 
-            <div class="cmp-cardView-carousel">
-                <div class="cmp-cardView-carousel__title">
-                    Executive Leadership
-                </div>
-                <div data-sly-use.filmStrip="com.techdata.core.models.FilmStripModel"
-                    id="carousel-d602cb4093-item-3946a406d0-tabpanel"
-                    class="cmp-cardView-carousel__cards cmp-carousel__item cmp-carousel__item--active" role="tabpanel"
-                    aria-labelledby="carousel-d602cb4093-item-3946a406d0-tab" aria-roledescription="slide"
-                    aria-label="Slide 1 of 3"
-                    data-cmp-data-layer="{&quot;carousel-d602cb4093-item-3946a406d0&quot;:{&quot;@type&quot;:&quot;core-components-examples/components/carousel/item&quot;,&quot;repo:modifyDate&quot;:&quot;2018-12-06T18:48:01Z&quot;}}"
-                    data-cmp-hook-carousel="item">
-                    <div data-sly-list.profileList="${filmStrip.profileItems}"
-                        class="cmp-cardView-carousel__cards--card">
-                        <div class="cmp-cardView-carousel__cards--card--name">
-                            ${profileList.name}
-                        </div>
-                        <div class="cmp-cardView-carousel__cards--card--position">
-                            ${profileList.position @ context='html'}
-                        </div>
-                    </div>
-                </div>
-                <ol class="cmp-carousel__indicators" role="tablist" aria-label="Choose a slide to display"
-                    data-cmp-hook-carousel="indicators">
-                    <li id="carousel-d602cb4093-item-3946a406d0-tab"
-                        class="cmp-carousel__indicator cmp-carousel__indicator--active" role="tab"
-                        aria-controls="carousel-d602cb4093-item-3946a406d0-tabpanel" aria-label="Slide 1"
-                        data-cmp-hook-carousel="indicator" aria-selected="true" tabindex="0">
-                    </li>
-                    <li id="carousel-d602cb4093-item-6cacfb6276-tab" class="cmp-carousel__indicator" role="tab"
-                        aria-controls="carousel-d602cb4093-item-6cacfb6276-tabpanel" aria-label="Slide 2"
-                        data-cmp-hook-carousel="indicator" aria-selected="false" tabindex="-1">
-                    </li>
-                    <li id="carousel-d602cb4093-item-c4cef25e5a-tab" class="cmp-carousel__indicator" role="tab"
-                        aria-controls="carousel-d602cb4093-item-c4cef25e5a-tabpanel" aria-label="Slide 3"
-                        data-cmp-hook-carousel="indicator" aria-selected="false" tabindex="-1">
-                    </li>
-                </ol>
+    <div >
+        <div class="cmp-filmstrip-carousel__cards--card">
+            <img src="${item.imagePath}">
+            <div class="cmp-filmstrip-carousel__cards--card--name" style="top: 0">
+                ${item.name}
             </div>
-
+            <div class="cmp-filmstrip-carousel__cards--card--position">
+                ${item.position}
+            </div>
         </div>
     </div>
+
 </div>

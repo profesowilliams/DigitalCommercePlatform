@@ -1,9 +1,6 @@
 package com.techdata.core.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
@@ -19,7 +16,6 @@ public class VendorListItem implements ListItem {
 
     private static final Logger log = LoggerFactory.getLogger(VendorListItem.class);
 
-    private String title;
     private String overview;
     private String vendorIcon;
     private String pageLink;
@@ -27,11 +23,40 @@ public class VendorListItem implements ListItem {
     private String vendorProductLabel;
     private String vendorProductLink;
     private List<String> categoryTag = new ArrayList<>();
+    private String vendorTitle;
+    private ListItem listItem;
+
+
+    @Override
+    public String getURL() {
+        return listItem.getURL();
+    }
 
     @Override
     public String getTitle() {
-        return title;
+        return this.vendorTitle;
     }
+
+    @Override
+    public String getDescription() {
+        return listItem.getDescription();
+    }
+
+    @Override
+    public Calendar getLastModified() {
+        return listItem.getLastModified();
+    }
+
+    @Override
+    public String getPath() {
+        return listItem.getPath();
+    }
+
+    @Override
+    public String getName() {
+        return listItem.getName();
+    }
+
     public String getOverview() {
         return overview;
     }
@@ -67,8 +92,8 @@ public class VendorListItem implements ListItem {
         final String vendorPageLabel,
         final String vendorProductLabel,
         final String vendorProductLink,
-        final List<String> tags) {
-        this.title = title;
+        final List<String> tags,
+        final ListItem listItem) {
         this.overview = overview;
         this.vendorIcon = vendorIcon;
         this.pageLink = pageLink;
@@ -76,9 +101,11 @@ public class VendorListItem implements ListItem {
         this.vendorProductLabel = vendorProductLabel;
         this.vendorProductLink = vendorProductLink;
         this.categoryTag = Collections.unmodifiableList(tags);
+        this.listItem = listItem;
+        this.vendorTitle = title;
     }
 
-    public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource){
+    public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource, ListItem cfListItem){
 
         String title = StringUtils.EMPTY;
         String overview = StringUtils.EMPTY;
@@ -116,7 +143,7 @@ public class VendorListItem implements ListItem {
                 tags = prepareTags(ce, resource);
             }
         }
-        VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags);
+        VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
         return v1;
     }

@@ -2,6 +2,7 @@ package com.techdata.core.models;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
+import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.commons.jcr.JcrConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -35,6 +36,9 @@ class TDListItemTest {
     private ExtractSVGModel extractSVGModel;
 
     @Mock
+    ListItem listItem;
+
+    @Mock
     ValueMap vm;
 
 
@@ -55,7 +59,7 @@ class TDListItemTest {
         String returnValue = "";
         when(resource.getChild(PAGE_THUMBNAIL_NODENAME)).thenReturn(null);
         when(resource.getChild(PAGE_THUMBNAIL_FILE_NODE_NAME)).thenReturn(null);
-        TDListItem tdl = TDListItem.getTDListItem(resource);
+        TDListItem tdl = TDListItem.getTDListItem(resource,  listItem);
         assertEquals(returnValue, tdl.getVendorIcon());
 
     }
@@ -68,16 +72,17 @@ class TDListItemTest {
         when(resource.getChild(PAGE_THUMBNAIL_FILE_NODE_NAME)).thenReturn(null);
         when(extractSVGModel.getBinary()).thenReturn(returnValue);
         when(extractSVGModel.isSvg()).thenReturn(true);
-        TDListItem tdl = TDListItem.getTDListItem(resource);
+        TDListItem tdl = TDListItem.getTDListItem(resource, listItem);
         assertEquals(returnValue, tdl.getVendorIcon());
 
     }
 
     @Test
-    void getVendorListItemTitle() {
+    void getTDListItemTitle() {
         String returnValue = "title";
         when(vm.get(JcrConstants.JCR_TITLE, StringUtils.EMPTY)).thenReturn(returnValue);
-        TDListItem tdl = TDListItem.getTDListItem(resource);
+        when(listItem.getTitle()).thenReturn(returnValue);
+        TDListItem tdl = TDListItem.getTDListItem(resource, listItem);
         assertEquals(returnValue, tdl.getTitle());
 
     }

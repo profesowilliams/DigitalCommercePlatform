@@ -20,16 +20,16 @@ import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 
-@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = FilmStripModel.RESOURCE_TYPE)
-public class FilmStripModel implements List {
-	private static final Logger log = LoggerFactory.getLogger(FilmStripModel.class);
+@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = FilmStripList.RESOURCE_TYPE)
+public class FilmStripList implements List {
+    private static final Logger log = LoggerFactory.getLogger(FilmStripList.class);
 
     public static final String RESOURCE_TYPE = "techdata/components/filmstrip";
-    private static final String PAGE_PROPERTY_CF_PATH = "fragmentPath";
-    
+    private static final String PAGE_PROPERTY_CF_PATH = "cfPath";
+
     @Self
     private SlingHttpServletRequest request;
-    
+
     @Self
     @Via(type = ResourceSuperType.class)
     List delegateList;
@@ -50,7 +50,7 @@ public class FilmStripModel implements List {
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
                 ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
                 if(contentFragment != null){
-                    FilmStripItem vi = FilmStripItem.getProfileListItem(contentFragment, cfProfileItem.getPath());
+                    FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfProfileItem.getPath());
                     listOfProfileItems.add(vi);
                 }
             }

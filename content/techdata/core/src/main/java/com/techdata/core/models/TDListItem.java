@@ -1,6 +1,7 @@
 package com.techdata.core.models;
 
 
+import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TDListItem extends VendorListItem  {
@@ -19,11 +21,43 @@ public class TDListItem extends VendorListItem  {
     private static final Logger log = LoggerFactory.getLogger(TDListItem.class);
 
     private boolean isIconSVG;
+    private ListItem listItem;
 
 
     public TDListItem() {
 
     }
+
+    @Override
+    public String getURL() {
+        return listItem.getURL();
+    }
+
+    @Override
+    public String getTitle() {
+        return listItem.getTitle();
+    }
+
+    @Override
+    public String getDescription() {
+        return listItem.getDescription();
+    }
+
+    @Override
+    public Calendar getLastModified() {
+        return listItem.getLastModified();
+    }
+
+    @Override
+    public String getPath() {
+        return listItem.getPath();
+    }
+
+    @Override
+    public String getName() {
+        return listItem.getName();
+    }
+
 
     public boolean getIsIconSVG() {
         return isIconSVG;
@@ -40,13 +74,15 @@ public class TDListItem extends VendorListItem  {
             final String vendorProductLabel,
             final String vendorProductLink,
             final List<String> tags,
-            final boolean isIconSVG) {
-        super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags);
+            final boolean isIconSVG,
+            final ListItem listItem) {
+        super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
         log.info("TDListItem contructor");
         this.isIconSVG = isIconSVG;
+        this.listItem = listItem;
     }
 
-    public static TDListItem getTDListItem(Resource pageContentResource){
+    public static TDListItem getTDListItem(Resource pageContentResource, ListItem listItem){
         String title = pageContentResource.getValueMap().containsKey(JcrConstants.JCR_TITLE) ? pageContentResource.getValueMap().get(JcrConstants.JCR_TITLE, StringUtils.EMPTY) : StringUtils.EMPTY;
         String overview = StringUtils.EMPTY;
         String vendorIcon = StringUtils.EMPTY;
@@ -71,7 +107,7 @@ public class TDListItem extends VendorListItem  {
             isIconSVG = evg != null && evg.isSvg();
         }
 
-        return new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, isIconSVG);
+        return new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, isIconSVG, listItem);
     }
 
 }
