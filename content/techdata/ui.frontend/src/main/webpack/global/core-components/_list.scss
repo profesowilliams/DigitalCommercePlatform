@@ -293,6 +293,19 @@
           max-width: 11.25rem;
           width: 100%;
         }
+        &:hover {
+          
+          article {
+            svg {
+              path {
+                fill: get-color(brand-light-blue);
+              }
+            }
+            .cmp-list__item-title {
+              font-weight: 600;
+            }
+          }
+        }
       }
 
       .cmp-list__item-title {

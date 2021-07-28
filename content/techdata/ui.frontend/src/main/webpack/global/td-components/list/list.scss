@@ -1,6 +1,5 @@
 .dp-list,
 .cmp-list {
-
   figure > svg {
     width: 100%;
     height: 100%;
@@ -66,6 +65,7 @@
         @include tablet {
           justify-content: space-evenly;
         }
+        
       }
       .cmp-list__item {
         width: 16.66%;
@@ -167,8 +167,7 @@
       max-width: 100%;
       transition: all 0.3s;
       &:hover {
-        filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg)
-        brightness(114%) contrast(100%);
+        filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg) brightness(114%) contrast(100%);
       }
     }
     .cmp-list__item-link {
@@ -209,17 +208,13 @@
           }
         }
       }
-
     }
-
-
 
     .cmp-image__image {
       max-width: 100%;
       transition: all 0.3s;
       &:hover {
-        filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg)
-        brightness(114%) contrast(100%);
+        filter: invert(100%) sepia(4%) saturate(405%) hue-rotate(284deg) brightness(114%) contrast(100%);
       }
     }
     .cmp-list__item-link {
@@ -236,8 +231,7 @@
     .cmp-image__image {
       max-width: 100%;
       max-height: 100%;
-      filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg)
-      brightness(95%) contrast(88%);
+      filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg) brightness(95%) contrast(88%);
       transition: all 0.3s;
     }
     .cmp-list__item-link {
@@ -274,6 +268,19 @@
           max-width: rem(180px);
           width: 100%;
         }
+        
+      &:hover {
+        article {
+          svg {
+            path {
+              fill: get-color(brand-light-blue);
+            }
+          }
+          .cmp-list__item-title {
+            font-weight: 600;
+          }
+        }
+      }
       }
       .cmp-list__item-title {
         display: block;
@@ -281,8 +288,7 @@
       .cmp-image__image {
         max-width: 100%;
         max-height: 100%;
-        filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg)
-        brightness(95%) contrast(88%);
+        filter: invert(94%) sepia(0%) saturate(45%) hue-rotate(149deg) brightness(95%) contrast(88%);
         transition: all 0.3s;
       }
       .cmp-list__item-link {
@@ -307,7 +313,7 @@
 }
 
 .dp-list--products-with-icons {
-  .cmp-list{
+  .cmp-list {
     display: flex;
     flex-wrap: wrap;
     @include tablet {
@@ -319,7 +325,7 @@
     &__item {
       display: flex;
       width: 16%;
-      list-style-type:none;
+      list-style-type: none;
       transition: all 0.3s;
       padding-bottom: 20px;
       justify-content: center;
@@ -329,10 +335,10 @@
         width: 200px;
       }
       &:hover {
-        article{
+        article {
           a.cmp-list__item-link {
-            span.cmp-list__item-title{
-              color: #000C21;
+            span.cmp-list__item-title {
+              color: #000c21;
               font-weight: bold;
             }
           }
@@ -351,12 +357,12 @@
               height: rem(75px);
             }
           }
-          span.cmp-list__item-title{
+          span.cmp-list__item-title {
             text-decoration: none;
             font-size: 13px;
             line-height: 15px;
             text-align: center;
-            color: rgba(0,0,0,.55);
+            color: rgba(0, 0, 0, 0.55);
             margin: 0 5px;
           }
         }
