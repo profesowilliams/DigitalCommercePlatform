@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             else if (origin == "pe" )
                 orderParameters.Origin = "Manual";
             else if (origin == "xml")
-                orderParameters.Origin = "Web";
+                orderParameters.Origin = "B2B";
             else
                 orderParameters.Origin = null;
             
