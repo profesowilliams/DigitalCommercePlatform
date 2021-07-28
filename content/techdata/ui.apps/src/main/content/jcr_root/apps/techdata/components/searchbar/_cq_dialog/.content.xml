@@ -29,6 +29,9 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <searchRoot
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:hideResource="{Boolean}true"/>
                                             <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -81,7 +84,7 @@
                                                                     value="order"/>
                                                                 <spas
                                                                     jcr:primaryType="nt:unstructured"
-                                                                    text="SPA's"
+                                                                    text="SPAs"
                                                                     value="spa"/>
                                                             </items>
                                                         </area>
