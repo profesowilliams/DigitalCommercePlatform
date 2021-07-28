@@ -8,11 +8,11 @@
 			"buttonTitle": "Create Quote",
 			"optionsList": [
 			{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE", "dropdownPlaceholder": "", "textPlaceholder": "", "manuallyTypedError": "" },
-			{ 
+			{
 				"key": "saved", "label": "Saved cart", "title": "CREATE QUOTE FROM", "dropdownPlaceholder": "Select Saved Cart", "textPlaceholder": "Enter Cart name",
 				"manuallyTypedError": "Enter a new cart name or browse carts instead"
 			},
-			{ 
+			{
 				"key": "estimate", "label": "Estimate ID", "title": "CREATE QUOTE", "dropdownPlaceholder": "Select Estimate", "textPlaceholder": "Estimate ID",
 				"manuallyTypedError": "Enter a new ID or browse estimates instead"
 			}
@@ -23,7 +23,7 @@
 			"cartdetailsEndpoint": "http://localhost:3000/cart",
 			"pricingConditions": "http://localhost:3000/pricingConditions",
 			"estimatedIdListEndpoint": "http://localhost:3000/estimates",
-			"estimatedIdDetailsEndpoint": "http://localhost:3000/estimations/validate"
+			"estimatedIdDetailsEndpoint": "http://localhost:3000/estimations/validate/{selected-id}"
 		}'
 	></div>
 </div>

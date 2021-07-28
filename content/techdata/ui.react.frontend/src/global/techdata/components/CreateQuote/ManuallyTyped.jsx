@@ -4,7 +4,7 @@ import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import ErrorMessage from './ErrorMessage';
 
-const ManuallyTyped = ({ 
+const ManuallyTyped = ({
   onClick, inputValue, setValue, label, validateCartEndpoint, onError, estimatedIdListEndpoint
 }) => {
   const [invalidCartName, setInvalidCartName] = useState(false);
@@ -35,12 +35,11 @@ const ManuallyTyped = ({
   const goToNext = async () => {
     try{
       if( estimatedIdListEndpoint ){
-        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint, { }); 
+        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint, { });
         if( items ){
           const filtered = items.filter((item) => item.configId === inputValue )
-          console.log('Coincidencia', filtered)
           if( filtered[0] ){
-            const newEndpoint = `${validateCartEndpoint}/${inputValue}`
+            const newEndpoint = validateCartEndpoint.replace('{selected-id}', inputValue)
             const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
             if(isValid)
               onClick(inputValue);
