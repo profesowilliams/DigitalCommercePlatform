@@ -5,10 +5,11 @@ import QuotePreviewNote from "./QuotePreviewNote";
 import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
+import Loader from '../Widgets/Loader';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const apiResponse = useGet(componentProp.uiServiceEndPoint);
+  const [apiResponse, isLoading] = useGet(componentProp.uiServiceEndPoint);
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
 
@@ -21,7 +22,8 @@ function QuotePreview(props) {
 
   return (
     <div className="cmp-quote-preview">
-      {apiResponse && (
+      <Loader visible={isLoading} />
+      {apiResponse && !isLoading && (
         <section>
           <ConfigGrid gridProps={componentProp}/>
           <div className="cmp-quote-preview__note">
