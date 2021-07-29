@@ -1148,7 +1148,18 @@ app.get("/typeahead", function (req, res) {
 
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
-    const { id, isEstimateId } = req.params;
+    const { id, isEstimateId } = req.query;
+
+    if (!req.headers["sessionid"] || !id || !isEstimateId) {
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+    }
+
     const response = {
         content: {
             "quotePreview":
