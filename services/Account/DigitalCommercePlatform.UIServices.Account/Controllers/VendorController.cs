@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
@@ -33,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         }
 
         [HttpGet]
-        [Route("vendor/connect")]
+        [Route("setVendorConnection")]
         public async Task<ActionResult> SetVendorConnections(string code, string vendor, string redirectURL)
         {
             SetVendorConnection.Request request = new SetVendorConnection.Request { Code = code, Vendor= vendor, RedirectURL = redirectURL };
@@ -63,6 +64,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         {
             GetVendorDisconnect.Request request = new GetVendorDisconnect.Request { Vendor = vendor};
             var response = await Mediator.Send(request).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("getVendorAuthorizeURL")]
+        public async Task<ActionResult> VendorAuthorizeURL([FromQuery] string vendor)
+        {
+            var response = await Mediator.Send(new getVendorAuthorizeURL.Request(vendor)).ConfigureAwait(false);
             return Ok(response);
         }
     }

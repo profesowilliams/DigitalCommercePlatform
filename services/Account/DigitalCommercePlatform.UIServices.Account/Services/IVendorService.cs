@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<List<VendorConnection>> GetVendorConnectionsAsync();
         Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request);
         Task<bool> VendorDisconnect(GetVendorDisconnect.Request request);
-
+        public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request);
     }
 }

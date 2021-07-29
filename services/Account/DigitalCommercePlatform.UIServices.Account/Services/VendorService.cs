@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
@@ -22,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public class VendorService : IVendorService
     {
         private readonly string _coreSecurityUrl;
+        private readonly string _VendorAutorizationURL;
         private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
@@ -35,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _coreSecurityUrl = appSettings.GetSetting(Globals.CoreSecurityUrl);
+            _VendorAutorizationURL = appSettings.GetSetting("Vendor.Login.Cisco.Url");
         }
 
         public static string[] GetAllowedVendorValues()
@@ -129,6 +132,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
             }
+        }
+       
+        public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request)
+        {
+            var url = string.Empty;
+            try
+            {
+                request.Vendor = string.IsNullOrEmpty(request.Vendor) ? "Cisco" : request.Vendor;
+                if (request.Vendor.ToLower() == "cisco")
+                    url = _VendorAutorizationURL;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
+                throw ex;
+            }
+            return Task.FromResult(url);
         }
     }
 }

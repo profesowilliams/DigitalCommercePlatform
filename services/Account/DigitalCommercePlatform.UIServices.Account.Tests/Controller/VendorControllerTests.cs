@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
@@ -96,6 +97,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
             var result = await controller.VendorDisconnect("Cisco").ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task VendorAuthorizeURL(ResponseBase<getVendorAuthorizeURL.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<getVendorAuthorizeURL.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.VendorAuthorizeURL("Cisco").ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
