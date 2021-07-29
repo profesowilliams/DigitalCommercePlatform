@@ -5,11 +5,14 @@ import QuotePreviewNote from "./QuotePreviewNote";
 import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
+import { getUrlParams } from "../../../../utils";
 import Loader from '../Widgets/Loader';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const [apiResponse, isLoading] = useGet(componentProp.uiServiceEndPoint);
+  const getDetailsId = ({ id, isEstimateId }) => [id, isEstimateId];
+  const [id, isEstimateId] = getDetailsId(getUrlParams());
+  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}`);
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
 
