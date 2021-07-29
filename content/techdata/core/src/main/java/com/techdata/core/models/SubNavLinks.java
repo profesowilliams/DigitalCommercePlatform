@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static com.techdata.core.util.Constants.*;
+
 public class SubNavLinks {
     protected static final Logger log = LoggerFactory.getLogger(SubNavLinks.class);
 
@@ -71,7 +73,7 @@ public class SubNavLinks {
 
 //        Does CF have any children
         ResourceResolver resourceResolver = cfResource.getResourceResolver();
-        Resource cfChildrenRoot = resourceResolver.getResource(cfResource.getPath() + Constants.CATALOG_CF_CHILDREN_FOLDER_SUFFIX);
+        Resource cfChildrenRoot = resourceResolver.getResource(cfResource.getPath() + CATALOG_CF_CHILDREN_FOLDER_SUFFIX);
 //        The children CFs are within a folder named with suffix '-children'
         if (null != cfChildrenRoot) {
 //            This CF has children
@@ -83,8 +85,9 @@ public class SubNavLinks {
                     SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage);
                     CatalogServiceConfiguration catalogServiceConfiguration =
                             currentPage.adaptTo(ConfigurationBuilder.class).as(CatalogServiceConfiguration.class);
+                    String keyVal = child.adaptTo(ValueMap.class).get(CATALOG_JSON_KEY_FIELD_NAME, StringUtils.EMPTY);
                     String url =
-                            catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + child.getName() + "&refinements=" + child.getName();
+                            catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + keyVal + "&refinements=" + keyVal;
                     link.setPagePath(url);
                     this.subNavLinkslist.add(link);
                 }
@@ -93,14 +96,14 @@ public class SubNavLinks {
     }
 
     private void populatePageData(Map<String, String> map) {
-        if (map.containsKey(Constants.CATALOG_OVERRIDE_NAME) && map.containsKey(Constants.CATALOG_NAME))
+        if (map.containsKey(CATALOG_OVERRIDE_NAME) && map.containsKey(CATALOG_NAME))
         {
-            this.pageTitle = map.get(Constants.CATALOG_OVERRIDE_NAME).isEmpty() ? map.get(Constants.CATALOG_NAME)  : map.get( Constants.CATALOG_OVERRIDE_NAME);
-            this.docCount = map.containsKey(Constants.CATALOG_DOCCOUNT) && !map.get(Constants.CATALOG_DOCCOUNT).isEmpty() ? map.get(Constants.CATALOG_DOCCOUNT) : StringUtils.EMPTY;
-            this.pageIcon = map.containsKey(Constants.CATALOG_MENU_ICON) ? map.get(Constants.CATALOG_MENU_ICON) :DEFAULT_FONT_AWESOME_ICON;
+            this.pageTitle = map.get(CATALOG_OVERRIDE_NAME).isEmpty() ? map.get(CATALOG_NAME)  : map.get( CATALOG_OVERRIDE_NAME);
+            this.docCount = map.containsKey(CATALOG_DOCCOUNT) && !map.get(CATALOG_DOCCOUNT).isEmpty() ? map.get(CATALOG_DOCCOUNT) : StringUtils.EMPTY;
+            this.pageIcon = map.containsKey(CATALOG_MENU_ICON) ? map.get(CATALOG_MENU_ICON) :DEFAULT_FONT_AWESOME_ICON;
             log.debug("this.pageTitle is {}", this.pageTitle);
         }else{
-            this.pageTitle = Constants.CATALOG_NO_NAME;
+            this.pageTitle = CATALOG_NO_NAME;
         }
     }
 
