@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -70,11 +70,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions
                     RuleFor(r => r.Items).Cascade(CascadeMode.Stop).NotNull()
                         .ChildRules(request =>
                         {
-                            request.RuleForEach(o => o).Where(p=>p.ProductId!=null);
+                            request.RuleForEach(o => o).Where(p => p.ProductId != null);
                         });
                 }
             }
         }
     }
 }
-

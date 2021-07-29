@@ -1,10 +1,10 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -150,7 +150,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetQuotePreview("1234",true,"cisco").ConfigureAwait(false);
+            var result = await controller.GetQuotePreview("1234", true, "cisco").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

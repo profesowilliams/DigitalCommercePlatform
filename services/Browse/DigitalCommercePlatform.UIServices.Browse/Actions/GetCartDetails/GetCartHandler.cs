@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;

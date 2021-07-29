@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -46,11 +46,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var cartDetails = await _contentService.GetSavedCartDetails(request);
-                    var getProductResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                var cartDetails = await _contentService.GetSavedCartDetails(request);
+                var getProductResponse = _mapper.Map<Response>(cartDetails);
+                return new ResponseBase<Response> { Content = getProductResponse };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

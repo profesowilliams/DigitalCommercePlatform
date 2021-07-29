@@ -1,6 +1,6 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
+﻿using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections
             {
                 var vendorConnections = _vendorService.GetVendorConnectionsAsync();
 
-                var response = new ResponseBase<Response> { Content = new Response {  Items = vendorConnections.Result } };
+                var response = new ResponseBase<Response> { Content = new Response { Items = vendorConnections.Result } };
                 return Task.FromResult(response);
             }
         }

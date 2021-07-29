@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string QuoteId { get; set;}
+            public string QuoteId { get; set; }
 
             public Request(string quioteId)
             {
@@ -47,6 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote
                 return new ResponseBase<Response> { Content = createByQuote };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

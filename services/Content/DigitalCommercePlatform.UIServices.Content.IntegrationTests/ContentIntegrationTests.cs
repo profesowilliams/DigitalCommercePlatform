@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalFoundation.Common.Client;
@@ -7,6 +6,7 @@ using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
 using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,6 @@ using Xunit.Abstractions;
 
 namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
 {
-
     public class UISetup : Setup
     {
         public override void AddClients(ITestHttpClientFactory factory, string serviceName)

@@ -2,13 +2,13 @@
 using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
-using DigitalCommercePlatform.UIServices.Content.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart.Internal;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
@@ -86,7 +86,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             }
         }
 
-
         //The middleTierHttpClient returns null
         //middleTierHttpClient needs to be fixed to return the right HTTP Response of a PATCH
         public async Task<AddCartItem.Response> AddItemCart(AddCartItem.Request request)
@@ -102,7 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             var cartURL = _appCartUrl.AppendPathSegment("/CreateByQuote").AppendPathSegment(QuoteId);
             try
             {
-                var createByQuote = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(cartURL,null,null).ConfigureAwait(false);
+                var createByQuote = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(cartURL, null, null).ConfigureAwait(false);
                 var result = createByQuote?.StatusCode ?? HttpStatusCode.OK;
 
                 var response = new GetCreateCartByQuote.Response();

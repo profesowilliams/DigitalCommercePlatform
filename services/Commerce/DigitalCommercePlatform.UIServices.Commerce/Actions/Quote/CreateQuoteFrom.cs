@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string QuoteId { get; set; }
             public string ConfirmationId { get; set; }
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _quoteService;
@@ -44,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 CreateModelResponse createModelResponse;
@@ -52,12 +54,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     case QuoteCreationSourceType.ActiveCart:
                         createModelResponse = await _quoteService.CreateQuoteFromActiveCart(request);
                         break;
+
                     case QuoteCreationSourceType.SavedCart:
                         createModelResponse = await _quoteService.CreateQuoteFromSavedCart(request);
                         break;
+
                     case QuoteCreationSourceType.EstimationId:
                         createModelResponse = await _quoteService.CreateQuoteFromEstimationId(request);
                         break;
+
                     default:
                         throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
@@ -89,9 +94,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     {
                         request.RuleFor(c => c.CreateFromType).NotNull().IsInEnum();
                         request.RuleFor(c => c).Must(IsValidCreateFromId).WithMessage("'CreateFromId' cannot be null");
-
                     });
             }
+
             private bool IsValidCreateFromId(CreateModelFrom r)
             {
                 return (r.CreateFromId != null || r.CreateFromType == QuoteCreationSourceType.ActiveCart);

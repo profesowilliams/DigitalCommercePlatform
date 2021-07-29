@@ -1,7 +1,7 @@
-using DigitalCommercePlatform.UIServices.Account.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -46,7 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Account
 
                 return new RenewalsServiceClient(binding, endpointAddress);
             });
-
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ISecurityService, SecurityService>();

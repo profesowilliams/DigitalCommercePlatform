@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,7 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.MyOrders
         public class Response
         {
             public MyOrdersDashboard items { get; set; }
-
         }
 
         public class MyOrdersHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -30,12 +29,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.MyOrders
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<MyOrdersHandler> _logger;
+
             public MyOrdersHandler(IAccountService accountService, IMapper mapper, ILogger<MyOrdersHandler> logger)
             {
                 _accountService = accountService;
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var myOrders = await _accountService.GetMyOrdersSummaryAsync(request);
@@ -43,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.MyOrders
                 return new ResponseBase<Response> { Content = getMyOrders };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

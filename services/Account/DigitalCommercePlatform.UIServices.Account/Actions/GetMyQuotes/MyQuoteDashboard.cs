@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,7 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes
         public class Response
         {
             public MyQuotes Items { get; set; }
-
         }
 
         public class MyQuotesHandler : IRequestHandler<Request, ResponseBase<Response>>
@@ -30,12 +29,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes
             private readonly IAccountService _accountService;
             private readonly IMapper _mapper;
             private readonly ILogger<MyQuotesHandler> _logger;
+
             public MyQuotesHandler(IAccountService accountService, IMapper mapper, ILogger<MyQuotesHandler> logger)
             {
                 _accountService = accountService;
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var myQuotes = await _accountService.MyQuotesSummaryAsync(request);
@@ -43,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes
                 return new ResponseBase<Response> { Content = getMyQuotes };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()

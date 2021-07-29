@@ -1,7 +1,6 @@
 ﻿using DigitalCommercePlatform.UIService.Browse;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
-using DigitalCommercePlatform.UIServices.Browse.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
@@ -17,6 +16,7 @@ using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
 using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authorization.Policy;
@@ -29,7 +29,6 @@ using Xunit.Abstractions;
 
 namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
 {
-
     public class UISetup : Setup
     {
         public override void AddClients(ITestHttpClientFactory factory, string serviceName)

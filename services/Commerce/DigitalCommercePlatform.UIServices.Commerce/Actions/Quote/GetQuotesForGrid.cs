@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -34,11 +34,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string manufacturer { get; set; }
             public string endUserName { get; set; }
 
-
             public Request()
             {
             }
         }
+
         public class Response
         {
             public long? TotalItems { get; set; }
@@ -46,8 +46,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public int? PageNumber { get; set; }
             public int? PageSize { get; set; }
             public IEnumerable<QuotesForGridModel> Items { get; set; }
-
         }
+
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;
@@ -65,43 +65,41 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             {
                 DateTime? dateFrom = null;
                 DateTime? dateTo = null;
-                 var createdFrom = request.CreatedFrom?.ToShortDateString();
+                var createdFrom = request.CreatedFrom?.ToShortDateString();
                 var createdTo = request.CreatedTo?.ToShortDateString();
                 if (createdFrom != null) { dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true)); };
                 if (createdTo != null) { dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true)); };
                 request.endUserName = string.IsNullOrWhiteSpace(request.endUserName) ? null : request.endUserName + "*";
 
                 var query = new FindModel()
-                    {
-                        CreatedBy = request.CreatedBy,
-                        SortBy = request.SortBy,
-                        SortAscending = string.IsNullOrWhiteSpace(request.SortDirection) ? false : request.SortDirection.ToLower().Equals("asc") ? true : false,
-                        Page = request.PageNumber,
-                        PageSize = request.PageSize,
-                        WithPaginationInfo = request.WithPaginationInfo,
-                        // Filters
-                        Id = request.QuoteIdFilter,
-                        VendorReference = request.VendorReference,
-                        CreatedFrom = dateFrom,
-                        Manufacturer = request.manufacturer,
-                        CreatedTo = dateTo,
-                        EndUserName=request.endUserName,
-                    };
-                    var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
-                    var getProductResponse = _mapper.Map<Response>(quoteDetails);
+                {
+                    CreatedBy = request.CreatedBy,
+                    SortBy = request.SortBy,
+                    SortAscending = string.IsNullOrWhiteSpace(request.SortDirection) ? false : request.SortDirection.ToLower().Equals("asc") ? true : false,
+                    Page = request.PageNumber,
+                    PageSize = request.PageSize,
+                    WithPaginationInfo = request.WithPaginationInfo,
+                    // Filters
+                    Id = request.QuoteIdFilter,
+                    VendorReference = request.VendorReference,
+                    CreatedFrom = dateFrom,
+                    Manufacturer = request.manufacturer,
+                    CreatedTo = dateTo,
+                    EndUserName = request.endUserName,
+                };
+                var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
+                var getProductResponse = _mapper.Map<Response>(quoteDetails);
 
-                    getProductResponse = new Response
-                    {
-                        Items = GetDummyAgreements(getProductResponse),
-                        TotalItems = quoteDetails?.Count,
-                        PageNumber = request.PageNumber,
-                        PageSize = request.PageSize,
-                        PageCount = (quoteDetails?.Count + request.PageSize - 1) / request.PageSize
-
-                    };
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                getProductResponse = new Response
+                {
+                    Items = GetDummyAgreements(getProductResponse),
+                    TotalItems = quoteDetails?.Count,
+                    PageNumber = request.PageNumber,
+                    PageSize = request.PageSize,
+                    PageCount = (quoteDetails?.Count + request.PageSize - 1) / request.PageSize
+                };
+                return new ResponseBase<Response> { Content = getProductResponse };
             }
-
 
             private List<QuotesForGridModel> GetDummyAgreements(Response response)
             {
@@ -133,6 +131,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 return quotes;
             }
         }
+
         public class GetQuotesValidator : AbstractValidator<Request>
         {
             public GetQuotesValidator(ISortingService sortingService)

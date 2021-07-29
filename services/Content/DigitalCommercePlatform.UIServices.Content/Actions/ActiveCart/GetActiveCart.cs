@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -38,9 +38,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                    var cartDetails = await _contentService.GetActiveCartDetails();
-                    var getProductResponse = _mapper.Map<Response>(cartDetails);
-                    return new ResponseBase<Response> { Content = getProductResponse };
+                var cartDetails = await _contentService.GetActiveCartDetails();
+                var getProductResponse = _mapper.Map<Response>(cartDetails);
+                return new ResponseBase<Response> { Content = getProductResponse };
             }
         }
     }

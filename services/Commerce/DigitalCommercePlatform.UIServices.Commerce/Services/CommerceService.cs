@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
-using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.ExceptionHandling;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
@@ -17,6 +16,7 @@ using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
@@ -47,6 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private string _appProductServiceURL;
         private static readonly Random getrandom = new Random();
         private readonly IMapper _mapper;
+
         public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
             ILogger<CommerceService> logger,
             IAppSettings appSettings,
@@ -88,19 +89,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
         {
-            var origin = string.IsNullOrWhiteSpace(orderParameters.Origin)?null: orderParameters.Origin.ToLower();
+            var origin = string.IsNullOrWhiteSpace(orderParameters.Origin) ? null : orderParameters.Origin.ToLower();
 
             if (origin == "web")
                 orderParameters.Origin = "Web";
             else if (origin == "edi")
                 orderParameters.Origin = "B2B";
-            else if (origin == "pe" )
+            else if (origin == "pe")
                 orderParameters.Origin = "Manual";
             else if (origin == "xml")
                 orderParameters.Origin = "B2B";
             else
                 orderParameters.Origin = null;
-            
+
             _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
@@ -124,7 +125,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return findOrdersDto;
         }
 
-
         public async Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request)
         {
             if (request.IsEstimateId)
@@ -133,10 +133,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return preview;
             }
             return await Task.FromResult(new QuotePreviewModel());
-
         }
-
-
 
         public static int GetRandomNumber(int min, int max)
         {
@@ -159,14 +156,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             catch (RemoteServerHttpException ex)
             {
                 _logger.LogError(ex, "Exception at : " + nameof(CommerceService));
-                throw new UIServiceException( ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at Generating Quote grid: " + nameof(CommerceService));
                 throw ex;
             }
-
         }
 
         public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
@@ -268,9 +264,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     createQuoteFrom.Items.Add(itemModel);
                 }
             }
-            //get order LEVEL and Type 
-
-
+            //get order LEVEL and Type
 
             var response = await CallCreateQuote(createQuoteFrom);
             return response;
@@ -278,7 +272,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
         {
-            // TO_DO: Missing implementation, so we return dummy response for now           
+            // TO_DO: Missing implementation, so we return dummy response for now
 
             var response = new CreateModelResponse
             {
@@ -305,7 +299,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
             _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
 
-
             try
             {
                 var url = _appConfigServiceURL.AppendPathSegment("find")
@@ -324,9 +317,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
 
-
                 MapEndUserAndReseller(configurationFindResponse, quotePreview); // Fix this using AutoMapper
-               
+
                 string productUrl = "";
                 string productId = "";
                 string manufacturer = "";
@@ -340,8 +332,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 foreach (var item in quotePreview.Items)
                 {
                     productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
-                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready                    
-                    item.Manufacturer = item.Manufacturer ??system;
+                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                    item.Manufacturer = item.Manufacturer ?? system;
                     manufacturer = item.Manufacturer ?? system;
                     arrManufacturer[i] = manufacturer;
                     arrProductIds[i] = productId;
@@ -357,13 +349,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                      SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
                      Manufacturer = arrManufacturer
                  });
-               
+
                 productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
 
                 ProductsModel product;
                 foreach (var line in quotePreview.Items)
                 {
-
                     product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
                     if (product != null && line != null)
                     {
@@ -373,13 +364,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         line.MFRNumber = product?.ManufacturerPartNumber;
                     }
                 }
-                
+
                 QuotePreviewModel response = new QuotePreviewModel
                 {
                     QuoteDetails = quotePreview
                 };
                 return response;
-
             }
             catch (Exception ex)
             {
@@ -440,7 +430,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 createModelFrom.Level = orderLevel;
                 createModelFrom.SalesOrg = "0100"; // read from user context once it is available
                 var customerAddress = GetAddress("CUS", false).Result;
-                // map customer address 
+                // map customer address
                 createModelFrom.ShipTo = _mapper.Map<ShipToModel>(customerAddress.ToList().FirstOrDefault().addresses.ToList().FirstOrDefault());
                 createModelFrom.Reseller = new ResellerModel
                 {
@@ -467,7 +457,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 Value = ""
             };
             createModelFrom.TargetSystem = "R3"; // verify logic for this
-
         }
 
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
@@ -499,6 +488,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return response;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

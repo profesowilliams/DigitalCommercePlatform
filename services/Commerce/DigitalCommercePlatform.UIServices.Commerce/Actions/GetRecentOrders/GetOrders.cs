@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System;
@@ -48,7 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             }
         }
 
-
         public class PagingDto
         {
             public PagingDto(string sortBy, string sortDirection, int pageNumber, int pageSize, bool withPaginationInfo)
@@ -69,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class FilteringDto
         {
-            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,string status,string orderMethod)
+            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo, string status, string orderMethod)
             {
                 Id = id;
                 CustomerPO = customerPO;
@@ -88,7 +87,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string Status { get; }
             public string OrderMethod { get; }
         }
-
 
         public class Response
         {
@@ -116,6 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 _statusMappingService = statusMappingService ?? throw new ArgumentNullException(nameof(statusMappingService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var sortingProperty = _sortingService.GetSortingPropertyValue(request.SortBy);
@@ -135,7 +134,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
                     WithPaginationInfo = request.WithPaginationInfo,
-                    Origin=request.OrderMethod
+                    Origin = request.OrderMethod
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
@@ -158,12 +157,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             private readonly ISortingService _sortingService;
             private readonly IStatusMappingService _statusMappingService;
 
-
             public GetOrdersValidator(ISortingService sortingService, IStatusMappingService statusMappingService)
             {
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
                 _statusMappingService = statusMappingService ?? throw new ArgumentNullException(nameof(statusMappingService));
-
 
                 var validProperties = _sortingService.GetValidProperties();
                 var validSortingValues = _sortingService.GetValidSortingValues();

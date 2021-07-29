@@ -1,9 +1,9 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
-using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;

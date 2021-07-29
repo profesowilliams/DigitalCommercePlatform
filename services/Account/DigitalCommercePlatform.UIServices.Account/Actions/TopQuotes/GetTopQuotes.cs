@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Actions.Abstract;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -20,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
         {
             public int? Top { get; set; }
             public string SortDirection { get; set; } = "desc";
-            public string Sortby{ get; set; }
+            public string Sortby { get; set; }
         }
 
         public class Response
@@ -33,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
             private readonly IAccountService _accountQueryService;
             private readonly IMapper _mapper;
             private readonly ILogger<GetTopQuotesQueryHandler> _logger;
+
             public GetTopQuotesQueryHandler(IAccountService accountQueryService,
                 IMapper mapper,
                 ILogger<GetTopQuotesQueryHandler> logger
@@ -42,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
                 _mapper = mapper;
                 _logger = logger;
             }
+
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 FindResponse<IEnumerable<QuoteModel>> quotes = await _accountQueryService.GetTopQuotesAsync(request);
@@ -49,6 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
                 return new ResponseBase<Response> { Content = getQuotes };
             }
         }
+
         public class Validator : AbstractValidator<Request>
         {
             public Validator()
