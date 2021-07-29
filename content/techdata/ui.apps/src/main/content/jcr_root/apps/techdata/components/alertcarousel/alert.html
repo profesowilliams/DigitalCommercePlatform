@@ -4,9 +4,9 @@
 			<div class="dp-carousel__alert-text text-shadow-1">${properties.alertTitle}</div>
 			<div class="dp-carousel__alert-buttons">
 				<sly data-sly-repeat.item="${nodes.actionItems.listChildren}">
-					<a data-sly-test="${item.linkText}" data-sly-use.labelParsed="${'label.js' @ title=item.linkText}"
-						href="${item.linkUrl}.html" class="dp-carousel__alert-button">
-						<span> ${labelParsed.titles @ context = 'html' } </span>
+					<a data-sly-test="${item.linkText}" data-sly-use.alertItem="${'label.js' @ title=item.linkText, link=item.linkUrl}"
+						href="${alertItem.linkUrl}" class="dp-carousel__alert-button">
+						<span> ${alertItem.titles @ context = 'html' } </span>
 						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor"
 							xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd"

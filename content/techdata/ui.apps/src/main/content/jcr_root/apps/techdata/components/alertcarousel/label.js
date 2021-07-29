@@ -6,7 +6,10 @@ use(function () {
     return wrapped;
   });
 
+  var parsedLinkUrl = this.link ? (this.link.startsWith("http") ? this.link : this.link + ".html") : "blank";
+
   return {
-    titles: titles
+    titles: titles,
+    linkUrl: parsedLinkUrl
   };
 });
