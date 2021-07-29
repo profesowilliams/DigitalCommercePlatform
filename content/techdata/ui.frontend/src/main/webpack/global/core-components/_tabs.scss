@@ -118,15 +118,15 @@
     }
   }
 }
-
 // Wrapped 5 tabs in a row
 
 .cmp-five-icon-tabs {
   width: unset; //test for AEM local
   .cmp-tabs {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 
     &__tablist {
       display: flex;
@@ -153,9 +153,15 @@
       margin-top: rem(14px);
       margin-bottom: rem(18px);
       transition: border-color 0.3s;
+      background-color: get-color(brand-white);
+      padding: rem(10px);
       img {
         width: auto;
-        margin: 0 auto;
+        margin: 0 auto;   
+      }
+      &:hover {        
+        background-color: get-color(brand-light-blue) !important;
+        padding: rem(10px);
       }
     }
     &__tabpanel--text {
@@ -174,16 +180,19 @@
       border-bottom: 0;
       font-size: $font-size-medium;
       width: rem(230px);
-
       &.cmp-tabs__tab--active,
       &:hover,
       &:active {
         outline: 0 none;
-
         .cmp-tabs__tab-image {
-          border-color: transparent !important;
+          svg path {
+            fill: get-color(brand-white);
+          }
         }
       }
     }
   }
 }
+
+
+
