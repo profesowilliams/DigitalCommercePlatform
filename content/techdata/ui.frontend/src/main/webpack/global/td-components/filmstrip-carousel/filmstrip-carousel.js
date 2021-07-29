@@ -13,4 +13,4 @@
         lazyLoad: 'ondemand',
         infinite: true
     });
-})($);
+})();
