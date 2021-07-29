@@ -77,6 +77,10 @@
         &__image {
           width: 100%;
           height: auto;
+          @include tablet {
+            min-height: 450px;
+            object-fit: cover;
+          }
         }
       }
     }

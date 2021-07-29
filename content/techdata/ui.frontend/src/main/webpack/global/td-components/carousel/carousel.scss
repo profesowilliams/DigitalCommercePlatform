@@ -16,6 +16,9 @@
       //d-flex font-12
       display: flex;
       align-items: center;
+      @include tablet {
+        justify-content: center;
+      }
     }
     .dp-carousel__nav-label{
       font-size: .75rem;
@@ -33,7 +36,7 @@
         background: get-color(brand-black);
         border-radius: 50%;
         width: 10px;
-        height: auto;
+        height: 10px;
         text-indent: -3000px;
       }
       &::before{
@@ -117,6 +120,11 @@
       color: get-color(brand-white);
       text-shadow: 0 rem(2px) rem(4px) rgba(0,0,0,0.5);
       margin-bottom: rem(10px);
+      @include tablet {
+        font-size: rem(13px);
+        font-weight: bold;
+        line-height: rem(18px);
+      }
     }
     .dp-carousel__alert-buttons{
       //col-md-auto d-flex align-items-end position-relative
@@ -125,6 +133,9 @@
       display: flex;
       align-items: flex-end;
       @include tablet {
+        font-size: rem(12px);
+        letter-spacing: 0;
+        line-height: rem(13px);
         flex-direction: column;
         align-items: flex-start;
       }

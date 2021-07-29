@@ -1,5 +1,12 @@
 
 .experiencefragment {
+    &.cmp-experiencefragment--header {
+        .megamenu {
+            @include tablet {
+                display: none;
+            }
+        }
+    }
     &.cmp-experiencefragment--header-mobile {
         .megamenu {
             display: none;
