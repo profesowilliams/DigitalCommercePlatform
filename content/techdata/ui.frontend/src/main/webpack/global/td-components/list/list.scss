@@ -1,9 +1,12 @@
 .dp-list,
 .cmp-list {
-  figure > svg {
-    width: 100%;
-    height: 100%;
+  &--svg-size{
+    figure > svg {
+      width: rem(72px);
+      height: rem(72px);
+    }
   }
+
   &--teaser {
     .cmp-list {
       display: flex;
