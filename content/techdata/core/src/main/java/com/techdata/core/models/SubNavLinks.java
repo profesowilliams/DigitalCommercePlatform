@@ -74,6 +74,12 @@ public class SubNavLinks {
 //        Does CF have any children
         ResourceResolver resourceResolver = cfResource.getResourceResolver();
         Resource cfChildrenRoot = resourceResolver.getResource(cfResource.getPath() + CATALOG_CF_CHILDREN_FOLDER_SUFFIX);
+        String secNavKey =
+                resourceResolver.getResource(cfResource.getPath() + "/jcr:content/data/master").adaptTo(ValueMap.class).get("key", StringUtils.EMPTY);
+        CatalogServiceConfiguration catalogServiceConfiguration =
+                currentPage.adaptTo(ConfigurationBuilder.class).as(CatalogServiceConfiguration.class);
+        this.pagePath =
+                catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + secNavKey + "&refinements=" + secNavKey;
 //        The children CFs are within a folder named with suffix '-children'
         if (null != cfChildrenRoot) {
 //            This CF has children
@@ -83,13 +89,15 @@ public class SubNavLinks {
                     this.hasChildPages = "true";
                     log.debug("processing resource at path {}", child.getPath());
                     SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage);
-                    CatalogServiceConfiguration catalogServiceConfiguration =
-                            currentPage.adaptTo(ConfigurationBuilder.class).as(CatalogServiceConfiguration.class);
-                    String keyVal = child.adaptTo(ValueMap.class).get(CATALOG_JSON_KEY_FIELD_NAME, StringUtils.EMPTY);
-                    String url =
-                            catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + keyVal + "&refinements=" + keyVal;
-                    link.setPagePath(url);
-                    this.subNavLinkslist.add(link);
+
+                    Resource masterResource = resourceResolver.getResource(child.getPath() + "/jcr:content/data/master");
+                    if(masterResource != null) {
+                        String keyVal = masterResource.adaptTo(ValueMap.class).get(CATALOG_JSON_KEY_FIELD_NAME, StringUtils.EMPTY);
+                        String url =
+                                catalogServiceConfiguration.productMenuLinkPrefix() + "?cs=" + keyVal + "&refinements=" + keyVal;
+                        link.setPagePath(url);
+                        this.subNavLinkslist.add(link);
+                    }
                 }
             }
         }// else no children for this CF
