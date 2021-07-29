@@ -100,7 +100,7 @@
 }
 
 .cmp-widget{
-  
+
   .cmp-text-input{
       width: 100%;
       display: block;
@@ -163,6 +163,9 @@
       color: get-color(brand-button-blue);
       text-decoration: underline;
       cursor: pointer;
+    }
+    .cmp-error-message__link {
+      padding: 5px;
     }
   }
 }
