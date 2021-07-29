@@ -6,33 +6,25 @@ import com.adobe.cq.dam.cfm.FragmentTemplate;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMException;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.techdata.core.util.Constants;
 import com.techdata.core.util.UIServiceHelper;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.api.resource.ModifiableValueMap;
-import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 
-import static com.techdata.core.util.Constants.*;
-import static com.techdata.core.util.Constants.VENDOR_ICON;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
@@ -101,15 +93,11 @@ class VendorServiceAPIImplTest {
     }
 
     @Test
-    void testFetchDataFromAPI() throws ContentFragmentException, WCMException, PersistenceException {
+    void testFetchDataFromAPI() throws ContentFragmentException, WCMException, IOException {
         String title = "Acer";
         String name = "acer";
         JsonObject testJsonData = new JsonParser().parse(TEST_JSON_DATA_STR).getAsJsonObject();
-//        JsonParser parser = new JsonParser();
-//        JsonElement tradeElement = parser.parse(TEST_JSON_DATA_STR);
-//        JsonArray testJsonData = tradeElement.getAsJsonArray();
-        when(uiServiceHelper.getUIServiceJSONResponse(
-                API_URL, "111jjj111")).thenReturn(testJsonData);
+        when(uiServiceHelper.getVendorDataFromAEM(API_URL, resourceResolver)).thenReturn(testJsonData);
         when(resourceResolver.getResource(CF_PATH)).thenReturn(contentFragmentRootResource);
         when(resourceResolver.getResource(Constants.VENDOR_CF_MODEL_PATH)).thenReturn(template);
         when(template.adaptTo(FragmentTemplate.class)).thenReturn(fragmentTemplate);
@@ -125,38 +113,7 @@ class VendorServiceAPIImplTest {
         when(contentResource.getChild("root/container")).thenReturn(containerResource);
         when(contentResource.adaptTo(ModifiableValueMap.class)).thenReturn(vendorPageContentResourceProps);
         when(resourceResolverForPage.create(any(), any(), any())).thenReturn(testResource);
-        underTest.fetchDataFromAPI(resourceResolver);
-    }
-
-    private Map<String, Object> prepareMapData() {
-        Map<String, Object> pageDataMap = new HashMap<>();
-        pageDataMap.put("paragraphScope", "all");
-        pageDataMap.put("displayMode", "multi");
-        pageDataMap.put("variationName", "master");
-        pageDataMap.put("text", "<h1>Lorem ipsum</h1>");
-        pageDataMap.put("elementNames", new String[] {
-                VENDOR_NAME, VENDOR_TITLE, VENDOR_DESIGNATION, VENDOR_ABBR, OVERVIEW, VENDOR_ICON
-        });
-        pageDataMap.put("sling:resourceType", "techdata/components/contentfragment");
-        pageDataMap.put("fragmentPath", null);
-        return pageDataMap;
-    }
-
-    private JsonArray buildJsonObject() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("vendor-name", "Acer");
-        jsonObject.addProperty("vendor-title", "Acer");
-        jsonObject.addProperty("vendor-abbreviation", "acer");
-        jsonObject.addProperty("vendor-designation", "TRUE");
-        jsonObject.addProperty("overview", "TRUE");
-        jsonObject.addProperty("vendor-icon", "svg:blah");
-        jsonObject.addProperty("Solutions", "experience-fragments:variation/web,experience-fragments:variation/pinterest");
-        jsonObject.addProperty("vendor-category", "properties:orientation/square,properties:orientation/portrait");
-        jsonObject.addProperty("vendor-product-label", "Browse Products by Acer");
-        jsonObject.addProperty("vendor-product-link", "shop-url");
-        JsonArray jsonArray = new JsonArray();
-        jsonArray.add(jsonObject);
-        return jsonArray;
+        Assertions.assertEquals(1, underTest.fetchDataFromAPI(resourceResolver));
     }
 
     private static final String TEST_JSON_DATA_STR = "{\n" +

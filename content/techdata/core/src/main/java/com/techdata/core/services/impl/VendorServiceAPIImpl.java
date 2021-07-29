@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -47,9 +48,8 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
     private ContentFragmentUtil fragmentUtil = new ContentFragmentUtil();
 
     @Override
-    public int fetchDataFromAPI(ResourceResolver resolver) throws PersistenceException, ContentFragmentException, WCMException {
-        JsonObject vendorJsonResponse =
-                uiServiceHelper.getUIServiceJSONResponse(importAPI, "111jjj111");
+    public int fetchDataFromAPI(ResourceResolver resolver) throws IOException, ContentFragmentException, WCMException {
+        JsonObject vendorJsonResponse = uiServiceHelper.getVendorDataFromAEM(importAPI, resolver);
         JsonArray vendorsArray = vendorJsonResponse.getAsJsonObject("content").getAsJsonArray("items");
         saveVendorsAsContentFragment(vendorsArray, resolver);
         return vendorsArray.size();

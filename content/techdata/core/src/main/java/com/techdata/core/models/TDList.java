@@ -80,7 +80,7 @@ public class TDList implements List {
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
                 ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
                 if(contentFragment != null){
-                    VendorListItem vi = TDListItem.getVendorListItem(contentFragment, resource, cfListItem);
+                    VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem);
                     listOfVendorItems.add(vi);
                 }
             }else{

@@ -10,14 +10,11 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Model(adaptables = {SlingHttpServletRequest.class, Resource.class}, adapters = Image.class, resourceType = TDImage.RESOURCE_TYPE)
 public class TDImage implements Image {
 
     private static final String SVG_EXTENSTION = ".svg";
-    private static final Logger log = LoggerFactory.getLogger(TDImage.class);
 
     public static final String RESOURCE_TYPE = "techdata/components/image";
 
@@ -63,8 +60,8 @@ public class TDImage implements Image {
 
     public String getSvg() {
         Resource imageResource = request.getResource();
-        String svgBinary = (imageResource!=null ? imageResource.adaptTo(ExtractSVGModel.class).getBinary() : "<svg></svg>");
-        return svgBinary;
+        ExtractSVGModel extractSVGModel = imageResource.adaptTo(ExtractSVGModel.class);
+        return (extractSVGModel!=null ? extractSVGModel.getBinary() : "<svg></svg>");
     }
 
     /** @deprecated */

@@ -5,7 +5,6 @@ import com.day.cq.wcm.api.Page;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.techdata.core.slingcaconfig.CatalogServiceConfiguration;
-import com.techdata.core.util.Constants;
 import com.techdata.core.util.ContentFragmentHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;

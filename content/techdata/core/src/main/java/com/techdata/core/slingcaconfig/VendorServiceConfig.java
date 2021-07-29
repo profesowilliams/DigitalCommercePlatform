@@ -12,5 +12,5 @@ public @interface VendorServiceConfig {
     String contentFragmentPath() default "/content/dam/techdata/tech-data-dot-com/global/content-fragments/vendors";
 
     @AttributeDefinition(name = "Vendors Import API", description = "Provide import API for vendors")
-    String importAPI() default "http://localhost:3000/vendors";
+    String importAPI() default "/var/data/vendors";
 }
