@@ -1,5 +1,5 @@
 .cmp-product-lines-grid {
-  height: auto;
+  height: 50%;
   width: 100%;
   overflow: auto;
   &__header {
@@ -69,9 +69,29 @@
     }
   }
   &__item-information {
+    width: rem(200px);
     &__image-link {
       width: 90px;
       height: 50px;
+      display: inline-block;
+    }
+    &__box-text {
+      display: inline-block;
+      text-align: justify;
+      font-size: 12px;
+      vertical-align: top;
+      width: 68%;
+      &__header {
+        padding-top: 5px;
+        font-weight: bold;
+        color: get-color(brand-button-blue);
+      }
+      &__content {
+        font-size: 10px;
+        &__more {
+          white-space: pre-wrap;
+        }
+      }
     }
   }
 }
