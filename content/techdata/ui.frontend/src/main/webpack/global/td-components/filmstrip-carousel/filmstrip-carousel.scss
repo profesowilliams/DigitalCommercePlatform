@@ -89,3 +89,39 @@
     justify-content: space-between;
     flex-direction: row;
 }
+
+.slick-dots {
+    li {
+      button {
+        &:before {
+          font-size: rem(10px);
+          border: solid rem(1px) get-color(text-light-charcoal);
+          border-radius: 50%;
+          line-height: rem(10px);
+          width: rem(8px);
+          height: rem(8px);
+          opacity: unset;
+          color: transparent;
+        }
+        &:hover::before{        
+          border: solid 0 get-color(text-light-charcoal);
+          font-size: rem(12px);
+          line-height: rem(14px);
+          opacity: unset;
+          color: get-color(brand-blue);
+        }
+      }
+      &.slick-active {
+        button {
+          &:before {
+            border: solid 0 get-color(text-light-charcoal);
+            font-size: rem(12px);
+            line-height: rem(14px);
+            opacity: unset;
+            color: get-color(brand-blue);
+          }
+        }
+      }
+    }
+  }
+  
