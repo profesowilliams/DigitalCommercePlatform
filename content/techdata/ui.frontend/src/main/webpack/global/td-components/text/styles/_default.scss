@@ -65,6 +65,12 @@
   &--onLight-theme {
     color: get-color(text-light-gray)!important;
   }
+  &--brand-blue {
+    color: get-color(brand-blue)!important;
+  }
+  &--brand-sky-blue {
+    color: get-color(brand-light-blue)!important;
+  }
 }
 
 .cmp-text-input {
