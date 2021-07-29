@@ -7,10 +7,9 @@
     font-family: $font-family-sans-serif;
     z-index: 1;
     position: absolute;
-    transform: translate(0px, -6px);
     &__title {
       margin-left: rem(16px);
-      font-size: $font-size-large;
+      font-size: $font-size-base;
     }
     &__expand-collapse {
       margin-left: rem(16px);
