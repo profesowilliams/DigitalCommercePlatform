@@ -2,7 +2,6 @@
 // Stylesheets
 import "./main.scss";
 
-import $ from '../global/main';
 import 'slick-carousel';
 
 // Javascript or Typescript

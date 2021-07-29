@@ -1,189 +1,28 @@
-//Component Mixins
-
-@mixin nav-button {
-	background-color: transparent;
-	color: get-color(brand-text-gray);
-	padding-block-start: rem(12px);
-	padding-block-end: rem(12px);
-	padding-inline-start: rem(32px);
-	padding-inline-end: rem(32px);
-	transition: all 200ms ease;
-	text-align: left;
-	width: 100%;
-
-	&:hover {
-		background-color: get-color(td-primary-blue);
-		color: get-color(brand-white);
-
-		svg {
-			color: get-color(brand-white);
-		}
-	}
-}
-
-@mixin reset-list-styles {
-	list-style-type: none;
-	text-decoration: none;
-}
-
-@mixin reset-spacing-styles {
-	padding: 0;
-	margin: 0;
-}
-
-@mixin chevron-icon {
-	color: get-color(brand-nav-blue);
-	margin-left: rem(8px);
-	transition: all 200ms ease;
-	width: rem(24px);
-}
-
-//Search Bar styles
 .cmp-searchbar {
-	min-width: rem(250px);
-	width: 100%;
-
-	&__container {
-		display: flex;
-		align-items: center;
-	}
-
-	&__input {
-		border: 1px solid get-color(brand-black);
-		border-radius: rem(6px) 0 0 rem(6px);
-		outline: none;
-		padding: rem(8px) rem(16px);
-		width: 100%;
-
-		&::placeholder{
-			color: get-color(brand-text-gray);
-		}
-	}
-
-	&__button {
-		background-color: get-color(brand-black);
-		border: rem(1.5px) solid get-color(brand-black);
-		padding: rem(9px) rem(17px);
-		transition: all 200ms ease;
-
-		&:hover {
-			background-color: get-color(brand-text-gray);
-			cursor: pointer;
-		}
-	}
-
-	&__icon {
-		color: get-color(brand-white);
-	}
-
-	&__context-menu {
-		box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
-	}
 }
-
-//Search Area styles
-.cmp-searcharea {
-	@include reset-list-styles;
-	@include reset-spacing-styles;
-	box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
-	margin: 0 rem(10px) 0 rem(10px);
-	max-height: 0;
-	transition: all 200ms ease;
-	overflow: scroll;
-
-	&--checked {
-		max-height: rem(250px);
-	}
-	
-	&__button {
-		@include nav-button;
-	}
-
-	&__selectedarea {
-		border-bottom: rem(2px) solid get-color(brand-black);
-		margin-left: 0;
-		margin-right: 0;
-		transition: all 200ms ease;
-
-		&--checked {
-			margin-left: rem(10px);
-			margin-right: rem(10px);
-		}
-
-		&-button {
-			@include nav-button;
-			display: flex;
-			align-items: center;
-			padding-block-start: rem(12px);
-			padding-block-end: rem(4px);
-			padding-inline-start: rem(16px);
-			padding-inline-end: rem(4px);
-		}
-
-		&-icon {
-			@include chevron-icon;
-		}
-	}
+.cmp-searchbar__form {
 }
-
-//Search Suggestions styles
-.cmp-searchsuggestions {
-	@include reset-list-styles;
-	@include reset-spacing-styles;
-
-	&:first-child {
-		color: get-color(brand-nav-blue);
-	}
-
-	&__suggestion, 
-	&__link {
-		@include reset-list-styles;
-		@include reset-spacing-styles;
-		color: get-color(brand-text-gray);
-	}
-
-	&__suggestion {
-		display: flex;
-		align-items: center;
-		transition: all 200ms ease;
-		padding: rem(8px) rem(16px);
-
-		&:first-child {
-			justify-content: center;
-			margin-top: rem(8px);
-
-			.cmp-searchsuggestions__link {
-				color: get-color(brand-nav-blue);
-			}
-		}
-
-		&:hover {
-			background-color: map-get($color-palette, 'td-lighter-gray');
-			color: get-color(brand-white);
-		}
-	}
+.cmp-searchbar__field {
 }
-
-//Search Bar Refinements styles
-.cmp-searchrefinements {
-	@include reset-spacing-styles;
-
-	&__link, 
-	&__item,
-	&__refinement {
-		@include reset-list-styles;
-		@include reset-spacing-styles;
-		color: get-color(brand-nav-blue);
-	}
-
-	&__item {
-		padding-left: rem(4px);
-		
-		&-icon {
-			@include chevron-icon;
-		}
-	}
-
+.cmp-searchbar__icon {
+}
+.cmp-searchbar__input {
+}
+.cmp-searchbar__loading-indicator {
+}
+.cmp-searchbar__clear {
+}
+.cmp-searchbar__clear-icon {
+}
+.cmp-searchbar__results {
+}
+.cmp-searchbar__item {
+}
+.cmp-searchbar__item--is-focused {
+}
+.cmp-searchbar__item-mark {
+}
+.cmp-searchbar__item-title {
 }
 
 .experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
@@ -245,7 +84,7 @@
 	right: 0.8rem;
 	left: unset;
 }
-/* .cmp-searchbar__input {
+.cmp-searchbar__input {
 	border: 1px solid lightgray;
 	outline: none;
 	padding: 0;
@@ -264,7 +103,7 @@
 		letter-spacing: 0;
 		color: #153B51;
 	}
-} */
+}
 .cmp-searchbar__loading-indicator {
 	right: 0.8rem;
 	left: unset;

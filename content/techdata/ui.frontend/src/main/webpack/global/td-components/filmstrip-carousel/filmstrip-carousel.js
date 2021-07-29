@@ -1,5 +1,3 @@
-import $ from "../../main";
-
 (function() {
     $('.center').slick({
         infinite: true,
