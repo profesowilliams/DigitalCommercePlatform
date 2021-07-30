@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 (function() {
     $('.center').slick({
         infinite: true,
@@ -13,4 +15,4 @@
         lazyLoad: 'ondemand',
         infinite: true
     });
-})();
+})($);
