@@ -14,11 +14,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Orders
         public OrderData Shipped { get; set; }
     }
 
-
+    [ExcludeFromCodeCoverage]
     public class OrderData
     {
-        public long Amount { get; set; }
+        public decimal Amount { get; set; }
         public string FormattedAmount { get; set; }
         public string Percentage { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class OrderStatsDto
+    {
+        public OrderStatsDataDto[] Data { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class OrderStatsDataDto
+    {
+        public string Value { get; set; }
+        public string Count { get; set; }
+        public string TotalValue { get; set; }
+        public string Currency { get; set; }
+    }
+
 }

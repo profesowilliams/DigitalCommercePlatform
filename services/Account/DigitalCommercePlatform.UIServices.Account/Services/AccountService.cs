@@ -257,26 +257,106 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)
         {
-            int maxForTotalOrders = 43_000;
-            var randomGenerator = new Random();
+            var createdFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var createdTo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-            var totalAmount = randomGenerator.Next(maxForTotalOrders);
-            var processedAmount = randomGenerator.Next(totalAmount);
-            var shippedAmount = randomGenerator.Next(processedAmount);
+            if (!request.IsMonthly)
+            {
+                var (createdFromItem, createdToItem) = GetQuarterDates();
+                createdFrom = createdFromItem;
+                createdTo = createdToItem;
+            }
 
-            var processedPercentage = ((processedAmount / (float)totalAmount) * 100).ToString("F") + "%";
-            var shippedPercentage = ((shippedAmount / (float)totalAmount) * 100).ToString("F") + "%";
+            var url = _ordersServiceUrl.AppendPathSegment("stats")
+                        .SetQueryParams(new
+                        {
+                            key = "status",
+                            createdFrom = createdFrom.ToString("yyyy-MM-dd"),
+                            createdTo = createdTo.ToString("yyyy-MM-dd")
+                        });
+
+            var orderStatsDto = await _middleTierHttpClient.GetAsync<OrderStatsDto>(url);
+
+            if (orderStatsDto?.Data == null) 
+            {
+                return new MyOrdersDashboard();
+            }
+
+            var orderStatsUsdOnlyDto = orderStatsDto.Data.Where(i => "USD".Equals(i.Currency, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (orderStatsUsdOnlyDto == null || !orderStatsUsdOnlyDto.Any())
+            {
+                return new MyOrdersDashboard();
+            }
+
+            var inProcess = GetAmmountFor(orderStatsUsdOnlyDto,"IN_PROCESS");
+            var onHold = GetAmmountFor(orderStatsUsdOnlyDto,"ON_HOLD");
+            var shipped = GetAmmountFor(orderStatsUsdOnlyDto,"SHIPPED");
+            var open = GetAmmountFor(orderStatsUsdOnlyDto,"OPEN");
+            
+            var total = inProcess + onHold + shipped + open;
+            var processed = inProcess + onHold + shipped;
+
+            var processedPercentage = ((processed / total) * 100).ToString("F") + "%";
+            var shippedPercentage = ((shipped / total) * 100).ToString("F") + "%";
 
             var myOrders = new MyOrdersDashboard
             {
                 CurrencyCode = "USD",
                 CurrencySymbol = "$",
                 IsMonthly = request.IsMonthly,
-                Total = new OrderData { Amount = totalAmount, FormattedAmount = string.Format("{0:N2}", totalAmount), Percentage = "100%" },
-                Processed = new OrderData { Amount = processedAmount, FormattedAmount = string.Format("{0:N2}", processedAmount), Percentage = processedPercentage },
-                Shipped = new OrderData { Amount = shippedAmount, FormattedAmount = string.Format("{0:N2}", shippedAmount), Percentage = shippedPercentage }
+                Total = new OrderData { Amount = total, FormattedAmount = string.Format("{0:N2}", total), Percentage = "100%" },
+                Processed = new OrderData { Amount = processed, FormattedAmount = string.Format("{0:N2}", processed), Percentage = processedPercentage },
+                Shipped = new OrderData { Amount = shipped, FormattedAmount = string.Format("{0:N2}", shipped), Percentage = shippedPercentage }
             };
-            return await Task.FromResult(myOrders);
+            return myOrders;
+        }
+
+        private (DateTime createdFrom, DateTime createdTo) GetQuarterDates()
+        {
+            var currentDate = DateTime.Now.Date;
+            
+            var startOfQuarter01 = new DateTime(currentDate.Year, 1, 1);
+            var endOfQuarter01 = new DateTime(currentDate.Year, 3, 31);
+
+            var startOfQuarter02 = new DateTime(currentDate.Year, 4, 1);
+            var endOfQuarter02 = new DateTime(currentDate.Year, 6, 30);
+
+            var startOfQuarter03 = new DateTime(currentDate.Year, 7, 1);
+            var endOfQuarter03 = new DateTime(currentDate.Year, 9, 30);
+
+            var startOfQuarter04 = new DateTime(currentDate.Year, 10, 1);
+
+
+
+            if (currentDate >= startOfQuarter01 && currentDate <= endOfQuarter01)
+            {
+                return (startOfQuarter01, currentDate);
+            }
+
+            if (currentDate >= startOfQuarter02 && currentDate <= endOfQuarter02)
+            {
+                return (startOfQuarter02, currentDate);
+            }
+
+            if (currentDate >= startOfQuarter03 && currentDate <= endOfQuarter03)
+            {
+                return (startOfQuarter03, currentDate);
+            }
+
+            return (startOfQuarter04, currentDate);
+        }
+
+        private decimal GetAmmountFor(List<OrderStatsDataDto> orderStatsDataDtos, string orderStatus)
+        {
+            var ammount = orderStatsDataDtos.Where(i => orderStatus.Equals(i.Value, StringComparison.OrdinalIgnoreCase)).SingleOrDefault()?.TotalValue;
+            if (ammount == null)
+            {
+                return 0;
+            }
+            return decimal.Parse(ammount);
+            // If some of values are null we are returning zero. If IN_PROCESS is null it means zero orders in process
+            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements 
         }
 
         public async Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request)
