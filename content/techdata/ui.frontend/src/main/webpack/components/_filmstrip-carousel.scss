@@ -1,5 +1,4 @@
-@import 'main';
-
+@import "main";
 
 .cmp-filmstrip-carousel {
   width: rem(720px);
@@ -87,44 +86,72 @@
 .slick-slide {
   margin: 0 rem(20px);
   width: auto !important;
+  a {
+    text-decoration: none !important;
+    img {
+        display: block;
+        width: 100%;
+        height: rem(170px);
+        border: 0 solid transparent;
+        box-shadow: 0 0 0 0 transparent;
+    }
+  }
 }
 .slick-track {
   display: flex !important;
   justify-content: space-between;
   flex-direction: row;
+  a {
+    text-decoration: none !important;
+    img {
+        display: block;
+        width: 100%;
+        height: rem(170px);
+        border: 0 solid transparent;
+        box-shadow: 0 0 0 0 transparent;
+    }
+  }
 }
 
 .slick-dots {
   li {
-    button {
-      &:before {
-        font-size: rem(10px);
-        border: solid rem(1px) get-color(text-light-charcoal);
-        border-radius: 50%;
-        line-height: rem(10px);
-        width: rem(8px);
-        height: rem(8px);
-        opacity: unset;
-        color: transparent;
-      }
-      &:hover::before{        
-        border: solid 0 get-color(text-light-charcoal);
-        font-size: rem(12px);
-        line-height: rem(14px);
-        opacity: unset;
-        color: get-color(brand-blue);
-      }
-    }
-    &.slick-active {
+      margin: 0 !important;
       button {
-        &:before {
-          border: solid 0 get-color(text-light-charcoal);
-          font-size: rem(12px);
-          line-height: rem(14px);
-          opacity: unset;
-          color: get-color(brand-blue);
-        }
+          &:before {
+              font-family: "Font Awesome 5 Free" !important;
+              font-size: rem(10px) !important;
+              border: solid rem(1px) get-color(text-light-charcoal) !important;
+              border-radius: 50% !important;
+              line-height: rem(10px) !important;
+              width: rem(8px) !important;
+              height: rem(8px) !important;
+              opacity: unset !important;
+              color: transparent !important;
+          }
+          &:hover::before {
+              font-family: Arial !important;
+              border: solid 0 get-color(text-light-charcoal) !important;
+              font-size: rem(44px) !important;
+              line-height: rem(14px) !important;
+              opacity: unset !important;
+              color: get-color(brand-blue) !important;
+              top: rem(-1.5px) !important;
+              left: rem(-3px);
+          }
       }
-    }
+      &.slick-active {
+          button {
+              &:before {
+              font-family: Arial !important;
+                  border: solid 0 get-color(text-light-charcoal) !important;
+                  font-size: rem(44px) !important;
+                  line-height: rem(14px) !important;
+                  opacity: unset !important;
+                  color: get-color(brand-blue) !important;
+                  top: rem(-1.5px) !important;
+                  left: rem(-3px);
+              }
+          }
+      }
   }
 }
