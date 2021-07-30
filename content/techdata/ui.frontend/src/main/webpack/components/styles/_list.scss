@@ -29,6 +29,7 @@
         width: rem(180px);
         max-width: 100%;
         justify-content: space-between;
+        align-items: center;
       }
     }
     .cmp-image__image-figure {
@@ -36,6 +37,7 @@
       margin: 0;
       margin-bottom: rem(20px);
       display: flex;
+      justify-content: space-around;
       align-items: center;
     }
   }
@@ -229,22 +231,25 @@
   &--menu-grid-2 {
     .cmp-list__item-title {
       display: block;
+    }
 
-      .cmp-list__item {
-        &:hover {
-          article {
-            svg {
-              path {
-                fill: get-color(brand-light-blue);
-              }
+    .cmp-list__item {
+
+
+      &:hover {
+        article {
+          svg {
+            path {
+              fill: get-color(brand-light-blue);
             }
-            .cmp-list__item-title {
-              font-weight: 600;
-            }
+          }
+          .cmp-list__item-title {
+            font-weight: 600;
           }
         }
       }
     }
+
 
     .cmp-image__image {
       max-width: 100%;
@@ -285,6 +290,7 @@
           margin: 0 auto;
           max-width: rem(180px);
           width: 100%;
+          align-items: center;
         }
       }
       .cmp-list__item-title {
