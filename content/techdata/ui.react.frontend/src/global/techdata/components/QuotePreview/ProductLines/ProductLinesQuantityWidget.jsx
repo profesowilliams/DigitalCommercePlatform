@@ -18,23 +18,27 @@ function ProductLinesQuantityWidget({
   return (
     <section>
       <div className="cmp-product-lines-grid__quantity-widget">
-        {value}
-        <button
-          onClick={() => {
-            setValue(value < initialValue ? value + 1 : value);
-            setShouldUpdate(true);
-          }}
-        >
-          +
-        </button>
-        <button
-          onClick={() => {
-            setValue(value > 0 ? value - 1 : value);
-            setShouldUpdate(true);
-          }}
-        >
-          -
-        </button>
+        <div className="cmp-product-lines-grid__quantity-widget__buttons">
+          <button
+            onClick={() => {
+              setValue(value < initialValue ? value + 1 : value);
+              setShouldUpdate(true);
+            }}
+          >
+            +
+          </button>
+          <button
+            onClick={() => {
+              setValue(value > 1 ? value - 1 : value);
+              setShouldUpdate(true);
+            }}
+          >
+            -
+          </button>
+        </div>
+        <div className="cmp-product-lines-grid__quantity-widget__value">
+          {value}
+        </div>
       </div>
     </section>
   );
