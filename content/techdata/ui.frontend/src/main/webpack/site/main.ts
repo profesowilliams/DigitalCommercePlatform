@@ -1,7 +1,6 @@
 
 // Stylesheets
 import "./main.scss";
-
 import $ from 'jquery';
 import 'slick-carousel';
 
@@ -13,7 +12,7 @@ import "../common-utils/js/app.initializer";
 // TODO: AEM devs to include clientlib.global.js too instead of fetching dependencies from here
 import "../global/td-components/megamenu/megamenu";
 import "../global/td-components/vendorlistings/vendorlistings";
-import "../global/td-components/dropdownbutton/dropdownbutton";
+// import "../global/td-components/dropdownbutton/dropdownbutton";
 import "../global/td-components/form-container/form-container";
 import "../global/td-components/region-select/region-select";
 import "../global/td-components/button/buttons";
