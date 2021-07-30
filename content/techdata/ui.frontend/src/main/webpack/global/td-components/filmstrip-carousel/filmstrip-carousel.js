@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-(function() {
+(function($) {
     $('.center').slick({
         infinite: true,
         autoplay: false,

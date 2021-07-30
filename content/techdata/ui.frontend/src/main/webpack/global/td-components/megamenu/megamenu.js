@@ -128,7 +128,33 @@ import bp from '../../../common-utils/js/media-match';
       })
     }
   };
+
+  function preInit() {
+    const navigation = document.querySelector('#megamenu');
+    if (!navigation) return;
+
+    const MenuPrimary = '.cmp-megamenu__primary';
+    const ActiveTabPanelClass = 'cmp-megamenu__tabpanel--active';
+    const ActiveTabClass = 'cmp-megamenu__tab--active';
+
+    document.addEventListener("mouseover", function(e) {
+      const megaMenu = e.target.closest('.cmp-megamenu');
+      if (!megaMenu) {
+        clearItems(`${MenuPrimary} li a.${ActiveTabClass}`, ActiveTabClass);
+        clearItems('.cmp-megamenu__tabpanel', ActiveTabPanelClass);
+      }
+    })
+
+    function clearItems(el, active) {
+      const clearItems = navigation?.querySelectorAll(el);
+      clearItems.forEach(function(tabPanel){
+        tabPanel.classList.remove(active);
+      })
+    }
+  }
+
   function onDocumentReady(){
+    preInit()
     var navigators = document.querySelectorAll('#megamenu');
     navigators.forEach(function(navigation) {
       var mediaQueryList = window.matchMedia("(min-width:1024px)");
