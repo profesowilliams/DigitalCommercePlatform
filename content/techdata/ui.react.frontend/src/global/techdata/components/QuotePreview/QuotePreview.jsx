@@ -1,4 +1,4 @@
-import React, { Element, useState } from "react";
+import React, { Element, useCallback, useState } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
@@ -6,6 +6,8 @@ import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
 import { getUrlParams } from "../../../../utils";
+import axios from 'axios';
+import data from './QuotePreviewSample';
 import Loader from '../Widgets/Loader';
 
 function QuotePreview(props) {
@@ -22,6 +24,27 @@ function QuotePreview(props) {
 
     setSubTotal(subTotal);
   };
+
+  const handleQuickQuote = useCallback(async (e) => {
+    e.preventDefault();
+    const params = {
+      method: 'POST',
+      url: componentProp.quickQuoteEndpoint,
+      headers: {
+        accept: '*/*'
+      },
+      body: data,
+    };
+
+    try {
+      const result = await axios.request(params);
+      console.log(result.data);
+      return result.data;
+    } catch( error ) {
+      console.log(error);
+      return error;
+    }
+  }, [data]);
 
   return (
     <div className="cmp-quote-preview">
@@ -44,7 +67,7 @@ function QuotePreview(props) {
               subtotalLabel={componentProp.subtotalLabel}
             />
           </div>
-          <QuotePreviewContinue gridProps={componentProp}/>
+          <QuotePreviewContinue gridProps={componentProp} handleQuickQuote={handleQuickQuote}/>
         </section>
       )}
     </div>

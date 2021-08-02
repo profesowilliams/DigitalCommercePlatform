@@ -1472,3 +1472,23 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
         res.json(response);
     }, 2000)
 });
+
+//---QUICK QUOTE CONTINUE BTN---//
+app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
+
+    console.log("post submit");
+    console.log(req.body);
+
+    if (!req.headers["sessionid"]) return res.status(401);
+
+    res.json({
+        content: {
+            // some data from respone
+        },
+        error: {
+            code: "",
+            message: "",
+            isError: false,
+        },
+    });
+});
