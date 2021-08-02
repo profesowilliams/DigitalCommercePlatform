@@ -140,7 +140,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
         pageDataMap.put("variationName", "master");
         pageDataMap.put("text", overview);
         pageDataMap.put("elementNames", new String[] {
-                VENDOR_NAME, VENDOR_TITLE, VENDOR_DESIGNATION, VENDOR_ABBR, OVERVIEW, VENDOR_ICON
+                VENDOR_NAME, VENDOR_TITLE, VENDOR_ABBR, OVERVIEW, VENDOR_ICON
         });
         pageDataMap.put("sling:resourceType", "techdata/components/contentfragment");
         pageDataMap.put("fragmentPath", cfmResource.getPath());
