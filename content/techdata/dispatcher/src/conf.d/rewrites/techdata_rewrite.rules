@@ -1,5 +1,6 @@
 # rewrite for root redirect
 RewriteRule ^/?$ /content/${CONTENT_FOLDER_NAME}/us/en.html [PT,L]
+RewriteRule ^/sg$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
 RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
 RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
 RewriteRule ^/hk/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
