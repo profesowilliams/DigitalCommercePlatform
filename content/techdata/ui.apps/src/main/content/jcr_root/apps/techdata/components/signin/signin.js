@@ -1,5 +1,6 @@
 "use strict";
 use(function () {
+    const HTML_EXTENSION = ".html";
     var listOfItems = [];
     var jsonObject = new Packages.org.json.JSONObject();
     var listOfItemsMap = new java.util.LinkedHashMap();
@@ -8,13 +9,26 @@ use(function () {
     var session = resourceResolver.adaptTo(Packages.javax.jcr.Session);
     var node = resourceResolver.getResource(resource.getPath() + "/itemLinks");
     var pageProps = currentPage.getContentResource();
+    var parseLinkURL = function(linkURL) {
+        if (linkURL) {
+            linkURL = linkURL.replace("\"","");
+            linkURL = linkURL.replace("\"","");
+
+            if (linkURL.startsWith("/content") && !linkURL.endsWith(HTML_EXTENSION)) {
+                return ("".concat(linkURL + ".html"));
+            }
+
+            return linkURL;
+        }
+        return linkURL;
+    }
 
     if (node !== null) {
         var childrenList = node.getChildren();
 
         for (var [key, res] in Iterator(childrenList)) {
             var linkTitle = res.properties["linkText"];
-            var linkUrl = res.properties["linkUrl"];
+            var linkUrl = parseLinkURL(JSON.stringify(res.properties["linkUrl"]));
             var iconUrl = res.properties["iconUrl"];
             var itemData = {};
             itemData.linkTitle = linkTitle;
@@ -40,19 +54,21 @@ use(function () {
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
-   if (this.authorizationPageURL != null) {
-    jsonObject.put("authenticationURL", this.authorizationPageURL);
+    if (this.authorizationPageURL != null) {
+        jsonObject.put("authenticationURL", this.authorizationPageURL);
     }
-if (this.uiServiceDomain != null) {
-    jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
+    if (this.uiServiceDomain != null) {
+        jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
 
-}
+    }
     if (this.pingAppId != null) {
-     jsonObject.put("clientId", this.pingAppId);
+        jsonObject.put("clientId", this.pingAppId);
     }
 
     if (properties.get("logoutURL") != null) {
-        jsonObject.put("logoutURL", properties.get("logoutURL"));
+
+        var logoutUrl = parseLinkURL(properties.get("logoutURL"))
+        jsonObject.put("logoutURL", logoutUrl);
     }
     if (properties.get("clientId") != null) {
         jsonObject.put("clientId", properties.get("clientId"));       }
