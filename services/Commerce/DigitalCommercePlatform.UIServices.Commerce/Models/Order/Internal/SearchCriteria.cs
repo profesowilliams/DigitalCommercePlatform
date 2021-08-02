@@ -18,5 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
         public string Origin { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

@@ -118,7 +118,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Page = orderParameters.PageNumber,
                             WithPaginationInfo = orderParameters.WithPaginationInfo,
                             Details = true,
-                            orderParameters.Origin
+                            orderParameters.Origin,
+                            orderParameters.ConfirmationNumber,
                         });
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);

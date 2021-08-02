@@ -30,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public int PageSize { get; }
             public bool WithPaginationInfo { get; set; }
             public string OrderMethod { get; set; }
+            public string ConfirmationNumber { get; set; }
 
             public Request(FilteringDto filtering, PagingDto paging)
             {
@@ -45,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 PageSize = paging.PageSize == 0 ? 25 : paging.PageSize;
                 WithPaginationInfo = paging.WithPaginationInfo;
                 OrderMethod = filtering.OrderMethod;
+                ConfirmationNumber = filtering.ConfirmationNumber;
             }
         }
 
@@ -68,7 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class FilteringDto
         {
-            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo, string status, string orderMethod)
+            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo, string status, string orderMethod, string confirmationNumber)
             {
                 Id = id;
                 CustomerPO = customerPO;
@@ -77,6 +79,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 CreatedTo = createdTo;
                 Status = status;
                 OrderMethod = orderMethod;
+                ConfirmationNumber = confirmationNumber;
             }
 
             public string Id { get; }
@@ -86,6 +89,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public DateTime? CreatedTo { get; }
             public string Status { get; }
             public string OrderMethod { get; }
+            public string ConfirmationNumber { get; }
         }
 
         public class Response
@@ -134,7 +138,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
                     WithPaginationInfo = request.WithPaginationInfo,
-                    Origin = request.OrderMethod
+                    Origin = request.OrderMethod,
+                    ConfirmationNumber = request.ConfirmationNumber,
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
