@@ -29,7 +29,8 @@ public class FilmStripListItem implements ListItem {
     private final String bio;
 
     public String getProfileLink() {
-        return profileLink;
+
+        return String.format("%s.html",profileLink);
     }
 
     public String getImagePath() {
