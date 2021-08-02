@@ -1,14 +1,14 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
   <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<sly 
-  data-sly-use.model="com.techdata.core.models.LanguageDropDownModel">
+<sly
+        data-sly-use.model="com.techdata.core.models.LanguageDropDownModel">
   <button class="cmp-dropbtn">
     <sly data-sly-test="${model.icon}">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 86 116.09">
         <defs>
           <style>
-            .cls-1,.cls-2,.cls-8{fill:none;}.cls-1{clip-rule:evenodd;}.cls-3{clip-path:url(#clip-path);}.cls-4{clip-path:url(#clip-path-2);}.cls-5{isolation:isolate;}.cls-6{clip-path:url(#clip-path-3);}.cls-7{clip-path:url(#clip-path-4);}.cls-8{stroke:#0b1321;stroke-miterlimit:10;stroke-width:6px;}.cls-9{clip-path:url(#clip-path-5);}.cls-10{clip-path:url(#clip-path-7);}.cls-11{clip-path:url(#clip-path-8);}
+            .cls-1,.cls-2,.cls-8{fill:none;}.cls-1{clip-rule:evenodd;}.cls-3{clip-path:url(#clip-path);}.cls-4{clip-path:url(#clip-path-2);}.cls-5{isolation:isolate;}.cls-6{clip-path:url(#clip-path-3);}.cls-7{clip-path:url(#clip-path-4);}.cls-8{stroke:#0b1321;stroke-miterlimit:10;stroke-width:12px;}.cls-9{clip-path:url(#clip-path-5);}.cls-10{clip-path:url(#clip-path-7);}.cls-11{clip-path:url(#clip-path-8);}
           </style>
           <clipPath id="clip-path" transform="translate(3 3)">
             <path class="cls-1" d="M40,0A40,40,0,0,1,73.4,62.05h.06L40,108,6.47,62.05H6.6A40,40,0,0,1,40,0Z"/>
@@ -64,21 +64,21 @@
   </button>
   <div id="regionSelectDropdown" class="cmp-dropdown-content">
     <form method="POST" action="/content/core-components-examples/library/form/button.html"
-      enctype="multipart/form-data" class="cmp-languagenavigation cmp-region-select-dropdown" id="${component.id}"
-      name="${component.id}">
+          enctype="multipart/form-data" class="cmp-languagenavigation cmp-region-select-dropdown" id="${component.id}"
+          name="${component.id}">
       <div class="options" data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-        data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
-        data-sly-use.groupTemplate="group.html"
-        data-sly-call="${groupTemplate.group @ items=model.languageListItems}"
-        data-sly-test.hasContent="${model.items && model.items.size > 0}"
-        data-cmp-data-layer="${languageNavigation.data.json}">
+           data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
+           data-sly-use.groupTemplate="group.html"
+           data-sly-call="${groupTemplate.group @ items=model.languageListItems}"
+           data-sly-test.hasContent="${model.items && model.items.size > 0}"
+           data-cmp-data-layer="${languageNavigation.data.json}">
         <input type="hidden" name=":formstart"
-          value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
+               value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
         <input type="hidden" name="_charset_" value="utf-8">
       </div>
       <div class="button">
         <button type="button" id="form-button-1117902125" class="cmp-button__region-select"
-          data-target="#countriesListModal" name="button">${properties.changeLocationLabel}</button>
+                data-target="#countriesListModal" name="button">${properties.changeLocationLabel}</button>
       </div>
       <div id="countriesListModal" class="modal">
         <!-- Modal content -->

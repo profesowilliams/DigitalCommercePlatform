@@ -218,7 +218,10 @@
 .dp-carousel__nav-label-separator{
   display: none;
 }
-
+.carousel-max-1440 .cmp-carousel .cmp-teaser__content {
+  max-width: 90rem;
+  margin: 0 auto!important;
+}
 // .dp-carousel__nav-dot{
 //   background-color: #fff!important;
 //   width: 7px!important;
