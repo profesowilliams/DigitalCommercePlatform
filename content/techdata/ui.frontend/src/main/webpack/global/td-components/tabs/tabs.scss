@@ -336,9 +336,11 @@
       padding: rem(10px);
       img {
         width: auto;
-        margin: 0 auto;   
+        margin: 0 auto;
       }
-      &:hover {        
+      &:hover,
+      &:active,
+      &:focus {
         background-color: get-color(brand-light-blue) !important;
         padding: rem(10px);
       }
@@ -364,6 +366,7 @@
       &:active {
         outline: 0 none;
         .cmp-tabs__tab-image {
+          background-color: get-color(brand-light-blue) !important;
           svg path g polyline ellipse line line rect {
             fill: get-color(brand-white);
           }
@@ -372,4 +375,3 @@
     }
   }
 }
-
