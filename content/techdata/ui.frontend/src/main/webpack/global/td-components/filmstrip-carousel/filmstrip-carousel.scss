@@ -125,27 +125,27 @@
                 color: transparent !important;
             }
             &:hover::before {
-                font-family: Arial !important;
                 border: solid 0 get-color(text-light-charcoal) !important;
-                font-size: rem(44px) !important;
                 line-height: rem(14px) !important;
                 opacity: unset !important;
-                color: get-color(brand-blue) !important;
-                top: rem(-1.5px) !important;
-                left: rem(-3px);
+                color: transparent !important;
+                top: rem(-0.022px) !important;
+                box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
+                width: rem(10px) !important;
+                height: rem(10px) !important;
             }
         }
         &.slick-active {
             button {
                 &:before {
-                font-family: Arial !important;
                     border: solid 0 get-color(text-light-charcoal) !important;
-                    font-size: rem(44px) !important;
                     line-height: rem(14px) !important;
                     opacity: unset !important;
-                    color: get-color(brand-blue) !important;
-                    top: rem(-1.5px) !important;
-                    left: rem(-3px);
+                    color: transparent !important;
+                    top: rem(-0.022px) !important;
+                    box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
+                    width: rem(10px) !important;
+                    height: rem(10px) !important;
                 }
             }
         }
