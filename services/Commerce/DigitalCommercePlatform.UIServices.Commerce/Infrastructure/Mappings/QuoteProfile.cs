@@ -95,6 +95,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
              .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City))
              ;
+            CreateMap<DiscountDto, Discount>()
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));
+
             CreateMap<ItemDto, Line>()
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Qty))
                 .ForMember(dest => dest.VendorPartNo, opt => opt.MapFrom(src => src.VendorPartNo))
@@ -107,6 +110,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.Parent))
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Vendor))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Discounts, opt => opt.MapFrom(src => src.Discounts))
+                .ForMember(dest => dest.Contract, opt => opt.MapFrom(src => src.Contract))
                 ;
 
             //CreateMap<Configuration, QuotePreviewModel>()

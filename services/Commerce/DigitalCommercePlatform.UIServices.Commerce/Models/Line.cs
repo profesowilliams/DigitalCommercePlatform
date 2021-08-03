@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
         public Discount[] Discounts { get; set; }
+        public ContractDto Contract { get; set; }
         //added details
         public string ShortDescription { get; set; }
         public string MFRNumber { get; set; }
