@@ -185,7 +185,7 @@
       &:active {
         outline: 0 none;
         .cmp-tabs__tab-image {
-          svg path {
+          svg path g polyline ellipse line line rect {
             fill: get-color(brand-white);
           }
         }

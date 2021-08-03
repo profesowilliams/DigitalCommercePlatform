@@ -346,7 +346,7 @@
         width: 200px;
       }
       &:hover {
-        svg path {
+        svg path g polyline ellipse line line rect {
           fill: get-color(brand-light-blue);
         }
         &.cmp-list__item-title {
