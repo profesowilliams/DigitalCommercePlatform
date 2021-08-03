@@ -18,7 +18,12 @@ function QuotePreviewContinue({gridProps, handleQuickQuote}) {
                 <input type="checkbox" name="make-default" checked={isDefault} onChange={handleInputChange} />
                 <label htmlFor="make-default">{gridProps.defaultChoiceLabel}</label>
             </div>
-            <Link href="#" variant={'cmp-qp-continue__link'} underline={'always'}>{gridProps.continueWithStandardPriceLabel}</Link>
+            <Link
+                href="#"
+                callback={handleQuickQuote}
+                variant={'cmp-qp-continue__link'} underline={'always'}>
+                {gridProps.continueWithStandardPriceLabel}
+            </Link>
         </div>
     )
 }

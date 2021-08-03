@@ -12,3 +12,5 @@ export const prepareCommonHeader = () => ({
     "SessionId" : nanoid(16),
     "Content-Type": "application/json"
 });
+
+export const waitFor = delay => new Promise(resolve => setTimeout(resolve, delay));
