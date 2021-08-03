@@ -21,7 +21,7 @@
             });
         }
 
-        window.onclick = function(event) {
+        window.addEventListener("click", function(event) {
             if (!(event.target.matches('.cmp-button') || event.target.matches('.cmp-button__text') || event.target.matches('.cmp-button__icon'))) {
                 const dropdowns = document.querySelectorAll(".cmp-button__dropdown");
                 dropdowns && dropdowns.forEach(function(dropdown) {
@@ -33,7 +33,7 @@
                     }
                 });
             }
-        }
+        });
     };
     document.addEventListener("DOMContentLoaded", onDocumentReady);
 })();

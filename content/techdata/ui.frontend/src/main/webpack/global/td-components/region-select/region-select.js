@@ -51,7 +51,7 @@
     }
   }
 
-  window.onclick = function (event) {
+  window.addEventListener("click", function (event) {
     if (event.target.matches('.cmp-button__region-select')) {
       countriesListPopup();
     } if (!event.target.matches('.cmp-button__region-select')) {
@@ -63,6 +63,6 @@
       hideRegionDropdown();
     }
 
-  }
+  });
 
 })();
