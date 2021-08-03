@@ -41,6 +41,7 @@
 //Search Bar styles
 .cmp-searchbar {
 	min-width: rem(250px);
+	position: relative;
 	width: 100%;
 
 	@include mobile {
@@ -120,6 +121,10 @@
 
 	&__context-menu {
 		box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
+		background-color: get-color(brand-white);
+		position: absolute;
+		width: 100%;
+		z-index: 100;
 
 		@include mobile {
 			width: 85%;
@@ -139,6 +144,8 @@
 
 	&--checked {
 		max-height: rem(250px);
+		position: absolute;
+		background-color: get-color(brand-white);
 	}
 	
 	&__button {
