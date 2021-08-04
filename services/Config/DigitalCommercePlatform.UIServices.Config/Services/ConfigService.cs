@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindSPA;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.SPA;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Settings;
 using Flurl;
@@ -33,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private readonly ILogger<ConfigService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _appConfigurationUrl;
+        private readonly string _appPriceUrl;
 
         public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
             ILogger<ConfigService> logger, IHttpClientFactory httpClientFactory)
@@ -43,6 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _appConfigurationUrl = _appSettings.GetSetting("App.Configuration.Url");
+            _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
         }
 
         private Models.Deals.Internal.FindModel PrepareDealsFindAppServiceRequest(GetDeals.Request request)
@@ -167,7 +172,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var data = findConfigurationResponse.Data;
             var result = _mapper.Map<List<Configuration>>(data);
             result.ForEach(c => GenerateConfigurationDetails(c));
-            
+
             return result;
         }
 
@@ -230,5 +235,44 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var url = await httpResponse.Content.ReadAsStringAsync();
             return url;
         }
+
+        public async Task<FindResponse<SpaBase>> GetSPADetails(GetSPA.Request request)
+        {
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
+            var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<FindResponse<SpaBase>>(requestUrl).ConfigureAwait(false);
+            if (getTypeAheadResponse.Data.Count() >= 2)
+            {
+                var Quote = new QuoteDetails
+                {
+                    ID = "40074328",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 10,
+                    Price = 1500
+                };
+                var Quote1 = new QuoteDetails
+                {
+                    ID = "40059342",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 02,
+                    Price = 2000
+                }; var Quote2 = new QuoteDetails
+                {
+                    ID = "40019648",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 11,
+                    Price = 2500
+                };
+
+                getTypeAheadResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
+
+                getTypeAheadResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
+            }
+
+            return getTypeAheadResponse;
+        }
+
     }
 }

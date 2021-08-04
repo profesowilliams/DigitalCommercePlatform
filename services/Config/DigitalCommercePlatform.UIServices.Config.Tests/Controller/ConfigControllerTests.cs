@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindSPA;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -176,6 +177,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var result = await controller.GetPunchOutUrl(new GetPunchOutUrl.Request()).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.OK);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetSPA(ResponseBase<GetSPA.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetSPA.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.GetSPA(new GetSPA.Request()).ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.OK);
         }

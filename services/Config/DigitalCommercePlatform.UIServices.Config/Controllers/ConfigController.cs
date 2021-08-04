@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindSPA;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -76,5 +77,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("getSPA")]
+        public async Task<IActionResult> GetSPA([FromQuery] GetSPA.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+
+
     }
 }
