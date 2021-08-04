@@ -3,10 +3,7 @@
 @mixin nav-button {
 	background-color: transparent;
 	color: get-color(brand-text-gray);
-	padding-block-start: rem(12px);
-	padding-block-end: rem(12px);
-	padding-inline-start: rem(32px);
-	padding-inline-end: rem(32px);
+	padding: rem(10px) rem(14px);
 	transition: all 200ms ease;
 	text-align: left;
 	width: 100%;
@@ -61,7 +58,7 @@
 		border: rem(1px) solid get-color(brand-black);
 		border-radius: rem(6px) 0 0 rem(6px);
 		outline: none;
-		padding: rem(8px) rem(16px);
+		padding: rem(10px) rem(14px);
 		transition: all 400ms ease;
 		width: 100%;
 
@@ -79,7 +76,7 @@
 			width: 0;
 
 			&--mobile {
-				padding: rem(4px) rem(8px);
+				padding: rem(6px) rem(10px);
 				visibility: visible;
 				pointer-events: inherit;
 				min-width: rem(350px);
@@ -91,7 +88,7 @@
 	&__button {
 		background-color: get-color(brand-black);
 		border: rem(1.5px) solid get-color(brand-black);
-		padding: rem(9px) rem(17px);
+		padding: rem(11px) rem(15px);
 		transition: all 200ms ease;
 
 		&:hover {
@@ -143,9 +140,11 @@
 	overflow: scroll;
 
 	&--checked {
+		background-color: get-color(brand-white);
+		left: 0;
 		max-height: rem(250px);
 		position: absolute;
-		background-color: get-color(brand-white);
+		width: 96%;
 	}
 	
 	&__button {
@@ -167,10 +166,7 @@
 			@include nav-button;
 			display: flex;
 			align-items: center;
-			padding-block-start: rem(12px);
-			padding-block-end: rem(4px);
-			padding-inline-start: rem(16px);
-			padding-inline-end: rem(4px);
+			padding: rem(10px) rem(14px);
 
 			@include mobile {
 				min-width: rem(350px);
@@ -206,6 +202,7 @@
 		padding: rem(8px) rem(16px);
 
 		&:first-child {
+			flex-direction: column;
 			justify-content: center;
 			margin-top: rem(8px);
 
@@ -248,15 +245,23 @@
 
 }
 
+//Loading indicator Styling
 .cmp-searchbar__loading-indicator {
 	right: 0.8rem;
 	left: unset;
 }
+
 .cmp-searchbar__clear {
 	display: none;
 }
+
 .cmp-searchbar__clear-icon {
 	left: 0.5rem;
 	right: unset;
 }
 
+//AEM overriding Styling
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+	margin-left: auto !important;
+	width: 35% !important;
+}
