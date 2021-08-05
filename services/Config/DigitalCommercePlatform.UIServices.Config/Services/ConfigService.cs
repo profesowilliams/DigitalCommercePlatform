@@ -239,8 +239,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public async Task<FindResponse<SpaBase>> GetSPADetails(GetSPA.Request request)
         {
             var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
-            var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<FindResponse<SpaBase>>(requestUrl).ConfigureAwait(false);
-            if (getTypeAheadResponse.Data.Count() >= 2)
+            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<SpaBase>>(requestUrl).ConfigureAwait(false);
+            if (getSPAResponse.Data.Count() >= 2)
             {
                 var Quote = new QuoteDetails
                 {
@@ -266,12 +266,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     Price = 2500
                 };
 
-                getTypeAheadResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
+                getSPAResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
 
-                getTypeAheadResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
+                getSPAResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
             }
 
-            return getTypeAheadResponse;
+            return getSPAResponse;
         }
 
     }
