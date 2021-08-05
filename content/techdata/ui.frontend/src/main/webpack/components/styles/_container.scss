@@ -29,3 +29,48 @@
     }
   }
 }
+
+/* moving container related style system class here to avoid confusions.
+These style system class work for container component only. */
+@mixin padding-sizes($padding, $default, $sm, $md, $lg) {
+  &>.cmp-container {
+    #{$padding}: rem($default);
+  }
+  &-small {
+    &>.cmp-container {
+      #{$padding}: rem($sm);
+    }
+  }
+  &-medium {
+    &>.cmp-container {
+      #{$padding}: rem($md);
+    }
+  }
+  &-large{
+    &>.cmp-container {
+      #{$padding}: rem($lg);
+    }
+  }
+}
+
+.dp-general__innerspace {
+  &--all {
+    @include padding-sizes(padding, 16px, 8px, 32px, 64px);
+  }
+
+  &--top {
+    @include padding-sizes(padding-top, 16px, 8px, 32px, 64px);
+  }
+
+  &--bottom {
+    @include padding-sizes(padding-bottom, 16px, 8px, 32px, 64px);
+  }
+
+  &--right {
+    @include padding-sizes(padding-right, 16px, 8px, 32px, 64px);
+  }
+
+  &--left {
+    @include padding-sizes(padding-left, 16px, 8px, 32px, 64px);
+  }
+}
