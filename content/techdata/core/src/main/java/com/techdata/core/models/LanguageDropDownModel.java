@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import lombok.Getter;
 
 @Model(
-	adaptables = SlingHttpServletRequest.class,
+	adaptables = {SlingHttpServletRequest.class},
 	adapters = LanguageNavigation.class,
 	resourceType = LanguageDropDownModel.RESOURCE_TYPE,
 	defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
@@ -67,12 +68,20 @@ public class LanguageDropDownModel implements LanguageNavigation {
 	@ValueMapValue
 	private boolean icon;
 
+	@Inject @Via("resource")
+	private String overRideCurrentPage;
+
+
 	private List<NavigationItem> items;
 
 	@PostConstruct
 	private void initModel() {
 		navigationRoot = properties.get(PN_NAVIGATION_ROOT, currentStyle.get(PN_NAVIGATION_ROOT, String.class));
 		items = delegateLanguageNavigation.getItems();
+		if (overRideCurrentPage != null)
+		{
+			currentPage = currentPage.getPageManager().getPage(this.overRideCurrentPage);
+		}
 	}
 
 	public List<LanguageDropDownItem> getRegionListItems() {
@@ -134,5 +143,9 @@ public class LanguageDropDownModel implements LanguageNavigation {
 			return countryRootPage.getPageTitle();
 		}
 		return StringUtils.EMPTY;
+	}
+
+	public String getOverRideCurrentPage(){
+		return this.overRideCurrentPage;
 	}
 }
