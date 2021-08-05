@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public DirectorModel Director { get; set; }
         public DivisionManagerModel DivisionManager { get; set; }
         public BusinessManagerModel BusinessManager { get; set; }
+        public List<AgreementModel> Agreements { get; set; }
     }
 }

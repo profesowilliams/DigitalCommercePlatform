@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -36,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string URLProductImage { get; set; }
         public string URLProductSpecs { get; set; }
         public List<Line> Children { get; set; }
+        public List<AgreementModel> Agreements { get; set; }
 
     }
 }
