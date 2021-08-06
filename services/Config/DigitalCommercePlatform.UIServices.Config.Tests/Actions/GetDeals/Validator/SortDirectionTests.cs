@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
     public class SortDirectionTests : GetDealsValidatorTestsBase
     {
         private readonly GRD.GetDeals.Validator _validator;
-        private readonly FindModel _model;
+        private readonly GRD.GetDeals.Request _model;
 
         public SortDirectionTests()
         {

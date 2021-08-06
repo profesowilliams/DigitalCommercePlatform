@@ -1,5 +1,4 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
-using DigitalCommercePlatform.UIServices.Config.Actions.FindSPA;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -45,10 +44,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
 
         [HttpGet]
         [Route("deals")]
-        public async Task<ActionResult> GetDeals([FromQuery] Models.Deals.FindModel criteria)
+        public async Task<ActionResult> GetDeals([FromQuery] GetDeals.Request request)
         {
-            var data = new GetDeals.Request { Criteria = criteria };
-            var response = await Mediator.Send(data).ConfigureAwait(false);
+            var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -77,16 +75,5 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
-
-        [HttpGet]
-        [Route("getSPA")]
-        public async Task<IActionResult> GetSPA([FromQuery] GetSPA.Request request)
-        {
-            var response = await Mediator.Send(request).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-
-
     }
 }

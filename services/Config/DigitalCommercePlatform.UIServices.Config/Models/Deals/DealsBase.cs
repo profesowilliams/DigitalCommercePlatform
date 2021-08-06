@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Models.SPA
+namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
 {
     [ExcludeFromCodeCoverage]
-    public class SpaBase
+    public class DealsBase
     {
         public IList<SpaDetailProductModel> Products { get; set; }
         public SpaSourceModel Source { get; set; }

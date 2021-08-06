@@ -5,7 +5,7 @@ using FluentAssertions;
 using System;
 using Xunit;
 
-using DCPD = DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DCPD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Deals
 {
@@ -45,35 +45,20 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             }
         }
 
-        [Theory]
-        [ClassData(typeof(MappingPaginatedToInternalFindModelData))]
-        public void MappingPaginatedToInternalFindModelShouldBeValid(Paginated paginated)
-        {
-            var result = Mapper.Map<DCPD.Internal.FindModel>(paginated);
-
-            result.Page.Should().Be(paginated.PageNumber);
-            result.PageSize.Should().Be(paginated.PageSize);
-        }
-
-        internal class MappingFindModelToInternalFindModelData : TheoryData<DCPD.FindModel>
+        internal class MappingFindModelToInternalFindModelData : TheoryData<DCPD.GetDeals.Request>
         {
             public MappingFindModelToInternalFindModelData()
             {
-                AddRow(new DCPD.FindModel
+                AddRow(new DCPD.GetDeals.Request
                 {
-                    CreatedFrom = DateTime.UtcNow,
-                    CreatedTo = DateTime.UtcNow.AddDays(1),
-                    DealId = "dealid1",
+                    ValidFrom = DateTime.UtcNow,
+                    ValidTo = DateTime.UtcNow.AddDays(1),
                     EndUserName = "endusername1",
-                    ExpiresFrom = DateTime.UtcNow.AddDays(2),
-                    ExpiresTo = DateTime.UtcNow.AddDays(3),
-                    Market = "market1",
-                    Pricing = DCPD.PricingCondition.EducationK12,
-                    VendorBid = "vendorbid1",
+                    UpdatedFrom = DateTime.UtcNow.AddDays(2),
+                    UpdatedTo = DateTime.UtcNow.AddDays(3),
                     VendorName = "vendorname1",
-                    PageNumber = 2,
+                    Page = 2,
                     PageSize = 20,
-                    SortBy = "any",
                     SortDirection = SortDirection.asc,
                 });
             }
@@ -81,24 +66,20 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
 
         [Theory]
         [ClassData(typeof(MappingFindModelToInternalFindModelData))]
-        public void MappingFindModelToInternalFindModelShouldBeValid(DCPD.FindModel model)
+        public void MappingFindModelToInternalFindModelShouldBeValid(DCPD.GetDeals.Request model)
         {
-            var result = Mapper.Map<DCPD.Internal.FindModel>(model);
+            var result = Mapper.Map<DCPD.GetDeals.Request>(model);
 
-            result.CreatedFrom.Should().Be(model.CreatedFrom);
-            result.CreatedTo.Should().Be(model.CreatedTo);
-            result.DealId.Should().Be(model.DealId);
+            result.Page.Should().Be(model.Page);
+            result.ValidFrom.Should().Be(model.ValidFrom);
+            result.ValidTo.Should().Be(model.ValidTo);
             result.EndUserName.Should().Be(model.EndUserName);
-            result.ExpiresFrom.Should().Be(model.ExpiresFrom);
-            result.ExpiresTo.Should().Be(model.ExpiresTo);
-            result.Market.Should().Be(model.Market);
+            result.UpdatedTo.Should().Be(model.UpdatedTo);
+            result.UpdatedFrom.Should().Be(model.UpdatedFrom);
             result.Pricing.Should().Be(model.Pricing);
-            result.VendorBid.Should().Be(model.VendorBid);
             result.VendorName.Should().Be(model.VendorName);
-            result.Page.Should().Be(model.PageNumber);
             result.PageSize.Should().Be(model.PageSize);
-            result.SortBy.Should().Be(model.SortBy);
-            result.SortByAscending.Should().BeTrue();
+            result.SortDirection.Should().Be(model.SortDirection);
         }
     }
 }

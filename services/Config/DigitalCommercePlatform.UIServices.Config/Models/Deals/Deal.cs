@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
@@ -10,10 +11,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public string Vendor { get; set; }
         public string Description { get; set; }
         public string EndUserName { get; set; }
-        public string TdQuoteId { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ExpiresOn { get; set; }        
-        public string Action { get; set; }
+        public string CreatedOn { get; set; }
+        public string ExpiresOn { get; set; }
+        public string Action { get; set; } = "Create Quote";
         public string ActionUrl { get; set; }
+        public List<QuoteDetails> Quotes { get; set; }
     }
 }

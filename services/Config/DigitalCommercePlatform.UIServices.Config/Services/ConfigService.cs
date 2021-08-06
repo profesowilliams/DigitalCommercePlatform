@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
-using DigitalCommercePlatform.UIServices.Config.Actions.FindSPA;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
-using DigitalCommercePlatform.UIServices.Config.Models.SPA;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Models;
@@ -50,52 +48,43 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
         }
 
-        private Models.Deals.Internal.FindModel PrepareDealsFindAppServiceRequest(GetDeals.Request request)
+        public async Task<FindResponse<DealsBase>> GetDeals(GetDeals.Request request)
         {
-            var result = _mapper.Map<Models.Deals.Internal.FindModel>(request.Criteria);
-            result.WithPaginationInfo = true;
-            return result;
-        }
-
-        private async Task<List<Deal>> MapAppResponseToDeals(/*FindResponse<AppServiceDeal> dealsFindResponse*/)
-        {
-            //var data = dealsFindResponse.Data;
-            //var result = _mapper.Map<List<Deal>>(data);
-            var result = GenerateDeals();
-            return await Task.FromResult(result);
-        }
-
-        private static List<Deal> GenerateDeals()
-        {
-            var lstDeals = new List<Deal>();
-            for (int i = 0; i < 30; i++)
+            
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
+            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
+            if (getSPAResponse.Data.Count() >= 2)
             {
-                Deal objDeal = new Deal();
-                var randomNumber = Convert.ToString(GetRandomNumber(1000, 6509));
-                objDeal.DealId = "Dummy-Deals : " + randomNumber;
-                objDeal.Vendor = i % 2 == 0 ? "HP" : i % 5 == 0 ? "Dell" : "Intel";
-                objDeal.TdQuoteId = i < 2 ? "" : objDeal.Vendor != "Dell" ? Convert.ToString(GetRandomNumber(20000000, 50000000)) : "";
-                objDeal.Description = i % 2 == 0 ? objDeal.DealId + "-" + Convert.ToString(GetRandomNumber(20000000, 50000000)) : "Deal from - " + objDeal.Vendor;
-                objDeal.EndUserName = i % 2 == 0 ? "SHI International" : i % 5 == 0 ? "CDW International" : "Davidson Russel Holdings";
-                objDeal.Action = string.IsNullOrWhiteSpace(objDeal.TdQuoteId) ? "Create Quote" : "Update Quote";
-                objDeal.CreatedOn = DateTime.Now.AddDays(i * -5);
-                lstDeals.Add(objDeal);
+                var Quote = new QuoteDetails
+                {
+                    ID = "40074328",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 10,
+                    Price = 1500
+                };
+                var Quote1 = new QuoteDetails
+                {
+                    ID = "40059342",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 02,
+                    Price = 2000
+                }; var Quote2 = new QuoteDetails
+                {
+                    ID = "40019648",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 11,
+                    Price = 2500
+                };
+
+                getSPAResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
+
+                getSPAResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
             }
 
-            return lstDeals.ToList();
-        }
-
-        public async Task<List<Deal>> GetDeals(GetDeals.Request request)
-        {
-            var appServiceRequest = PrepareDealsFindAppServiceRequest(request);
-            var dealsFindUrl = _appConfigurationUrl
-                .AppendPathSegment("find") //change it to deals related segment
-                .SetQueryParams(appServiceRequest);
-            _ = dealsFindUrl + string.Empty;
-            //var dealsFindResponse = await _middleTierHttpClient
-            //    .GetAsync<FindResponse<AppServiceDeal>>(dealsFindUrl);
-            var result = await MapAppResponseToDeals(/*dealsFindResponse*/);
-            return result;
+            return getSPAResponse;
         }
 
         public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
@@ -234,44 +223,5 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var url = await httpResponse.Content.ReadAsStringAsync();
             return url;
         }
-
-        public async Task<FindResponse<SpaBase>> GetSPADetails(GetSPA.Request request)
-        {
-            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
-            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<SpaBase>>(requestUrl).ConfigureAwait(false);
-            if (getSPAResponse.Data.Count() >= 2)
-            {
-                var Quote = new QuoteDetails
-                {
-                    ID = "40074328",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 10,
-                    Price = 1500
-                };
-                var Quote1 = new QuoteDetails
-                {
-                    ID = "40059342",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 02,
-                    Price = 2000
-                }; var Quote2 = new QuoteDetails
-                {
-                    ID = "40019648",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 11,
-                    Price = 2500
-                };
-
-                getSPAResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
-
-                getSPAResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
-            }
-
-            return getSPAResponse;
-        }
-
     }
 }

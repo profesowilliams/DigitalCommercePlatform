@@ -10,9 +10,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Valid
             return new GRD.GetDeals.Validator();
         }
 
-        protected static MD.FindModel GetValidModel()
+        protected static GRD.GetDeals.Request GetValidModel()
         {
-            return new MD.FindModel();
+            return new GRD.GetDeals.Request();
         }
     }
 }
