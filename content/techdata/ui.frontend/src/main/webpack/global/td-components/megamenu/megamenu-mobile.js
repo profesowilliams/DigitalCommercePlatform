@@ -34,8 +34,6 @@ export default class MegamenuMobile {
     }
 
     handleBackBtnClick(event, el) {
-        event.preventDefault();
-
         const backBtn = event.target.closest('.cmp-megamenu__back');
 
         if (!backBtn) return;
@@ -138,8 +136,6 @@ export default class MegamenuMobile {
     }
 
     handleNavigationClick(event) {
-        event.preventDefault();
-
         let isList = event.target.closest('.cmp-navigation__item');
         const ACTIVE_CLASS = 'active';
 
@@ -149,6 +145,7 @@ export default class MegamenuMobile {
         const subMenu = isList.querySelector('.cmp-navigation__group');
 
         if (subMenu) {
+            event.preventDefault();
             if (isList.classList.contains(ACTIVE_CLASS)) {
                 isList.classList.remove(ACTIVE_CLASS);
                 this.toggleClass(subMenu, 'hide');
