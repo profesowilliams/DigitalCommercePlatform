@@ -64,21 +64,32 @@ const SearchBar = ({ componentProp }) => {
   const onSearchTermTextKeyPress = (e) => {
     if (e.key === "Enter") {
       redirectToShop();
+    } else if (e.key === "Enter" && searchTermText === ''){
+      return null
     }
   };
 
   const redirectToShop = () => {
-    window.location.href = getSearchUrl(searchTermText);
+    if(searchTermText === ''){
+      return null    
+    } else {
+      window.location.href = getSearchUrl(searchTermText);
+    }
   };
 
   const mobileState = window.innerWidth <= 767
 
   const mobileSearchOpener = () => {
-    if (mobileState) {
-      setMobile(!isMobile);
-      setSearchInputFocused(!searchInputFocused)
+    setMobile(true);
+    setSearchInputFocused(true)
+
+    if (setSearchInputFocused === false){
+      lostFocus()
+    } else if (setSearchInputFocused === true) {
+      gotFocus()
     }
   };
+
 
   const changeSelectedArea = (areaConfiguration) => {
     setSelectedArea(areaConfiguration);
@@ -87,9 +98,12 @@ const SearchBar = ({ componentProp }) => {
   };
 
   const gotFocus = () => {
+    setMobile(true);
     setSearchInputFocused(true);
   };
+
   const lostFocus = () => {
+    setMobile(false);
     setSearchInputFocused(false);
   };
 
@@ -117,8 +131,8 @@ const SearchBar = ({ componentProp }) => {
       return (
         <>
         <input
-          className={!isMobile ? "cmp-searchbar__input" 
-                               : "cmp-searchbar__input cmp-searchbar__input--mobile"}
+          className={isMobile ? "cmp-searchbar__input cmp-searchbar__input--mobile"
+                               : "cmp-searchbar__input"}
           data-cmp-hook-search="input"
           type="text"
           name="fulltext"
@@ -132,7 +146,7 @@ const SearchBar = ({ componentProp }) => {
           value={searchTermText}
           placeholder={placeholder}
         />
-        <button className={!isMobile ? "cmp-searchbar__button" : "cmp-searchbar__button cmp-searchbar__button--mobile"}
+        <button className={isMobile ? "cmp-searchbar__button cmp-searchbar__button--mobile" : "cmp-searchbar__button"}
                 onClick={mobileSearchOpener}>
           <i className="cmp-searchbar__icon fas fa-search" data-cmp-hook-search="icon"></i>
         </button>

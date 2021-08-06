@@ -45,6 +45,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		min-width: 0;
+		position: relative;
+		width: 80%;
 	}
 
 	&__container {
@@ -52,6 +55,7 @@
 		align-items: center;
 		justify-content: center;
 		margin: 0 auto;
+		width: 100%;
 	}
 
 	&__input {
@@ -70,7 +74,6 @@
 			border: rem(1px) solid get-color(border-light-gray);
 			border-radius: 0;
 			padding: 0;
-			pointer-events: none;
 			visibility: hidden;
 			min-width: 0;
 			width: 0;
@@ -78,8 +81,6 @@
 			&--mobile {
 				padding: rem(6px) rem(10px);
 				visibility: visible;
-				pointer-events: inherit;
-				min-width: rem(350px);
 				width: 100%;
 			}
 		}
@@ -124,7 +125,9 @@
 		z-index: 100;
 
 		@include mobile {
-			width: 85%;
+			position: relative;
+			margin-bottom: rem(12px);
+			min-width: rem(350px);
 		}
 	}
 }
@@ -143,8 +146,13 @@
 		background-color: get-color(brand-white);
 		left: 0;
 		max-height: rem(250px);
-		position: absolute;
-		width: 96%;
+		position: relative;
+		width: 94%;
+
+		@include mobile {
+			width: 100%;
+			margin: 0;
+		}
 	}
 	
 	&__button {
@@ -160,6 +168,11 @@
 		&--checked {
 			margin-left: rem(10px);
 			margin-right: rem(10px);
+
+			@include mobile {
+				margin-left: 0;
+				margin-right: 0;
+			}
 		}
 
 		&-button {
@@ -240,6 +253,9 @@
 		
 		&-icon {
 			@include chevron-icon;
+			@include mobile {
+				width: auto;
+			}
 		}
 	}
 
@@ -264,4 +280,16 @@
 .experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
 	margin-left: auto !important;
 	width: 35% !important;
+
+	@include mobile {
+		width: 100% !important;
+	}
+}
+
+.experiencefragment.cmp-experiencefragment--header-mobile .cmp-experiencefragment>.cmp-container> div {
+	@include mobile {
+		height: auto;
+		min-height: rem(40px);
+		transition: height 400ms ease;
+	}
 }
