@@ -7,10 +7,18 @@ use(function () {
         jsonObject.put("maxItems", properties.get("cutOffValue"));
     }
 
-    jsonObject.put("endpoint", this.uiServiceDomain+this.activeCartEndpoint);
+    if (properties.get("endpoint") != null) {
+        jsonObject.put("endpoint", properties.get("endpoint"));
+    }else{
+        jsonObject.put("endpoint", this.uiServiceDomain+this.activeCartEndpoint);
+    }
 
+    if (properties.get("shopUrl") != null) {
+        jsonObject.put("shopUrl", properties.get("shopUrl"));
+    }else{
+        jsonObject.put("shopUrl", this.shopDomain+this.cartURL);
+    }
 
-    jsonObject.put("shopUrl", this.shopDomain+this.cartURL);
 
 
     return {

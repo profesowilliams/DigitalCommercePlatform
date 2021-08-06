@@ -54,16 +54,34 @@ use(function () {
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
-    if (this.authorizationPageURL != null) {
-        jsonObject.put("authenticationURL", this.authorizationPageURL);
+    if (properties.get("authenticationURL") != null)
+    {
+        jsonObject.put("authenticationURL", properties.get("authenticationURL"));
+    }else{
+        if (this.authorizationPageURL != null) {
+            jsonObject.put("authenticationURL", this.authorizationPageURL);
+        }
     }
-    if (this.uiServiceDomain != null) {
-        jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
 
+    if (properties.get("uiServiceEndPoint") != null)
+    {
+        jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
+    }else{
+        if (this.uiServiceDomain != null) {
+            jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
+        }
     }
-    if (this.pingAppId != null) {
-        jsonObject.put("clientId", this.pingAppId);
+
+    if (properties.get("clientId") != null)
+    {
+        jsonObject.put("clientId", properties.get("clientId"));
+    }else{
+        if (this.pingAppId != null) {
+            jsonObject.put("clientId", this.pingAppId);
+        }
     }
+
+
 
     if (properties.get("logoutURL") != null) {
 
