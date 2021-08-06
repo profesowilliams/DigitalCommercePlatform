@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal
 {
@@ -30,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public string[] SerialNumbers { get; set; }
         public string Instance { get; set; }
         public string Magickey { get; set; }
-        public DiscountDto Discounts { get; set; }
+        public List<DiscountDto> Discounts { get; set; }
         public ContractDto Contract { get; set; }
     }
 }
