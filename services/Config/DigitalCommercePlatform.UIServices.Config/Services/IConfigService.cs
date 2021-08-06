@@ -14,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 {
     public interface IConfigService
     {
-        Task<List<Configuration>> FindConfigurations(GetConfigurations.Request request);
+        Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request);
         Task<List<Deal>> GetDeals(GetDeals.Request request);
         Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
         Task<bool> EstimationValidate(EstimationValidate.Request request);

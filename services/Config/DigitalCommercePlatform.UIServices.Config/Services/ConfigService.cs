@@ -136,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<List<Configuration>> FindConfigurations(GetConfigurations.Request request)
+        public async Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request)
         {
             try
             {
@@ -149,15 +149,23 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<DetailedDto>>(configurationFindUrl);
-                    var result = MapAppResponseToConfigurations(configurationFindResponse);
-                    return result;
+                    var result = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
+                    result.ToList().ForEach(c => GenerateConfigurationDetails(c));
+                    FindResponse<Configuration> response = new FindResponse<Configuration>();
+                    response.Count = configurationFindResponse.Count;
+                    response.Data = result;
+                    return response;
                 }
                 else
                 {
                     var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
-                    var result = MapAppResponseToConfigurations(configurationFindResponse);
-                    return result;
+                    var result = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
+                    result.ToList().ForEach(c => GenerateConfigurationDetails(c));
+                    FindResponse<Configuration> response = new FindResponse<Configuration>();
+                    response.Count = configurationFindResponse.Count;
+                    response.Data = result;
+                    return response;
                 }
             }
             catch (Exception ex)
@@ -165,15 +173,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
                 throw;
             }
-        }
-
-        private List<Configuration> MapAppResponseToConfigurations<T>(FindResponse<T> findConfigurationResponse)
-        {
-            var data = findConfigurationResponse.Data;
-            var result = _mapper.Map<List<Configuration>>(data);
-            result.ForEach(c => GenerateConfigurationDetails(c));
-
-            return result;
         }
 
         private static void GenerateConfigurationDetails(Configuration c)
@@ -204,7 +203,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             try
             {
                 var result = await FindConfigurations(new GetConfigurations.Request { Criteria = request.Criteria });
-                return result?.ToList().Count > 0;
+                return result?.Data.ToList().Count > 0;
             }
             catch (Exception ex)
             {
