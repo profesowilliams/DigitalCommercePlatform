@@ -582,17 +582,17 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private JsonObject createShopOptionsJSONObject() {
         JsonObject shopOptionsJsonData = new JsonObject();
-        shopOptionsJsonData.addProperty("shopUrl"," http,//localhost,63018");
-        shopOptionsJsonData.addProperty("corporateUrl","http,//exwb11preview.dev.web.us.tdworldwide.com");
-        shopOptionsJsonData.addProperty("legacyUrl","http,//exwb11preview.dev.web.us.tdworldwide.com");
+        shopOptionsJsonData.addProperty("shopUrl","https://shop.cstenet.com");
+        shopOptionsJsonData.addProperty("corporateUrl","http://exwb11preview.dev.web.us.tdworldwide.com");
+        shopOptionsJsonData.addProperty("legacyUrl","http://exwb11preview.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("typeAheadUrl","https://typeahead.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("shopDomain","shop.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("corporateDomain","exwb11preview.dev.web.us.tdworldwide.com/");
         shopOptionsJsonData.addProperty("legacyDomain","exwb11preview.dev.web.us.tdworldwide.com");
         shopOptionsJsonData.addProperty("cookieDomain",".us.tdworldwide.com");
         shopOptionsJsonData.addProperty("addManufacturerStoresToId","research");
-        shopOptionsJsonData.addProperty("techSelectContentUrl","https://shop.techdata.com/siteredirect/?referrer=shop.techdata.com&destination=http,//content.techselect.techdata.com&authPage=login.aspx&landingPage=http,//content.techselect.techdata.com");
-        shopOptionsJsonData.addProperty("myOrderTrackerUrl","https://shop.dev.web.us.tdworldwide.com/siteredirect/?referrer=shop.dev.web.us.tdworldwide.com&destination=http,//www.myordertracker.com&authPage=/us/default.aspx&landingPage=http,//www.myordertracker.com/reseller/MyOrderTracker.aspx");
+        shopOptionsJsonData.addProperty("techSelectContentUrl","https://shop.techdata.com/siteredirect/?referrer=shop.techdata.com&destination=http://content.techselect.techdata.com&authPage=login.aspx&landingPage=http://content.techselect.techdata.com");
+        shopOptionsJsonData.addProperty("myOrderTrackerUrl","https://shop.dev.web.us.tdworldwide.com/siteredirect/?referrer=shop.dev.web.us.tdworldwide.com&destination=http://www.myordertracker.com&authPage=/us/default.aspx&landingPage=http://www.myordertracker.com/reseller/MyOrderTracker.aspx");
         shopOptionsJsonData.addProperty("debug","true");
         shopOptionsJsonData.addProperty("clickstreamEnabled","true");
         shopOptionsJsonData.addProperty("enableTrackingEvents","true");
@@ -607,6 +607,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         shopOptionsJsonData.addProperty("productCategoriesMegaMenu","false");
         return shopOptionsJsonData;
     }
+
     private JsonObject createAuthJSONObject() {
         JsonObject authenticationStatusJsonData = new JsonObject();
         authenticationStatusJsonData.addProperty("userId", StringUtils.EMPTY);
