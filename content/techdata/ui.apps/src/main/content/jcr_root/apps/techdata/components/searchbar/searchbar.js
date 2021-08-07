@@ -12,11 +12,15 @@ use(function () {
     jsonObject.put("placeholder", properties.get("placeholder"));
   }
 
-  if (this.searchDomain !== null) {
-    jsonObject.put("searchDomain", this.searchDomain);
+  if (properties.get("searchDomain") != null) {
+    jsonObject.put("searchDomain", properties.get("searchDomain"));
+  }else if (this.searchDomain !== null) {
+      jsonObject.put("searchDomain", this.searchDomain);
   }
 
-  if (this.typeAheadDomain !== null) {
+  if (properties.get("typeAheadDomain") != null) {
+    jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain"));
+  }else if (this.typeAheadDomain !== null) {
     jsonObject.put("typeAheadDomain", this.typeAheadDomain);
   }
 
@@ -31,8 +35,20 @@ use(function () {
       var areaLabel = res.properties["areaLabel"];
 
       var areaconfig = new Packages.org.json.JSONObject();
-      var areaEndpoint = this[area + 'SearchEndpoint'];
-      var areaSuggestionUrl = this.serviceData[area + 'SuggestionUrl'];
+      var areaEndpoint, areaSuggestionUrl ;
+      if (res.properties["areaEndpoint"]!= null)
+      {
+        areaEndpoint = res.properties["areaEndpoint"];
+      }else{
+        areaEndpoint = this[area + 'SearchEndpoint']
+      }
+      if (res.properties["areaSuggestionEndPoint"]!= null)
+      {
+        areaSuggestionUrl = res.properties["areaSuggestionEndPoint"];
+      }else{
+        areaSuggestionUrl = this.serviceData[area + 'SuggestionUrl'];
+      }
+
 
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);

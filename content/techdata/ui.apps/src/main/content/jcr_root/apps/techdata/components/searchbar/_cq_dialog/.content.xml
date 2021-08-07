@@ -44,6 +44,24 @@
                                                 fieldDescription="Placeholder for text input."
                                                 fieldLabel="Placeholder"
                                                 name="./placeholder"/>
+                                            <searchDomain
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Search Domain"
+                                                    fieldLabel="Search Domain"
+                                                    name="./searchDomain"/>
+                                            <typeAheadDomain
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Type Head Domain"
+                                                    fieldLabel="Type Head Domain"
+                                                    name="./typeAheadDomain"/>
+                                            <placeholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Placeholder for text input."
+                                                    fieldLabel="Placeholder"
+                                                    name="./placeholder"/>
                                             <areaList
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -56,43 +74,59 @@
                                                     name="./areaList">
                                                     <items jcr:primaryType="nt:unstructured">
                                                         <area
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                            fieldLabel="Select List of options"
-                                                            required="true"
-                                                            name="./area">
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                fieldLabel="Select List of options"
+                                                                required="true"
+                                                                name="./area">
                                                             <items jcr:primaryType="nt:unstructured">
                                                                 <all
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="All"
-                                                                    value="all"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="All"
+                                                                        value="all"/>
                                                                 <products
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="Products"
-                                                                    value="product"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="Products"
+                                                                        value="product"/>
                                                                 <content
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="Content"
-                                                                    value="content"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="Content"
+                                                                        value="content"/>
                                                                 <quotes
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="Quotes"
-                                                                    value="quote"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="Quotes"
+                                                                        value="quote"/>
                                                                 <orders
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="Orders"
-                                                                    value="order"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="Orders"
+                                                                        value="order"/>
                                                                 <spas
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="SPAs"
-                                                                    value="spa"/>
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        text="SPAs"
+                                                                        value="spa"/>
                                                             </items>
                                                         </area>
                                                         <areaLabel
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                            fieldLabel="Area Label"
-                                                            name="./areaLabel"/>
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Area Label"
+                                                                fieldLabel="Area Label"
+                                                                required="true"
+                                                                name="./areaLabel"/>
+                                                        <areaEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Endpoint"
+                                                                fieldLabel="Endpoint"
+                                                                name="./areaEndpoint"
+                                                                />
+                                                        <areaSuggestionEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Suggestion URL"
+                                                                fieldLabel="Suggestion URL"
+                                                                name="./areaSuggestionEndPoint"
+                                                                />
                                                     </items>
                                                 </field>
                                             </areaList>
