@@ -1,0 +1,14 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<sly data-sly-use.model="com.techdata.core.models.GetMenuCategories">
+    <ul data-sly-list.category="${model.categoriesList}">
+        <li>
+            ${category.categoryName}
+        </li>
+        <sly data-sly-list.link="${category.menuList}">
+            <a href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}">${link.linkLabel}</a>
+        </sly>
+    </ul>
+</sly>
