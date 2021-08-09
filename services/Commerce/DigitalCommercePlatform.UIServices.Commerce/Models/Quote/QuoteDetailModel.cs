@@ -29,6 +29,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public decimal SubTotal { get; set; }
         public string SubTotalFormatted { get; set; }
         public string Tier { get; set; }
+        public string Created { get; set; }
+        public string Expires { get; set; }
+
 
     }
 }

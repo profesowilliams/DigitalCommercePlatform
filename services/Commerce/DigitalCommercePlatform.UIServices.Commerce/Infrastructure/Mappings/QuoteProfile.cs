@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public QuoteProfile()
         {
+            CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
+            CreateMap<Models.Quote.Quote.Internal.AgreementModel, Models.Quote.AgreementModel>();
+
             CreateMap<ItemModel, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name))
                 .ForMember(dest => dest.TDNumber, opt => opt.MapFrom(src => src.Product[0].Id))
@@ -58,7 +62,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.VendorReference != null ? src.VendorReference.FirstOrDefault().Type + ": " + src.VendorReference.FirstOrDefault().Value : string.Empty))
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
-            .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value));
+            .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+            .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
 
             CreateMap<QuoteModel, GetQuote.Response>()
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src));
