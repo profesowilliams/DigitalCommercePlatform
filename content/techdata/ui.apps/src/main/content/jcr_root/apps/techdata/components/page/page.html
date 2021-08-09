@@ -27,11 +27,29 @@
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
           adobeDataLayer.push({
-              page: JSON.parse("${page.data.json @ context='scriptString'}"),
-              event:'cmp:show',
-              eventInfo: {
-                  path: 'page.${page.id @ context="scriptString"}'
-              }
+              event:'page view',
+              page: {
+                pageInfo: {
+                    pageName: '${page.analyticsPageName @ context='unsafe'}',
+                    url: '${page.pageUrl @ context='unsafe'}',
+                    server: '${page.pageHost @ context='unsafe'}',
+                    country: '${page.country @ context='unsafe'}',
+                    language: '${page.language @ context='unsafe'}',
+                    currencyCode: '${page.currencyCode @ context='unsafe'}'
+                }
+             },
+             category: {
+                   pageType: '${page.pageType  @ context='unsafe'}',
+                   siteSection1: '${page.siteSections[0]  @ context='unsafe'}',
+                   siteSection2: '${page.siteSections[1]  @ context='unsafe'}',
+                   siteSection3: '${page.siteSections[2]  @ context='unsafe'}',
+                   siteSection4: '${page.siteSections[3]  @ context='unsafe'}'
+             },
+             error: {
+                error404: '${page.error404 @ context='unsafe'}',
+                errorCode: '${page.errorCode @ context='unsafe'}',
+                errorName: '${page.errorName @ context='unsafe'}'
+             }
           });
         </script>
 <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"

@@ -37,4 +37,7 @@ public class Constants {
     public static final String WORKFLOW_ARGS_KEY = "PROCESS_ARGS";
     public static final String COMMA = ",";
 
+    public static final int COUNTRY_PAGE = 3;
+    public static final int LOCALE_PAGE = 4;
+
 }

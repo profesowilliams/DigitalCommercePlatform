@@ -38,6 +38,18 @@
                                             name="./errorPages"
                                             rootPath="/content/techdata">
                                     </errorPages>
+                                    <currency
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Define currency at the locale page, else default to USD."
+                                            fieldLabel="Currency Code"
+                                            name="./currency"/>
+                                    <pageType
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Defines pagetype for the page."
+                                            fieldLabel="Page Type"
+                                            name="./pageType"/>
                                 </items>
                             </column>
                         </items>
