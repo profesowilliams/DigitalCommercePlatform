@@ -1,17 +1,9 @@
 .cmp-sub-header {
   font-family: "Open Sans", sans-serif;
   font-size: 0.813rem;
+  position: relative;
   &__wrapper{
     align-self: center;
-  }
-  &--sub-nav {
-    background-color: #000c21;
-    display: flex;
-    width: 100%;
-    height: 3.75rem;
-    line-height: 3.75rem;
-    height: 2.688rem;
-    justify-content: space-between;
     ul{
       margin: 0;
       padding: 0;
@@ -30,7 +22,15 @@
         }
       }
     }
-    ol {
+  }
+  &--sub-nav {
+    background-color: #000c21;
+    display: flex;
+    width: 100%;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    height: 2.688rem;
+    > ol {
       margin: 0;
       padding: 0;
       align-self: center;
@@ -40,7 +40,7 @@
           margin-right: 4.375rem;
         }
       }
-      li {
+      > li {
         display: inline-flex;
         position: relative;
         padding: 0 0.938rem !important;

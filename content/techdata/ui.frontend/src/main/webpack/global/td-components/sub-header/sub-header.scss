@@ -4,17 +4,10 @@
 .cmp-sub-header {
   font-family: "Open Sans", sans-serif;
   font-size: $font-size-custom-xxsmall;
+  position: relative;
   &__wrapper{
     align-self: center;
-  }
-  &--sub-nav {
-    background-color: get-color(td-dark-blue);
-    display: flex;
-    width: 100%;
-    height: rem(60px);
-    line-height: rem(60px);
-    height: rem(43px);
-    justify-content: space-between;
+    margin-left: auto;
     ul{
       margin: 0;
       padding: 0;
@@ -33,7 +26,15 @@
         }
       }
     }
-    ol {
+  }
+  &--sub-nav {
+    background-color: get-color(td-dark-blue);
+    display: flex;
+    width: 100%;
+    height: rem(60px);
+    line-height: rem(60px);
+    height: rem(43px);
+    > ol {
       margin: 0;
       padding: 0;
       align-self: center;
@@ -43,7 +44,7 @@
           margin-right: rem(70px);
         }
       }
-      li {
+      > li {
         display: inline-flex;
         position: relative;
         padding: 0 rem(15px)!important;
