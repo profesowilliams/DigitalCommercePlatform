@@ -144,7 +144,7 @@ public class PageImpl implements Page {
             for (int i = 0; i < hierarchyPagesList.size(); i++) {
                 String path = hierarchyPagesList.get(i);
                 if(StringUtils.isNotEmpty(path)) {
-                    siteSections[i] = path;
+                    siteSections[i-1] = path;
                 }
             }
         }
@@ -157,7 +157,7 @@ public class PageImpl implements Page {
             hierarchyPagesList = Arrays.asList("home");
         } else {
             hierarchyPagesList = Arrays.asList(hierarchyPages);
-            Collections.reverse(hierarchyPagesList);
+//            Collections.reverse(hierarchyPagesList);
         }
         return hierarchyPagesList;
     }
