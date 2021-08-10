@@ -51,10 +51,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName , o => o.Ignore())
-                .ForMember(d => d.TdQuoteId , o => o.Ignore())
                 .ForMember(d => d.VendorQuoteId , o => o.Ignore())
                 .ForMember(d => d.Action , o => o.Ignore())
-                .ForMember(d => d.Details , o => o.Ignore())
+                .ForMember(d => d.Quotes , o => o.Ignore())
                 ;
             CreateMap<DetailedDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
@@ -63,10 +62,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName, o => o.Ignore())
-                .ForMember(d => d.TdQuoteId, o => o.Ignore())
                 .ForMember(d => d.VendorQuoteId, o => o.Ignore())
                 .ForMember(d => d.Action, o => o.Ignore())
-                .ForMember(d => d.Details, o => o.Ignore())
+                .ForMember(d => d.Quotes, o => o.Ignore())
                 ;
         }
     }

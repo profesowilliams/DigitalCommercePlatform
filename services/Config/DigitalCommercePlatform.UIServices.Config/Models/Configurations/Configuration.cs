@@ -12,11 +12,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public DateTime CreatedOn { get; set; }
         public string Vendor { get; set; }
         public string ConfigName { get; set; }
-        public string EndUserName { get; set; }
-        public string TdQuoteId { get; set; }
+        public string EndUserName { get; set; }        
         public string VendorQuoteId { get; set; }
         public string Action { get; set; } = ConfigurationAction.CreateQuote.ToString();
-
-        public IList<TdQuoteIdDetails> Details { get; set; }
+        public IList<TdQuoteIdDetails> Quotes { get; set; }
     }
 }
