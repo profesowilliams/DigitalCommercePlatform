@@ -3,12 +3,14 @@
 </sly>
 
 <sly data-sly-use.model="com.techdata.core.models.GetMenuCategories">
-    <ul data-sly-list.category="${model.categoriesList}">
-        <li>
+    <ul data-sly-list.category="${model.categoriesList}" class="cmp-tools">
+        <li class="cmp-tools__category-name">
             ${category.categoryName}
+            <sly data-sly-list.link="${category.menuList}">
+                <ul>
+                    <li><a href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}">${link.linkLabel}</a></li>
+                </ul>
+            </sly>
         </li>
-        <sly data-sly-list.link="${category.menuList}">
-            <a href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}">${link.linkLabel}</a>
-        </sly>
     </ul>
 </sly>

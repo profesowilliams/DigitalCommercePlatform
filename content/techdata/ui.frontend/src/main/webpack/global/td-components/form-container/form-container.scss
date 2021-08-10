@@ -1,7 +1,7 @@
 .form-style-container {
   .cmp-form {
     .cmp-form-text, .cmp-form-options {
-      margin-bottom: 20px;
+      margin-bottom: rem(20px);
     }
 
     fieldset {
@@ -12,26 +12,26 @@
     .cmp-form-text input,
     .cmp-form-text textarea,
     .cmp-form-options select {
-      font-size: 16px;
-      line-height: 16px;
+      font-size: rem(16px);
+      line-height: rem(16px);
       border: 0;
-      border-bottom: 1px solid #979797;
+      border-bottom: rem(1px) solid get-color(border-light-gray);
       font-family: inherit;
       border-radius: 0;
       width: 100%;
       outline: none;
-      padding: 15px 0;
+      padding: rem(15px) 0;
     }
 
     .cmp-form-text textarea {
-      border: 1px solid #ccc;
-      padding: 15px;
+      border: rem(1px) solid get-color(input-grey-borde);
+      padding: rem(15px);
       width: 100%;
     }
 
     ::-webkit-input-placeholder,
     select:invalid {
-      color: #555555;
+      color: get-color(text-light-charcoal);
     }
 
     option {
@@ -40,17 +40,18 @@
 
     label,
     legend {
-      font-size: 14px;
-      line-height: 16px;
-      color: #555555;
-      margin-bottom: 10px;
+      font-size: rem(14px);
+      line-height: rem(16px);
+      color: get-color(brand-text-gray);
+      margin-bottom: rem(10px);
+      display: inline-block;
     }
 
     &-options {
       &__field-label {
         position: relative;
-        padding-left: 10px;
-        margin-right: 15px;
+        padding-left: rem(10px);
+        margin-right: rem(15px);
       }
       &__field-description {
         top: 0;
@@ -62,14 +63,14 @@
           content: '\f096';
           position: absolute;
           left: 0;
-          top: 2px;
+          top: rem(2px);
           @include font-awesome-custom-icon;
-          color: #555555;
+          color: get-color(brand-text-gray);
         }
         &:checked {
           &:after {
             content: '\f14a';
-            color: #00B1E2;
+            color: get-color(brand-light-blue);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
           }
@@ -84,13 +85,13 @@
           left: 0;
           top: 0;
           @include font-awesome-custom-icon;
-          color: #555555;
+          color: get-color(brand-text-gray);
         }
 
         &:checked {
           &:after {
             content: '\f192';
-            color: #00B1E2;
+            color: get-color(brand-light-blue);
             font-weight: 600;
           }
         }
@@ -98,12 +99,12 @@
     }
 
     .cmp-form-button {
-      font-size: 16px;
-      line-height: 19px;
-      background-color: #000C21;
+      font-size: rem(16px);
+      line-height: rem(19px);
+      background-color: get-color(td-dark-blue);
       width: 100%;
       border: none;
-      padding: 12px 10px;
+      padding: rem(12px) rem(10px);
       font-weight: bold;
       text-align: center;
       color: white;
