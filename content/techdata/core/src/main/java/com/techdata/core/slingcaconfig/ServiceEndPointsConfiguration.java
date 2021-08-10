@@ -80,5 +80,6 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Quotes Preview Pricing Endpoint", description = "Quotes Preview Pricing Endpoint ", order = 24)
     String quotesPreviewPricingEndPoint();
 
-
+    @Property(label = "Configurations Endpoint", description = "Configurations Endpoint ", order = 25)
+    String configurationsEndpoint();
 }

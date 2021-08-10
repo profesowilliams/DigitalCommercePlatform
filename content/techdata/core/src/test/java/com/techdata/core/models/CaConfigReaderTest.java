@@ -86,6 +86,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.orderGridEndpoint()).thenReturn("orderGridEndpoint");
         when(serviceEndPointsConfiguration.quotesPreviewEndPoint()).thenReturn("quotesPreviewEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
+        when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.tdPartSmart()).thenReturn("tdPartSmart");
@@ -138,6 +139,7 @@ class CaConfigReaderTest {
         assertEquals("orderGridEndpoint", underTest.getOrderGridEndpoint());
         assertEquals("quotesPreviewEndPoint", underTest.getQuotesPreviewEndPoint());
         assertEquals("quotesPreviewPricingEndPoint", underTest.getQuotesPreviewPricingEndPoint());
+        assertEquals("configurationsEndpoint", underTest.getConfigurationsEndpoint());
         assertEquals("shopDomain", underTest.getShopDomain());
         assertEquals("cartURL", underTest.getCartURL());
         assertEquals("tdPartSmart", underTest.getTdPartSmart());

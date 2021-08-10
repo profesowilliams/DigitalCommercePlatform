@@ -986,6 +986,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/list-new.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "configuration-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/configuration-grid.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

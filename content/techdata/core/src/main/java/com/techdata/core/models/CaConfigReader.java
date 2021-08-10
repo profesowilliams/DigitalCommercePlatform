@@ -72,6 +72,8 @@ public class CaConfigReader {
 
 	private String vendorConnectionEndpoint;
 
+	private String configurationsEndpoint;
+
 	private  String shopDomain;
 
 	private String cartURL;
@@ -164,6 +166,7 @@ public class CaConfigReader {
 		orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
 		quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
 		quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
+		configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
 		shopDomain = mcConfiguration.shopDomain();
 		cartURL = mcConfiguration.cartURL();
 		tdPartSmart = mcConfiguration.tdPartSmart();
@@ -290,6 +293,10 @@ public class CaConfigReader {
 
 	public String getQuotesPreviewPricingEndPoint() {
 		return quotesPreviewPricingEndPoint;
+	}
+
+	public String getConfigurationsEndpoint() {
+		return configurationsEndpoint;
 	}
 
 	public String getShopDomain() {

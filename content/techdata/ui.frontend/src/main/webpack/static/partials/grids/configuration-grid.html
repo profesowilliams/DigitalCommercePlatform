@@ -1,0 +1,24 @@
+<div id="ConfigurationGrid" data-observe-mutation>
+    <div
+        data-component="ConfigurationGrid"
+        data-cmp-type="react"
+        className="cmp-configuration-grid"
+        data-config='{"label":"Configuration grid",
+        "uiServiceEndPoint":"http://localhost:3000/ui-config/v1/configurations",
+        "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
+        "itemsPerPage":"25", "paginationStyle": "pages",
+        "options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"},
+        "columnList":[{"columnLabel":"Config ID","columnKey":"configId", "sortable": true},
+        {"columnLabel":"Type","columnKey":"configurationType", "sortable": false},
+        {"columnLabel":"Vendor","columnKey":"vendor", "sortable": false},
+        {"columnLabel":"Created","columnKey":"created", "sortable": false},
+        {"columnLabel":"Expires","columnKey":"expires", "sortable": false},
+        {"columnLabel":"Config Name","columnKey":"configName", "sortable": true},
+        {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
+        {"columnLabel":"Quote Id","columnKey":"quotes", "sortable": false},
+        {"columnLabel":"Action","columnKey":"action", "sortable": false}],
+        "checkout":{"uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
+        "redirectUrl": "https://shop.techdata.com/cart"},
+        "spaDealsIdLabel": "multiple"}'
+    ></div>
+</div>
