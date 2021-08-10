@@ -9,7 +9,6 @@ import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static com.techdata.core.util.Constants.COUNTRY_PAGE;
@@ -157,7 +155,6 @@ public class PageImpl implements Page {
             hierarchyPagesList = Arrays.asList("home");
         } else {
             hierarchyPagesList = Arrays.asList(hierarchyPages);
-//            Collections.reverse(hierarchyPagesList);
         }
         return hierarchyPagesList;
     }

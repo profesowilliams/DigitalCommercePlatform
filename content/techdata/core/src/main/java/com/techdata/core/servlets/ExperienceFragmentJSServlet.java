@@ -82,7 +82,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private boolean isPublish = false;
 
-    private ExperienceFragmentJSServletConfig configData;
+    private transient ExperienceFragmentJSServletConfig configData;
 
     @Activate
     protected void activate(ExperienceFragmentJSServletConfig config) {
@@ -669,7 +669,6 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private static final String THIS_WINDOW = "thisWindow";
     private static final String HIGHLIGHT = "highlight";
     private static final String CHILDREN = "children";
-    private static final String JQUERY_DEFAULT = "jquery";
     private static final String APPS = "/apps/";
     private static final String LIBS = "/libs/";
     private static final String ETC_CLIENTLIBS = "/etc.clientlibs/";
