@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const SearchAreas = ({ areaList, selectedArea, changeSelectedArea }) => {
+const SearchAreas = ({ areaList, selectedArea, changeSelectedArea, toggleSearchIcon }) => {
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
 
   const toggleAreaSelection = () => {
-    setAreaSelectionOpen(!areaSelectionOpen);
-  }
+      setAreaSelectionOpen(!areaSelectionOpen);
+    }
 
   const onAreaClick = (areaConfiguration) => {
     toggleAreaSelection();
@@ -20,7 +20,9 @@ const SearchAreas = ({ areaList, selectedArea, changeSelectedArea }) => {
       "cmp-searcharea__selectedarea"}>
       <button
         className="cmp-searcharea__selectedarea-button"
-        onClick={toggleAreaSelection}>
+        onClick={() => { toggleAreaSelection();
+          toggleSearchIcon(areaSelectionOpen)
+        }}>
         {' '}{selectedArea.areaLabel}
         <i className="cmp-searcharea__selectedarea-icon fas	fa-chevron-down"></i>
       </button>

@@ -61,6 +61,7 @@
 	&__input {
 		border: rem(1px) solid get-color(brand-black);
 		border-radius: rem(6px) 0 0 rem(6px);
+		box-sizing: border-box;
 		outline: none;
 		padding: rem(10px) rem(14px);
 		transition: all 400ms ease;
@@ -88,8 +89,13 @@
 
 	&__button {
 		background-color: get-color(brand-black);
-		border: rem(1.5px) solid get-color(brand-black);
-		padding: rem(11px) rem(15px);
+		border-right: rem(1.5px) solid get-color(brand-black) !important;
+		border-top: rem(1.5px) solid get-color(brand-black) !important;
+		border-bottom: rem(1.5px) solid get-color(brand-black) !important;
+		border-left: 0 !important;
+		border-radius: 0 rem(6px) rem(6px) 0;
+		box-sizing: border-box;
+		padding: rem(9.5px) rem(13.5px);
 		transition: all 200ms ease;
 
 		&:hover {
@@ -103,9 +109,21 @@
 
 		@include mobile {
 			background-color: transparent;
-			border: none;
+			border: none !important;
 			padding: 0;
 			margin: 0 rem(8px);
+		}
+
+		&--checked {
+			background-color: get-color(brand-white);
+
+			&:hover {
+				background-color: get-color(brand-light-gray);
+			}
+
+			svg {
+				color: get-color(brand-black);
+			}
 		}
 	}
 
@@ -114,6 +132,10 @@
 
 		@include mobile {
 			color: get-color(brand-light-blue);
+		}
+
+		&--checked {
+			color: get-color(brand-black);
 		}
 	}
 
@@ -147,7 +169,7 @@
 		left: 0;
 		max-height: rem(250px);
 		position: relative;
-		width: 94%;
+		width: 96%;
 
 		@include mobile {
 			width: 100%;
@@ -218,10 +240,6 @@
 			flex-direction: column;
 			justify-content: center;
 			margin-top: rem(8px);
-
-			.cmp-searchsuggestions__link {
-				color: get-color(brand-nav-blue);
-			}
 
 			@include mobile {
 				display: flex;

@@ -3,6 +3,7 @@ import axios from "axios";
 
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
+import { toggleAreaSelection } from './SearchAreas'
 
 const SearchBar = ({ componentProp }) => {
   let { id, areaList, placeholder, searchDomain, typeAheadDomain } =
@@ -12,6 +13,7 @@ const SearchBar = ({ componentProp }) => {
   const [searchInputFocused, setSearchInputFocused] = useState(false);
 
   const [isMobile, setMobile] = useState(false);
+  const [isClicked, setClicked] = useState(false);
 
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
@@ -105,7 +107,12 @@ const SearchBar = ({ componentProp }) => {
   const lostFocus = () => {
     setMobile(false);
     setSearchInputFocused(false);
+    setClicked(false);
   };
+
+  const toggleSearchIcon = () => {
+    setClicked(!isClicked)
+  }
 
   const renderContextMenu = () => {
     if (!searchInputFocused) {
@@ -117,6 +124,7 @@ const SearchBar = ({ componentProp }) => {
           areaList={areaList}
           selectedArea={selectedArea}
           changeSelectedArea={changeSelectedArea}
+          toggleSearchIcon={toggleSearchIcon}
         ></SearchAreas>
         <SearchSuggestions
           suggestionsList={typeAheadSuggestions.Suggestions}
@@ -170,11 +178,11 @@ const SearchBar = ({ componentProp }) => {
           value={searchTermText}
           placeholder={placeholder}
         />
-        <button className="cmp-searchbar__button" onClick={redirectToShop}>
-          <i
-            className="cmp-searchbar__icon fas fa-search"
-            data-cmp-hook-search="icon"
-          ></i>
+        <button className={isClicked ? "cmp-searchbar__button cmp-searchbar__button--checked" 
+                                     : "cmp-searchbar__button"} onClick={redirectToShop}>
+
+          <i className={isClicked ? "cmp-searchbar__icon cmp-searchbar__icon--checked fas fa-search" 
+                                  : "cmp-searchbar__icon fas fa-search"} data-cmp-hook-search="icon"></i>
         </button>
       </>
       )
