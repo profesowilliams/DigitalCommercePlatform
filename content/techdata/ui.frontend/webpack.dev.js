@@ -827,6 +827,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "white-label-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/white-label-grid.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "quotes-subheader-react",
                 template: path.resolve(
                     __dirname,
