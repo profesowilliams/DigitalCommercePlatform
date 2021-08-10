@@ -4,7 +4,7 @@
     data-sly-test="${teaser.imageResource}">
     <sly data-sly-test="${svgModel.isSvg}">
       <div class="cmp-teaser__image">
-        <a class="cmp-image__link" href="${teaser.linkURL}" data-cmp-clickable="" data-cmp-hook-image="link">
+        <a class="cmp-image__link" href="${teaser.linkURL}" data-cmp-clickable data-cmp-hook-image="link">
           <div class="cmp-image__image" data-cmp-hook-image="image">
             ${svgModel.getBinary @ context='unsafe'}
           </div>

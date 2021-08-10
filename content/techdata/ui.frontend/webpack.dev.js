@@ -994,6 +994,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "analytics",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/analytics-demo-page.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "configuration-grid",
                 template: path.resolve(
                     __dirname,
