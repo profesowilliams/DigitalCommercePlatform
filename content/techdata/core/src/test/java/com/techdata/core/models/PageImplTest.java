@@ -145,11 +145,13 @@ class PageImplTest {
     @Test
     void validateTDErrorStatuses() {
         when(currentPage.getAbsoluteParent(LOCALE_PAGE)).thenReturn(localePage);
-        when(localePage.adaptTo(ValueMap.class)).thenReturn(localePageProperties);
-        when(currentPage.getPath()).thenReturn(ERROR_PAGE_PATH);
-        when(localePageProperties.get("errorPages", StringUtils.EMPTY)).thenReturn(ERROR_PAGE_PATH);
+        when(localePage.getProperties()).thenReturn(localePageProperties);
+        when(currentPage.getPath()).thenReturn(ERROR_404_PAGE_PATH);
+        when(localePageProperties.get("errorPages", String.class)).thenReturn(ERROR_PAGE_PATH);
         assertEquals(tdPage.getError404(), "true");
+        when(currentPage.getTitle()).thenReturn("404");
         assertEquals(tdPage.getErrorCode(), "404");
+        when(currentPage.getDescription()).thenReturn("404: Page not found, please try again");
         assertEquals(tdPage.getErrorName(), "404: Page not found, please try again");
 
         when(currentPage.getPath()).thenReturn(CURR_PAGE_PATH);
@@ -161,5 +163,6 @@ class PageImplTest {
     private static final String COUNTRY_PAGE_PATH = "/content/techdata/americas/ca";
     private static final String LOCALE_PAGE_PATH = COUNTRY_PAGE_PATH + "/fr";
     private static final String CURR_PAGE_PATH = LOCALE_PAGE_PATH + "/products";
-    private static final String ERROR_PAGE_PATH = LOCALE_PAGE_PATH + "/404";
+    private static final String ERROR_PAGE_PATH = LOCALE_PAGE_PATH + "/errors";
+    private static final String ERROR_404_PAGE_PATH = LOCALE_PAGE_PATH + "/errors/404";
 }

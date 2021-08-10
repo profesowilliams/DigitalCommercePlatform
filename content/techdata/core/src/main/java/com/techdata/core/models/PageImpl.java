@@ -225,8 +225,8 @@ public class PageImpl implements Page {
     public String getError404() {
         com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
         if(localePage != null) {
-            ValueMap localePageProperties = localePage.adaptTo(ValueMap.class);
-            if (currentPage.getPath().equals(localePageProperties.get("errorPages", StringUtils.EMPTY))) {
+            String errorPagesPath = localePage.getProperties().get("errorPages", String.class);
+            if (StringUtils.isNotEmpty(errorPagesPath) && currentPage.getPath().contains(errorPagesPath)) {
                 return "true";
             }
         }
@@ -236,14 +236,14 @@ public class PageImpl implements Page {
 
     public String getErrorCode() {
         if(getError404().equals("true")) {
-            return "404";
+            return currentPage.getTitle();
         }
         return StringUtils.EMPTY;
     }
 
     public String getErrorName() {
         if(getError404().equals("true")) {
-            return "404: Page not found, please try again";
+            return currentPage.getDescription();
         }
         return StringUtils.EMPTY;
     }
