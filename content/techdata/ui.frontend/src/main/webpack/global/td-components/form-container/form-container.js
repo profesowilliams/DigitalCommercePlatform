@@ -1,7 +1,7 @@
 (function() {
     "use strict";
     function onDocumentReady() {
-        const formElems = document.querySelectorAll('.container .cmp-form');
+        const formElems = document.querySelectorAll('.form-style-container .cmp-form');
         formElems && formElems.forEach(formElem => {
             formElem && formElem.querySelectorAll('input, select,textarea').forEach(elem => {
                 if (elem.closest('.cmp-form-text')) {
