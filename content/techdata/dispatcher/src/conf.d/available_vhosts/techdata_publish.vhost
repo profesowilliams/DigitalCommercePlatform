@@ -7,7 +7,7 @@ PassEnv DISP_ID
 	# Put names of which domains are used for your published site/content here
 	ServerAlias	uat.dc.tdebusiness.cloud
 	ServerAlias stage.dc.tdebusiness.cloud
-	ServerAlias techdata.com www.techdata.com asia.techdata.com
+	ServerAlias techdata.com www.techdata.com asia.techdata.com prod.dc.tdebusiness.cloud
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
 	# Add header breadcrumbs for help in troubleshooting
