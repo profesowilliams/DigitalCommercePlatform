@@ -1,28 +1,15 @@
 "use strict";
+
 use(function () {
   var jsonObject = new Packages.org.json.JSONObject();
 
   var resourceResolver = resource.getResourceResolver();
 
-  if (properties.get("id") != null) {
-      jsonObject.put("id", properties.get("id"));
-  }
-
-  if (properties.get("placeholder") != null) {
-    jsonObject.put("placeholder", properties.get("placeholder"));
-  }
-
-  if (properties.get("searchDomain") != null) {
-    jsonObject.put("searchDomain", properties.get("searchDomain"));
-  }else if (this.searchDomain !== null) {
-      jsonObject.put("searchDomain", this.searchDomain);
-  }
-
-  if (properties.get("typeAheadDomain") != null) {
-    jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain"));
-  }else if (this.typeAheadDomain !== null) {
-    jsonObject.put("typeAheadDomain", this.typeAheadDomain);
-  }
+  jsonObject.put("id", properties.get("id") || '');
+  jsonObject.put("placeholder", properties.get("placeholder") || '');
+  jsonObject.put("searchDomain", properties.get("searchDomain") || this.serviceData['searchDomain'] || '');
+  jsonObject.put("uiServiceDomain", this.serviceData['uiServiceDomain'] || '');
+  jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain") || this.serviceData['typeaheadDomain'] || '');
 
   var areaListNode = resourceResolver.getResource(currentNode.getPath() + "/areaList");
 
@@ -35,34 +22,37 @@ use(function () {
       var areaLabel = res.properties["areaLabel"];
 
       var areaconfig = new Packages.org.json.JSONObject();
-      var areaEndpoint, areaSuggestionUrl ;
-      if (res.properties["areaEndpoint"]!= null)
-      {
+      var areaEndpoint, areaSuggestionUrl;
+      if (res.properties["areaEndpoint"] != null) {
         areaEndpoint = res.properties["areaEndpoint"];
-      }else{
-        areaEndpoint = this[area + 'SearchEndpoint']
+      } else {
+        areaEndpoint = this.serviceData[area + "SearchEndpoint"];
       }
-      if (res.properties["areaSuggestionEndPoint"]!= null)
-      {
+      if (res.properties["areaSuggestionEndPoint"] != null) {
         areaSuggestionUrl = res.properties["areaSuggestionEndPoint"];
-      }else{
-        areaSuggestionUrl = this.serviceData[area + 'SuggestionUrl'];
+      } else {
+        areaSuggestionUrl = this.serviceData[area + "SuggestionUrl"];
       }
-
 
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);
-      if(areaEndpoint !== null) {
-        areaconfig.put("endpoint", areaEndpoint);
-      }
+      areaconfig.put("endpoint", areaEndpoint || '');
+      areaconfig.put("areaSuggestionUrl", areaSuggestionUrl || '');
 
-      if(areaSuggestionUrl !== null) {
-        areaconfig.put("areaSuggestionUrl", areaSuggestionUrl);
+      // quote specific vars
+      if (area === 'quote') {
+        /**
+         * quoteDetailPage:         Page to redirect DCP User for successful quote entered
+         * dcpQuotesLookupEndpoint: Endpoint for checking if quote ID entered exists, for DCP User
+         * dcpSearchFailedPage:     Page to redirect DCP User for failed quote entered
+         */
+          areaconfig.put("quoteDetailPage", this.serviceData['quoteDetailPage'] || '');
+          areaconfig.put("dcpQuotesLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
+          areaconfig.put("dcpSearchFailedPage", res.properties['dcpSearchFailedPage'] || '');
       }
-
+      
       jsonArray.put(areaconfig);
     }
-
     jsonObject.put("areaList", jsonArray);
   }
 

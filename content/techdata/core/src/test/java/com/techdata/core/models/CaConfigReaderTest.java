@@ -97,12 +97,10 @@ class CaConfigReaderTest {
         when(searchBarConfiguration.productSuggestionUrl()).thenReturn("productSuggestionUrl");
         when(searchBarConfiguration.contentSearchEndpoint()).thenReturn("contentSearchEndpoint");
         when(searchBarConfiguration.contentSuggestionUrl()).thenReturn("contentSuggestionUrl");
-        when(searchBarConfiguration.quoteSearchEndpoint()).thenReturn("quoteSearchEndpoint");
         when(searchBarConfiguration.orderSearchEndpoint()).thenReturn("orderSearchEndpoint");
         when(searchBarConfiguration.spaSearchEndpoint()).thenReturn("spaSearchEndpoint");
         when(searchBarConfiguration.typeAheadDomain()).thenReturn("typeAheadDomain");
         when(searchBarConfiguration.typeAheadEndpoint()).thenReturn("typeAheadEndpoint");
-//        when(searchBarConfiguration.typeAheadKeyword()).thenReturn("typeAheadKeyword");
         when(searchBarConfiguration.searchDomain()).thenReturn("searchDomain");
         when(searchBarConfiguration.legacySearchEndpoint()).thenReturn("legacySearchEndpoint");
         when(searchBarConfiguration.searchKeywordParameter()).thenReturn("searchKeywordParameter");
@@ -150,12 +148,10 @@ class CaConfigReaderTest {
         assertEquals("productSuggestionUrl", underTest.getProductSuggestionUrl());
         assertEquals("contentSearchEndpoint", underTest.getContentSearchEndpoint());
         assertEquals("contentSuggestionUrl", underTest.getContentSuggestionUrl());
-        assertEquals("quoteSearchEndpoint", underTest.getQuoteSearchEndpoint());
         assertEquals("orderSearchEndpoint", underTest.getOrderSearchEndpoint());
         assertEquals("spaSearchEndpoint", underTest.getSpaSearchEndpoint());
         assertEquals("typeAheadDomain", underTest.getTypeAheadDomain());
         assertEquals("typeAheadEndpoint", underTest.getTypeAheadEndpoint());
-//        assertEquals("typeAheadKeyword", underTest.getTypeAheadKeyword());
         assertEquals("searchDomain", underTest.getSearchDomain());
         assertEquals("legacySearchEndpoint", underTest.getLegacySearchEndpoint());
         assertEquals("searchKeywordParameter", underTest.getSearchKeywordParameter());
@@ -168,10 +164,5 @@ class CaConfigReaderTest {
         assertEquals("quotePreviewPage", underTest.getQuotePreviewPage());
         assertEquals("orderListingPage", underTest.getOrderListingPage());
         assertEquals("orderDetailPage", underTest.getOrderDetailPage());
-
-
-
-
-
     }
 }

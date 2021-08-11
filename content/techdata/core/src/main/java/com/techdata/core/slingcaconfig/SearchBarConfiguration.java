@@ -26,11 +26,11 @@ public @interface SearchBarConfiguration {
     @Property(label = "Content Suggestion Url", description = "Content Suggestion Url")
     String contentSuggestionUrl();
 
-    @Property(label = "Quotes Search", description = "Quotes Search")
-    String quoteSearchEndpoint();
-
     @Property(label = "Orders Search", description = "Orders Search")
     String orderSearchEndpoint();
+
+    @Property(label = "Quote Search Endpoint", description = "Quote Search Endpoint")
+    String quoteSearchEndpoint();
 
     @Property(label = "SPA Search", description = "SPA Search")
     String spaSearchEndpoint();
@@ -61,7 +61,4 @@ public @interface SearchBarConfiguration {
 
     @Property(label = "Content Search Tab", description = "Content Search Tab")
     String contentSearchTab();
-
-
-
 }

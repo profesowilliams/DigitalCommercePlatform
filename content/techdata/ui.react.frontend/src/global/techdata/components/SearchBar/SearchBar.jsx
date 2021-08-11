@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 import { toggleAreaSelection } from './SearchAreas'
 
-const SearchBar = ({ componentProp }) => {
-  let { id, areaList, placeholder, searchDomain, typeAheadDomain } =
-    JSON.parse(componentProp);
+const SearchBar = ({ data, componentProp }) => {
+  const { 
+    id, 
+    areaList, 
+    placeholder, 
+    searchDomain, 
+    uiServiceDomain, 
+    typeAheadDomain 
+  } = JSON.parse(componentProp);
 
   const [searchTermText, setSearchTermText] = useState("");
   const [searchInputFocused, setSearchInputFocused] = useState(false);
@@ -17,20 +24,19 @@ const SearchBar = ({ componentProp }) => {
 
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
-
   useEffect(() => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
-
     return () => clearTimeout(timeOutId);
   }, [searchTermText]);
+
+  const replaceSearchTerm = (originalStr, searchTerm) => {
+    return originalStr.replace("{search-term}", searchTerm);
+  }
 
   const loadSuggestions = async (searchTerm) => {
     if (searchTermText.length >= 3) {
       if (["all", "product", "content"].includes(selectedArea.area)) {
-        const response = await axios.get(
-          typeAheadDomain.replace("{search-term}", searchTerm)
-        );
-
+        const response = await axios.get(replaceSearchTerm(typeAheadDomain, searchTerm));
         setTypeAheadSuggestions(response.data);
       }
     } else {
@@ -38,15 +44,27 @@ const SearchBar = ({ componentProp }) => {
     }
   };
 
-  const getSearchUrl = (searchTerm) => {
-    const path = selectedArea.endpoint.replace("{search-term}", searchTerm);
-
-    return `${searchDomain}${path}`;
+  const getSearchUrl = async (searchTerm) => {    
+    if (selectedArea.area === 'quote') {
+      if (!data.userData?.hasDCPAccess) {
+        try {
+          const response = await axios.get(uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint);
+          const idFound = response.data.content.items.find(quote => quote.id == searchTerm);
+          if (idFound) {
+            return window.location.origin + `${selectedArea.quoteDetailPage}?id=${searchTerm}`;
+          }
+          return window.location.origin + selectedArea.dcpSearchFailedPage;
+        } catch (err) {
+          console.log(`Error calling UI Serivce Endpoint (${uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint}): ${err}`);
+        }
+      }
+    }
+    return searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
-    let path = selectedArea.areaSuggestionUrl
-      .replace("{search-term}", searchTerm)
+    let path = 
+      replaceSearchTerm(selectedArea.areaSuggestionUrl, searchTerm)
       .replace("{suggestion-index}", itemIndex + 1);
 
     if (refinementId) {
@@ -63,7 +81,7 @@ const SearchBar = ({ componentProp }) => {
     setSearchTermText(value);
   };
 
-  const onSearchTermTextKeyPress = (e) => {
+  const onSearchTermTextKeyPress = async (e) => {
     if (e.key === "Enter") {
       redirectToShop();
     } else if (e.key === "Enter" && searchTermText === ''){
@@ -71,11 +89,11 @@ const SearchBar = ({ componentProp }) => {
     }
   };
 
-  const redirectToShop = () => {
+  const redirectToShop = async () => {
     if(searchTermText === ''){
       return null    
     } else {
-      window.location.href = getSearchUrl(searchTermText);
+      window.location.href = await getSearchUrl(searchTermText);
     }
   };
 
@@ -210,4 +228,11 @@ const SearchBar = ({ componentProp }) => {
     </div>
   );
 };
-export default SearchBar;
+
+const mapStateToProps = (state) => {
+	return {
+		data: state,
+	};
+};
+
+export default connect(mapStateToProps, null)(SearchBar);

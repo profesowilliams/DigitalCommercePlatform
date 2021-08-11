@@ -8,76 +8,76 @@ import org.apache.sling.caconfig.annotation.Property;
     description = "Configuration can be made per website")
 public @interface ServiceEndPointsConfiguration {
 
-    @Property(label = "UI Service Domain", description = "UI Service Domain", order = 1)
+    @Property(label = "UI Service Domain", description = "UI Service Domain")
     String uiServiceDomain();
 
-    @Property(label = "Catalog Endpoint", description = "Catalog Endpoint", order = 2)
+    @Property(label = "Catalog Endpoint", description = "Catalog Endpoint")
     String catalogEndpoint();
 
-    @Property(label = "Authorization Page URL", description = "Authorization Page URL", order = 3)
+    @Property(label = "Authorization Page URL", description = "Authorization Page URL")
     String authorizationPageURL();
 
-    @Property(label = "Login Endpoint", description = "Login Endpoint", order = 4)
+    @Property(label = "Login Endpoint", description = "Login Endpoint")
     String loginEndpoint();
 
-    @Property(label = "Ping App Id", description = "Ping App Id", order = 5)
+    @Property(label = "Ping App Id", description = "Ping App Id")
     String pingAppId();
 
-    @Property(label = "Active Cart Endpoint", description = "Active Cart Endpoint", order = 6)
+    @Property(label = "Active Cart Endpoint", description = "Active Cart Endpoint")
     String activeCartEndpoint();
 
-    @Property(label = "My Configurations Endpoint", description = "My Configurations Endpoint", order = 7)
+    @Property(label = "My Configurations Endpoint", description = "My Configurations Endpoint")
     String myConfigurationsEndpoint();
 
-    @Property(label = "My Orders Endpoint", description = "My Orders Endpoint", order = 8)
+    @Property(label = "My Orders Endpoint", description = "My Orders Endpoint")
     String myOrdersEndpoint();
 
-    @Property(label = "My Quotes Endpoint", description = "My Quotes Endpoint", order = 9)
+    @Property(label = "My Quotes Endpoint", description = "My Quotes Endpoint")
     String myQuotesEndpoint();
 
-    @Property(label = "My Deals Endpoint", description = "My Deals Endpoint", order = 10)
+    @Property(label = "My Deals Endpoint", description = "My Deals Endpoint")
     String myDealsEndpoint();
 
-    @Property(label = "My Renewals Endpoint", description = "My Renewals Endpoint", order = 11)
+    @Property(label = "My Renewals Endpoint", description = "My Renewals Endpoint")
     String myRenewalsEndpoint();
 
-    @Property(label = "Top Items Endpoint", description = "Top Items Endpoint", order = 12)
+    @Property(label = "Top Items Endpoint", description = "Top Items Endpoint")
     String topItemsEndpoint();
 
-    @Property(label = "Create Quote Endpoint", description = "Create Quote Endpoint", order = 13)
+    @Property(label = "Create Quote Endpoint", description = "Create Quote Endpoint")
     String createQuoteEndpoint();
 
-    @Property(label = "Cart Details Endpoint", description = "Cart Details Endpoint", order = 14)
+    @Property(label = "Cart Details Endpoint", description = "Cart Details Endpoint")
     String cartDetailsEndpoint();
 
-    @Property(label = "Pricing Conditions Endpoint", description = "Pricing Conditions Endpoint", order = 15)
+    @Property(label = "Pricing Conditions Endpoint", description = "Pricing Conditions Endpoint")
     String pricingConditionsEndPoint();
 
-    @Property(label = "Estimated Id List Endpoint", description = "Estimated Id List Endpoint", order = 16)
+    @Property(label = "Estimated Id List Endpoint", description = "Estimated Id List Endpoint")
     String estimatedIdListEndpoint();
 
-    @Property(label = "Estimated Id Details Endpoint", description = "Estimated Id Details Endpoint", order = 17)
+    @Property(label = "Estimated Id Details Endpoint", description = "Estimated Id Details Endpoint")
     String estimatedIdDetailsEndpoint();
 
-    @Property(label = "Saved Carts Endpoint", description = "Saved Carts Endpoint", order = 18)
+    @Property(label = "Saved Carts Endpoint", description = "Saved Carts Endpoint")
     String savedCartsEndpoint();
 
-    @Property(label = "Quote Grid Endpoint", description = "Quote Grid Endpoint", order = 19)
+    @Property(label = "Quote Grid Endpoint", description = "Quote Grid Endpoint")
     String quoteGridEndpoint();
 
-    @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint", order = 20)
+    @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint")
     String orderGridEndpoint();
 
-    @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint", order = 21)
+    @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 
-    @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ", order = 22)
+    @Property(label = "Vendor connection Endpoint", description = "Vendor Connection Endpoint ")
     String vendorConnectionEndpoint();
 
-    @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ", order = 23)
+    @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ")
     String quotesPreviewEndPoint();
 
-    @Property(label = "Quotes Preview Pricing Endpoint", description = "Quotes Preview Pricing Endpoint ", order = 24)
+    @Property(label = "Quotes Preview Pricing Endpoint", description = "Quotes Preview Pricing Endpoint ")
     String quotesPreviewPricingEndPoint();
 
     @Property(label = "Configurations Endpoint", description = "Configurations Endpoint ", order = 25)

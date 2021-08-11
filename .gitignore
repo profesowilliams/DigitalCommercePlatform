@@ -441,7 +441,6 @@ ASALocalRun/
 /Publishers/Order/DigitalFoundation.Core.Publishers.Order/.config/dotnet-tools.json
 /Order/Publisher/DigitalFoundation.Core.Publishers.Order/log.txt
 /Catalog/Publisher/logs
-*.txt
 content/techdata/server/.vscode/settings.json
 content/techdata/ui.react.frontend/.vscode/settings.json
 

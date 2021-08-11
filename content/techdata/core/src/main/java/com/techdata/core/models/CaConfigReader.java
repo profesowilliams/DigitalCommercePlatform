@@ -17,7 +17,6 @@ import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 
 import javax.annotation.PostConstruct;
 
-
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
 
@@ -130,10 +129,6 @@ public class CaConfigReader {
 
 	private String orderDetailPage;
 
-
-
-
-
 	@PostConstruct
 	public void init() {
 		ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -177,8 +172,8 @@ public class CaConfigReader {
 		productSuggestionUrl = searchBarConfiguration.productSuggestionUrl();
 		contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
 		contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
-		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
 		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
+		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
 		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
 		typeAheadKeyword = searchBarConfiguration.typeAheadKeyword();
 		typeAheadDomain = searchBarConfiguration.typeAheadDomain();
@@ -195,8 +190,6 @@ public class CaConfigReader {
 		quotePreviewPage = redirectConfiguration.quotePreviewPage();
 		orderListingPage = redirectConfiguration.orderListingPage();
 		orderDetailPage = redirectConfiguration.orderDetailPage();
-
-
 	}
 
 	public String getUiServiceDomain() {
@@ -339,12 +332,12 @@ public class CaConfigReader {
 		return contentSuggestionUrl;
 	}
 
-	public String getQuoteSearchEndpoint() {
-		return quoteSearchEndpoint;
-	}
-
 	public String getOrderSearchEndpoint() {
 		return orderSearchEndpoint;
+	}
+
+	public String getQuoteSearchEndpoint() {
+		return quoteSearchEndpoint;
 	}
 
 	public String getSpaSearchEndpoint() {
@@ -394,6 +387,4 @@ public class CaConfigReader {
 	public String getOrderListingPage(){return orderListingPage;}
 
 	public String getOrderDetailPage(){return orderDetailPage;}
-
-
 }
