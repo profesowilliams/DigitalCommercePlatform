@@ -1,9 +1,15 @@
-;(function(){
+;
+
+
+
+(function(){
+
+    var dataLayer;
 
     console.log("%c TD Analytics Tracking Start","background-color: #00b1e2;color: white");
 
-    const CAROUSEL_COMPONENT_EVENTINFO = "component.carousel";
-    const TEASER_COMPONENT_EVENTINFO = "component.teaser";
+    const CAROUSEL_COMPONENT_NAME= "carousel";
+    const TEASER_COMPONENT_NAME = "teaser";
     const COMPONENT_PREFIX = "component.";
     const CAROUSEL_ITEM_DIV_CLASSNAME = ".cmp-carousel__item";
     const CAROUSEL_DIV_CLASSNAME = ".cmp-carousel";
@@ -16,18 +22,23 @@
     const DATA_LAYER_REGION_PN = "analyticsRegion";
     const ANALYTICS_EVENTINFO_CATEGORY_PN = "category";
     const ANALYTICS_EVENTINFO_NAME_PN = "name";
+    const ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN = "carouselName";
     const ANALYTICS_EVENTINFO_REGION_PN = "region";
     const ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN = "mastheadlevel"
     const ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN = "selectionDepth";
     const ANALYTICS_EVENTINFO_TYPE_PN = "type"
     const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link"
+    const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta"
 
+    function parseNameFromElement(elementClicked) {
 
+        return elementClicked.text.trim();
+
+    }
 
     function getDataLayerObjectFromDataAttribute(componentDivElement) {
         return JSON.parse(componentDivElement.getAttribute(DATA_LAYER_DATA_ATTRIBUTE_NAME));
     }
-
 
     function updateClickInfo(dataLayer) {
         let clickInfo = {};
@@ -50,8 +61,6 @@
 
     function pushToDataLayer(clickInfo) {
 
-        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
-
         window.adobeDataLayer.push(
             {
                 "event": 'click',
@@ -60,7 +69,7 @@
 
     }
 
-    function carouselTeaserClickHandler(teaserDivElement, carouselItemDivElement) {
+    function carouselTeaserClickHandler(teaserDivElement, carouselItemDivElement, elementClicked) {
         let carouselRootElement = carouselItemDivElement.closest(CAROUSEL_DIV_CLASSNAME);
         let dataLayer = getDataLayerObjectFromDataAttribute(carouselRootElement);
         let carouselDepth = JSON.parse(carouselItemDivElement.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
@@ -68,53 +77,77 @@
         if (carouselDepth) {
             clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = carouselDepth;
         }
-
         clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = "";
+        clickInfo[ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN] = clickInfo[ANALYTICS_EVENTINFO_NAME_PN];
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = parseNameFromElement(elementClicked)
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
 
         pushToDataLayer(clickInfo);
+
     }
 
-    function carouselClickHandler(carouselPath) {
-        let componentDivId = carouselPath.replace(COMPONENT_PREFIX, "");
-        let carouselRootElement = document.getElementById(componentDivId);
+    function carouselClickHandler(carouselId, elementClicked) {
+        let carouselRootElement = document.getElementById(carouselId);
         let dataLayer = getDataLayerObjectFromDataAttribute(carouselRootElement);
         let carouselItemDivElement = carouselRootElement.querySelector(CAROUSEL_ACTIVE_ITEM_CLASS_NAME);
         let carouselDepth = JSON.parse(carouselItemDivElement.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
-        let clickInfo = updateClickInfo(dataLayer);
+        let clickInfo = updateClickInfo(dataLayer, elementClicked);
         if (carouselDepth) {
             clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = carouselDepth;
         }
-
+        clickInfo[ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN] = clickInfo[ANALYTICS_EVENTINFO_NAME_PN];
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = parseNameFromElement(elementClicked)
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_CTA_VAL;
         clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = "";
         pushToDataLayer(clickInfo);
     }
 
-    function teaserClickHandler(teaserPath) {
-        let componentDivId = teaserPath.replace(COMPONENT_PREFIX, "");
+    function teaserClickHandler(componentDivId, elementClicked) {
         let componentDivElement = document.getElementById(componentDivId);
         if (componentDivElement) {
             let carouselItemParent = componentDivElement.closest(CAROUSEL_ITEM_DIV_CLASSNAME);
             if (carouselItemParent) {
                 //    teaser is inside a carousel
-                carouselTeaserClickHandler(componentDivElement, carouselItemParent);
+                carouselTeaserClickHandler(componentDivElement, carouselItemParent, elementClicked);
             }
         }
 
     }
 
-    function carouselClickEventHandler() {
-        if (window.adobeDataLayer)
-            window.adobeDataLayer.addEventListener("cmp:click", function (e) {
-                let componentEventInfo;
-                if (e.eventInfo && e.eventInfo.path)
-                    componentEventInfo = e.eventInfo.path;
-                if (componentEventInfo.startsWith(CAROUSEL_COMPONENT_EVENTINFO)) {
-                    carouselClickHandler(componentEventInfo);
-                } else if (componentEventInfo.startsWith(TEASER_COMPONENT_EVENTINFO)) {
-                    teaserClickHandler(componentEventInfo);
-                }
+    function attachClickEventListener(element) {
+        element.addEventListener("click", addClickToDataLayer);
+    }
 
-            });
+    function getClickId(element) {
+        if (element.dataset.cmpDataLayer) {
+            return Object.keys(JSON.parse(element.dataset.cmpDataLayer))[0];
+        }
+
+        var componentElement = element.closest("[data-cmp-data-layer]");
+
+        return Object.keys(JSON.parse(componentElement.dataset.cmpDataLayer))[0];
+    }
+
+    function addClickToDataLayer(event) {
+        var element = event.currentTarget;
+        var componentId = getClickId(element);
+
+        if (componentId.startsWith(CAROUSEL_COMPONENT_NAME))
+        {
+            carouselClickHandler(componentId, element);
+        }else if (componentId.startsWith(TEASER_COMPONENT_NAME)){
+            teaserClickHandler(componentId, element)
+        }
+
+    }
+
+    function carouselClickEventHandler() {
+        dataLayer = window.adobeDataLayer = window.adobeDataLayer || [];
+        var clickableElements = document.querySelectorAll("[data-cmp-clickable]");
+
+        clickableElements.forEach(function(element) {
+            attachClickEventListener(element);
+        });
     }
 
 
