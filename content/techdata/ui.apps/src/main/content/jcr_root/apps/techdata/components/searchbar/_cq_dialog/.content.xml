@@ -43,6 +43,18 @@
                                                 fieldDescription="HTML ID attribute to apply to the component."
                                                 fieldLabel="ID"
                                                 name="./id"/>
+                                            <searchDomain
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Search Domain"
+                                                fieldLabel="Search Domain"
+                                                name="./searchDomain"/>
+                                            <typeAheadDomain
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Type Head Domain"
+                                                fieldLabel="Type Head Domain"
+                                                name="./typeAheadDomain"/>
                                             <placeholder
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
