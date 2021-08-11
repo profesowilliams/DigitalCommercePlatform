@@ -32,7 +32,7 @@
 
 /* moving container related style system class here to avoid confusions.
 These style system class work for container component only. */
-@mixin padding-sizes($padding, $default, $sm, $md, $lg) {
+@mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
   &>.cmp-container {
     #{$padding}: rem($default);
   }
@@ -51,26 +51,31 @@ These style system class work for container component only. */
       #{$padding}: rem($lg);
     }
   }
+  &-extra-large{
+    &>.cmp-container {
+      #{$padding}: rem($xlg);
+    }
+  }
 }
 
 .dp-general__innerspace {
   &--all {
-    @include padding-sizes(padding, 16px, 8px, 32px, 64px);
+    @include padding-sizes(padding, 16px, 8px, 32px, 64px, 160px);
   }
 
   &--top {
-    @include padding-sizes(padding-top, 16px, 8px, 32px, 64px);
+    @include padding-sizes(padding-top, 16px, 8px, 32px, 64px, 160px);
   }
 
   &--bottom {
-    @include padding-sizes(padding-bottom, 16px, 8px, 32px, 64px);
+    @include padding-sizes(padding-bottom, 16px, 8px, 32px, 64px, 160px);
   }
 
   &--right {
-    @include padding-sizes(padding-right, 16px, 8px, 32px, 64px);
+    @include padding-sizes(padding-right, 16px, 8px, 32px, 64px, 160px);
   }
 
   &--left {
-    @include padding-sizes(padding-left, 16px, 8px, 32px, 64px);
+    @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
   }
 }
