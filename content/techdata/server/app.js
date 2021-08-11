@@ -1133,7 +1133,13 @@ app.get("/typeahead", function (req, res) {
       },
       {
           "Keyword": `${keyword} monitor`,
-          "Refinements": null,
+          "Refinements": [
+            {
+              "Description": "Desktops & Workstations > Desktops",
+              "RefinementId": "510010101",
+              "RefinementType": 0
+            }
+          ],
           "SuggestionType": 1
       },
       {
@@ -1148,7 +1154,13 @@ app.get("/typeahead", function (req, res) {
       },
       {
           "Keyword": `${keyword} xps`,
-          "Refinements": null,
+          "Refinements": [
+            {
+              "Description": "Desktops & Workstations > Desktops",
+              "RefinementId": "510010101",
+              "RefinementType": 0
+            }
+          ],
           "SuggestionType": 1
       },
       {

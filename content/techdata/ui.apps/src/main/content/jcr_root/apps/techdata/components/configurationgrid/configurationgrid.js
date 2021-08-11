@@ -8,7 +8,7 @@ use(function () {
     var optionData = {};
     var searchCriteriaData = {};
     var keywordDropdownData = {};
-    var vendorDropdownData = {};
+    var configurationTypesDropdownData = {};
     var checkoutData = {};
     var resourceResolver = resource.getResourceResolver();
 
@@ -73,9 +73,8 @@ if (properties && properties["keywordDropdownLabel"]) {
 
 		}
 
-	if (properties && properties["vendorDropdownLabel"]) {
-		vendorDropdownData.label = properties["vendorDropdownLabel"];
-	}
+  configurationTypesDropdownData.label = properties["configurationTypesDropdownLabel"] || "";
+
 	var vendorListNode = resourceResolver.getResource(currentNode.getPath() + "/vendorList");
 
 		if (vendorListNode !== null) {
@@ -88,8 +87,7 @@ if (properties && properties["keywordDropdownLabel"]) {
 				labelData.key = labelKey;
 				labelData.value = labelValue;
 				vendorValues.push(labelData);
-				vendorDropdownData.items = vendorValues;
-
+        configurationTypesDropdownData.items = vendorValues;
 			}
 
 
@@ -130,53 +128,49 @@ if (properties && properties["keywordDropdownLabel"]) {
         jsonObject["options"] = optionData;
     }
     if (properties && properties["searchTitle"]) {
-            searchCriteriaData.title = properties["searchTitle"];
-        }
+      searchCriteriaData.title = properties["searchTitle"];
+    }
 
-        if (properties && properties["searchButtonLabel"]) {
-            searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
-        }
+    if (properties && properties["searchButtonLabel"]) {
+      searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
+    }
 
-    	if (properties && properties["clearButtonLabel"]) {
-            searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
-        }
+    if (properties && properties["clearButtonLabel"]) {
+      searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
+    }
 
-        if (properties && properties["inputPlaceholder"]) {
-            searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
-        }
-        if (properties && properties["fromLabel"]) {
-                    searchCriteriaData.fromLabel = properties["fromLabel"];
-        }
-        if (properties && properties["toLabel"]) {
-                    searchCriteriaData.toLabel = properties["toLabel"];
-        }
-        if (properties && properties["datePlaceholder"]) {
-                    searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
-        }
-         if (keywordDropdownData != null) {
-            searchCriteriaData["keywordDropdown"] = keywordDropdownData;
-        }
+    if (properties && properties["inputPlaceholder"]) {
+      searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
+    }
+    if (properties && properties["fromLabel"]) {
+      searchCriteriaData.fromLabel = properties["fromLabel"];
+    }
+    if (properties && properties["toLabel"]) {
+      searchCriteriaData.toLabel = properties["toLabel"];
+    }
+    if (properties && properties["datePlaceholder"]) {
+      searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
+    }
+    if (keywordDropdownData != null) {
+      searchCriteriaData["keywordDropdown"] = keywordDropdownData;
+    }
 
-    	if (vendorDropdownData != null) {
-            searchCriteriaData["vendorsDropdown"] = vendorDropdownData;
-        }
+    if (configurationTypesDropdownData != null) {
+      searchCriteriaData["configurationTypesDropdown"] = configurationTypesDropdownData;
+    }
 
-        if (searchCriteriaData != null) {
-            jsonObject["searchCriteria"] = searchCriteriaData;
-        }
+    if (searchCriteriaData != null) {
+      jsonObject["searchCriteria"] = searchCriteriaData;
+    }
 
     checkoutData.uiServiceEndPoint = this.serviceData.uiServiceDomain+this.serviceData.createQuoteEndpoint || '';
 
-
-
-
-     if (this.shopDomain != null) {
-                    checkoutData.redirectUrl = this.shopDomain+this.cartURL;
-        }
-      if (checkoutData != null) {
-            jsonObject["checkout"] = checkoutData;
-        }
-
+    if (this.shopDomain != null) {
+      checkoutData.redirectUrl = this.shopDomain+this.cartURL;
+    }
+    if (checkoutData != null) {
+      jsonObject["checkout"] = checkoutData;
+    }
     return {
         configJson: JSON.stringify(jsonObject)
     };

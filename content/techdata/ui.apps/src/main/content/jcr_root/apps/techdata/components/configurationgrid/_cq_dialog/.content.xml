@@ -38,7 +38,7 @@
                                                     name="./itemsPerPage"/>
                                             <configDetailUrl
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                    fieldLabel="Link"
+                                                    fieldLabel="Config Link Details URL"
                                                     fieldDescription="Enter link and set where the id should be by using curly braces"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
@@ -275,12 +275,12 @@
                                                     </items>
                                                 </field>
                                             </actions>
-                                            <vendorDropdownLabel
+                                            <configurationTypesDropdownLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Vendor Label"
-                                                    name="./vendorDropdownLabel"/>
-                                            <vendorActions
+                                                    fieldLabel="Configuration Types Label"
+                                                    name="./configurationTypesDropdownLabel"/>
+                                            <configurationTypes
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                     composite="{Boolean}true"
@@ -310,7 +310,7 @@
                                                         </column>
                                                     </items>
                                                 </field>
-                                            </vendorActions>
+                                            </configurationTypes>
                                             <fromLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

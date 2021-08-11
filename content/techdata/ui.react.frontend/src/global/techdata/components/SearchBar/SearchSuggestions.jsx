@@ -9,7 +9,7 @@ const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl }) => {
     <ul className="cmp-searchsuggestions">
       {suggestionsList && suggestionsList.map((suggestion, index) => {
         return (
-          <li className="cmp-searchsuggestions__suggestion" key={index}>
+          <li className={`cmp-searchsuggestions__suggestion ${suggestion.Refinements?.length > 0 ? "cmp-searchsuggestions__suggestion-withRefinement" : ""}`} key={index}>
             <a className="cmp-searchsuggestions__link" href={getTypeAheadSearchUrl(suggestion.Keyword, index)}>
               {suggestion.Keyword}
             </a>

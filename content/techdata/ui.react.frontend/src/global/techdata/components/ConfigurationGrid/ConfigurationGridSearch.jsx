@@ -14,11 +14,12 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
     ],
   };
 
-  const defaultVendorsDropdown = {
-    label: "Vendors",
+  const defaultConfigurationTypesDropdown = {
+    label: "Configuration Types",
     items: [
-      { key: "allVendors", value: "All Vendors" },
-      { key: "cisco", value: "Cisco" },
+      { key: "estimate", value: "Estimate" },
+      { key: "vendorQuote", value: "Vendor Quote" },
+      { key: "deal", value: "Deal" },
     ],
   };
 
@@ -26,9 +27,9 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
     keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
       ? componentProp?.keywordDropdown
       : defaultKeywordDropdown,
-    vendorsDropdown: isNotEmpty(componentProp?.vendorsDropdown)
-      ? componentProp?.vendorsDropdown
-      : defaultVendorsDropdown,
+    configurationTypesDropdown: isNotEmpty(componentProp?.configurationTypesDropdown)
+      ? componentProp?.configurationTypesDropdown
+      : defaultConfigurationTypesDropdown,
     inputPlaceholder: componentProp?.inputPlaceholder ?? "Enter Your Search",
     fromLabel: componentProp?.fromLabel ?? "From",
     toLabel: componentProp?.toLabel ?? "To",
@@ -91,7 +92,7 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
       ></QueryInput>
       <SimpleDropDown
         key={"manufacturer"}
-        items={config.vendorsDropdown.items}
+        items={config.configurationTypesDropdown.items}
         onItemSelected={(change) => handleFilterChange(change, "manufacturer")}
       ></SimpleDropDown>
       <SimpleDatePicker
