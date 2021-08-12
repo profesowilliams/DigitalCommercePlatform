@@ -16,21 +16,25 @@ const MiniCart = ({componentProp}) => {
   const [cartActive, setCartActive] = useState(false);
   useEffect(() => {
 
+    const getActiveCart = async () => {
+      try{
+        const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
+        setCartItems(totalQuantity);
+        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+      }catch{
+        localStorage.setItem('ActiveCart', '' );
+      }
+    }
     if (isAlreadySignedIn())
     {
-      const getActiveCart = async () => {
-        try{
-          const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
-          setCartItems(totalQuantity);
-          localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
-        }catch{
-          localStorage.setItem('ActiveCart', '' );
-        }
-      }
       getActiveCart();
     }else{
 
     }
+
+    document.addEventListener("cart:updated", () => {
+      getActiveCart();
+    });
 
   },[]);
   useEffect(() => {
