@@ -93,9 +93,9 @@ public class PageImpl implements Page {
         if(localePage != null) {
             String currentPagePath = currentPage.getPath();
             String localePagePath = localePage.getPath();
-            String prefix = "www:" + localePage.getParent().getName() + ":" + localePage.getName();
+            String prefix = localePage.getParent().getName() + ":" + localePage.getName();
             if (currentPagePath.equals(localePagePath)) {
-                return prefix + ":home";
+                return prefix + ":" + pageProperties.get("pageType", StringUtils.EMPTY);
             }
             String relativePagePath = currentPage.getPath().replace(localePagePath, StringUtils.EMPTY);
             return prefix + relativePagePath.replace("/", ":");
@@ -123,8 +123,8 @@ public class PageImpl implements Page {
     public String getCurrencyCode() {
         com.day.cq.wcm.api.Page countryPage = currentPage.getAbsoluteParent(COUNTRY_PAGE);
         if(countryPage != null) {
-            ValueMap localePageProperties = countryPage.getProperties();
-            return localePageProperties.get("currency", "USD");
+            ValueMap countryPageProperties = countryPage.getProperties();
+            return countryPageProperties.get("currency", "USD");
         }
         return StringUtils.EMPTY;
     }
@@ -137,7 +137,7 @@ public class PageImpl implements Page {
         com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
         String[] siteSections = {"n/a", "n/a", "n/a", "n/a"};
         if(localePage != null) {
-            String relativePagePath = currentPage.getPath().replace(localePage.getPath(), StringUtils.EMPTY);
+            String relativePagePath = currentPage.getParent().getPath().replace(localePage.getPath(), StringUtils.EMPTY);
             List<String> hierarchyPagesList = buildHierarchyList(relativePagePath.split("/"));
             for (int i = 0; i < hierarchyPagesList.size(); i++) {
                 String path = hierarchyPagesList.get(i);
@@ -152,7 +152,7 @@ public class PageImpl implements Page {
     private List<String> buildHierarchyList(String[] hierarchyPages) {
         List<String> hierarchyPagesList;
         if (hierarchyPages.length == 1) {
-            hierarchyPagesList = Arrays.asList("home");
+            hierarchyPagesList = Arrays.asList(pageProperties.get("pageType", StringUtils.EMPTY));
         } else {
             hierarchyPagesList = Arrays.asList(hierarchyPages);
         }
@@ -233,7 +233,7 @@ public class PageImpl implements Page {
 
     public String getErrorCode() {
         if(getError404().equals("true")) {
-            return currentPage.getTitle();
+            return pageProperties.get("errorCode", StringUtils.EMPTY);
         }
         return StringUtils.EMPTY;
     }

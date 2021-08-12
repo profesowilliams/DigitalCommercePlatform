@@ -38,6 +38,12 @@
                                             name="./errorPages"
                                             rootPath="/content/techdata">
                                     </errorPages>
+                                    <errorCode
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Define error code for the page."
+                                            fieldLabel="Error Code"
+                                            name="./errorCode"/>
                                     <currency
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

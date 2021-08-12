@@ -37,7 +37,7 @@ class PageImplTest {
     private ValueMap pageProperties, localePageProperties, countryPageProperties;
 
     @Mock
-    private com.day.cq.wcm.api.Page currentPage, localePage, countryPage;
+    private com.day.cq.wcm.api.Page currentPage, localePage, countryPage, parentPage;
 
     @BeforeEach
     void setUp() {
@@ -116,9 +116,10 @@ class PageImplTest {
         when(localePage.getParent()).thenReturn(countryPage);
         when(countryPage.getName()).thenReturn("ca");
         when(localePage.getName()).thenReturn("fr");
-        assertEquals(tdPage.getAnalyticsPageName(), "www:ca:fr:products");
+        assertEquals(tdPage.getAnalyticsPageName(), "ca:fr:products");
         when(currentPage.getPath()).thenReturn(LOCALE_PAGE_PATH);
-        assertEquals(tdPage.getAnalyticsPageName(), "www:ca:fr:home");
+        when(pageProperties.get("pageType", StringUtils.EMPTY)).thenReturn("home");
+        assertEquals(tdPage.getAnalyticsPageName(), "ca:fr:home");
     }
 
     @Test
@@ -137,7 +138,8 @@ class PageImplTest {
     @Test
     void validateTDSiteSections() {
         when(currentPage.getAbsoluteParent(LOCALE_PAGE)).thenReturn(localePage);
-        when(currentPage.getPath()).thenReturn(CURR_PAGE_PATH);
+        when(currentPage.getParent()).thenReturn(parentPage);
+        when(parentPage.getPath()).thenReturn(CURR_PAGE_PATH);
         when(localePage.getPath()).thenReturn(LOCALE_PAGE_PATH);
         assertNotNull(tdPage.getSiteSections());
     }
@@ -149,7 +151,7 @@ class PageImplTest {
         when(currentPage.getPath()).thenReturn(ERROR_404_PAGE_PATH);
         when(localePageProperties.get("errorPages", String.class)).thenReturn(ERROR_PAGE_PATH);
         assertEquals(tdPage.getError404(), "true");
-        when(currentPage.getTitle()).thenReturn("404");
+        when(pageProperties.get("errorCode", StringUtils.EMPTY)).thenReturn("404");
         assertEquals(tdPage.getErrorCode(), "404");
         when(currentPage.getDescription()).thenReturn("404: Page not found, please try again");
         assertEquals(tdPage.getErrorName(), "404: Page not found, please try again");
