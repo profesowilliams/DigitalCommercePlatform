@@ -1,0 +1,49 @@
+.contentFragment-bio {
+  .cmp-contentfragment {
+    clear: both;
+    overflow: hidden;
+    width: 50%;
+    margin: 0 auto rem(15px);
+    &__title,
+    &__element-title,
+    &__element--photo .cmp-contentfragment__element-value {
+      display: none;
+    }
+    &__element--photo {
+      float: left;
+      margin-right: rem(20px);
+      margin-bottom: rem(30px);
+      img {
+        max-width: rem(150px);
+      }
+    }
+    &__element--title {
+      .cmp-contentfragment__element-value {
+        font-size: rem(20px);
+        color: gray;
+      }
+    }
+    &__element--name {
+      padding-top: rem(40px);
+      .cmp-contentfragment__element-value {
+        font-size: rem(30px);
+        margin-bottom: rem(10px);
+      }
+    }
+    &__element--bio {
+      display: block;
+      clear: both;
+      margin-top: rem(10px);
+      margin-left: 0;
+      border-top: rem(1px) solid lightgray;
+      padding-top: rem(30px);
+      .cmp-contentfragment__element-value {
+        margin-inline-start: 0;
+      }
+    }
+    &__element--name,
+    &__element--title {
+      margin-left: rem(20px);
+    }
+  }
+}

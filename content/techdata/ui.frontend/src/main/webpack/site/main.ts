@@ -14,6 +14,7 @@ import "../global/td-components/megamenu/megamenu";
 import "../global/td-components/vendorlistings/vendorlistings";
 import "../global/td-components/dropdownbutton/dropdownbutton";
 import "../global/td-components/form-container/form-container";
+import "../global/td-components/contentfragment-bio/contentfragment-bio";
 import "../global/td-components/region-select/region-select";
 import "../global/td-components/button/buttons";
 import {Initializer} from "../global/initializer";
