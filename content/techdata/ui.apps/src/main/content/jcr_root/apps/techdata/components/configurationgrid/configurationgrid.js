@@ -73,21 +73,23 @@ if (properties && properties["keywordDropdownLabel"]) {
 
 		}
 
-  configurationTypesDropdownData.label = properties["configurationTypesDropdownLabel"] || "";
+  if(properties && properties["configurationTypesDropdownLabel"]) {
+    configurationTypesDropdownData.label = properties["configurationTypesDropdownLabel"] || "";
+  }
 
-	var vendorListNode = resourceResolver.getResource(currentNode.getPath() + "/vendorList");
+	var configurationTypesListNode = resourceResolver.getResource(currentNode.getPath() + "/configurationTypesList");
 
-		if (vendorListNode !== null) {
-			var childrenList = vendorListNode.getChildren();
-			var vendorValues = [];
+		if (configurationTypesListNode !== null) {
+			var childrenList = configurationTypesListNode.getChildren();
+			var configurationTypesValues = [];
 			for (var [key, res] in Iterator(childrenList)) {
-				var labelKey = res.properties["vendorKey"];
-				var labelValue = res.properties["vendorValue"];
+				var labelKey = res.properties["configurationTypesKey"];
+				var labelValue = res.properties["configurationTypesValue"];
 				var labelData = {};
 				labelData.key = labelKey;
 				labelData.value = labelValue;
-				vendorValues.push(labelData);
-        configurationTypesDropdownData.items = vendorValues;
+				configurationTypesValues.push(labelData);
+        configurationTypesDropdownData.items = configurationTypesValues;
 			}
 
 
