@@ -9,7 +9,7 @@ use(function () {
   jsonObject.put("placeholder", properties.get("placeholder") || '');
   jsonObject.put("searchDomain", properties.get("searchDomain") || this.serviceData['searchDomain'] || '');
   jsonObject.put("uiServiceDomain", this.serviceData['uiServiceDomain'] || '');
-  jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain") || this.serviceData['typeaheadDomain'] || '');
+  jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain") || this.serviceData['typeAheadDomain'] || '');
 
   var areaListNode = resourceResolver.getResource(currentNode.getPath() + "/areaList");
 
