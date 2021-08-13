@@ -114,6 +114,18 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldLabel="Area Label"
                                                             name="./areaLabel"/>
+                                                         <areaEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Endpoint"
+                                                                fieldLabel="Endpoint"
+                                                                name="./areaEndpoint" />
+                                                        <areaSuggestionEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Suggestion URL"
+                                                                fieldLabel="Suggestion URL"
+                                                                name="./areaSuggestionEndPoint" />
                                                         <setChildren
                                                             granite:class="hide area-option-showhide-target foundation-layout-util-vmargin"
                                                             jcr:primaryType="nt:unstructured"
