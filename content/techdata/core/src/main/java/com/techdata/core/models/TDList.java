@@ -84,7 +84,7 @@ public class TDList implements List {
                     listOfVendorItems.add(vi);
                 }
             }else{
-                log.debug("cf path not found");
+                log.debug("CF path not found. Build List from child pages");
                 TDListItem tdListItem = TDListItem.getTDListItem(page.getContentResource(), cfListItem);
                 listOfVendorItems.add(tdListItem);
             }

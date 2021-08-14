@@ -29,9 +29,11 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
 <ul data-sly-use.list="com.adobe.cq.wcm.core.components.models.List"
+    data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
     data-sly-list.item="${list.listItems}"
     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
     data-sly-use.itemTemplate="item.html"
+    id="${component.id}"
     data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}"
     class="cmp-list">
     <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"></li>

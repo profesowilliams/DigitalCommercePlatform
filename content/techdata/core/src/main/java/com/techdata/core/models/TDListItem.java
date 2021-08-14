@@ -5,6 +5,7 @@ import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +18,21 @@ public class TDListItem extends VendorListItem  {
     private static final String PAGE_THUMBNAIL_NODENAME = "image";
     private static final String PAGE_THUMBNAIL_FILE_NODE_NAME = "image/file";
     private static final String FILE_REFERENCE_RENDITION_PATH = "/jcr:content/renditions/cq5dam.thumbnail.140.100.png";
+    private static final String TAG_CATEGORY_PN = "tagCategories";
 
     private static final Logger log = LoggerFactory.getLogger(TDListItem.class);
 
     private boolean isIconSVG;
     private ListItem listItem;
+    private String[] dropdownCategoryTags;
 
-
-    public TDListItem() {
-
+    @SuppressWarnings("java:S107")
+    public TDListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, boolean isIconSVG, ListItem listItem, String[] dropDownCategorytags) {
+        super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
+        log.info("TDListItem contructor");
+        this.isIconSVG = isIconSVG;
+        this.listItem = listItem;
+        this.dropdownCategoryTags = dropDownCategorytags;
     }
 
     @Override
@@ -63,24 +70,11 @@ public class TDListItem extends VendorListItem  {
         return isIconSVG;
     }
 
+    public String getDropdownCategoryTags() { return String.join(",",this.dropdownCategoryTags); }
 
-    @SuppressWarnings("java:S107")
-    public TDListItem(
-            final String title,
-            final String overview,
-            final String vendorIcon,
-            final String pageLink,
-            final String vendorPageLabel,
-            final String vendorProductLabel,
-            final String vendorProductLink,
-            final List<String> tags,
-            final boolean isIconSVG,
-            final ListItem listItem) {
-        super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
-        log.info("TDListItem contructor");
-        this.isIconSVG = isIconSVG;
-        this.listItem = listItem;
-    }
+
+
+
 
     public static TDListItem getTDListItem(Resource pageContentResource, ListItem listItem){
         String title = pageContentResource.getValueMap().containsKey(JcrConstants.JCR_TITLE) ? pageContentResource.getValueMap().get(JcrConstants.JCR_TITLE, StringUtils.EMPTY) : StringUtils.EMPTY;
@@ -92,9 +86,20 @@ public class TDListItem extends VendorListItem  {
         String vendorProductLink = StringUtils.EMPTY;
         boolean isIconSVG = false;
         List<String> tags = new ArrayList<>();
+        String[] dropdownCategorytags;
+
 
         Resource pageImageFileNodeResource = pageContentResource.getChild(PAGE_THUMBNAIL_FILE_NODE_NAME);
         Resource pageImageResource = pageContentResource.getChild(PAGE_THUMBNAIL_NODENAME);
+        ValueMap pageValuemap = pageContentResource.getValueMap();
+
+        if (pageValuemap.containsKey(TAG_CATEGORY_PN)){
+            dropdownCategorytags = pageValuemap.get(TAG_CATEGORY_PN, String[].class);
+            log.debug("tags found in page at {}. Tags are {}", pageContentResource.getPath(), (dropdownCategorytags == null ? "tags is null" : String.join(",", dropdownCategorytags)));
+        }else{
+            dropdownCategorytags = new String[0];
+        }
+
         //          The thumbnail is from dam via fileReferenceProperty
         if (pageImageFileNodeResource == null && pageImageResource != null) {
             ExtractSVGModel evg = pageImageResource.adaptTo(ExtractSVGModel.class);
@@ -107,7 +112,7 @@ public class TDListItem extends VendorListItem  {
             isIconSVG = evg != null && evg.isSvg();
         }
 
-        return new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, isIconSVG, listItem);
+        return new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, isIconSVG, listItem, dropdownCategorytags);
     }
 
 }
