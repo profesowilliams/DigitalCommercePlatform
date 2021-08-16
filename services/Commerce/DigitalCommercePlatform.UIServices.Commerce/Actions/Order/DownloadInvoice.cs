@@ -80,8 +80,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Order
                 foreach (var invoiceId in listInvoiceIds)
                 {
                     var binaryContentPdf = await _orderService.GetPdfInvoiceAsync(invoiceId);
-                    var invoiceFile = new DownloadableFile(binaryContentPdf, request.InvoiceId + ".pdf", "application/pdf");
-                    listFiles.Add(invoiceFile);
+                    if (binaryContentPdf != null)
+                    {
+                        var invoiceFile = new DownloadableFile(binaryContentPdf, request.InvoiceId + ".pdf", "application/pdf");
+                        listFiles.Add(invoiceFile);
+                    }
                 }
 
                 var response = new Response();
