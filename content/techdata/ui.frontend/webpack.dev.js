@@ -648,6 +648,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "top-five-orders",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/top5-orders-demo.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "quote.html",
                 template: path.resolve(
                     __dirname,
