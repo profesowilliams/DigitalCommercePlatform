@@ -321,7 +321,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 string productUrl = "";
                 string productId = "";
                 string manufacturer = "";
-                string system = configurationFindResponse?.Data?.FirstOrDefault()?.Source.System;
+                string system = configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
                 string[] arrProductIds = new string[quotePreview.Items.Count];
                 string[] arrManufacturer = new string[quotePreview.Items.Count];
                 ProductData productDetails;
@@ -333,15 +333,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
                     if (!string.IsNullOrWhiteSpace(productId))
                     {
-                        item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                        item.Manufacturer = item.Manufacturer ?? system;
-                        manufacturer = item.Manufacturer ?? system;
-                        arrManufacturer[i] = manufacturer;
-                        arrProductIds[i] = productId;
-                        i++;
+                        if (!arrProductIds.Contains(productId))
+                        {
+                            item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                            item.Manufacturer = item.Manufacturer ?? system;
+                            manufacturer = item.Manufacturer ?? system;
+                            arrManufacturer[i] = manufacturer;
+                            arrProductIds[i] = productId;
+                            i++;
+                        }
                     }
                 }
 
+                arrManufacturer = arrManufacturer.Where(c => c != null).ToArray();
+                arrProductIds = arrProductIds.Where(c => c != null).ToArray();
                 // call product app service
                 productUrl = _appProductServiceURL.AppendPathSegment("Find")
                  .SetQueryParams(new
