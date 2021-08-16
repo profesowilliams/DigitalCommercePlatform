@@ -2661,7 +2661,7 @@
                                                             <div id="SignInBox" data-observe-mutation>
                                                                 <div data-component="SignIn" data-cmp-type="react" className="signin"
                                                                      data-config="{&#34;clientId&#34;:&#34;ecom.apps.web.aem.sit&#34;,
-                                                                        &#34;logoutURL&#34;:&#34;https://www.google.com&#34;,
+                                                                        &#34;logoutURL&#34;:&#34;/analytics&#34;,
                                                                         &#34;editMode&#34;:&#34;DISABLED&#34;,
                                                                         &#34;myEcIdlabel&#34;:&#34;My EC ID&#34;,
                                                                         &#34;label&#34;:&#34;Sign In&#34;,
@@ -2687,7 +2687,7 @@
 
 
                                                             <div id="Mini cart" data-observe-mutation>
-                                                                <div data-component="MiniCart" data-cmp-type="react" className="minicart"
+                                                                <div data-component="MiniCart" data-cmp-type="react" class="minicart"
                                                                      data-config="{&#34;maxItems&#34;:&#34;99&#34;,
                                                                     &#34;endpoint&#34;:&#34;http://localhost:3000/activeCart&#34;,
                                                                     &#34;shopUrl&#34;:&#34;https://shop.cstenet.com/cart&#34;}">
@@ -5488,6 +5488,6 @@
 
 
 
-
+<%= require('html-loader!./partials/svg-icons/svg-icons.html') %>
 </body>
 </html>
