@@ -5,7 +5,7 @@ export const redirectUnauthenticatedUser = (authUrl, clientId) => {
     // colon separated shop domain names
     let shopDomainNamesList = "shop.cstenet.com:shop.techdata.com:shop.dev.web.us.tdworldwide.com:shop-rc.cstenet.com:pilot.techdata.com";
     let redirectUri = window.location.href;
-    if(shopDomainNamesList.indexOf(incomingHostname) > 0) {
+    if(incomingHostname.indexOf("shop") >= 0 && shopDomainNamesList.indexOf(incomingHostname) >= 0) {
         redirectUri = "https://" + incomingHostname + "/oauth";
     }
 
