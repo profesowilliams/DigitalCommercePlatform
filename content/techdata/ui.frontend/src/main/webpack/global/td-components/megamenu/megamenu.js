@@ -96,9 +96,10 @@ import bp from '../../../common-utils/js/media-match';
     }
     function selectQuaternaryItem(event){
       var target = event.target;
+      clearItems(MenuTertiary, ' li a.' + ActiveItemClass, ActiveItemClass);
+      clearItems(MenuQuaternary, ' .' + itemToSelect, ActiveWrappClass);
       if( target.dataset.cmpClickable !== 'true' || target.className.indexOf(ActiveItemClass) >=0  ) return; // avoid everything if there is no menu attached to this item
       event.preventDefault();
-      clearItems(MenuTertiary, ' li a.' + ActiveItemClass, ActiveItemClass);
       target.classList.add(ActiveItemClass);
       var navQuaternaryItems = navigation.querySelectorAll(MenuQuaternary + ' .' + itemToSelect);
       navQuaternaryItems.forEach(function(n){
