@@ -5,53 +5,53 @@
     xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="sling:Folder">
     <https jcr:primaryType="sling:OrderedFolder">
-        <publish1eastus2.prod.techdata-digital.adobecqms.net
-            jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
-        </publish1eastus2.prod.techdata-digital.adobecqms.net>
-        <publish2eastus2.prod.techdata-digital.adobecqms.net
-            jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
-        </publish2eastus2.prod.techdata-digital.adobecqms.net>
         <prod.dc.tdebusiness.cloud
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
+            <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
         </prod.dc.tdebusiness.cloud>
+        <preprod.dc.tdebusiness.cloud
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
+        </preprod.dc.tdebusiness.cloud>
         <techdata.com
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
+            <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
         </techdata.com>
         <www.techdata.com
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
+            <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
         </www.techdata.com>
         <asia.techdata.com
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
+            <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
         </asia.techdata.com>
+        <techdata-digital-prod.adobecqms.net
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
+        </techdata-digital-prod.adobecqms.net>
     </https>
 </jcr:root>

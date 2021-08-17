@@ -5,21 +5,21 @@
     xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="sling:Folder">
     <https jcr:primaryType="sling:OrderedFolder">
-        <publish1eastus2.dev.techdata-digital.adobecqms.net
-            jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
-        </publish1eastus2.dev.techdata-digital.adobecqms.net>
         <uat.dc.tdebusiness.cloud
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac]">
-            <techdata_com_content
+            <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/apac/$1]"
-                sling:match="/$1"/>
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
         </uat.dc.tdebusiness.cloud>
+        <techdata-digital-dev.adobecqms.net
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1]"
+                sling:match="(.+)$"/>
+        </techdata-digital-dev.adobecqms.net>
     </https>
 </jcr:root>
