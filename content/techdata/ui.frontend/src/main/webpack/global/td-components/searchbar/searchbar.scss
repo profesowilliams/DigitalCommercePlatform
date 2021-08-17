@@ -162,20 +162,21 @@
   margin: 0 rem(10px) 0 rem(10px);
   max-height: 0;
   transition: all 200ms ease;
-  overflow: scroll;
 
   &--checked {
     background-color: get-color(brand-white);
-    left: 0;
-    max-height: rem(250px);
+    max-height: rem(350px);
     position: relative;
-    width: 96%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 95.5%;
 
     @include mobile {
       width: 100%;
       margin: 0;
     }
   }
+
 
   &__button {
     @include nav-button;
@@ -212,6 +213,27 @@
       @include chevron-icon;
     }
   }
+}
+
+// Search Area scrollbar Styling
+
+/* Width */
+.cmp-searcharea::-webkit-scrollbar {
+  width: rem(8px);
+}
+/* Track */
+.cmp-searcharea::-webkit-scrollbar-track {
+  background: get-color(brand-white);
+}
+/* Handle */
+.cmp-searcharea::-webkit-scrollbar-thumb {
+  background: get-color(brand-black);
+  border-radius: rem(8px);
+  max-height: rem(4px);
+}
+/* Buttons */
+.cmp-searcharea::-webkit-scrollbar-button {
+  display: none
 }
 
 //Search Suggestions styles
