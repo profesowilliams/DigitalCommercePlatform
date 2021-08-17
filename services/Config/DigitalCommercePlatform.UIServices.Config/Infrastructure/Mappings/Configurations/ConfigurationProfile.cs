@@ -54,6 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName , o => o.Ignore())
                 .ForMember(d => d.VendorQuoteId , o => o.Ignore())
+                .ForMember(d => d.Expires , o => o.MapFrom(s => s.ExpiryDate))
                 .ForMember(d => d.Action , o => o.Ignore())
                 .ForMember(d => d.Quotes , o => o.Ignore())
                 ;
@@ -63,6 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Created, o => o.MapFrom(s => s.Created))
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
+                .ForMember(d => d.Expires, o => o.MapFrom(s => s.ExpiryDate))
                 .ForMember(d => d.ConfigName, o => o.Ignore())
                 .ForMember(d => d.VendorQuoteId, o => o.Ignore())
                 .ForMember(d => d.Action, o => o.Ignore())
