@@ -36,61 +36,61 @@
         <ol data-sly-list.tab="${tabs.items}" role="tablist" class="cmp-tabs__tablist" aria-label="${tabs.accessibilityLabel}" aria-multiselectable="false">
             <sly data-sly-test.isActive="${tab.name == tabs.activeItem}" />
             <sly data-sly-test="${tabList.index == 0 && !item_1}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 0 && item_1}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
             <sly data-sly-test="${tabList.index == 1 && !item_2}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 1 && item_2}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
             <sly data-sly-test="${tabList.index == 2 && !item_3}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-tab-name="${tab.title}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 2 && item_3}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
             <sly data-sly-test="${tabList.index == 3 && !item_4}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 3 && item_4}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
             <sly data-sly-test="${tabList.index == 4 && !item_5}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 4 && item_5}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
@@ -98,13 +98,13 @@
 
 
             <sly data-sly-test="${tabList.index == 5 && !item_6}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 5 && item_6}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
@@ -112,52 +112,52 @@
 
 
             <sly data-sly-test="${tabList.index == 6 && !item_7}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 6 && item_7}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
 
             <sly data-sly-test="${tabList.index == 7 && !item_8}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 7 && item_8}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
 
             <sly data-sly-test="${tabList.index == 8 && !item_9}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 8 && item_9}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
             </sly>
 
             <sly data-sly-test="${tabList.index == 9 && !item_10}">
-                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                <li role="tab" id="${tab.id}-tab" class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                     <span>${tab.title}</span>
                 </li>
             </sly>
             <sly data-sly-test="${tabList.index == 9 && item_10}">
                 <sly data-sly-list.tabRes="${resource.listChildren}">
-                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
+                    <li data-sly-test="${tab.name == tabRes.name}" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tabRes.linkPath}" role="tab" id="${tab.id}-tab" class="anchor cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}" data-tab-name="${tab.title}" aria-controls="${tab.id}-tabpanel" tabindex="${isActive ? '0' : '-1'}" data-cmp-hook-tabs="tab">
                         <a href="${urlHelper.url @ context='html'}">${tab.title}</a>
                     </li>
                 </sly>
