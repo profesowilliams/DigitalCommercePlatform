@@ -12,6 +12,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
     {
         public ConfigurationProfile()
         {
+            CreateMap<System.DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
+
             CreateMap<Paginated, Models.Configurations.Internal.FindModel>()
                 .Include<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
                 .ForMember(d => d.Page, o => o.MapFrom(s => s.PageNumber))
@@ -47,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
             CreateMap<SummaryDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
                 .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))
-                .ForMember(d => d.CreatedOn, o => o.MapFrom(s => s.Created))
+                .ForMember(d => d.Created, o => o.MapFrom(s => s.Created))
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName , o => o.Ignore())
@@ -58,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
             CreateMap<DetailedDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
                 .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))
-                .ForMember(d => d.CreatedOn, o => o.MapFrom(s => s.Created))
+                .ForMember(d => d.Created, o => o.MapFrom(s => s.Created))
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName, o => o.Ignore())

@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
     {        
         public string ConfigId { get; set; }
         public string ConfigurationType { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string Created { get; set; }
         public string Vendor { get; set; }
         public string ConfigName { get; set; }
         public string EndUserName { get; set; }        

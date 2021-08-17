@@ -174,7 +174,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     Status = i == 3 ? "Pending" : i == 5 ? "Failed" :  i == 2 ? "Expired" : "Created",
                     Created = i == 5 || i == 2 || i == 3 ? string.Empty : DateTime.UtcNow.AddDays(-1 * GetRandomNumber(1, 10)).ToShortDateString(),
                     Id = i == 5 || i == 2 || i == 3 ? string.Empty : $"CD_ID_{c.ConfigId}_{i + 1}",
-                    Line = i == 5 || i == 2 || i == 3 ? string.Empty : $"Line_{GetRandomNumber(1, 1000)}",
+                    Line = i == 5 || i == 2 || i == 3 ? string.Empty : $"{GetRandomNumber(1, 1000)}",
                     Price = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(2, 100),
                     Quantity = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(1, 10)
                 }); ; ; ;
