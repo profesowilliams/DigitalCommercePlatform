@@ -2,11 +2,13 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
+<sly data-sly-use.model="${'com.techdata.core.models.MultifieldToJson' @name='primaryMenus'}"></sly>
 <sly data-sly-use.listUse="${'signin.js' @multifieldName='itemLinks', editMode=wcmmode, uiServiceDomain=serviceData.uiServiceDomain,loginEndpoint=serviceData.loginEndpoint, authorizationPageURL=serviceData.authorizationPageURL, pingAppId=serviceData.pingAppId}">
 
     <div id="SignInBox" data-observe-mutation>
-        <div data-component="SignIn" data-cmp-type="react" className="signin" data-config="${listUse.listValues}">
+        <div data-component="SignIn" data-cmp-type="react" className="signin" data-config="${listUse.listValues}" data-dropdownlinks="${model.getJsonMulti}">
         </div>
+
     </div>
 </sly>
 
