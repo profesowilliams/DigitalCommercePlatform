@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Common.Configuration.Models.Configu
         public string LastName { get; set; }
         public string Initial { get; set; }
         public string EmailAddress { get; set; }
+        public string EmailAddressUpper { get; set; }
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
     }

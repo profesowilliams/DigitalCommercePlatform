@@ -7,6 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Common.Configuration.Models.Configu
     public class FindModel
     {
         public string Id { get; set; }
+        public string Name { get; set; }
         public bool Details { get; set; }
         public string Type { get; set; }
         public string Manufacturer { get; set; }
@@ -20,5 +21,9 @@ namespace DigitalCommercePlatform.UIServices.Common.Configuration.Models.Configu
         public int Page { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
+        public string DUANS { get; set; }
+        public string VATNumber { get; set; }
+        public string VendorAccountName { get; set; }
+        public string VendorAccountNumber { get; set; }
     }
 }
