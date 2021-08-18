@@ -17,9 +17,10 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
   const defaultConfigurationTypesDropdown = {
     label: "Configuration Types",
     items: [
-      { key: "estimate", value: "Estimate" },
-      { key: "vendorQuote", value: "Vendor Quote" },
-      { key: "deal", value: "Deal" },
+      { key: "AllConfigurationTypes", value: "All Configuration Types" },
+      { key: "Estimate", value: "Estimate" },
+      { key: "VendorQuote", value: "Vendor Quote" },
+      { key: "Deal", value: "Deal" },
     ],
   };
 
@@ -43,9 +44,9 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`
         : "";
-    let manufacturer =
-      query.manufacturer?.key && query.manufacturer?.key !== "allVendors"
-        ? `&manufacturer=${query.manufacturer.key}`
+    let configurations =
+      query.configurations?.key && query.configurations?.key !== "AllConfigurationTypes"
+        ? `&Type=${query.configurations.key}`
         : "";
     let from =
       query.from?.key && query.from?.value
@@ -55,7 +56,7 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
       query.to?.key && query.to?.value
         ? `&createdTo=${new Date(query.to.value.setUTCHours(23, 59, 59)).toISOString()}`
         : "";
-    let concatedQuery = `${keyword}${manufacturer}${from}${to}`;
+    let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
       onQueryChanged(concatedQuery);
     } else {
@@ -91,9 +92,9 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
         onQueryChanged={(change) => handleFilterChange(change, "keyword")}
       ></QueryInput>
       <SimpleDropDown
-        key={"manufacturer"}
+        key={"configurations"}
         items={config.configurationTypesDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "manufacturer")}
+        onItemSelected={(change) => handleFilterChange(change, "configurations")}
       ></SimpleDropDown>
       <SimpleDatePicker
         pickerKey={"from"}
