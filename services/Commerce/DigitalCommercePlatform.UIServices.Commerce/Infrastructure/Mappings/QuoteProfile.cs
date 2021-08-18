@@ -15,6 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     [ExcludeFromCodeCoverage]
     public class QuoteProfile : Profile
     {
+        [SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public QuoteProfile()
         {
             CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
@@ -121,13 +122,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Contract, opt => opt.MapFrom(src => src.Contract))
                 ;
 
-            //CreateMap<Configuration, QuotePreviewModel>()
-            //    .ForMember(dest => dest.QuoteDetails.Id, opt => opt.MapFrom(src => src.ConfigId))
-            //    //.ForMember(dest => dest.QuoteDetails.Currency, opt => opt.MapFrom(src => src.Details.FirstOrDefault().))
-            //    //.ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => src.Created))
-            //    //.ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
-            //    .ForPath(dest => dest.QuoteDetails.Items, opt => opt.MapFrom(src => src.Details))
-            //    ;
             CreateMap<SourceDto, VendorReferenceModel>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
@@ -142,14 +136,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                  .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Contact.EmailAddress))
                  .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contact.FirstName + " " + src.Contact.LastName))
                  ;
-            //CreateMap<DetailedDto, Configuration>()
-            //   .ForMember(dest => dest.ConfigId, opt => opt.MapFrom(src => src.Source.Id))
-            //   .ForMember(dest => dest.ConfigurationType, opt => opt.MapFrom(src => src.Source.Type))
-            //   .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => src.Created))
-            //   .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
-            //   .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
-            //   .ForPath(dest => dest.Details, opt => opt.MapFrom(src => src.Items))
-            //   ;
 
             CreateMap<ResellerDto, Address>()
                 .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))

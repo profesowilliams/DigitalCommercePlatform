@@ -38,6 +38,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string URLProductSpecs { get; set; }
         public List<Line> Children { get; set; }
         public List<AgreementModel> Agreements { get; set; }
+        public string AncillaryChargesWithTitles { get; set; }
 
+        public Annuity Annuity { get; set; }
+        public bool IsSubLine { get { return false; } }
+        public string DisplayLineNumber { get { return Id; } }
     }
 }

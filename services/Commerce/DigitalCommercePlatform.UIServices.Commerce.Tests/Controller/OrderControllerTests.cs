@@ -66,6 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         [AutoMoqData]
         public async Task GetOrderDetails_BadRequest(ResponseBase<GetOrder.Response> expected)
         {
+            expected.Error.IsError = true;
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetOrder.Request>(),
                        It.IsAny<CancellationToken>()))
@@ -156,6 +157,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         [AutoMoqData]
         public async Task GetOrderLinesAsync_BadRequest(ResponseBase<GetLines.Response> expected)
         {
+            expected.Error.IsError = true;
             _mediator.Setup(x => x.Send(
                        It.IsAny<GetLines.Request>(),
                        It.IsAny<CancellationToken>()))
