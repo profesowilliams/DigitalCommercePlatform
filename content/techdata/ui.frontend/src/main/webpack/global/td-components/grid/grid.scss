@@ -180,3 +180,13 @@
 	  font-weight: $font-weight-bold;
 	}
   }
+  
+  .ag-cell-label-container{
+	.ag-header-cell-label{
+	  span.ag-header-cell-text{
+		white-space: break-spaces;
+	  }
+	}
+  }
+  
+  

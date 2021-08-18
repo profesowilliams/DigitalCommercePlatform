@@ -1,5 +1,41 @@
 .cmp-quote-preview {
-	&__note{
-		width: 100%;
+	&__note {
+	  width: 100%;
+	  padding: rem(20px 29px);  
+	  .cmp-notes-container{
+		  padding: .8rem 0.78rem;
+		  background-color: $gray-lighter;
+		  font-size: $font-size-small;
+		  line-height: 1.5;		
+		  
+		  section:first-child{
+			  color: #555555;
+			  font-weight: $font-weight-bold;
+		  }
+	  
+	  .cmp-notes-actions{
+		  display: flex;
+		  gap: 2rem;
+		  color: $gray;
+		  margin-top: 3px;
+		  &--setup{
+			  position: relative;	
+			  .icon{
+				@include icon($white,$yellow);		
+				margin-right: 4px;		
+			}	
+			
+		}
+		&--attachment{
+			position: relative;	
+			.icon{
+				@include icon($color:$white,$background:$pink);
+				margin-right: 4px;		
+			  }			
+		
+		  }
+	  }
+	  
 	}
+  }
 }

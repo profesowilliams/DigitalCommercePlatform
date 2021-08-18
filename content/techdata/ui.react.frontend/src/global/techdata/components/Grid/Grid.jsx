@@ -297,7 +297,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			window.removeEventListener('resize', onResize);
 		};
 	}, []);
-
+	
 	return (
 		<div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
 			<Fragment>

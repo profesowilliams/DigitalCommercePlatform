@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import thousandSeparator from "../../../helpers/thousandSeparator";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
@@ -30,9 +31,11 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     {
       headerName: "Select All",
       field: "id",
-      sortable: false,
+      sortable: false,     
       checkboxSelection: true,
-      width: "80px",
+      width:138,
+      minWidth:138,
+      maxWidth:145,     
       headerCheckboxSelection: true,
       expandable: true,
       rowClass: ({ node, data }) => "cmp-product-lines-grid__row",
@@ -46,7 +49,8 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     },
     {
       headerName: "Item Information",
-      field: "shortDescription",
+      field: "shortDescription",    
+      width:window.screen.width > 1600 ? 1187 : 619 ,
       sortable: false,
       cellHeight: () => 80,
       cellRenderer: (props) => {
@@ -89,11 +93,11 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       onDetailsShown: (row) => {},
       onDetailsHidden: (row) => {},
       valueFormatter: ({ data }) => {
-        return "$" + data.unitPrice * data.quantity;
+        return "$" + thousandSeparator(data.unitPrice * data.quantity);
       },
       sortable: false,
     },
-  ];
+  ].map(column => ({...column,suppressSizeToFit:true, resizable:true }));
 
   function onSelectionChanged({ api }) {
     selectedLinesModel.length = 0;

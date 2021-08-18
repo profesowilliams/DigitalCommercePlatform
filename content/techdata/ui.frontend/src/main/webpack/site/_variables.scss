@@ -146,3 +146,14 @@ $list-item-border: 5px solid $brand-third;
 
 $button-size: 48px;
 $unchecked-state-content: '\f0c8';
+
+//===common icons
+@mixin icon($color,$background){
+    color: $color;
+    background: $background;
+    width: 14px;
+    height: 14px;
+    border-radius: 2.8px;
+    font-size: 10.27px;
+    padding: 2px;
+}
