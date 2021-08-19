@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Button from '../../Widgets/Button';
 
-function CompanyInfo({info}) {
+function CompanyInfo({data, info}) {
+    const {content: {items}} = data;
+    const res = items[0];
     const [defaultAddress, setDefaultAddress] = useState(false);
-    const [selectedAddress, setSelectedAddress] = useState('');
+    const [selectedAddress, setSelectedAddress] = useState(0);
 
     const handleOptionChange = e => {
-        setSelectedAddress(e.target.value)
+        setSelectedAddress(+(e.target.value))
     };
 
     const handleDefaultAddress = () => {
@@ -16,18 +18,18 @@ function CompanyInfo({info}) {
     return (
         <div className="cmp-qp__company-info">
             <p onClick={handleDefaultAddress} className="cmp-qp__company-info--title">{info.yourCompanyHeaderLabel}</p>
-            <p className="cmp-qp__company-info--sub-title">Sis Margaret’s Inc.</p>
+            <p className="cmp-qp__company-info--sub-title">{res.name}</p>
             {!defaultAddress && 
                 <div className="cmp-qp__company-info--address-group">
                     <p>
                         <span>Wade Wilson</span>
-                        <span>9071 Santa Monica Blvd</span>
-                        <span>West Hollywood, CA 90069</span>
-                        <span>United States</span>
+                        <span>{res.addresses[0].addressLine1}</span>
+                        <span>{res.addresses[0].city}, {res.addresses[0].state} {res.addresses[0].zip}</span>
+                        <span>{res.addresses[0].country}</span>
                     </p>
                     <p>
-                        <span>Email: dpool@sismargarets.com</span>
-                        <span>Phone: (424) 777-8399</span>
+                        <span>Email: {res.addresses[0].email || 'NA'}</span>
+                        <span>Phone: {res.addresses[0].phone}</span>
                     </p>
                 </div>
             }
@@ -37,32 +39,33 @@ function CompanyInfo({info}) {
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="address1" 
-                                        value={"Default address"}  
-                                        checked={selectedAddress === "Default address"} 
+                                        value={0}  
+                                        checked={selectedAddress === 0} 
                                         onChange={handleOptionChange} />
                                 <span>Default Address</span>
-                                <span><b>9071 Santa Monica Blvd</b></span>
-                                <span>West Hollywood, CA 90069</span>
+                                <span><b>{res.addresses[0].addressLine1}</b></span>
+                                {/* commenting out as there's nothing from API as of now */}
+                                {/* <span>West Hollywood, CA 90069</span> */}
                             </label>
                         </div>
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="addres2" 
-                                        value={"Second address"} 
-                                        checked={selectedAddress === "Second address"} 
+                                        value={1} 
+                                        checked={selectedAddress === 1} 
                                         onChange={handleOptionChange} />
-                                <span><b>28655 S Dixie Hwy</b></span>
-                                <span>Homestead, FL 33033</span>
+                                <span><b>{res.addresses[0].addressLine2}</b></span>
+                                {/* <span>Homestead, FL 33033</span> */}
                             </label>
                         </div>
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="address3" 
-                                        value={"Third address"}
-                                        checked={selectedAddress === "Third address"}
+                                        value={2}
+                                        checked={selectedAddress === 2}
                                         onChange={handleOptionChange} />
-                                <span><b>1151 Tower Blvd</b></span>
-                                <span>Lake Wales, FL 33853</span>
+                                <span><b>{res.addresses[0].addressLine3}</b></span>
+                                {/* <span>Lake Wales, FL 33853</span> */}
                             </label>
                         </div>
                         <div className="form-group">

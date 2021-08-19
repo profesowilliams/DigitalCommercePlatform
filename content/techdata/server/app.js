@@ -957,6 +957,66 @@ app.get("/getAddress", (req, res) => {
     });
 });
 
+app.get("/ui-account/v1/getAddress", (req, res) => {
+    if (!req.headers["sessionid"]) {
+        return res.status(500).json({
+            error: {
+                code: 0,
+                message: [],
+                isError: true,
+            },
+        });
+    }
+
+
+    const response = {
+        "content": {
+            "items": [
+                {
+                    "name": "SHI INTERNATIONAL CORP",
+                    "companies": [
+                        {
+                            "companyCode": "0100",
+                            "paymentTermsCode": "Z271",
+                            "paymentTermsText": "1.50 % 10 Net 30"
+                        },
+                        {
+                            "companyCode": "0101",
+                            "paymentTermsCode": "Z271",
+                            "paymentTermsText": "1.50 % 10 Net 30"
+                        }
+                    ],
+                    "addresses": [
+                        {
+                            "addressNumber": "0001445402",
+                            "addressLine1": "290 Davidson Ave",
+                            "addressLine2": " ",
+                            "addressLine3": " ",
+                            "city": "Somerset",
+                            "state": "NJ",
+                            "country": "US",
+                            "zip": "08873-4145",
+                            "email": null,
+                            "addressType": "CUS",
+                            "phone": "8005276389",
+                            "salesOrganization": "0100"
+                        }
+                    ]
+                }
+            ]
+        },
+        "error": {
+            "code": 0,
+            "messages": [],
+            "isError": false
+        }
+    };
+
+    setTimeout(() => {
+        res.json(response);
+    }, 2000)
+});
+
 app.get("/pricingConditions", (req, res) => {
     if (!req.headers["sessionid"])
         return res.status(500).json({
