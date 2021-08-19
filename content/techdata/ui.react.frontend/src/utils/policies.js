@@ -1,15 +1,7 @@
 import { getUser } from "./index";
 
 export const redirectUnauthenticatedUser = (authUrl, clientId) => {
-    let incomingHostname = window.location.host;
-    // colon separated shop domain names
-    let shopDomainNamesList = "shop.cstenet.com:shop.techdata.com:shop.dev.web.us.tdworldwide.com:shop-rc.cstenet.com:pilot.techdata.com";
-    let redirectUri = window.location.href;
-    if(incomingHostname.indexOf("shop") >= 0 && shopDomainNamesList.indexOf(incomingHostname) >= 0) {
-        redirectUri = "https://" + incomingHostname + "/oauth";
-    }
-
-    let authUrlLocal = authUrl + "?redirect_uri=" + redirectUri;
+    let authUrlLocal = authUrl + "?redirect_uri=" + window.location.href;
     authUrlLocal = authUrlLocal + "&client_id=" + clientId;
     authUrlLocal = authUrlLocal + "&response_type=code";
     authUrlLocal = authUrlLocal + "&pfidpadapterId=ShieldBaseAuthnAdaptor";

@@ -33,6 +33,14 @@ const SignIn = (props) => {
 		isCodePresent();
 		routeChange();
 		isAuthenticated(authUrl, clientId, isPrivatePage);
+		// Added below event listener to handle login in AEM: esp for shop
+		document.addEventListener("shop:authenticated", (e) => {
+            // call onSignIn if user is not authenticated
+            let codeFromLocalStorage = localStorage.getItem('signInCode');
+            if(!codeFromLocalStorage) {
+                onSignIn();
+            }
+        });
 	}, []);
 
 	const isCodePresent = () => {
