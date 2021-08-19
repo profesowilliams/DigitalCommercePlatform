@@ -170,7 +170,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetActionItems(1).ConfigureAwait(false);
+            var result = await controller.GetActionItems().ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -186,7 +186,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetActionItems(null).ConfigureAwait(false);
+            var result = await controller.GetActionItems().ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

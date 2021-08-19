@@ -16,7 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public int? Days { get; set; }
         }
 
         public class Response
@@ -48,12 +47,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary
             }
         }
 
-        public class Validator : AbstractValidator<Request>
-        {
-            public Validator()
-            {
-                RuleFor(x => x.Days).NotNull();
-            }
-        }
+        
     }
 }

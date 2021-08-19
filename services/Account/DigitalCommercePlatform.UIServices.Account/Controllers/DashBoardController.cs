@@ -63,10 +63,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
 
         [HttpGet]
         [Route("actionItems")]
-        public async Task<IActionResult> GetActionItems([FromQuery] int? days)
+        public async Task<IActionResult> GetActionItems()
         {
-            GetActionItems.Request request = new GetActionItems.Request { Days = days };
-            var response = await Mediator.Send(request).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetActionItems.Request()).ConfigureAwait(false);
 
             if (response.Error.IsError)
             {

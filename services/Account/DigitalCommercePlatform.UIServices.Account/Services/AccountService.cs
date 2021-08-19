@@ -42,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _quoteServiceURL;
         private readonly string _cartServiceURL;
         private readonly string _customerServiceURL;
+        private readonly string _priceServiceURL;
         private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
@@ -61,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _ordersServiceUrl = appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
             _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
+            _priceServiceURL = appSettings.GetSetting("App.Price.Url"); 
             _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
             _customerServiceURL = appSettings.GetSetting("App.Customer.Url");
         }
@@ -168,13 +170,24 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ActionItemsModel> GetActionItemsSummaryAsync(GetActionItems.Request request)
         {
-            int daysToGoInPast = request.Days.Value * -1;
+            var numberOfExpiringDeals = await GetExpiringDeals();
+            var numberOfBlockedOrders = await GetBlockedOrders();
 
+            var actionItems = new ActionItemsModel
+            {
+                ExpiringDeals = numberOfExpiringDeals,
+                NewOpportunities = GetRandomNumber(0, 4), 
+                OrdersBlocked = numberOfBlockedOrders
+            };
+
+            return actionItems;
+        }
+
+        private async Task<int> GetBlockedOrders()
+        {
             var url = _ordersServiceUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
                         {
-                            CreatedFrom = DateTime.Now.AddDays(daysToGoInPast).ToString("yyyy-MM-dd"),
-                            CreatedTo = DateTime.Now.ToString("yyyy-MM-dd"),
                             Status = "ON_HOLD",
                             WithPaginationInfo = true,
                         });
@@ -182,25 +195,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             try
             {
                 var orderNumberDto = await _middleTierHttpClient.GetAsync<OrderNumberDto>(url);
-                var actionItems = new ActionItemsModel
-                {
-                    ExpiringDeals = GetRandomNumber(0, 4),
-                    NewOpportunities = GetRandomNumber(1, 8),
-                    OrdersBlocked = orderNumberDto.Count
-                };
-                
-                return actionItems;
+                return orderNumberDto.Count;
             }
             catch (RemoteServerHttpException ex) when (ex.Code == HttpStatusCode.NotFound)
             {
-                var actionItems = new ActionItemsModel
-                {
-                    ExpiringDeals = GetRandomNumber(0, 4),
-                    NewOpportunities = GetRandomNumber(1, 8),
-                    OrdersBlocked = 0
-                };
-                return actionItems;
+                return 0;
             }
+        }
+
+
+        private async Task<int> GetExpiringDeals()
+        {
+            var url = _priceServiceURL.AppendPathSegments("Spa", "Find")
+                        .SetQueryParams(new
+                        {
+                            ValidTo = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"),
+                            TotalCount = true,
+                            Details = false,
+                        });
+
+            var dealsExpiringDto = await _middleTierHttpClient.GetAsync<DealsExpiringDto>(url);
+            return dealsExpiringDto.Count;
         }
 
         public async Task<TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request)
