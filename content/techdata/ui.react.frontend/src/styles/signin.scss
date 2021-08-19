@@ -52,72 +52,76 @@
 	$offset-sm: 14px;
 
 	&-list {
-		background-color: #fff;
-		z-index: 9999;
-		box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
-		box-sizing: border-box;
-		padding: 0 $offset-sm;
-		position: absolute;
-		top: 47px;
-		right: 1px;
-		white-space: nowrap;
-		min-width: 200px;
-		@include tablet {
-			position: fixed;
-			padding: 0 $offset-lg;
-		}
+        background-color: #fff;
+        z-index: 9999;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
+        box-sizing: border-box;
+        padding: 0 $offset-sm;
+        position: absolute;
+        top: 47px;
+        right: 1px;
+        white-space: nowrap;
+        min-width: 200px;
+        @include tablet {
+            position: fixed;
+            padding: 0 $offset-lg;
+            width: 100%;
+            max-width: 19.375rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
 
-		p {
-			color: #555555;
-			font-family: 'Open Sans', sans-serif;
-			font-size: 13px;
-			letter-spacing: 0;
-			line-height: 16px;
-			padding: 14px 0;
-			text-align: left;
-			box-sizing: border-box;
-			white-space: nowrap;
-			overflow: hidden;
+        p {
+            color: #555555;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0;
+            line-height: 16px;
+            padding: 14px 0;
+            text-align: left;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
 
-			&.ec-id {
-				border-bottom: 1px solid #d6d6d6;
-				display: block;
-			}
-			&.user-greet {
-				@include desktop {
-					display: none;
-				}
-				border-bottom: 1px solid #d6d6d6;
-			}
-		}
+            &.ec-id {
+                border-bottom: 1px solid #d6d6d6;
+                display: block;
+            }
+            &.user-greet {
+                @include desktop {
+                    display: none;
+                }
+                border-bottom: 1px solid #d6d6d6;
+            }
+        }
 
-		&-content {
-			list-style: none;
-			padding: 0;
-			&--item {
-				margin-bottom: 10px;
-				display: flex;
-				&-link {
-					text-decoration: none;
+        &-content {
+            list-style: none;
+            padding: 0;
+            &--item {
+                margin-bottom: 10px;
+                display: flex;
+                &-link {
+                    text-decoration: none;
 
-					&--icon {
-						color: #1798d1;
-						margin-right: 13px;
-						@include tablet {
-							display: none;
-							&.fa, &.fa-user {
-								display: none;
-							}
-						}
-					}
+                    &--icon {
+                        color: #1798d1;
+                        margin-right: 13px;
+                        @include tablet {
+                            display: none;
+                            &.fa, &.fa-user {
+                                display: none;
+                            }
+                        }
+                    }
 
-					span {
-						color: #555555;
-						font-size: 13px;
-					}
-				}
-			}
-		}
+                    span {
+                        color: #555555;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
 	}
 
 	&-signout {

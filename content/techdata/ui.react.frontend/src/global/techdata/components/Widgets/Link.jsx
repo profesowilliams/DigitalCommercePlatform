@@ -8,7 +8,7 @@ import React from 'react';
 const Link = ({ href, variant, children, underline, callback }) => (
   <a
     href={href}
-    onClick={callback || (() => {})}
+    onClick={callback || (() => null)}
     className={`tdr-link ${variant || ''} ${underline || ''}`}>
       {children}
   </a>
