@@ -111,6 +111,11 @@
                     .cmp-teaser__title-link {
                         color: get-color(brand-white) !important;
                     }
+
+                    svg {
+                        background-color: get-color(brand-light-blue);
+                        fill: get-color(brand-white);
+                    }
                 }
 
                 &__content {
@@ -137,10 +142,18 @@
                     }
                 }
                 &__image {
-                    img {
+                    img, svg {
                         border-radius: 50%;
                         width: 6.62rem;
                         height: 6.62rem;
+                    }
+
+                    width: 6.62rem;
+                    height: 6.62rem;
+
+                    svg {
+                        fill: get-color(brand-blue);
+                        background-color: get-color(brand-white);
                     }
                 }
                 &__description {
