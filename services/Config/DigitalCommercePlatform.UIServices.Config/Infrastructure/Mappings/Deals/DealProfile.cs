@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals.Resolvers;
@@ -72,6 +73,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 .ForMember(d => d.PageNumber, o => o.Ignore())
                 .ForMember(d => d.PageSize, o => o.Ignore())
                 .ForMember(dest => dest.TotalItems, opt => opt.MapFrom(src => src.Count));
+
+
+
+            CreateMap<DealsBase, DealsForGrid>()
+                //.ForMember(dest => dest.Bid, opt => opt.MapFrom(src => src.VendorBidNumber))-need confirmation which value to be mapped 
+                .ForMember(d => d.Bid, o => o.Ignore())
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Source.Version))
+                .ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src.VendorBidNumber))
+                .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUserName))
+                ;
+
+            CreateMap<FindResponse<DealsBase>, GetDealsFor.Response>()
+               .ForMember(dest => dest.response, opt => opt.MapFrom(src => src.Data));
 
 
 

@@ -1,5 +1,4 @@
-﻿using MD = DigitalCommercePlatform.UIServices.Config.Models.Deals;
-using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+﻿using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Validator
 {

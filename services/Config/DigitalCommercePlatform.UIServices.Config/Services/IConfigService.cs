@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
@@ -13,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     {
         Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request);
         Task<FindResponse<DealsBase>> GetDeals(GetDeals.Request request);
+        Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request);
         Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
         Task<bool> EstimationValidate(EstimationValidate.Request request);
         Task<string> GetPunchOutUrlAsync(PunchInModel request);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
@@ -48,41 +49,39 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
         }
 
-        public async Task<FindResponse<DealsBase>> GetDeals(GetDeals.Request request)
+        public Task<FindResponse<DealsBase>> GetDeals(GetDeals.Request request)
         {
-            
-            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
-            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
-            if (getSPAResponse.Data.Count() >= 2)
-            {
-                var Quote = new QuoteDetails
+            var getSPAResponse = GetDealsDetails(request);
+             if (getSPAResponse.Result.Count>= 2)
                 {
-                    ID = "40074328",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 10,
-                    Price = 1500
-                };
-                var Quote1 = new QuoteDetails
-                {
-                    ID = "40059342",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 02,
-                    Price = 2000
-                }; var Quote2 = new QuoteDetails
-                {
-                    ID = "40019648",
-                    Line = "",
-                    Created = DateTime.Now,
-                    Quantity = 11,
-                    Price = 2500
-                };
+                    var Quote = new QuoteDetails
+                    {
+                        ID = "40074328",
+                        Line = "",
+                        Created = DateTime.Now,
+                        Quantity = 10,
+                        Price = 1500
+                    };
+                    var Quote1 = new QuoteDetails
+                    {
+                        ID = "40059342",
+                        Line = "",
+                        Created = DateTime.Now,
+                        Quantity = 02,
+                        Price = 2000
+                    }; var Quote2 = new QuoteDetails
+                    {
+                        ID = "40019648",
+                        Line = "",
+                        Created = DateTime.Now,
+                        Quantity = 11,
+                        Price = 2500
+                    };
 
-                getSPAResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
+                    getSPAResponse.Result.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
 
-                getSPAResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
-            }
+                    getSPAResponse.Result.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
+                }
 
             return getSPAResponse;
         }
@@ -223,6 +222,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             var url = await httpResponse.Content.ReadAsStringAsync();
             return url;
+        }
+
+        public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
+        {
+            var getDealsForGrid = GetDealsDetails(request);
+            return getDealsForGrid;
+        }
+
+        private async Task<FindResponse<DealsBase>> GetDealsDetails<T>(T request)
+        {
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
+            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
+            return getSPAResponse;
         }
     }
 }

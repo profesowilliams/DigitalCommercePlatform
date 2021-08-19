@@ -1,4 +1,5 @@
 ﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
@@ -39,6 +40,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new GetConfigurations.Request { Criteria = criteria };
             var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("getDealsFor")]
+        public async Task<ActionResult> GetDealFor([FromQuery] GetDealsFor.Request request )
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
 

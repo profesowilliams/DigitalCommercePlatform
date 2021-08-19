@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System.Diagnostics.CodeAnalysis;
