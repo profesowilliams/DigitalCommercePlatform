@@ -26,21 +26,30 @@ const SignIn = (props) => {
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
 	const userData = props.data.auth.userData;
-	const userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem('userData'));
+	let userDataCheck = populateLoginData();
+
+    function populateLoginData () {
+        let userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem('userData'));
+        if(window.SHOP && window.SHOP.authentication) {
+            if(window.SHOP.authentication.isAuthenticated()) {
+                // read from shop datalayer window.SHOP.datalayer.User
+                userDataCheck = {
+                    email: window.SHOP.datalayer.User.email,
+                    firstName: window.SHOP.datalayer.User.custName,
+                    id: window.SHOP.datalayer.User.ecid,
+                    lastName: '',
+                    phone: null
+                };
+            }
+        }
+        return userDataCheck;
+    }
 
 	useEffect(() => {
 		localStorage.setItem('signin', constructSignInURL());
 		isCodePresent();
 		routeChange();
 		isAuthenticated(authUrl, clientId, isPrivatePage);
-		// Added below event listener to handle login in AEM: esp for shop
-		document.addEventListener("shop:authenticated", (e) => {
-            // call onSignIn if user is not authenticated
-            let codeFromLocalStorage = localStorage.getItem('signInCode');
-            if(!codeFromLocalStorage) {
-                onSignIn();
-            }
-        });
 	}, []);
 
 	const isCodePresent = () => {
