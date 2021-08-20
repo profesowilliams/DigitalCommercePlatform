@@ -32,11 +32,11 @@ const SignIn = (props) => {
         let userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem('userData'));
         if(window.SHOP && window.SHOP.authentication) {
             if(window.SHOP.authentication.isAuthenticated()) {
-                // read from shop datalayer window.SHOP.datalayer.User
+                // read from shop datalayer window.SHOP.dataLayer.User
                 userDataCheck = {
-                    email: window.SHOP.datalayer.User.email,
-                    firstName: window.SHOP.datalayer.User.custName,
-                    id: window.SHOP.datalayer.User.ecid,
+                    email: window.SHOP.dataLayer.User.email,
+                    firstName: window.SHOP.dataLayer.User.custName,
+                    id: window.SHOP.dataLayer.User.ecid,
                     lastName: '',
                     phone: null
                 };
