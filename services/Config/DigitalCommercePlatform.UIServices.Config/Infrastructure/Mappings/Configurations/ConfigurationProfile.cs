@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations.Resolvers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -12,7 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
     {
         public ConfigurationProfile()
         {
-            CreateMap<System.DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
+            CreateMap<System.DateTime?, string>().ConvertUsing(new DateTimeToStringConverter());
 
             CreateMap<Paginated, Models.Configurations.Internal.FindModel>()
                 .Include<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
@@ -52,7 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Created, o => o.MapFrom(s => s.Created))
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
-                .ForMember(d => d.ConfigName , o => o.Ignore())
+                .ForMember(d => d.ConfigName , o => o.MapFrom(s => s.Name))
                 .ForMember(d => d.VendorQuoteId , o => o.Ignore())
                 .ForMember(d => d.Expires , o => o.MapFrom(s => s.ExpiryDate))
                 .ForMember(d => d.Action , o => o.Ignore())
@@ -65,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.Expires, o => o.MapFrom(s => s.ExpiryDate))
-                .ForMember(d => d.ConfigName, o => o.Ignore())
+                .ForMember(d => d.ConfigName, o => o.MapFrom(s => s.Name))
                 .ForMember(d => d.VendorQuoteId, o => o.Ignore())
                 .ForMember(d => d.Action, o => o.Ignore())
                 .ForMember(d => d.Quotes, o => o.Ignore())

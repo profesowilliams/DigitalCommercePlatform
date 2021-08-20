@@ -22,5 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Config\DigitalCommercePlatform.UIServices.Config.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
+  </ItemGroup>
 </Project>

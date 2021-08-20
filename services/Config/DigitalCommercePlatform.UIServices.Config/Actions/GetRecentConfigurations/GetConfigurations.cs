@@ -1,5 +1,4 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
-using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
@@ -33,6 +32,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
+            protected readonly IConfigService _configService;
+
             public Handler(
                 ILoggerFactory loggerFactory,
                 IConfigService configService,
@@ -41,8 +42,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 _configService = configService;
             }
-
-            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {

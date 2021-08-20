@@ -31,6 +31,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
+            protected readonly IMapper _mapper;
+            protected readonly IConfigService _configService;
+
             public Handler(
                 IMapper mapper,
                 ILoggerFactory loggerFactory,
@@ -41,9 +44,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
                 _mapper = mapper;
                 _configService = configService;
             }
-
-            protected readonly IMapper _mapper;
-            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {

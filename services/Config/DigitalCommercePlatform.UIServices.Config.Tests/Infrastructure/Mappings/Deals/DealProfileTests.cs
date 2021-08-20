@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Deals.Fixtures;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -9,16 +9,6 @@ using DCPD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Deals
 {
-    public class InitDealProfileFixture
-    {
-        public MapperConfiguration Config { get; }
-
-        public InitDealProfileFixture()
-        {
-            Config = new MapperConfiguration(cfg => cfg.AddProfile<DealProfile>());
-        }
-    }
-
     public class DealProfileTests : IClassFixture<InitDealProfileFixture>
     {
         public InitDealProfileFixture Fixture;

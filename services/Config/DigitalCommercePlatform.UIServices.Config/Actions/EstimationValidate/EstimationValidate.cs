@@ -36,6 +36,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
+            protected readonly IConfigService _configService;
+
             public Handler(
                 ILoggerFactory loggerFactory,
                 IConfigService configService,
@@ -44,8 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
             {
                 _configService = configService;
             }
-
-            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {

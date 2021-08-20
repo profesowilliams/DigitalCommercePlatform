@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Configurations.Fixtures;
 using FluentAssertions;
 using System;
 using Xunit;
@@ -9,16 +9,6 @@ using DCPC = DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Configurations
 {
-    public class InitConfigurationProfileFixture
-    {
-        public MapperConfiguration Config { get; }
-
-        public InitConfigurationProfileFixture()
-        {
-            Config = new MapperConfiguration(cfg => cfg.AddProfile<ConfigurationProfile>());
-        }
-    }
-
     public class ConfigurationProfileTests : IClassFixture<InitConfigurationProfileFixture>
     {
         public InitConfigurationProfileFixture Fixture;
