@@ -10,12 +10,15 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.via.ForcedResourceType;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -32,6 +35,15 @@ public class VendorComponentList implements List {
     @Self
     @Via(type = ResourceSuperType.class)
     List delegateList;
+
+    @Inject @Optional @Via("resource")
+    String isExecutiveListing;
+
+    public String getIsExecutiveListing()
+    {
+        return this.isExecutiveListing;
+    }
+
 
 
     @Override
@@ -51,12 +63,23 @@ public class VendorComponentList implements List {
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
                 ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
                 if(contentFragment != null){
-                    VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem);
-                    listOfVendorItems.add(vi);
+                    if (isExecutiveListing!=null)
+                    {
+                        FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfListItem.getPath());
+                        listOfVendorItems.add(vi);
+
+                        log.debug("this is an executive listing. value of field is {}", isExecutiveListing);
+                    }else{
+                        log.debug("this is not an executive listing. value of field is {}", isExecutiveListing);
+                        VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem);
+                        listOfVendorItems.add(vi);
+                    }
+
                 }
             }
 
         }
+        log.debug(listOfVendorItems.toString());
         return listOfVendorItems;
     }
 }

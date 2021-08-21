@@ -1,0 +1,69 @@
+
+<template data-sly-template.vendors="${@ listUse}">
+    <div class="vendor-listing--container">
+        <div class="vendor-listing--left-section">
+            <sly data-sly-list.item1="${listUse.listItems}">
+                <div class="vendor-icon" data-type="${item1.title}">
+                    <div class="vendor-icon__container  ${item1List.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
+                        ${item1.vendorIcon @ context = 'scriptComment'}
+                    </div>
+                </div>
+            </sly>
+        </div>
+        <div class="vendor-listing--right-section">
+            <sly data-sly-list.item="${listUse.listItems}">
+                <div class="vendor-content-section ${itemList.count == 1 ? 'active' : ''}" data-type="${item.title}">
+                    <h2 class="vendor-section-title">${item.name}</h2>
+                    <sly data-sly-test="${properties.showCategory}">
+                        <ul class="vendor-section-checks">
+                            <sly data-sly-list.tag="${item.categoryTag}">
+                                <li>${tag}</li>
+                            </sly>
+                        </ul>
+                    </sly>
+                    <div class="vendor-section-desc">
+                        <p>${item.overview @ context = 'html'}</p>
+                    </div>
+                    <div class="vendor-section-link-section">
+                        <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                    </div>
+                    <div class="vendor-section-link-section">
+                        <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
+                    </div>
+
+                </div>
+            </sly>
+        </div>
+    </div>
+</template>
+<template data-sly-template.executives="${@ listUse}">
+    <div class="vendor-listing--container">
+        <div class="vendor-listing--left-section">
+            <sly data-sly-list.item="${listUse.listItems}">
+                <div class="vendor-icon" data-type="${item.name}">
+                    <div class="vendor-icon__container  ${itemList.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
+                        <img class="cmp-image__image" src=${item.imagePath} />
+                    </div>
+                </div>
+            </sly>
+        </div>
+        <div class="vendor-listing--right-section">
+            <sly data-sly-list.item="${listUse.listItems}">
+                <div class="vendor-content-section ${itemList.count == 1 ? 'active' : ''}" data-type="${item.name}">
+                    <div class="vendor-icon" data-type="${item.name}">
+                        <div class="vendor-icon__container  ${itemList.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
+                            <img class="cmp-image__image" src=${item.imagePath} />
+                        </div>
+                    </div>
+                    <h2 class="vendor-section-title">${item.position}</h2>
+                    <div class="vendor-section-desc">
+                        <p>${item.bio @ context = 'html'}</p>
+                    </div>
+
+                </div>
+            </sly>
+        </div>
+    </div>
+</template>
+
+
