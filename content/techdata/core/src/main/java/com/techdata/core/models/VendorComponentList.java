@@ -13,7 +13,6 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.via.ForcedResourceType;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,10 +66,7 @@ public class VendorComponentList implements List {
                     {
                         FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfListItem.getPath());
                         listOfVendorItems.add(vi);
-
-                        log.debug("this is an executive listing. value of field is {}", isExecutiveListing);
                     }else{
-                        log.debug("this is not an executive listing. value of field is {}", isExecutiveListing);
                         VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem);
                         listOfVendorItems.add(vi);
                     }
@@ -79,7 +75,6 @@ public class VendorComponentList implements List {
             }
 
         }
-        log.debug(listOfVendorItems.toString());
         return listOfVendorItems;
     }
 }
