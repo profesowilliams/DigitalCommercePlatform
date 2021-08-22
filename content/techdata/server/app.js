@@ -603,6 +603,8 @@ app.get("/details", (req, res) => {
     res.json({
         content: {
             details: {
+                created: "08/18/21",
+                expires: "09/18/21",
                 shipTo: {
                     id: null,
                     companyName: "SHI INTERNATIONAL CORP",

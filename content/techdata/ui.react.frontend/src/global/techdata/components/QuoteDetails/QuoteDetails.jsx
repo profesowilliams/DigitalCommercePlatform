@@ -31,11 +31,14 @@ const QuoteDetails = ({ componentProp }) => {
         endUser,
         subTotalFormatted,
         currencySymbol,
+        created,
+        expires
     } = quoteDetails;
+ 
 
     return quoteDetails ? (
         <>
-            <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
+            <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} dates={{created,expires}} />
             <QuoteContactInfo label={resellerContactLabel} contact={reseller} />
             <QuoteContactInfo label={endUserContactLabel} contact={endUser} />
             <QuoteSubtotal

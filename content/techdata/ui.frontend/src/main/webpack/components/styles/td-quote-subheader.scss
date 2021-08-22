@@ -29,4 +29,20 @@
       margin-left: rem(32px);
     }
   }
+
+  &__dates{
+    color: $brand-text-gray;
+    font-size: $font-size-xsmall;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    span.date-created{
+      font-weight: $font-weight-normal;
+    }
+    span.date-expires{
+      font-weight: $font-weight-bold;
+      color: $brand-blue;
+      text-shadow: 0.20px 0px #000c21;
+    }   
+  }
 }
