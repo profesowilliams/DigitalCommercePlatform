@@ -221,4 +221,49 @@
 			}
 		}
 	}
+	&--button {
+		.cmp-teaser {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			&:hover {
+				svg {
+					background-color: get-color(td-lightblue);
+				}
+
+				a {
+					font-weight: 900;
+				}
+			}
+		}
+
+		.cmp-teaser__title-link {
+			color: get-color(brand-black);
+			text-decoration: none;
+			font-weight: 100;
+			transition: all .3s;
+		}
+		
+		.cmp-teaser__image {
+			height: auto;
+			text-align: center;
+			max-width: rem(96px);
+			width: 100%;
+
+			svg {
+				background-color: get-color(brand-black);
+				border-radius: 50%;
+				padding: rem(10px);
+				height: auto;
+				transition: all .3s;
+				width: rem(72px);
+
+				path,
+				polygon {
+						fill: get-color(brand-white);
+				}
+			}
+		}
+	}
 }
