@@ -9,6 +9,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
@@ -62,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _ordersServiceUrl = appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
             _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
-            _priceServiceURL = appSettings.GetSetting("App.Price.Url"); 
+            _priceServiceURL = appSettings.GetSetting("App.Price.Url");
             _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
             _customerServiceURL = appSettings.GetSetting("App.Customer.Url");
         }
@@ -176,7 +177,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var actionItems = new ActionItemsModel
             {
                 ExpiringDeals = numberOfExpiringDeals,
-                NewOpportunities = GetRandomNumber(0, 4), 
+                NewOpportunities = GetRandomNumber(0, 4),
                 OrdersBlocked = numberOfBlockedOrders
             };
 
@@ -242,14 +243,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             request.SortDirection = string.IsNullOrWhiteSpace(request.SortDirection) ? "desc" : request.SortDirection;
             bool sortDirection = request.SortDirection.ToLower() == "asc" ? true : false;
 
-            var quoteURL = _quoteServiceURL.AppendPathSegment("find").SetQueryParams("&SortBy="+ setTextCase.ToTitleCase(request.Sortby)+ "&SortAscending=" + sortDirection+ "&pageSize=" +request.Top);
+            var quoteURL = _quoteServiceURL.AppendPathSegment("find").SetQueryParams("&SortBy=" + setTextCase.ToTitleCase(request.Sortby) + "&SortAscending=" + sortDirection + "&pageSize=" + request.Top);
             var topQuotes = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<QuoteModel>>>(quoteURL);
             return topQuotes;
         }
 
         public async Task<QuoteStatistics> MyQuotesSummaryAsync(MyQuoteDashboard.Request request)
         {
-            var quoteURL = _quoteServiceURL.AppendPathSegment("/GetQuoteStatistics"); 
+            var quoteURL = _quoteServiceURL.AppendPathSegment("/GetQuoteStatistics");
             var MyQuotes = await _middleTierHttpClient.GetAsync<QuoteStatistics>(quoteURL);
             return MyQuotes;
         }
@@ -292,7 +293,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             var orderStatsDto = await _middleTierHttpClient.GetAsync<OrderStatsDto>(url);
 
-            if (orderStatsDto?.Data == null) 
+            if (orderStatsDto?.Data == null)
             {
                 return new MyOrdersDashboard();
             }
@@ -304,11 +305,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 return new MyOrdersDashboard();
             }
 
-            var inProcess = GetAmmountFor(orderStatsUsdOnlyDto,"IN_PROCESS");
-            var onHold = GetAmmountFor(orderStatsUsdOnlyDto,"ON_HOLD");
-            var shipped = GetAmmountFor(orderStatsUsdOnlyDto,"SHIPPED");
-            var open = GetAmmountFor(orderStatsUsdOnlyDto,"OPEN");
-            
+            var inProcess = GetAmmountFor(orderStatsUsdOnlyDto, "IN_PROCESS");
+            var onHold = GetAmmountFor(orderStatsUsdOnlyDto, "ON_HOLD");
+            var shipped = GetAmmountFor(orderStatsUsdOnlyDto, "SHIPPED");
+            var open = GetAmmountFor(orderStatsUsdOnlyDto, "OPEN");
+
             var total = inProcess + onHold + shipped + open;
             var processed = inProcess + onHold + shipped;
 
@@ -330,7 +331,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private (DateTime createdFrom, DateTime createdTo) GetQuarterDates()
         {
             var currentDate = DateTime.Now.Date;
-            
+
             var startOfQuarter01 = new DateTime(currentDate.Year, 1, 1);
             var endOfQuarter01 = new DateTime(currentDate.Year, 3, 31);
 
@@ -385,19 +386,31 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 var salesOrg = _uiContext.User.ActiveCustomer?.System == "2" ? "0100" : string.Empty;
 
                 if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria && t.SalesOrganization == salesOrg).ToList(); 
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria && t.SalesOrganization == salesOrg).ToList();
                 else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList(); 
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList();
                 else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == salesOrg).ToList(); 
+                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == salesOrg).ToList();
                 else
                     return response;
             }
             return response;
         }
 
+        public async Task<List<OrderModel>> GetTopOrdersAsync(GetTopOrders.Request request)
+        {
 
+            TextInfo setTextCase = CultureInfo.CurrentCulture.TextInfo;
 
+            request.Sortby = string.IsNullOrWhiteSpace(request.Sortby) ? "Price" : request.Sortby;
+            request.SortDirection = string.IsNullOrWhiteSpace(request.SortDirection) ? "desc" : request.SortDirection;
+            
+            bool sortDirection = request.SortDirection.ToLower() == "asc" ? true : false;
 
+            var url = _quoteServiceURL.AppendPathSegment("Find").SetQueryParams("&SortBy=" + setTextCase.ToTitleCase(request.Sortby) + "&SortAscending=" + sortDirection + "&pageSize=" + request.Top + "&WithPaginationInfo=false");
+
+            var orderNumberDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
+            return orderNumberDto.Data.ToList();
+        }
     }
 }

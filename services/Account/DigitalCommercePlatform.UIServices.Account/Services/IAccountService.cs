@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Carts;
@@ -24,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     {
         Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request);
         Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request);
+        Task<List<OrderModel>> GetTopOrdersAsync(GetTopOrders.Request request);
         Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request);
         Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request);
         Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);

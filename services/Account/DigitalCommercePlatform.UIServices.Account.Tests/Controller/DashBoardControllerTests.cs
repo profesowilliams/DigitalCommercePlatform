@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalFoundation.Common.Contexts;
@@ -347,6 +348,38 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetAddress("ALL", false).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopOrders(ResponseBase<GetTopOrders.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetTopOrders.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopOrders(5, "price", "desc").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetTopOrders_BadRequest(ResponseBase<GetTopOrders.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetTopOrders.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetTopOrders(0, "price", "desc").ConfigureAwait(false);
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }

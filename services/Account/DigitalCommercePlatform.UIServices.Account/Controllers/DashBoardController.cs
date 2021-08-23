@@ -9,6 +9,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.RenewalsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
@@ -19,9 +20,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
@@ -213,6 +212,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
                 Criteria = criteria,
                 IgnoreSalesOrganization = ignoreSalesOrganization
             };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("topOrders")]
+        public async Task<IActionResult> GetTopOrders([FromQuery] int top, string sortby, string sortDirection)
+        {
+            var request = new GetTopOrders.Request { Top = top, Sortby = sortby, SortDirection = sortDirection };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)
