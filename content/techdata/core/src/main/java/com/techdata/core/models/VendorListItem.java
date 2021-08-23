@@ -165,10 +165,12 @@ public class VendorListItem implements ListItem {
         TagManager tagManager = resource.getResourceResolver().adaptTo(TagManager.class);
         for (String vendorCategoryTag : vendorCategoryTags) {
             log.debug(" Inside for loop {}", vendorCategoryTag);
-            String tag = tagManager.resolve(vendorCategoryTag).getTitle();
-            log.debug(" Vendor category Tag Name {}", tag);
-            if (tag != null) {
-                tags.add(tag);
+            if(!vendorCategoryTag.isEmpty()){
+                String tag = tagManager.resolve(vendorCategoryTag).getTitle();
+                log.debug(" Vendor category Tag Name {}", tag);
+                if (tag != null) {
+                    tags.add(tag);
+                }
             }
         }
         return tags;

@@ -537,3 +537,35 @@
     }
   }
 }
+
+// Teaser reverse
+
+.cmp-quadriptych-teaser-reverse {
+    &.cmp-quadriptych-teaser {
+        .cmp-teaser {
+            box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+            border: none;
+            outline: none !important;
+            &:hover {
+               outline: none !important;
+               box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+                 .cmp-teaser__title {
+                    background-color: get-color(brand-blue) !important;
+                    color: get-color(brand-white) !important;
+                    &-link {
+                        color: get-color(brand-white) !important;
+                    }
+                 }
+            }
+            &__title {
+                font-size: rem(22px);
+                line-height: rem(45px);
+                font-weight: normal;
+                padding: 0;
+            }
+            &__image {
+                order: 2;
+            }
+        }
+    }
+}
