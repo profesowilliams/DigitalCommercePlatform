@@ -3,6 +3,13 @@ import { usGet } from '../../../../utils/api';
 import {isAlreadySignedIn} from "../../../../store/action/authAction";
 
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
+
+  if(window.SHOP && window.SHOP.authentication) {
+    if(window.SHOP.authentication.isAuthenticated()) {
+        cartActive = true;
+    }
+  }
+
   const className = `cmp-cart ${cartActive}`;
   if( cartActive )
     return <a href={shopUrl} className={className}>{children}</a>
