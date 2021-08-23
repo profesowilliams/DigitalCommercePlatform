@@ -6,6 +6,7 @@ import Hamburger from './td-components/hamburger-menu/hamburger';
 import Header from './td-components/header/header';
 import MegamenuMobile from './td-components/megamenu/megamenu-mobile';
 import bp from '../common-utils/js/media-match';
+import {subHeader} from './td-components/sub-header/subHeader';
 
 export function Initializer() {
     this.initComponents();
@@ -42,6 +43,7 @@ Initializer.prototype.initComponents = function () {
 Initializer.prototype.manualInitComponents = function () {
     new Hamburger();
     new Header();
+    subHeader();
     if (bp.tablet()) {
         new MegamenuMobile();
     }
