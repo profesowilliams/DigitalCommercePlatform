@@ -3,15 +3,20 @@ export const subHeader = () => {
 
     function toolsToggle(event) {
         const isTools = event.target.closest(`[data-tab-name]`)
+        let uniqueId = isTools?.getAttribute('id');
+
         if (!isTools) {
-            document.querySelector(`[data-tab-parent="Tools"]`)?.classList.remove('cmp-tabs__tabpanel--custom-active');
+            uniqueId = document.querySelector(`[data-tab-name]`).getAttribute('id');
+            document.querySelector(`[aria-labelledby='${uniqueId}']`)?.classList.remove('cmp-tabs__tabpanel--custom-active');
             return;
         }
 
-        const toolsTab = document.querySelector(`[data-tab-parent="Tools"]`);
+        const toolsTab = document.querySelector(`[aria-labelledby='${uniqueId}']`);
+
         if (!toolsTab) return;
 
         const isActive = toolsTab.classList.contains('cmp-tabs__tabpanel--custom-active');
+
         if (isActive) {
             toolsTab.classList.remove('cmp-tabs__tabpanel--custom-active');
             toolsTab.classList.remove('cmp-tabs__tabpanel--active');
