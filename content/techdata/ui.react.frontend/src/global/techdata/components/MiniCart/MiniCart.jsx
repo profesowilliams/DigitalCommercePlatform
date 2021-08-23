@@ -18,14 +18,14 @@ const MiniCart = ({componentProp}) => {
 
     const getActiveCart = async () => {
       try{
-        const { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
-        setCartItems(totalQuantity);
-        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+        let { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
         if(window.SHOP && window.SHOP.authentication) {
             if(window.SHOP.authentication.isAuthenticated()) {
-                localStorage.setItem('ActiveCart', JSON.stringify({ window.SHOP.dataLayer.cart.totItemCount }) );
+                totalQuantity = window.SHOP.dataLayer.cart.totItemCount;
             }
         }
+        setCartItems(totalQuantity);
+        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
       }catch{
         localStorage.setItem('ActiveCart', '' );
       }
