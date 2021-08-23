@@ -37,7 +37,6 @@
             let dropDownFilterComponent = document.querySelectorAll(FILTER_SOLUTION_DROPDOWN_COMPONENT_ID);
 
             if (!dropDownFilterComponent || dropDownFilterComponent === undefined || dropDownFilterComponent.length == 0) {
-                console.error(`cannot find dropdown` );
                 return;
             }else if (dropDownFilterComponent.length > 1) {
                 console.error(`More than one ID found for id ${FILTER_SOLUTION_DROPDOWN_COMPONENT_ID}` );

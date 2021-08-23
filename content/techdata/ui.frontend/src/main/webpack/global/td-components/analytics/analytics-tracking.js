@@ -6,8 +6,6 @@
 
     var dataLayer;
 
-    console.log("%c TD Analytics Tracking Start","background-color: #00b1e2;color: white");
-
     const CAROUSEL_COMPONENT_NAME= "carousel";
     const TEASER_COMPONENT_NAME = "teaser";
     const COMPONENT_PREFIX = "component.";
