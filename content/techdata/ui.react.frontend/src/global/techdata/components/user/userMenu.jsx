@@ -11,9 +11,6 @@ const userMenu = (props) => {
     localStorage.removeItem('userData');
     localStorage.removeItem('signInCode');
     localStorage.removeItem('shopUserData');
-    if(window.SHOP && window.SHOP.authentication) {
-        window.SHOP.authentication.signOut();
-    }
     window.location.href = window.location.protocol +  "//" + window.location.hostname + (window.location.port === "80" ? "" : ":" + window.location.port) + window.location.pathname;
   };
 

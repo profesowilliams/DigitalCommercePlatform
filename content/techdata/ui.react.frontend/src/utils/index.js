@@ -8,12 +8,16 @@ export const setSessionId = (sessionId) =>
 export const getSessionId = () => localStorage.getItem('sessionId')
 
 export const signOut = (redirectURL) => {
-  const { protocol, hostname, port, pathname } = window.location
-  localStorage.removeItem('sessionId')
-  localStorage.removeItem('signin')
-  localStorage.removeItem('signout')
-  localStorage.removeItem('userData')
-  localStorage.removeItem('signInCode')
+  const { protocol, hostname, port, pathname } = window.location;
+  localStorage.removeItem('sessionId');
+  localStorage.removeItem('signin');
+  localStorage.removeItem('signout');
+  localStorage.removeItem('userData');
+  localStorage.removeItem('signInCode');
+  localStorage.removeItem('shopUserData');
+  if(window.SHOP && window.SHOP.authentication) {
+    window.SHOP.authentication.signOut();
+  }
   const _url = redirectURL;
   if (_url) {
     window.location.href = _url;
