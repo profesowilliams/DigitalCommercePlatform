@@ -31,6 +31,8 @@ const SignIn = (props) => {
     function populateLoginData () {
         let userDataCheck = Object.keys(userData).length ? userData : JSON.parse(localStorage.getItem('userData'));
         if(window.SHOP && window.SHOP.authentication) {
+            // call SHOP redirectAuth API on load to makesure to refresh login in SHOP
+            window.SHOP.authentication.redirectToLoginIfNeeded();
             if(window.SHOP.authentication.isAuthenticated()) {
                 // read from shop datalayer window.SHOP.dataLayer.User
                 userDataCheck = {
