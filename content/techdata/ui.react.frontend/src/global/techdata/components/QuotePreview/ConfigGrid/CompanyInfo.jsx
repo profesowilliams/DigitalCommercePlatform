@@ -5,7 +5,7 @@ function CompanyInfo({data, info}) {
     const {content: {items}} = data;
     const res = items[0];
     const [defaultAddress, setDefaultAddress] = useState(false);
-    const [selectedAddress, setSelectedAddress] = useState(0);
+    const [selectedAddress, setSelectedAddress] = useState(1);
 
     const handleOptionChange = e => {
         setSelectedAddress(+(e.target.value))
@@ -22,8 +22,8 @@ function CompanyInfo({data, info}) {
             {!defaultAddress && 
                 <div className="cmp-qp__company-info--address-group">
                     <p>
-                        <span>Wade Wilson</span>
-                        <span>{res.addresses[0].addressLine1}</span>
+                        {/* <span>Wade Wilson</span> */}
+                        <span>{selectedAddress ? res.addresses[0]['addressLine' + '' + selectedAddress] : res.addresses[0].addressLine1}</span>
                         <span>{res.addresses[0].city}, {res.addresses[0].state} {res.addresses[0].zip}</span>
                         <span>{res.addresses[0].country}</span>
                     </p>
@@ -39,8 +39,8 @@ function CompanyInfo({data, info}) {
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="address1" 
-                                        value={0}  
-                                        checked={selectedAddress === 0} 
+                                        value={1}  
+                                        checked={selectedAddress === 1} 
                                         onChange={handleOptionChange} />
                                 <span>Default Address</span>
                                 <span><b>{res.addresses[0].addressLine1}</b></span>
@@ -51,8 +51,8 @@ function CompanyInfo({data, info}) {
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="addres2" 
-                                        value={1} 
-                                        checked={selectedAddress === 1} 
+                                        value={2} 
+                                        checked={selectedAddress === 2} 
                                         onChange={handleOptionChange} />
                                 <span><b>{res.addresses[0].addressLine2}</b></span>
                                 {/* <span>Homestead, FL 33033</span> */}
@@ -61,8 +61,8 @@ function CompanyInfo({data, info}) {
                         <div className="form-check">
                             <label>
                                 <input type="radio" name="address3" 
-                                        value={2}
-                                        checked={selectedAddress === 2}
+                                        value={3}
+                                        checked={selectedAddress === 3}
                                         onChange={handleOptionChange} />
                                 <span><b>{res.addresses[0].addressLine3}</b></span>
                                 {/* <span>Lake Wales, FL 33853</span> */}
