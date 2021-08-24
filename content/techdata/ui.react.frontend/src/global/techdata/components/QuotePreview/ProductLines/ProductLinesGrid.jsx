@@ -31,11 +31,9 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     {
       headerName: "Select All",
       field: "id",
+      width: "80px",
       sortable: false,     
-      checkboxSelection: true,
-      width:138,
-      minWidth:138,
-      maxWidth:145,     
+      checkboxSelection: true, 
       headerCheckboxSelection: true,
       expandable: true,
       rowClass: ({ node, data }) => "cmp-product-lines-grid__row",
@@ -49,9 +47,9 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     },
     {
       headerName: "Item Information",
-      field: "shortDescription",    
-      width:window.screen.width > 1600 ? 1187 : 619 ,
+      field: "shortDescription",
       sortable: false,
+      width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation line={props.data} />;
@@ -63,11 +61,12 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       sortable: false,
       valueFormatter: ({ value }) => {
         return "$" + value;
-      },
+      }
     },
     {
       headerName: "Quantity",
       field: "quantity",
+      width: "80px",
       sortable: false,
       cellRenderer: ({ rowIndex, node, api, setValue }) => {
         return (
@@ -97,7 +96,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       },
       sortable: false,
     },
-  ].map(column => ({...column,suppressSizeToFit:true, resizable:true }));
+  ];
 
   function onSelectionChanged({ api }) {
     selectedLinesModel.length = 0;

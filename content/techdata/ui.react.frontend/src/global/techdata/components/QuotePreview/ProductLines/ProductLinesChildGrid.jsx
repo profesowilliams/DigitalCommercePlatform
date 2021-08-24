@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
+import thousandSeparator from "../../../helpers/thousandSeparator";
 
 function ProductLinesChildGrid({ data }) {
   const columnDefs = [
@@ -16,6 +17,7 @@ function ProductLinesChildGrid({ data }) {
     {
       field: "shortDescription",
       sortable: false,
+      width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation line={props.data} />;
@@ -28,10 +30,14 @@ function ProductLinesChildGrid({ data }) {
     {
       field: "quantity",
       sortable: false,
+      width: "80px",
     },
     {
       field: "extendedPriceFormatted",
       sortable: false,
+      valueFormatter: ({ data }) => {
+        return "$" + thousandSeparator(data.unitPrice * data.quantity);
+      },
     },
   ];
 
