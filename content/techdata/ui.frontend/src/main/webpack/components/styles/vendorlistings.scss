@@ -219,3 +219,124 @@
     }
   }
 }
+
+.executive-grid {
+  .cmp-image {
+    &__image {
+      border-radius: 50%;
+      box-shadow: 5px 5px 3px -1px rgba(0,0,0,0.3);
+      width: 100%;
+    }
+  }
+  
+  .vendor-listing {
+    &--container {
+      @include mobile {
+        flex-direction: row;
+      }
+    }
+
+    &--left-section {
+      justify-content: space-between;
+
+      .vendor-icon {
+        max-width: 11rem;
+        padding: 1rem;
+        
+        @include mobile {
+          max-width: 100%;
+        }
+
+        &__container {
+          transition: all 100ms linear;
+          border-radius: 50%;
+
+          &.activeIcon {
+            border: 4px solid get-color(brand-black);
+            .vendor-section-exec-name {
+              font-weight: bolder;
+            }
+          }
+        }
+
+        &__description {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.3;
+          padding-top: 1rem;
+        }
+      }
+      .vendor-section-exec-title {
+        color: get-color(text-mid-gray);
+        font-size: .8rem;
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+
+    &--right-section {
+      display: flex;
+
+      .vendor-content{
+        &-section.active {
+          display: flex;
+          align-items: center;
+
+          @include mobile {
+            flex-direction: column;
+          }
+        }
+      }
+      .vendor-section {
+        &-container {
+          display: flex;
+          flex-direction: column;
+          margin-left: 2rem;
+          width: 40%;
+
+          @include mobile {
+            flex-direction: column;
+            margin-left: 0;
+            width: 100%;
+            text-align: center;
+          }
+        }
+        &-title{
+          color: get-color(text-mid-gray);
+          font-size: 1rem;
+        }
+        &-desc{
+          -webkit-font-smoothing: antialiased;
+          margin-bottom: 0;
+          max-height: 22rem;
+          overflow-y: scroll;
+
+          @include mobile {
+            max-height: auto;
+            overflow-y: hidden;
+          }
+        }
+        &-desc p::-webkit-scrollbar-thumb {
+          background: get-color(brand-black);
+          border-radius: rem(8px);
+          max-height: rem(4px);
+        }
+        &-desc p::-webkit-scrollbar-button {
+          display: none
+        }
+        &-desc p::-webkit-scrollbar-track {
+          background: get-color(brand-white);
+        }
+      }
+
+      .vendor-icon {
+        width: 60%;
+        padding: 2rem;
+
+        @include mobile {
+          width: 100%;
+          padding: 0;
+        }
+      }
+    }
+  }
+}

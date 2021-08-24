@@ -59,12 +59,13 @@
                             <img class="cmp-image__image" src=${item.imagePath} />
                         </div>
                     </div>
-                    <h2 class="vendor-section-name">${item.name}</h2>
-                    <h2 class="vendor-section-title">${item.position}</h2>
-                    <div class="vendor-section-desc">
-                        <p>${item.bio @ context = 'html'}</p>
+                    <div class="vendor-section-container">
+                        <h2 class="vendor-section-name">${item.name}</h2>
+                        <h3 class="vendor-section-title">${item.position}</h3>
+                        <div class="vendor-section-desc">
+                            <p>${item.bio @ context = 'html'}</p>
+                        </div>
                     </div>
-
                 </div>
             </sly>
         </div>
