@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -129,6 +130,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(request?.Criteria?.SortBy))
+                {
+                    TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+                    request.Criteria.SortBy = textInfo.ToTitleCase(request.Criteria.SortBy.Replace("_", " "));
+                }
+
                 var appServiceRequest = PrepareConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
