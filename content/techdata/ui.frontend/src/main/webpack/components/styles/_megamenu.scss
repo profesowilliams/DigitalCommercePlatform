@@ -125,6 +125,11 @@
             font-weight: normal;
         }
         .cmp-megamenu__tertiary {
+            .cmp-megamenu-level-title {
+                a {
+                    color : get-color(brand-blue)
+                }
+            }
             padding: rem(10px 22px);
             border-right: rem(1px) solid get-color(brand-light-gray2);
             a {
