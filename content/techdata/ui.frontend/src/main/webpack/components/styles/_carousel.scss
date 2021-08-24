@@ -10,7 +10,6 @@
 .cmp-carousel__action--play {}
 .cmp-carousel__action-icon {}
 .cmp-carousel__action-text {}
-.cmp-carousel__indicators {}
 .cmp-carousel__indicator {}
 
 
@@ -230,3 +229,7 @@
 //   border-radius: 50%;
 //   opacity: .6!important;
 // }
+
+.cmp-carousel__indicators {
+  width: 100%; 
+} 
