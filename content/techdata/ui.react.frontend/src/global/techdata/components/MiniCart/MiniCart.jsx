@@ -4,12 +4,6 @@ import {isAlreadySignedIn} from "../../../../store/action/authAction";
 
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
 
-  if(window.SHOP && window.SHOP.authentication) {
-    if(window.SHOP.authentication.isAuthenticated()) {
-        cartActive = true;
-    }
-  }
-
   const className = `cmp-cart ${cartActive}`;
   if( cartActive )
     return <a href={shopUrl} className={className}>{children}</a>
@@ -24,20 +18,25 @@ const MiniCart = ({componentProp}) => {
   useEffect(() => {
 
     const getActiveCart = async () => {
-      try{
-        let { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
-        if(window.SHOP && window.SHOP.authentication) {
-            if(window.SHOP.authentication.isAuthenticated()) {
-                totalQuantity = window.SHOP.dataLayer.cart.totItemCount;
+        try{
+            let totalQuantity = 0;
+            try {
+                let { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
+            } catch {
             }
+
+            if(window.SHOP && window.SHOP.authentication) {
+                if(window.SHOP.authentication.isAuthenticated()) {
+                    totalQuantity = window.SHOP.dataLayer.cart.totItemCount;
+                }
+            }
+            setCartItems(totalQuantity);
+            localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+        } catch{
+            localStorage.setItem('ActiveCart', '' );
         }
-        setCartItems(totalQuantity);
-        localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
-      }catch{
-        localStorage.setItem('ActiveCart', '' );
-      }
     }
-    if (isAlreadySignedIn())
+    if (isAlreadySignedIn() || (window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()))
     {
       getActiveCart();
     }else{

@@ -14,7 +14,6 @@ export const signOut = (redirectURL) => {
   localStorage.removeItem('signout');
   localStorage.removeItem('userData');
   localStorage.removeItem('signInCode');
-  localStorage.removeItem('shopUserData');
   if(window.SHOP && window.SHOP.authentication) {
     window.SHOP.authentication.signOut();
   }
