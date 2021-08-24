@@ -32,10 +32,6 @@ public class MultifieldToJson {
     @RequestAttribute
     private String name;
 
-    private Resource resource;
-
-    private static String jsonString;
-
     @Inject
     private SlingHttpServletRequest request;
 
@@ -46,11 +42,6 @@ public class MultifieldToJson {
         // let's test if we are getting the param in here.
         LOGGER.info("request param name :: {}", name);
         setPropertiesToIgnore();
-        resource = request.getResource();
-    }
-
-    public String getJsonString() {
-        return jsonString;
     }
 
     private void setPropertiesToIgnore() {
@@ -80,21 +71,21 @@ public class MultifieldToJson {
                 if (!propertiesToIgnore.contains(property.getName()))
                     resourceJson.addProperty(property.getName(), property.getValue().getString());
             }
-            if (resource.hasChildren()) {
-                JsonArray multiJson = new JsonArray();
-                for (Iterator<Resource> children = resource.listChildren(); children.hasNext(); ) {
-                    Resource childResource = children.next();
-                    JsonObject obj = checkForChildren(childResource);
-                    //if resource has children, list children as json objects.
-                    //but for multi use JsonArray
-                    if (childResource.getName().startsWith("item"))
-                        multiJson.add(obj);
-                    else
-                        resourceJson.add(childResource.getName(), obj);
-                }
-                if (multiJson.size() > 0)
-                    resourceJson.add("items", multiJson);
+        }
+        if (resource.hasChildren()) {
+            JsonArray multiJson = new JsonArray();
+            for (Iterator<Resource> children = resource.listChildren(); children.hasNext(); ) {
+                Resource childResource = children.next();
+                JsonObject obj = checkForChildren(childResource);
+                //if resource has children, list children as json objects.
+                //but for multi use JsonArray
+                if (childResource.getName().startsWith("item"))
+                    multiJson.add(obj);
+                else
+                    resourceJson.add(childResource.getName(), obj);
             }
+            if (multiJson.size() > 0)
+                resourceJson.add("items", multiJson);
         }
         return resourceJson;
     }
