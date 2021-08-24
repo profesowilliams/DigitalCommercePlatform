@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Content.Models.Search
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Content.Models.Search
 {
     public enum TypeAheadSuggestionTypes
     {

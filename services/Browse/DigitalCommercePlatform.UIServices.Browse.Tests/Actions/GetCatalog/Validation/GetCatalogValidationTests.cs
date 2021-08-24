@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;

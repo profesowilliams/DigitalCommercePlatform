@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
 {
     public class AddressModel
     {

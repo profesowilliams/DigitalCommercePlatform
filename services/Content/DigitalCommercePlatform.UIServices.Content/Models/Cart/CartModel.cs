@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Models.Cart.Internal;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Content.Models.Cart.Internal;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

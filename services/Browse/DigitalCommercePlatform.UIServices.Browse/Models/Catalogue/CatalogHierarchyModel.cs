@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal;
 

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find.Internal;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find.Internal;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

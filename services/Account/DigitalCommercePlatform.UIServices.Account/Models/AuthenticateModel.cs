@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models

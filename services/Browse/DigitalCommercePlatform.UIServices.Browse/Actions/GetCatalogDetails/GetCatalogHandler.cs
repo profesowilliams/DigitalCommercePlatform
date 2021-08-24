@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;

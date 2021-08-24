@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
 {
     public class OrderNotification
     {

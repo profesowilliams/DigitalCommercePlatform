@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.IntegrationTests

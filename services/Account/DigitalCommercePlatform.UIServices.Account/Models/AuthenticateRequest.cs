@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models

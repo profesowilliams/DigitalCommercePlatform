@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories;
 using GRC = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetConfigurations.Validator

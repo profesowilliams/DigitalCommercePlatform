@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;

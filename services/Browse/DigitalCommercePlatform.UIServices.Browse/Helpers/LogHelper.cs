@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using Microsoft.AspNetCore.Http;
 using Serilog.Events;
 using System;
 

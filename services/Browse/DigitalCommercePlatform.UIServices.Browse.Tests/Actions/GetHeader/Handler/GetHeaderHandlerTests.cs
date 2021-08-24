@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Services;

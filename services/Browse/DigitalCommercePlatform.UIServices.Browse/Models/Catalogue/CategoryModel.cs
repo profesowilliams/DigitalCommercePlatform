@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.Models;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Models;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 

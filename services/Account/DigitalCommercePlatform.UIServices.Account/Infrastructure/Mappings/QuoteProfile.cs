@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;

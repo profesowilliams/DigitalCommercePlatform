@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalFoundation.Common.Client;

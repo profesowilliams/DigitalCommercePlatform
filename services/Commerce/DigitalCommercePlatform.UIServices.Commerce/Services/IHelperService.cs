@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System.Threading.Tasks;
 

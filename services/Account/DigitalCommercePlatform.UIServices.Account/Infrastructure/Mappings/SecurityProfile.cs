@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalFoundation.Common.Security.Messages;

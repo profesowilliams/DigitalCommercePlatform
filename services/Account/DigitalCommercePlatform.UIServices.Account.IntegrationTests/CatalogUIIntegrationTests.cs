@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;

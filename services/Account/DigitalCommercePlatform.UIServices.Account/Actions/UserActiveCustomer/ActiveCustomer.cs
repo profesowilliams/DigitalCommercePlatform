@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.Cache.UI;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;

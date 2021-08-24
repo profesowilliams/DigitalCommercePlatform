@@ -1,4 +1,5 @@
-﻿using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using GRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.GetDeals.Validator
 {

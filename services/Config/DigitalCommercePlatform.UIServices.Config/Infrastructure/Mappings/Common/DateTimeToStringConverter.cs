@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using System;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common

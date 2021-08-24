@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Models;

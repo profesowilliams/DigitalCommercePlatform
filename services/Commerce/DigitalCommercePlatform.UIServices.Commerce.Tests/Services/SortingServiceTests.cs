@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Services;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Services;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services

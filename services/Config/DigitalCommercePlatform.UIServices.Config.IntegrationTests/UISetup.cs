@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.Client;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;

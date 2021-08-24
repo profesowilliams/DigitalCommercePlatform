@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Services;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Services;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services

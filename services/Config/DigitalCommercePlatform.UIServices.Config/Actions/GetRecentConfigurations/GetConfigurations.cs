@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;

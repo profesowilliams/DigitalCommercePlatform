@@ -1,4 +1,5 @@
-Ôªøusing DigitalCommercePlatform.UIServices.Commerce.Models;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalFoundation.Common.Contexts;
@@ -349,8 +350,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         termsConditionLines.Value = "This price list is a quotation only and is not an order or offer to sell.";
                         break;
                     case 4:
-                        termsConditionLines.Value = "No contract for sale will exist unless and until a purchase order has been issued by you and accepted by Tech Data Corporation(‚ÄúTech Data‚Äù)." +
-                                                " Acceptance by Tech Data of any offer is expressly conditioned upon your assent to the Terms and Conditions of Sale set forth in Tech Data‚Äôs invoices." +
+                        termsConditionLines.Value = "No contract for sale will exist unless and until a purchase order has been issued by you and accepted by Tech Data Corporation(ìTech Dataî)." +
+                                                " Acceptance by Tech Data of any offer is expressly conditioned upon your assent to the Terms and Conditions of Sale set forth in Tech Dataís invoices." +
                                                 " The prices contained in this list may not be relied upon as the price at which Tech Data will accept an offer to purchase products unless expressly agreed to by Tech Data in writing." +
                                                 " Products quoted were selected by Tech Data based on specifications available at the time of the quotation, and are not guaranteed to meet bid specifications." +
                                                 " Product specifications may be changed by the manufacturer without notice. It is your responsibility to verify product conformance to specifications of any subsequent contract. All products are subject to availability from the manufacturer.";
@@ -379,7 +380,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             termsConditionLines.Worksheet.Row(xlRow + 6).Height = 30;
                             break;
                         case 7:
-                            termsConditionLines.Value = "(2)   Cisco recurring XaaS subscriptions can contain metered/consumption based charges based on end customer‚Äôs usage." +
+                            termsConditionLines.Value = "(2)   Cisco recurring XaaS subscriptions can contain metered/consumption based charges based on end customerís usage." +
                                             " These fees are in addition to the base subscription costs and are billed in arrears based on billing frequency.";
                             break;
                         case 8:
@@ -388,7 +389,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         case 9:
                             termsConditionLines.Value = "(4)   The vast majority of Cisco subscriptions are set to auto-renew. If you wish to cancel or modify the subscription prior to the renewal date," +
                                             " Cisco requires at least 30 days advance notice to do so. While Tech Data notifies partners of upcoming renewals 120, 90, and 60 days in advance," +
-                                            " it is incumbent on the partner to cancel the renewal or request that Tech Data do so a minimum of 30 days in advance, in accordance with Cisco‚Äôs policy. ";
+                                            " it is incumbent on the partner to cancel the renewal or request that Tech Data do so a minimum of 30 days in advance, in accordance with Ciscoís policy. ";
                             termsConditionLines.Worksheet.Row(xlRow + 9).Height = 30;
                             break;
                     }

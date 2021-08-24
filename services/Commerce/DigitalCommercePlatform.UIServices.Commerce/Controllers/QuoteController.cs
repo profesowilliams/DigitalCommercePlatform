@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIService.Browse;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIService.Browse;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;

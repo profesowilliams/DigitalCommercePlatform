@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using System;

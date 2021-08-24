@@ -1,4 +1,5 @@
-﻿using AutoFixture.Xunit2;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;

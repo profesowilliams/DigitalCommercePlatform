@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Services;

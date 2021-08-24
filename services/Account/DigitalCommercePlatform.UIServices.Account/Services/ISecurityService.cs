@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.Security.Messages;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Security.Messages;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services

@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;

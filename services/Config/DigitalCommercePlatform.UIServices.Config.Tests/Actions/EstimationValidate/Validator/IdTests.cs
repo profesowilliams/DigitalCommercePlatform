@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Tests.Common;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Tests.Common;
 using DigitalCommercePlatform.UIServices.Config.Tests.Common.Factories;
 using FluentAssertions;
 using System.Threading.Tasks;

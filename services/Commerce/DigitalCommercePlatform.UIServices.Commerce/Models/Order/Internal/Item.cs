@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 

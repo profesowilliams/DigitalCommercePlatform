@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;

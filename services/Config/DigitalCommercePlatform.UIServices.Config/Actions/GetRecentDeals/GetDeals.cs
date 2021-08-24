@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;

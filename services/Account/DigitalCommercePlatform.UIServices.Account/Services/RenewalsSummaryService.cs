@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Models.Renewals;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;

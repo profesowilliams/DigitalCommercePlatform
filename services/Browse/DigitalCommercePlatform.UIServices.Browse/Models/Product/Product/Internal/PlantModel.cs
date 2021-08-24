@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Models.Product.Stock;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Stock;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal

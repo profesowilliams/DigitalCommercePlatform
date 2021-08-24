@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Infrastructure;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;

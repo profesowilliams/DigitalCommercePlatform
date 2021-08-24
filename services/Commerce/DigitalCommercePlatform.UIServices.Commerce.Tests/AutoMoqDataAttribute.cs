@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 using System.Linq;

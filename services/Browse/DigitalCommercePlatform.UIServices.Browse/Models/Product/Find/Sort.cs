@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Find
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Find
 {
     public enum Sort
     {

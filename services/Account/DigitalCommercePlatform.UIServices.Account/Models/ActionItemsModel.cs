@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Account.Models
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Account.Models
 {
     public class ActionItemsModel
     {

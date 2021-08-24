@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;

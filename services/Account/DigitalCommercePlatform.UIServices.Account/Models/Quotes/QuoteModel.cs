@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models.Quote.Internal;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Models.Quote.Internal;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models.Quotes
 {

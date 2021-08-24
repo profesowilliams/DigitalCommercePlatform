@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Cart

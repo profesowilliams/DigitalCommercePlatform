@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

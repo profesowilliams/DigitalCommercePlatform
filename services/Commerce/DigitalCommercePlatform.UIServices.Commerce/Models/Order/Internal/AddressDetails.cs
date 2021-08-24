@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
 {

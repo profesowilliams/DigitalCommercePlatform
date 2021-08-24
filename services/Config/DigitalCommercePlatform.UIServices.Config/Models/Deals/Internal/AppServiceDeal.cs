@@ -1,4 +1,5 @@
-﻿using System;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal

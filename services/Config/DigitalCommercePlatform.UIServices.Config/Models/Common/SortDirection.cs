@@ -1,4 +1,5 @@
-﻿namespace DigitalCommercePlatform.UIServices.Config.Models.Common
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+namespace DigitalCommercePlatform.UIServices.Config.Models.Common
 {
     public enum SortDirection : byte
     {

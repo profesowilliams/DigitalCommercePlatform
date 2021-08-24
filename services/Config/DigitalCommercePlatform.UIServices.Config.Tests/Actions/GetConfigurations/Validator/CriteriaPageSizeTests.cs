@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using FluentAssertions;
 using FluentValidation.TestHelper;
 using System.Threading.Tasks;
 using Xunit;

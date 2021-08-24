@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary.Internal;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 

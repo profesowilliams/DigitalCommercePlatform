@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using MediatR;

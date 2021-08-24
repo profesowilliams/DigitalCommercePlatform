@@ -1,4 +1,5 @@
-﻿using DigitalFoundation.Common.IntegrationTestUtilities;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentAssertions;

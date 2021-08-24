@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;

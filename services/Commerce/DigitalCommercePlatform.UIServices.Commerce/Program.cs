@@ -1,3 +1,4 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Logging;
 using Microsoft.AspNetCore;

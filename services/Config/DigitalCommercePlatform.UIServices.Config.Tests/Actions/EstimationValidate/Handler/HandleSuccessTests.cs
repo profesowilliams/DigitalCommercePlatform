@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;

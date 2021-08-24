@@ -1,4 +1,5 @@
-﻿using System;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using EV = DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 

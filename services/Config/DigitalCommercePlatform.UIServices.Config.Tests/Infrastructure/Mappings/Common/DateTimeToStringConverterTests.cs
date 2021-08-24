@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common;
 using FluentAssertions;
 using System;
 using Xunit;

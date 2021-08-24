@@ -1,4 +1,5 @@
-﻿using DigitalCommercePlatform.UIServices.Account.Services;
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
