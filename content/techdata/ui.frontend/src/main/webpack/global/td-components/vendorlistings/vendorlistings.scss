@@ -239,6 +239,14 @@
 }
 
 .executive-grid {
+  .cmp-carousel__indicators {
+    width: 50%;
+  }
+
+  .dp-carousel__nav-label {
+    background-color: get-color(brand-blue);
+  }
+
   .cmp-image {
     &__image {
       border-radius: 50%;
@@ -326,23 +334,13 @@
           -webkit-font-smoothing: antialiased;
           margin-bottom: 0;
           max-height: 22rem;
+          overflow-x: hidden;
           overflow-y: scroll;
 
           @include mobile {
             max-height: auto;
             overflow-y: hidden;
           }
-        }
-        &-desc p::-webkit-scrollbar-thumb {
-          background: get-color(brand-black);
-          border-radius: rem(8px);
-          max-height: rem(4px);
-        }
-        &-desc p::-webkit-scrollbar-button {
-          display: none
-        }
-        &-desc p::-webkit-scrollbar-track {
-          background: get-color(brand-white);
         }
       }
 
@@ -357,4 +355,19 @@
       }
     }
   }
+}
+
+/* Track */
+.vendorlistings .list .executive-grid aem-GridColumn .aem-GridColumn--default--12::-webkit-scrollbar-track {
+  background: get-color(brand-white);
+}
+/* Handle */
+.vendorlistings .list .executive-grid aem-GridColumn .aem-GridColumn--default--12::-webkit-scrollbar-thumb {
+  background: get-color(brand-black);
+  border-radius: rem(8px);
+  max-height: rem(4px);
+}
+/* Buttons */
+.vendorlistings .list .executive-grid aem-GridColumn .aem-GridColumn--default--12::-webkit-scrollbar-button {
+  display: none
 }

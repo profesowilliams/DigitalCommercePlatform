@@ -10,7 +10,14 @@
 .cmp-carousel__action--play {}
 .cmp-carousel__action-icon {}
 .cmp-carousel__action-text {}
+.cmp-carousel__indicators {
+  width: 50%;
+}
 .cmp-carousel__indicator {}
+
+.cmp-carousel__indicator--active{
+  background-color: get-color(brand-blue);
+}
 
 
 .dp-carousel{
@@ -74,11 +81,11 @@
       }
       &.cmp-carousel__indicator--active,
       &:hover{
-        color: get-color(brand-white);
-        background-color: transparent;
+        color: get-color(brand-blue);
+        background-color: get-color(brand-blue);
         opacity: 1;
         @include tablet {
-          background-color: get-color(brand-white);
+          background-color: get-color(brand-blue);
           opacity: 0.5;
         }
         &::before{
@@ -201,15 +208,16 @@
     width: 10px;
     height: 10px;
     color: transparent;
-    background-color: #fff;
+    border: 1px solid get-color(brand-black);
+    background-color: get-color(brand-white);
     border-radius: 50%;
     box-sizing: border-box;
     margin: 0 .4rem;
     
     &.cmp-carousel__indicator--active,
     &:hover{
-      color: #fff;
-      background-color: #fff;
+      color: #fff;;
+      background-color: get-color(brand-blue);
       opacity: 1;
     }
   }

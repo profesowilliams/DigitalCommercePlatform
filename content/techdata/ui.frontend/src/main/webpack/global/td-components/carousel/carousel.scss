@@ -59,10 +59,10 @@
       &.cmp-carousel__indicator--active,
       &:hover{
         color: get-color(brand-white);
-        background-color: transparent;
+        background-color: get-color(brand-blue);
         opacity: 1;
         @include tablet {
-          background-color: get-color(brand-white);
+          background-color: get-color(brand-blue);
           opacity: 0.5;
         }
         &::before{
@@ -193,7 +193,7 @@
     &.cmp-carousel__indicator--active,
     &:hover{
       color: get-color(brand-white);
-      background-color: get-color(brand-white);
+      background-color: get-color(text-mid-gray);
       opacity: 1;
     }
   }
