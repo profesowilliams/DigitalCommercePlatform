@@ -1,9 +1,14 @@
 # redirect root
-RedirectMatch "^/$" "/sg"
+RedirectMatch "^/$" "/us"
 
+# apac
 RewriteRule ^/sg$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
 RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
 RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]
+
+# americas
+RewriteRule ^/us$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
+RewriteRule ^/us/en$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
