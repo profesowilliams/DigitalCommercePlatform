@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { signOut } from '../../../../utils';
 import SubHeaderMenuContainer from '../ProfileMegaMenu/SubHeaderMenuContainer';
 import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
+import {menuItems as data} from '../ProfileMegaMenu/aem-data';
 
 const DropdownMenu = ({ items, userDataCheck, config }) => {
 	const [isActive, setDropdown] = useState(false);
@@ -10,7 +11,6 @@ const DropdownMenu = ({ items, userDataCheck, config }) => {
     const [secondaryItems, setSecondaryItems] = useState(null);
 	const userDropDown = () => setDropdown(!isActive);
 	const { id: userId, firstName: userName } = userDataCheck;
-    const { "data-dropdownlinks": dropDownData } = config;
 
     const handlePrimaryClick = (obj) => {
         setSecondaryItems(obj);
@@ -54,7 +54,7 @@ const DropdownMenu = ({ items, userDataCheck, config }) => {
                                         </li>
                                     ))}
                                 </ul>
-                                <SubHeaderMenuContainer data={dropDownData} handlePrimaryClick={handlePrimaryClick} />
+                                <SubHeaderMenuContainer data={data} handlePrimaryClick={handlePrimaryClick} />
                                 <button
                                     className='cmp-sign-in-signout'
                                     onClick={() => {
