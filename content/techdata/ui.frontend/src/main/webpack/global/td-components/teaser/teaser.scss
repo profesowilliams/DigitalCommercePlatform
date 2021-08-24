@@ -814,7 +814,7 @@ $teaser-headings-mobile: (
     img {
       width: 100%;
       height: auto;
-      object-fit: cover;
+      object-fit: fill;
     }
 
     &--title {
@@ -890,7 +890,7 @@ $teaser-headings-mobile: (
 
     &__image {
       img {
-        object-fit: cover;
+        object-fit: fill;
         width: rem(215px);
         height: rem(134px);
       }
@@ -921,6 +921,11 @@ $teaser-headings-mobile: (
   }
 }
 
+.cmp-teaser__desc-link {
+    text-decoration: none;
+    color: #555;
+}
+
 // Teaser reverse
 
 .cmp-quadriptych-teaser-reverse {
@@ -928,10 +933,8 @@ $teaser-headings-mobile: (
         .cmp-teaser {
             box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
             border: none;
-            outline: none !important;
             &:hover {
-                outline: none !important;
-                box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+               box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
                  .cmp-teaser__title {
                     background-color: get-color(brand-blue) !important;
                     color: get-color(brand-white) !important;
@@ -939,6 +942,12 @@ $teaser-headings-mobile: (
                         color: get-color(brand-white) !important;
                     }
                  }
+            }
+            &__content {
+                min-height: auto;
+              .cmp-teaser__description {
+                min-height: 17rem;
+              }
             }
             &__title {
                 font-size: rem(22px);
