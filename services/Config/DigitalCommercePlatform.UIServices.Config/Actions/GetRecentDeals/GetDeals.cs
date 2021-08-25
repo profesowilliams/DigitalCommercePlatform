@@ -3,12 +3,12 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading;
@@ -19,7 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
     [ExcludeFromCodeCoverage]
     public sealed class GetDeals
     {
-        public class Request : IRequest<ResponseBase<Response>>
+        public class Request : Paginated, IRequest<ResponseBase<Response>>
         {
             public string[] ProductIds { get; set; }
             public string VendorBidNumber { get; set; }
@@ -34,9 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
             public SortDirection SortDirection { get; set; }
             public bool TotalCount { get; set; } = true;
             public string[] MfrPartNumbers { get; set; }
-            public int Page { get; set; } = 1;
-            public int PageSize { get; set; } = 25;
             public PricingCondition? Pricing { get; set; }
+
             public enum SortField
             {
                 VendorBidNumber,
@@ -44,18 +43,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 EndUserName,
                 ExpirationDate
             }
-            public Request()
-            {
-            }
+            
         }
 
-        public class Response
+        public class Response : PaginatedResponse<Deal>
         {
-            public int TotalItems { get; set; }
-            public long? PageCount { get; set; }
-            public int? PageNumber { get; set; }
-            public int? PageSize { get; set; }
-            public IList<Deal> response { get; set; }
+            public Response(FindResponse<Deal> findResponse, IPaginated request)
+                : base(findResponse, request)
+            {
+            }
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
@@ -77,27 +73,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
 
-                var dealsDetails = await _configService.GetDeals(request).ConfigureAwait(false);
-                var dealsResponse = _mapper.Map<Response>(dealsDetails);
-                var getDealsResponse = new Response
-                {
-                    TotalItems = dealsResponse.TotalItems,
-                    PageNumber = request.Page,
-                    PageSize = request.PageSize,
-                    PageCount = (dealsResponse.TotalItems + request.PageSize - 1) / request.PageSize,
-                    response=dealsResponse.response,
-
-            };
-                return new ResponseBase<Response> { Content = getDealsResponse };
+                var findResponse = await _configService.GetDeals(request).ConfigureAwait(false);
+                return new ResponseBase<Response> { Content = new Response(findResponse, request) };
             }
         }
 
-        public class Validator : AbstractValidator<GetDeals.Request>
+        public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                RuleFor(x => x.Page)
-                    .NotEmpty().GreaterThan(0).WithMessage("Page must be greater than 0.");
+                RuleFor(x => x.PageNumber)
+                    .NotEmpty().GreaterThan(0).WithMessage("PageNumber must be greater than 0.");
                 RuleFor(x => x.PageSize)
                     .NotEmpty().GreaterThan(0).WithMessage("PageSize must be greater than 0.");
                 RuleFor(x => x.SortDirection).IsInEnum();

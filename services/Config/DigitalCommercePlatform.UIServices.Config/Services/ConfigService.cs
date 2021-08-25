@@ -51,41 +51,45 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
         }
 
-        public Task<FindResponse<DealsBase>> GetDeals(GetDeals.Request request)
+        public async Task<FindResponse<Deal>> GetDeals(GetDeals.Request request)
         {
-            var getSPAResponse = GetDealsDetails(request);
-             if (getSPAResponse.Result.Count>= 2)
+            var findResponse = await GetDealsDetails(request);
+            if (findResponse.Count >= 2)
+            {
+                var Quote = new QuoteDetails
                 {
-                    var Quote = new QuoteDetails
-                    {
-                        ID = "40074328",
-                        Line = "",
-                        Created = DateTime.Now,
-                        Quantity = 10,
-                        Price = 1500
-                    };
-                    var Quote1 = new QuoteDetails
-                    {
-                        ID = "40059342",
-                        Line = "",
-                        Created = DateTime.Now,
-                        Quantity = 02,
-                        Price = 2000
-                    }; var Quote2 = new QuoteDetails
-                    {
-                        ID = "40019648",
-                        Line = "",
-                        Created = DateTime.Now,
-                        Quantity = 11,
-                        Price = 2500
-                    };
+                    ID = "40074328",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 10,
+                    Price = 1500
+                };
+                var Quote1 = new QuoteDetails
+                {
+                    ID = "40059342",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 02,
+                    Price = 2000
+                };
+                var Quote2 = new QuoteDetails
+                {
+                    ID = "40019648",
+                    Line = "",
+                    Created = DateTime.Now,
+                    Quantity = 11,
+                    Price = 2500
+                };
 
-                    getSPAResponse.Result.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
-
-                    getSPAResponse.Result.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
-                }
-
-            return getSPAResponse;
+                findResponse.Data.FirstOrDefault().Quotes = new List<QuoteDetails> { Quote };
+                findResponse.Data.ToArray()[2].Quotes = new List<QuoteDetails> { Quote1, Quote2 };
+            }
+            var result = new FindResponse<Deal>()
+            {
+                Count = findResponse.Count,
+                Data = _mapper.Map<IEnumerable<Deal>>(findResponse.Data)
+            };
+            return result;
         }
 
         public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
@@ -136,39 +140,41 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     request.Criteria.SortBy = textInfo.ToTitleCase(request.Criteria.SortBy.Replace("_", " "));
                 }
 
-                var appServiceRequest = PrepareConfigurationsAppServiceRequest(request);
+                var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
+
+                FindResponse<Configuration> result = new();
 
                 if (appServiceRequest.Details)
                 {
                     var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<DetailedDto>>(configurationFindUrl);
-                    var result = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
-                    result.ToList().ForEach(c => GenerateConfigurationDetails(c));
-                    FindResponse<Configuration> response = new FindResponse<Configuration>();
-                    response.Count = configurationFindResponse.Count;
-                    response.Data = result;
-                    return response;
+                    BuildResult(result, configurationFindResponse);
                 }
                 else
                 {
                     var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
-                    var result = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
-                    result.ToList().ForEach(c => GenerateConfigurationDetails(c));
-                    FindResponse<Configuration> response = new FindResponse<Configuration>();
-                    response.Count = configurationFindResponse.Count;
-                    response.Data = result;
-                    return response;
+                    BuildResult(result, configurationFindResponse);
                 }
+
+                return result;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
                 throw;
             }
+        }
+
+        private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
+        {
+            var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
+            mappingResult.ToList().ForEach(c => GenerateConfigurationDetails(c));
+            result.Count = configurationFindResponse.Count;
+            result.Data = mappingResult;
         }
 
         private static void GenerateConfigurationDetails(Configuration c)
@@ -184,11 +190,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     Line = i == 5 || i == 2 || i == 3 ? string.Empty : $"{GetRandomNumber(1, 1000)}",
                     Price = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(2, 100),
                     Quantity = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(1, 10)
-                }); ; ; ;
+                });
             }
         }
 
-        private Models.Configurations.Internal.FindModel PrepareConfigurationsAppServiceRequest(GetConfigurations.Request request)
+        private Models.Configurations.Internal.FindModel BuildConfigurationsAppServiceRequest(GetConfigurations.Request request)
         {
             var result = _mapper.Map<Models.Configurations.Internal.FindModel>(request.Criteria);
             result.WithPaginationInfo = true;
@@ -218,7 +224,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public async Task<string> GetPunchOutUrlAsync(PunchInModel request)
         {
             const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
-            var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+            var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) 
+                ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
 
             _logger.LogInformation($"Requested url is: {requestUrl}");
 
@@ -241,8 +248,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private async Task<FindResponse<DealsBase>> GetDealsDetails<T>(T request)
         {
             var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
-            var getSPAResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
-            return getSPAResponse;
+            var getSpaResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
+            return getSpaResponse;
         }
     }
 }

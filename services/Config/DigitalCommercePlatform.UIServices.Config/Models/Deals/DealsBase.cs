@@ -20,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public DateTime? ExpirationDate { get; set; }
         public List<QuoteDetails> Quotes { get; set; }
     }
+
     public class SpaSourceModel
     {
         public string Id { get; set; }
@@ -44,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public int CustomerMaximumQuantity { get; set; }
         public int RemainingQuantity { get; set; }
     }
+
     public class SimpleSourceModel
     {
         public string Id { get; set; }

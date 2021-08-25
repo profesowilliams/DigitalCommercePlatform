@@ -77,9 +77,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var controller = GetController();
             var criteria = new GetDeals.Request
             {
-                Details=true,
-                Page=1,
-                PageSize=25
+                Details = true,
+                PageNumber = 1,
+                PageSize = 25
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
@@ -100,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new GetDeals.Request
             {
                 Details = true,
-                Page = 1,
+                PageNumber = 1,
                 PageSize = 25
             };
 

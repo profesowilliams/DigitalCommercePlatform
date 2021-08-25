@@ -1,12 +1,13 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading;
@@ -22,13 +23,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             public FindModel Criteria { get; set; }
         }
 
-        public class Response 
+        public class Response : PaginatedResponse<Configuration>
         {
-            public long? TotalItems { get; set; }
-            public long? PageCount { get; set; }
-            public int? PageNumber { get; set; }
-            public int? PageSize { get; set; }
-            public IEnumerable<Configuration> Items { get; set; }
+            public Response(FindResponse<Configuration> findResponse, IPaginated request)
+                : base(findResponse, request)
+            {
+            }
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
@@ -48,16 +48,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 try
                 {
-                    var configurations = await _configService.FindConfigurations(request).ConfigureAwait(false);
-                    var getRecentConfigurationContent = new Response
-                    {
-                        Items = configurations.Data,
-                        TotalItems = configurations?.Count,
-                        PageNumber = request.Criteria.PageNumber,
-                        PageSize = request.Criteria.PageSize,
-                        PageCount = (configurations?.Count + request.Criteria.PageSize - 1) / request.Criteria.PageSize,
-                    };
-                    return new ResponseBase<Response> { Content = getRecentConfigurationContent };
+                    var findResponse = await _configService.FindConfigurations(request).ConfigureAwait(false);
+                    return new ResponseBase<Response> { Content = new Response(findResponse, request.Criteria) };
                 }
                 catch (Exception ex)
                 {

@@ -6,7 +6,7 @@ using FluentAssertions;
 using System;
 using Xunit;
 
-using DCPD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using AGRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Deals
 {
@@ -36,11 +36,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             }
         }
 
-        internal class MappingFindModelToInternalFindModelData : TheoryData<DCPD.GetDeals.Request>
+        [Theory]
+        [ClassData(typeof(MappingPaginatedToInternalFindModelData))]
+        public void MappingPaginatedToInternalFindModelShouldBeValid(Paginated paginated)
+        {
+            var result = Mapper.Map<Models.Deals.Internal.FindModel>(paginated);
+
+            result.Page.Should().Be(paginated.PageNumber);
+            result.PageSize.Should().Be(paginated.PageSize);
+        }
+
+        internal class MappingFindModelToInternalFindModelData : TheoryData<AGRD.GetDeals.Request>
         {
             public MappingFindModelToInternalFindModelData()
             {
-                AddRow(new DCPD.GetDeals.Request
+                AddRow(new AGRD.GetDeals.Request
                 {
                     ValidFrom = DateTime.UtcNow,
                     ValidTo = DateTime.UtcNow.AddDays(1),
@@ -48,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
                     UpdatedFrom = DateTime.UtcNow.AddDays(2),
                     UpdatedTo = DateTime.UtcNow.AddDays(3),
                     VendorName = "vendorname1",
-                    Page = 2,
+                    PageNumber = 2,
                     PageSize = 20,
                     SortDirection = SortDirection.asc,
                 });
@@ -57,11 +67,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
 
         [Theory]
         [ClassData(typeof(MappingFindModelToInternalFindModelData))]
-        public void MappingFindModelToInternalFindModelShouldBeValid(DCPD.GetDeals.Request model)
+        public void MappingFindModelToInternalFindModelShouldBeValid(AGRD.GetDeals.Request model)
         {
-            var result = Mapper.Map<DCPD.GetDeals.Request>(model);
+            var result = Mapper.Map<AGRD.GetDeals.Request>(model);
 
-            result.Page.Should().Be(model.Page);
+            result.PageNumber.Should().Be(model.PageNumber);
             result.ValidFrom.Should().Be(model.ValidFrom);
             result.ValidTo.Should().Be(model.ValidTo);
             result.EndUserName.Should().Be(model.EndUserName);

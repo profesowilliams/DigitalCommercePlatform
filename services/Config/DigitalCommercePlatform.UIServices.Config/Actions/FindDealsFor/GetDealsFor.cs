@@ -37,6 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
         {
+            protected readonly IMapper _mapper;
+            protected readonly IConfigService _configService;
+
             public Handler(
                 IMapper mapper,
                 ILoggerFactory loggerFactory,
@@ -47,9 +50,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
                 _mapper = mapper;
                 _configService = configService;
             }
-
-            protected readonly IMapper _mapper;
-            protected readonly IConfigService _configService;
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
@@ -64,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
             }
         }
 
-        public class Validator : AbstractValidator<GetDealsFor.Request>
+        public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
