@@ -272,6 +272,43 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return renewalSearchResult;
         }
 
+        public async Task<MyOrdersStatusDashboard> GetMyOrdersStatusAsync(GetMyOrdersStatus.Request request)
+        {
+            var url = _ordersServiceUrl.AppendPathSegment("stats")
+                        .SetQueryParams(new
+                        {
+                            key = "status",
+                            createdFrom = request.FromDate.Value.ToString("yyyy-MM-dd"),
+                            createdTo = request.ToDate.Value.ToString("yyyy-MM-dd")
+                        });
+
+            var orderStatsDto = await _middleTierHttpClient.GetAsync<OrderStatsDto>(url);
+
+            if (orderStatsDto?.Data == null)
+            {
+                return new MyOrdersStatusDashboard();
+            }
+
+            var orderStatsUsdOnlyDto = orderStatsDto.Data.Where(i => "USD".Equals(i.Currency, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (orderStatsUsdOnlyDto == null || !orderStatsUsdOnlyDto.Any())
+            {
+                return new MyOrdersStatusDashboard();
+            }
+
+            var inProcess = GetCountFor(orderStatsUsdOnlyDto, "IN_PROCESS");
+            var onHold = GetCountFor(orderStatsUsdOnlyDto, "ON_HOLD");
+            var shipped = GetCountFor(orderStatsUsdOnlyDto, "SHIPPED");
+
+            var myOrders = new MyOrdersStatusDashboard
+            {
+                InProcess = inProcess.ToString(),
+                OnHold = onHold.ToString(),
+                Shipped = shipped.ToString()
+            };
+            return myOrders;
+        }
+
         public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)
         {
             var createdFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -376,6 +413,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements 
         }
 
+        private int GetCountFor(List<OrderStatsDataDto> orderStatsDataDtos, string orderStatus)
+        {
+            var count = orderStatsDataDtos.Where(i => orderStatus.Equals(i.Value, StringComparison.OrdinalIgnoreCase)).SingleOrDefault()?.Count;
+            if (count == null)
+            {
+                return 0;
+            }
+            return int.Parse(count);
+            // If some of values are null we are returning zero. If IN_PROCESS is null it means zero orders in process
+            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements 
+        }
+
         public async Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request)
         {
             var customerId = _uiContext.User.ActiveCustomer?.CustomerNumber;
@@ -413,5 +462,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var orderNumberDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
             return orderNumberDto.Data.ToList();
         }
+
+        
     }
 }

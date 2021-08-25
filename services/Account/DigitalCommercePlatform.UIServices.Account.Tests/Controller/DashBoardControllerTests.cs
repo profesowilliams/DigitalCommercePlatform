@@ -22,6 +22,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -384,5 +385,40 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             result.Should().Equals(HttpStatusCode.BadRequest);
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetMyOrdersStatus(ResponseBase<GetMyOrdersStatus.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<GetMyOrdersStatus.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            DateTime fromDate = new DateTime (2021, 05, 01);
+            DateTime toDate = DateTime.Now;
+            var result = await controller.GetMyOrdersStatus(fromDate, toDate).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetMyOrdersStatus_BadRequest(ResponseBase<GetMyOrdersStatus.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                      It.IsAny<GetMyOrdersStatus.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.GetMyOrdersStatus(null, null).ConfigureAwait(false);
+
+            result.Should().Equals(HttpStatusCode.BadRequest);
+        }
     }
+
+    
 }

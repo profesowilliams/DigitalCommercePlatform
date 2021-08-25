@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -192,6 +193,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<IActionResult> GetMyOrder([FromQuery] bool isMonthly)
         {
             var request = new GetMyOrders.Request { IsMonthly = isMonthly };
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("myOrdersStatus")]
+        public async Task<IActionResult> GetMyOrdersStatus([FromQuery] DateTime? fromDate, DateTime? toDate)
+        {
+            var request = new GetMyOrdersStatus.Request { FromDate = fromDate, ToDate = toDate };
             var response = await Mediator.Send(request).ConfigureAwait(false);
 
             if (response.Error.IsError)

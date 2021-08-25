@@ -17,6 +17,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
             CreateMap<MyOrdersDashboard, GetMyOrders.Response>()
                 .ForMember(dest => dest.items, opt => opt.MapFrom(src => src));
 
+            CreateMap<MyOrdersStatusDashboard, GetMyOrdersStatus.Response>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+
             CreateMap<OrderModel, OpenResellerItems>()
                 .ForMember(dest => dest.Sequence, opt => opt.Ignore())
                 .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Price))
