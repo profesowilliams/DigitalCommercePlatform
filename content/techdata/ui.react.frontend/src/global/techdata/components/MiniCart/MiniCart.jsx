@@ -22,12 +22,16 @@ const MiniCart = ({componentProp}) => {
             let totalQuantity = 0;
             try {
                 let { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
+                setCartItems(totalQuantity);
+                localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
             } catch {
             }
 
             if(window.SHOP && window.SHOP.authentication) {
                 if(window.SHOP.authentication.isAuthenticated()) {
                     totalQuantity = window.SHOP.dataLayer.cart.totItemCount;
+                    setCartItems(totalQuantity);
+                    localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
                 }
             }
             setCartItems(totalQuantity);
