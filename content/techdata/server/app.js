@@ -157,6 +157,36 @@ app.post("/login", function (req, res) {
     }
 });
 
+app.post("/logout", function (req, res) {
+    let code = req.body.code;
+    let redirectUrl = req.body.RedirectUri;
+    let applicationName = req.body.applicationName;
+
+    console.log("post submit");
+    console.log(req.body);
+    console.log(code);
+    console.log(redirectUrl);
+    console.log(applicationName);
+    // {"content":{"message":"User logged out successfully"},"error":{"code":0,"messages":[],"isError":false}}
+    let resJsonSuccess = {
+        content: {
+            message: "User logged out successfully",
+            error: {
+              code: 0,
+              messages:[],
+              isError: false
+            }
+        }
+    };
+
+    let resJsonFail = {
+        isError: true,
+        user: null,
+    };
+
+    res.json(resJsonSuccess);
+});
+
 app.options("/*", function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
@@ -286,7 +316,7 @@ app.get("/activeCart", function (req, res) {
                         quantity: 1,
                     },
                 ],
-                totalQuantity: 4,
+                totalQuantity: 14,
             },
         },
         error: {

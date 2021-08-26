@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getSessionId } from './index';
-const sessionId = getSessionId()
+
+const sessionId = localStorage.getItem('sessionId')
 
 const USaxios = axios.create({
   headers:{

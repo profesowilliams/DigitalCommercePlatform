@@ -75,7 +75,7 @@ const DashboardSubheader = ({ componentProp }) => {
 		checkIfVendorSignedIn();
 	}, []);
 
-	if (showError) return <p>You should be logged to see this feat</p>;
+	if (showError) return <p></p>;
 	return (
 		<Fragment>
 			<ul>

@@ -88,6 +88,25 @@ use(function () {
         var logoutUrl = parseLinkURL(properties.get("logoutURL"))
         jsonObject.put("logoutURL", logoutUrl);
     }
+
+    if (properties.get("pingLogoutURL") != null) {
+
+        var pingLogoutURL = parseLinkURL(properties.get("pingLogoutURL"))
+        jsonObject.put("pingLogoutURL", pingLogoutURL);
+    }
+
+    if (properties.get("errorPageUrl") != null) {
+
+        var errorPageUrl = parseLinkURL(properties.get("errorPageUrl"))
+        jsonObject.put("errorPageUrl", errorPageUrl);
+    }
+
+    if (properties.get("shopLogoutRedirectUrl") != null) {
+
+            var shopLogoutRedirectUrl = parseLinkURL(properties.get("shopLogoutRedirectUrl"))
+            jsonObject.put("shopLogoutRedirectUrl", shopLogoutRedirectUrl);
+        }
+
     if (properties.get("clientId") != null) {
         jsonObject.put("clientId", properties.get("clientId"));       }
 

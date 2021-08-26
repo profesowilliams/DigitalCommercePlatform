@@ -39,13 +39,28 @@
 											<uiService
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-													fieldLabel="UI Service End Point"
+													fieldLabel="UI Service Login End Point"
 													name="./uiServiceEndPoint"/>
 											<logoutURL
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-													fieldLabel="Logout URL"
+													fieldLabel="UI Service Logout End Point"
 													name="./logoutURL"/>
+											<pingLogoutURL
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Ping Logout End Point"
+													name="./pingLogoutURL"/>
+											<errorPageUrl
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Error Page Url"
+													name="./errorPageUrl"/>
+											<shopLogoutRedirectUrl
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Shop Auth Redirect Url"
+													name="./shopLogoutRedirectUrl"/>
 											<clientId
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

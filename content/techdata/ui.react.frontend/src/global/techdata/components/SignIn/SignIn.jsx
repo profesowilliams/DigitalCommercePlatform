@@ -37,9 +37,9 @@ const SignIn = (props) => {
                 // read from shop datalayer window.SHOP.dataLayer.User
                 userDataCheck = {
                     email: window.SHOP.dataLayer.User.email,
-                    firstName: window.SHOP.dataLayer.User.custName,
+                    firstName: window.SHOP.dataLayer.User.contactFirstName,
                     id: window.SHOP.dataLayer.User.ecid,
-                    lastName: '',
+                    lastName: window.SHOP.dataLayer.User.contactLastName,
                     phone: null
                 };
             }

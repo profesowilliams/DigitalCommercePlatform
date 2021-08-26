@@ -34,8 +34,6 @@ const MiniCart = ({componentProp}) => {
                     localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
                 }
             }
-            setCartItems(totalQuantity);
-            localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
         } catch{
             localStorage.setItem('ActiveCart', '' );
         }

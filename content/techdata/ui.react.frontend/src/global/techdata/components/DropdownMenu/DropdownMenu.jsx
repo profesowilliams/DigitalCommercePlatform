@@ -58,7 +58,8 @@ const DropdownMenu = ({ items, userDataCheck, config }) => {
                                 <button
                                     className='cmp-sign-in-signout'
                                     onClick={() => {
-                                        signOut(config?.logoutURL ?? null);
+                                        signOut(config?.logoutURL ?? null, config?.pingLogoutURL ?? null,
+                                        config?.errorPageUrl ?? null, config?.shopLogoutRedirectUrl ?? null);
                                     }}
                                 >
                                     Log Out
@@ -86,3 +87,4 @@ DropdownMenu.propTypes = {
 		firstName: PropTypes.string,
 	}).isRequired,
 };
+
