@@ -70,9 +70,19 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             var url = _coreSecurityUrl.AppendPathSegment("revoketoken");
 
+            var refreshRequest = new Account.Models.Accounts.ClientRevokeTokenRequestModel
+            {
+                TokenTypeHint = "refresh",
+                ClientId = _clientId,
+                ClientSecret = _clientSecret,
+                Token = _context.User.RefreshToken
+            };
+
+            await _middleTierHttpClient.PostAsync<ClientRevokeTokenResponseModel>(url, null, refreshRequest).ConfigureAwait(false);
+
             var request = new Account.Models.Accounts.ClientRevokeTokenRequestModel
             {
-                TokenTypeHint = "password",
+                TokenTypeHint = "bearer",
                 ClientId = _clientId,
                 ClientSecret = _clientSecret,
                 Token = _context.User.AccessToken

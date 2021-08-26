@@ -43,12 +43,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Logout
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                _sessionIdBasedCacheProvider.Remove("User");
+                
                 var result = await _securityService.RevokePingTokenAsync(request.SessionId);
-                if (result.IsError)
-                {
+
+                if (result.IsError)                
                     return await Task.FromResult(new ResponseBase<Response> { Error = new ErrorInformation { IsError = true, Messages = new List<string> { result.ErrorDescription, result.ErrorCode, result.ErrorType.ToString() }, Code = 500 } });
-                }
+
+                _sessionIdBasedCacheProvider.Remove("User");
+
                 return await Task.FromResult(new ResponseBase<Response> { Content = new Response { Message = "User logged out successfully" } });
             }
         }
