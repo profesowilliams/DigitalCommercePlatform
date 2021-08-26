@@ -8,7 +8,7 @@ function ProductLinesChildGrid({ data }) {
     {
       field: "id",
       sortable: false,
-      width: "80px",
+      width: "160px",
       rowClass: ({ node, data }) => "cmp-product-lines-grid__child-grid__row",
       cellRenderer: (props) => {
         return <section style={{ marginLeft: "60px" }}>{props.value}</section>;
@@ -30,7 +30,7 @@ function ProductLinesChildGrid({ data }) {
     {
       field: "quantity",
       sortable: false,
-      width: "80px",
+      width: "120px",
     },
     {
       field: "extendedPriceFormatted",

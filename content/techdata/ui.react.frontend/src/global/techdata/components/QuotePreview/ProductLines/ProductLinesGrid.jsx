@@ -31,7 +31,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     {
       headerName: "Select All",
       field: "id",
-      width: "80px",
+      width: "160px",
       sortable: false,     
       checkboxSelection: true, 
       headerCheckboxSelection: true,
@@ -66,7 +66,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     {
       headerName: "Quantity",
       field: "quantity",
-      width: "80px",
+      width: "120px",
       sortable: false,
       cellRenderer: ({ rowIndex, node, api, setValue }) => {
         return (
