@@ -949,8 +949,15 @@ $teaser-headings-mobile: (
           &__content {
               min-height: auto;
               .cmp-teaser__description {
-                  //min-height: 17rem;
-                  min-height: auto;
+                //min-height: 17rem;
+                min-height: auto;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 8;
+                -webkit-box-orient: vertical;
+                padding-bottom: 0;
+                margin-bottom: rem(14px);
               }
           }
           &__title {
@@ -962,6 +969,8 @@ $teaser-headings-mobile: (
           &__image {
               order: 2;
               width: 100%;
+              overflow: hidden;
+              height: rem(155px);
           }
       }
   }
