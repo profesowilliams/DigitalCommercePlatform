@@ -199,6 +199,7 @@
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
   position: absolute;
   bottom: 10px;
+  left: 50%;
   .dp-carousel__nav-label{
     &::before{
       display: none;

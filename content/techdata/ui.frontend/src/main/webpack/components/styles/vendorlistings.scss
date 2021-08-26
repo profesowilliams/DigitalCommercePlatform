@@ -154,7 +154,7 @@
     flex-direction: row-reverse;
   }
   .vendor-listing--right-section {
-    text-align: right;
+    text-align: left;
   }
   .vendor-listing--left-section {
     border-right: none;
@@ -305,7 +305,7 @@
 
     &--right-section {
       display: flex;
-
+      
       .vendor-content{
         &-section.active {
           display: flex;
@@ -320,7 +320,8 @@
         &-container {
           display: flex;
           flex-direction: column;
-          margin-left: 2rem;
+          margin-left: 1rem;
+          margin-top: 1rem;
           width: 40%;
 
           @include mobile {
@@ -338,6 +339,7 @@
           -webkit-font-smoothing: antialiased;
           margin-bottom: 0;
           max-height: 22rem;
+          padding-right: 2rem;
           overflow-x: hidden;
           overflow-y: scroll;
 
