@@ -346,8 +346,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     }
                 }
 
-                arrManufacturer = arrManufacturer.Where(c => c != null).ToArray();
-                arrProductIds = arrProductIds.Where(c => c != null).ToArray();
+                arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
+                arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
                 // call product app service
                 productUrl = _appProductServiceURL.AppendPathSegment("Find")
                  .SetQueryParams(new
