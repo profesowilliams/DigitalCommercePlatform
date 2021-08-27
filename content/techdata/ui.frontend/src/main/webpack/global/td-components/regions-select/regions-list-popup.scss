@@ -1,62 +1,75 @@
-.cmp-region-list {    
-    width: rem(1040px);
-    font-family: $font-family;
-    border-top: rem(2px) solid get-color(td-dark-blue);
-    box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    line-height: rem(45px);
-    margin: 0 !important;
-    padding: rem(18px) rem(75px) rem(40px);    
+.cmp-region-list {
+	width: rem(1040px);
+	font-family: $font-family;
+	border-top: rem(2px) solid get-color(td-dark-blue);
+	box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	line-height: rem(45px);
+	margin: 0 !important;
+	padding: rem(18px) rem(75px) rem(40px);
 
-    .americas {
-        width: 20%;
-    }
+	.americas {
+		width: 20%;
+	}
 
-    .europe {
-        width: 60%;
-    }
+	.europe {
+		width: 60%;
+	}
 
-    .asia {        
-        width: 20%;
-        padding-left: rem(60px);
-    }
+	.asia {
+		width: 20%;
+		padding-left: rem(60px);
+	}
 
-    &__title {
-        font-size: $font-size-medium;
-        color: get-color(brand-text-gray); 
-        display: flex;
-        flex-direction: column;
-        line-height: 1.8;
-        margin-bottom: rem(20px);
-        &.eu {
-            padding-left: rem(35px);
-        }
-    }
+	&__title {
+		font-size: $font-size-medium;
+		color: get-color(brand-text-gray);
+		display: flex;
+		flex-direction: column;
+		line-height: 1.8;
+		margin-bottom: rem(20px);
+		&.eu {
+			padding-left: rem(35px);
+		}
+	}
 
-    &__countries {
-        font-size: $font-size-custom-xxsmall;
-        color: get-color(brand-text-gray);
-        text-transform: uppercase;
-        display: flex;
-        flex-direction: column;
-        line-height: 1.8;
-        margin-bottom: rem(20px);
-    }
+	&__countries {
+		font-size: $font-size-custom-xxsmall;
+		color: get-color(brand-text-gray);
+		text-transform: uppercase;
+		line-height: 1.8;
+		margin-bottom: rem(20px);
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		a {
+			color: get-color(brand-text-gray) !important;
+			text-decoration: none !important;
+		}
 
-    &__language {
-        font-size: $font-size-xsmall;
-        color: get-color(brand-text-lightgray) !important;
-        text-transform: none !important;
-        a {
-            color: get-color(brand-text-lightgray) !important;
-            text-decoration: none !important;
-        }
-    }
+		&--flag {
+			width: rem(22px);
+			margin-right: rem(5px);
+		}
 
+		&--name {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	&__language {
+		font-size: $font-size-xsmall;
+		color: get-color(brand-text-lightgray) !important;
+		text-transform: none !important;
+		a {
+			color: get-color(brand-text-lightgray) !important;
+			text-decoration: none !important;
+		}
+	}
 }
-
 
 .cmp-regions-modal-target {
 	position: fixed;
@@ -64,10 +77,10 @@
 	width: 100%;
 	background-color: get-color(brand-black);
 	opacity: 0;
-	-webkit-transition: opacity .5s ease-in-out;
-	-moz-transition: opacity .5s ease-in-out;
-	-o-transition: opacity .5s ease-in-out;
-	transition: opacity .5s ease-in-out;
+	-webkit-transition: opacity 0.5s ease-in-out;
+	-moz-transition: opacity 0.5s ease-in-out;
+	-o-transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.5s ease-in-out;
 	overflow: hidden;
 	&:target {
 		opacity: 1;
@@ -88,10 +101,10 @@
 	position: absolute;
 	top: rem(-80px);
 	right: 0;
-	-webkit-transition: .5s ease-in-out;
-	-moz-transition: .5s ease-in-out;
-	-o-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
+	-webkit-transition: 0.5s ease-in-out;
+	-moz-transition: 0.5s ease-in-out;
+	-o-transition: 0.5s ease-in-out;
+	transition: 0.5s ease-in-out;
 	&:before {
 		content: "";
 		display: block;
@@ -131,9 +144,11 @@
 	margin: auto;
 	width: rem(1040px);
 	background-color: get-color(brand-white);
-	-webkit-transition: .5s ease-in-out;
-	-moz-transition: .5s ease-in-out;
-	-o-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
+	-webkit-transition: 0.5s ease-in-out;
+	-moz-transition: 0.5s ease-in-out;
+	-o-transition: 0.5s ease-in-out;
+	transition: 0.5s ease-in-out;
 	z-index: 10;
 }
+
+//FLAGS

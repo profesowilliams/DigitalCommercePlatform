@@ -28,80 +28,91 @@
 
 .cmp-dropbtn {
   font-size: $font-size-small;
-	margin: 0 rem(16px);
+  margin: 0 rem(16px);
   padding: 0;
   min-height: rem(30px);
   background: none;
-  color: get-color(brand-black);;
+  color: get-color(brand-black);
   border: none;
-	cursor: pointer;
-    &:hover {
-        box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
-    }
-    &:active {
-        box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
-    }
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
+  }
+  &:active {
+    box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
+  }
 }
 .cmp-dropdown {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 .cmp-dropdown-content {
   display: none;
   width: rem(250px);
 }
 .cmp-show {
-	display: block;
+  display: block;
 }
 
-.cmp-languagenavigation__item-link{
+.cmp-languagenavigation__item-link {
   text-decoration: none;
   color: get-color(brand-black);
 }
 
-
 .cmp-region-list {
   &__title {
-      font-size: $font-size-medium;
-      color: get-color(brand-text-gray);
-      display: flex;
-      flex-direction: column;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
-      font-weight: normal !important;
-      &.eu {
-          padding-left: rem(35px);
-      }
+    font-size: $font-size-medium;
+    color: get-color(brand-text-gray);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8;
+    margin-bottom: rem(20px);
+    font-weight: normal !important;
+    &.eu {
+      padding-left: rem(35px);
+    }
   }
 
-  &__countries {
-      font-size: $font-size-custom-xxsmall;
-      color: get-color(brand-text-gray);
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
-      a {
-          color: get-color(brand-text-gray) !important;
-          text-decoration: none !important;
-      }
-  }
+
+	&__countries {
+		font-size: $font-size-custom-xxsmall;
+		color: get-color(brand-text-gray);
+		text-transform: uppercase;
+		line-height: 1.8;
+		margin-bottom: rem(20px);
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		a {
+			color: get-color(brand-text-gray) !important;
+			text-decoration: none !important;
+		}
+
+		&--flag {
+			width: rem(22px);
+			margin-right: rem(5px);
+		}
+
+		&--name {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 
   &__language {
-      font-size: $font-size-xsmall;
+    font-size: $font-size-xsmall;
+    color: get-color(brand-text-lightgray) !important;
+    text-transform: none !important;
+    a {
       color: get-color(brand-text-lightgray) !important;
-      text-transform: none !important;
-      a {
-          color: get-color(brand-text-lightgray) !important;
-          text-decoration: none !important;
-      }
+      text-decoration: none !important;
+    }
   }
 }
 
 /* The Modal (background) */
 .modal {
-    font-family: $font-family;
+  font-family: $font-family;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -111,7 +122,7 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: get-color(td-dark-blue-shade); /* Black w/ opacity *///  
+  background-color: get-color(td-dark-blue-shade); /* Black w/ opacity */ //
   z-index: 99;
 
   /* Modal Content */
@@ -153,13 +164,13 @@
       //column-width: rem(250px);
 
       &__seperator-l {
-         border-left: rem(1px) solid get-color(v-divider-darkgray);         
-        padding: 0 0 0 rem(35px) !important;    
+        border-left: rem(1px) solid get-color(v-divider-darkgray);
+        padding: 0 0 0 rem(35px) !important;
       }
 
       &__seperator-r {
-         border-right: rem(1px) solid get-color(v-divider-darkgray);
-        padding: 0  !important;
+        border-right: rem(1px) solid get-color(v-divider-darkgray);
+        padding: 0 !important;
       }
 
       &__seperator-l {
@@ -179,9 +190,12 @@
         padding: rem(20px) rem(35px);
       }
 
-      &:last-child > &__seperator{
+      &:last-child > &__seperator {
         border-right: none;
       }
     }
   }
+}
+
+.cmp-country-flags {
 }

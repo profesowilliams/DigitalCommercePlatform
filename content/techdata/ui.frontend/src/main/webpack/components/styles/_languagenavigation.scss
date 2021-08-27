@@ -98,19 +98,30 @@
       }
   }
 
-  &__countries {
-      font-size: $font-size-custom-xxsmall;
-      color: get-color(brand-text-gray);
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
-      a {
-          color: get-color(brand-text-gray) !important;
-          text-decoration: none !important;
-      }
-  }
+	&__countries {
+		font-size: $font-size-custom-xxsmall;
+		color: get-color(brand-text-gray);
+		text-transform: uppercase;
+		line-height: 1.8;
+		margin-bottom: rem(20px);
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		a {
+			color: get-color(brand-text-gray) !important;
+			text-decoration: none !important;
+		}
+
+		&--flag {
+			width: rem(22px);
+			margin-right: rem(5px);
+		}
+
+		&--name {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 
   &__language {
       font-size: $font-size-xsmall;

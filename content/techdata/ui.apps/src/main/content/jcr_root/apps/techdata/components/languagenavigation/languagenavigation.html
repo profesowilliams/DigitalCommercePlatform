@@ -91,13 +91,19 @@
                 <div class="modal__content__column__seperator">
                   <sly data-sly-list.countryItems="${continentItems.children}">
                     <div class="cmp-region-list__countries">
-                      ${countryItems.title}
-                      <span class="cmp-region-list__language">
-                        <sly data-sly-list.LanguageItems="${countryItems.children}">
-                          <a href="${LanguageItems.URL}">${LanguageItems.displayLanguage}</a>${LanguageItemsList.last ? '' :
-                          ' | '}
-                        </sly>
-                      </span>
+                      <div class="cmp-region-list__countries--flag">
+                        ${countryItems.svgFlag} 
+                      </div>
+                      <div class="cmp-region-list__countries--name">
+                        ${countryItems.title}
+                        <span class="cmp-region-list__language">
+                          <sly data-sly-list.LanguageItems="${countryItems.children}">
+                            <a href="${LanguageItems.URL}">${LanguageItems.displayLanguage}</a>${LanguageItemsList.last
+                            ? '' :
+                            ' | '}
+                          </sly>
+                        </span>
+                      </div>
                     </div>
                   </sly>
                 </div>
