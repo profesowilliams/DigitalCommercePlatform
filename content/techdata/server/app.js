@@ -170,12 +170,12 @@ app.post("/logout", function (req, res) {
     // {"content":{"message":"User logged out successfully"},"error":{"code":0,"messages":[],"isError":false}}
     let resJsonSuccess = {
         content: {
-            message: "User logged out successfully",
-            error: {
-              code: 0,
-              messages:[],
-              isError: false
-            }
+            message: "User logged out successfully"
+        },
+        error: {
+            code: 0,
+            messages:[],
+            isError: false
         }
     };
 

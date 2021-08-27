@@ -1,6 +1,7 @@
 <sly data-sly-use.model="com.techdata.core.models.MegaMenu"
      data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
     <div id="megamenu" class="cmp-megamenu">
+        <div id="ssoLoginRedirectUrl" data-ssoLoginRedirectUrl="${properties.ssoLoginRedirectUrl}"></div>
         <div class="cmp-megamenu__body">
             <div class="cmp-megamenu__title">Menu</div>
             <i class="cmp-megamenu__back fas fa-chevron-left"></i>

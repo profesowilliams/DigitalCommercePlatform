@@ -173,7 +173,34 @@ import bp from '../../../common-utils/js/media-match';
       // triggers navigation only once when resize reach Desktop.
       mediaQueryList.addEventListener('change', triggerNavigationOnDesktop);
     });
+
+    var megamenuAnchors = document.querySelectorAll('#megamenu a');
+    megamenuAnchors.forEach(function(anchor){
+        anchor.addEventListener('click', getShopLoginUrlPrefix);
+    });
+
   };
+
+  function getShopLoginUrlPrefix() {
+      let prefixShopAuthUrl = "";
+      if(window.SHOP == undefined) { // ignore if its shop
+          let sessionId = localStorage.getItem('sessionId');
+          if(sessionId) {
+              let incomingHref = $(this).attr('href');
+              if(incomingHref &&
+                    (incomingHref.indexOf('shop.cstenet.com') != -1 || incomingHref.indexOf('shop.techdata.com') != -1)) {
+                  if(incomingHref.indexOf('https://shop.cstenet.com/loginRedirect') == -1 && document.querySelector('#ssoLoginRedirectUrl')) {
+                      prefixShopAuthUrl = document.querySelector('#ssoLoginRedirectUrl').getAttribute('data-ssoLoginRedirectUrl');
+                      var clickedBtnID = prefixShopAuthUrl + "?returnUrl=" + encodeURI(incomingHref);
+                      console.log('Modified link to ' + clickedBtnID);
+                      window.open(clickedBtnID,"_self");
+                  }
+              }
+
+          }
+      }
+  }
+
   if (document.readyState !== "loading") {
     onDocumentReady();
   } else {

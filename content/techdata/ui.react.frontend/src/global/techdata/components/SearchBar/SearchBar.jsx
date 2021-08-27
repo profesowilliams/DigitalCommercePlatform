@@ -6,6 +6,15 @@ import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 import { toggleAreaSelection } from './SearchAreas'
 
+function getShopLoginUrlPrefix() {
+    let sessionId = localStorage.getItem('sessionId');
+    let prefixShopAuthUrl = "";
+    if(sessionId) {
+        prefixShopAuthUrl = "https://shop.cstenet.com/loginRedirect?returnUrl=";
+    }
+    return prefixShopAuthUrl;
+}
+
 const getSearchTermFromUrl = () => {
   const searchQueryStringParameter = new URLSearchParams(window.location.search).get("kw");
 
@@ -65,7 +74,7 @@ const SearchBar = ({ data, componentProp }) => {
         }
       }
     }
-    return searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
+    return getShopLoginUrlPrefix() + searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
@@ -82,7 +91,7 @@ const SearchBar = ({ data, componentProp }) => {
       path += `&refinements=${refinementId}`;
     }
 
-    return prefixShopAuthUrl + `${searchDomain}${path}`;
+    return getShopLoginUrlPrefix() + prefixShopAuthUrl + `${searchDomain}${path}`;
   };
 
   const onSearchTermTextChange = (e) => {
