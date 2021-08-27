@@ -10,9 +10,6 @@
 .cmp-carousel__action--play {}
 .cmp-carousel__action-icon {}
 .cmp-carousel__action-text {}
-.cmp-carousel__indicators {
-  width: 50%;
-}
 .cmp-carousel__indicator {}
 
 .cmp-carousel__indicator--active{
@@ -199,7 +196,7 @@
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
   position: absolute;
   bottom: 10px;
-  left: 50%;
+  
   .dp-carousel__nav-label{
     &::before{
       display: none;
@@ -230,11 +227,22 @@
   max-width: 90rem;
   margin: 0 auto!important;
 }
-// .dp-carousel__nav-dot{
-//   background-color: #fff!important;
-//   width: 7px!important;
-//   height: 7px!important;
-//   border: 0 none;
-//   border-radius: 50%;
-//   opacity: .6!important;
-// }
+
+// New nav dots styling
+.cmp-carousel__indicators {
+  width: 50%;
+  
+  //New classes for position of carousel dots
+  &--left {
+    .cmp-carousel__indicators{
+      left: 0;
+    }
+  }
+
+
+  &--right {
+    .cmp-carousel__indicators{
+      left: 50%;
+    }
+  }
+}
