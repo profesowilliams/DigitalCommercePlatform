@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using static DigitalCommercePlatform.UIServices.Account.Actions.TopOrders.GetTopOrders;
 
 namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
 {
@@ -23,12 +24,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
             CreateMap<OrderModel, OpenResellerItems>()
                 .ForMember(dest => dest.Sequence, opt => opt.Ignore())
                 .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Price))
-                .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.Reseller.Name)) 
+                .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.Reseller.Name))
                 .ForMember(dest => dest.CurrencyCode, opt => opt.MapFrom(src => src.Currency))
                 .ForMember(dest => dest.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
                 .ForMember(dest => dest.FormattedAmount, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)));
 
-            CreateMap<List<OpenResellerItems>, GetTopOrders.Response>()
+            CreateMap<IEnumerable<OrderModel>, TopOrders>()
+               .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
+
+            CreateMap<TopOrders, GetTopOrders.Response>()
            .ForMember(dest => dest.Summary, opt => opt.MapFrom(src => src));
 
         }

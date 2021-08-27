@@ -1,7 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Models;
-using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
@@ -16,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopOrders
 {
     [ExcludeFromCodeCoverage]
     public sealed class GetTopOrders
-    {       
+    {
         public class Request : IRequest<ResponseBase<Response>>
         {
             public int? Top { get; set; }
@@ -26,8 +25,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopOrders
         [ExcludeFromCodeCoverage]
         public class Response
         {
-            public List<OpenResellerItems> Summary { get; set; }
+            public TopOrders Summary { get; set; }
         }
+
+        [ExcludeFromCodeCoverage]
+        public class TopOrders
+        {
+            public List<OpenResellerItems> Items { get; set; }
+        }
+
         [ExcludeFromCodeCoverage]
         public class GetTopDealsQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -48,8 +54,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopOrders
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var orders = await _accountService.GetTopOrdersAsync(request);
-                
-                var tempOrders = _mapper.Map<List<OpenResellerItems>>(orders);
+
+                var tempOrders = _mapper.Map<TopOrders>(orders);
                 var topOrders = _mapper.Map<Response>(tempOrders);
 
                 return new ResponseBase<Response> { Content = topOrders };
