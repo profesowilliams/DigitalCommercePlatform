@@ -26,9 +26,7 @@ export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogo
 
       try {
 
-        const { data: { content: { error: { isError } } } } = await usPost(redirectURL, { });
-//        let data2 = await usPost(redirectURL, { });
-//        const { data: content: { error: { isError } } } = data2;
+        const { data: { error: { isError } } } = await usPost(redirectURL, { });
         if( !isError ) {
             // Initiate Ping Federate logout
             pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + errorPageUrl;

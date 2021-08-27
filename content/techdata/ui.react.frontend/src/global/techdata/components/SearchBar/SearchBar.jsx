@@ -63,6 +63,11 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
+    let sessionId = localStorage.getItem('sessionId');
+    let prefixShopAuthUrl = "";
+    if(sessionId) {
+        prefixShopAuthUrl = "https://shop.cstenet.com/loginRedirect?returnUrl=";
+    }
     let path = 
       replaceSearchTerm(selectedArea.areaSuggestionUrl, searchTerm)
       .replace("{suggestion-index}", itemIndex + 1);
@@ -71,7 +76,7 @@ const SearchBar = ({ data, componentProp }) => {
       path += `&refinements=${refinementId}`;
     }
 
-    return `${searchDomain}${path}`;
+    return prefixShopAuthUrl + `${searchDomain}${path}`;
   };
 
   const onSearchTermTextChange = (e) => {
