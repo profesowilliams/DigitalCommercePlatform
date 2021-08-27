@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { 
 	AgGridColumn, 
-	AgGridReact
+	AgGridReact,
+	fullWidthCellRenderer,
+	agDetailCellRenderer
 } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import { get } from '../../../../utils/api';
 
-function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowSelected, onSelectionChanged, requestInterceptor }) {
-	const componentVersion = '1.1.3';
+function Grid(props) {
+	let { columnDefinition, options, config, data, onAfterGridInit, onRowSelected, onSelectionChanged, requestInterceptor } 
+		= Object.assign({}, props);
+	const componentVersion = '1.1.4';
 	const gridData = data;
 	const [agGrid, setAgGrid] = useState(null);
 	const [actualRange, setActualRange] = useState({ from: null, to: null, total: null });
@@ -85,7 +89,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			// check for render function
 			if (el.cellRenderer || el.detailRenderer) {
 				renderers[el.field] = el.cellRenderer;
-				el.expandable? renderers.__detailRenderer = el.detailRenderer : null;
+				el.expandable? renderers['__detailRenderer'] = el.detailRenderer : null;
 			}
 			filteredColumns.push(el);
 		}
@@ -183,6 +187,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			version: componentVersion,
 			node: gridNodeRef.current,
 			api: data.api,
+			props: props,
 			onAjaxCall: globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall
 				? globalThis[`$$tdGrid${gridId.current}`].onAjaxCall
 				: (apiUrl) => {},
@@ -297,7 +302,7 @@ function Grid({ columnDefinition, options, config, data, onAfterGridInit, onRowS
 			window.removeEventListener('resize', onResize);
 		};
 	}, []);
-	
+
 	return (
 		<div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
 			<Fragment>

@@ -1,3 +1,3 @@
 export default function thousandSeparator(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return Number(x).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

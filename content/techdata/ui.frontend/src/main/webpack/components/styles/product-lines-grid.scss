@@ -78,11 +78,15 @@
     &__buttons {
       display: flex;
       flex-direction: column;
-      & button {
+      &__button {
         background-color: get-color(td-dark-blue);
         color: get-color(brand-white);
         width: rem(18px);
         height: rem(18px);
+        border-radius: unset;
+        &--disabled {
+          background-color: get-color(secondary-grey);
+        }
       }
       .cmp-grid .ag-cell button {
         line-height: rem(12px);
@@ -119,6 +123,3 @@
     }
   }
 }
-
-
-
