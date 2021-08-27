@@ -108,7 +108,8 @@ if (properties && properties["keywordDropdownLabel"]) {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
     if (properties && properties["configDetailUrl"]) {
-        jsonObject["configDetailUrl"] = properties["configDetailUrl"] + ".html";
+        jsonObject["configDetailUrl"] = properties["configDetailUrl"] + ".html" +
+        properties["configDetailUrlSuffix"];
     }
     if (properties && properties["defaultSortingColumnKey"]) {
         optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];

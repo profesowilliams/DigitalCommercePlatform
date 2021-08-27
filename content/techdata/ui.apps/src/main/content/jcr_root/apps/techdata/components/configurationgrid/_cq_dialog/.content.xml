@@ -39,10 +39,15 @@
                                             <configDetailUrl
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                     fieldLabel="Config Link Details URL"
-                                                    fieldDescription="Enter link and set where the id should be by using curly braces"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
-                                                    name="./configDetailUrl" />
+                                                    name="./configDetailUrl"/>
+                                            <configDetailUrlSuffix
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Config Link Details URL Suffix"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./configDetailUrlSuffix"/>
                                             <multipleSPADealLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
