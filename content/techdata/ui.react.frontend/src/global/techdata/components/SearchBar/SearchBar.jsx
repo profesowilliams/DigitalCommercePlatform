@@ -6,17 +6,23 @@ import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 import { toggleAreaSelection } from './SearchAreas'
 
+const getSearchTermFromUrl = () => {
+  const searchQueryStringParameter = new URLSearchParams(window.location.search).get("kw");
+
+  return searchQueryStringParameter ? searchQueryStringParameter : "";
+}
+
 const SearchBar = ({ data, componentProp }) => {
-  const { 
-    id, 
-    areaList, 
-    placeholder, 
-    searchDomain, 
-    uiServiceDomain, 
-    typeAheadDomain 
+  const {
+    id,
+    areaList,
+    placeholder,
+    searchDomain,
+    uiServiceDomain,
+    typeAheadDomain
   } = JSON.parse(componentProp);
 
-  const [searchTermText, setSearchTermText] = useState("");
+  const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
 
   const [isMobile, setMobile] = useState(false);
@@ -44,7 +50,7 @@ const SearchBar = ({ data, componentProp }) => {
     }
   };
 
-  const getSearchUrl = async (searchTerm) => {    
+  const getSearchUrl = async (searchTerm) => {
     if (selectedArea.area === 'quote') {
       if (!data.userData?.hasDCPAccess) {
         try {
@@ -68,7 +74,7 @@ const SearchBar = ({ data, componentProp }) => {
     if(sessionId) {
         prefixShopAuthUrl = "https://shop.cstenet.com/loginRedirect?returnUrl=";
     }
-    let path = 
+    let path =
       replaceSearchTerm(selectedArea.areaSuggestionUrl, searchTerm)
       .replace("{suggestion-index}", itemIndex + 1);
 
@@ -96,7 +102,7 @@ const SearchBar = ({ data, componentProp }) => {
 
   const redirectToShop = async () => {
     if(searchTermText === ''){
-      return null    
+      return null
     } else {
       window.location.href = await getSearchUrl(searchTermText);
     }
@@ -201,10 +207,10 @@ const SearchBar = ({ data, componentProp }) => {
           value={searchTermText}
           placeholder={placeholder}
         />
-        <button className={isClicked ? "cmp-searchbar__button cmp-searchbar__button--checked" 
+        <button className={isClicked ? "cmp-searchbar__button cmp-searchbar__button--checked"
                                      : "cmp-searchbar__button"} onClick={redirectToShop}>
 
-          <i className={isClicked ? "cmp-searchbar__icon cmp-searchbar__icon--checked fas fa-search" 
+          <i className={isClicked ? "cmp-searchbar__icon cmp-searchbar__icon--checked fas fa-search"
                                   : "cmp-searchbar__icon fas fa-search"} data-cmp-hook-search="icon"></i>
         </button>
       </>
