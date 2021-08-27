@@ -19,6 +19,10 @@ PassEnv DISP_ID
 		Header merge X-Content-Type-Options nosniff "expr=%{resp:X-Content-Type-Options}!='nosniff'"
 		# Make sure proxies don't deliver the wrong content
 		Header append Vary User-Agent env=!dont-vary
+		# CORS
+		SetEnvIf Origin "http(s)?://(www\.)?(.+\.cstenet.com|.+\.techdata.com|shop.dev.web.us.tdworldwide.com)$" AccessControlAllowOrigin=$0
+		Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
+		Header merge Vary Origin
 	</IfModule>
 	<Directory />
 		# Update /etc/sysconfig/httpd with setting the PUBLISH_WHITELIST_ENABLED from 0 or 1 to enable or disable ip restriction rules
