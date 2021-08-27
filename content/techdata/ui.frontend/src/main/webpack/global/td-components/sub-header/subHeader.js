@@ -6,7 +6,7 @@ export const subHeader = () => {
         let uniqueId = isTools?.getAttribute('id');
 
         if (!isTools) {
-            uniqueId = document.querySelector(`[data-tab-name]`).getAttribute('id');
+            uniqueId = document.querySelector(`[data-tab-name]`)?.getAttribute('id');
             document.querySelector(`[aria-labelledby='${uniqueId}']`)?.classList.remove('cmp-tabs__tabpanel--custom-active');
             return;
         }
