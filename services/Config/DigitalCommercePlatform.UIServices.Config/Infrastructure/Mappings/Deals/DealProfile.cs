@@ -1,19 +1,18 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
+using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals.Resolvers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal;
 using DigitalFoundation.Common.Models;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals
 {
     [ExcludeFromCodeCoverage]
-    public class DealProfile : Profile
+    public class DealProfile : ProfileBase
     {       
         public DealProfile()
         {
@@ -55,17 +54,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
             CreateMap<DealsDetailModel, GetDeal.Response>()
                 .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src));
 
-            CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
             CreateMap<DealsBase, Deal>()
-                .ForPath(dest => dest.DealId, o => o.MapFrom(src => src.Source.Id))
-                .ForMember(dest => dest.Vendor, o => o.MapFrom(src => src.VendorName))
-                .ForMember(dest => dest.Description, o => o.MapFrom(src => src.Description))
-                .ForMember(dest => dest.EndUserName, o => o.MapFrom(src => src.EndUserName))
-                .ForMember(dest => dest.ExpiresOn, o => o.MapFrom(src => src.ExpirationDate))
-                .ForMember(d => d.CreatedOn, o => o.Ignore())
+                .ForPath(d => d.DealId, o => o.MapFrom(s => s.Source.Id))
+                .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))
+                .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUserName))
+                .ForMember(d => d.ExpiresOn, o => o.MapFrom(s => s.ExpirationDate))
+                .ForMember(d => d.Quotes, o => o.MapFrom(s => s.Quotes))
+                .ForMember(d => d.Vendor, o => o.MapFrom(s => s.VendorName))
                 .ForMember(d => d.Action, o => o.Ignore())
                 .ForMember(d => d.ActionUrl, o => o.Ignore())
-                .ForMember(dest => dest.Quotes, opt => opt.MapFrom(src => src.Quotes));
+                .ForMember(d => d.CreatedOn, o => o.Ignore())
+                ;
 
             CreateMap<DealsBase, DealsForGrid>()
                 //.ForMember(dest => dest.Bid, opt => opt.MapFrom(src => src.VendorBidNumber))-need confirmation which value to be mapped 

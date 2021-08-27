@@ -27,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             Fixture.Config.AssertConfigurationIsValid();
         }
 
-        internal class MappingPaginatedToInternalFindModelData : TheoryData<Paginated>
+        internal class MappingPaginatedToInternalFindModelData : TheoryData<IPaginated>
         {
             public MappingPaginatedToInternalFindModelData()
             {
@@ -38,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
 
         [Theory]
         [ClassData(typeof(MappingPaginatedToInternalFindModelData))]
-        public void MappingPaginatedToInternalFindModelShouldBeValid(Paginated paginated)
+        public void MappingPaginatedToInternalFindModelShouldBeValid(IPaginated paginated)
         {
             var result = Mapper.Map<DCPC.Internal.FindModel>(paginated);
 

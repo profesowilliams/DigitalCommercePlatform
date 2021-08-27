@@ -3,17 +3,20 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations.Resolvers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using System;
 using Xunit;
+
+using Internal = DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Configurations.Resolvers
 {
     public class SortByResolverTests
     {
         private readonly IMapper _mapper;
-        private readonly Models.Configurations.FindModel _source;
+        private readonly FindModel _source;
 
 
         public SortByResolverTests()
@@ -21,15 +24,15 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             var config = new MapperConfiguration(cfg => cfg.AddProfile<ConfigurationProfile>());
             _mapper = config.CreateMapper();
 
-            _source = new Models.Configurations.FindModel();
+            _source = new FindModel();
         }
 
         [Theory]
         [AutoDomainData]
-        public void ShouldReturnTrue(Models.Configurations.FindModel source)
+        public void ShouldReturnTrue(FindModel source)
         {
             source.SortDirection = SortDirection.asc;
-            var result = _mapper.Map<Models.Configurations.Internal.FindModel>(source);
+            var result = _mapper.Map<Internal.FindModel>(source);
 
             result.SortByAscending.Should().BeTrue();
         }
@@ -46,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
         {
             Enum.TryParse(s, out SortDirection parsingResult);
             _source.SortDirection = parsingResult;
-            var result = _mapper.Map<Models.Configurations.Internal.FindModel>(_source);
+            var result = _mapper.Map<Internal.FindModel>(_source);
 
             result.SortByAscending.Should().BeFalse();
         }
@@ -54,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
         [Fact]
         public void NullSourceShouldReturnFalse()
         {
-            var result = new SortByResolver().Resolve(null, new Models.Configurations.Internal.FindModel(), false, null);
+            var result = new SortByResolver().Resolve(null, new Internal.FindModel(), false, null);
 
             result.Should().BeFalse();
         }

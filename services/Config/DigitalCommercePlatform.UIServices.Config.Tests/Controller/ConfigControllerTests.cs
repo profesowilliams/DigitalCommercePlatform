@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
+using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -56,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var criteria = new FindModel
             {
                 SortBy = "createdOn",
-                SortDirection = Models.Common.SortDirection.asc,
+                SortDirection = SortDirection.asc,
                 Id = string.Empty,
             };
 

@@ -10,12 +10,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Configurations
 {
     [ExcludeFromCodeCoverage]
-    public class ConfigurationProfile : Profile
+    public class ConfigurationProfile : ProfileBase
     {
         public ConfigurationProfile()
         {
-            CreateMap<System.DateTime?, string>().ConvertUsing(new DateTimeToStringConverter());
-
             CreateMap<Paginated, Models.Configurations.Internal.FindModel>()
                 .Include<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
                 .ForMember(d => d.Page, o => o.MapFrom(s => s.PageNumber))

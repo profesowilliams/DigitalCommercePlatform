@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Common
+namespace DigitalCommercePlatform.UIServices.Config.Tests.Models.Common
 {
     public class PaginatedResponseTests
     {

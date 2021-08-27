@@ -7,6 +7,7 @@ using System;
 using Xunit;
 
 using AGRD = DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using Internal = DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Deals
 {
@@ -40,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
         [ClassData(typeof(MappingPaginatedToInternalFindModelData))]
         public void MappingPaginatedToInternalFindModelShouldBeValid(Paginated paginated)
         {
-            var result = Mapper.Map<Models.Deals.Internal.FindModel>(paginated);
+            var result = Mapper.Map<Internal.FindModel>(paginated);
 
             result.Page.Should().Be(paginated.PageNumber);
             result.PageSize.Should().Be(paginated.PageSize);
