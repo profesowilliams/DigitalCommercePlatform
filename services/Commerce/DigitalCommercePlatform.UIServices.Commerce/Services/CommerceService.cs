@@ -270,6 +270,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return response;
         }
 
+        public async Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request)
+        {
+            // TO_DO: App Sercice Missing implementation, so we return dummy response for now
+            //var response = await CallCreateQuote(request.CreateModelFrom);
+            //return response;
+            // delete below code once App-Service implementation is available
+            var response = new CreateModelResponse
+            {
+                Id = "QuoteId_" + GetRandomNumber(10000, 60000),
+                Confirmation = "Confirm_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+
+        }
+
         public async Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
         {
             // TO_DO: Missing implementation, so we return dummy response for now
@@ -332,17 +347,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 foreach (var item in quotePreview.Items)
                 {
                     productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
-                    if (!string.IsNullOrWhiteSpace(productId))
+                    if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
                     {
-                        if (!arrProductIds.Contains(productId))
-                        {
-                            item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                            item.Manufacturer = item.Manufacturer ?? system;
-                            manufacturer = item.Manufacturer ?? system;
-                            arrManufacturer[i] = manufacturer;
-                            arrProductIds[i] = productId;
-                            i++;
-                        }
+
+                        item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                        item.Manufacturer = item.Manufacturer ?? system;
+                        manufacturer = item.Manufacturer ?? system;
+                        arrManufacturer[i] = manufacturer;
+                        arrProductIds[i] = productId;
+                        i++;
                     }
                 }
 

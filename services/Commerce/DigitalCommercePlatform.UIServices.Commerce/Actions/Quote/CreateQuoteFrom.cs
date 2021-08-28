@@ -64,6 +64,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         createModelResponse = await _quoteService.CreateQuoteFromEstimationId(request);
                         break;
 
+                    case QuoteCreationSourceType.Expired:
+                        createModelResponse = await _quoteService.CreateQuoteFromExpired(request);
+                        break;
+
                     default:
                         throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
