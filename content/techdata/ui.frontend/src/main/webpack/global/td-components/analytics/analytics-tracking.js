@@ -24,8 +24,13 @@
     const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta"
 
     function parseNameFromElement(elementClicked) {
+        var linkText = elementClicked.text.trim();
+        if (linkText.startsWith("|"))
+        {
+            linkText = linkText.substring(1, linkText.length-1).trim();
+        }
 
-        return elementClicked.text.trim();
+        return linkText;
 
     }
 
