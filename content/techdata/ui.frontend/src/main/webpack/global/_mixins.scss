@@ -18,3 +18,9 @@
   width: auto !important;
   @content;
 }
+
+@mixin aem-only {
+    .page {
+        @content;
+    }
+}

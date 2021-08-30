@@ -8,8 +8,16 @@
     cursor: pointer !important;
 }
 
-button {
-    border: none !important;
+.button {
+    >.cmp-button {
+        border: none !important;
+    }
+}
+
+@include aem-only {
+    button {
+        border: none !important;
+    }
 }
 
 .cmp-button--background-enabled {

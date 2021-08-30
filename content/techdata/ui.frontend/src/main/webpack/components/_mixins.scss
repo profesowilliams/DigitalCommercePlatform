@@ -6,6 +6,12 @@
     @content;
 }
 
+@mixin aem-only {
+    .page {
+        @content;
+    }
+}
+
 @mixin fontdef($font-primary-path, $FontType: "Regular") {
 	src: url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf"),
 		url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf");
