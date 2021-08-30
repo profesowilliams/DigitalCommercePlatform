@@ -182,8 +182,12 @@
         &__container {
           &.nonActiveIcon {
             &:not(:hover) {
-              svg path  {
-                fill: #000C21 !important;
+              svg {
+                path,
+                rect,
+                polygon {
+                  fill: #000C21 !important;
+                }
               }
             }
           }
@@ -194,8 +198,12 @@
   &:not(.vendor-logo-grid) {
     .vendor-icon__container {
       &.nonActiveIcon {
-        svg path{
-          fill: #000C21 !important;
+        svg {
+          path,
+          rect,
+          polygon {
+            fill: #000C21 !important;
+          }
         }
       }
     }
