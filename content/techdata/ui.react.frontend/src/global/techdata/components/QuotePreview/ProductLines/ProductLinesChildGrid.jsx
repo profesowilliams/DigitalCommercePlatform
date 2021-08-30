@@ -3,7 +3,7 @@ import Grid from "../../Grid/Grid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import thousandSeparator from "../../../helpers/thousandSeparator";
 
-function ProductLinesChildGrid({ data }) {
+function ProductLinesChildGrid({ data, columns }) {
   const columnDefs = [
     {
       field: "id",
@@ -46,7 +46,11 @@ function ProductLinesChildGrid({ data }) {
       <div className="cmp-product-lines-grid__child-grid">
         <Grid
           columnDefinition={columnDefs}
-          config={{ serverSide: false, paginationStyle: "none" }}
+          config={{
+            columnList: columns,
+            serverSide: false,
+            paginationStyle: "none",
+          }}
           data={data}
           showHeader={false}
         ></Grid>

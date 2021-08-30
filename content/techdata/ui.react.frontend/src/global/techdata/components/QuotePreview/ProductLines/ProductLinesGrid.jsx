@@ -32,15 +32,18 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerName: "Select All",
       field: "id",
       width: "160px",
-      sortable: false,     
-      checkboxSelection: true, 
+      sortable: false,
+      checkboxSelection: true,
       headerCheckboxSelection: true,
       expandable: true,
       rowClass: ({ node, data }) => "cmp-product-lines-grid__row",
       detailRenderer: ({ data }) => {
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
-            <ProductLinesChildGrid data={data.children}></ProductLinesChildGrid>
+            <ProductLinesChildGrid
+              columns={gridProps.columnList}
+              data={data.children}
+            ></ProductLinesChildGrid>
           </section>
         );
       },
@@ -61,7 +64,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       sortable: false,
       valueFormatter: ({ value }) => {
         return "$" + value;
-      }
+      },
     },
     {
       headerName: "Quantity",
