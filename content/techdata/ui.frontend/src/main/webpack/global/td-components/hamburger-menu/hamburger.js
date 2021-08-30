@@ -14,6 +14,7 @@ export default class Hamburger {
         this.containerEl = document.querySelector('.megamenu');
 
         this.el.addEventListener('click', () => this.handleClick(classObj));
+        document.addEventListener('click', (e) => this.hideWhenOutside(e, classObj));
     }
 
     injectHamburger() {
@@ -33,15 +34,28 @@ export default class Hamburger {
         return hamburgerBtn;
     }
 
+    hideMegaMenu(active, open) {
+        this.el.classList.remove(active);
+        this.containerEl.classList.remove(open);
+        this.open = false;
+    }
+
     handleClick({active, open}) {
         if (!this.open) {
             this.el.classList.add(active);
             this.containerEl.classList.add(open);
             this.open = true;
         } else {
-            this.el.classList.remove(active);
-            this.containerEl.classList.remove(open);
-            this.open = false;
+            this.hideMegaMenu(active, open);
         }
+    }
+
+    hideWhenOutside(event, classObj) {
+        const isInsideMenu = event.target.closest('.cmp-megamenu__body');
+        const isHamburgerBtn = event.target.closest('.cmp-td-hamburgerMenu');
+        const {active, open} = classObj;
+
+        if (isInsideMenu || isHamburgerBtn) return;
+        this.hideMegaMenu(active, open);
     }
 }
