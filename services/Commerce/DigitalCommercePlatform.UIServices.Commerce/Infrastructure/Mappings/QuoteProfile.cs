@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
              .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
-             .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src.Agreements))
+             .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src.VendorReference))
              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
              .ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src.Price))
              .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))

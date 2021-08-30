@@ -2,8 +2,10 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Settings;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -54,12 +56,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
+            private readonly IAppSettings _appSettings;
 
-            public Handler(ICommerceService commerceQueryService, IMapper mapper, ILogger<Handler> logger)
+            public Handler(ICommerceService commerceQueryService, IMapper mapper, ILogger<Handler> logger, IAppSettings appSettings)
             {
                 _commerceQueryService = commerceQueryService;
                 _mapper = mapper;
                 _logger = logger;
+                _appSettings = appSettings;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -93,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                 getProductResponse = new Response
                 {
-                    Items = GetDummyAgreements(getProductResponse),
+                    Items = QuoteGridItems(getProductResponse),
                     TotalItems = quoteDetails?.Count,
                     PageNumber = request.PageNumber,
                     PageSize = request.PageSize,
@@ -102,31 +106,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 return new ResponseBase<Response> { Content = getProductResponse };
             }
 
-            private List<QuotesForGridModel> GetDummyAgreements(Response response)
+            private List<QuotesForGridModel> QuoteGridItems(Response response)
             {
+                string IsDummyData = _appSettings.GetSetting("Feature.UI.QuoteDeals.ReturnDummyRecords");
                 var quotes = response?.Items?.ToList();
 
                 if (quotes == null) { return new List<QuotesForGridModel>(); }
-
-                var secondQuote = quotes.ElementAtOrDefault(1);
-
-                if (secondQuote != null)
+                var vendorValue = response.Items.Where(x => x.Deals == null).ToList();
+                if (IsDummyData == "true" && vendorValue.Count == 0)
                 {
-                    secondQuote.Deals = new List<AgreementModel>
-                    {
-                        new AgreementModel { Id = "111", Version = "1", VendorId = "2323232", SelectionFlag = "flag" }
-                    };
-                }
+                    var secondQuote = quotes.ElementAtOrDefault(1);
 
-                var thirdQuote = quotes.ElementAtOrDefault(2);
-
-                if (thirdQuote != null)
-                {
-                    thirdQuote.Deals = new List<AgreementModel>
+                    if (secondQuote != null)
                     {
-                        new AgreementModel { Id = "222", Version = "1", VendorId = "7755444", SelectionFlag = "flag" },
-                        new AgreementModel { Id = "333", Version = "1", VendorId = "9871234", SelectionFlag = "flag" }
-                    };
+                        secondQuote.Deals = new List<VendorReferenceModel>
+                        {
+                            new VendorReferenceModel { Value = "1", Type = "2323232"}
+                        };
+                    }
+
+                    var thirdQuote = quotes.ElementAtOrDefault(2);
+
+                    if (thirdQuote != null)
+                    {
+                        thirdQuote.Deals = new List<VendorReferenceModel>
+                        {
+                            new VendorReferenceModel {  Value = "1", Type = "7755444" },
+                            new VendorReferenceModel { Value = "1", Type = "9871234"}
+                        };
+                    }
+
                 }
 
                 return quotes;
