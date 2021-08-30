@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
     {
         public string Id { get; set; }
         public string Reseller { get; set; }
-        public string Vendor { get; set; }
+        public List<Vendor> Vendor { get; set; }
         public string Created { get; set; }
         public string ShipTo { get; set; }
         public string Type { get; set; }
@@ -22,5 +22,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string IsReturn { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
         public List<InvoiceDetails> Invoices { get; set; }
+    }
+    [ExcludeFromCodeCoverage]
+    public class Vendor
+    {
+        public string VendorName { get; set; }
     }
 }

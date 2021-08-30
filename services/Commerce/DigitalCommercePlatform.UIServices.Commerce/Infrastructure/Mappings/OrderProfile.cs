@@ -61,15 +61,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     }
 
     [ExcludeFromCodeCoverage]
-    public class OrderVendorResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
+    public class OrderVendorResolver : IValueResolver<OrderModel, RecentOrdersModel, List<Vendor>>
     {
-        public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
+        public List<Vendor> Resolve(OrderModel source, RecentOrdersModel destination, List<Vendor> destMember, ResolutionContext context)
         {
-            var theFirstItem = source?.Items?.FirstOrDefault();
-            var theFirstProduct = theFirstItem?.Product?.FirstOrDefault();
-            var description = theFirstProduct?.Manufacturer ?? string.Empty;
-            return description;
+            var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer!=null);
+            var vendorDetails = source.Items.SelectMany(i => i.Product).Where(i => i.Manufacturer != null).GroupBy(i => i.Manufacturer)
+              .Select(i => new Vendor
+              {
+                  VendorName = i.Key
+              }).ToList();
+            return vendorDetails;
         }
+
     }
 
 
