@@ -65,19 +65,18 @@
     color: get-color(brand-text-gray);
     display: flex;
     flex-direction: column;
-    line-height: 1.8;
+    line-height: 1.8; 
     margin-bottom: rem(20px);
     font-weight: normal !important;
     text-align: center;
     margin-top: 0;
   }
 
-
 	&__countries {
 		font-size: $font-size-custom-xxsmall;
 		color: get-color(brand-text-gray);
 		text-transform: uppercase;
-		line-height: 1.8;
+		line-height: 1.8; 
 		margin-bottom: rem(20px);
 		display: flex;
 		flex-direction: row;
