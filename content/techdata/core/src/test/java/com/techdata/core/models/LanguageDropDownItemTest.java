@@ -44,8 +44,10 @@ class LanguageDropDownItemTest {
         when(iteratorMock.hasNext()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(iteratorMock.next()).thenReturn(nextPage);
         when(page.getPageTitle()).thenReturn("Page Title");
+        when(nextPage.getPageTitle()).thenReturn("Page Title");
         when(page.getPath()).thenReturn("/path/to/page");
-        when(page.getPath()).thenReturn("/path/to/page");
+        when(page.getName()).thenReturn("345");
+        when(nextPage.getName()).thenReturn("345");
         underTest = new LanguageDropDownItem(page, Boolean.TRUE, 4);
 
         assertEquals(1, underTest.getChildren().size());

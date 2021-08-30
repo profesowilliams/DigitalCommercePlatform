@@ -90,6 +90,7 @@ class LanguageDropDownModelTest {
         when(parentPage.getDepth()).thenReturn(6);
         when(iteratorMock.hasNext()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(iteratorMock.next()).thenReturn(nextPage);
+        when(nextPage.getName()).thenReturn("123");
         assertEquals(1, underTest.getRegionListItems().size());
         assertEquals(0, underTest.getLanguageListItems().size());
     }
