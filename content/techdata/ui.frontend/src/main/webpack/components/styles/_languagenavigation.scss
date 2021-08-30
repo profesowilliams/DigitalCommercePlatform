@@ -84,19 +84,20 @@
 }
 
 
+
 .cmp-region-list {
   &__title {
-      font-size: $font-size-medium;
-      color: get-color(brand-text-gray);
-      display: flex;
-      flex-direction: column;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
-      font-weight: normal !important;
-      &.eu {
-          padding-left: rem(35px);
-      }
+    font-size: $font-size-medium;
+    color: get-color(brand-text-gray);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8;
+    margin-bottom: rem(20px);
+    font-weight: normal !important;
+    text-align: center;
+    margin-top: 0;
   }
+
 
 	&__countries {
 		font-size: $font-size-custom-xxsmall;
@@ -124,23 +125,29 @@
 	}
 
   &__language {
-      font-size: $font-size-xsmall;
+    font-size: $font-size-xsmall;
+    color: get-color(brand-text-lightgray) !important;
+    text-transform: none !important;
+    a {
       color: get-color(brand-text-lightgray) !important;
-      text-transform: none !important;
-      a {
-          color: get-color(brand-text-lightgray) !important;
-          text-decoration: none !important;
-      }
+      text-decoration: none !important;
+    }
   }
 }
 
 /* The Modal (background) */
+
+#countriesListModal {
+	.modal {
+		padding-top: rem(45px) !important;	
+	}
+}
 .modal {
     font-family: $font-family;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: rem(50px); /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -186,10 +193,10 @@
       float: left;
       width: 50%;
       padding: 20px;
-
+      
       &__seperator {
-        border-right: 1px solid get-color(brand-text-lightgray);
-        height: 300px;
+        border-right: 0px solid get-color(brand-text-lightgray);
+        //height: 300px; this is causing an issue in UAT bug 199700
         column-width: 200px;
       }
 

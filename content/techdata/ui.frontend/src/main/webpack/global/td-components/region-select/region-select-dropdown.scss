@@ -68,9 +68,8 @@
     line-height: 1.8;
     margin-bottom: rem(20px);
     font-weight: normal !important;
-    &.eu {
-      padding-left: rem(35px);
-    }
+    text-align: center;
+    margin-top: 0;
   }
 
 
@@ -111,12 +110,14 @@
 }
 
 /* The Modal (background) */
+
+
 .modal {
   font-family: $font-family;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: rem(100px); /* Location of the box */
+  padding-top: rem(50px); /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -163,8 +164,13 @@
       padding: rem(20px);
       //column-width: rem(250px);
 
-      &__seperator-l {
+      &:nth-of-type(2) {
         border-left: rem(1px) solid get-color(v-divider-darkgray);
+        border-right: rem(1px) solid get-color(v-divider-darkgray);
+      }
+
+      &__seperator-l {
+        border-left: rem(0px) solid get-color(v-divider-darkgray);
         padding: 0 0 0 rem(35px) !important;
       }
 
