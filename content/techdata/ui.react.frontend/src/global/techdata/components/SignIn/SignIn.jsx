@@ -9,10 +9,16 @@ import {
 } from "../../../../utils/policies";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
+import {usPost} from "../../../../utils/api";
+import { signOut } from '../../../../utils';
+
 
 const FA = require('react-fontawesome');
 
 const SignIn = (props) => {
+	const ACTION_QUERY_PARAM = "action";
+	const ACTION_QUERY_PARAM_LOGOUT_VALUE = "logout";
+	const REDIRECT_URL_QUERY_PARAM = "redirectUrl";
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
 	const configDataAEM = JSON.parse(props.componentProp);
@@ -21,7 +27,7 @@ const SignIn = (props) => {
 	});
 
 	const codeQueryParam = 'code';
-	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode } = configDataAEM;
+	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode, pingLogoutURL, errorPageUrl } = configDataAEM;
 	const requested = props.data.auth.requested;
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
@@ -47,7 +53,26 @@ const SignIn = (props) => {
         return userDataCheck;
     }
 
+    const redirectIfActionParameter = (pingLogoutURL, errorPageUrl,logoutURL) => {
+		//ideally this would call the signout button, but due to seeing inconsistency in how the
+		// flow is handled, going to include this method for temporarily.
+		//This will only get triggered if the query params are sent via shop
+		if (window.location.search) {
+			let actionParam = getQueryStringValue(ACTION_QUERY_PARAM);
+			if (actionParam)
+			{
+				let redirectUrl = getQueryStringValue(REDIRECT_URL_QUERY_PARAM);
+				if (actionParam ===ACTION_QUERY_PARAM_LOGOUT_VALUE && redirectUrl)
+				{
+					let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
+					signOut(logoutURL, pingLogoutURL, errorPageUrl, redirectUrl, true);
+				}
+			}
+		}
+	}
+
 	useEffect(() => {
+		redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
 		localStorage.setItem('signin', constructSignInURL());
 		isCodePresent();
 		routeChange();

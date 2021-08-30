@@ -157,17 +157,39 @@ app.post("/login", function (req, res) {
     }
 });
 
-app.post("/logout", function (req, res) {
-    let code = req.body.code;
-    let redirectUrl = req.body.RedirectUri;
+app.get("/logout", function (req, res) {
+    let errorPage = req.query.InErrorResource;
+    let redirectUrl = req.query.TargetResource;
     let applicationName = req.body.applicationName;
 
     console.log("post submit");
-    console.log(req.body);
-    console.log(code);
+    console.log(errorPage);
     console.log(redirectUrl);
-    console.log(applicationName);
-    // {"content":{"message":"User logged out successfully"},"error":{"code":0,"messages":[],"isError":false}}
+    let resJsonSuccess = {
+        content: {
+            message: "User logged out successfully"
+        },
+        error: {
+            code: 0,
+            messages:[],
+            isError: false
+        }
+    };
+
+    let resJsonFail = {
+        isError: true,
+        user: null,
+    };
+
+    res.redirect(redirectUrl);
+});
+
+app.post("/logoutservice", function (req, res) {
+
+    let applicationName = req.body.applicationName;
+
+    console.log("logout service post submit");
+    console.log(req.body);
     let resJsonSuccess = {
         content: {
             message: "User logged out successfully"

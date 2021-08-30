@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { nanoid } from 'nanoid';
 import { usPost } from './api';
+import {skip} from "rxjs/operators";
 
 export const createSessionId = () => nanoid(16)
 
@@ -9,10 +10,11 @@ export const setSessionId = (sessionId) =>
 
 export const getSessionId = () => localStorage.getItem('sessionId')
 
-export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
+export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, skipShop) => {
   const { protocol, hostname, port, pathname } = window.location;
   let sessionId = localStorage.getItem('sessionId');
-  if(window.SHOP && window.SHOP.authentication) {
+
+    if(window.SHOP && window.SHOP.authentication && !skipShop) {
     window.SHOP.authentication.signOut();
   } else {
 
@@ -30,18 +32,19 @@ export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogo
         if( !isError ) {
             // Initiate Ping Federate logout
             pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + errorPageUrl;
-            let pingLogoutUrlRes = await usPost(pingLogoutUrl, { });
             localStorage.removeItem('sessionId');
             localStorage.removeItem('signin');
             localStorage.removeItem('signout');
             localStorage.removeItem('userData');
             localStorage.removeItem('signInCode');
             localStorage.removeItem('ActiveCart');
-            location.reload();
+
+            window.location.href = pingLogoutUrl;
+
         }
       } catch(e){
-        console.log('Error occurred when trying to logout');
-        console.log(e);
+        console.error('Error occurred when trying to logout');
+        console.error(e);
       }
 
   }
