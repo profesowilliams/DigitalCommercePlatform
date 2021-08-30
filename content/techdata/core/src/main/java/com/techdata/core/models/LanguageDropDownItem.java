@@ -1,17 +1,34 @@
 package com.techdata.core.models;
 
+import com.day.cq.dam.api.Asset;
+import com.day.cq.dam.api.Rendition;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class LanguageDropDownItem  {
+
+    protected static final Logger log = LoggerFactory.getLogger(LanguageDropDownItem.class);
+
 
     private Page page;
     private boolean active;
     private String title;
+    private String svgFlag;
+//    This needs to be configurable. Due to time constraints, this will be hard-coded
+    private static final  String DAM_TECHDATA_COUNTRY_FLAGS = "/content/dam/techdata/country-flags";
 
     private List<LanguageDropDownItem> children;
 
@@ -19,11 +36,58 @@ public class LanguageDropDownItem  {
         return this.title;
     }
 
+    public String getSvgFlag() {
+        return this.svgFlag;
+    }
+
+
+    private String initSVGFlag(Page page)
+    {
+        if (page.getName().length()==2) {
+            Resource assetResource = page.getContentResource().getResourceResolver().getResource(String.format("%s/%s.svg", DAM_TECHDATA_COUNTRY_FLAGS, page.getName()));
+            if (assetResource != null) {
+                Asset asset = assetResource.adaptTo(Asset.class);
+                return getBinary(asset);
+            } else {
+                return StringUtils.EMPTY;
+            }
+        }else{
+            return StringUtils.EMPTY;
+        }
+
+    }
+
+    // This needs to be externalized as a util method
+    public String getBinary(Asset asset) {
+        if (Objects.nonNull(asset)) {
+            final Rendition rendition = asset.getOriginal();
+            final InputStream stream = rendition.getStream();
+            return readXml(stream);
+        }
+        return StringUtils.EMPTY;
+    }
+// This needs to be externalized as a util method
+    private String readXml(final InputStream content) {
+        String readLine;
+        final BufferedReader br = new BufferedReader(new InputStreamReader(content));
+        final StringBuilder strBuilder = new StringBuilder();
+
+        try {
+            while (((readLine = br.readLine()) != null)) {
+                strBuilder.append(readLine);
+            }
+        } catch (IOException e) {
+            log.error("Unable to read the SVG's XML from InputStream: ", e);
+        }
+        return strBuilder.toString();
+    }
+
 
     LanguageDropDownItem(Page page, boolean active) {
         this.page = page;
         this.active = active;
         this.title = page.getPageTitle();
+        this.svgFlag = initSVGFlag(page);
     }
 
     LanguageDropDownItem(Page page, boolean active, int level) {
@@ -31,6 +95,7 @@ public class LanguageDropDownItem  {
         this.page = page;
         this.active = active;
         this.title = page.getPageTitle();
+        this.svgFlag = initSVGFlag(page);
 
 
         Iterator<Page> it = page.listChildren(new PageFilter());

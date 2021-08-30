@@ -92,7 +92,7 @@
                   <sly data-sly-list.countryItems="${continentItems.children}">
                     <div class="cmp-region-list__countries">
                       <div class="cmp-region-list__countries--flag">
-                        ${countryItems.svgFlag} 
+                        ${countryItems.svgFlag @ context = 'scriptComment'}
                       </div>
                       <div class="cmp-region-list__countries--name">
                         ${countryItems.title}
