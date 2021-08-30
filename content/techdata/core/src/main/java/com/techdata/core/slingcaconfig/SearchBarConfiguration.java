@@ -38,11 +38,14 @@ public @interface SearchBarConfiguration {
     @Property(label = "Typeahead Domain", description = "Typeahead Domain")
     String typeAheadDomain();
 
-    @Property(label = "Typeahead Endpoint", description = "Typeahead Endpoint")
-    String typeAheadEndpoint();
+    @Property(label = "Typeahead Search Term Suffix", description = "Typeahead Search Term Suffix")
+    String typeAheadSearchTermSuffix();
 
-    @Property(label = "Typeahead Keyword Parameter", description = "Typeahead Keyword Parameter")
-    String typeAheadKeyword();
+    @Property(label = "Typeahead X Domain", description = "Typeahead X Domain")
+    String typeAheadXDomainScript();
+
+    @Property(label = "Typeahead Proxy Script", description = "Typeahead Proxy Script")
+    String typeAheadProxyScript();
 
     @Property(label = "Search Domain", description = "Search Domain")
     String searchDomain();

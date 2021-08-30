@@ -9,7 +9,9 @@ use(function () {
   jsonObject.put("placeholder", properties.get("placeholder") || '');
   jsonObject.put("searchDomain", properties.get("searchDomain") || this.serviceData['searchDomain'] || '');
   jsonObject.put("uiServiceDomain", this.serviceData['uiServiceDomain'] || '');
-  jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain") || this.serviceData['typeAheadDomain'] || '');
+  jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain")
+                                 || (this.serviceData['typeAheadDomain'] + this.serviceData['typeAheadSearchTermSuffix'])
+                                 || '');
 
   var areaListNode = resourceResolver.getResource(currentNode.getPath() + "/areaList");
 
@@ -50,7 +52,7 @@ use(function () {
           areaconfig.put("dcpQuotesLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
           areaconfig.put("dcpSearchFailedPage", res.properties['dcpSearchFailedPage'] || '');
       }
-      
+
       jsonArray.put(areaconfig);
     }
     jsonObject.put("areaList", jsonArray);

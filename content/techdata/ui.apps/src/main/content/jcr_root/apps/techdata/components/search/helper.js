@@ -89,10 +89,6 @@ var singleLabelEndpointData = {};
 
 jsonObject["dropdownList"] = keyValues;
 
-    if(this.typeAheadDomain != null && this.typeAheadEndpoint != null && this.typeAheadKeyword != null){
-    	jsonObject["typeaheadEndpoint"] = this.typeAheadDomain+this.typeAheadEndpoint+this.typeAheadKeyword;
-    }
-
     if(this.dcpDashboardPage != null){
     	jsonObject["dcpDashboardPage"] = this.dcpDashboardPage;
     }

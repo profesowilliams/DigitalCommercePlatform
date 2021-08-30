@@ -101,9 +101,11 @@ public class CaConfigReader {
 
 	private String typeAheadDomain;
 
-	private String typeAheadEndpoint;
+	private String typeAheadSearchTermSuffix;
 
-	private String typeAheadKeyword;
+	private String typeAheadXDomainScript;
+
+	private String typeAheadProxyScript;
 
 	private String searchDomain;
 
@@ -174,10 +176,13 @@ public class CaConfigReader {
 		contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
 		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
 		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
+
 		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
-		typeAheadKeyword = searchBarConfiguration.typeAheadKeyword();
 		typeAheadDomain = searchBarConfiguration.typeAheadDomain();
-		typeAheadEndpoint = searchBarConfiguration.typeAheadEndpoint();
+		typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
+		typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
+		typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();
+
 		searchDomain = searchBarConfiguration.searchDomain();
 		legacySearchEndpoint = searchBarConfiguration.legacySearchEndpoint();
 		searchKeywordParameter = searchBarConfiguration.searchKeywordParameter();
@@ -348,12 +353,16 @@ public class CaConfigReader {
 		return typeAheadDomain;
 	}
 
-	public String getTypeAheadEndpoint() {
-		return typeAheadEndpoint;
+	public String getTypeAheadSearchTermSuffix() {
+		return typeAheadSearchTermSuffix;
 	}
 
-	public String getTypeAheadKeyword() {
-		return typeAheadKeyword;
+	public String getTypeAheadXDomainScript() {
+		return typeAheadXDomainScript;
+	}
+
+	public String getTypeAheadProxyScript() {
+		return typeAheadProxyScript;
 	}
 
 	public String getSearchDomain() {

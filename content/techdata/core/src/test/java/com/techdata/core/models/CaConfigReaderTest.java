@@ -91,6 +91,7 @@ class CaConfigReaderTest {
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.tdPartSmart()).thenReturn("tdPartSmart");
         when(analyticsConfiguration.analyticsSnippet()).thenReturn("analyticsSnippet");
+
         when(searchBarConfiguration.allSearchEndpoint()).thenReturn("allSearchEndpoint");
         when(searchBarConfiguration.allSuggestionUrl()).thenReturn("allSuggestionUrl");
         when(searchBarConfiguration.productSearchEndpoint()).thenReturn("productSearchEndpoint");
@@ -100,8 +101,11 @@ class CaConfigReaderTest {
         when(searchBarConfiguration.orderSearchEndpoint()).thenReturn("orderSearchEndpoint");
         when(searchBarConfiguration.spaSearchEndpoint()).thenReturn("spaSearchEndpoint");
         when(searchBarConfiguration.typeAheadDomain()).thenReturn("typeAheadDomain");
-        when(searchBarConfiguration.typeAheadEndpoint()).thenReturn("typeAheadEndpoint");
+        when(searchBarConfiguration.typeAheadSearchTermSuffix()).thenReturn("typeAheadSearchTermSuffix");
+        when(searchBarConfiguration.typeAheadXDomainScript()).thenReturn("typeAheadXDomainScript");
+        when(searchBarConfiguration.typeAheadProxyScript()).thenReturn("typeAheadProxyScript");
         when(searchBarConfiguration.searchDomain()).thenReturn("searchDomain");
+
         when(searchBarConfiguration.legacySearchEndpoint()).thenReturn("legacySearchEndpoint");
         when(searchBarConfiguration.searchKeywordParameter()).thenReturn("searchKeywordParameter");
         when(searchBarConfiguration.searchRefinementsParameter()).thenReturn("searchRefinementsParameter");
@@ -151,7 +155,9 @@ class CaConfigReaderTest {
         assertEquals("orderSearchEndpoint", underTest.getOrderSearchEndpoint());
         assertEquals("spaSearchEndpoint", underTest.getSpaSearchEndpoint());
         assertEquals("typeAheadDomain", underTest.getTypeAheadDomain());
-        assertEquals("typeAheadEndpoint", underTest.getTypeAheadEndpoint());
+        assertEquals("typeAheadSearchTermSuffix", underTest.getTypeAheadSearchTermSuffix());
+        assertEquals("typeAheadXDomainScript", underTest.getTypeAheadXDomainScript());
+        assertEquals("typeAheadProxyScript", underTest.getTypeAheadProxyScript());
         assertEquals("searchDomain", underTest.getSearchDomain());
         assertEquals("legacySearchEndpoint", underTest.getLegacySearchEndpoint());
         assertEquals("searchKeywordParameter", underTest.getSearchKeywordParameter());
