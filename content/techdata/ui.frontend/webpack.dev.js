@@ -1014,6 +1014,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/configuration-grid.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "quote-details-pdf-demo",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/quote-details-pdf.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

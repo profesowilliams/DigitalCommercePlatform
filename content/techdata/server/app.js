@@ -456,6 +456,12 @@ app.get("/ui-commerce/v1/quote", function (req, res) {
     res.json(response);
 });
 
+app.get("/ui-commerce/v1/quotedetails", function (req, res) {
+    const id = req.query.id;
+    const response = utils.getQuoteDetailsResponse();
+    res.json(response);
+});
+
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
     const details = req.query.details || true;

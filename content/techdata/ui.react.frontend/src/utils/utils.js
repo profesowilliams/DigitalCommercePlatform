@@ -14,3 +14,10 @@ export const prepareCommonHeader = () => ({
 });
 
 export const waitFor = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+export const getImageBuffer =  async imgPath => {
+    const buffer =  await fetch(imgPath)
+        .then(response => response.buffer ? response.buffer() : response.arrayBuffer())
+
+    return buffer.constructor.name === 'Buffer' ? buffer : Buffer.from(buffer);
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import QuotesSubHeader from "../QuotesSubHeader/QuotesSubHeader";
 import QuoteContactInfo from "../QuoteContactInfo/QuoteContactInfo";
 import QuoteSubtotal from "../QuoteSubtotal/QuoteSubtotal";
+import PDFWindow from "../PDFWindow/PDFWindow";
 import { getUrlParams } from "../../../../utils";
 import { get } from "../../../../utils/api";
 
@@ -14,6 +15,8 @@ const QuoteDetails = ({ componentProp }) => {
         endUserContactLabel,
         subtotalLabel,
         uiServiceEndPoint,
+        logoURL,
+        fileName,
     } = JSON.parse(componentProp);
     useEffect(async () => {
         const getDetailsId = ({ id }) => id;
@@ -32,13 +35,14 @@ const QuoteDetails = ({ componentProp }) => {
         subTotalFormatted,
         currencySymbol,
         created,
-        expires
+        expires,
     } = quoteDetails;
- 
 
-    return quoteDetails ? (
+
+    return (quoteDetails ? (
         <>
-            <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} dates={{created,expires}} />
+            <PDFWindow quoteDetails={quoteDetails} logoURL={logoURL} fileName={fileName} />
+            <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
             <QuoteContactInfo label={resellerContactLabel} contact={reseller} />
             <QuoteContactInfo label={endUserContactLabel} contact={endUser} />
             <QuoteSubtotal
@@ -47,7 +51,7 @@ const QuoteDetails = ({ componentProp }) => {
                 currencySymbol={currencySymbol}
             />
         </>
-    ) : null;
-};
+    ) : null);
+}
 
 export default QuoteDetails;
