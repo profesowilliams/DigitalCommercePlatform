@@ -180,137 +180,133 @@
 }
 
 @include tablet {
-    .experiencefragment {
-        &.cmp-experiencefragment--header-mobile {
-            .cmp-experiencefragment {
-                > .cmp-container {
-                    .aem-Grid {
-                        .megamenu {
-                            .cmp-megamenu {
-                                &__title {
+    #cmp-techdata-header.cmp-experiencefragment--header-mobile {
+        &.cmp-container {
+            .aem-Grid {
+                .megamenu {
+                    .cmp-megamenu {
+                        &__title {
+                            text-align: center;
+                            border-bottom: 1px solid get-color(secondary-light-grey);
+                            line-height: rem(50px);
+                            color: get-color(text-light-charcoal);
+                            font-size: rem(14px);
+                            &.inactive-md {
+                                display: none;
+                            }
+                            &.active-md {
+                                display: block;
+                            }
+                        }
+                        &__body {
+                            .fa-chevron-left {
+                                color: get-color(border-lighter-gray);
+                                font-size: 16px;
+                                position: absolute;
+                                left: rem(10px);
+                                top: rem(13px);
+                                opacity: 0;
+                            }
+                        }
+                        &__primary {
+                            padding: 0;
+                            &.inactive-md {
+                                display: none;
+                            }
+                            &.active-md {
+                                display: block;
+                            }
+                        }
+                        &__tabpanel {
+                            div {
+                                display: none;
+                                &.active-md {
+                                    display: block;
+                                }
+                            }
+                            .cmp-megamenu__secondary {
+                                &.inactive-md {
+                                    display: none;
+                                }
+                                &.active-md {
+                                    display: block;
+                                }
+                                &--title {
+                                    display: block;
                                     text-align: center;
                                     border-bottom: 1px solid get-color(secondary-light-grey);
-                                    line-height: rem(50px);
+                                    padding: 10px 0;
                                     color: get-color(text-light-charcoal);
                                     font-size: rem(14px);
-                                    &.inactive-md {
-                                        display: none;
-                                    }
-                                    &.active-md {
-                                        display: block;
+                                    &:first-letter {
+                                        text-transform: capitalize;
                                     }
                                 }
-                                &__body {
-                                    .fa-chevron-left {
-                                        color: get-color(border-lighter-gray);
-                                        font-size: 16px;
-                                        position: absolute;
-                                        left: rem(10px);
-                                        top: rem(13px);
-                                        opacity: 0;
+                                &--sub-title {
+                                    border-bottom: 1px solid get-color(secondary-light-grey);
+                                    padding: 10px 0;
+                                    color: #000c21;
+                                    font-size: rem(14px);
+                                    display: block;
+                                    &:first-letter {
+                                        text-transform: capitalize;
                                     }
                                 }
-                                &__primary {
+                            }
+                            .cmp-navigation {
+                                &__group {
                                     padding: 0;
-                                    &.inactive-md {
+                                    .cmp-navigation__group {
+                                        padding-left: rem(30px);
                                         display: none;
-                                    }
-                                    &.active-md {
-                                        display: block;
-                                    }
-                                }
-                                &__tabpanel {
-                                    div {
-                                        display: none;
-                                        &.active-md {
-                                            display: block;
-                                        }
-                                    }
-                                    .cmp-megamenu__secondary {
                                         &.inactive-md {
                                             display: none;
                                         }
                                         &.active-md {
                                             display: block;
                                         }
-                                        &--title {
-                                            display: block;
-                                            text-align: center;
-                                            border-bottom: 1px solid get-color(secondary-light-grey);
-                                            padding: 10px 0;
+                                    }
+                                    li {
+                                        list-style: none;
+                                        position: relative;
+                                        a {
+                                            text-decoration: none;
                                             color: get-color(text-light-charcoal);
-                                            font-size: rem(14px);
-                                            &:first-letter {
-                                                text-transform: capitalize;
-                                            }
-                                        }
-                                        &--sub-title {
-                                            border-bottom: 1px solid get-color(secondary-light-grey);
-                                            padding: 10px 0;
-                                            color: #000c21;
-                                            font-size: rem(14px);
-                                            display: block;
-                                            &:first-letter {
-                                                text-transform: capitalize;
+                                            svg,
+                                            > i {
+                                                display: none;
                                             }
                                         }
                                     }
-                                    .cmp-navigation {
-                                        &__group {
-                                            padding: 0;
-                                            .cmp-navigation__group {
-                                                padding-left: rem(30px);
-                                                display: none;
-                                                &.inactive-md {
-                                                    display: none;
-                                                }
-                                                &.active-md {
-                                                    display: block;
-                                                }
-                                            }
-                                            li {
-                                                list-style: none;
-                                                position: relative;
-                                                a {
-                                                    text-decoration: none;
-                                                    color: get-color(text-light-charcoal);
-                                                    svg,
-                                                    > i {
-                                                        display: none;
-                                                    }
-                                                }
-                                            }
+                                }
+                                &__item {
+                                    color: get-color(text-light-charcoal);
+                                    font-family: $open-sans;
+                                    font-size: rem(14px);
+                                    letter-spacing: 0;
+                                    line-height: rem(40px);
+                                    &--level-0 {
+                                        &.has-child.active {
+                                            border-bottom: 1px solid get-color(secondary-light-grey);
                                         }
-                                        &__item {
-                                            color: get-color(text-light-charcoal);
-                                            font-family: $open-sans;
-                                            font-size: rem(14px);
-                                            letter-spacing: 0;
-                                            line-height: rem(40px);
-                                            &--level-0 {
-                                                &.has-child.active {
-                                                    border-bottom: 1px solid get-color(secondary-light-grey);
-                                                }
+                                    }
+                                    &.has-child {
+                                        &:before {
+                                            content: "\f054";
+                                            font-family: "Font Awesome 5 Free";
+                                            font-size: rem(16px);
+                                            font-weight: 900;
+                                            color: get-color(border-lighter-gray);
+                                            position: absolute;
+                                            right: 0;
+                                        }
+                                        &.active {
+                                            > a {
+                                                color: get-color(brand-light-blue);
                                             }
-                                            &.has-child {
-                                                &:before {
-                                                    content: "\f054";
-                                                    font-family: "Font Awesome 5 Free";
-                                                    font-size: rem(16px);
-                                                    font-weight: 900;
-                                                    color: get-color(border-lighter-gray);
-                                                    position: absolute;
-                                                    right: 0;
-                                                }
-                                                &.active {
-                                                    > a {
-                                                        color: get-color(brand-light-blue);
-                                                    }
-                                                    &:before {
-                                                        color: get-color(brand-light-blue);
-                                                        content: "\f078";
-                                                    }
-                                                }
+                                            &:before {
+                                                color: get-color(brand-light-blue);
+                                                content: "\f078";
                                             }
                                         }
                                     }

@@ -3,8 +3,8 @@ import insertAfter, { hasSomeParentTheClass } from '../../../common-utils/js/hel
 
 export default class Header {
     constructor() {
-        this.headerEl = document.querySelector('.cmp-experiencefragment--header');
-        this.searchEl = document.querySelector('.cmp-experiencefragment--header .search');
+        this.headerEl = document.querySelector('#cmp-techdata-header');
+        this.searchEl = document.querySelector('#cmp-techdata-header .search');
         this.HEADER_MOBILE = 'cmp-experiencefragment--header-mobile';
         
         this.headerResize();

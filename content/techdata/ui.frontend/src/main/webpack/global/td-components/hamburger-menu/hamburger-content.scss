@@ -1,12 +1,12 @@
-.experiencefragment {
-    &.cmp-experiencefragment--header {
+#cmp-techdata-header {
+    &.cmp-container {
         .megamenu {
             @include tablet {
                 display: none;
             }
         }
     }
-    &.cmp-experiencefragment--header-mobile {
+    &.cmp-experiencefragment--header-mobile.cmp-container {
         .megamenu {
             display: none;
             height: 100vh;

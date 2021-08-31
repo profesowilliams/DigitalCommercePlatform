@@ -25,7 +25,7 @@
 .cmp-search__item-title {
 }
 
-.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+#cmp-techdata-header.cmp-container .aem-Grid .search {
 	// making this desktop only as in mobile search is next to signin.
 	@include desktop {
 		margin-left: unset !important;

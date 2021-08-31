@@ -1,6 +1,6 @@
 
-.experiencefragment {
-    &.cmp-experiencefragment--header {
+#cmp-techdata-header {
+    &.cmp-container {
         .megamenu {
             @include tablet {
                 display: none;

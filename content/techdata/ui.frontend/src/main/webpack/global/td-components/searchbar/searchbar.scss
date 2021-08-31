@@ -321,7 +321,7 @@
 }
 
 //AEM overriding Styling
-.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+#cmp-techdata-header.cmp-container .aem-Grid .search {
   margin-left: auto !important;
   width: 35% !important;
 
@@ -330,7 +330,7 @@
   }
 }
 
-.experiencefragment.cmp-experiencefragment--header-mobile .cmp-experiencefragment>.cmp-container> div {
+#cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container> div {
   @include mobile {
     height: auto;
     min-height: rem(40px);
