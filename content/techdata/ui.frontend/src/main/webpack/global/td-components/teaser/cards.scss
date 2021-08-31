@@ -113,11 +113,14 @@
 					}
 
 					svg {
-						background-color: get-color(brand-light-blue);
 						fill: get-color(brand-white);
 					}
 				}
-
+				&:not(:hover) {
+				    svg circle {
+				        fill: get-color(brand-blue);
+				    }
+				}
 				&__content {
 					display: flex;
 					flex-grow: 1;
@@ -228,14 +231,15 @@
 			align-items: center;
 
 			&:hover {
-				svg {
-					background-color: get-color(td-lightblue);
-				}
-
 				a {
 					font-weight: 900;
 				}
 			}
+			&:not(:hover) {
+                svg circle {
+                    fill: get-color(brand-blue);
+                }
+            }
 		}
 
 		.cmp-teaser__title-link {
@@ -244,20 +248,19 @@
 			font-weight: 100;
 			transition: all .3s;
 		}
-		
+
 		.cmp-teaser__image {
 			height: auto;
 			text-align: center;
-			max-width: rem(96px);
+			max-width: rem(120px);
 			width: 100%;
 
 			svg {
-				background-color: get-color(brand-black);
 				border-radius: 50%;
 				padding: rem(10px);
 				height: auto;
 				transition: all .3s;
-				width: rem(72px);
+				width: rem(120px);
 
 				path,
 				polygon {
