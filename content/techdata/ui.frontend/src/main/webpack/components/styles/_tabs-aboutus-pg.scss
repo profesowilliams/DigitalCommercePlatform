@@ -7,18 +7,22 @@
         &__tablist {
             display: flex;
             flex-direction: column;
-
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             width: -webkit-fill-available;
-            width: 30%;
+            width: 15%;
             margin: 0;
+            line-height: rem(50px);
+            .cmp-tabs__tab {
+                padding: 0 rem(16px);
+            }
         }
 
         &__tabpanel {
             margin: 0 !important;
-            width: 70%;
-            padding-top: rem(10px);
+            width: 85%;
+            padding-left: rem(45px);
+            border-left: rem(1px) solid get-color(brand-scrollbar);
         }
 
         &__tab {
@@ -31,11 +35,11 @@
             &:hover,
             &:active {
                 font-weight: 600;
-                color: get-color(brand-light-blue) !important;
-                &::after {
-                    font-family: "Font Awesome 5 Free";
-                    content: "\f054";
-                }
+                color: get-color(brand-blue) !important;
+                // &::after {
+                //     font-family: "Font Awesome 5 Free";
+                //     content: "\f054";
+                // }
 
                 i,
                 svg {
