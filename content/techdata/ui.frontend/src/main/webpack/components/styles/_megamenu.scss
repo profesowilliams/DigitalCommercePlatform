@@ -132,7 +132,7 @@
             }
             padding: rem(10px 22px);
             border-right: rem(1px) solid get-color(brand-light-gray2);
-            a {
+            a, span {
                 padding: rem(5px 0px);
                 display: flex;
                 justify-content: space-between;

@@ -41,9 +41,12 @@
 
                             <div class="cmp-megamenu__wrapper-item ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}" data-cmp-parent="menu ${item.menuID}" data-sly-test="${item.hasChildPages}">
                                 <h4 class="cmp-megamenu-level-title">
-                                    <a href="${nav.linkUrl}.html" title="${item.rootParentTitle} Home"  class="cmp-navigation__item-link">
+                                    <a data-sly-test="${item.rootParentLink}" href="${item.rootParentLink}.html" title="${item.rootParentTitle} Home"  class="cmp-navigation__item-link">
                                         ${item.rootParentTitle} Home
                                     </a>
+                                    <span data-sly-test="${!item.rootParentLink}" class="cmp-navigation__item-link">
+                                        ${item.rootParentTitle} Home
+                                    </span>
                                 </h4>
                                 <ul class="cmp-navigation__group" data-sly-list="${item.subNavLinkslist}">
                                     <li class="cmp-navigation__item cmp-navigation__item--level-1" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">

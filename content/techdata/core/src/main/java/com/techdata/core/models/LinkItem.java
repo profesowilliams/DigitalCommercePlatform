@@ -13,6 +13,7 @@ import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.*;
@@ -84,7 +85,7 @@ public class LinkItem {
 
             if (null != cfRootParent && null != rootPage) {
                 for(Resource child : cfRootParent.getChildren()) {
-                    populateTertiarySubnavLinks(child, rootPage);
+                    populateTertiarySubnavLinks(child, rootPage, linkUrl);
                 }
                 log.debug("sublink size is {}",this.subLinks.size());
             }
@@ -97,7 +98,7 @@ public class LinkItem {
                 Iterator<Page> children = rootPage.listChildren();
                 while(children.hasNext()){
                     Page childPage = children.next();
-                    SubNavLinks link = new SubNavLinks(childPage, resolver, platformName);
+                    SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl);
                     subLinks.add(link);
                     tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
                 }
@@ -108,10 +109,10 @@ public class LinkItem {
 
     }
 
-    private void populateTertiarySubnavLinks(Resource child, Page rootPage) {
+    private void populateTertiarySubnavLinks(Resource child, Page rootPage, String rootParentLink) {
         if (ContentFragmentHelper.isContentFragment(child)) {
             log.debug("processing resource at path {}", child.getPath());
-            SubNavLinks link = new SubNavLinks(child, platformName, rootPage);
+            SubNavLinks link = new SubNavLinks(child, platformName, rootPage, rootParentLink);
             this.subLinks.add(link);
             tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
         }
@@ -141,5 +142,9 @@ public class LinkItem {
     @SuppressWarnings("squid:S2384")
     public List<SubNavLinks> getTertiaryMenuItems(){
         return tertiarySubNavLinks;
+    }
+
+    public String getLinkUrl() {
+        return this.linkUrl;
     }
 }

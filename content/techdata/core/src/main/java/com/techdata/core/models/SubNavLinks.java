@@ -42,13 +42,16 @@ public class SubNavLinks {
 
     private String docCount;
 
+    private String rootParentLink;
+
     private List<SubNavLinks> subNavLinkslist =  new ArrayList<>();
 
-    SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle){
+    SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
         this.navPage = page;
         this.pageTitle = page.getTitle();
         this.pagePath = page.getPath();
         this.rootParentTitle = rootParentTitle;
+        this.rootParentLink = rootParentLink;
 
         ValueMap pageProps = page.getProperties();
         if (pageProps.containsKey(FONTAWESOME_ICON_PROPERTY_NAME))
@@ -64,9 +67,10 @@ public class SubNavLinks {
         childPageIterator(resolver);
     }
 
-    public SubNavLinks(Resource cfResource, String rootParentTitle, Page currentPage) {
+    public SubNavLinks(Resource cfResource, String rootParentTitle, Page currentPage, String rootParentLink) {
         log.debug("inside subnavlinks constructor for CF. Path {} is being processed", cfResource.getPath());
         this.rootParentTitle = rootParentTitle;
+        this.rootParentLink = rootParentLink;
         ContentFragment cf = cfResource.adaptTo(ContentFragment.class);
 
         populatePageData(ContentFragmentHelper.convertCFElementsToMap(cf));
@@ -88,7 +92,7 @@ public class SubNavLinks {
                 if (ContentFragmentHelper.isContentFragment(child)) {
                     this.hasChildPages = "true";
                     log.debug("processing resource at path {}", child.getPath());
-                    SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage);
+                    SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage, rootParentLink);
 
                     Resource masterResource = resourceResolver.getResource(child.getPath() + "/jcr:content/data/master");
                     if(masterResource != null) {
@@ -150,7 +154,7 @@ public class SubNavLinks {
             Page childPage = itr.next();
             if(!childPage.isHideInNav()){
                 hasChildPages = "true";
-                SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle);
+                SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle, this.rootParentLink);
                 subNavLinkslist.add(childNav);
             }
         }
@@ -205,7 +209,10 @@ public class SubNavLinks {
         this.hasChildPages = hasChildPages;
     }
 
-    public String getMenuID() {return (this.getRootParentTitle()+"-"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT);
+    public String getMenuID() {return (this.getRootParentTitle()+"-"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT); }
+
+    public String getRootParentLink(){
+        return this.rootParentLink;
     }
 }
 
