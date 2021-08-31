@@ -98,6 +98,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
+            var url = _priceServiceURL.AppendPathSegments("Spa", "Find")
+                         .SetQueryParams(new
+                         {
+                             ValidTo = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"),
+                             TotalCount = false,
+                             Details = false,
+                             WithPaginationInfo = false,
+                             SortBy = "expirationDate"
+                         });
+
+            var dealsSummary = await _middleTierHttpClient.GetAsync<DigitalFoundation.Common.Models.FindResponse<DealsBase>>(url);
+
             var response = new List<DealsSummaryModel>();
             var objDeal = new DealsSummaryModel();
 
@@ -105,7 +117,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 objDeal = new DealsSummaryModel
                 {
-                    Value = i * GetRandomNumber(1, 3)
+
+                    Value = i == 1 ? dealsSummary?.Data?.Where(t => t.ExpirationDate <= DateTime.Now.AddDays(2)).Count() :
+                            i == 2 ? dealsSummary?.Data?.Where(t => t.ExpirationDate <= DateTime.Now.AddDays(7)).Count() :
+                            dealsSummary?.Data?.Where(t => t.ExpirationDate > DateTime.Now.AddDays(7)).Count()
+
                 };
                 response.Add(objDeal);
             }
@@ -113,7 +129,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         }
 
         public async Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request)
-        {
+        {            
+
             var deals = new List<OpenResellerItems>();
             for (int i = 0; i < 5; i++)
             {
@@ -454,7 +471,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
             request.Sortby = string.IsNullOrWhiteSpace(request.Sortby) ? "Price" : request.Sortby;
             request.SortDirection = string.IsNullOrWhiteSpace(request.SortDirection) ? "desc" : request.SortDirection;
-            
+
             bool sortDirection = request.SortDirection.ToLower() == "asc" ? true : false;
 
             var url = _quoteServiceURL.AppendPathSegment("Find").SetQueryParams("&SortBy=" + setTextCase.ToTitleCase(request.Sortby) + "&SortAscending=" + sortDirection + "&pageSize=" + request.Top + "&WithPaginationInfo=false");
@@ -463,6 +480,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return orderNumberDto.Data.ToList();
         }
 
-        
+
     }
 }
