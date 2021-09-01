@@ -71,11 +71,11 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       field: "quantity",
       width: "120px",
       sortable: false,
-      cellRenderer: ({ rowIndex, node, api, setValue }) => {
+      cellRenderer: ({ node, api, setValue, data }) => {
         return (
           <ProductLinesQuantityWidget
-            initialValue={gridData[rowIndex]?.quantity}
-            selectedValue={mutableGridData[rowIndex]?.quantity}
+            initialValue={gridData.find((row) => row.id === data.id)?.quantity}
+            selectedValue={data.quantity}
             onValueChanged={(_val) => {
               isDataMutated = true;
               setValue(_val);
