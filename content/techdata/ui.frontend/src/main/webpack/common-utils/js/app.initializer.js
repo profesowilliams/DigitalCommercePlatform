@@ -66,6 +66,10 @@ class AppInitializer {
     }
 }
 
-window.onload = (event) => {
+if (document.readyState !== "loading") {
     new AppInitializer();
+} else {
+    document.addEventListener("DOMContentLoaded", function () {
+        new AppInitializer();
+    });
 }
