@@ -33,6 +33,9 @@ use(function () {
     if (this.uiServiceDomain != null) {
     	jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
     }
+    if (this.uiServiceDomain != null) {
+    	jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
+    }
 
     if (properties && properties["headerLabel"]) {
         jsonObject["headerLabel"] = properties["headerLabel"];
