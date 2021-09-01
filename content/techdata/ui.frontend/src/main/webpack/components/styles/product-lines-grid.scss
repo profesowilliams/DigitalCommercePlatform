@@ -42,7 +42,7 @@
     .ag-cell {
       border-top: rem(1px) solid get-color(brand-scrollbar);
       &:first-child {
-        border-top: 0.0625rem solid #d8d8d8;
+        border-top: 0.0625rem solid transparent;
       }
     }
     .ag-row-group-expanded {
