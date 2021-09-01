@@ -2,20 +2,12 @@ import React, { useEffect, useState } from "react";
 import thousandSeparator from "../../../helpers/thousandSeparator";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
-import ProductLinesItemInformation from "./ProductLinesItemInformation";
-import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
+import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 
-function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
+function ProductLinesGrid({ gridProps, data }) {
   const [gridApi, setGridApi] = useState(null);
-  const gridData = data.content?.quotePreview?.quoteDetails.items ?? [];
-  /*
-    grid data can be mutated intentionally by changing quantity in each row. 
-    so in order to not mutate props, mutableGridData is clone of the data that is
-    used in full component lifecycle and orignal data is kept for reference
-  */
-  const mutableGridData = JSON.parse(JSON.stringify(gridData));
-  const selectedLinesModel = [];
-  let isDataMutated = false;
+  const gridData = data.items ?? [];
+  const mutableGridData = Object.assign([], gridData);
 
   useEffect(() => {
     gridApi?.selectAll();
@@ -29,12 +21,10 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
 
   const columnDefs = [
     {
-      headerName: "Select All",
+      headerName: "Line Item",
       field: "id",
-      width: "160px",
+      width: "80px",
       sortable: false,
-      checkboxSelection: true,
-      headerCheckboxSelection: true,
       expandable: true,
       rowClass: ({ node, data }) => {
         return `cmp-product-lines-grid__row ${
@@ -47,7 +37,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
-              columns={gridProps.columnList}
+              columnDefiniton={columnDefs}
               data={data.children}
             ></ProductLinesChildGrid>
           </section>
@@ -77,23 +67,16 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       field: "quantity",
       width: "120px",
       sortable: false,
-      cellRenderer: ({ node, api, setValue, data }) => {
-        return (
-          <ProductLinesQuantityWidget
-            initialValue={gridData.find((row) => row.id === data.id)?.quantity}
-            selectedValue={data.quantity}
-            onValueChanged={(_val) => {
-              isDataMutated = true;
-              setValue(_val);
-              api.refreshCells({
-                columns: ["extendedPriceFormatted"],
-                force: true,
-              });
-              node.selected && onSelectionChanged({ api });
-            }}
-          ></ProductLinesQuantityWidget>
-        );
+    },
+    {
+      headerName: "Unit Price",
+      field: "unitPrice",
+      onDetailsShown: (row) => {},
+      onDetailsHidden: (row) => {},
+      valueFormatter: ({ data }) => {
+        return "$" + thousandSeparator(data.unitPrice);
       },
+      sortable: false,
     },
     {
       headerName: "Extended Price",
@@ -106,20 +89,6 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       sortable: false,
     },
   ];
-
-  function onSelectionChanged({ api }) {
-    selectedLinesModel.length = 0;
-    api.forEachNode((rowNode) => {
-      const _price = rowNode.data.quantity * rowNode.data.unitPrice;
-      rowNode.data.extendedPrice = _price;
-      const _row = Object.assign({}, rowNode.data);
-      delete _row.extendedPriceFormatted;
-      rowNode.selected && selectedLinesModel.push(_row);
-    });
-    if (typeof onQuoteLinesUpdated === "function") {
-      onQuoteLinesUpdated(selectedLinesModel);
-    }
-  }
 
   function expandAll() {
     gridApi?.forEachNode((node) => {
@@ -144,14 +113,17 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
           <span className="cmp-product-lines-grid__header__title">
-            {gridProps.label}
+            {gridProps?.label || "Line Item Details"}
           </span>
           <span className="cmp-product-lines-grid__header__expand-collapse">
-            <span onClick={() => expandAll()}> {gridProps.expandAllLabel}</span>{" "}
+            <span onClick={() => expandAll()}>
+              {" "}
+              {gridProps?.expandAllLabel || "Expand All"}
+            </span>{" "}
             |
             <span onClick={() => collapseAll()}>
               {" "}
-              {gridProps.collapseAllLabel}
+              {gridProps?.collapseAllLabel || "Collapse All"}
             </span>
           </span>
         </section>
@@ -159,7 +131,6 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
           columnDefinition={columnDefs}
           config={gridConfig}
           data={mutableGridData}
-          onSelectionChanged={onSelectionChanged}
           onAfterGridInit={onAfterGridInit}
         ></Grid>
       </div>

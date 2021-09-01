@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { getUrlParams } from "../../../../utils";
-import { If } from "../../helpers/If";
-import { dateToString } from "../../helpers/dates";
+import { getUrlParams } from "../../../../../utils";
+import { If } from "../../../helpers/If";
+import { dateToString } from "../../../helpers/dates";
 
 const QuotesSubHeader = ({
   label,

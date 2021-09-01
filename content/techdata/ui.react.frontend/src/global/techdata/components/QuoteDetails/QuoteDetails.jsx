@@ -1,57 +1,68 @@
 import React, { useEffect, useState } from "react";
-import QuotesSubHeader from "../QuotesSubHeader/QuotesSubHeader";
-import QuoteContactInfo from "../QuoteContactInfo/QuoteContactInfo";
-import QuoteSubtotal from "../QuoteSubtotal/QuoteSubtotal";
+import QuotesSubHeader from "./QuoteDetailsSubHeader/QuotesSubHeader";
+import QuoteContactInfo from "./QuoteDetailsContactInfo/QuoteContactInfo";
+import QuoteSubtotal from "./QuoteDetailsSubTotal/QuoteSubtotal";
+import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
+import Loader from "../Widgets/Loader";
+import FullScreenLoader from "../Widgets/FullScreenLoader";
 import PDFWindow from "../PDFWindow/PDFWindow";
 import { getUrlParams } from "../../../../utils";
-import { get } from "../../../../utils/api";
+import useGet from "../../hooks/useGet";
 
 const QuoteDetails = ({ componentProp }) => {
-    const [quoteDetails, setQuoteDetails] = useState(false);
-    const {
-        subheaderLabel,
-        subheaderTitle,
-        resellerContactLabel,
-        endUserContactLabel,
-        subtotalLabel,
-        uiServiceEndPoint,
-        logoURL,
-        fileName,
-    } = JSON.parse(componentProp);
-    useEffect(async () => {
-        const getDetailsId = ({ id }) => id;
-        const id = getDetailsId(getUrlParams());
-        const {
-            data: {
-                content: { details },
-            },
-        } = await get(`${uiServiceEndPoint}&id=${id}`);
-        setQuoteDetails(details);
-    }, []);
+  const {
+    subheaderLabel,
+    subheaderTitle,
+    resellerContactLabel,
+    endUserContactLabel,
+    subtotalLabel,
+    uiServiceEndPoint,
+    logoURL,
+    fileName,
+  } = JSON.parse(componentProp);
 
-    const {
-        reseller,
-        endUser,
-        subTotalFormatted,
-        currencySymbol,
-        created,
-        expires,
-    } = quoteDetails;
+  const { id } = getUrlParams();
+  const [response, isLoading] = useGet(
+    `${uiServiceEndPoint}?id=${id}
+    }`
+  );
+  const [quoteDetails, setQuoteDetails] = useState(null);
 
+  useEffect(() => {
+    response?.content?.details && setQuoteDetails(response.content.details);
+  }, [response]);
 
-    return (quoteDetails ? (
-        <>
-            <PDFWindow quoteDetails={quoteDetails} logoURL={logoURL} fileName={fileName} />
-            <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
-            <QuoteContactInfo label={resellerContactLabel} contact={reseller} />
-            <QuoteContactInfo label={endUserContactLabel} contact={endUser} />
-            <QuoteSubtotal
-                label={subtotalLabel}
-                amount={subTotalFormatted}
-                currencySymbol={currencySymbol}
-            />
-        </>
-    ) : null);
-}
+  return quoteDetails ? (
+    <>
+      <PDFWindow
+        quoteDetails={quoteDetails}
+        logoURL={logoURL}
+        fileName={fileName}
+      />
+      <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
+      <QuoteContactInfo
+        label={resellerContactLabel}
+        contact={quoteDetails.reseller}
+      />
+      <QuoteContactInfo
+        label={endUserContactLabel}
+        contact={quoteDetails.endUser}
+      />
+      <ProductLinesGrid
+        gridProps={componentProp.productLines}
+        data={quoteDetails}
+      ></ProductLinesGrid>
+      <QuoteSubtotal
+        label={subtotalLabel}
+        amount={quoteDetails.subTotalFormatted}
+        currencySymbol={quoteDetails.currencySymbol}
+      />
+    </>
+  ) : (
+    <FullScreenLoader>
+      <Loader visible={true}></Loader>
+    </FullScreenLoader>
+  );
+};
 
 export default QuoteDetails;

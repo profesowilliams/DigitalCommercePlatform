@@ -91,7 +91,7 @@ function Grid(props) {
   let filteredColumns = [];
 
   // overwrite config in column definitions with config from AEM
-  config.columnList?.forEach((column) => {
+  config?.columnList?.forEach((column) => {
     const el = columnDefinition.find((el) => {
       return el.field === column.columnKey;
     });

@@ -2,6 +2,17 @@
   height: 50%;
   width: 100%;
   overflow: auto;
+  &__row {
+    &--notExpandable {
+      .ag-cell-expandable .ag-group-contracted {
+        pointer-events: none;
+        .ag-icon::before {
+          color: get-color(secondary-grey);
+          pointer-events: none;
+        }
+      }
+    }
+  }
   &__header {
     color: get-color(td-dark-blue);
     font-family: $font-family-sans-serif;
