@@ -151,7 +151,7 @@
 		padding-top: rem(45px) !important;	
 	}
 }
-.modal {
+.language-modal {
     font-family: $font-family;
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -166,6 +166,7 @@
   z-index: 99;
 
   /* Modal Content */
+
   &__content {
     background-color: #fefefe;
     margin: auto;

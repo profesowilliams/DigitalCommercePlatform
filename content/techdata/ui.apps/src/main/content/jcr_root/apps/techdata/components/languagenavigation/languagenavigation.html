@@ -80,15 +80,15 @@
         <button type="button" id="form-button-1117902125" class="cmp-button__region-select"
                 data-target="#countriesListModal" name="button">${properties.changeLocationLabel}</button>
       </div>
-      <div id="countriesListModal" class="modal">
+      <div id="countriesListModal" class="language-modal">
         <!-- Modal content -->
-        <div class="modal__content">
-          <span class="modal__content__close" href="#"></span>
-          <div class="modal__content__row">
+        <div class="language-navigation-modal__content">
+          <span class="language-modal__content__close" href="#"></span>
+          <div class="language-modal__content__row">
             <sly data-sly-list.continentItems="${model.regionListItems}">
-              <div class="modal__content__column">
+              <div class="language-modal__content__column">
                 <h2 class="cmp-region-list__title">${continentItems.title}</h2>
-                <div class="modal__content__column__seperator">
+                <div class="language-modal__content__column__seperator">
                   <sly data-sly-list.countryItems="${continentItems.children}">
                     <div class="cmp-region-list__countries">
                       <div class="cmp-region-list__countries--flag">
