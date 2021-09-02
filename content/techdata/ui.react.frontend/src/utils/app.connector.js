@@ -30,7 +30,7 @@ class AppConnector {
 		let randomKey = nanoid();
 		ReactContentRenderer.render(
 			<Provider store={store}>
-				<Component key={randomKey} componentProp={this.componentProps.config} />
+				<Component key={randomKey} componentProp={this.componentProps.config} aemDataSet={this.componentProps} />
 			</Provider>,
 			element
 		);

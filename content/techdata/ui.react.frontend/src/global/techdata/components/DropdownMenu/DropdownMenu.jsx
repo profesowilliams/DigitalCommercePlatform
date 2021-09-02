@@ -4,13 +4,12 @@ import { signOut } from '../../../../utils';
 import SubHeaderMenuContainer from '../ProfileMegaMenu/SubHeaderMenuContainer';
 import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
 
-const DropdownMenu = ({ items, userDataCheck, config }) => {
+const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
 	const [isActive, setDropdown] = useState(false);
 	const [showSecondary, setShowSecondary] = useState(false);
     const [secondaryItems, setSecondaryItems] = useState(null);
 	const userDropDown = () => setDropdown(!isActive);
 	const { id: userId, firstName: userName } = userDataCheck;
-    const { "data-dropdownlinks": dropDownData } = config;
 
     const handlePrimaryClick = (obj) => {
         setSecondaryItems(obj);

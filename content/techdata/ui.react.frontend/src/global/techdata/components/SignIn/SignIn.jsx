@@ -22,6 +22,7 @@ const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
 	const configDataAEM = JSON.parse(props.componentProp);
+    const dropDownData = JSON.parse(props.aemDataSet.dropdownlinks);
 	const { auth } = useSelector((state) => {
 		return state;
 	});
@@ -134,7 +135,7 @@ const SignIn = (props) => {
 				{requested ? (
 					'Loading...'
 				) : userDataCheck !== null ? (
-					<DropdownMenu userDataCheck={userDataCheck} items={items} config={configDataAEM} />
+					<DropdownMenu userDataCheck={userDataCheck} dropDownData={dropDownData} items={items} config={configDataAEM} />
 				) : (
 					signInButton()
 				)}
