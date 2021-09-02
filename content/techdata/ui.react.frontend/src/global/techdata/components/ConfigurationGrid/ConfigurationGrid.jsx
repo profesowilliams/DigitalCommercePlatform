@@ -1,21 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Modal from '../Modal/Modal';
-import DetailsInfo from '../DetailsInfo/DetailsInfo';
+import DetailsInfo from './DetailsInfo';
 import ConfigurationGridSearch from "./ConfigurationGridSearch";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
 
+	const [modal, setModal] = useState(null);
+
   const { spaDealsIdLabel } = componentProp;
 
   const getDateTransformed = (dateUTC) => {
-    const formatedDate = new Date(dateUTC).toLocaleDateString();
-    return formatedDate;
+    function isValidDate(d) {
+      return d instanceof Date && !isNaN(d);
+    }
+
+    const dateValue = new Date(dateUTC);
+
+    return isValidDate(dateValue) ? dateValue.toLocaleDateString() : dateUTC;
   };
+
+	const labelList = [
+		{
+			labelKey: 'multiple',
+			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'multiple')?.labelValue ?? 'Multiple',
+		},
+		{
+			labelKey: 'pending',
+			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
+		},
+	];
+
+	const invoicesModal = {
+		title: componentProp.invoicesModal?.title ?? 'Order',
+		content:
+			componentProp.invoicesModal?.content ??
+			'There are multiple Invoices associated with this Order. Click an invoice number to preview with the option to print or Download All for a zip file of all shown here',
+		pendingInfo:
+			componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
+	};
 
   const getDealsIdLabel = (deals) =>
     deals && deals.length > 1
@@ -40,8 +67,10 @@ function ConfigurationGrid(props) {
 		);
 	}
 	function getInvoices(line) {
-    return "";
-		if (line.invoices.length && line.invoices.length > 1) {
+    if(!line.quotes) {
+      return '';
+    }
+		else if (line.quotes.length && line.quotes.length > 1) {
 			return (
 				<div
 					onClick={() => {
@@ -66,10 +95,10 @@ function ConfigurationGrid(props) {
 				</div>
 			);
 		} else {
-			if (line.invoices[0]?.id === 'Pending') {
+			if (line.quotes[0]?.id === 'Pending') {
 				return labelList.find((label) => label.labelKey === 'pending').labelValue;
 			} else {
-				return line.invoices[0]?.id ?? null;
+				return line.quotes[0]?.id ?? null;
 			}
 		}
 	}
@@ -85,7 +114,7 @@ function ConfigurationGrid(props) {
             <a
               className="cmp-grid-url-underlined"
               href={
-                componentProp.configDetailUrl.replace('{id}', props.value)
+                componentProp.configDetailUrl?.replace('{id}', props.value)
               }
             >
               {props.value}
@@ -141,12 +170,9 @@ function ConfigurationGrid(props) {
       headerName: "Quote Id",
       field: "quotes",
       sortable: false,
-      valueFormatter: (props) => {
-        return getDealsIdLabel(props.value);
-      },
-			/*cellRenderer: (props) => {
+			cellRenderer: (props) => {
 				return <div className='cmp-grid-url-underlined'>{getInvoices(props.data)}</div>;
-			},*/
+			},
     },
     {
       headerName: "Action",
@@ -160,10 +186,10 @@ function ConfigurationGrid(props) {
 
   return (
     <section>
-      <div className="cmp-quotes-grid">
+      <div className="cmp-configurations-grid cmp-quotes-grid">
         <GridSearchCriteria
           Filters={ConfigurationGridSearch}
-          label={componentProp.searchCriteria?.title ?? "Filter Quotes"}
+          label={componentProp.searchCriteria?.title ?? "Filter Configurations"}
           componentProp={componentProp.searchCriteria}
           onSearchRequest={filteringExtension.onQueryChanged}
           onClearRequest={filteringExtension.onQueryChanged}
@@ -180,6 +206,7 @@ function ConfigurationGrid(props) {
           }
         ></Grid>
       </div>
+			{modal}
     </section>
   );
 }
