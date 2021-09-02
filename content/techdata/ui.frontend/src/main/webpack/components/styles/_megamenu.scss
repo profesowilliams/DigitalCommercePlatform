@@ -202,8 +202,9 @@
                             color: get-color(border-lighter-gray);
                             font-size: 16px;
                             position: absolute;
-                            left: rem(10px);
-                            top: rem(13px);
+                            left: 0;
+                            top: 0;
+                            padding: 12px;
                             opacity: 0;
                         }
                     }
