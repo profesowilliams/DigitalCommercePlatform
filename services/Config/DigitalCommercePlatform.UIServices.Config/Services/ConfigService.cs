@@ -223,6 +223,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public async Task<string> GetPunchOutUrlAsync(PunchInModel request)
         {
+             if(request.ActionName=="edit")
+            {
+                var estimateRequest = new Models.Configurations.FindModel();
+                estimateRequest.Id = request.IdValue;
+                estimateRequest.Type = "Estimate";
+
+                var result = await FindConfigurations(new GetConfigurations.Request{Criteria= estimateRequest });
+                if (result.Count < 1)
+                    throw new InvalidOperationException($"Configuration Id is wrong");
+            }
             const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
             var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) 
                 ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
