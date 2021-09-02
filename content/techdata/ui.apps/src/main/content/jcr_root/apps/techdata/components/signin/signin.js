@@ -1,5 +1,5 @@
 "use strict";
-use(function () {
+use(function() {
     const HTML_EXTENSION = ".html";
     var listOfItems = [];
     var jsonObject = new Packages.org.json.JSONObject();
@@ -11,8 +11,8 @@ use(function () {
     var pageProps = currentPage.getContentResource();
     var parseLinkURL = function(linkURL) {
         if (linkURL) {
-            linkURL = linkURL.replace("\"","");
-            linkURL = linkURL.replace("\"","");
+            linkURL = linkURL.replace("\"", "");
+            linkURL = linkURL.replace("\"", "");
 
             if (linkURL.startsWith("/content") && !linkURL.endsWith(HTML_EXTENSION)) {
                 return ("".concat(linkURL + ".html"));
@@ -41,41 +41,37 @@ use(function () {
 
     if (pageProps) {
         var isPrivatePage = pageProps.properties["isPrivatePage"];
-        if (isPrivatePage)
-        {
+        if (isPrivatePage) {
             jsonObject.put("isPrivatePage", true);
-        }else{
+        } else {
             jsonObject.put("isPrivatePage", false);
         }
-    }else{
+    } else {
         jsonObject.put("isPrivatePage", false);
     }
 
     if (properties.get("label") != null) {
         jsonObject.put("label", properties.get("label"));
     }
-    if (properties.get("authenticationURL") != null)
-    {
+    if (properties.get("authenticationURL") != null) {
         jsonObject.put("authenticationURL", properties.get("authenticationURL"));
-    }else{
+    } else {
         if (this.authorizationPageURL != null) {
             jsonObject.put("authenticationURL", this.authorizationPageURL);
         }
     }
 
-    if (properties.get("uiServiceEndPoint") != null)
-    {
+    if (properties.get("uiServiceEndPoint") != null) {
         jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
-    }else{
+    } else {
         if (this.uiServiceDomain != null) {
-            jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
+            jsonObject.put("uiServiceEndPoint", this.uiServiceDomain + this.loginEndpoint);
         }
     }
 
-    if (properties.get("clientId") != null)
-    {
+    if (properties.get("clientId") != null) {
         jsonObject.put("clientId", properties.get("clientId"));
-    }else{
+    } else {
         if (this.pingAppId != null) {
             jsonObject.put("clientId", this.pingAppId);
         }
@@ -103,12 +99,13 @@ use(function () {
 
     if (properties.get("shopLogoutRedirectUrl") != null) {
 
-            var shopLogoutRedirectUrl = parseLinkURL(properties.get("shopLogoutRedirectUrl"))
-            jsonObject.put("shopLogoutRedirectUrl", shopLogoutRedirectUrl);
-        }
+        var shopLogoutRedirectUrl = parseLinkURL(properties.get("shopLogoutRedirectUrl"))
+        jsonObject.put("shopLogoutRedirectUrl", shopLogoutRedirectUrl);
+    }
 
     if (properties.get("clientId") != null) {
-        jsonObject.put("clientId", properties.get("clientId"));       }
+        jsonObject.put("clientId", properties.get("clientId"));
+    }
 
     if (properties.get("myEcIdlabel") != null) {
         jsonObject.put("myEcIdlabel", properties.get("myEcIdlabel"));
@@ -116,6 +113,13 @@ use(function () {
     if (properties.get("myEcId") != null) {
         jsonObject.put("myEcId", properties.get("myEcId"));
     }
+    if (properties.get("idleTimeout") != null) {
+        jsonObject.put("idleTimeout", properties.get("idleTimeout"));
+    }
+    if (properties.get("maxTimeout") != null) {
+        jsonObject.put("maxTimeout", properties.get("maxTimeout"));
+    }
+
     if (listValues != null) {
         jsonObject.put("items", listValues);
     }
