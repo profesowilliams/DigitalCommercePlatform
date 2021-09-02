@@ -1,0 +1,15 @@
+.cmp-td-quote-checkout {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  width: fit-content;
+  &__button {
+    &__title {
+      font-size: $font-size-large;
+      font-weight: $font-weight-bold;
+    }
+  }
+  &__dropdown {
+    width: rem(250px);
+  }
+}

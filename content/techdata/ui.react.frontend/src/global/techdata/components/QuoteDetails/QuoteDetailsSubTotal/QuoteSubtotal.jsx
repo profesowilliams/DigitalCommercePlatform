@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const QuoteSubtotal = ({ label, amount, currencySymbol }) => {
     return (
         <div>
-            <div className='cmp-td-quote-subtotal'>
+            <div className='cmp-td-quote-subtotal cmp-widget'>
                 <div className='cmp-td-quote-subtotal__price-area'>
                     <div className='cmp-td-quote-subtotal__price-area--title'>
                         {label}
