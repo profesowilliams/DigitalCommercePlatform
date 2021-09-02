@@ -7,18 +7,18 @@
     <https jcr:primaryType="sling:OrderedFolder">
         <uat.dc.tdebusiness.cloud
             jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas]">
+            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
             <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1]"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
                 sling:match="(.+)$"/>
         </uat.dc.tdebusiness.cloud>
         <techdata-digital-dev.adobecqms.net
             jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas]">
+            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
             <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1]"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
                 sling:match="(.+)$"/>
         </techdata-digital-dev.adobecqms.net>
     </https>

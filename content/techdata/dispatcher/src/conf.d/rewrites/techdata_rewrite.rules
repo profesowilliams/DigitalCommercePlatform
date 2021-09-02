@@ -2,24 +2,24 @@
 RedirectMatch "^/$" "/us"
 
 # apac
-RewriteRule ^/sg$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
-RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
+RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]
+RewriteRule ^/apac/en$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]
 RewriteRule ^/au$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
 RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
 RewriteRule ^/hk$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
 RewriteRule ^/hk/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
 RewriteRule ^/hk/tdcs$ /content/${CONTENT_FOLDER_NAME}/apac/hk/tdcs.html [PT,L]
+RewriteRule ^/hk/tdcs/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/tdcs/en.html [PT,L]
 RewriteRule ^/in$ /content/${CONTENT_FOLDER_NAME}/apac/in/en.html [PT,L]
 RewriteRule ^/in/en$ /content/${CONTENT_FOLDER_NAME}/apac/in/en.html [PT,L]
 RewriteRule ^/my$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
 RewriteRule ^/my/en$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
 RewriteRule ^/nz$ /content/${CONTENT_FOLDER_NAME}/apac/nz/en.html [PT,L]
 RewriteRule ^/nz/en$ /content/${CONTENT_FOLDER_NAME}/apac/nz/en.html [PT,L]
-RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]
+RewriteRule ^/sg$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
+RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME}/apac/sg/en.html [PT,L]
 
 # americas
-RewriteRule ^/us$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
-RewriteRule ^/us/en$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
 RewriteRule ^/ar$ /content/${CONTENT_FOLDER_NAME}/americas/ar/en.html [PT,L]
 RewriteRule ^/ar/en$ /content/${CONTENT_FOLDER_NAME}/americas/ar/en.html [PT,L]
 RewriteRule ^/br$ /content/${CONTENT_FOLDER_NAME}/americas/br/en.html [PT,L]
@@ -36,24 +36,32 @@ RewriteRule ^/mx$ /content/${CONTENT_FOLDER_NAME}/americas/mx/en.html [PT,L]
 RewriteRule ^/mx/en$ /content/${CONTENT_FOLDER_NAME}/americas/mx/en.html [PT,L]
 RewriteRule ^/pe$ /content/${CONTENT_FOLDER_NAME}/americas/pe/en.html [PT,L]
 RewriteRule ^/pe/en$ /content/${CONTENT_FOLDER_NAME}/americas/pe/en.html [PT,L]
+RewriteRule ^/us$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
+RewriteRule ^/us/en$ /content/${CONTENT_FOLDER_NAME}/americas/us/en.html [PT,L]
 
 # europe
 RewriteRule ^/at$ /content/${CONTENT_FOLDER_NAME}/americas/at/en.html [PT,L]
 RewriteRule ^/at/en$ /content/${CONTENT_FOLDER_NAME}/americas/at/en.html [PT,L]
 RewriteRule ^/be$ /content/${CONTENT_FOLDER_NAME}/americas/be/en.html [PT,L]
 RewriteRule ^/be/en$ /content/${CONTENT_FOLDER_NAME}/americas/be/en.html [PT,L]
-RewriteRule ^/hr$ /content/${CONTENT_FOLDER_NAME}/americas/hr/en.html [PT,L]
-RewriteRule ^/hr/en$ /content/${CONTENT_FOLDER_NAME}/americas/hr/en.html [PT,L]
+RewriteRule ^/ch$ /content/${CONTENT_FOLDER_NAME}/americas/ch/en.html [PT,L]
+RewriteRule ^/ch/en$ /content/${CONTENT_FOLDER_NAME}/americas/ch/en.html [PT,L]
+RewriteRule ^/cs$ /content/${CONTENT_FOLDER_NAME}/americas/cs/en.html [PT,L]
+RewriteRule ^/cs/en$ /content/${CONTENT_FOLDER_NAME}/americas/cs/en.html [PT,L]
 RewriteRule ^/cz$ /content/${CONTENT_FOLDER_NAME}/americas/cz/en.html [PT,L]
 RewriteRule ^/cz/en$ /content/${CONTENT_FOLDER_NAME}/americas/cz/en.html [PT,L]
+RewriteRule ^/de$ /content/${CONTENT_FOLDER_NAME}/americas/de/en.html [PT,L]
+RewriteRule ^/de/en$ /content/${CONTENT_FOLDER_NAME}/americas/de/en.html [PT,L]
 RewriteRule ^/dk$ /content/${CONTENT_FOLDER_NAME}/americas/dk/en.html [PT,L]
 RewriteRule ^/dk/en$ /content/${CONTENT_FOLDER_NAME}/americas/dk/en.html [PT,L]
+RewriteRule ^/es$ /content/${CONTENT_FOLDER_NAME}/americas/es/en.html [PT,L]
+RewriteRule ^/es/en$ /content/${CONTENT_FOLDER_NAME}/americas/es/en.html [PT,L]
 RewriteRule ^/fi$ /content/${CONTENT_FOLDER_NAME}/americas/fi/en.html [PT,L]
 RewriteRule ^/fi/en$ /content/${CONTENT_FOLDER_NAME}/americas/fi/en.html [PT,L]
 RewriteRule ^/fr$ /content/${CONTENT_FOLDER_NAME}/americas/fr/en.html [PT,L]
 RewriteRule ^/fr/en$ /content/${CONTENT_FOLDER_NAME}/americas/fr/en.html [PT,L]
-RewriteRule ^/de$ /content/${CONTENT_FOLDER_NAME}/americas/de/en.html [PT,L]
-RewriteRule ^/de/en$ /content/${CONTENT_FOLDER_NAME}/americas/de/en.html [PT,L]
+RewriteRule ^/hr$ /content/${CONTENT_FOLDER_NAME}/americas/hr/en.html [PT,L]
+RewriteRule ^/hr/en$ /content/${CONTENT_FOLDER_NAME}/americas/hr/en.html [PT,L]
 RewriteRule ^/hu$ /content/${CONTENT_FOLDER_NAME}/americas/hu/en.html [PT,L]
 RewriteRule ^/hu/en$ /content/${CONTENT_FOLDER_NAME}/americas/hu/en.html [PT,L]
 RewriteRule ^/ie$ /content/${CONTENT_FOLDER_NAME}/americas/ie/en.html [PT,L]
@@ -70,16 +78,10 @@ RewriteRule ^/pt$ /content/${CONTENT_FOLDER_NAME}/americas/pt/en.html [PT,L]
 RewriteRule ^/pt/en$ /content/${CONTENT_FOLDER_NAME}/americas/pt/en.html [PT,L]
 RewriteRule ^/ro$ /content/${CONTENT_FOLDER_NAME}/americas/ro/en.html [PT,L]
 RewriteRule ^/ro/en$ /content/${CONTENT_FOLDER_NAME}/americas/ro/en.html [PT,L]
-RewriteRule ^/cs$ /content/${CONTENT_FOLDER_NAME}/americas/cs/en.html [PT,L]
-RewriteRule ^/cs/en$ /content/${CONTENT_FOLDER_NAME}/americas/cs/en.html [PT,L]
-RewriteRule ^/sk$ /content/${CONTENT_FOLDER_NAME}/americas/sk/en.html [PT,L]
-RewriteRule ^/sk/en$ /content/${CONTENT_FOLDER_NAME}/americas/sk/en.html [PT,L]
-RewriteRule ^/es$ /content/${CONTENT_FOLDER_NAME}/americas/es/en.html [PT,L]
-RewriteRule ^/es/en$ /content/${CONTENT_FOLDER_NAME}/americas/es/en.html [PT,L]
 RewriteRule ^/se$ /content/${CONTENT_FOLDER_NAME}/americas/se/en.html [PT,L]
 RewriteRule ^/se/en$ /content/${CONTENT_FOLDER_NAME}/americas/se/en.html [PT,L]
-RewriteRule ^/ch$ /content/${CONTENT_FOLDER_NAME}/americas/ch/en.html [PT,L]
-RewriteRule ^/ch/en$ /content/${CONTENT_FOLDER_NAME}/americas/ch/en.html [PT,L]
+RewriteRule ^/sk$ /content/${CONTENT_FOLDER_NAME}/americas/sk/en.html [PT,L]
+RewriteRule ^/sk/en$ /content/${CONTENT_FOLDER_NAME}/americas/sk/en.html [PT,L]
 RewriteRule ^/tr$ /content/${CONTENT_FOLDER_NAME}/americas/tr/en.html [PT,L]
 RewriteRule ^/tr/en$ /content/${CONTENT_FOLDER_NAME}/americas/tr/en.html [PT,L]
 RewriteRule ^/uk$ /content/${CONTENT_FOLDER_NAME}/americas/uk/en.html [PT,L]
@@ -96,7 +98,7 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
-RewriteRule ^/us(.*)$ /content/${CONTENT_FOLDER_NAME}/americas/us$1 [PT,L]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk)(.*)$ /content/${CONTENT_FOLDER_NAME}/europe/$1$2 [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
@@ -109,4 +111,17 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
-RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/$1 [PT,L]
+RewriteRule ^/(ar|br|ca|cl|co|ec|mx|pe|us)(.*)$ /content/${CONTENT_FOLDER_NAME}/americas/$1$2 [PT,L]
+
+RewriteCond %{REQUEST_URI} !^/apps
+RewriteCond %{REQUEST_URI} !^/bin
+RewriteCond %{REQUEST_URI} !^/content
+RewriteCond %{REQUEST_URI} !^/etc
+RewriteCond %{REQUEST_URI} !^/home
+RewriteCond %{REQUEST_URI} !^/libs
+RewriteCond %{REQUEST_URI} !^/saml_login
+RewriteCond %{REQUEST_URI} !^/system
+RewriteCond %{REQUEST_URI} !^/tmp
+RewriteCond %{REQUEST_URI} !^/var
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteRule ^/(apac|au|hk|hk|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/$1$2 [PT,L]
