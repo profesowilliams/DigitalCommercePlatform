@@ -7,22 +7,29 @@
         &__tablist {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-start;
             width: -webkit-fill-available;
-            width: 15%;
+            width: 18%;
             margin: 0;
             line-height: rem(50px);
             .cmp-tabs__tab {
                 padding: 0 rem(16px);
+                position: relative;
+                top: rem(-10px);
             }
         }
 
         &__tabpanel {
             margin: 0 !important;
-            width: 85%;
+            width: 82%;
             padding-left: rem(45px);
             border-left: rem(1px) solid get-color(brand-scrollbar);
+
+            &.cmp-container {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
         }
 
         &__tab {
