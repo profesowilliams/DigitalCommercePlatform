@@ -5,11 +5,13 @@ using DigitalCommercePlatform.UIServices.Common.Cart.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using DigitalFoundation.Common.Services.UI.ExceptionHandling;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -42,10 +44,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce
             });
         }
 
-        public override void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, TelemetryClient telemetryClient)
         {
             app.UseStaticFiles();
-            base.Configure(app, env);
+            base.Configure(app, env, applicationLifetime, telemetryClient);
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

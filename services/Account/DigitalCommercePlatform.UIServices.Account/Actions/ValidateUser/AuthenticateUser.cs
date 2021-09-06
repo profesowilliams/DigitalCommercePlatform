@@ -110,7 +110,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 }
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
+#pragma warning disable CS0618 // Type or member is obsolete
                 var roles = userResponse.User.Roles;
+#pragma warning restore CS0618 // Type or member is obsolete
                 if (roles == null)
                     roles = new List<string>();
 
@@ -119,7 +121,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 else
                     roles = userResponse.User.ID.Equals("516514") ? new List<string> { "hasDCPAccess" } : new List<string>();
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 userResponse.User.Roles = roles;
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 // Current requirement is to take the first customer from the list
                 userResponse.User.ActiveCustomer = userResponse.User.CustomerList?.FirstOrDefault();

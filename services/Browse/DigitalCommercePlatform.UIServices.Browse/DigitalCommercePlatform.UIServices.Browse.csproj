@@ -70,9 +70,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.1.61" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.61" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.61" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.1.73" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.1.73" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.1.73" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
