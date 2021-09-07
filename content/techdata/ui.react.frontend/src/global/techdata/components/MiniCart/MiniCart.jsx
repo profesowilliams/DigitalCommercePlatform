@@ -24,6 +24,10 @@ const MiniCart = ({componentProp}) => {
                 let { data: { content: { data: {totalQuantity} } } } = await usGet(endpoint, { });
                 setCartItems(totalQuantity);
                 localStorage.setItem('ActiveCart', JSON.stringify({ totalQuantity }) );
+                // Updating sessionIdleTimeout with current time + 1 hour
+                var dt = new Date();
+                dt.setHours(dt.getHours() + 1);
+                localStorage.setItem('sessionIdleTimeout', dt.valueOf());
             } catch {
             }
 

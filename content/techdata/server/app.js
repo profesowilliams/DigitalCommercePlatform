@@ -157,9 +157,9 @@ app.post("/login", function (req, res) {
     }
 });
 
-app.get("/logout", function (req, res) {
-    let errorPage = req.query.InErrorResource;
-    let redirectUrl = req.query.TargetResource;
+app.post("/logoutservice", function (req, res) {
+    let code = req.body.code;
+    let redirectUrl = req.body.RedirectUri;
     let applicationName = req.body.applicationName;
 
     console.log("post submit");
@@ -184,7 +184,7 @@ app.get("/logout", function (req, res) {
     res.redirect(redirectUrl);
 });
 
-app.post("/logoutservice", function (req, res) {
+app.post("/logout", function (req, res) {
 
     let applicationName = req.body.applicationName;
 
@@ -478,12 +478,6 @@ app.get("/ui-commerce/v1/quote", function (req, res) {
     res.json(response);
 });
 
-app.get("/ui-commerce/v1/quotedetails", function (req, res) {
-    const id = req.query.id;
-    const response = utils.getQuoteDetailsResponse();
-    res.json(response);
-});
-
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
     const details = req.query.details || true;
@@ -663,7 +657,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           },
       });
   }
-  
+
   const response = {
     "content": {
       "details": {

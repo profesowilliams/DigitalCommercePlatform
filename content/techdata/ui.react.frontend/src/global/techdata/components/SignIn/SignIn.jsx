@@ -10,8 +10,7 @@ import {
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import {usPost} from "../../../../utils/api";
-import { signOut } from '../../../../utils';
-
+import { signOutBasedOnParam } from '../../../../utils';
 
 const FA = require('react-fontawesome');
 
@@ -22,13 +21,16 @@ const SignIn = (props) => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
 	const configDataAEM = JSON.parse(props.componentProp);
-    const dropDownData = JSON.parse(props.aemDataSet.dropdownlinks);
+	let dropDownData = undefined;
+	if(props.aemDataSet && props.aemDataSet.dropdownlinks) {
+        dropDownData = JSON.parse(props.aemDataSet.dropdownlinks);
+    }
 	const { auth } = useSelector((state) => {
 		return state;
 	});
 
 	const codeQueryParam = 'code';
-	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode, pingLogoutURL, errorPageUrl } = configDataAEM;
+	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode, shopLoginRedirectUrl, pingLogoutURL, errorPageUrl } = configDataAEM;
 	const requested = props.data.auth.requested;
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
@@ -66,18 +68,53 @@ const SignIn = (props) => {
 				if (actionParam ===ACTION_QUERY_PARAM_LOGOUT_VALUE && redirectUrl)
 				{
 					let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
-					signOut(logoutURL, pingLogoutURL, errorPageUrl, redirectUrl, true);
+					signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, redirectUrl);
 				}
 			}
 		}
 	}
 
+    /**
+     *
+     * SessionMaxTimeout - MAX_TIMEOUT on PING that keeps the active logged-in user alive
+     * SessionIdleTimeout - IDLE_TIMEOUT on PING that keeps the inactive logged-in user alive
+     *
+     * If user sessionId exist then
+     *      if sessionMaxTimeout is before currentTime or sessionIdleTimeout is before currentTime
+     *          then initiate user logout
+    */
+	const isSessionExpired = () => {
+	    try {
+	        let sessionId = localStorage.getItem("sessionId");
+	        if(sessionId) {
+                let sessionMaxTimeout = localStorage.getItem("sessionMaxTimeout");
+                let sessionIdleTimeout = localStorage.getItem("sessionIdleTimeout");
+                // Below is added for missing sessionMaxTimeout/sessionIdleTimeout localstorage esp for existing login sessions
+                if(!sessionMaxTimeout) return true;
+                var sessionMaxTimeoutInt = parseInt(sessionMaxTimeout);
+                var sessionIdleTimeoutInt = parseInt(sessionIdleTimeout);
+                var currentTime = new Date().valueOf();
+                // checking if session expiration is before curr time
+                if(sessionMaxTimeout < currentTime || (sessionIdleTimeoutInt && sessionIdleTimeoutInt < currentTime)) {
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.error("invalid login session expiration", e);
+            return true;
+        }
+        return false;
+	}
+
 	useEffect(() => {
+	    if(isSessionExpired()) {
+           signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, encodeURIComponent(window.location.href));
+        }
 		redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
 		localStorage.setItem('signin', constructSignInURL());
 		isCodePresent();
 		routeChange();
-		isAuthenticated(authUrl, clientId, isPrivatePage);
+		isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 	}, []);
 
 	const isCodePresent = () => {
@@ -103,7 +140,7 @@ const SignIn = (props) => {
 	};
 
 	const onSignIn = () => {
-		redirectUnauthenticatedUser(authUrl, clientId);
+		redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
 	};
 
 	const routeChange = () => {

@@ -58,7 +58,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                                     className='cmp-sign-in-signout'
                                     onClick={() => {
                                         signOut(config?.logoutURL ?? null, config?.pingLogoutURL ?? null,
-                                        config?.errorPageUrl ?? null, config?.shopLogoutRedirectUrl ?? null);
+                                        config?.errorPageUrl ?? null, config?.shopLogoutRedirectUrl ?? null,
+                                        config?.aemAuthUrl ?? null);
                                     }}
                                 >
                                     Log Out

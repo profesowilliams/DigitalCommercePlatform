@@ -136,13 +136,13 @@ public class PageImpl implements Page {
     public String[] getSiteSections() {
         com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
         String[] siteSections = {"n/a", "n/a", "n/a", "n/a"};
-        if(localePage != null) {
-            String relativePagePath = currentPage.getParent().getPath().replace(localePage.getPath(), StringUtils.EMPTY);
+        if(localePage != null && !currentPage.getPath().contains("/content/experience-fragments")) {
+            String relativePagePath = currentPage.getPath().replace(localePage.getPath(), StringUtils.EMPTY);
             List<String> hierarchyPagesList = buildHierarchyList(relativePagePath.split("/"));
             for (int i = 0; i < hierarchyPagesList.size(); i++) {
                 String path = hierarchyPagesList.get(i);
-                if(StringUtils.isNotEmpty(path)) {
-                    siteSections[i-1] = path;
+                if (StringUtils.isNotEmpty(path)) {
+                    siteSections[i - 1] = path;
                 }
             }
         }

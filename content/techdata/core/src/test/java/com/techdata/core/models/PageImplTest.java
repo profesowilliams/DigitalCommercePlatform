@@ -138,8 +138,8 @@ class PageImplTest {
     @Test
     void validateTDSiteSections() {
         when(currentPage.getAbsoluteParent(LOCALE_PAGE)).thenReturn(localePage);
-        when(currentPage.getParent()).thenReturn(parentPage);
-        when(parentPage.getPath()).thenReturn(CURR_PAGE_PATH);
+//        when(currentPage.getParent()).thenReturn(parentPage);
+        when(currentPage.getPath()).thenReturn(CURR_PAGE_PATH);
         when(localePage.getPath()).thenReturn(LOCALE_PAGE_PATH);
         assertNotNull(tdPage.getSiteSections());
     }

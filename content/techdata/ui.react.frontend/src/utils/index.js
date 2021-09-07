@@ -5,19 +5,19 @@ import {skip} from "rxjs/operators";
 
 export const createSessionId = () => nanoid(16)
 
+export const createMaxTimeout = () => {
+    // Setting sessionMaxTimeout to future time
+    var dt = new Date();
+    dt.setHours(dt.getHours() + 8);
+    localStorage.setItem('sessionMaxTimeout', dt.valueOf());
+}
+
 export const setSessionId = (sessionId) =>
   localStorage.setItem('sessionId', sessionId)
 
 export const getSessionId = () => localStorage.getItem('sessionId')
 
-export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, skipShop) => {
-  const { protocol, hostname, port, pathname } = window.location;
-  let sessionId = localStorage.getItem('sessionId');
-
-    if(window.SHOP && window.SHOP.authentication && !skipShop) {
-    window.SHOP.authentication.signOut();
-  } else {
-
+export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
     /**
      * 2 step logout process:
      *  - initiate UI service logout
@@ -28,25 +28,40 @@ export const signOut = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogo
 
       try {
 
-        const { data: { error: { isError } } } = await usPost(redirectURL, { });
-        if( !isError ) {
+        const response = await usPost(redirectURL, { });
+                if( response.status == 200 || response.status == 401 ) {
             // Initiate Ping Federate logout
-            pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + errorPageUrl;
+            shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(window.location.href);
+            pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
             localStorage.removeItem('sessionId');
             localStorage.removeItem('signin');
             localStorage.removeItem('signout');
             localStorage.removeItem('userData');
+            localStorage.removeItem('sessionMaxTimeout');
+            localStorage.removeItem('sessionIdleTimeout');
             localStorage.removeItem('signInCode');
             localStorage.removeItem('ActiveCart');
-
-            window.location.href = pingLogoutUrl;
-
+            window.location.replace(pingLogoutUrl);
         }
       } catch(e){
         console.error('Error occurred when trying to logout');
         console.error(e);
       }
+}
 
+export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
+}
+
+export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl) => {
+  const { protocol, hostname, port, pathname } = window.location;
+  let sessionId = localStorage.getItem('sessionId');
+
+    if(window.SHOP && window.SHOP.authentication) {
+        let returnUrl = encodeURIComponent(aemAuthUrl + "?action=logout%26redirectUrl="+ window.location.href);
+        window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
+  } else {
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
   }
 
 }

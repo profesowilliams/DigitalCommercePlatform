@@ -3,257 +3,241 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Properties"
     sling:resourceType="cq/gui/components/authoring/dialog">
-    <content
+	<content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
-        <items jcr:primaryType="nt:unstructured">
-            <column
+		<items jcr:primaryType="nt:unstructured">
+			<column
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
-                <items jcr:primaryType="nt:unstructured">
-                    <tabs
+				<items jcr:primaryType="nt:unstructured">
+					<tabs
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/tabs"
                         maximized="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <properties
+						<items jcr:primaryType="nt:unstructured">
+							<properties
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Properties"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <label
+										<items jcr:primaryType="nt:unstructured">
+											<label
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Label"
                                                 name="./label"/>
-                                            <authenticationURL
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="Authentication Page URL"
-                                                name="./authenticationURL"/>
-                                            <uiService
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="UI Service Login End Point"
-                                                name="./uiServiceEndPoint"/>
-                                            <logoutURL
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="UI Service Logout End Point"
-                                                name="./logoutURL"/>
-                                            <pingLogoutURL
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="Ping Logout End Point"
-                                                name="./pingLogoutURL"/>
-                                            <errorPageUrl
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="Error Page Url"
-                                                name="./errorPageUrl"/>
-                                            <shopLogoutRedirectUrl
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                fieldLabel="Shop Auth Redirect Url"
-                                                name="./shopLogoutRedirectUrl"/>
-                                            <clientId
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="App ID"
-                                                name="./clientId"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </properties>
-                            <elements
+											<authenticationURL
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Authentication Page URL"
+													name="./authenticationURL"/>
+											<uiService
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="UI Service Login End Point"
+													name="./uiServiceEndPoint"/>
+											<logoutURL
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="UI Service Logout End Point"
+													name="./logoutURL"/>
+											<pingLogoutURL
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Ping Logout End Point"
+													name="./pingLogoutURL"/>
+											<errorPageUrl
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Error Page Url"
+													name="./errorPageUrl"/>
+											<aemAuthUrl
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+												fieldLabel="AEM Auth Url"
+												name="./aemAuthUrl"/>
+											<shopLogoutRedirectUrl
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Shop Logout Redirect Url"
+													name="./shopLogoutRedirectUrl"/>
+											<shopLoginRedirectUrl
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+													fieldLabel="Shop Login Redirect Url"
+													name="./shopLoginRedirectUrl"/>
+											<clientId
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="App ID"
+													name="./clientId"/>
+										</items>
+									</column>
+								</items>
+							</properties>
+							<elements
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Items"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <actions
+										<items jcr:primaryType="nt:unstructured">
+											<actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add links.">
-                                                <field
+												<field
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                     name="./itemLinks">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
+													<items jcr:primaryType="nt:unstructured">
+														<column
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <label
+															<items jcr:primaryType="nt:unstructured">
+																<label
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter label"
                                                                     fieldLabel="Label"
                                                                     name="./linkText"/>
-                                                                <iconUrl
+																<iconUrl
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                     fieldDescription="Enter icon"
                                                                     fieldLabel="Icon"
                                                                     name="./iconUrl"
                                                                     rootPath="/content/dam/techdata"/>
-                                                                <linkUrl
+																<linkUrl
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                     fieldDescription="Enter link"
                                                                     fieldLabel="Link"
                                                                     name="./linkUrl"
                                                                     rootPath="/content/techdata"/>
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </actions>
-                                        </items>
-                                    </column>
-                                </items>
-                            </elements>
-                            <ecIdProperties
+															</items>
+														</column>
+													</items>
+												</field>
+											</actions>
+										</items>
+									</column>
+								</items>
+							</elements>
+							<ecIdProperties
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="EC ID Properties"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <myEcIdlabel
+										<items jcr:primaryType="nt:unstructured">
+											<myEcIdlabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="My EC ID Label"
                                                 name="./myEcIdlabel"/>
-                                            <myEcId
+											<myEcId
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="ID"
                                                 name="./myEcId"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </ecIdProperties>
-                            <linksTab
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Mobile Dropdown Link"
-                                sling:resourceType="granite/ui/components/coral/foundation/container"
-                                margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <dropdownLinks
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                        composite="{Boolean}true"
-                                        fieldLabel="Mobile Dropdown Links">
-                                        <field
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                                            name="./primaryMenus">
-                                            <items jcr:primaryType="nt:unstructured">
-                                                <primaryLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    emptyText="Link Label"
-                                                    name="./primaryLabel"/>
-                                                <primaryLink
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                    name="./primaryLink"
-                                                    rootPath="/content/techdata"/>
-                                                <secondary
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    composite="{Boolean}true"
-                                                    fieldLabel="Secondary Menus">
-                                                    <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./secondaryMenus">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <secondaryLabel
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                emptyText="Link Label"
-                                                                name="./secondaryLabel"/>
-                                                            <secondaryLink
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                                name="./secondaryLink"
-                                                                rootPath="/content/techdata"/>
-                                                            <tertiary
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                                composite="{Boolean}true"
-                                                                fieldLabel="Tertiary Menus">
-                                                                <field
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                                    name="./tertiaryMenus">
-                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                        <tertiaryLabel
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                            emptyText="Link Label"
-                                                                            name="./tertiaryLabel"/>
-                                                                        <tertiaryLink
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                                            name="./tertiaryLink"
-                                                                            rootPath="/content/techdata"/>
-                                                                    </items>
-                                                                </field>
-                                                            </tertiary>
-                                                        </items>
-                                                    </field>
-                                                </secondary>
-                                            </items>
-                                        </field>
-                                    </dropdownLinks>
-                                </items>
-                            </linksTab>
-                            <timeout
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Session Time Out "
-                                sling:resourceType="granite/ui/components/coral/foundation/container"
-                                margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <idle
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                                emptyText="60"
-                                                fieldLabel="IDLE TIMEOUT"
-                                                name="./idleTimeout"/>
-                                            <max
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                                emptyText="480"
-                                                fieldLabel="MAX TIMEOUT"
-                                                name="./maxTimeout"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </timeout>
-                        </items>
-                    </tabs>
-                </items>
-            </column>
-        </items>
-    </content>
+										</items>
+									</column>
+								</items>
+							</ecIdProperties>
+							<linksTab
+								jcr:primaryType="nt:unstructured"
+								jcr:title="Mobile Dropdown Link"
+								sling:resourceType="granite/ui/components/coral/foundation/container"
+								margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<dropdownLinks
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+											composite="{Boolean}true"
+											fieldLabel="Mobile Dropdown Links">
+										<field
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/container"
+											name="./primaryMenus">
+											<items jcr:primaryType="nt:unstructured">
+												<primaryLabel
+														jcr:primaryType="nt:unstructured"
+														sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+														emptyText="Link Label"
+														name="./primaryLabel"/>
+												<primaryLink
+														jcr:primaryType="nt:unstructured"
+														sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+														rootPath="/content/techdata"
+														name="./primaryLink"/>
+												<secondary
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+													composite="{Boolean}true"
+													fieldLabel="Secondary Menus">
+													<field
+														jcr:primaryType="nt:unstructured"
+														sling:resourceType="granite/ui/components/coral/foundation/container"
+														name="./secondaryMenus">
+														<items jcr:primaryType="nt:unstructured">
+															<secondaryLabel
+																	jcr:primaryType="nt:unstructured"
+																	sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+																	emptyText="Link Label"
+																	name="./secondaryLabel"/>
+															<secondaryLink
+																	jcr:primaryType="nt:unstructured"
+																	sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+																	rootPath="/content/techdata"
+																	name="./secondaryLink"/>
+															<tertiary
+																	jcr:primaryType="nt:unstructured"
+																	sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+																	composite="{Boolean}true"
+																	fieldLabel="Tertiary Menus">
+																<field
+																	jcr:primaryType="nt:unstructured"
+																	sling:resourceType="granite/ui/components/coral/foundation/container"
+																	name="./tertiaryMenus">
+																<items jcr:primaryType="nt:unstructured">
+																		<tertiaryLabel
+																			jcr:primaryType="nt:unstructured"
+																			sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+																			emptyText="Link Label"
+																			name="./tertiaryLabel"/>
+																		<tertiaryLink
+																			jcr:primaryType="nt:unstructured"
+																			sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+																			rootPath="/content/techdata"
+																			name="./tertiaryLink"/>
+																	</items>
+																</field>
+															</tertiary>
+														</items>
+													</field>
+												</secondary>
+											</items>
+										</field>
+									</dropdownLinks>
+								</items>
+							</linksTab>
+						</items>
+					</tabs>
+				</items>
+			</column>
+		</items>
+	</content>
 </jcr:root>

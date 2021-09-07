@@ -1,6 +1,6 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
-import { createSessionId, setSessionId } from '../../utils';
+import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
 import {refreshPage} from "../../utils/policies";
 
 export const signInRequest = () => {
@@ -36,6 +36,7 @@ export const signInAsynAction = (apiUrl) => {
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem("signInCode");
 		const sessionId = createSessionId();
+		createMaxTimeout();
 		setSessionId(sessionId);
 		return {
 			"TraceId" : "NA",

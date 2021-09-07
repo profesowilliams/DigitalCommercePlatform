@@ -7,10 +7,16 @@ import SearchSuggestions from "./SearchSuggestions";
 import { toggleAreaSelection } from './SearchAreas'
 
 function getShopLoginUrlPrefix() {
-    let sessionId = localStorage.getItem('sessionId');
     let prefixShopAuthUrl = "";
-    if(sessionId) {
-        prefixShopAuthUrl = "https://shop.cstenet.com/loginRedirect?returnUrl=";
+    if(window.SHOP == undefined) {
+        let sessionId = localStorage.getItem('sessionId');
+        if(sessionId) {
+            let prefixURLEle = document.querySelector('#ssoLoginRedirectUrl');
+            if(prefixURLEle) {
+                prefixShopAuthUrl =
+                    document.querySelector('#ssoLoginRedirectUrl').getAttribute('data-ssoLoginRedirectUrl') + "?returnUrl=";
+            }
+        }
     }
     return prefixShopAuthUrl;
 }
@@ -74,15 +80,14 @@ const SearchBar = ({ data, componentProp }) => {
         }
       }
     }
-    return getShopLoginUrlPrefix() + searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
+    let searchTargetUrl = searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
+    if(getShopLoginUrlPrefix() !== "") {
+        searchTargetUrl = encodeURIComponent(searchTargetUrl);
+    }
+    return getShopLoginUrlPrefix() + searchTargetUrl;
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
-    let sessionId = localStorage.getItem('sessionId');
-    let prefixShopAuthUrl = "";
-    if(sessionId) {
-        prefixShopAuthUrl = "https://shop.cstenet.com/loginRedirect?returnUrl=";
-    }
     let path =
       replaceSearchTerm(selectedArea.areaSuggestionUrl, searchTerm)
       .replace("{suggestion-index}", itemIndex + 1);
@@ -90,8 +95,11 @@ const SearchBar = ({ data, componentProp }) => {
     if (refinementId) {
       path += `&refinements=${refinementId}`;
     }
-
-    return getShopLoginUrlPrefix() + prefixShopAuthUrl + `${searchDomain}${path}`;
+    let searchTargetUrl = `${searchDomain}${path}`;
+    if(getShopLoginUrlPrefix() !== "") { // encode only if there is prefix url
+        searchTargetUrl = encodeURIComponent(searchTargetUrl);
+    }
+    return getShopLoginUrlPrefix() +  searchTargetUrl;
   };
 
   const onSearchTermTextChange = (e) => {
