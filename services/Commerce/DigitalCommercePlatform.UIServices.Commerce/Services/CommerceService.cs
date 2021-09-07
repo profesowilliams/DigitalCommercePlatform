@@ -169,16 +169,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             List<PricingCondition> lstPricingConditions = new List<PricingCondition>();
 
-            lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "0"));
-            lstPricingConditions.Add(new PricingCondition("Education (Student, Staff)", "1"));
-            lstPricingConditions.Add(new PricingCondition("Education (Higher)", "2"));
-            lstPricingConditions.Add(new PricingCondition("Education (K - 12)", "3"));
-            lstPricingConditions.Add(new PricingCondition("Education E-Rate (K - 12)", "4"));
-            lstPricingConditions.Add(new PricingCondition("Federal", "5"));
-            lstPricingConditions.Add(new PricingCondition("Federal GSA", "6"));
-            lstPricingConditions.Add(new PricingCondition("State", "7"));
-            lstPricingConditions.Add(new PricingCondition("Medical", "8"));
-            lstPricingConditions.Add(new PricingCondition("SEWP Contract", "11"));
+            lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "Commercial"));
+            lstPricingConditions.Add(new PricingCondition("Education (Student, Staff)", "EduStudentStaff"));
+            lstPricingConditions.Add(new PricingCondition("Education (Higher)", "EduHigher"));
+            lstPricingConditions.Add(new PricingCondition("Education (K - 12)", "EduK12"));
+            lstPricingConditions.Add(new PricingCondition("Education E-Rate (K - 12)", "EduErate"));
+            lstPricingConditions.Add(new PricingCondition("Federal", "GovtFederal"));
+            lstPricingConditions.Add(new PricingCondition("Federal GSA", "GovtFederalGSA"));
+            lstPricingConditions.Add(new PricingCondition("Local", "GovtLocal"));
+            lstPricingConditions.Add(new PricingCondition("State", "GovtState"));
+            lstPricingConditions.Add(new PricingCondition("Medical", "Medical"));
+            lstPricingConditions.Add(new PricingCondition("SEWP Contract", "SEWPContract "));
 
             var response = new PricingConditionsModel
             {
