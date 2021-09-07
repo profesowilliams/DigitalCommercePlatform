@@ -12,8 +12,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
 	const { id: userId, firstName: userName } = userDataCheck;
 
     const handlePrimaryClick = (obj) => {
-        setSecondaryItems(obj);
-        setShowSecondary(prevSecondary => !prevSecondary);
+        if (obj.secondaryMenus) {
+            setSecondaryItems(obj);
+            setShowSecondary(prevSecondary => !prevSecondary);
+        }
     }
 
     const handleBackBtnClick = () => {

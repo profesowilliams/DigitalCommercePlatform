@@ -5,8 +5,10 @@ import FontIcon from '../Widgets/FontIcon';
 function SecondaryMenu({secondaryData, handleBackBtnClick}) {
     const [isOpen, setIsOpen] = useState(null);
 
-    const handleSecondaryClick = (event, index) => {
-        event.preventDefault();
+    const handleSecondaryClick = (event, index, hasChild) => {
+        if (hasChild)
+            event.preventDefault();
+        event.stopPropagation();
         setIsOpen(prevIsOpen => {
             if (prevIsOpen === index) return null;
             return prevIsOpen = index
@@ -23,7 +25,7 @@ function SecondaryMenu({secondaryData, handleBackBtnClick}) {
             <ul className="cmp-sign-in-group">
                 {secondaryData.secondaryMenus.items.map((item, index) => {
                     return (
-                        <li onClick={() => handleSecondaryClick(event, index)} key={Symbol(item.secondaryLabel).toString()} className={`cmp-sign-in__item cmp-sign-in__level-1 ${item.tertiaryMenus ? 'has-child' : ''} ${(isOpen === index) ? 'active' : ''}`}>
+                        <li onClick={() => handleSecondaryClick(event, index, item.tertiaryMenus)} key={Symbol(item.secondaryLabel).toString()} className={`cmp-sign-in__item cmp-sign-in__level-1 ${item.tertiaryMenus ? 'has-child' : ''} ${(isOpen === index) ? 'active' : ''}`}>
                             <a href={item.secondaryLink}>
                                 {item.secondaryLabel}
                             </a>

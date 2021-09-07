@@ -6,7 +6,7 @@ function SubHeaderMenuContainer({data, handlePrimaryClick}) {
             <ul className='cmp-sign-in-sub-header'>
                 {data.items.map((item) => {
                     return (
-                        <li onClick={() => handlePrimaryClick(item)} key={Symbol(item.primaryLabel).toString()}>{item.primaryLabel}</li>
+                        <li className={`${item.secondaryMenus ? 'has-child' : ''}`} onClick={() => handlePrimaryClick(item)} key={Symbol(item.primaryLabel).toString()}>{item.primaryLabel}</li>
                     )
                 })}
             </ul>
