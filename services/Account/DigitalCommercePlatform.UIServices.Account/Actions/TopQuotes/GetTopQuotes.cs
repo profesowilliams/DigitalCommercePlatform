@@ -1,7 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Models;
-using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
@@ -26,9 +25,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
 
         public class Response
         {
-            public IEnumerable<OpenResellerItems> Summary { get; set; }
+            public TopQuotes Summary { get; set; }
         }
 
+        public class TopQuotes
+        {
+            public IEnumerable<OpenResellerItems> Items  { get; set; }
+
+        }
         public class GetTopQuotesQueryHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IAccountService _accountQueryService;
@@ -47,9 +51,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                FindResponse<IEnumerable<QuoteModel>> quotes = await _accountQueryService.GetTopQuotesAsync(request);
-                var getQuotes = _mapper.Map<Response>(quotes);
-                return new ResponseBase<Response> { Content = getQuotes };
+                    var quotes = await _accountQueryService.GetTopQuotesAsync(request);
+                    var tempQuotes = _mapper.Map<TopQuotes>(quotes);
+                    var getQuotes = _mapper.Map<Response>(tempQuotes);
+                    return new ResponseBase<Response> { Content = getQuotes };                
             }
         }
 

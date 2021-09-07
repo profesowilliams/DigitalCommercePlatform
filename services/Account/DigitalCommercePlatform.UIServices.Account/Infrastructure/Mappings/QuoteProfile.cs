@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using static DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes.GetTopQuotes;
 
 namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
 {
@@ -29,8 +30,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
                 .ForMember(dest => dest.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
                 .ForMember(dest => dest.FormattedAmount, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)));
 
-            CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetTopQuotes.Response>()
-                .ForMember(dest => dest.Summary, opt => opt.MapFrom(src => src.Data));
+            CreateMap<FindResponse<IEnumerable<QuoteModel>>, TopQuotes>()
+              .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data));
+
+            CreateMap<TopQuotes, GetTopQuotes.Response>()
+           .ForMember(dest => dest.Summary, opt => opt.MapFrom(src => src));
         }
     }
 
