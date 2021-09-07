@@ -10,7 +10,7 @@ function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
 
-	const [modal, setModal] = useState(null);
+  const [modal, setModal] = useState(null);
 
   const { spaDealsIdLabel } = componentProp;
 
@@ -24,84 +24,88 @@ function ConfigurationGrid(props) {
     return isValidDate(dateValue) ? dateValue.toLocaleDateString() : dateUTC;
   };
 
-	const labelList = [
-		{
-			labelKey: 'multiple',
-			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'multiple')?.labelValue ?? 'Multiple',
-		},
-		{
-			labelKey: 'pending',
-			labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
-		},
-	];
+  const labelList = [
+    {
+      labelKey: 'multiple',
+      labelValue: componentProp.labelList?.find((label) => label.labelKey === 'multiple')?.labelValue ?? 'Multiple',
+    },
+    {
+      labelKey: 'pending',
+      labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
+    },
+  ];
 
-	const invoicesModal = {
-		title: componentProp.invoicesModal?.title ?? 'Order',
-		content:
-			componentProp.invoicesModal?.content ??
-			'There are multiple Invoices associated with this Order. Click an invoice number to preview with the option to print or Download All for a zip file of all shown here',
-		pendingInfo:
-			componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
-	};
-
-  const getDealsIdLabel = (deals) =>
-    deals && deals.length > 1
-      ? spaDealsIdLabel
-      : deals && deals.length === 1
-      ? deals[0].id
-      : null;
+  const quotesModal = {
+    title: componentProp.quotesModal?.title ?? 'Config ID',
+    content:
+      componentProp.quotesModal?.content ??
+      'There are multiple items associated with this Config ID. Please choose the item you would like to review:',
+    pendingInfo:
+      componentProp.quotesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
+  };
 
   const options = {
     defaultSortingColumnKey: "created",
     defaultSortingDirection: "asc",
   };
 
-	function invokeModal(modal) {
-		setModal(
-			<Modal
-				modalAction={modal.action}
-				modalContent={modal.content}
-				modalProperties={modal.properties}
-				onModalClosed={() => setModal(null)}
-			></Modal>
-		);
-	}
-	function getInvoices(line) {
+  function invokeModal(modal) {
+    setModal(
+      <Modal
+        modalAction={modal.action}
+        modalContent={modal.content}
+        modalProperties={modal.properties}
+        onModalClosed={() => setModal(null)}
+      ></Modal>
+    );
+  }
+  function getQuoteCellConfiguration(line) {
     if(!line.quotes) {
       return '';
     }
-		else if (line.quotes.length && line.quotes.length > 1) {
-			return (
-				<div
-					onClick={() => {
-						invokeModal({
-							content: (
-								<DetailsInfo
-									info={invoicesModal.content}
-									line={line}
-									pendingInfo={invoicesModal.pendingInfo}
-									pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
-								></DetailsInfo>
-							),
-							properties: {
-								title: `${invoicesModal.title}: ${line.id} `,
-								buttonIcon: invoicesModal.buttonIcon,
-								buttonLabel: invoicesModal.buttonLabel,
-							},
-						});
-					}}
-				>
-					{labelList.find((label) => label.labelKey === 'multiple').labelValue}
-				</div>
-			);
-		} else {
-			if (line.quotes[0]?.id === 'Pending') {
-				return labelList.find((label) => label.labelKey === 'pending').labelValue;
-			} else {
-				return line.quotes[0]?.id ?? null;
-			}
-		}
-	}
+    else if (line.quotes.length && line.quotes.length > 1) {
+      return (
+        <div
+          onClick={() => {
+            invokeModal({
+              content: (
+                <DetailsInfo
+                  info={quotesModal.content}
+                  line={line}
+                  pendingInfo={quotesModal.pendingInfo}
+                  pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
+                ></DetailsInfo>
+              ),
+              properties: {
+                title: `${quotesModal.title}: ${line.configId} `,
+                buttonIcon: quotesModal.buttonIcon,
+                buttonLabel: quotesModal.buttonLabel,
+              },
+            });
+          }}
+        >
+          {labelList.find((label) => label.labelKey === 'multiple').labelValue}
+        </div>
+      );
+    } else {
+      if (line.quotes[0]?.Status === 'Pending') {
+        return labelList.find((label) => label.labelKey === 'pending').labelValue;
+      } else if (line.quotes[0]?.id) {
+        return (
+          <a
+            className="cmp-grid-url-underlined"
+            href={
+              componentProp.quoteDetailUrl?.replace('{id}', line.quotes[0]?.id)
+            }
+          >
+            {line.quotes[0]?.id}
+          </a>
+        )
+      } else {
+        return '';
+      }
+    }
+  }
 
   const columnDefs = [
     {
@@ -170,9 +174,9 @@ function ConfigurationGrid(props) {
       headerName: "Quote Id",
       field: "quotes",
       sortable: false,
-			cellRenderer: (props) => {
-				return <div className='cmp-grid-url-underlined'>{getInvoices(props.data)}</div>;
-			},
+      cellRenderer: (props) => {
+        return <div className='cmp-grid-url-underlined'>{getQuoteCellConfiguration(props.data)}</div>;
+      },
     },
     {
       headerName: "Action",
@@ -186,7 +190,7 @@ function ConfigurationGrid(props) {
 
   return (
     <section>
-      <div className="cmp-configurations-grid cmp-quotes-grid">
+      <div className="cmp-configurations-grid">
         <GridSearchCriteria
           Filters={ConfigurationGridSearch}
           label={componentProp.searchCriteria?.title ?? "Filter Configurations"}
@@ -205,8 +209,8 @@ function ConfigurationGrid(props) {
             filteringExtension.requestInterceptor(request)
           }
         ></Grid>
+        {modal}
       </div>
-			{modal}
     </section>
   );
 }

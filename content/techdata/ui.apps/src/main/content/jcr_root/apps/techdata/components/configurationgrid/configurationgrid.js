@@ -108,8 +108,10 @@ if (properties && properties["keywordDropdownLabel"]) {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
     if (properties && properties["configDetailUrl"]) {
-        jsonObject["configDetailUrl"] = properties["configDetailUrl"] + ".html" +
-        properties["configDetailUrlSuffix"];
+        jsonObject["configDetailUrl"] = properties["configDetailUrl"] + properties["configDetailUrlSuffix"];
+    }
+    if (properties && properties["quoteDetailUrl"]) {
+        jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + properties["quoteDetailUrlSuffix"];
     }
     if (properties && properties["defaultSortingColumnKey"]) {
         optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];

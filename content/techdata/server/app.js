@@ -1390,6 +1390,7 @@ app.get("/ui-config/v1/configurations", function (req, res) {
           "configId": "VG116957111OI",
           "configurationType": "Estimate",
           "created": utils.getRandomDate(),
+          "expires":"n/a",
           "vendor": "Cisco",
           "configName": null,
           "endUserName": "AVNET TS LTD",
@@ -1513,6 +1514,16 @@ app.get("/ui-config/v1/configurations", function (req, res) {
           "configName": null,
           "endUserName": null,
           "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__1",
+                "line": "Line_863",
+                "quantity": 6,
+                "price": 54.0,
+                "created": "8/8/2021",
+                "status": "Pending"
+            },
+          ],
           "vendorQuoteId": null,
           "action": "CreateQuote",
           "details": [
