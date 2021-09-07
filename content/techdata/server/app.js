@@ -3608,3 +3608,22 @@ app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
         },
     });
 });
+
+// Punchout to vendor - CREATE CONFIG //
+app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
+    console.log(req.body);
+
+    if (!req.headers["sessionid"]) return res.status(401);
+
+    res.json({
+        content: {
+             url: "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-4009d55f-17ba623a67f-c99417e13b6c4681f7d4d16d678eaa5e&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome&P4=CREATE&P6=N"
+        },
+        error: {
+            code: 0,
+            messages: [],
+            isError: false
+        }
+    });
+});
+

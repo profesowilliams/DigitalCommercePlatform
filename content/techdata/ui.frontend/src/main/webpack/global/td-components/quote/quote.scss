@@ -28,7 +28,7 @@
   }
   &:disabled{
     opacity: .7;
-    cursor: default;
+    cursor: not-allowed;
     color: get-color(brand-text-gray);
     background-color: get-color(v-divider-gray);
     border: rem(1px) solid get-color(brand-light-gray2);
