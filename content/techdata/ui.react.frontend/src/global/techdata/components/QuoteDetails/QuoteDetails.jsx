@@ -47,7 +47,7 @@ const QuoteDetails = ({ componentProp }) => {
         logoURL={logoURL}
         fileName={fileName}
       />
-      <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} />
+      <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} quoteDetails={quoteDetails}  />
       <QuoteContactInfo
         label={resellerContactLabel}
         contact={quoteDetails.reseller}

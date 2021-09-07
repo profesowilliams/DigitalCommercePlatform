@@ -7,10 +7,10 @@ import { dateToString } from "../../../helpers/dates";
 const QuotesSubHeader = ({
   label,
   title,
-  dates = {},
+  quoteDetails = {},
 }) => {
   const urlParams = getUrlParams();
-  const { created='', expires='' } = dates;
+  const { created='', expires='' } = quoteDetails;
   const getQuoteId = ({ id }) => id;
   return (
     <div className="cmp-td-quote-subheader">
