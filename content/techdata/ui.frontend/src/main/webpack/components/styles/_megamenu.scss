@@ -179,6 +179,20 @@
     }
 }
 
+@media only screen and (min-width: 1024px) and (max-width: 1260px){
+    .cmp-megamenu {
+        .cmp-megamenu__primary {
+            li {
+             padding: 0 0.1rem;
+             font-size: 0.8rem;
+            }
+        }
+    }
+    #cmp-techdata-header.cmp-container .aem-Grid .search {
+        width: 33% !important;
+    }
+}
+
 @include tablet {
     #cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container {
         .aem-Grid {
