@@ -228,6 +228,30 @@
   margin: 0 auto!important;
 }
 
+.carousel-max-1440.dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+.carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
+    max-width: 90rem;
+    left: calc(50% - 45rem);
+}
+
+.carousel-max-1440 .dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+.carousel-max-1440 .dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
+    max-width: 90rem;
+    left: calc(50% - 45rem);
+}
+
+.carousel-max-height-500 .cmp-teaser__image .cmp-image__image {
+    max-height: 500px;
+}
+
 // New nav dots styling
 .cmp-carousel__indicators {
   width: 50%;
