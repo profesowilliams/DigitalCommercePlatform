@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { bindActionCreators } from "redux";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {isAlreadySignedIn, signInAsynAction} from "../../../../store/action/authAction";
-import { getQueryStringValue } from "../../../../utils/utils";
+import {getQueryStringValue, toggleLangNavigation} from "../../../../utils/utils";
 import {
 	isAuthenticated,
 	redirectUnauthenticatedUser,
@@ -106,6 +106,10 @@ const SignIn = (props) => {
         return false;
 	}
 
+	function showHideElements() {
+		toggleLangNavigation(isAlreadySignedIn());
+	}
+
 	useEffect(() => {
 	    if(isSessionExpired()) {
            signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, encodeURIComponent(window.location.href));
@@ -115,6 +119,7 @@ const SignIn = (props) => {
 		isCodePresent();
 		routeChange();
 		isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+		showHideElements();
 	}, []);
 
 	const isCodePresent = () => {
