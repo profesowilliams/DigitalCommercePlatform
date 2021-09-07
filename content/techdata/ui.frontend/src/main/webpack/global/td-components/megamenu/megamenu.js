@@ -180,8 +180,8 @@ import bp from '../../../common-utils/js/media-match';
         let prefixShopAuthUrl = "";
         if(window.SHOP == undefined) { // ignore if its shop
             let sessionId = localStorage.getItem('sessionId');
-            if(sessionId) {
-                var megamenu = document.getElementById("megamenu");
+            var megamenu = document.getElementById("megamenu");
+            if(sessionId && megamenu) {
                 var megamenuAnchorsLinks = megamenu.getElementsByTagName("a");
                 let prefixURLEle = document.querySelector('#ssoLoginRedirectUrl');
                 for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {

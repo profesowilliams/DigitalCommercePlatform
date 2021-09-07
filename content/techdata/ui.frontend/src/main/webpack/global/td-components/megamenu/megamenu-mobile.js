@@ -2,6 +2,8 @@ export default class MegamenuMobile {
     constructor() {
         this.log('initialized mobile megamenu');
         const mm = this.mm = document.querySelector('.megamenu');
+        if (!mm) return;
+
         this.init(mm);
         this.showCls = 'active-md';
         this.hideCls = 'inactive-md';
@@ -10,8 +12,6 @@ export default class MegamenuMobile {
     }
 
     init(el) {
-        if (!el) return;
-
         this.handlePrimary(el);
     }
 

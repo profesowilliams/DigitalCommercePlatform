@@ -35,8 +35,8 @@ export default class Hamburger {
     }
 
     hideMegaMenu(active, open) {
-        this.el.classList.remove(active);
-        this.containerEl.classList.remove(open);
+        this.el?.classList.remove(active);
+        this.containerEl?.classList.remove(open);
         this.open = false;
     }
 
