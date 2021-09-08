@@ -1,77 +1,61 @@
 "use strict";
 use(function () {
-
-    var jsonObject = {};
-
-    var listValues = [];
-    var iconValues = [];
+  var jsonObject = {};
+  var resourceResolver = resource.getResourceResolver();
     var optionData = {};
     var searchCriteriaData = {};
-    var keywordDropdownData = {};
-    var configurationTypesDropdownData = {};
-    var checkoutData = {};
-    var resourceResolver = resource.getResourceResolver();
 
-    var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
+  if (properties && properties["configDetailUrl"]) {
+    jsonObject["configDetailUrl"] = properties["configDetailUrl"] + properties["configDetailUrlSuffix"];
+  }
 
-    if (node !== null) {
-        var childrenList = node.getChildren();
+  if (properties && properties["quoteDetailUrl"]) {
+    jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + properties["quoteDetailUrlSuffix"];
+  }
 
-        for (var [key, res] in Iterator(childrenList)) {
-            var columnLabel = res.properties["columnLabel"];
-            var columnKey = res.properties["columnKey"];
-            var sortable = res.properties["sortable"];
-            var itemData = {};
-            itemData.columnLabel = columnLabel;
-            itemData.columnKey = columnKey;
-            itemData.sortable = sortable;
-            listValues.push(itemData);
+  var columnListValues = [];
+  var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
 
-        }
+  if (node !== null) {
+    var childrenList = node.getChildren();
 
+    for (var [key, res] in Iterator(childrenList)) {
+      var itemData = {};
 
+      itemData.columnLabel = res.properties["columnLabel"];
+      itemData.columnKey = res.properties["columnKey"];
+      itemData.sortable = res.properties["sortable"];
+
+      columnListValues.push(itemData);
     }
+  }
 
-    var iconListNode = resourceResolver.getResource(currentNode.getPath() + "/iconList");
+  if (columnListValues != null) {
+    jsonObject["columnList"] = columnListValues;
+  }
 
-    if (iconListNode !== null) {
-        var childrenList = iconListNode.getChildren();
+  var keywordDropdownData = {};
 
-        for (var [key, res] in Iterator(childrenList)) {
-            var iconKey = res.properties["iconKey"];
-            var iconValue = res.properties["iconValue"];
-            var iconText = res.properties["iconText"];
-            var itemData = {};
-            itemData.iconKey = iconKey;
-            itemData.iconValue = iconValue;
-            itemData.iconText = iconText;
-            iconValues.push(itemData);
-
-        }
-
-
-    }
-if (properties && properties["keywordDropdownLabel"]) {
+  if (properties && properties["keywordDropdownLabel"]) {
 		keywordDropdownData.label = properties["keywordDropdownLabel"];
 	}
 	var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
 
-		if (keywordListNode !== null) {
-			var childrenList = keywordListNode.getChildren();
-			var keyValues = [];
-			for (var [key, res] in Iterator(childrenList)) {
-				var labelKey = res.properties["key"];
-				var labelValue = res.properties["value"];
-				var labelData = {};
-				labelData.key = labelKey;
-				labelData.value = labelValue;
-				keyValues.push(labelData);
-				keywordDropdownData.items = keyValues;
+  if (keywordListNode !== null) {
+    var childrenList = keywordListNode.getChildren();
+    var keyValues = [];
+    for (var [key, res] in Iterator(childrenList)) {
+      var labelKey = res.properties["key"];
+      var labelValue = res.properties["value"];
+      var labelData = {};
+      labelData.key = labelKey;
+      labelData.value = labelValue;
+      keyValues.push(labelData);
+      keywordDropdownData.items = keyValues;
+    }
+  }
 
-			}
-
-
-		}
+  var configurationTypesDropdownData = {};
 
   if(properties && properties["configurationTypesDropdownLabel"]) {
     configurationTypesDropdownData.label = properties["configurationTypesDropdownLabel"] || "";
@@ -79,21 +63,43 @@ if (properties && properties["keywordDropdownLabel"]) {
 
 	var configurationTypesListNode = resourceResolver.getResource(currentNode.getPath() + "/configurationTypesList");
 
-		if (configurationTypesListNode !== null) {
-			var childrenList = configurationTypesListNode.getChildren();
-			var configurationTypesValues = [];
-			for (var [key, res] in Iterator(childrenList)) {
-				var labelKey = res.properties["configurationTypesKey"];
-				var labelValue = res.properties["configurationTypesValue"];
-				var labelData = {};
-				labelData.key = labelKey;
-				labelData.value = labelValue;
-				configurationTypesValues.push(labelData);
-        configurationTypesDropdownData.items = configurationTypesValues;
-			}
+  if (configurationTypesListNode !== null) {
+    var childrenList = configurationTypesListNode.getChildren();
+    var configurationTypesValues = [];
+    for (var [key, res] in Iterator(childrenList)) {
+      var labelKey = res.properties["configurationTypesKey"];
+      var labelValue = res.properties["configurationTypesValue"];
+      var labelData = {};
+      labelData.key = labelKey;
+      labelData.value = labelValue;
+      configurationTypesValues.push(labelData);
+      configurationTypesDropdownData.items = configurationTypesValues;
+    }
+  }
 
+  //Get Status Labels (Pending, Multiple,...)
+  var statusLabelsListValues = [];
+  var statusLabelsListNode = resourceResolver.getResource(currentNode.getPath() + "/statusLabelsList");
 
-		}
+  if (statusLabelsListNode !== null) {
+    var childrenList = statusLabelsListNode.getChildren();
+
+    for (var [key, res] in Iterator(childrenList)) {
+      var labelData = {};
+
+      labelData.labelKey = res.properties["labelKey"];
+      labelData.labelValue = res.properties["labelValue"];
+      labelData.labelDescription = res.properties["labelDescription"];
+      labelData.buttonIcon = res.properties["buttonIcon"];
+      labelData.buttonLabel = res.properties["buttonLabel"];
+
+      statusLabelsListValues.push(labelData);
+    }
+  }
+
+  if (statusLabelsListValues != null) {
+    jsonObject["statusLabelsList"] = statusLabelsListValues;
+  }
 
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
@@ -107,12 +113,6 @@ if (properties && properties["keywordDropdownLabel"]) {
     if (properties && properties["paginationStyle"]) {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }
-    if (properties && properties["configDetailUrl"]) {
-        jsonObject["configDetailUrl"] = properties["configDetailUrl"] + properties["configDetailUrlSuffix"];
-    }
-    if (properties && properties["quoteDetailUrl"]) {
-        jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + properties["quoteDetailUrlSuffix"];
-    }
     if (properties && properties["defaultSortingColumnKey"]) {
         optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
     }
@@ -123,15 +123,11 @@ if (properties && properties["keywordDropdownLabel"]) {
     if (properties && properties["spaDealsIdLabel"]) {
         jsonObject["spaDealsIdLabel"] = properties["spaDealsIdLabel"];
     }
-    if (listValues != null) {
-        jsonObject["columnList"] = listValues;
-    }
-    if (iconValues != null) {
-        jsonObject["iconList"] = iconValues;
-    }
+
     if (optionData != null) {
         jsonObject["options"] = optionData;
     }
+
     if (properties && properties["searchTitle"]) {
       searchCriteriaData.title = properties["searchTitle"];
     }
@@ -168,14 +164,6 @@ if (properties && properties["keywordDropdownLabel"]) {
       jsonObject["searchCriteria"] = searchCriteriaData;
     }
 
-    checkoutData.uiServiceEndPoint = this.serviceData.uiServiceDomain+this.serviceData.createQuoteEndpoint || '';
-
-    if (this.shopDomain != null) {
-      checkoutData.redirectUrl = this.shopDomain+this.cartURL;
-    }
-    if (checkoutData != null) {
-      jsonObject["checkout"] = checkoutData;
-    }
     return {
         configJson: JSON.stringify(jsonObject)
     };

@@ -40,8 +40,6 @@ function ConfigurationGrid(props) {
     content:
       componentProp.quotesModal?.content ??
       'There are multiple items associated with this Config ID. Please choose the item you would like to review:',
-    pendingInfo:
-      componentProp.quotesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
   };
 
   const options = {
@@ -72,8 +70,8 @@ function ConfigurationGrid(props) {
                 <DetailsInfo
                   info={quotesModal.content}
                   line={line}
-                  pendingInfo={quotesModal.pendingInfo}
-                  pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
+                  statusLabelsList={componentProp.statusLabelsList}
+                  configDetailUrl={componentProp.configDetailUrl}
                 ></DetailsInfo>
               ),
               properties: {
@@ -88,7 +86,7 @@ function ConfigurationGrid(props) {
         </div>
       );
     } else {
-      if (line.quotes[0]?.Status === 'Pending') {
+      if (line.quotes[0]?.status === 'Pending') {
         return labelList.find((label) => label.labelKey === 'pending').labelValue;
       } else if (line.quotes[0]?.id) {
         return (
@@ -114,16 +112,14 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div>
-            <a
-              className="cmp-grid-url-underlined"
-              href={
-                componentProp.configDetailUrl?.replace('{id}', props.value)
-              }
-            >
-              {props.value}
-            </a>
-          </div>
+          <a
+            className="cmp-grid-url-underlined"
+            href={
+              componentProp.configDetailUrl?.replace('{id}', props.value)
+            }
+          >
+            {props.value}
+          </a>
         );
       },
     },

@@ -35,26 +35,36 @@ function ShowMore({ label, content }) {
   );
 }
 
-function DetailsInfo({ line, info, pendingInfo, pendingLabel }) {
+function DetailsInfo({ line, info, statusLabelsList, configDetailUrl }) {
   return (
     <section>
       <div className='cmp-details-info'>
         <div className='cmp-details-info__info'>{info}</div>
         <div className='cmp-details-info__lines'>
-          {line.quotes.map((invoice, index) => (
+          {line.quotes.map((quote, index) => {
+            const status = statusLabelsList.find((label) => label.labelKey === quote.status);
+            return (
             <div className='cmp-details-info__line' key={index}>
-              <ShowMore label={pendingLabel} content={pendingInfo}></ShowMore>
-              <div className='date'>{invoice.created ? new Date(invoice.created).toLocaleDateString() : 'N/A'}</div>
-              <div className={`id ${invoice.status !== 'Pending' ? 'ongoing' : 'pending'}`}>
-                {invoice.status !== 'Pending' ? (
-                  invoice.id
+              <ShowMore label={status?.labelValue} content={status?.labelDescription}></ShowMore>
+              <div className='date'>{quote.created ? new Date(quote.created).toLocaleDateString() : 'N/A'}</div>
+              <div className={`id ${quote.status !== 'Pending' ? 'ongoing' : 'pending'}`}>
+                {quote.status !== 'Pending' ? (
+                  <a
+                    className="cmp-grid-url-underlined"
+                    href={
+                      configDetailUrl?.replace('{id}', quote.id)
+                    }
+                  >
+                    {quote.id}
+                  </a>
                 ) : (
-                  pendingLabel
+                  status?.labelValue
                 )}
               </div>
-              <div className='value'>{line.currencySymbol + '' + invoice.price}</div>
+              <div className='value'>{line.currencySymbol + '' + quote.price}</div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
