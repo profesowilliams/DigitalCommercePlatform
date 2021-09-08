@@ -1,16 +1,16 @@
 .cmp-button {
-	cursor: pointer !important;
+	cursor: pointer;
 }
 
 .button {
     >.cmp-button {
-        border: none !important;
+        border: none;
     }
 }
 
 @include aem-only {
     button {
-        border: none !important;
+        border: none;
     }
 }
 

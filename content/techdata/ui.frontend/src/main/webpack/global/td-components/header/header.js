@@ -21,8 +21,8 @@ export default class Header {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
         }
     }
-
-    initSecondaryImage() {
+// Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
+/*     initSecondaryImage() {
         const imgEl = document.querySelector('[data-mobile-logo]');
         if (imgEl) {
             const smallLogo = imgEl.dataset.mobileLogo;
@@ -34,13 +34,14 @@ export default class Header {
             insertAfter(img, figure);
             img.src = smallLogo;
         }
-    }
+    } */
 
     toggleSearch(el) {
         if (hasSomeParentTheClass(el, this.HEADER_MOBILE)) {
             el.classList.add('active');
             document.querySelector('.cmp-header--logo-small')?.classList.add('active');
-            document.querySelector('.dp-figure').style.display = 'none';
+            // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
+            //document.querySelector('.dp-figure').style.display = 'none';
         }
     }
 

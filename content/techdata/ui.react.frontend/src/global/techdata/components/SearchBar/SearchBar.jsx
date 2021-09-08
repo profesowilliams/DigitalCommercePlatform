@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
-import { toggleAreaSelection } from './SearchAreas'
 
 function getShopLoginUrlPrefix() {
     let prefixShopAuthUrl = "";
@@ -42,6 +41,7 @@ const SearchBar = ({ data, componentProp }) => {
 
   const [isMobile, setMobile] = useState(false);
   const [isClicked, setClicked] = useState(false);
+  const [isChecked, setChecked] = useState(false);
 
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
@@ -128,12 +128,12 @@ const SearchBar = ({ data, componentProp }) => {
   const mobileState = window.innerWidth <= 767
 
   const mobileSearchOpener = () => {
-    setMobile(true);
-    setSearchInputFocused(true)
+    setClicked(true);
+    setChecked(true)
 
-    if (setSearchInputFocused === false){
+    if (searchInputFocused === false){
       lostFocus()
-    } else if (setSearchInputFocused === true) {
+    } else if (searchInputFocused === true) {
       gotFocus()
     }
   };
@@ -154,6 +154,7 @@ const SearchBar = ({ data, componentProp }) => {
     setMobile(false);
     setSearchInputFocused(false);
     setClicked(false);
+    setChecked(false)
   };
 
   const toggleSearchIcon = () => {
@@ -238,7 +239,7 @@ const SearchBar = ({ data, componentProp }) => {
   return (
     <div
       id={id}
-      className="cmp-searchbar"
+      className={isChecked === true ? "cmp-searchbar cmp-searchbar--checked" : "cmp-searchbar"}
       onMouseLeave={lostFocus}
       onMouseEnter={gotFocus}
     >

@@ -47,7 +47,7 @@
     align-items: center;
     min-width: 0;
     position: relative;
-    width: 100%;
+    width: 80%;
   }
 
   &__container {
@@ -56,9 +56,6 @@
     justify-content: center;
     margin: 0 auto;
     width: 100%;
-    @include mobile {
-        justify-content: flex-end;
-    }
   }
 
   &__input {
@@ -86,7 +83,6 @@
         padding: rem(6px) rem(10px);
         visibility: visible;
         width: 100%;
-        margin-left: rem(10px);
       }
     }
   }
@@ -151,12 +147,9 @@
     z-index: 100;
 
     @include mobile {
-        position: fixed;
-        margin-bottom: rem(12px);
-        min-width: rem(350px);
-        top: 48px;
-        left: 0;
-        right: 0;
+      position: relative;
+      margin-bottom: rem(12px);
+      min-width: rem(350px);
     }
   }
 }
@@ -328,7 +321,7 @@
 }
 
 //AEM overriding Styling
-#cmp-techdata-header.cmp-container .aem-Grid .search {
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
   margin-left: auto !important;
   width: 35% !important;
 
@@ -337,7 +330,7 @@
   }
 }
 
-#cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container> div {
+.experiencefragment.cmp-experiencefragment--header-mobile .cmp-experiencefragment>.cmp-container> div {
   @include mobile {
     height: auto;
     min-height: rem(40px);
