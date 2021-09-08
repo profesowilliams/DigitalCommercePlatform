@@ -1,0 +1,134 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Common;
+using DigitalCommercePlatform.UIServices.Export.Models;
+using DigitalCommercePlatform.UIServices.Export.Models.Internal;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
+namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Configurations
+{
+    [ExcludeFromCodeCoverage]
+    public class ExportProfile : ProfileBase
+    {
+        public ExportProfile()
+        {
+            CreateMap<ItemModel, Line>()
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name))
+                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom(src => src.Product[0].Id))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.UnitListPrice, opt => opt.MapFrom(src => src.UnitListPrice))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+                .ForMember(dest => dest.UnitListPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitListPrice)))
+                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
+                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)))
+                .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements));
+
+            CreateMap<AddressModel, Address>();
+
+            CreateMap<QuoteModel, QuoteDetails>()
+            .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
+            .ForPath(dest => dest.ShipTo.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
+            .ForPath(dest => dest.ShipTo.Email, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Email : string.Empty))
+            .ForPath(dest => dest.ShipTo.PhoneNumber, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Phone : string.Empty))
+            .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Name : string.Empty))
+
+            .ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser.Address))
+            .ForPath(dest => dest.EndUser.CompanyName, opt => opt.MapFrom(src => src.EndUser.Name))
+            .ForPath(dest => dest.EndUser.Email, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Email : string.Empty))
+            .ForPath(dest => dest.EndUser.PhoneNumber, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Phone : string.Empty))
+            .ForPath(dest => dest.EndUser.Name, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Name : string.Empty))
+
+            .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller.Address))
+            .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.Reseller.Name))
+            .ForPath(dest => dest.Reseller.PhoneNumber, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Phone : string.Empty))
+            .ForPath(dest => dest.Reseller.Name, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Name : string.Empty))
+            .ForPath(dest => dest.Reseller.Email, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Email : string.Empty))
+
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
+            .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.EndUserPO, opt => opt.MapFrom(src => src.EndUserPO))
+            .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
+            .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
+            .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.VendorReference != null ? src.VendorReference.FirstOrDefault().Type + ": " + src.VendorReference.FirstOrDefault().Value : string.Empty))
+            .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
+            .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+            .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
+
+
+            //CreateMap<AccountAddress, ShipToModel>()
+            //  .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
+            //  .ForPath(dest => dest.Address, opt => opt.MapFrom(src => src))
+            //  ;
+
+            //CreateMap<AccountAddress, AddressModel>()
+            // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
+            // .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.AddressLine1))
+            // .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.AddressLine2))
+            // .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.AddressLine3))
+            // .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.Zip))
+            // .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
+            // .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City))
+            // ;
+            //CreateMap<DiscountDto, Discount>()
+            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));
+
+            //CreateMap<ItemDto, Line>()
+            //    .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Qty))
+            //    .ForMember(dest => dest.VendorPartNo, opt => opt.MapFrom(src => src.VendorPartNo))
+            //    .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.ListPrice))
+            //    .ForMember(dest => dest.UnitListPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.ListPrice)))
+            //    .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom(src => src.VendorPartNo))
+            //    .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom(src => src.Description))
+            //    .ForMember(dest => dest.ExtendedPrice, opt => opt.MapFrom(src => src.TotalPurchaseCost))
+            //    .ForMember(dest => dest.ExtendedPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPurchaseCost)))
+            //    .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.Parent))
+            //    .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Vendor))
+            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            //    .ForMember(dest => dest.Discounts, opt => opt.MapFrom(src => src.Discounts))
+            //    .ForMember(dest => dest.Contract, opt => opt.MapFrom(src => src.Contract))
+            //    ;
+
+            //CreateMap<SourceDto, VendorReferenceModel>()
+            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
+            //    .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
+            //    ;
+            //CreateMap<EndUserDto, Address>()
+            //     .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))
+            //     .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Address2))
+            //     .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.Address.Address3))
+            //     .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
+            //     .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
+            //     .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.ParentCompany))
+            //     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Contact.EmailAddress))
+            //     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contact.FirstName + " " + src.Contact.LastName))
+            //     ;
+
+            //CreateMap<ResellerDto, Address>()
+            //    .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))
+            //    .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Address2))
+            //    .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.Address.Address3))
+            //    .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
+            //    .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
+            //    .ForMember(dest => dest.Zip, opt => opt.MapFrom(src => src.Address.PostalCode))
+            //    ;
+            //CreateMap<DetailedDto, QuotePreview>()
+            //   .ForMember(dest => dest.ConfigurationId, opt => opt.MapFrom(src => src.Source.Id))
+            //   .ForMember(dest => dest.ShipTo, opt => opt.Ignore())
+            //   .ForMember(dest => dest.Reseller, opt => opt.Ignore())
+            //   .ForMember(dest => dest.EndUser, opt => opt.Ignore())
+            //   .ForPath(dest => dest.Source, opt => opt.MapFrom(src => src.Source))
+            //   .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.TotalCost))
+            //   .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            //   .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
+            //   .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
+            //   .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
+            //   //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
+            //   //.ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller))
+            //   ;
+        }
+    }
+}
