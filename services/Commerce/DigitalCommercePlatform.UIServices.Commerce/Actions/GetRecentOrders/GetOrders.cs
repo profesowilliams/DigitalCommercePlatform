@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public bool WithPaginationInfo { get; set; }
             public string OrderMethod { get; set; }
             public string ConfirmationNumber { get; set; }
+            public string InvoiceId { get; set; }
 
             public Request(FilteringDto filtering, PagingDto paging)
             {
@@ -71,7 +72,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
 
         public class FilteringDto
         {
-            public FilteringDto(string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo, string status, string orderMethod, string confirmationNumber)
+            public FilteringDto(
+                string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,
+                string status, string orderMethod, string confirmationNumber, string invoiceId)
             {
                 Id = id;
                 CustomerPO = customerPO;
@@ -81,6 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 Status = status;
                 OrderMethod = orderMethod;
                 ConfirmationNumber = confirmationNumber;
+                InvoiceId = invoiceId;
             }
 
             public string Id { get; }
@@ -91,6 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string Status { get; }
             public string OrderMethod { get; }
             public string ConfirmationNumber { get; }
+            public string InvoiceId { get; }
         }
 
         public class Response
@@ -141,6 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     WithPaginationInfo = request.WithPaginationInfo,
                     Origin = request.OrderMethod,
                     ConfirmationNumber = request.ConfirmationNumber,
+                    InvoiceId = request.InvoiceId,
                 };
 
                 var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);

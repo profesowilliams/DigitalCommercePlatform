@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public bool WithPaginationInfo { get; set; }
         public string OrderMethod { get; set; }
         public string ConfirmationNumber { get; set; }
+        public string InvoiceId { get; set; }
     }
 }

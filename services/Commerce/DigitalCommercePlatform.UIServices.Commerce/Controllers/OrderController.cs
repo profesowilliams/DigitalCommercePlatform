@@ -50,12 +50,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet] 
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
         {
             var filtering = new GetOrders.FilteringDto(getOrdersRequest.Id, getOrdersRequest.Reseller, getOrdersRequest.Vendor,
-                getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo,getOrdersRequest.Status,getOrdersRequest.OrderMethod, getOrdersRequest.ConfirmationNumber);
+                getOrdersRequest.CreatedFrom, getOrdersRequest.CreatedTo,getOrdersRequest.Status,getOrdersRequest.OrderMethod,
+                getOrdersRequest.ConfirmationNumber, getOrdersRequest.InvoiceId);
 
             var paging = new GetOrders.PagingDto(getOrdersRequest.SortBy, getOrdersRequest.SortDirection, getOrdersRequest.PageNumber, getOrdersRequest.PageSize, getOrdersRequest.WithPaginationInfo);
 

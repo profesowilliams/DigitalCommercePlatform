@@ -119,6 +119,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Details = true,
                             orderParameters.Origin,
                             orderParameters.ConfirmationNumber,
+                            orderParameters.InvoiceId
                         });
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
