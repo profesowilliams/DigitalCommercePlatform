@@ -2,7 +2,21 @@
   height: 50%;
   width: 100%;
   overflow: auto;
+  &__your-cost {
+    background-color: get-color(td-lighter-gray);
+  }
+  &__client-cost {
+    background-color: get-color(td-lighter-gray);
+  }
   &__row {
+    &__cell {
+      &__your-cost {
+        background-color: get-color(td-lighter-gray);
+      }
+      &__client-cost {
+        background-color: get-color(td-lighter-gray);
+      }
+    }
     &--notExpandable {
       .ag-cell-expandable .ag-group-contracted {
         pointer-events: none;
@@ -10,6 +24,16 @@
           color: get-color(secondary-grey);
           pointer-events: none;
         }
+      }
+    }
+  }
+  &__th {
+    &__your-cost {
+      &::after {
+      }
+    }
+    &__client-cost {
+      &::after {
       }
     }
   }
@@ -76,6 +100,41 @@
       margin-top: 0;
       .ag-header {
         display: none;
+      }
+    }
+  }
+  &__markup {
+    display: flex;
+    height: rem(32px);
+    justify-content: center;
+    align-items: center;
+    padding-top: rem(16px);
+    font-size: $font-size-small;
+    &--global {
+      padding: rem(16px);
+      display: flex;
+      width: rem(300px);
+      margin-bottom: rem(16px);
+      margin-left: auto;
+    }
+    &__label {
+      white-space: nowrap;
+      text-align: center;
+      margin-right: rem(16px);
+    }
+    &__currency {
+      margin: unset;
+    }
+    &__input {
+      width: 100%;
+    }
+    &__button {
+      padding-top: rem(3px);
+      padding-bottom: rem(3px);
+      width: rem(48px);
+      &--active {
+        color: get-color(brand-white);
+        background-color: get-color(brand-button-blue);
       }
     }
   }

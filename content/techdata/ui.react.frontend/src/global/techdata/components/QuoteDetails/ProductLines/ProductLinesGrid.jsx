@@ -1,28 +1,53 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import thousandSeparator from "../../../helpers/thousandSeparator";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
+import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
+import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 
-function ProductLinesGrid({ gridProps, data, quoteOption }) {
+function ProductLinesGrid({
+  gridProps,
+  data,
+  labels,
+  quoteOption,
+  onMarkupChanged,
+}) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items ?? [];
   const mutableGridData = Object.assign([], gridData);
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
-
-  useEffect(() => {
-    quoteOption &&
-      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
-  }, [quoteOption]);
-
-  useEffect(() => {}, [whiteLabelMode]);
-
   const gridConfig = {
     ...gridProps,
     serverSide: false,
     paginationStyle: "none",
   };
 
+  function expandAll() {
+    gridApi?.forEachNode((node) => {
+      node.expanded = true;
+    });
+    gridApi?.expandAll();
+  }
+
+  function collapseAll() {
+    gridApi?.forEachNode((node) => {
+      node.expanded = false;
+    });
+    gridApi?.collapseAll();
+  }
+
+  function onAfterGridInit({ node, api, gridResetRequest }) {
+    setGridApi(api);
+  }
+
+  function markupChanged(data) {
+    if (typeof onMarkupChanged === "function") {
+      onMarkupChanged(data);
+    }
+  }
+
+  //default column defs
   const columnDefs = [
     {
       headerName: "Line Item",
@@ -57,11 +82,19 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
       },
     },
     {
-      headerName: "MSRP/Unit List Price",
+      headerName: "Unit List Price",
       field: "unitListPriceFormatted",
       sortable: false,
       valueFormatter: ({ value }) => {
         return "$" + value;
+      },
+    },
+    {
+      headerName: "% Off List Price",
+      field: "discounts",
+      sortable: false,
+      valueFormatter: ({ value }) => {
+        return value || 0;
       },
     },
     {
@@ -79,6 +112,10 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
           ? "cmp-product-lines-grid__row__cell__your-cost"
           : "";
       },
+      headerClass: ({ node, data }) => {
+        return whiteLabelMode ? "cmp-product-lines-grid__th__your-cost" : "";
+      },
+      enableRowGroup: true,
       valueFormatter: ({ data }) => {
         return "$" + thousandSeparator(data.unitPrice);
       },
@@ -94,6 +131,10 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
           ? "cmp-product-lines-grid__row__cell__your-cost"
           : "";
       },
+      headerClass: ({ node, data }) => {
+        return whiteLabelMode ? "cmp-product-lines-grid__th__your-cost" : "";
+      },
+      enableRowGroup: true,
       valueFormatter: ({ data }) => {
         return "$" + thousandSeparator(data.unitPrice * data.quantity);
       },
@@ -101,16 +142,42 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
     },
   ];
 
+  //whitelabel column defs
   const whiteLabelCols = () => {
+    const removedIds = ["discounts", "unitListPriceFormatted"];
+    const filteredCols = Object.assign([], columnDefs).filter(
+      (el) => !removedIds.includes(el.field)
+    );
     const extended = [
-      ...columnDefs,
+      ...filteredCols,
       {
         headerName: "Markup",
         field: "appliedMarkup",
         onDetailsShown: (row) => {},
         onDetailsHidden: (row) => {},
         cellClass: ({ node, data }) => {
-          return "cmp-product-lines-grid__row__cell__client-cost";
+          return "cmp-product-lines-grid__row__cell__markup";
+        },
+        headerClass: "cmp-product-lines-grid__th__markup",
+        cellRenderer: (props) => {
+          const { node, api, value, setValue, data } = props;
+          return (
+            <ProductLinesMarkupRow
+              onMarkupValueChanged={({ value, unit, source }) => {
+                setValue(value);
+                api.refreshCells({
+                  columns: ["clientUnitPrice"],
+                  force: true,
+                });
+                if (source === "internal") {
+                  markupChanged(mutableGridData);
+                }
+              }}
+              initialMarkup={value || 0}
+              resellerUnitPrice={data.unitPrice}
+              labels={labels}
+            ></ProductLinesMarkupRow>
+          );
         },
         valueFormatter: ({ data }) => {
           return 0;
@@ -125,8 +192,15 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
         cellClass: ({ node, data }) => {
           return "cmp-product-lines-grid__row__cell__client-cost";
         },
-        valueFormatter: ({ data }) => {
-          return "$" + thousandSeparator(data.unitPrice);
+        headerClass: "cmp-product-lines-grid__th__client-cost",
+        cellRenderer: ({ node, api, value, setValue, data }) => {
+          const _ = Number(data.appliedMarkup) + Number(data.unitPrice);
+          setValue(_);
+          api.refreshCells({
+            columns: ["clientExtendedPrice"],
+            force: true,
+          });
+          return "$" + thousandSeparator(_);
         },
         sortable: false,
       },
@@ -135,8 +209,14 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
         field: "clientExtendedPrice",
         onDetailsShown: (row) => {},
         onDetailsHidden: (row) => {},
-        valueFormatter: ({ data }) => {
-          return "$" + thousandSeparator(data.unitPrice * data.quantity);
+        cellClass: ({ node, data }) => {
+          return "cmp-product-lines-grid__row__cell__client-cost";
+        },
+        headerClass: "cmp-product-lines-grid__th__client-cost",
+        cellRenderer: ({ node, api, value, setValue, data }) => {
+          const _ = Number(data.clientUnitPrice) * Number(data.quantity);
+          setValue(_);
+          return "$" + thousandSeparator(_);
         },
         sortable: false,
       },
@@ -149,26 +229,21 @@ function ProductLinesGrid({ gridProps, data, quoteOption }) {
     });
   };
 
-  function expandAll() {
-    gridApi?.forEachNode((node) => {
-      node.expanded = true;
-    });
-    gridApi?.expandAll();
-  }
-
-  function collapseAll() {
-    gridApi?.forEachNode((node) => {
-      node.expanded = false;
-    });
-    gridApi?.collapseAll();
-  }
-
-  function onAfterGridInit({ node, api, gridResetRequest }) {
-    setGridApi(api);
-  }
+  useEffect(() => {
+    quoteOption &&
+      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
+  }, [quoteOption]);
 
   return (
     <section>
+      {whiteLabelMode && (
+        <ProductLinesMarkupGlobal
+          labels={labels}
+          onMarkupValueChanged={() => {
+            markupChanged(mutableGridData);
+          }}
+        ></ProductLinesMarkupGlobal>
+      )}
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
           <span className="cmp-product-lines-grid__header__title">

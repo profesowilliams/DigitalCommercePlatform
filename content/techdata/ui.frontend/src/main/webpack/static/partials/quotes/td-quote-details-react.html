@@ -1,14 +1,65 @@
 <div id="QuoteDetails" data-observe-mutation>
-    <div
-        data-component="QuoteDetails"
-        data-cmp-type="react"
-        className="cmp-td-quote-details"
-        data-config='{
-            "subheaderLabel": "TD Quote:",
-            "subheaderTitle": "",
-            "resellerContactLabel": "Your Company Information",
-            "endUserContactLabel": "End User Information",
-            "subtotalLabel": "Subtotal:",
-            "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details"}'
-    ></div>
+  <div
+    data-component="QuoteDetails"
+    data-cmp-type="react"
+    className="cmp-td-quote-details"
+    data-config='{
+            "subheaderLabel": "TD Quote",
+            "subheaderTitle": "TD Quote",
+            "createdLabel": "Created",
+            "expiresLabel": "Expires",
+            "subtotalLabel": "Subtotal",
+            "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details",
+            "information": {
+                "yourCompanyHeaderLabel": "Your Company Information",
+                "yourLogoLabel": "Your logo",
+                "productImagesLabel": "Product images",
+                "partNoManufacturerLabel": "Part number - manufacturer",
+                "partNoTDLabel": "Part number - Tech Data",
+                "trackingNoLabel": "UPC number",
+                "MSRPLabel": "MSRP",
+                "endUserHeaderLabel": "End User Information",
+                "generalHeaderLabel": "General Information",
+                "emailLabel": "Email",
+                "phoneLabel": "Phone",
+                "sourceLabel": "Source",
+                "tierLabel": "Tier",
+                "referenceLabel": "Reference",
+                "dealLabel": "Deal"
+            },
+            "productLines": {
+                "label": "Line Item Details",
+                "applyMarkupLabel": "Apply your markup to the line items below",
+                "expandAllLabel": "Expand All",
+                "collapseAllLabel": "Collapse All",
+                "startDateLabel": "Start Date",
+                "autoRenewLabel": "Auto Renew",
+                "durationLabel": "Duration",
+                "billingLabel": "billing",
+                "yesLabel": "Yes",
+                "noLabel": "No",
+                "columnList":[
+                ]
+            },
+            "quoteOptions": {
+                "exportToCSV": "Export to CSV",
+                "exportToPDF": "Export to PDF",
+                "whiteLabelQuote": "White Label Quote"
+            },
+            "whiteLabel":{
+                "markubLabel":"markup",
+                "MSRPLabel": "MSRP",
+                "yourCostLabel": "Your cost",
+                "yourCustomerPriceLabel": "Your cusotmers price",
+                "yourMarkupLabel": "Your markup",
+                "subtotalLabel": "Subtotal",
+                "ancillaryItemsLabel": "Ancillary items",
+                "endUserTotalLabel": "End user total",
+                "savingsLabel": "Savings over MSRP",
+                "applyToAllLabel": "Apply to all",
+                "applyMarkupLabel" : "Apply markup as",
+                "previewQuoteLabel": "Preview customer quote"
+            }
+        }'
+  ></div>
 </div>

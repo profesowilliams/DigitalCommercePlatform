@@ -14,7 +14,7 @@ function Grid(props) {
     onSelectionChanged,
     requestInterceptor,
   } = Object.assign({}, props);
-  const componentVersion = "1.1.5";
+  const componentVersion = "1.1.6";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({
@@ -89,6 +89,12 @@ function Grid(props) {
 
   const renderers = {};
   let filteredColumns = [];
+
+  // disable default behaviour of column being movable
+  columnDefinition.forEach((column) => {
+    if (column.movable !== true || column.suppressMovable === false)
+      column.suppressMovable = true;
+  });
 
   // overwrite config in column definitions with config from AEM
   config?.columnList?.forEach((column) => {

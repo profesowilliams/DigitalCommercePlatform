@@ -12,21 +12,22 @@ import useGet from "../../hooks/useGet";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
+    createdLabel,
+    expiresLabel,
     subheaderLabel,
     subheaderTitle,
-    resellerContactLabel,
-    endUserContactLabel,
     subtotalLabel,
+    information,
+    productLines,
+    endUseproductLines,
     uiServiceEndPoint,
     logoURL,
     fileName,
-    downloadLinkText
+    downloadLinkText,
   } = JSON.parse(componentProp);
 
   const { id } = getUrlParams();
-  const [response, isLoading] = useGet(
-    `${uiServiceEndPoint}?id=${id}`
-  );
+  const [response, isLoading] = useGet(`${uiServiceEndPoint}?id=${id}`);
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
 
@@ -46,19 +47,23 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
         logoURL={logoURL}
         fileName={fileName}
-        downloadLinkText = {downloadLinkText}
+        downloadLinkText={downloadLinkText}
       />
-      <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} quoteDetails={quoteDetails}  />
+      <QuotesSubHeader
+        label={subheaderLabel}
+        title={subheaderTitle}
+        quoteDetails={quoteDetails}
+      />
       <QuoteContactInfo
-        label={resellerContactLabel}
+        label={information.yourCompanyHeaderLabel}
         contact={quoteDetails.reseller}
       />
       <QuoteContactInfo
-        label={endUserContactLabel}
+        label={information.endUserHeaderLabel}
         contact={quoteDetails.endUser}
       />
       <ProductLinesGrid
-        gridProps={componentProp.productLines}
+        gridProps={productLines}
         data={quoteDetails}
         quoteOption={quoteOption}
       ></ProductLinesGrid>
