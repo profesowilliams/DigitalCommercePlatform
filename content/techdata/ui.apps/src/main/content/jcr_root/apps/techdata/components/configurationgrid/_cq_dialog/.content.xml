@@ -209,7 +209,7 @@
                             </modalLabels>
                             <statusLabelsList
                                     jcr:primaryType="nt:unstructured"
-                                    jcr:title="Label Tab"
+                                    jcr:title="Status Label Tab"
                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                     margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">

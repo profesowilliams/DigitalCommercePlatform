@@ -1420,6 +1420,14 @@ app.get("/ui-config/v1/configurations", function (req, res) {
                 "status": "Created"
             },
             {
+                "id": "CD_ID__2",
+                "line": "Line_104",
+                "quantity": 9,
+                "price": 39.0,
+                "created": "8/6/2021",
+                "status": "Failed"
+            },
+            {
                 "id": "",
                 "line": "",
                 "quantity": 0,

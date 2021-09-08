@@ -7,6 +7,10 @@
     cursor: pointer;
   }
 
+  .cmp-simple-drop-down__selection {
+    width: rem(153px);
+  }
+
   .cmp-details-info {
     &__line {
       display: grid;
@@ -14,7 +18,8 @@
     }
     .cmp-show-more__content {
       display: grid;
-      grid-template-columns: 50% 50%;
+      grid-template-columns: 30% 40% 30%;
+      text-align: left;
     }
   }
 }
