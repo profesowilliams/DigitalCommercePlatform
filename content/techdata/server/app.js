@@ -338,7 +338,7 @@ app.get("/activeCart", function (req, res) {
                         quantity: 1,
                     },
                 ],
-                totalQuantity: 14,
+                totalQuantity: 0,
             },
         },
         error: {

@@ -4,11 +4,11 @@ import {isAlreadySignedIn} from "../../../../store/action/authAction";
 
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
 
+  const sessionId = localStorage.getItem("sessionId");
+  if(!sessionId) return "";
+
   const className = `cmp-cart ${cartActive}`;
-  if( cartActive )
-    return <a href={shopUrl} className={className}>{children}</a>
-  
-  return <div className={className}>{children}</div>
+  return <a href={shopUrl} className={className}>{children}</a>
 }
 
 const MiniCart = ({componentProp}) => {
@@ -63,7 +63,7 @@ const MiniCart = ({componentProp}) => {
       <span className="cmp-cart__icon">
         {cartActive ? (
         <svg viewBox="0 0 34 28" xmlns="http://www.w3.org/2000/svg">
-                        <title>Cart </title>
+                        <title>Cart</title>
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g id="Nav-Masthead---Hot" transform="translate(-1385.000000, -24.000000)">
                     <g id="Cart-" transform="translate(1385.999924, 24.999904)">
@@ -80,7 +80,7 @@ const MiniCart = ({componentProp}) => {
         </svg>
         ) : (
             <svg viewBox="0 0 49 41" xmlns="http://www.w3.org/2000/svg">
-              <title>Group 9</title>
+              <title>Cart</title>
               <g id="Illustrations---Production" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
                 <g id="Cart---Empty" transform="translate(-6.000000, -11.000000)" stroke="#000C21" stroke-width="2.63414634">
                   <g id="Group-9" transform="translate(8.000000, 13.000000)">
