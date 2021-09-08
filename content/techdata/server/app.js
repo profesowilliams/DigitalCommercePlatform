@@ -3589,6 +3589,20 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     }, 2000)
 });
 
+app.post("/ui-config/v1/getPunchOutURL", function (req,res){
+  console.log('test post punchout url ✌✌✌');
+  if (!req.headers["sessionid"]) return res.status(401);
+  res.json({
+    "content": {
+        "url": "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-9ff8842-179c840b9ad-53ce4dd807efb79ac258ea8d4ed4ce77&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome%3FpunchinEstimateID%3D&P4=edit&P5=ZU125923843DQ&P6=N"
+    },
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+}) })
+
 //---QUICK QUOTE CONTINUE BTN---//
 app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
 

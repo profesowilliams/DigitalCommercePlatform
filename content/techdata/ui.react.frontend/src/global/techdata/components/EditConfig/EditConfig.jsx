@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { get } from "../../../../utils/api";
 import WidgetTitle from "../Widgets/WidgetTitle";
 import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
+import Loader from '../Widgets/Loader';
+import { waitFor } from "../../../../utils/utils";
+import axios from 'axios';
+import { makeRequest } from "../../helpers/helpers";
 
 const EditConfig = ({ componentProp }) => {
     // useEffect(() => {
@@ -19,6 +23,7 @@ const EditConfig = ({ componentProp }) => {
     // }, []);
     const [configurationId, setConfigurationId] = useState("");
     const [configurations, setConfigurations] = useState(false);
+    const [isLoadingGetUrl, setLoadingGetUrl] = useState(false);
     const {
         label,
         buttonTitle,
@@ -27,21 +32,43 @@ const EditConfig = ({ componentProp }) => {
         ignoreSalesOrganization,
         isDefault,
         placeholderText,
+        puchOutEndpoint
     } = JSON.parse(componentProp);
-    const onChange = ({ target: { value } }) => {
+
+    const handleConfigInput = ({ target: { value } }) => {
         setConfigurationId(value);
     };
-
+    const getRedirectUrl = async (e) => {
+        const body = { 
+            "PostBackURL": "postbackurl",  
+            "Vendor": "Cisco",  
+            "ConfigurationId": configurationId,  
+            "Function": "CCW_ESTIMATE",  
+            "Action": "edit" 
+        }
+        setLoadingGetUrl(true);
+        waitFor(3000);
+        const result = await makeRequest("POST",puchOutEndpoint,body);
+        setLoadingGetUrl(false);
+        const {url} = result?.content;
+        window.open(
+                url,
+            '_blank' 
+            );
+        return result.data;         
+    }
+    const handleGetUrl = useCallback(getRedirectUrl, [configurationId, isLoadingGetUrl]);
     return (
         <div className='cmp-widget'>
+            <Loader visible={isLoadingGetUrl} />
             <WidgetTitle>{label}</WidgetTitle>
             <>
                 <InputText
-                    onChange={onChange}
+                    onChange={handleConfigInput}
                     inputValue={configurationId}
                     label={placeholderText}
                 />
-                <Button disabled={!configurationId} onClick={() => true}>
+                <Button disabled={!configurationId} onClick={handleGetUrl}>
                     {buttonTitle}
                 </Button>
             </>

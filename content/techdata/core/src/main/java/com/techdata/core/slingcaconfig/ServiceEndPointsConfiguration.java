@@ -83,6 +83,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Account Address Endpoint", description = "Account Address Endpoint")
     String accountAdressEndPoint();
 
+    @Property(label = "Punch Out Endpoint", description = "Punch Out Endpoint")
+    String puchOutEndpoint();
+
     @Property(label = "Configurations Endpoint", description = "Configurations Endpoint ")
     String configurationsEndpoint();
 }

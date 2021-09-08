@@ -133,6 +133,8 @@ public class CaConfigReader {
 
 	private String orderDetailPage;
 
+	private String puchOutEndpoint;
+
 	@PostConstruct
 	public void init() {
 		ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -167,6 +169,7 @@ public class CaConfigReader {
 		quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
 		accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
 		configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
+		puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
 		shopDomain = mcConfiguration.shopDomain();
 		cartURL = mcConfiguration.cartURL();
 		tdPartSmart = mcConfiguration.tdPartSmart();
@@ -302,6 +305,10 @@ public class CaConfigReader {
 
 	public String getConfigurationsEndpoint() {
 		return configurationsEndpoint;
+	}
+
+	public String getPuchOutEndpoint(){
+		return puchOutEndpoint;
 	}
 
 	public String getShopDomain() {

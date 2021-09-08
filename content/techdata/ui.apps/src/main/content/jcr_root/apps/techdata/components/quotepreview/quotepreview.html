@@ -3,9 +3,10 @@
         <div class="cq-placeholder" data-emptyText="${component.title}"></div>
     </sly>
     <sly data-sly-use.listUse="${'quotepreview.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,quotesPreviewEndPoint=serviceData.quotesPreviewEndPoint,quotesPreviewPricingEndPoint=serviceData.quotesPreviewPricingEndPoint,accountAdressEndPoint=serviceData.accountAdressEndPoint}">
-
-                <div data-component="QuotePreview" data-cmp-type="react" className="cmp-quotePreview" data-config="${listUse.configJson}">
-
-                </div>
+        <div 
+        data-component="QuotePreview"
+        data-cmp-type="react"
+        className="cmp-quotePreview" data-config="${listUse.configJson}">
+        </div>
     </sly>
 </sly>
