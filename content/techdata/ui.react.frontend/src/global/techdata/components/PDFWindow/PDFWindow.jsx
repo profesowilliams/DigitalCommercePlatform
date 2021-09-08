@@ -8,35 +8,23 @@ import ReactPDFImageWrapper from "../ReactPDFImageWrapper/ReactPDFImageWrapper";
 // Create styles
 const styles = PDFStyles;
 
-const PDFWindow = ({quoteDetails, logoURL, fileName}) =>  {
+const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
 
-    console.log(`PDF window`);
-    console.log(logoURL);
-    console.log(fileName);
     return (
         <>
-        <div className='cmp-sign-in'>
-            <div className='cmp-sign-in-option'>
-                <button className='cmp-sign-in-button' onClick={() => onSignIn(quoteDetails, true, logoURL)}>
+                <button id="pdfDownloadButton" onClick={() => downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText)}>
                     <i className="fas fa-download"></i>
-                    Download
+                    {downloadLinkText}
                 </button>
-                <button className='cmp-sign-in-button' onClick={() => onSignIn(quoteDetails, false, logoURL)}>
-                    <i className="fas fa-print"></i>
-                    Print
-                </button>
-            </div>
-        </div>
+            <div id="pdfDownloadLink" className="cmp-pdfPrinter"></div>
         </>
     );
 }
 
-const onSignIn = async (details, isDownloadLink, logoURL) => {
+const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText) => {
     const imagePath = logoURL;
 
     const PrintHelper = () => {
-        console.log(`PrintHelper function onclick`)
-        console.log(details);
         return (
                 <Document>
                     <Page size="A4" orientation="landscape" style={styles.page}>
@@ -85,11 +73,14 @@ const onSignIn = async (details, isDownloadLink, logoURL) => {
         )
     }
 
-    const DownLoadLink = ({fileName}) => {
+    const DownLoadLink = ({fileName, downloadLinkText}) => {
+
         return (
             <PDFDownloadLink document={<PrintHelper />} fileName={fileName}>
-                {({ blob, url, loading, error }) =>
-                    loading ? 'Loading document...' : 'Download PDF'
+                {({ blob, url, loading, error }) => {
+                    let downloadLinkParent = document.getElementById("downloadlink")
+                    return loading ? 'Preparing PDF to download...' : downloadLinkText
+                }
                 }
             </PDFDownloadLink>
         )
@@ -105,26 +96,15 @@ const onSignIn = async (details, isDownloadLink, logoURL) => {
 
     if (isDownloadLink)
     {
-        ReactDOM.render(<DownLoadLink />, document.getElementById("downloadlink"));
+        let pdfDownloadBtn = document.getElementById("pdfDownloadButton");
+
+        if (pdfDownloadBtn) {
+            pdfDownloadBtn.style.display = "none";
+        }
+        ReactDOM.render(<DownLoadLink fileName={fileName} downloadLinkText={downloadLinkText}/>, document.getElementById("pdfDownloadLink"));
     }else{
-        ReactDOM.render(<PDFViewerExample />, document.getElementById("printutil"));
+        ReactDOM.render(<PDFViewerExample />, document.getElementById("pdfPreviewButton"));
     }
-
-
 };
-
-// Create Document Component
-// (
-//     <Document>
-//         <Page size="A4" style={styles.page}>
-//             <View style={styles.section}>
-//                 <Text>Section #1</Text>
-//             </View>
-//             <View style={styles.section}>
-//                 <Text>Section #2</Text>
-//             </View>
-//         </Page>
-//     </Document>
-// );
 
 export default PDFWindow;

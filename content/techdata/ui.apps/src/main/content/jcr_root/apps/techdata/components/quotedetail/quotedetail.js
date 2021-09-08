@@ -4,6 +4,18 @@ use(function () {
     var jsonObject = {};
 
 
+    if (properties && properties["fileReference"]) {
+        jsonObject["logoURL"] = properties["fileReference"];
+    }
+
+    if (properties && properties["downloadLinkText"]) {
+        jsonObject["downloadLinkText"] = properties["downloadLinkText"];
+    }
+
+    if (properties && properties["fileName"]) {
+        jsonObject["fileName"] = properties["fileName"];
+    }
+
     if (properties && properties["subheaderLabel"]) {
         jsonObject["subheaderLabel"] = properties["subheaderLabel"];
     }

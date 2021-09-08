@@ -12,9 +12,6 @@ const descriptionStyle = {...styles.tableCell, width:'65%'};
 const quantityStyle = {...styles.tableCell, width:'10%', textAlign:'center'};
 
 const PDFTableRow = ({quoteItem, header, currencySymbol}) => {
-    console.log(`row`)
-    console.log(currencySymbol)
-
     return (
         <View style={header ? styles.tableHeader : styles.tableRow}>
             <PDFTableCell cellItem={quoteItem.id} cellWidth="5%" type={"string"} cellStyle={idStyle} />

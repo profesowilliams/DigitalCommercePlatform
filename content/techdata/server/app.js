@@ -478,6 +478,13 @@ app.get("/ui-commerce/v1/quote", function (req, res) {
     res.json(response);
 });
 
+app.get("/ui-commerce/v1/quotedetails", function (req, res) {
+    console.log(req.url)
+    const id = req.query.id;
+    const response = utils.getQuoteDetailsResponse();
+    res.json(response);
+});
+
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
     const details = req.query.details || true;
@@ -657,7 +664,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           },
       });
   }
-
+  
   const response = {
     "content": {
       "details": {

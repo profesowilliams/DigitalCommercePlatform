@@ -2,9 +2,6 @@ import React from "react";
 import PDFTableRow from "../PDFTableRow/PDFTableRow";
 
 const PDFTable = ({quoteItems, currencySymbol}) => {
-    console.log(quoteItems);
-    console.log(`currency`)
-    console.log(currencySymbol)
     let quoteLineItems;
     const headerItems = {"id" : "ID", "description" : "Description", "unitListPriceFormatted" : "Unit Price", "quantity": "Quantity", "totalPriceFormatted":"Total"}
 

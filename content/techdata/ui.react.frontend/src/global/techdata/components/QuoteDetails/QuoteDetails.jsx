@@ -20,12 +20,12 @@ const QuoteDetails = ({ componentProp }) => {
     uiServiceEndPoint,
     logoURL,
     fileName,
+    downloadLinkText
   } = JSON.parse(componentProp);
 
   const { id } = getUrlParams();
   const [response, isLoading] = useGet(
-    `${uiServiceEndPoint}?id=${id}
-    }`
+    `${uiServiceEndPoint}?id=${id}`
   );
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
@@ -46,6 +46,7 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
         logoURL={logoURL}
         fileName={fileName}
+        downloadLinkText = {downloadLinkText}
       />
       <QuotesSubHeader label={subheaderLabel} title={subheaderTitle} quoteDetails={quoteDetails}  />
       <QuoteContactInfo
