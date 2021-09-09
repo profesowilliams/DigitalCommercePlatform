@@ -9,3 +9,13 @@ export function hasSomeParentTheClass(element, classname) {
 export default function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
+
+export function waitForGlobal (key, callback) {
+    if (window[key]) {
+        callback();
+    } else {
+        setTimeout(function() {
+            waitForGlobal(key, callback);
+        }, 100);
+    }
+}

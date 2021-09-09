@@ -1,6 +1,6 @@
+import { waitForGlobal } from './helper';
 class AppInitializer {
     constructor() {
-        var self = this;
         /*------------------------------------------------------------------
          * MutationObserver is used to listen for DOM changes
          * DOC: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver#Instance_methods
@@ -9,20 +9,20 @@ class AppInitializer {
          */
 
         // observe body element for mutations change
-        var targetNode = document.querySelector('[data-observe-mutation]');
+        const targetNode = document.querySelector('[data-observe-mutation]');
 
         // Options for the observer (which mutations to observe)
-        var config = {
+        const config = {
             attributes: false,
             childList: true,
             subtree: true
         };
 
         // Callback function to execute when mutations are observed
-        let callback = function (mutationsList) {
-            for (var mutation of mutationsList) {
+        function callback(mutationsList) {
+            for (const mutation of mutationsList) {
                 if (mutation.type == 'childList') {
-                    let newNodes = mutation.addedNodes;
+                    const newNodes = mutation.addedNodes;
                     // if new nodes are added to the DOM run through initialize component code
                     if (newNodes.length) {
                         newNodes.forEach(element => {
@@ -31,32 +31,19 @@ class AppInitializer {
                     }
                 }
             }
-        };
+        }
 
         if (targetNode) {
-            let observer = new MutationObserver(callback);
+            const observer = new MutationObserver(callback);
 
             // Start observing on body element for configured mutations
             observer.observe(targetNode, config);
         }
-        this.initAppConfiguration();
-    }
-
-    initAppConfiguration() {
-        var _self = this;
-
-        if (typeof initConfiguration === "function") {
-            var initConfig = initConfiguration();
-
-            initConfig.then(function () {
-                _self.initComponent();
-            });
-        }
     }
 
     initComponent(scope) {
-        let _scope = typeof scope == 'undefined' ? document : scope;
-        let componentReferences = _scope.querySelectorAll ? _scope.querySelectorAll(`[data-component]`) : [];
+        const _scope = typeof scope == 'undefined' ? document : scope;
+        const componentReferences = _scope.querySelectorAll ? _scope.querySelectorAll(`[data-component]`) : [];
 
         Array.prototype.forEach.call(componentReferences, function (element) {
             const componentProps = element.dataset;
@@ -69,10 +56,6 @@ class AppInitializer {
     }
 }
 
-if (document.readyState !== "loading") {
+waitForGlobal("AppConnector", function() {
     new AppInitializer();
-} else {
-    document.addEventListener("DOMContentLoaded", function () {
-        new AppInitializer();
-    });
-}
+});
