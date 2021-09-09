@@ -10,12 +10,15 @@ export default function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
-export function waitForGlobal (key, callback) {
+export function waitForGlobal (key, callback, maxIterations) {
+    const iterationsLeft = maxIterations -1 || null;
     if (window[key]) {
         callback();
     } else {
-        setTimeout(function() {
-            waitForGlobal(key, callback);
-        }, 100);
+        if (iterationsLeft) {
+            setTimeout(function () {
+                waitForGlobal(key, callback, iterationsLeft);
+            }, 100);
+        }
     }
 }

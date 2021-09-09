@@ -31,4 +31,16 @@ class AppConnector {
 	}
 }
 
+window.initConfiguration = async () => {
+	// console.log('inside initConfig');
+	/* Get the Configuration from backend on initial load */
+	// await initConfig();
+
+	// /* Get the i18n data from backend on initial load */
+	// await initi18n();
+
+	// /* Get the Anonymous token on initial load */
+	// return await initAuth();
+}
+
 window.AppConnector = AppConnector;

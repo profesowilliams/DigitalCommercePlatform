@@ -1,4 +1,5 @@
 import { waitForGlobal } from './helper';
+
 class AppInitializer {
     constructor() {
         /*------------------------------------------------------------------
@@ -19,14 +20,14 @@ class AppInitializer {
         };
 
         // Callback function to execute when mutations are observed
-        function callback(mutationsList) {
+        const callback = (mutationsList) => {
             for (const mutation of mutationsList) {
                 if (mutation.type == 'childList') {
                     const newNodes = mutation.addedNodes;
                     // if new nodes are added to the DOM run through initialize component code
                     if (newNodes.length) {
                         newNodes.forEach(element => {
-                            self.initComponent(element);
+                            this.initComponent(element);
                         });
                     }
                 }
@@ -39,6 +40,10 @@ class AppInitializer {
             // Start observing on body element for configured mutations
             observer.observe(targetNode, config);
         }
+
+        initConfiguration().then(() => {
+            this.initComponent();
+        })
     }
 
     initComponent(scope) {
@@ -58,4 +63,4 @@ class AppInitializer {
 
 waitForGlobal("AppConnector", function() {
     new AppInitializer();
-});
+}, 50);
