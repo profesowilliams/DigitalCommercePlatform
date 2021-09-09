@@ -44,11 +44,14 @@ class AppInitializer {
 
     initAppConfiguration() {
         var _self = this;
-        var initConfig = initConfiguration();
 
-        initConfig.then(function () {
-            _self.initComponent();
-        });
+        if (typeof initConfiguration === "function") {
+            var initConfig = initConfiguration();
+
+            initConfig.then(function () {
+                _self.initComponent();
+            });
+        }
     }
 
     initComponent(scope) {

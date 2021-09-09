@@ -11,7 +11,7 @@ export default class Header {
         window.addEventListener('resize', () => this.headerResize());
         this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
         document.addEventListener('click', (event) => this.showSearchIconOnly(event, this.searchEl));
-        this.initSecondaryImage();
+        // this.initSecondaryImage();
     }
 
     headerResize() {
@@ -21,8 +21,9 @@ export default class Header {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
         }
     }
-// Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
-/*     initSecondaryImage() {
+
+    // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
+    /*initSecondaryImage() {
         const imgEl = document.querySelector('[data-mobile-logo]');
         if (imgEl) {
             const smallLogo = imgEl.dataset.mobileLogo;
