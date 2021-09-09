@@ -30,7 +30,7 @@ const SignIn = (props) => {
 	});
 
 	const codeQueryParam = 'code';
-	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode, shopLoginRedirectUrl, pingLogoutURL, errorPageUrl } = configDataAEM;
+	const { authenticationURL: authUrl, uiServiceEndPoint, clientId, logoutURL, items, isPrivatePage, editMode, shopLoginRedirectUrl, pingLogoutURL, errorPageUrl, shopLogoutRedirectUrl } = configDataAEM;
 	const requested = props.data.auth.requested;
 	const isError = props.data.auth.showError;
 	const isLoading = props.data.auth.loading;
@@ -112,7 +112,7 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 	    if(isSessionExpired()) {
-           signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, encodeURIComponent(window.location.href));
+           signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, shopLogoutRedirectUrl);
         }
 		redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
 		localStorage.setItem('signin', constructSignInURL());
