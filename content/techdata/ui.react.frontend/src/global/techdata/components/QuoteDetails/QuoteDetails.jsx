@@ -55,12 +55,12 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
       />
       <QuoteContactInfo
-        label={information.yourCompanyHeaderLabel}
-        contact={quoteDetails.reseller}
+        label={information?.yourCompanyHeaderLabel ? information?.yourCompanyHeaderLabel : ""}
+        contact={quoteDetails?.reseller}
       />
       <QuoteContactInfo
-        label={information.endUserHeaderLabel}
-        contact={quoteDetails.endUser}
+        label={information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""}
+        contact={quoteDetails?.endUser}
       />
       <ProductLinesGrid
         gridProps={productLines}
@@ -69,8 +69,8 @@ const QuoteDetails = ({ componentProp }) => {
       ></ProductLinesGrid>
       <QuoteSubtotal
         label={subtotalLabel}
-        amount={quoteDetails.subTotalFormatted}
-        currencySymbol={quoteDetails.currencySymbol}
+        amount={quoteDetails?.subTotalFormatted ? quoteDetails?.subTotalFormatted : ""}
+        currencySymbol={quoteDetails?.currencySymbol ? quoteDetails?.currencySymbol : ""}
       />
       <QuoteCheckout
         onQuoteCheckout={onQuoteCheckout}
