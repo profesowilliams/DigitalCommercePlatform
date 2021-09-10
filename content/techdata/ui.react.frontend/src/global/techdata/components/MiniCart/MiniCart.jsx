@@ -5,12 +5,11 @@ import {isAlreadySignedIn} from "../../../../store/action/authAction";
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
 
   const sessionId = localStorage.getItem("sessionId");
-  if(!window.SHOP?.authentication?.isAuthenticated() || !sessionId) {
-    return "";
-  }
-
   const className = `cmp-cart ${cartActive}`;
-  return <a href={shopUrl} className={className}>{children}</a>
+  if(window.SHOP?.authentication?.isAuthenticated() || sessionId) {
+    return <a href={shopUrl} className={className}>{children}</a>
+  }
+  return "";
 }
 
 const MiniCart = ({componentProp}) => {
