@@ -5,7 +5,9 @@ import {isAlreadySignedIn} from "../../../../store/action/authAction";
 const MiniCartWrapper = ({children, cartActive, shopUrl}) => {
 
   const sessionId = localStorage.getItem("sessionId");
-  if(!sessionId) return "";
+  if(!window.SHOP?.authentication?.isAuthenticated() || !sessionId) {
+    return "";
+  }
 
   const className = `cmp-cart ${cartActive}`;
   return <a href={shopUrl} className={className}>{children}</a>
