@@ -39,6 +39,8 @@ public class CaConfigReader {
 
 	private String myOrdersEndpoint;
 
+	private String orderDetailEndpoint;
+
 	private String myQuotesEndpoint;
 
 	private String myDealsEndpoint;
@@ -166,6 +168,7 @@ public class CaConfigReader {
 		savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
 		quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
 		quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
+		orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
 		vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
 		orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
 		quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
@@ -417,4 +420,6 @@ public class CaConfigReader {
 	public String getOrderListingPage(){return orderListingPage;}
 
 	public String getOrderDetailPage(){return orderDetailPage;}
+
+	public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
 }

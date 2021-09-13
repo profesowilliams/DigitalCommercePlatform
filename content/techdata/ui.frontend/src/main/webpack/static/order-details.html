@@ -4,22 +4,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Quote Details</title>
+    <title>Order Details</title>
 
 
     <meta name="template" content="dcp-commerce-template"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <link rel="icon" href="/content/dam/techdata/favicon-32x32.ico" type="image/x-icon"/>
+
     <link rel="stylesheet" href="/etc.clientlibs/techdata/clientlibs/clientlib-base.min.css" type="text/css">
+
+
+
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"/>
+
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
+
     <script src="https://kit.fontawesome.com/e1e12a4c06.js" crossorigin="anonymous"></script>
+
+
     <script src="//assets.adobedtm.com/ee563c3a61fa/2fdd93b22384/launch-c1c0b59cbb70-development.min.js" async></script>
+
+
+
     <script type="text/javascript" src="https://typeahead.techdata.com/scripts/xdomain.min.js" slave="https://typeahead.techdata.com/proxy.html"></script>
+    <!-- CSS only -->
 
     <script src="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.min.js"></script>
+
     <link rel="stylesheet" href="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.min.css" type="text/css">
-    <link rel="stylesheet" href="http://localhost:9000/bundle.css" type="text/css">
 
 
 </head>
@@ -74,6 +88,13 @@
 
 
                                                         </a>
+
+
+
+
+
+
+
 
                                                     </figure>
                                                     <%= require('html-loader!./partials/megamenu/megamenu.html') %>
@@ -606,17 +627,15 @@
 
                 <div id="container-d120811ce9" class="cmp-container">
                     <div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+                        <div class="orderdetail aem-GridColumn aem-GridColumn--default--12">
 
-                        <div class="quotedetail aem-GridColumn aem-GridColumn--default--12">
-
-                            <div id="QuoteDetails" data-observe-mutation>
-                                <div data-component="QuoteDetails" data-cmp-type="react" className="cmp-td-quote-details"
-                                     data-config="{&#34;fileName&#34;:&#34;quote.pdf&#34;,&#34;downloadLinkText&#34;:&#34;Download Quote As PDF&#34;,&#34;logoURL&#34;:&#34;http://localhost:8080/content/techdata/language-masters/en/_jcr_content/root/container/container_943305826/teaser_copy_573990399.coreimg.png/1627657642556/security.png&#34;,&#34;subheaderLabel&#34;:&#34;TD Quote:&#34;,&#34;resellerContactLabel&#34;:&#34;Your Company Information&#34;,&#34;endUserContactLabel&#34;:&#34;End User Information&#34;,&#34;subtotalLabel&#34;:&#34;Quote Subtotal:&#34;,&#34;uiServiceEndPoint&#34;:&#34;http://localhost:3000/ui-commerce/v1/quotedetails&#34;}"></div>
-                            </div></div>
-
+                            <div id=OrderDetails" data-observe-mutation>
+                                <div data-component="OrderDetails" data-cmp-type="react" className="cmp-td-order-details"
+                                     data-config="{&#34;uiServiceEndPoint&#34;:&#34;http://localhost:3000/ui-commerce/v1/order/details&#34;,&#34;headerConfig&#34;:{&#34;orderLabel&#34;:&#34;Order Label&#34;,&#34;orderDateLabel&#34;:&#34;Order Date Label&#34;,&#34;purchaseOrderLabel&#34;:&#34;Purchase Order Label&#34;,&#34;exportCSVLabel&#34;:&#34;Export to CSV Label&#34;},&#34;infoConfig&#34;:{&#34;orderStatusLabel&#34;:&#34;Status Card Label&#34;,&#34;orderStatusItemsShipped&#34;:&#34;All Items Shipped Message&#34;,&#34;orderStatusItemsInProcess&#34;:&#34;Items are being Processed message&#34;,&#34;orderStatusItemsShippedDescription&#34;:&#34;All Items Shipped Very Very long Message, very very very looong&#34;,&#34;orderStatusItemsInProcessDescription&#34;:&#34;Items are being Processed Very Very long Message, very very very looong&#34;,&#34;endUserLabel&#34;:&#34;End-user Card Label&#34;,&#34;shipToLabel&#34;:&#34;Ship-To Card Label&#34;,&#34;blindPackagingUsed&#34;:&#34;Blind packaging used Label&#34;,&#34;blindPackagingNotUsed&#34;:&#34;Blind packaging not used Label&#34;,&#34;paymentLabel&#34;:&#34;Payment Card Label&#34;}}"></div>
+                            </div>
+                        </div>
 
                     </div>
-
                 </div>
 
 
@@ -1405,7 +1424,7 @@
 
 
 <script src="/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.min.js"></script>
-<script src="http://localhost:9000/bundle.js"></script>
 <script src="/etc.clientlibs/techdata/clientlibs/clientlib-base.min.js"></script>
+<script src="http://localhost:9000/bundle.js"></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+	<div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<div id="OrderDetails" data-observe-mutation data-sly-use.model="${'orderdetail.js' @uiServiceDomain=serviceData.uiServiceDomain,orderDetailEndpoint=serviceData.orderDetailEndpoint}">
+	<div
+			data-component="OrderDetails"
+			data-cmp-type="react"
+			className="cmp-td-order-details"
+			data-config="${model.configJson}"
+	></div>
+</div>

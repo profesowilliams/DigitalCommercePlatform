@@ -80,6 +80,18 @@ module.exports = {
                     },
                     "source": [],
                     "notes": null,
+                    "id": "121764062",
+                    "orders": [{"id": null, "system": "Q", "salesOrg": "0100"}],
+                    "customerPO": "21",
+                    "endUserPO": null,
+                    "poDate": null,
+                    "quoteReference": "CCW QuoteId:4732840041",
+                    "spaId": null,
+                    "currency": "USD",
+                    "currencySymbol": "$",
+                    "subTotal": 19011.5500000,
+                    "subTotalFormatted": "19,011.55",
+                    "tier": "Commercial",
                     "items": [{
                         "id": "1",
                         "parent": null,
@@ -660,21 +672,105 @@ module.exports = {
                         "urlProductSpecs": null,
                         "children": null,
                         "agreements": []
-                    }],
-                    "id": "121764062",
-                    "orders": [{"id": null, "system": "Q", "salesOrg": "0100"}],
-                    "customerPO": "21",
-                    "endUserPO": null,
-                    "poDate": null,
-                    "quoteReference": "CCW QuoteId:4732840041",
-                    "spaId": null,
-                    "currency": "USD",
-                    "currencySymbol": "$",
-                    "subTotal": 19011.5500000,
-                    "subTotalFormatted": "19,011.55",
-                    "tier": "Commercial"
+                    }]
                 }
             }, "error": {"code": 0, "messages": [], "isError": false}
         };
+    },
+    getOrderDetailsResponse() {
+        return {
+            "content": {
+                "id": "121764062",
+                "details": {
+                    "status" : "process",
+                    "shipTo": {
+                        "id": null,
+                        "companyName": "Sister Maggie's School",
+                        "name": "Wade Wilson",
+                        "line1": "9200 Sunset Boulevard",
+                        "line2": " ",
+                        "line3": " ",
+                        "city": "West Hollywood",
+                        "state": "CA",
+                        "zip": null,
+                        "postalCode": "90069",
+                        "country": "US",
+                        "email": "mrpool@sismaggies.com",
+                        "phoneNumber": "(424)-244-7789",
+                        "blindPackaging" : false
+                    },
+                    "endUser": {
+                        "id": null,
+                        "companyName": "PEIGENESISCOM",
+                        "name": "Daniel  Vogt",
+                        "line1": "2180 HORNIG RD",
+                        "line2": null,
+                        "line3": null,
+                        "city": "PHILADELPHIA",
+                        "state": "PA",
+                        "zip": null,
+                        "postalCode": "19116",
+                        "country": "US",
+                        "email": "Daniel.Vogt@techdata.com",
+                        "phoneNumber": "(000)-000-0000"
+                    },
+                    "paymentDetails": {
+                        "netValue": "50.00",
+                        "reference": "L-4426992",
+                        "currency": "USD",
+                        "currencySymbol": "$",
+                        "terms" : "30 Days Net 10",
+                        "subTotal" : "13920",
+                        "subTotalFormatted" : "13,920.00",
+                        "tax" : "10",
+                        "taxFormatted" : "10.00",
+                        "freight" : "5920",
+                        "freightFormatted" : "5,920.00",
+                        "total" : "19850",
+                        "totalFormatted" : "19,850.00",
+                    },
+                    "customer": "VERIZON",
+                    "orderPlacedDate" : "2021/03/04",
+                    "purchaseOrder" : "DP2020CureFor",
+                    "items": [
+                        {
+                            "id": "10",
+                            "parent": "0",
+                            "vendorPartNo": null,
+                            "manufacturer": null,
+                            "description": "PLTNM TAB PRTNR STOCK $5+ MRC ACTIVATION",
+                            "quantity": 0,
+                            "unitPrice": 50.0,
+                            "unitPriceFormatted": "50.00",
+                            "totalPrice": 0.0,
+                            "totalPriceFormatted": "0.00",
+                            "msrp": null,
+                            "invoice": null,
+                            "discounts": null,
+                            "contract": null,
+                            "shortDescription": null,
+                            "mfrNumber": null,
+                            "tdNumber": null,
+                            "upcNumber": null,
+                            "unitListPrice": null,
+                            "unitListPriceFormatted": null,
+                            "extendedPrice": null,
+                            "extendedPriceFormatted": "",
+                            "availability": null,
+                            "rebateValue": null,
+                            "urlProductImage": null,
+                            "urlProductSpecs": null,
+                            "children": null,
+                            "agreements": null,
+                            "ancillaryChargesWithTitles": null,
+                            "annuity": null,
+                            "isSubLine": false,
+                            "displayLineNumber": "10"
+                        }
+                    ]
+                }
+        },
+            "error": { "code": 0, "messages": [], "isError": false }
+        }
     }
 };

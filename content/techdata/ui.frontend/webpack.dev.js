@@ -1043,6 +1043,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/quote-details-pdf.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "order-details-demo",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/order-details.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

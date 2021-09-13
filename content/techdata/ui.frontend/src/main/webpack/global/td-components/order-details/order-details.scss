@@ -1,67 +1,203 @@
+
 .cmp-td-order-details {
-    font-smooth: always;
-    &__header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    &_header--details,
-    &_header--status {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
 
-    &_header--details {
-        font-size: $font-size-xsmall;
-        color: get-color(brand-text-gray);
-    }
+  &__parent-container {
+    background-color: #f6f6f6;
+  }
 
-    &_header--status {
-        font-size: $font-size-small;
-        color: get-color(brand-button-blue);
+  font-smooth: always;
 
-        a {
-            border-right: rem(1px) solid get-color(brand-light-gray2);
-            text-decoration: none;
-            color: get-color(brand-button-blue);
-            padding-right: rem(24px);
-            &:hover {
-                text-decoration: underline;
+  &__info-cards {
+    display: flex;
+
+    &__card {
+
+      width:25%;
+      padding: 2rem;
+      min-height: rem(400px);
+
+      &__container {
+        padding: 2rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        min-height: inherit;
+
+        &__label {
+          margin-top: rem(0);
+          margin-bottom: rem(16px);
+        }
+
+        &__status-title {
+
+        }
+        &__status-body {
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          &__status-heading {
+            padding-top: rem(16px);
+            padding-bottom: rem(16px);
+            font-weight: bold;
+          }
+
+          &__status-icon, &__status-icon-inprocess {
+
+            svg, .fas {
+              border-radius: 50%;
+              padding: rem(7px);
+              width: rem(30px) !important;
+              height: rem(30px);
             }
-        }
-    }
-    &_header--details,
-    &_header--status {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
+          }
 
-        div {
-            padding: 0 rem(25px);
-        }
-
-        .order-number {
-            color: get-color(td-dark-blue);
-            font-size: $font-size-custom-medium;
-            font-weight: 700;
-            position: relative;
-
-            &:before {
-                content: "\f053";
-                font-family: "Font Awesome 5 Free";
-                color: get-color(td-dark-blue);
-                position: absolute;
-                left: 0;
+          &__status-icon {
+            svg, .fa-check {
+              background-color: get-color(button-open);
+              color: get-color(brand-white);
             }
+          }
+
+          &__status-icon-inprocess{
+            svg, .fa-times {
+              background-color: get-color(brand-text-gray);
+              color: get-color(brand-white);
+            }
+          }
         }
-        .open {
-            font-size: $font-size-small;
-            color: get-color(brand-white);
-            background-color: get-color(button-open);
-            padding: rem(7px) rem(10px);
-            border: 0;
+
+
+
+        &__ship-to, &__end-user, &__payment {
+        color : get-color(brand-text-gray);
+        line-height: rem(24px);
+        font-size: $font-size-custom-xxsmall;
+           p {
+             margin-top: rem(0);
+             margin-bottom: rem(0);
+           }
+      }
+
+        &__payment {
+          flex-direction: row;
+
+          &__line-item, &__total {
+            display: flex;
+            &__left {
+              line-height: inherit;
+              width: 50%;
+              text-align: left;
+            }
+
+            &__right {
+              line-height: inherit;
+              width: 50%;
+              text-align: right;
+            }
+          }
+
+          &__total {
+            font-weight: bold;
+            margin-top: rem(16px);
+            border-top: rem(2px) solid get-color(black) ;
+          }
+
         }
+
+        &__ship-to, &__end-user {
+
+          &__address-name {
+            font-weight: bold;
+          }
+
+          &__contact-info-name {
+            margin-top: rem(16px);
+            font-weight: bold;
+          }
+
+          &__packaging {
+            margin-top: rem(32px);
+            font-weight: bold;
+          }
+
+        }
+      }
     }
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: rem(16px);
+    padding-right: rem(16px);
+  }
+
+  &_header--details,
+  &_header--status {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  &_header--details {
+    font-size: $font-size-xsmall;
+    color: get-color(brand-text-gray);
+  }
+
+  &_header--status {
+    font-size: $font-size-small;
+    color: get-color(brand-button-blue);
+
+    a {
+      border-right: rem(1px) solid get-color(brand-light-gray2);
+      text-decoration: none;
+      color: get-color(brand-button-blue);
+      padding-right: rem(24px);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &_header--details,
+  &_header--status {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    div {
+      padding: 0 rem(25px);
+    }
+
+    .order-number {
+      color: get-color(td-dark-blue);
+      font-size: $font-size-custom-medium;
+      font-weight: 700;
+      position: relative;
+
+      &:before {
+        content: "\f053";
+        font-family: "Font Awesome 5 Free";
+        color: get-color(td-dark-blue);
+        position: absolute;
+        left: 0;
+      }
+    }
+
+    .open {
+      font-size: $font-size-small;
+      color: get-color(brand-white);
+      background-color: get-color(button-open);
+      padding: rem(7px) rem(10px);
+      border: 0;
+    }
+  }
+
+  &_header--status {
+    align-items: center;
+  }
 }

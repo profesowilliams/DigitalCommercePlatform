@@ -91,4 +91,7 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Configurations Endpoint", description = "Configurations Endpoint ")
     String configurationsEndpoint();
+
+    @Property(label = "Order Detail Endpoint", description = "Order Detail Endpoint")
+    String orderDetailEndpoint();
 }

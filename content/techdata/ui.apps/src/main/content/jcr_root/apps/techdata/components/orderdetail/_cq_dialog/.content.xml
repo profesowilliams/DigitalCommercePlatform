@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Order Detail"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    helpPath="https://www.adobe.com/go/aem_cmp_image_v2">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <orderHeader
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Order Subheader Configuration"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <orderLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Order Label"
+                                                    fieldLabel="Order Label"
+                                                    name="./orderLabel"/>
+                                            <orderDateLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Order Date Label"
+                                                    fieldLabel="Order Date Label"
+                                                    name="./orderDateLabel"/>
+                                            <purchaseOrderLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="PO Label"
+                                                    fieldLabel="Purchase Order Label"
+                                                    name="./purchaseOrderLabel"/>
+                                            <exportCSVLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Export to CSV Label"
+                                                    fieldLabel="Export to CSV Label"
+                                                    name="./exportCSVLabel"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </orderHeader>
+                    <orderInfo
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Order Information Configuration"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <orderStatusLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Order Status Label"
+                                                fieldLabel="Order Status Label"
+                                                name="./orderStatusLabel"/>
+                                            <orderStatusItemsShipped
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="All Items Shipped Message"
+                                                    fieldLabel="All Items Shipped Message"
+                                                    name="./orderStatusItemsShipped"/>
+                                            <orderStatusItemsInProcess
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="All Items Shipped Descriptive Message"
+                                                    fieldLabel="Items are being Processed Descriptive message"
+                                                    name="./orderStatusItemsInProcess"/>
+                                            <orderStatusItemsShippedDescription
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="All Items Shipped Descriptive Message"
+                                                    fieldLabel="All Items Shipped Descriptive Message"
+                                                    name="./orderStatusItemsShippedDescription"/>
+                                            <orderStatusItemsInProcessDescription
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="All Items Shipped Message"
+                                                    fieldLabel="Items are being Processed message"
+                                                    name="./orderStatusItemsInProcessDescription"/>
+                                            <endUserLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="End-user Card Label"
+                                                    fieldLabel="End-user Card Label"
+                                                    name="./endUserLabel"/>
+                                            <shipToLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Ship-To Card Label"
+                                                    fieldLabel="Ship-To Card Label"
+                                                    name="./shipToLabel"/>
+                                            <blindPackagingUsed
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Blind packaging used Label"
+                                                    fieldLabel="Blind packaging used Label"
+                                                    name="./blindPackagingUsed"/>
+                                            <blindPackagingNotUsed
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Blind packaging not used Label"
+                                                    fieldLabel="Blind packaging not used Label"
+                                                    name="./blindPackagingNotUsed"/>
+                                            <paymentLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Payment Card Label"
+                                                    fieldLabel="Payment Card Label"
+                                                    name="./paymentLabel"/>
+
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </orderInfo>
+                    <SubTotal
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Sub Total"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <subtotalLabel
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="Sub-total Contact Label"
+                                    fieldLabel="Sub-total Label"
+                                    name="./subtotalLabel"/>
+                        </items>
+                    </SubTotal>
+                    <PDF
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="PDF Configuration"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <logoUrl
+                                    jcr:primaryType="nt:unstructured"
+                                    path="/mnt/overlay/core/wcm/components/image/v2/image/cq:dialog/content/items/tabs/items/asset/items/columns/items/column/items/file"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"/>
+                            <downloadLinkText
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="Text for Download Link"
+                                    fieldLabel="Download Link Text"
+                                    value="Download PDF"
+                                    name="./downloadLinkText"/>
+                            <pdfFileName
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="Filename to be given for the downloaded file"
+                                    fieldLabel="Download File Name"
+                                    value="Download PDF"
+                                    name="./fileName"/>
+                        </items>
+                    </PDF>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
