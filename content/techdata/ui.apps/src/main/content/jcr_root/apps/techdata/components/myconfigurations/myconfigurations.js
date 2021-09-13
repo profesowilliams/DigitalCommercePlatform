@@ -26,7 +26,7 @@ use(function () {
     }
 
     if (this.uiServiceDomain != null) {
-    jsonObject.put("endpoint", this.uiServiceDomain+this.myConfigurationsEndpoint);
+        jsonObject.put("endpoint", this.uiServiceDomain+this.myConfigurationsEndpoint);
     }
 
     if (listValues != null) {

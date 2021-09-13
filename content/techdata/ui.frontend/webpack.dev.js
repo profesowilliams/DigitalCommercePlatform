@@ -500,6 +500,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "my-order-status.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/my-order-status.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "sign-in.html",
                 template: path.resolve(
                     __dirname,

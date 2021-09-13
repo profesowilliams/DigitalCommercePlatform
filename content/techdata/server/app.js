@@ -279,6 +279,28 @@ app.get("/quote/MyQuote", function (req, res) {
         },
     });
 });
+
+app.get("/myorderstatus", function (req, res) {
+    const code = req.query.code;
+
+    if (!req.headers["sessionid"]) return res.status(401);
+
+    res.json({
+        content: {
+            items: {
+                onHold: "0",
+                inProcess: "0",
+                shipped: "42",
+            },
+        },
+        error: {
+            code: "",
+            message: "",
+            isError: false,
+        },
+    });
+});
+
 app.post("/quote/create", function (req, res) {
 
     if (!req.headers["sessionid"]) return res.status(401);

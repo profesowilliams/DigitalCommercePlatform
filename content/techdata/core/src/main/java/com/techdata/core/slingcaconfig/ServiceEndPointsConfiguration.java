@@ -32,6 +32,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "My Orders Endpoint", description = "My Orders Endpoint")
     String myOrdersEndpoint();
 
+    @Property(label = "My Order Status Endpoint", description = "My Order Status Endpoint")
+    String myOrderStatusEndpoint();
+
     @Property(label = "My Quotes Endpoint", description = "My Quotes Endpoint")
     String myQuotesEndpoint();
 

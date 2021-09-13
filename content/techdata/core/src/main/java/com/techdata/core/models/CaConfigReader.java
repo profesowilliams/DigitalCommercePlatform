@@ -43,6 +43,8 @@ public class CaConfigReader {
 
 	private String myDealsEndpoint;
 
+	private String myOrderStatusEndpoint;
+
 	private String myRenewalsEndpoint;
 
 	private String topItemsEndpoint;
@@ -153,6 +155,7 @@ public class CaConfigReader {
 		myOrdersEndpoint = serviceEndPointsConfiguration.myOrdersEndpoint();
 		myQuotesEndpoint = serviceEndPointsConfiguration.myQuotesEndpoint();
 		myDealsEndpoint = serviceEndPointsConfiguration.myDealsEndpoint();
+		myOrderStatusEndpoint = serviceEndPointsConfiguration.myOrderStatusEndpoint();
 		myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
 		topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
 		createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
@@ -241,6 +244,10 @@ public class CaConfigReader {
 
 	public String getMyDealsEndpoint() {
 		return myDealsEndpoint;
+	}
+
+	public String getMyOrderStatusEndpoint() {
+		return myOrderStatusEndpoint;
 	}
 
 	public String getMyRenewalsEndpoint() {

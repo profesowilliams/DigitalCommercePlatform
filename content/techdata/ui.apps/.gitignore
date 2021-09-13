@@ -1,9 +1,5 @@
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site/js
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site/css
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site
 src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-dependencies
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-global/css
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-global/js
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-us/css
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-us/js
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react/js
-src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react/css
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-global
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-site-us
+src/main/content/jcr_root/apps/techdata/clientlibs/clientlib-react
