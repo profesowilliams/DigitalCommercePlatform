@@ -10,7 +10,7 @@ module.exports = {
         allowProxy: true,
         categories: ["techdata.react"],
         serializationFormat: "xml",
-        jsProcessor: ["min:gcc"],
+        jsProcessor: ["min:none"],
         assets: {
             js: [
                 "dist/**/*.js"
