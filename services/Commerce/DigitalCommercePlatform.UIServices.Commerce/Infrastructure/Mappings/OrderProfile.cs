@@ -33,11 +33,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
 
             CreateMap<Item, Line>()
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name)); 
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
 
             CreateMap<AddressDetails, Address>();
             CreateMap<Item, Line>()
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name)); 
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
             CreateMap<OrderModel, OrderDetailModel>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
                 .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
@@ -46,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
                 .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
+                .ForPath(dest=> dest.PaymentDetails.PaymentTermText, opt => opt.Ignore())
                 .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
         }

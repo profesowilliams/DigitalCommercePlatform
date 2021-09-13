@@ -7,5 +7,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string Reference { get; set; }
         public string Currency { get; set; }
         public string CurrencySymbol { get; set; } = "$";
+        public string PaymentTermText { get; set; } = "30 Days Net 10";
     }
 }

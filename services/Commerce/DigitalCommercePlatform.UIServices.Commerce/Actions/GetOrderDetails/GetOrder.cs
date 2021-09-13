@@ -32,6 +32,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
             public Address ShipTo { get; set; }
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
+            public bool BlindPackaging { get; set; } = true;
+            public string Status { get; set; } = "OPEN";
             public List<Line> Items { get; set; }
 
             public Response(OrderDetailModel data)

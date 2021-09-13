@@ -234,7 +234,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Type = "1",
                         }
                     };
-                    item.Quantity = cartLine.Quantity;
+                    //item.Quantity = cartLine.Quantity;
                     request.CreateModelFrom.Items.Add(item);
                 }
             }
@@ -262,7 +262,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     itemModel.Product = new List<ProductModel> {
                         new ProductModel { Id = cartLine.ProductId, Manufacturer = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", }
                     };
-                    itemModel.Quantity = cartLine.Quantity;
+                    //itemModel.Quantity = cartLine.Quantity;
                     createQuoteFrom.Items.Add(itemModel);
                 }
             }
