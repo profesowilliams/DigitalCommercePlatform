@@ -1444,7 +1444,10 @@ app.get("/ui-config/v1/configurations", function (req, res) {
                 "id": "CD_ID__1",
                 "line": "Line_863",
                 "quantity": 6,
-                "price": 54.0,
+                "price": "54,048.50",
+                "priceFormatted": "54,048.50",
+                "currency": "USD",
+                "currencySymbol": "$",
                 "created": "8/8/2021",
                 "status": "Created"
             },
@@ -1452,7 +1455,10 @@ app.get("/ui-config/v1/configurations", function (req, res) {
                 "id": "CD_ID__2",
                 "line": "Line_104",
                 "quantity": 9,
-                "price": 39.0,
+                "price": "54,048.50",
+                "priceFormatted": "54,048.50",
+                "currency": "USD",
+                "currencySymbol": "$",
                 "created": "8/6/2021",
                 "status": "Created"
             },
@@ -1460,12 +1466,15 @@ app.get("/ui-config/v1/configurations", function (req, res) {
                 "id": "CD_ID__2",
                 "line": "Line_104",
                 "quantity": 9,
-                "price": 39.0,
+                "price": "54,048.50",
+                "priceFormatted": "54,048.50",
+                "currency": "USD",
+                "currencySymbol": "$",
                 "created": "8/6/2021",
                 "status": "Failed"
             },
             {
-                "id": "",
+                "id": "CD_ID__3",
                 "line": "",
                 "quantity": 0,
                 "price": 0.0,
@@ -1651,6 +1660,16 @@ app.get("/ui-config/v1/configurations", function (req, res) {
           "configName": null,
           "endUserName": "VITALITY CORPORATE SERVICES LTD",
           "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__3",
+                "line": "",
+                "quantity": 0,
+                "price": 0.0,
+                "created": "",
+                "status": "Expired"
+            }
+          ],
           "vendorQuoteId": null,
           "action": "CreateQuote",
           "details": [
@@ -1685,6 +1704,19 @@ app.get("/ui-config/v1/configurations", function (req, res) {
           "configName": null,
           "endUserName": "NIKE",
           "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__2",
+                "line": "Line_104",
+                "quantity": 9,
+                "price": "54,048.50",
+                "priceFormatted": "54,048.50",
+                "currency": "USD",
+                "currencySymbol": "$",
+                "created": "8/6/2021",
+                "status": "Failed"
+            },
+          ],
           "vendorQuoteId": null,
           "action": "CreateQuote",
           "details": [

@@ -15,11 +15,27 @@
     &__line {
       display: grid;
       grid-template-columns: 5% 25% 40% 30%;
+
+      &.cmp-details-info__lines--single {
+        grid-template-columns: 30% 40% 30%;
+      }
+    }
+    &__info {
+      text-align: left;
+      font-weight: 600;
     }
     .cmp-show-more__content {
       display: grid;
       grid-template-columns: 30% 40% 30%;
       text-align: left;
+
+      .cmp-modal_quote-details{
+        padding-right: rem(4px);
+      }
+
+      .cmp-modal_btn {
+        height: 44px;
+      }
     }
   }
 }

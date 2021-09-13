@@ -13,6 +13,24 @@ use(function () {
     jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + properties["quoteDetailUrlSuffix"];
   }
 
+  //Modal Labels
+  var quotesModal = {};
+
+  if (properties && properties["modalTitle"]) {
+    quotesModal.title = properties["modalTitle"];
+  }
+
+  if (properties && properties["modalContent"]) {
+    quotesModal.content = properties["modalContent"];
+  }
+
+  if (properties && properties["modalQuotePreffixLabel"]) {
+    quotesModal.quotePreffixLabel = properties["modalQuotePreffixLabel"];
+  }
+
+  jsonObject["quotesModal"] = quotesModal;
+
+  //Column definition
   var columnListValues = [];
   var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
 
@@ -100,10 +118,6 @@ use(function () {
   if (statusLabelsListValues != null) {
     jsonObject["statusLabelsList"] = statusLabelsListValues;
   }
-
-    if (properties && properties["label"]) {
-        jsonObject["label"] = properties["label"];
-    }
 
     jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain+this.serviceData.configurationsEndpoint || '';
 

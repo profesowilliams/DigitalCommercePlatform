@@ -3,8 +3,8 @@ import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Modal from '../Modal/Modal';
-import DetailsInfo from './DetailsInfo';
 import ConfigurationGridSearch from "./ConfigurationGridSearch";
+import { QuoteDetailsLink, MultipleQuotesInvokeModal, SingleQuotesInvokeModal } from './QuotesModals'
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -22,24 +22,6 @@ function ConfigurationGrid(props) {
     const dateValue = new Date(dateUTC);
 
     return isValidDate(dateValue) ? dateValue.toLocaleDateString() : dateUTC;
-  };
-
-  const labelList = [
-    {
-      labelKey: 'multiple',
-      labelValue: componentProp.labelList?.find((label) => label.labelKey === 'multiple')?.labelValue ?? 'Multiple',
-    },
-    {
-      labelKey: 'pending',
-      labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
-    },
-  ];
-
-  const quotesModal = {
-    title: componentProp.quotesModal?.title ?? 'Config ID',
-    content:
-      componentProp.quotesModal?.content ??
-      'There are multiple items associated with this Config ID. Please choose the item you would like to review:',
   };
 
   const options = {
@@ -63,41 +45,30 @@ function ConfigurationGrid(props) {
     }
     else if (line.quotes.length && line.quotes.length > 1) {
       return (
-        <div
-          onClick={() => {
-            invokeModal({
-              content: (
-                <DetailsInfo
-                  info={quotesModal.content}
-                  line={line}
-                  statusLabelsList={componentProp.statusLabelsList}
-                  configDetailUrl={componentProp.configDetailUrl}
-                ></DetailsInfo>
-              ),
-              properties: {
-                title: `${quotesModal.title}: ${line.configId} `,
-                buttonIcon: quotesModal.buttonIcon,
-                buttonLabel: quotesModal.buttonLabel,
-              },
-            });
-          }}
-        >
-          {labelList.find((label) => label.labelKey === 'multiple').labelValue}
-        </div>
+        <MultipleQuotesInvokeModal
+          invokeModal={invokeModal}
+          quotesModal={componentProp.quotesModal}
+          configDetailUrl={componentProp.configDetailUrl}
+          statusLabelsList={componentProp.statusLabelsList}
+          line={line}
+        ></MultipleQuotesInvokeModal>
       );
     } else {
-      if (line.quotes[0]?.status === 'Pending') {
-        return labelList.find((label) => label.labelKey === 'pending').labelValue;
+      const status = componentProp.statusLabelsList.find((label) => label.labelKey === line.quotes[0]?.status);
+      if (status || line.quotes[0]?.status === 'Pending') {
+        return (
+          <SingleQuotesInvokeModal
+            invokeModal={invokeModal}
+            quotesModal={componentProp.quotesModal}
+            configDetailUrl={componentProp.configDetailUrl}
+            statusLabelsList={componentProp.statusLabelsList}
+            line={line}
+            status={status}
+          ></SingleQuotesInvokeModal>
+        );
       } else if (line.quotes[0]?.id) {
         return (
-          <a
-            className="cmp-grid-url-underlined"
-            href={
-              componentProp.quoteDetailUrl?.replace('{id}', line.quotes[0]?.id)
-            }
-          >
-            {line.quotes[0]?.id}
-          </a>
+          <QuoteDetailsLink quote={line.quotes[0]} configDetailUrl={componentProp.configDetailUrl}></QuoteDetailsLink>
         )
       } else {
         return '';
