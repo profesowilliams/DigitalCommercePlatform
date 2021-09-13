@@ -12,9 +12,12 @@ function Grid(props) {
     onAfterGridInit,
     onRowSelected,
     onSelectionChanged,
+    onRowDataChanged,
+    onRowDataUpdated,
+    getRowIdCallback,
     requestInterceptor,
   } = Object.assign({}, props);
-  const componentVersion = "1.1.6";
+  const componentVersion = "1.1.7";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({
@@ -57,6 +60,8 @@ function Grid(props) {
       detailRowAutoHeight={true}
       animateRows={false}
       domLayout={serverSide ? "normal" : "autoHeight"}
+      onRowDataChanged={onRowDataChanged}
+      onRowDataUpdated={onRowDataUpdated}
       onFirstDataRendered={onFirstDataRendered}
       onRowGroupOpened={onRowGroupOpened}
       onExpandOrCollapseAll={onExpandOrCollapseAll}
@@ -65,6 +70,7 @@ function Grid(props) {
       rowSelection={"multiple"}
       getRowHeight={getRowHeight}
       getRowClass={getRowClass}
+      getRowNodeId={getRowIdCallback}
       suppressRowClickSelection={true}
       suppressPropertyNamesCheck={true}
     >

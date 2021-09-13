@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Widgets/Dropdown";
 
-function QuoteSubtotal({ config, onQuoteCheckout, onQuoteOptionChanged }) {
+function QuoteDetailsCheckout({
+  config,
+  onQuoteCheckout,
+  onQuoteOptionChanged,
+}) {
   const checkoutLabel = config?.checkoutLabel || "Checkout";
   const dropdownLabel = config?.dropdownLabel || "Quote Options";
 
@@ -46,17 +50,19 @@ function QuoteSubtotal({ config, onQuoteCheckout, onQuoteOptionChanged }) {
             </div>
           </button>
         </div>
-        <div className="cmp-td-quote-checkout__dropdown cmp-widget">
-          <Dropdown
-            selected={selectedOption || { label: dropdownLabel }}
-            setValue={setSelectedOption}
-            options={quoteOptions}
-            label={dropdownLabel}
-          />
-        </div>
+        {selectedOption?.key !== "whiteLabelQuote" && (
+          <div className="cmp-td-quote-checkout__dropdown cmp-widget">
+            <Dropdown
+              selected={selectedOption || { label: dropdownLabel }}
+              setValue={setSelectedOption}
+              options={quoteOptions}
+              label={dropdownLabel}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-export default QuoteSubtotal;
+export default QuoteDetailsCheckout;

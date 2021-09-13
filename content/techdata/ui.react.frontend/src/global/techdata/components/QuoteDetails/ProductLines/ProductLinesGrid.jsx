@@ -14,8 +14,21 @@ function ProductLinesGrid({
   onMarkupChanged,
 }) {
   const [gridApi, setGridApi] = useState(null);
-  const gridData = data.items ?? [];
+  const gridData = data.items.map((el) => {
+    return {
+      ...el,
+      calculatedCost: Number(el.quantity) * Number(el.unitPrice),
+      children: el.children?.map((inner) => {
+        return {
+          ...inner,
+          calculatedCost: Number(inner.quantity) * Number(inner.unitPrice),
+        };
+      }),
+    };
+  });
+
   const mutableGridData = Object.assign([], gridData);
+
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const gridConfig = {
     ...gridProps,
@@ -43,7 +56,9 @@ function ProductLinesGrid({
 
   function markupChanged(data) {
     if (typeof onMarkupChanged === "function") {
-      onMarkupChanged(data);
+      setTimeout(() => {
+        onMarkupChanged(data);
+      }, 200);
     }
   }
 
@@ -165,10 +180,15 @@ function ProductLinesGrid({
             <ProductLinesMarkupRow
               onMarkupValueChanged={({ value, unit, source }) => {
                 setValue(value);
-                api.refreshCells({
-                  columns: ["clientUnitPrice"],
-                  force: true,
-                });
+                node.setDataValue(
+                  "clientUnitPrice",
+                  Number(value) + Number(data.unitPrice)
+                );
+                node.setDataValue(
+                  "clientExtendedPrice",
+                  (Number(value) + Number(data.unitPrice)) *
+                    Number(data.quantity)
+                );
                 if (source === "internal") {
                   markupChanged(mutableGridData);
                 }
@@ -178,9 +198,6 @@ function ProductLinesGrid({
               labels={labels}
             ></ProductLinesMarkupRow>
           );
-        },
-        valueFormatter: ({ data }) => {
-          return 0;
         },
         sortable: false,
       },
@@ -194,13 +211,7 @@ function ProductLinesGrid({
         },
         headerClass: "cmp-product-lines-grid__th__client-cost",
         cellRenderer: ({ node, api, value, setValue, data }) => {
-          const _ = Number(data.appliedMarkup) + Number(data.unitPrice);
-          setValue(_);
-          api.refreshCells({
-            columns: ["clientExtendedPrice"],
-            force: true,
-          });
-          return "$" + thousandSeparator(_);
+          return "$" + thousandSeparator(value);
         },
         sortable: false,
       },
@@ -214,9 +225,7 @@ function ProductLinesGrid({
         },
         headerClass: "cmp-product-lines-grid__th__client-cost",
         cellRenderer: ({ node, api, value, setValue, data }) => {
-          const _ = Number(data.clientUnitPrice) * Number(data.quantity);
-          setValue(_);
-          return "$" + thousandSeparator(_);
+          return "$" + thousandSeparator(value);
         },
         sortable: false,
       },

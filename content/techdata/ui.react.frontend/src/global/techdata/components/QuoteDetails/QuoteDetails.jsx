@@ -3,7 +3,7 @@ import QuotesSubHeader from "./QuoteDetailsSubHeader/QuotesSubHeader";
 import QuoteContactInfo from "./QuoteDetailsContactInfo/QuoteContactInfo";
 import QuoteSubtotal from "./QuoteDetailsSubTotal/QuoteSubtotal";
 import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
-import QuoteCheckout from "./QuoteDetailsCheckout/QuoteCheckout";
+import QuoteDetailsCheckout from "./QuoteDetailsCheckout/QuoteDetailsCheckout";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import PDFWindow from "../PDFWindow/PDFWindow";
@@ -24,12 +24,14 @@ const QuoteDetails = ({ componentProp }) => {
     logoURL,
     fileName,
     downloadLinkText,
+    whiteLabel,
   } = JSON.parse(componentProp);
 
   const { id } = getUrlParams();
-  const [response, isLoading] = useGet(`${uiServiceEndPoint}?id=${id}`);
+  const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
+  const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
 
   function onQuoteCheckout() {}
 
@@ -55,31 +57,54 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
       />
       <QuoteContactInfo
-        label={information?.yourCompanyHeaderLabel ? information?.yourCompanyHeaderLabel : ""}
+        label={
+          information?.yourCompanyHeaderLabel
+            ? information?.yourCompanyHeaderLabel
+            : ""
+        }
         contact={quoteDetails?.reseller}
       />
       <QuoteContactInfo
-        label={information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""}
+        label={
+          information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""
+        }
         contact={quoteDetails?.endUser}
       />
       <ProductLinesGrid
         gridProps={productLines}
         data={quoteDetails}
         quoteOption={quoteOption}
+        onMarkupChanged={(quote) => {
+          setQuoteWithMarkup([...quote]);
+        }}
       ></ProductLinesGrid>
       <QuoteSubtotal
-        label={subtotalLabel}
-        amount={quoteDetails?.subTotalFormatted ? quoteDetails?.subTotalFormatted : ""}
-        currencySymbol={quoteDetails?.currencySymbol ? quoteDetails?.currencySymbol : ""}
+        labels={whiteLabel}
+        amount={quoteDetails?.subTotal}
+        currencySymbol={
+          quoteDetails?.currencySymbol ? quoteDetails?.currencySymbol : ""
+        }
+        quoteWithMarkup={quoteWithMarkup}
+        quoteOption={quoteOption}
       />
-      <QuoteCheckout
+      <QuoteDetailsCheckout
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
       />
     </>
   ) : (
     <FullScreenLoader>
-      <Loader visible={true}></Loader>
+      {error ? (
+        <div className="error">
+          <div className="error__header">Error {error.code && error.code}.</div>
+          <div className="error__messages">
+            {" "}
+            Contact you site administrator.
+          </div>
+        </div>
+      ) : (
+        <Loader visible={true}></Loader>
+      )}
     </FullScreenLoader>
   );
 };

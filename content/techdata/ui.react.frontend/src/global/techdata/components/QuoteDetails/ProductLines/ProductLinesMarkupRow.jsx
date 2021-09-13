@@ -1,4 +1,4 @@
-import React, { useEffect, useState, forwardRef, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const ProductLinesMarkupRow = (props) => {
   const { labels, initialMarkup, resellerUnitPrice, onMarkupValueChanged } =

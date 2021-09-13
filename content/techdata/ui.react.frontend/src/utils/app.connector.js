@@ -1,30 +1,69 @@
-import React from 'react';
-import ReactContentRenderer from 'react-dom';
-import {nanoid} from 'nanoid';
-import store from '../store/store';
-import {Provider} from 'react-redux';
+import React from "react";
+import ReactContentRenderer from "react-dom";
+import { nanoid } from "nanoid";
+import store from "../store/store";
+import { Provider } from "react-redux";
+
+function writeLog(logs, message, data) {
+	logs.push({
+		message: message,
+		data: data,
+	});
+}
+
+function parseJSON(json) {
+	try {
+		return JSON.parse(json);
+	} catch (error) {
+		return error;
+	}
+}
 
 class AppConnector {
 	constructor(componentProps, element) {
-		const _self = this;
+		this.logs = [];
+		var _self = this;
 		this.components = [];
 		this.componentProps = componentProps;
-
-		import(`../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}`)
+		writeLog(
+			this.logs,
+			"attempting to import",
+			{ path: `../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}` }
+		);
+		import(
+			`../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}`
+		)
 			.then((component) => {
+				writeLog(_self.logs, "component imported", { component: component });
 				_self.loadComponent(component.default, element);
 			})
-			.catch(() => {
-				console.error(`${_self.componentProps.component} Component not found`);
+			.catch((error) => {
+				writeLog(_self.logs, "error occured", { error: error });
+				console.error(
+					`${_self.componentProps.component} not initialized succesfully. Check logs below:`
+				);
+				console.error(_self.logs);
 			});
 	}
 
 	loadComponent(componentRef, element) {
 		let Component = componentRef; // Captilize is mandatory for the variable 'Component'
 		let randomKey = nanoid();
+		writeLog(this.logs, "attempting to render", {
+			element: element,
+			componentRef: componentRef,
+			componentKey: randomKey,
+			aemDataSet: this.componentProps,
+			componentProp: this.componentProps?.config,
+			componentPropParsed: parseJSON(this.componentProps?.config),
+		});
 		ReactContentRenderer.render(
 			<Provider store={store}>
-				<Component key={randomKey} componentProp={this.componentProps.config} aemDataSet={this.componentProps} />
+				<Component
+					key={randomKey}
+					componentProp={this.componentProps.config}
+					aemDataSet={this.componentProps}
+				/>
 			</Provider>,
 			element
 		);

@@ -5,6 +5,7 @@ import { get } from '../../../utils/api';
 export default function useGet(url) {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -12,6 +13,9 @@ export default function useGet(url) {
       .then(result => {
         if (isMounted) {
           setResponse(result.data);
+          if (result.data?.error?.isError) {
+            setError(result.data.error);
+          }
           setIsLoading(false);
         }
       });
@@ -19,5 +23,5 @@ export default function useGet(url) {
       isMounted = false;
     };
   }, []);
-  return [response, isLoading];
+  return [response, isLoading, error];
 }
