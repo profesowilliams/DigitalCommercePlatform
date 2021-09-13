@@ -796,12 +796,19 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/my-configurations.html"
                 ),
-            }),
+            }),    
             new HtmlWebpackPlugin({
                 filename: "searchbar",
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/searchbar.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "WhitelabelExportConfiguration",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/WhitelabelExportConfiguration.html"
                 ),
             }),
             new HtmlWebpackPlugin({
