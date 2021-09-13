@@ -892,10 +892,25 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "td-order-details-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                        "/static/partials/orders/td-order-details-react.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "td-quote-details-react",
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/td-quote-details-react.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "td-order-details-react",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/td-order-details-react.html"
                 ),
             }),
             new HtmlWebpackPlugin({

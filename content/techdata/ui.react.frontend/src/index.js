@@ -18,6 +18,7 @@ import Subheader from "./global/techdata/components/Subheader/Subheader";
 import MyQuotes from "./global/techdata/components/MyQuotes/MyQuotes";
 import QuotesGrid from "./global/techdata/components/Grid/Grid";
 import QuoteDetails from "./global/techdata/components/QuoteDetails/QuoteDetails";
+import OrderDetails from "./global/techdata/components/OrderDetails/OrderDetails";
 import OrdersGrid from "./global/techdata/components/OrdersGrid/OrdersGrid";
 import Modal from "./global/techdata/components/Modal/Modal";
 import QuotePreview from "./global/techdata/components/QuotePreview/QuotePreview";

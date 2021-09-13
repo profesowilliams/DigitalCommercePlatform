@@ -507,6 +507,14 @@ app.get("/ui-commerce/v1/quotedetails", function (req, res) {
     res.json(response);
 });
 
+//---ORDER DETAILS MOCK API---//
+app.get("/ui-commerce/v1/orderdetails", function (req, res) {
+  console.log(req.url)
+  const id = req.query.id;
+  const response = {};
+  res.json(response);
+}); 
+
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
     const details = req.query.details || true;
