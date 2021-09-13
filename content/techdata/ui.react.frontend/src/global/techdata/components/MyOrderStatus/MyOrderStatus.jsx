@@ -19,15 +19,20 @@ const ValueItem = ({ icon, value, color }) => (
   </section>
 );
 
-const MyOrderDeals = ({ componentProp }) => {
-  let { label, endpoint } = JSON.parse(componentProp);
+const MyOrderStatus = ({ componentProp }) => {
+  let { label, fromDateInYears, endpoint } = JSON.parse(componentProp);
   const [ status, setStatus ] = useState([])
   useEffect(async () => {
       try{
-            const { data: { content: { items } } } = await get(endpoint, {});
-            setStatus(items);
-      } catch {
-      }
+          let date = new Date();
+          let toDateInUSFormat = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear(1);
+          date.setFullYear(date.getFullYear() - fromDateInYears);
+          let fromDateInUSFormat = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear(1);
+          endpoint = endpoint + "?fromDate=" + fromDateInUSFormat + "&toDate=" + toDateInUSFormat;
+          const { data: { content: { items } } } = await get(endpoint, {});
+
+          setStatus(items);
+      } catch {}
   },[])
   return(
     <>
@@ -63,4 +68,4 @@ const MyOrderDeals = ({ componentProp }) => {
   )
 }
 
-export default MyOrderDeals;
+export default MyOrderStatus;

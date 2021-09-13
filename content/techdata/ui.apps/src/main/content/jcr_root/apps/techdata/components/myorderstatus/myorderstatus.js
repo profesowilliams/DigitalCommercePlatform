@@ -1,8 +1,13 @@
 "use strict";
 use(function () {
     var jsonObject = {};
-    if (properties && properties["label"]) {
-        jsonObject["label"] = properties["label"];
+    if (properties) {
+        if(properties["label"]) {
+            jsonObject["label"] = properties["label"];
+        }
+        if(properties["fromDateInYears"]) {
+            jsonObject["fromDateInYears"] = properties["fromDateInYears"];
+        }
     }
 
     jsonObject["endpoint"] = this.uiServiceDomain+this.myOrderStatusEndpoint;

@@ -36,6 +36,7 @@ public class PageImpl implements Page {
 
     private static final Logger LOG = LoggerFactory.getLogger(PageImpl.class);
     protected static final String RESOURCE_TYPE = "techdata/components/page";
+    private static final String PAGE_TYPE = "pageType";
 
     @ScriptVariable
     protected com.day.cq.wcm.api.Page currentPage;
@@ -95,7 +96,7 @@ public class PageImpl implements Page {
             String localePagePath = localePage.getPath();
             String prefix = localePage.getParent().getName() + ":" + localePage.getName();
             if (currentPagePath.equals(localePagePath)) {
-                return prefix + ":" + pageProperties.get("pageType", StringUtils.EMPTY);
+                return prefix + ":" + pageProperties.get(PAGE_TYPE, StringUtils.EMPTY);
             }
             String relativePagePath = currentPage.getPath().replace(localePagePath, StringUtils.EMPTY);
             return prefix + relativePagePath.replace("/", ":");
@@ -130,7 +131,7 @@ public class PageImpl implements Page {
     }
 
     public String getPageType() {
-        return pageProperties.get("pageType", StringUtils.EMPTY);
+        return pageProperties.get(PAGE_TYPE, StringUtils.EMPTY);
     }
 
     public String[] getSiteSections() {
@@ -152,7 +153,7 @@ public class PageImpl implements Page {
     private List<String> buildHierarchyList(String[] hierarchyPages) {
         List<String> hierarchyPagesList;
         if (hierarchyPages.length == 1) {
-            hierarchyPagesList = Arrays.asList(pageProperties.get("pageType", StringUtils.EMPTY));
+            hierarchyPagesList = Arrays.asList(pageProperties.get(PAGE_TYPE, StringUtils.EMPTY));
         } else {
             hierarchyPagesList = Arrays.asList(hierarchyPages);
         }

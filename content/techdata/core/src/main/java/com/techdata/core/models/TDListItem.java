@@ -26,13 +26,10 @@ public class TDListItem extends VendorListItem  {
     private ListItem listItem;
     private String[] dropdownCategoryTags;
 
-    @SuppressWarnings("java:S107")
-    public TDListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, boolean isIconSVG, ListItem listItem, String[] dropDownCategorytags) {
+    public TDListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, ListItem listItem) {
         super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
         log.info("TDListItem contructor");
-        this.isIconSVG = isIconSVG;
         this.listItem = listItem;
-        this.dropdownCategoryTags = dropDownCategorytags;
     }
 
     @Override
@@ -65,16 +62,11 @@ public class TDListItem extends VendorListItem  {
         return listItem.getName();
     }
 
-
     public boolean getIsIconSVG() {
         return isIconSVG;
     }
 
     public String getDropdownCategoryTags() { return String.join(",",this.dropdownCategoryTags); }
-
-
-
-
 
     public static TDListItem getTDListItem(Resource pageContentResource, ListItem listItem){
         String title = pageContentResource.getValueMap().containsKey(JcrConstants.JCR_TITLE) ? pageContentResource.getValueMap().get(JcrConstants.JCR_TITLE, StringUtils.EMPTY) : StringUtils.EMPTY;
@@ -112,7 +104,18 @@ public class TDListItem extends VendorListItem  {
             isIconSVG = evg != null && evg.isSvg();
         }
 
-        return new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, isIconSVG, listItem, dropdownCategorytags);
+        TDListItem tdListItem =  new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
+        tdListItem.setIconSVG(isIconSVG);
+        tdListItem.setDropdownCategoryTags(dropdownCategorytags);
+        return tdListItem;
     }
 
+    public void setIconSVG(boolean iconSVG) {
+        isIconSVG = iconSVG;
+    }
+
+    @SuppressWarnings("java:S2384")
+    public void setDropdownCategoryTags(String[] dropdownCategoryTags) {
+        this.dropdownCategoryTags = dropdownCategoryTags;
+    }
 }

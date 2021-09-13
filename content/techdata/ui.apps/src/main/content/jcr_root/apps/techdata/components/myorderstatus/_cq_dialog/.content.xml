@@ -16,6 +16,11 @@
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Label"
                         name="./label"/>
+                    <fromDateInYears
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                        fieldLabel="From Date in years"
+                        name="./fromDateInYears"/>
 				</items>
             </column>
         </items>
