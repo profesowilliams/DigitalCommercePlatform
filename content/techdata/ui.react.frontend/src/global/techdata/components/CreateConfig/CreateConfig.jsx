@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
-import { waitFor } from "../../../../utils/utils";
 import { usPost } from "../../../../utils/api";
 
 const CreateConfig = ({ componentProp }) => {
@@ -29,7 +28,6 @@ const CreateConfig = ({ componentProp }) => {
     };
 
     try {
-      await waitFor(3000); // remove after testing
       const result = await usPost(punchOutUrl, params);
       if (result?.data?.content?.url)
         window.open(result.data.content.url);
