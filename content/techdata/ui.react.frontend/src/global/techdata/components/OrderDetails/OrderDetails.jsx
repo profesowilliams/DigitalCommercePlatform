@@ -25,7 +25,7 @@ const OrderDetails = ({ componentProp }) => {
 
 
   useEffect(() => {
-    response?.content?.details && setOrderDetails(response.content.details);
+    response?.content && setOrderDetails(response.content);
   }, [response]);
 
   return orderDetails ? (
