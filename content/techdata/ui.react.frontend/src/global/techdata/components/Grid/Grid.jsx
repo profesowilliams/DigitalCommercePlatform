@@ -12,12 +12,11 @@ function Grid(props) {
     onAfterGridInit,
     onRowSelected,
     onSelectionChanged,
-    onRowDataChanged,
-    onRowDataUpdated,
     getRowIdCallback,
+    onModelUpdateFinished,
     requestInterceptor,
   } = Object.assign({}, props);
-  const componentVersion = "1.1.7";
+  const componentVersion = "1.1.8";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({
@@ -34,6 +33,11 @@ function Grid(props) {
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
   const gridApi = useRef(null);
+
+  const updatingFinished =
+    typeof onModelUpdateFinished === "function"
+      ? debouncer(500, () => onModelUpdateFinished())
+      : null;
 
   /*
 	function that returns AG grid vnode outside main return function to keep that
@@ -60,8 +64,6 @@ function Grid(props) {
       detailRowAutoHeight={true}
       animateRows={false}
       domLayout={serverSide ? "normal" : "autoHeight"}
-      onRowDataChanged={onRowDataChanged}
-      onRowDataUpdated={onRowDataUpdated}
       onFirstDataRendered={onFirstDataRendered}
       onRowGroupOpened={onRowGroupOpened}
       onExpandOrCollapseAll={onExpandOrCollapseAll}
@@ -73,6 +75,8 @@ function Grid(props) {
       getRowNodeId={getRowIdCallback}
       suppressRowClickSelection={true}
       suppressPropertyNamesCheck={true}
+      onCellValueChanged={onModelUpdated}
+      onModelUpdated={onModelUpdated}
     >
       {filteredColumns.map((column) => {
         return (
@@ -198,6 +202,14 @@ function Grid(props) {
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
       return response?.data?.content;
     }
+  }
+
+  function onModelUpdated(data) {
+    updatingFinished &&
+      updatingFinished.call(() => {
+        // empty call, after specified amount of time defined in updatingFinished deboncer
+        // if no new call will be registered, onUpdatingFinished callback will be fired
+      });
   }
 
   function onGridReady(data) {
@@ -335,6 +347,24 @@ function Grid(props) {
       });
       return classes.join(" ");
     }
+  }
+
+  function debouncer(interval, done) {
+    return (() => {
+      let calls = 0;
+      let awaiter = (fn, arg) => setTimeout(() => fn.call(this, arg), interval);
+      return {
+        call: (fn) => {
+          fn();
+          calls++;
+          awaiter((_calls) => {
+            if (_calls === calls) {
+              done && done();
+            }
+          }, calls);
+        },
+      };
+    })();
   }
 
   useEffect(() => {

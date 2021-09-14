@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "../../Grid/Grid";
 
-function ProductLinesChildGrid({ data, columns, columnDefiniton }) {
+function ProductLinesChildGrid({ data, columns, columnDefiniton, ...rest }) {
   const cols = columnDefiniton.map((col) => {
     col.field === "id" &&
       (col.cellRenderer = (props) => {
@@ -24,6 +24,7 @@ function ProductLinesChildGrid({ data, columns, columnDefiniton }) {
           }}
           data={data}
           showHeader={false}
+          {...rest}
         ></Grid>
       </div>
     </section>

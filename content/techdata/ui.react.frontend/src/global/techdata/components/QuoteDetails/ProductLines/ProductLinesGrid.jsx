@@ -18,10 +18,12 @@ function ProductLinesGrid({
     return {
       ...el,
       calculatedCost: Number(el.quantity) * Number(el.unitPrice),
+      clientExtendedPrice: Number(el.quantity) * Number(el.unitPrice),
       children: el.children?.map((inner) => {
         return {
           ...inner,
           calculatedCost: Number(inner.quantity) * Number(inner.unitPrice),
+          clientExtendedPrice: Number(inner.quantity) * Number(inner.unitPrice),
         };
       }),
     };
@@ -56,9 +58,7 @@ function ProductLinesGrid({
 
   function markupChanged(data) {
     if (typeof onMarkupChanged === "function") {
-      setTimeout(() => {
-        onMarkupChanged(data);
-      }, 200);
+      onMarkupChanged(data);
     }
   }
 
@@ -82,6 +82,9 @@ function ProductLinesGrid({
           <ProductLinesChildGrid
             columnDefiniton={whiteLabelMode ? whiteLabelCols() : columnDefs}
             data={data.children}
+            onModelUpdateFinished={() => {
+              markupChanged(mutableGridData);
+            }}
           ></ProductLinesChildGrid>
         </section>
       ),
@@ -189,9 +192,6 @@ function ProductLinesGrid({
                   (Number(value) + Number(data.unitPrice)) *
                     Number(data.quantity)
                 );
-                if (source === "internal") {
-                  markupChanged(mutableGridData);
-                }
               }}
               initialMarkup={value || 0}
               resellerUnitPrice={data.unitPrice}
@@ -246,12 +246,7 @@ function ProductLinesGrid({
   return (
     <section>
       {whiteLabelMode && (
-        <ProductLinesMarkupGlobal
-          labels={labels}
-          onMarkupValueChanged={() => {
-            markupChanged(mutableGridData);
-          }}
-        ></ProductLinesMarkupGlobal>
+        <ProductLinesMarkupGlobal labels={labels}></ProductLinesMarkupGlobal>
       )}
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
@@ -276,6 +271,9 @@ function ProductLinesGrid({
           config={gridConfig}
           data={mutableGridData}
           onAfterGridInit={onAfterGridInit}
+          onModelUpdateFinished={() => {
+            markupChanged(mutableGridData);
+          }}
         ></Grid>
       </div>
     </section>

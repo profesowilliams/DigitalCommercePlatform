@@ -18,49 +18,41 @@ const QuoteSubtotal = ({
 
   function sum(array, field) {
     if (!array) return 0;
-    return array.reduce(
-      (previous, current) =>
-        Number(previous[field] || 0) + Number(current[field] || 0)
-    );
+    return array
+      .map((x) => Number(x[field] || 0))
+      .reduce((previous, current) => previous + current);
   }
 
   function markupReducer(store, action) {
     if (!store) return;
     switch (action.type) {
       case "getMSRP":
-        return [...store].reduce(
-          (previous, current) =>
-            Number(previous.msrp || 0) +
-            sum(previous.children, "msrp") +
-            Number(current.msrp || 0) +
-            sum(current.children, "msrp")
-        );
+        return [...store]
+          .map((x) => Number(x.msrp || 0) + sum(x.children, "msrp"))
+          .reduce((previous, current) => previous + current);
       case "getYourCost":
-        return [...store].reduce(
-          (previous, current) =>
-            Number(previous.calculatedCost || 0) +
-            sum(previous.children, "calculatedCost") +
-            Number(current.calculatedCost || 0) +
-            sum(current.children, "calculatedCost")
-        );
+        return [...store]
+          .map((x) =>
+            Number(x.calculatedCost || 0) + sum(x.children, "calculatedCost")
+          )
+          .reduce((previous, current) => previous + current);
       case "getYourMarkup":
-        return [...store].reduce(
-          (previous, current) =>
-            Number(previous.appliedMarkup || 0) +
-            sum(previous.children, "appliedMarkup") +
-            Number(current.appliedMarkup || 0) +
-            sum(current.children, "appliedMarkup")
-        );
+        return [...store]
+          .map(
+            (x) =>
+              Number(x.appliedMarkup || 0) + sum(x.children, "appliedMarkup")
+          )
+          .reduce((previous, current) => previous + current);
       case "getSubtotal":
         return amount;
       case "getEndUserTotal":
-        return [...store].reduce(
-          (previous, current) =>
-            Number(previous.clientExtendedPrice || 0) +
-            sum(previous.children, "clientExtendedPrice") +
-            Number(current.clientExtendedPrice || 0) +
-            sum(current.children, "clientExtendedPrice")
-        );
+        return [...store]
+          .map(
+            (x) =>
+              Number(x.clientExtendedPrice || 0) +
+              sum(x.children, "clientExtendedPrice")
+          )
+          .reduce((previous, current) => previous + current);
       case "getSavings":
         return (
           markupReducer(store, { type: "getMSRP" }) -
@@ -68,7 +60,7 @@ const QuoteSubtotal = ({
         );
 
       default:
-        return "-";
+        return 0;
     }
   }
 
