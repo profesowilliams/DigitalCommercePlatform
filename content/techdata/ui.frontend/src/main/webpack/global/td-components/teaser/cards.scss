@@ -17,11 +17,11 @@
 			background-color: get-color(brand-white);
 			background-clip: border-box;
 			color: get-color(text-dark-grey) !important;
-			cursor: pointer;
+			cursor: default;
 
 			&:hover {
 				color: get-color(brand-blue) !important;
-				cursor: pointer;
+				cursor: default;
 				.cmp-teaser__title-link {
 					color: get-color(brand-blue) !important;
 					font-weight: 600;
