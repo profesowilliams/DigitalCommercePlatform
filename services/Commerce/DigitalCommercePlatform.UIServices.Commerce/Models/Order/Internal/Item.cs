@@ -20,5 +20,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public List<Product> Product { get; set; }
         public List<ShipmentModel> Shipments { get; set; }
         public List<InvoiceModel> Invoices { get; set; }
+        public List<OrderLinkModel> PurchaseOrder { get; set; }
+        public decimal? Tax { get; set; }
+        public decimal? Freight { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class OrderLinkModel
+    {
+        public string ID { get; set; }
+        public string AltID { get; set; }
+        public string Line { get; set; }
     }
 }

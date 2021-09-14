@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
@@ -28,12 +29,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
 
         public class Response
         {
-            public OrderDetailModel details { get; set; }
+            public OrderDetailModel Details { get; set; }
             public Address ShipTo { get; set; }
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
-            public bool BlindPackaging { get; set; } = true;
-            public string Status { get; set; } = "OPEN";
             public List<Line> Items { get; set; }
 
             public Response(OrderDetailModel data)
@@ -42,6 +41,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 PaymentDetails = data?.PaymentDetails;
                 Customer = data?.Reseller?.CompanyName;
                 Items = data?.Lines;
+                Details = data;
+                Details.Status = Details.Status.ToTitleCase();
             }
         }
 

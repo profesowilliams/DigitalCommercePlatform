@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string OtherFees { get; set; }
         public string Tax { get; set; }
         public string OrderTotal { get; set; }
-        public string BlindPackaging { get; set; }
+        public bool BlindPackaging { get; set; }
         public string SiteURL { get; set; }
         public string Status { get; set; }
     }

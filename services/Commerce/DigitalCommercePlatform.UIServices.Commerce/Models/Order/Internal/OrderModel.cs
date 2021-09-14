@@ -20,5 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public Status Status { get; set; }
         public List<Item> Items { get; set; }
         public string CustomerPO { get; set; }
+        public bool BlindPackaging { get; set; }
+        public string PaymentTermText { get; set; }
     }
 }
