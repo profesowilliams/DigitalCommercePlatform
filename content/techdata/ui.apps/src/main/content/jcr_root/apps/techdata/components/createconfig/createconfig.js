@@ -35,6 +35,10 @@ use(function () {
             listValues.push(itemData);
         }
     }
+    if (this.uiServiceDomain != null) {
+        jsonObject.put("punchOutUrl",this.uiServiceDomain+this.puchOutEndpoint);
+
+    }
     if (properties.get("createConfigTitle") != null) {
         jsonObject.put("label", properties.get("createConfigTitle"));
     }
