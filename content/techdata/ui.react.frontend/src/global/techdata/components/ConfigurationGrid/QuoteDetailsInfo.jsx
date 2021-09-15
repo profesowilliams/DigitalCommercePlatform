@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import { QuoteDetailsLink } from './QuotesModals'
 
-function ShowMore({ statusConfiguration, quote, configDetailUrl, label, content, buttonIcon, buttonLabel }) {
+function ShowMore({ statusConfiguration, quote, quoteDetailUrl, label, content, buttonIcon, buttonLabel }) {
   const invokeModalAction = () => { console.log("Call the service required for the quote"); }
   return (
     <div className='cmp-show-more'>
       <div className='cmp-show-more__content'>
         <div></div>
         <div className='cmp-modal_quote-details'>
-          {quote.status === "Expired" && <div><QuoteDetailsLink label="Quote: " quote={quote} configDetailUrl={configDetailUrl}></QuoteDetailsLink></div>}
+          {quote.status === "Expired" && <div><QuoteDetailsLink label="Quote: " quote={quote} quoteDetailUrl={quoteDetailUrl}></QuoteDetailsLink></div>}
           {content}
         </div>
 
@@ -26,7 +26,7 @@ function ShowMore({ statusConfiguration, quote, configDetailUrl, label, content,
   );
 }
 
-function QuoteItem({ line, configDetailUrl, statusLabelsList, quote, alwaysExpanded, extraClass }) {
+function QuoteItem({ line, quoteDetailUrl, statusLabelsList, quote, alwaysExpanded, extraClass }) {
   const [expanded, setExpanded] = useState(!!alwaysExpanded);
   useEffect(() => {}, []);
   function onExpandCollapse() {
@@ -47,19 +47,19 @@ function QuoteItem({ line, configDetailUrl, statusLabelsList, quote, alwaysExpan
         <div className='date'>{quote.created ? new Date(quote.created).toLocaleDateString() : 'N/A'}</div>
         <div className="id">
           {!status ? (
-            <QuoteDetailsLink label="Quote: " quote={quote} configDetailUrl={configDetailUrl}></QuoteDetailsLink>
+            <QuoteDetailsLink label="Quote: " quote={quote} quoteDetailUrl={quoteDetailUrl}></QuoteDetailsLink>
           ) : (
             status?.labelValue
           )}
         </div>
         <div className='value'>{line.currencySymbol ? line.currencySymbol : '$' + '' + quote.price}</div>
       </div>
-      {expanded && <ShowMore statusConfiguration={status} quote={quote} configDetailUrl={configDetailUrl} label={status?.labelValue} content={status?.labelDescription}></ShowMore>}
+      {expanded && <ShowMore statusConfiguration={status} quote={quote} quoteDetailUrl={quoteDetailUrl} label={status?.labelValue} content={status?.labelDescription}></ShowMore>}
     </div>
   );
 }
 
-function QuoteDetailsInfo({ line, info, statusLabelsList, configDetailUrl, alwaysExpanded }) {
+function QuoteDetailsInfo({ line, info, statusLabelsList, quoteDetailUrl, alwaysExpanded }) {
   const singleVsMultipleClassName = 'cmp-details-info__lines' + (line.quotes.length > 1 ? '--multiple' : '--single');
 
   return (
@@ -74,7 +74,7 @@ function QuoteDetailsInfo({ line, info, statusLabelsList, configDetailUrl, alway
                 line={line}
                 quote={quote}
                 index={index}
-                configDetailUrl={configDetailUrl}
+                quoteDetailUrl={quoteDetailUrl}
                 statusLabelsList={statusLabelsList}
                 alwaysExpanded={alwaysExpanded}
                 extraClass={singleVsMultipleClassName}

@@ -140,7 +140,8 @@ use(function () {
         jsonObject["label"] = properties["label"];
     }
     if (this.uiServiceDomain != null) {
-    jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderGridEndpoint;
+        jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderGridEndpoint;
+        jsonObject["downloadAllInvoicesEndpoint"] = this.uiServiceDomain+this.downloadAllInvoicesEndpoint;
     }
 
     if (properties && properties["itemsPerPage"]) {

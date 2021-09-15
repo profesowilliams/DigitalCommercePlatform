@@ -48,7 +48,7 @@ function ConfigurationGrid(props) {
         <MultipleQuotesInvokeModal
           invokeModal={invokeModal}
           quotesModal={componentProp.quotesModal}
-          configDetailUrl={componentProp.configDetailUrl}
+          quoteDetailUrl={componentProp.quoteDetailUrl}
           statusLabelsList={componentProp.statusLabelsList}
           line={line}
         ></MultipleQuotesInvokeModal>
@@ -60,7 +60,7 @@ function ConfigurationGrid(props) {
           <SingleQuotesInvokeModal
             invokeModal={invokeModal}
             quotesModal={componentProp.quotesModal}
-            configDetailUrl={componentProp.configDetailUrl}
+            quoteDetailUrl={componentProp.quoteDetailUrl}
             statusLabelsList={componentProp.statusLabelsList}
             line={line}
             status={status}
@@ -68,7 +68,7 @@ function ConfigurationGrid(props) {
         );
       } else if (line.quotes[0]?.id) {
         return (
-          <QuoteDetailsLink quote={line.quotes[0]} configDetailUrl={componentProp.configDetailUrl}></QuoteDetailsLink>
+          <QuoteDetailsLink quote={line.quotes[0]} quoteDetailUrl={componentProp.quoteDetailUrl}></QuoteDetailsLink>
         )
       } else {
         return '';

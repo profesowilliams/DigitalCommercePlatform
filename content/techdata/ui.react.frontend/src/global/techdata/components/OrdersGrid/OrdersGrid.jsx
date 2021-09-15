@@ -61,6 +61,7 @@ function OrdersGrid(props) {
 				modalAction={modal.action}
 				modalContent={modal.content}
 				modalProperties={modal.properties}
+				modalAction={modal.modalAction}
 				onModalClosed={() => setModal(null)}
 			></Modal>
 		);
@@ -79,6 +80,10 @@ function OrdersGrid(props) {
 
 	function getTrackingStatus(trackingArray) {
 		return trackingArray.length ? trackingArray.length > 0 : false;
+	}
+
+	function downloadInvoice(orderId) {
+		return () => window.location.href = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
 	}
 
 	function getInvoices(line) {
@@ -100,6 +105,7 @@ function OrdersGrid(props) {
 								buttonIcon: invoicesModal.buttonIcon,
 								buttonLabel: invoicesModal.buttonLabel,
 							},
+							modalAction: downloadInvoice(line.id)
 						});
 					}}
 				>

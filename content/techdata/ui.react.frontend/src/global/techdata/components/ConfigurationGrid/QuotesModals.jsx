@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import QuoteDetailsInfo from './QuoteDetailsInfo';
 
-export function QuoteDetailsLink({ configDetailUrl, label, quote }) {
+export function QuoteDetailsLink({ quoteDetailUrl, label, quote }) {
   return (
     <a
       className="cmp-grid-url-underlined"
       href={
-        configDetailUrl?.replace('{id}', quote.id)
+        quoteDetailUrl?.replace('{id}', quote.id)
       }
     >
       {label}{quote.id}
@@ -15,7 +15,7 @@ export function QuoteDetailsLink({ configDetailUrl, label, quote }) {
   );
 }
 
-export function MultipleQuotesInvokeModal({ invokeModal, quotesModal, configDetailUrl, statusLabelsList, line }) {
+export function MultipleQuotesInvokeModal({ invokeModal, quotesModal, quoteDetailUrl, statusLabelsList, line }) {
   return (
     <div
       onClick={() => {
@@ -25,7 +25,7 @@ export function MultipleQuotesInvokeModal({ invokeModal, quotesModal, configDeta
               info={quotesModal.content}
               line={line}
               statusLabelsList={statusLabelsList}
-              configDetailUrl={configDetailUrl}
+              quoteDetailUrl={quoteDetailUrl}
             ></QuoteDetailsInfo>
           ),
           properties: {
@@ -39,7 +39,7 @@ export function MultipleQuotesInvokeModal({ invokeModal, quotesModal, configDeta
   );
 }
 
-export function SingleQuotesInvokeModal({ invokeModal, quotesModal, configDetailUrl, statusLabelsList, line, status }) {
+export function SingleQuotesInvokeModal({ invokeModal, quotesModal, quoteDetailUrl, statusLabelsList, line, status }) {
   return (
     <div
       onClick={() => {
@@ -48,7 +48,7 @@ export function SingleQuotesInvokeModal({ invokeModal, quotesModal, configDetail
             <QuoteDetailsInfo
               line={line}
               statusLabelsList={statusLabelsList}
-              configDetailUrl={configDetailUrl}
+              quoteDetailUrl={quoteDetailUrl}
               alwaysExpanded={true}
             ></QuoteDetailsInfo>
           ),
