@@ -113,7 +113,7 @@
     i {
       color: get-color(td-primary-blue);
       margin-right: rem(5px);
-	  margin-top: rem(3.2px);
+      margin-top: rem(3.2px);
       &:before {
         display: inline-block;
       }
@@ -289,5 +289,22 @@
       margin-right: rem(5px);
       margin-top: 0.2rem;
     }
+  }
+}
+// error message style
+.cmp-error {
+  color: get-color(text-mid-gray);
+  border: 1px solid get-color(brand-light-gray2);
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: rem(16px);
+  margin: auto;
+  margin-top: rem(16px);
+  &__header {
+    margin-bottom: rem(16px);
+  }
+  &__message {
+    margin: unset;
   }
 }

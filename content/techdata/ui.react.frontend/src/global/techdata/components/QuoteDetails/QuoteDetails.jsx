@@ -92,19 +92,21 @@ const QuoteDetails = ({ componentProp }) => {
         onQuoteOptionChanged={onOptionChanged}
       />
     </>
+  ) : error ? (
+    <div className="cmp-error">
+      <div className="cmp-error__header">
+        Error {error.code && error.code} {error.status && error.status}.
+      </div>
+      <div className="cmp-error__message">
+        {" "}
+        {error.code === 401 || error.status === 401
+          ? "You have to be logged in to use this feature."
+          : "Contact your site administrator."}
+      </div>
+    </div>
   ) : (
     <FullScreenLoader>
-      {error ? (
-        <div className="error">
-          <div className="error__header">Error {error.code && error.code}.</div>
-          <div className="error__messages">
-            {" "}
-            Contact you site administrator.
-          </div>
-        </div>
-      ) : (
-        <Loader visible={true}></Loader>
-      )}
+      <Loader visible={true}></Loader>
     </FullScreenLoader>
   );
 };
