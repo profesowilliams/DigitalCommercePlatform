@@ -1,0 +1,13 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+
+namespace DigitalCommercePlatform.UIServices.Search.Models.Cart.Internal
+{
+    [ExcludeFromCodeCoverage]
+    public class ReplaceCartModel
+    {
+        public HttpStatusCode StatusCode { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+}

@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <CodeAnalysisRuleSet>DigitalCommercePlatform.UIServices.Search.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\dc-df-search-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(PACKAGEVERSION)'!=''">
+      <PropertyGroup>
+        <AssemblyVersion>$(PACKAGEVERSION)</AssemblyVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Mappings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="5.2.25" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.25" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.25" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.25" />
+    <PackageReference Include="Flurl" Version="3.0.2" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+  </ItemGroup>
+</Project>
