@@ -18,6 +18,16 @@ steps:
     feedsToUse: 'select'
     vstsFeed: 'c1db23e3-14aa-4e9a-9464-1e9b795ce2b3'
 
+- task: copyrightheader@1
+  displayName: 'Copyrights Header check'
+  inputs:
+    headerRegex: '^[/\\\-<>!*\n]*\d{4} \(c\) ((Tech Data Corporation){1}|(TD Synnex){1}).*All Rights Reserved.*[/\\\-<>!*\n]*$'
+    header: 'yyyy (c) Tech Data Corporation -. All Rights Reserved.'
+    fileExtensions: '.cs,.sql'
+    verbosity: 'detailed'
+  env:
+    SYSTEM_ACCESSTOKEN: $(system.accesstoken)    
+
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
   continueOnError: true   
