@@ -5,8 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class ProductNoteModel
+    public class VolumePricing
     {
-        public string Value { get; set; }
+        public int MinQuantity { get; set; }
+        public decimal Price { get; set; }
     }
 }

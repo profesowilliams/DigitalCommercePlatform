@@ -1,12 +1,12 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class ProductNoteModel
+    public class AuthorizationModel
     {
-        public string Value { get; set; }
+        public bool CanOrder { get; set; }
+        public bool CanViewPrice { get; set; }
     }
 }

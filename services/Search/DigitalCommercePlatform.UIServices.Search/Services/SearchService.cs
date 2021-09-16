@@ -1,10 +1,13 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,6 +32,31 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _appSearchUrl = appSettings.GetSetting("App.Search.Url");
         }
 
+        public async Task<AppSearchResponseDto> GetProductData(AppSearchRequestModel request)
+        {
+            var url = _appSearchUrl
+           .AppendPathSegment("Product")
+           .ToString();
+
+            try
+            {
+                return await _middleTierHttpClient.PostAsync<AppSearchResponseDto>(url, null, request).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                if (ex is RemoteServerHttpException)
+                {
+                    var remoteEx = ex as RemoteServerHttpException;
+                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                }
+                _logger.LogError(ex, "Exception at getting GetProductData : " + nameof(SearchService));
+                throw;
+            }
+        }
+
         public async Task<List<TypeAheadModel>> GetTypeAhead(TypeAhead.Request request)
         {
             var typeAheadUrl = _appSearchUrl.AppendPathSegment("/TypeAhead").BuildQuery(request);
@@ -39,6 +67,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             }
             catch (Exception ex)
             {
+                if (ex is RemoteServerHttpException)
+                {
+                    var remoteEx = ex as RemoteServerHttpException;
+                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                }
                 _logger.LogError(ex, "Exception at getting GetTypeAhead : " + nameof(SearchService));
                 throw ex;
             }
