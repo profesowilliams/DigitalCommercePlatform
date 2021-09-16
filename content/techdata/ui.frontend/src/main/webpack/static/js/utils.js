@@ -1,47 +1,40 @@
-let componentFilter = document.getElementById("componentPageFilter");
-let componentItemsParent =  document.getElementById("componentItems");
-let componentItems = componentItemsParent.getElementsByTagName("li");
-let pageItemsParent = document.getElementById("pageItems");
-let pageItems = pageItemsParent.getElementsByTagName("li");
+const componentFilter = document.getElementById("componentPageFilter");
 
+if (componentFilter) {
 
-componentFilter.oninput = function(event)
-{
-    let typedText = componentFilter.value;
-    for( let i = 0; i < componentItems.length; i++)
-    {
-        let itemText = componentItems[i].innerText;
-        if (typedText) {
-            if (itemText && !itemText.toLowerCase().includes(typedText.toLowerCase())) {
-                componentItems[i].hidden = true;
-            }else{
-                componentItems[i].hidden = false;
+    const componentItemsParent =  document.getElementById("componentItems");
+    const componentItems = componentItemsParent ? componentItemsParent.getElementsByTagName("li") : null;
+    const pageItemsParent = document.getElementById("pageItems");
+    const pageItems = pageItemsParent ? pageItemsParent.getElementsByTagName("li") : null;
+
+    function hideShowElement(typedText, elements) {
+        if (!elements) {
+            return;
+        }
+        for( let i = 0; i < elements.length; i++)
+        {
+            const itemText = elements[i].innerText;
+            if (typedText) {
+                elements[i].hidden = itemText && !itemText.toLowerCase().includes(typedText.toLowerCase());
+            }
+            else {
+                elements[i].hidden = false;
             }
         }
-        else {
-                componentItems[i].hidden = false;
-            }
     }
 
-    for( let i = 0; i < pageItems.length; i++)
+    componentFilter.oninput = function()
     {
-        let itemText = pageItems[i].innerText;
-        if (typedText) {
-            if (itemText && !itemText.toLowerCase().includes(typedText.toLowerCase())) {
-                pageItems[i].hidden = true;
-            }else{
-                pageItems[i].hidden = false;
-            }
-        } else{
-                pageItems[i].hidden = false;
-            }
+        const typedText = componentFilter.value;
 
-    }
+        hideShowElement(typedText, componentItems);
+        hideShowElement(typedText, pageItems);
 
-}
+    };
 
-window.onload = () => {
+    window.onload = () => {
 
-    componentFilter.focus();
+        componentFilter.focus();
 
+    };
 }
