@@ -33,11 +33,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
 
             CreateMap<Item, Line>()
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
+                .ForMember(dest => dest.Description, opt => opt.MapFrom<TDPartNameResolver>())
+                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<TDPartNameResolver>())
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<VendorPartResolver>())
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice));
+
 
             CreateMap<AddressDetails, Address>();
+
             CreateMap<Item, Line>()
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name));
+                .ForMember(dest => dest.Description, opt => opt.MapFrom<TDPartNameResolver>())
+                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<TDPartResolver>())
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<VendorPartResolver>())
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice));
+
+
             CreateMap<OrderModel, OrderDetailModel>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
                 .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
@@ -46,16 +60,59 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
                 .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
-                .ForPath(dest=> dest.PaymentDetails.PaymentTermText, opt => opt.Ignore())
+                .ForPath(dest=> dest.PaymentDetails.PaymentTermText, opt => opt.MapFrom(src => src.PaymentTermText))
                 .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
-                .ForPath(dest => dest.PaymentDetails.PaymentTermText, opt => opt.MapFrom(src => src.PaymentTermText))
                 .ForPath(dest => dest.BlindPackaging, opt => opt.MapFrom(src => src.BlindPackaging))
-                .ForPath(dest => dest.PaymentDetails.Tax, opt => opt.MapFrom(src => src.Items.FirstOrDefault().Tax))
-                .ForPath(dest => dest.PaymentDetails.Freight, opt => opt.MapFrom(src => src.Items.FirstOrDefault().Freight))
-                .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.Items.FirstOrDefault().TotalPrice))
+                .ForPath(dest => dest.PaymentDetails.Tax, opt => opt.MapFrom(src => src.Tax))
+                .ForPath(dest => dest.PaymentDetails.Freight, opt => opt.MapFrom(src => src.Freight))
+                .ForPath(dest => dest.PaymentDetails.Total, opt => opt.MapFrom(src => src.Total))
+                .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.TotalCharge))
+                .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
+                .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
+                .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
                 .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
         }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class TDPartResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Id : "Unavailable";
+            return description;
+        }
+    }
+    [ExcludeFromCodeCoverage]
+    public class VendorPartResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).FirstOrDefault()?.Id : "Unavailable";
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class TDPartNameResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Name : "Unavailable";
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ManufacturerResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Manufacturer : "Unavailable";
+            return description;
+        }
+    }                   
 
     [ExcludeFromCodeCoverage]
     public class OrderPriceResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
@@ -148,6 +205,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             return trackingDetails;
         }
     }
+
 
     [ExcludeFromCodeCoverage]
     public static class StringExtensions

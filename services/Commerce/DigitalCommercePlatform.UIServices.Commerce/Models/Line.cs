@@ -1,7 +1,9 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -40,9 +42,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public List<Line> Children { get; set; }
         public List<AgreementModel> Agreements { get; set; }
         public string AncillaryChargesWithTitles { get; set; }
-
         public Annuity Annuity { get; set; }
         public bool IsSubLine { get { return false; } }
         public string DisplayLineNumber { get { return Id; } }
+        public DateTime? LicenseStartDate { get; set; }
+        public DateTime? LicenseEndDate { get; set; }
+        public DateTime? ContractStartDate { get; set; }
+        public DateTime? ContractEndDate { get; set; }
+        public List<ServiceContractDetailModel> ServiceContractDetails { get; set; }
+        public string ContractNo { get; set; }
+        public string ContractType { get; set; }
+        public string License { get; set; }
+        public string VendorStatus { get; set; }
+        public string CustomerPOLine { get; set; }
+        public string SupplierQuoteRef { get; set; }
+        public string ConfigID { get; set; }
+        public string LocationID { get; set; }
     }
 }

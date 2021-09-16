@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
 {
@@ -20,7 +21,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public Status Status { get; set; }
         public List<Item> Items { get; set; }
         public string CustomerPO { get; set; }
+        public string EndUserPO { get; set; }
+        public DateTime PoDate { get; set; }
         public bool BlindPackaging { get; set; }
         public string PaymentTermText { get; set; }
+        public string FreightFormatted { get; set; }
+        public decimal? Freight { get; set; }
+        public decimal? Tax { get; set; }
+        public decimal? TotalCharge { get; set; }
+        public decimal? SubTotal { get; set; }
+        public decimal? Total { get; set; }        
+        public decimal? OtherFees { get; set; }
+
     }
 }

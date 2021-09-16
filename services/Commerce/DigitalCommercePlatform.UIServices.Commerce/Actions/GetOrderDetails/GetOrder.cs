@@ -27,25 +27,43 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public class Response
         {
-            public OrderDetailModel Details { get; set; }
             public Address ShipTo { get; set; }
+            public Address EndUser { get; set; }
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
             public List<Line> Items { get; set; }
-
+            public string QuoteNumber { get; set; }
+            public string OrderNumber { get; set; }
+            public string PONumber { get; set; }
+            public string EndUserPO { get; set; }
+            public string PODate { get; set; }
+            public bool BlindPackaging { get; set; }
+            public bool ShipComplete { get; set; }
+            public bool CanBeExpedited { get; set; }
+            public string Status { get; set; }
             public Response(OrderDetailModel data)
             {
                 ShipTo = data?.ShipTo;
+                EndUser = data?.EndUser;
                 PaymentDetails = data?.PaymentDetails;
                 Customer = data?.Reseller?.CompanyName;
-                Items = data?.Lines;
-                Details = data;
-                Details.Status = Details.Status.ToTitleCase();
+                Items = data?.Lines;                
+                Status = data.Status.ToTitleCase();
+                QuoteNumber = string.Empty;
+                OrderNumber = data?.OrderNumber;
+                PONumber = data?.PONumber;
+                PODate = data?.PODate;
+                EndUserPO = data?.EndUserPO;
+                BlindPackaging = data.BlindPackaging;
+                ShipComplete = data.ShipComplete;
+
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public class GetOrderHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceQueryService;

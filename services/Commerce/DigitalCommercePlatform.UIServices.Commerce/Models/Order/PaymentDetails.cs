@@ -14,5 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public decimal? Subtotal { get; set; }
         public decimal? Tax { get; set; }
         public decimal? Freight { get; set; }
+        public decimal? OtherFees { get; set; }
+        public decimal? Total { get; set; }
     }
 }

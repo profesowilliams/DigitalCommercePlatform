@@ -21,18 +21,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string PONumber { get; set; }
         public string EndUserPO { get; set; }
         public string PODate { get; set; }
-        public string ContactName { get; set; }
-        public string ContactEmail { get; set; }
-        public string ContactPhone { get; set; }
         public string SiteID { get; set; }
-        public string ShipComplete { get; set; }
+        public bool ShipComplete { get; set; }
         public int StandardOrderStatusCode { get; set; }
         public string StandardOrderStatus { get; set; }
         public string ConfigurationOrderStatus { get; set; }
-        public string Freight { get; set; }
-        public string OtherFees { get; set; }
-        public string Tax { get; set; }
-        public string OrderTotal { get; set; }
         public bool BlindPackaging { get; set; }
         public string SiteURL { get; set; }
         public string Status { get; set; }

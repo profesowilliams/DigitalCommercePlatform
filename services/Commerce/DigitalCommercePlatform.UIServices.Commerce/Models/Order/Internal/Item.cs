@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -23,6 +24,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public List<OrderLinkModel> PurchaseOrder { get; set; }
         public decimal? Tax { get; set; }
         public decimal? Freight { get; set; }
+        public decimal? OtherFees { get; set; }
+        public DateTime? LicenseStartDate { get; set; }
+        public DateTime? LicenseEndDate { get; set; }
+        public DateTime? ContractStartDate { get; set; }
+        public DateTime? ContractEndDate { get; set; }
+        public List<ServiceContractDetailModel> ServiceContractDetails { get; set; }
+        public string ContractNo { get; set; }
+        public string ContractType { get; set; }
+        public string License { get; set; }
+        public string VendorStatus { get; set; }
+        public string CustomerPOLine { get; set; }
+        public string SupplierQuoteRef { get; set; }
+        public string ConfigID { get; set; }
+        public string LocationID { get; set; }
     }
 
     [ExcludeFromCodeCoverage]
@@ -31,5 +46,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public string ID { get; set; }
         public string AltID { get; set; }
         public string Line { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ServiceContractDetailModel
+    {
+        public string BillStatus { get; set; }
+        public decimal? BillPlanAmount { get; set; }
+        public DateTime? BillPlanDate { get; set; }
     }
 }
