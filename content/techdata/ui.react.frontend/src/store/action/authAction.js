@@ -77,6 +77,14 @@ export const signInAsynAction = (apiUrl) => {
 export const isAlreadySignedIn = () => {
 	// TODO this needs to check if user is alreday signed in, and return accordingly
 	let userData = localStorage.getItem('userData');
+
+	if (!userData)
+	{
+		if(window.SHOP && window.SHOP.authentication) {
+			return window.SHOP.authentication.isAuthenticated();
+		}
+	}
+
 	return userData;
 }
 export const getLocalStorageUser = () => {
