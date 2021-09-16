@@ -77,7 +77,7 @@
     }
 }
 
-.cmp-qp__company-info {
+.cmp-qp__company-info, .cmp-qp__general-info, .cmp-qp__enduser-info {
     &--title {
         color: $brand-blue;
         font-size: 14px;

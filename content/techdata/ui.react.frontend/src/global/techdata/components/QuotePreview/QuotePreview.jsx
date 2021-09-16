@@ -64,7 +64,10 @@ function QuotePreview(props) {
       )}
       {apiResponse && !isLoading && (
         <section>
-          <ConfigGrid gridProps={componentProp}/>
+          <ConfigGrid
+            gridProps={componentProp}
+            data={apiResponse}
+          />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />
           </div>
