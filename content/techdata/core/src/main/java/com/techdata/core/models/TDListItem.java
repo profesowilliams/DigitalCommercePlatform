@@ -116,6 +116,6 @@ public class TDListItem extends VendorListItem  {
 
     @SuppressWarnings("java:S2384")
     public void setDropdownCategoryTags(String[] dropdownCategoryTags) {
-        this.dropdownCategoryTags = dropdownCategoryTags;
+        this.dropdownCategoryTags = dropdownCategoryTags.clone();
     }
 }
