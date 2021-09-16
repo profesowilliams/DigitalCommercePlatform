@@ -1,0 +1,14 @@
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
+using System.Diagnostics.CodeAnalysis;
+
+namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
+{
+    [ExcludeFromCodeCoverage]
+    public class PriceModel : ElasticPriceModel
+    {
+        public decimal? BestPrice { get; set; }
+        public decimal? BasePrice { get; set; }
+        public DateTime? BestPriceExpiration { get; set; }
+    }
+}
