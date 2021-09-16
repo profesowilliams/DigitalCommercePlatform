@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         {
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> TypeAhead([FromQuery] string keyword)
         {

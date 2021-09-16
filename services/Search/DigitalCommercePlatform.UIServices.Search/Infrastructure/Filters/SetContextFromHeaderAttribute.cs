@@ -28,8 +28,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters
         public SetContextFromHeaderFilter(IUIContext uiContext)
         {
             _uiContext = uiContext ?? throw new ArgumentNullException(nameof(uiContext));
-            if (uiContext.User == null) { throw new ArgumentException("User is missing from the context!"); }
-            if (string.IsNullOrWhiteSpace(uiContext.User.AccessToken)) { throw new ArgumentException("AccessToken is missing from the context!"); }
+            if (uiContext.User != null && string.IsNullOrWhiteSpace(uiContext.User.AccessToken)) {
+                throw new ArgumentException("AccessToken is missing from the context!");
+            }
+            
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -63,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters
             _uiContext.SetLanguage(language);
             _uiContext.SetConsumer(consumer);
             _uiContext.SetTraceId(traceId);
-            _uiContext.SetAccessToken(_uiContext.User.AccessToken);
+            _uiContext.SetAccessToken(_uiContext.User?.AccessToken);
             await next();
         }
     }
