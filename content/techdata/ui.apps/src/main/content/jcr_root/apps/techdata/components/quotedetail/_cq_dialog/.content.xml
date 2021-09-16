@@ -13,6 +13,7 @@
                 sling:resourceType="granite/ui/components/coral/foundation/tabs"
                 maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
+               
                     <subheader
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Quote Subheader"
@@ -28,12 +29,48 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <SubheaderLabel
+                                            <subheaderLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Subheader Label"
-                                                    fieldLabel="Subheader Label"
+                                                    fieldLabel="Header Label"
                                                     name="./subheaderLabel"/>
+                                            <subTotalLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Add subtotal label"
+                                                    fieldLabel="Sub Total Label"
+                                                    name="./subTotalLabel"/>
+                                            <confirmButtonLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Confirm Button Label"
+                                                    fieldLabel="Confirm Button Label"
+                                                    name="./confirmButtonLabel"/>
+                                            <makeChoiceLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Default Choice Label"
+                                                    fieldLabel="Default Choice Label"
+                                                    name="./makeChoiceLabel"/>
+                                            <continueStandardPriceLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Continue With Standard Price Text"
+                                                    fieldLabel="Continue With Standard Price Text"
+                                                    name="./continueStandardPriceLabel"/>
+                                            <createdDateLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Created Date Label"
+                                                    fieldLabel="Created Date Label"
+                                                    name="./createdDateLabel"/>
+                                            <expiresDateLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Expires date label"
+                                                    fieldLabel="Expires date label"
+                                                    name="./expiresDateLabel"/>
+                                        
                                         </items>
                                     </column>
                                 </items>
