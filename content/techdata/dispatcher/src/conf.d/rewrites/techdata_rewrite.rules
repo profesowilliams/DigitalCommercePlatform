@@ -11,8 +11,8 @@ RewriteRule ^/au$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
 RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME}/apac/au/en.html [PT,L]
 RewriteRule ^/hk$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
 RewriteRule ^/hk/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/en.html [PT,L]
-RewriteRule ^/hk/tdcs$ /content/${CONTENT_FOLDER_NAME}/apac/hk/tdcs.html [PT,L]
-RewriteRule ^/hk/tdcs/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk/tdcs/en.html [PT,L]
+RewriteRule ^/hk_tdcs$ /content/${CONTENT_FOLDER_NAME}/apac/hk_tdcs/en.html [PT,L]
+RewriteRule ^/hk_tdcs/en$ /content/${CONTENT_FOLDER_NAME}/apac/hk_tdcs/en.html [PT,L]
 RewriteRule ^/id$ /content/${CONTENT_FOLDER_NAME}/apac/id/en.html [PT,L]
 RewriteRule ^/id/en$ /content/${CONTENT_FOLDER_NAME}/apac/id/en.html [PT,L]
 RewriteRule ^/in$ /content/${CONTENT_FOLDER_NAME}/apac/in/en.html [PT,L]
@@ -133,4 +133,4 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
-RewriteRule ^/(apac|au|hk|hk|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/$1$2 [PT,L]
+RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/$1$2 [PT,L]
