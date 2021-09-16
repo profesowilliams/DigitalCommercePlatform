@@ -32,7 +32,7 @@ function TopItemsBarChart(props) {
 		return array.sort((a, b) => b[stringKey] - a[stringKey]);
 	}
 
-	function createChart(node, chartData, chartOptions) {
+	function createChart(node, chartData) {
 		const colorArray = chartData.map((d, i) => {
 			const elem = document.querySelector(`.cmp-barChart__sub-title-color-${i + 1}`);
 			return getComputedStyle(elem).borderRightColor;
@@ -110,8 +110,8 @@ function TopItemsBarChart(props) {
 								<div className='cmp-barChart__legend'>
 									{payload.content.summary.items.map((item, i) => {
 										return (
-											<div key={i}>
-												<span className={`cmp-barChart__sub-title-color-${i + 1}`}></span>
+											<div key={i} className={`cmp-barChart__legend-row`}>
+												<span className={`cmp-barChart__sub-title-color-${i + 1}`} />
 												<span className='cmp-barChart__sub-title'>{item.endUserName ?? null}</span>
 												<span className='cmp-barChart__sub-title-digits'>
 												{item.currencySymbol ?? '$'}{formatAmount(item.formattedAmount ?? item.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','))}

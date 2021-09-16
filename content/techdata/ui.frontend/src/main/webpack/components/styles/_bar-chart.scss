@@ -16,7 +16,6 @@
         text-transform: uppercase;
         color: #53565a;
         width: 100%;
-        text-transform: uppercase;
         padding-bottom: 10px;
     }
 
@@ -33,16 +32,30 @@
         }
     }
 
+    &__legend-row {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        white-space: nowrap;
+        height: .9rem;
+        margin-bottom: 2px;
+    }
+
     &__sub-title {
         font-size: 11px;
         color: #555555;
-        padding: 0rem 0.5rem 0.313rem 0.313rem;
+        padding: 0 0.5rem 0.313rem 0.313rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
 
         &-digits {
             font-size: 11px;
             color: #555555;
             text-align: right;
             padding-left: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &-currency {
