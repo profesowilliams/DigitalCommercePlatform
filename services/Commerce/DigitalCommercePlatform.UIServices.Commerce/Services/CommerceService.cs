@@ -12,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Client;
@@ -84,7 +85,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             decimal? subtotal = order.SubTotal == null ? 0 : order.SubTotal;
             decimal? Other = order.OtherFees == null ? 0 : order.OtherFees;
             decimal? Freight = order.Freight == null ? 0 : order.Freight;
-            decimal? Tax = + order.Tax == null ? 0 : order.Tax;
+            decimal? Tax = +order.Tax == null ? 0 : order.Tax;
 
             order.Total = subtotal + Other + Freight + Tax;
             return order;
@@ -139,6 +140,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         });
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
+
+            foreach (var item in findOrdersDto.Data)
+            {
+                var invoiceDetails = item.Items.SelectMany(i => i.Invoices)
+               .Select(i => new InvoiceModel { ID = i.ID }).ToList();
+                var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
+
+                if (invoices.Any())
+                {
+                    foreach (var invoice in invoices)
+                    {
+                        var _appreturn = _appSettings.GetSetting("App.Return.Url");
+                        _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
+
+                        var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
+                        if (findReturnsDTO.Data.Any())
+                        {
+                            item.Return = true;
+                            break;
+                        }
+                    }
+                }
+            }
             return findOrdersDto;
         }
 

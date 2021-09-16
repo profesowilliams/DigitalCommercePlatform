@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
 
         public class Response
         {
-            public IList<DealsForGrid> response { get; set; }
+            public IList<DealsdetailsForProducts> response { get; set; }
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>

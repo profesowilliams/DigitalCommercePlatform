@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 .ForMember(d => d.CreatedOn, o => o.Ignore())
                 ;
 
-            CreateMap<DealsBase, DealsForGrid>()
+            CreateMap<DealsBase, DealsdetailsForProducts>()
                 //.ForMember(dest => dest.Bid, opt => opt.MapFrom(src => src.VendorBidNumber))-need confirmation which value to be mapped 
                 .ForMember(d => d.Bid, o => o.Ignore())
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Source.Version))

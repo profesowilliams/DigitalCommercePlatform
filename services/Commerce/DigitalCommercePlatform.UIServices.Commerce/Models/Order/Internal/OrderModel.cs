@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public decimal? SubTotal { get; set; }
         public decimal? Total { get; set; }        
         public decimal? OtherFees { get; set; }
+        public bool Return { get; set; }
 
     }
 }

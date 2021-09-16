@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
 {
     [ExcludeFromCodeCoverage]
-    public class DealsForGrid
+    public class DealsdetailsForProducts
     {
         public string Bid { get; set; }
         public decimal Version { get; set; }

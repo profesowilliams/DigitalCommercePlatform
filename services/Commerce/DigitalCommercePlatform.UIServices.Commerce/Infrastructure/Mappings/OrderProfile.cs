@@ -26,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
                 .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.DocType))
+                .ForMember(dest => dest.IsReturn, opt => opt.MapFrom(src => src.Return))
                 .ForMember(dest => dest.Vendor, opt => opt.MapFrom<OrderVendorResolver>())
                 .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>())
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom<OrderInvoicesResolver>())

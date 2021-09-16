@@ -34,7 +34,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
         }
-
+        /// <summary>
+        /// This request is being used for Configuration grid
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("configurations")]
         public async Task<ActionResult> GetRecentConfigurations([FromQuery] FindModel criteria)
@@ -43,6 +47,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }
+        /// <summary>
+        /// This request is for applying Deals in Quote details
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("getDealsFor")]
         public async Task<ActionResult> GetDealFor([FromQuery] GetDealsFor.Request request )
@@ -50,7 +59,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// This request is for SPA Grid
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("deals")]
         public async Task<ActionResult> GetDeals([FromQuery] GetDeals.Request request)
@@ -58,7 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// This request is for deals details but returning dummy data (no requirment to show deals details)
+        /// </summary>
+        /// <param name="dealId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("deal")]
         public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
@@ -67,7 +85,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// This request is for validating the configurationId's
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("estimations/validate")]
         public async Task<ActionResult> EstimationValidate([FromQuery] FindModel criteria)
@@ -76,7 +98,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// This request will create/edit the PunchoutUrl with ConfigId's (Only applicable to CISCO)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("getPunchOutUrl")]
         public async Task<ActionResult> GetPunchOutUrl(GetPunchOutUrl.Request request)
