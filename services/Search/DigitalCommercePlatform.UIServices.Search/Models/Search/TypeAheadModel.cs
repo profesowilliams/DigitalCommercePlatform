@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Search.Models.Search
 {
     [ExcludeFromCodeCoverage]
-    public class TypeAheadSuggestion
+    public class TypeAheadModel
     {
         public string Type { get; set; }
         public string Id { get; set; }

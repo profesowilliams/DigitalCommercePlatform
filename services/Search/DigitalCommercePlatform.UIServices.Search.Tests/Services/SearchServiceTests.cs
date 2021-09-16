@@ -1,0 +1,78 @@
+﻿using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.Models.Search;
+using DigitalCommercePlatform.UIServices.Search.Services;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
+{
+    public class SearchServiceTests
+    {
+        private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
+        private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly FakeLogger<SearchService> _logger;
+        private readonly Mock<IUIContext> _context;
+        private readonly SearchService _searchService;
+
+        public SearchServiceTests() {
+            _logger = new FakeLogger<SearchService>();
+            _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
+            _appSettingsMock = new Mock<IAppSettings>();
+            _appSettingsMock.Setup(s => s.GetSetting("App.Search.Url")).Returns("http://app-Search/v1");
+            _context = new Mock<IUIContext>();
+            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void SearchServiceThrowsExceptionOtherThanRemoteServerHttpException(TypeAhead.Request request)
+        {
+            //arrange
+            _middleTierHttpClient.Setup(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                .ThrowsAsync(new Exception("test"));
+
+            //act
+            Func<Task> act = async () => await _searchService.GetTypeAhead(request);
+
+            //assert
+            act.Should().ThrowAsync<Exception>();
+            _middleTierHttpClient.Verify(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task SearchServiceReturnsCorrectResult(TypeAhead.Request request, List<TypeAheadModel> appResponse)
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+                .Returns(Task.FromResult(appResponse));
+
+            //Act
+            var result = await _searchService.GetTypeAhead(request);
+
+            //Assert
+            result.Should().NotBeNull();
+
+            foreach (var item in appResponse)
+            {
+                result.Find(x => x.Id == item.Id
+                    && x.Name == item.Name
+                    && x.Type == item.Type
+                    && x.CategoryName == item.CategoryName
+                    && x.Description == item.Description).Should().NotBeNull();
+            }
+
+            _middleTierHttpClient.Verify(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+        }
+    }
+}

@@ -1,6 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Search.Actions.ActiveCart;
-using DigitalCommercePlatform.UIServices.Search.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
@@ -47,52 +45,26 @@ namespace DigitalCommercePlatform.UIServices.Search.IntegrationTests
     public class UIFixture : TestServerFixture<Startup, UISetup>
     { }
 
-    public class CatalogUIIntegrationTests : IClassFixture<UIFixture>
+    public class SearchUIIntegrationTests : IClassFixture<UIFixture>
     {
         private readonly UIFixture fixture;
 
-        public CatalogUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
+        public SearchUIIntegrationTests(UIFixture fixture, ITestOutputHelper output)
         {
             this.fixture = fixture;
             TestOutput.Output = output;
         }
 
         [Theory]
-        [InlineData("v1/savedCart?id=123&isCartName=false")]
-        public async Task GetSavedCartDetails(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains(input)
-                .Returns<ResponseBase<GetSavedCartDetails.Response>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetSavedCartDetails.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
-        [InlineData("v1/Search?searchTerm=shop&maxResults=21")]
+        [InlineData("v1/TypeAhead?SearchTerm=microso&Type=Product&MaxResults=10&MinResults=12&MinResults=2")]
         public async Task TypeAheadSearch(string input)
         {
             using var scope = fixture.CreateChildScope();
             scope.OverrideClient<object>()
                 .MatchContains(input)
-                .Returns<ResponseBase<TypeAheadSearch.Response>>();
+                .Returns<ResponseBase<TypeAhead.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<TypeAheadSearch.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
-        [InlineData("v1/activeCart")]
-        public async Task GetActiveCartDetails(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains(input)
-                .Returns<ResponseBase<GetActiveCart.Request>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetActiveCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.RunTest<ResponseBase<TypeAhead.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
     }

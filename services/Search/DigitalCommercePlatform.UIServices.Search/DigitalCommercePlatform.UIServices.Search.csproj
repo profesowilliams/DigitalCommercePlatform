@@ -32,10 +32,6 @@
   </Choose>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Mappings\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DigitalFoundation.Common" Version="5.2.25" />
     <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.25" />
     <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.25" />

@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Search
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<ISearchService, SearchService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
