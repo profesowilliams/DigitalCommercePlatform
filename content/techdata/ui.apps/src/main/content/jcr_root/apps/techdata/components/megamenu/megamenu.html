@@ -7,7 +7,7 @@
             <i class="cmp-megamenu__back fas fa-chevron-left"></i>
             <ol class="cmp-megamenu__primary" aria-multiselectable="false" data-sly-list="${model.firstLevelMenuItems}">
                 <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.linkUrl}">
-                    <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="true" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
+                    <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="true" data-cmp-isprivate="${item.isPrivate ? 'true' : 'false'}" data-cmp-children="${item.platformMenuID}" class="cmp-megamenu__tab-text">${item.platformName}</a>
                 </li>
             </ol>
             <sly data-sly-list.nav="${model.firstLevelMenuItems}">

@@ -34,6 +34,9 @@ public class LinkItem {
     private String linkUrl;
 
     @Inject
+    private boolean isPrivate;
+
+    @Inject
     private boolean enableUIServiceEndPoint;
 
     @Inject
@@ -147,4 +150,6 @@ public class LinkItem {
     public String getLinkUrl() {
         return this.linkUrl;
     }
+
+   
 }

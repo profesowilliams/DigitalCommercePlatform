@@ -52,6 +52,15 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
                                                     name="./linkUrl" />
+                                                <isPrivate
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"                                             
+                                                    fieldDescription="Select this if you want to make this item private"
+                                                    text="Private"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    uncheckedValue="false"
+                                                    value="true"
+                                                    name="./isPrivate" />
                                                 <linkTarget
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

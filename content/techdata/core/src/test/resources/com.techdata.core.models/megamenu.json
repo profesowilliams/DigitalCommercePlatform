@@ -8,7 +8,8 @@
       "navigationCatalogRoot": "/content/dam/techdata/catalog/ALT-children",
       "platformName": "Products",
       "navigationRoot": "/content/techdata/language-masters/en/products",
-      "linkTarget": "true"
+      "linkTarget": "true",
+      "isPrivate": "false"
     },
     "item1": {
       "jcr:primaryType": "nt:unstructured",
@@ -16,7 +17,9 @@
       "platformName": "Solutions",
       "navigationRoot": "/content/techdata/language-masters/en/solutions",
       "linkUrl": "/content/techdata/language-masters/en/solutions",
-      "linkTarget": "false"
+      "linkTarget": "false",
+      "isPrivate": "false"
+
     },
     "item2": {
       "jcr:primaryType": "nt:unstructured",
@@ -24,7 +27,9 @@
       "platformName": "Brands",
       "navigationRoot": "/content/techdata/language-masters/en/brands",
       "linkUrl": "/content/techdata/language-masters/en/brands",
-      "linkTarget": "false"
+      "linkTarget": "false",
+      "isPrivate": "false"
+
     },
     "item3": {
       "jcr:primaryType": "nt:unstructured",
@@ -32,7 +37,8 @@
       "platformName": "About Us",
       "navigationRoot": "/content/techdata/language-masters/en/about-us",
       "linkUrl": "/content/techdata/language-masters/en/about-us",
-      "linkTarget": "false"
+      "linkTarget": "false",
+      "isPrivate": "false"
     }
   }
 }
