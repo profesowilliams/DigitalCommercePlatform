@@ -48,9 +48,18 @@ use(function () {
          * dcpQuotesLookupEndpoint: Endpoint for checking if quote ID entered exists, for DCP User
          * dcpSearchFailedPage:     Page to redirect DCP User for failed quote entered
          */
-          areaconfig.put("quoteDetailPage", this.serviceData['quoteDetailPage'] || '');
-          areaconfig.put("dcpQuotesLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
-          areaconfig.put("dcpSearchFailedPage", res.properties['dcpSearchFailedPage'] || '');
+          areaconfig.put("detailsPage", this.serviceData['quoteDetailPage'] || '');
+          areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
+          areaconfig.put("dcpSearchPage", res.properties['dcpSearchFailedPage'] || '');
+      } else if (area === 'order') {
+        /**
+         * orderDetailPage:         Page to redirect DCP User for successful order entered
+         * dcpOrdersLookupEndpoint: Endpoint for checking if order ID entered exists, for DCP User
+         * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
+         */
+        areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
+        areaconfig.put("dcpLookupEndpoint", this.serviceData['orderGridEndpoint'] || '');
+        areaconfig.put("dcpSearchPage", res.properties['ordersGridPage'] || '');
       }
 
       jsonArray.put(areaconfig);

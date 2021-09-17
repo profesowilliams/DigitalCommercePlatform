@@ -66,20 +66,19 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const getSearchUrl = async (searchTerm) => {
-    if (selectedArea.area === 'quote') {
-      if (!data.userData?.hasDCPAccess) {
+    if (selectedArea.area === 'quote' || selectedArea.area === 'order' ) {
         try {
-          const response = await axios.get(uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint);
-          const idFound = response.data.content.items.find(quote => quote.id == searchTerm);
+          const response = await axios.get(uiServiceDomain + selectedArea.dcpLookupEndpoint);
+          const  idFound = response.data.content.items.find(order => order.id == searchTerm);
           if (idFound) {
-            return window.location.origin + `${selectedArea.quoteDetailPage}?id=${searchTerm}`;
+            return window.location.origin + `${selectedArea.detailsPage}?id=${searchTerm}`;
           }
-          return window.location.origin + selectedArea.dcpSearchFailedPage;
+          return window.location.origin + selectedArea.dcpSearchPage;
         } catch (err) {
           console.log(`Error calling UI Serivce Endpoint (${uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint}): ${err}`);
         }
-      }
     }
+
     let searchTargetUrl = searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
     if(getShopLoginUrlPrefix() !== "") {
         searchTargetUrl = encodeURIComponent(searchTargetUrl);
