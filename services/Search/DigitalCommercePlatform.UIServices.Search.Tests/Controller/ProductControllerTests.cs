@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.Controllers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
@@ -56,6 +57,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Controller
             var controller = GetController();
 
             var result = await controller.FullSearch(request).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task KeywordSearchResponseNotNull(KeywordSearch.Response expected, string keyword, string categoryId)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<KeywordSearch.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.KeywordSearch(keyword, categoryId).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

@@ -1,6 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -18,6 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
         public string Status { get; set; }
         public bool IsSelectedForCompare { get; set; }
         public bool IsFavorite { get; set; }
+        public bool IsExactMatch { get; set; }
         public StockModel Stock { get; set; }
         public List<ProductNoteModel> ProductNotes { get; set; }
         public PriceModel Price { get; set; }

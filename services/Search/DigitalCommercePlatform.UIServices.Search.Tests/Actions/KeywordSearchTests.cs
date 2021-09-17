@@ -1,0 +1,166 @@
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
+using DigitalCommercePlatform.UIServices.Search.Actions.Product;
+using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
+using DigitalCommercePlatform.UIServices.Search.Models.Search;
+using DigitalCommercePlatform.UIServices.Search.Services;
+using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
+using FluentValidation.TestHelper;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
+{
+    public class KeywordSearchTests
+    {
+        private readonly Mock<ISearchService> _searchServiceMock;
+        private readonly FakeLogger<KeywordSearch.Handler> _logger;
+        private readonly Mapper _mapper;
+        private readonly Mock<ISiteSettings> _siteSettingsMock;
+
+        public KeywordSearchTests()
+        {
+            _logger = new FakeLogger<KeywordSearch.Handler>();
+            _searchServiceMock = new Mock<ISearchService>();
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
+            _siteSettingsMock = new Mock<ISiteSettings>();
+            _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog")).Returns("FCS");
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void HandleThrowsExceptionOtherThanRemoteServerHttpException(KeywordSearch.Request request)
+        {
+            //arrange
+
+            var sut = GetHandler();
+
+            //act
+            Func<Task> act = async () => await sut.Handle(request, default);
+
+            //assert
+            act.Should().ThrowAsync<Exception>();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void HandleReturnsError(KeywordSearch.Request request)
+        {
+            //arrange
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).ThrowsAsync(new Exception("test"));
+
+            var sut = GetHandler();
+
+            //act
+            Func<Task> act = async () => await sut.Handle(request, default);
+            //assert
+            _ = act.Should().ThrowAsync<Exception>();
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task HandleReturnsNullWhenNotFoundReturned(KeywordSearch.Request request)
+        {
+            //arrange
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(new AppSearchResponseDto()));
+
+            var sut = GetHandler();
+            
+            //act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            result.Should().NotBeNull();
+            result.Results.Should().NotBeNull();
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task HandleReturnsForAuthorizedUser(KeywordSearch.Request request, AppSearchResponseDto appSearchResponse)
+        {
+            //arrange
+            request.IsAnonymous = false;
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appSearchResponse));
+
+            var sut = GetHandler();
+
+            //act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            result.Should().NotBeNull();
+            result.Results.Should().NotBeNull();
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task HandleReturnsCorrectResult(KeywordSearch.Request request, AppSearchResponseDto appResponse)
+        {
+            //Arrange
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            var sut = GetHandler();
+
+            //Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //Assert
+            result.Results.Should().NotBeNull();
+
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task HandleReturnsCorrectResultWhenExactMatch(KeywordSearch.Request request, AppSearchResponseDto appResponse)
+        {
+            //Arrange
+            var exactMatch = appResponse.Products.FirstOrDefault();
+            appResponse.Products.Clear();
+            appResponse.Products.Add(exactMatch);
+            request.IsAnonymous = false;
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            var sut = GetHandler();
+
+            //Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //Assert
+            result.Results.Should().NotBeNull();
+            result.Results.Products.FirstOrDefault().IsExactMatch.Should().BeTrue();
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task HandleReturnsCorrectResultWhenSiteSettingIsNull(KeywordSearch.Request request, AppSearchResponseDto appResponse)
+        {
+            //Arrange
+            _searchServiceMock.Setup(x => x.GetProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            var _siteSettingsMockEmpty = new Mock<ISiteSettings>();
+            var sut = new KeywordSearch.Handler(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMockEmpty.Object);
+
+            //Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //Assert
+            result.Results.Should().NotBeNull();
+            _searchServiceMock.Verify(x => x.GetProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+        }
+
+
+        private KeywordSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object);
+    }
+}

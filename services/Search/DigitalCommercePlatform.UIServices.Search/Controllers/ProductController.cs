@@ -40,5 +40,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
             var response = await Mediator.Send(new FullSearch.Request(_context.User == null, productSearch)).ConfigureAwait(false);
             return Ok(response.Results);
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("KeywordSearch")]
+        public async Task<ActionResult> KeywordSearch(string keyword, string categoryId)
+        {
+            var response = await Mediator.Send(new KeywordSearch.Request(_context.User == null, keyword, categoryId)).ConfigureAwait(false);
+            return Ok(response.Results);
+        }
     }
 }

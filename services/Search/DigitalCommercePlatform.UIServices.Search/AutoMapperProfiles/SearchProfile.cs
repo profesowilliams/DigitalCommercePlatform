@@ -38,9 +38,10 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.IsSelectedForCompare, opt => opt.Ignore())
                 .ForMember(dest => dest.IsFavorite, opt => opt.Ignore())
+                .ForMember(dest => dest.IsExactMatch, opt => opt.Ignore())
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(x => x.LongDescription))
                 .ForMember(dest => dest.Upc, opt => opt.MapFrom(x => x.UpcEan))
-                .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.First().Value));
+                .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.FirstOrDefault().Value));
             CreateMap<Dto.FullSearch.Internal.CategoryBreadcrumbDto, Models.FullSearch.Internal.CategoryBreadcrumbModel>();
             CreateMap<Dto.FullSearch.Internal.RefinementOptionDto, Models.FullSearch.Internal.RefinementOptionModel>();
             CreateMap<Dto.FullSearch.Internal.RangeDto, Models.FullSearch.Internal.RangeModel>();
