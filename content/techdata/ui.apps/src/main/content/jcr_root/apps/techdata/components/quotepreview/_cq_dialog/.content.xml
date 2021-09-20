@@ -81,12 +81,6 @@
                                                 fieldDescription="Enter End User Header Label"
                                                 fieldLabel="End User Header Label"
                                                 name="./endUserHeaderLabel"/>
-                                            <generalHeaderLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter General Header Label"
-                                                fieldLabel="General Header Label"
-                                                name="./generalHeaderLabel"/>
                                             <emailLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -99,30 +93,6 @@
                                                 fieldDescription="Enter Phone Label"
                                                 fieldLabel="Phone Label"
                                                 name="./phoneLabel"/>
-                                            <sourceLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Source Label"
-                                                fieldLabel="Source Label"
-                                                name="./sourceLabel"/>
-                                            <tierLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Tier Label"
-                                                fieldLabel="Tier Label"
-                                                name="./tierLabel"/>
-                                            <referenceLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Reference Label"
-                                                fieldLabel="Reference Label"
-                                                name="./referenceLabel"/>
-                                            <dealLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Deal Label"
-                                                fieldLabel="Deal Label"
-                                                name="./dealLabel"/>
                                             <companyLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -165,6 +135,64 @@
                                                     fieldDescription="Enter Country Label"
                                                     fieldLabel="Country Label"
                                                     name="./countryLabel"/>
+                                            <generalInformation
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                jcr:title="General Information">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <generalHeaderLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        required="{Boolean}true"
+                                                        fieldLabel="General Header Label"
+                                                        name="./generalHeaderLabel"/>
+                                                    <sourceLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Source Label"
+                                                        name="./sourceLabel"/>
+                                                    <referenceLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Reference Label"
+                                                        name="./referenceLabel"/>
+                                                    <dealLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Deal Label"
+                                                        name="./dealLabel"/>
+                                                    <tierLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Tier Label"
+                                                        name="./tierLabel"/>
+                                                    <tierOptions
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                        composite="{Boolean}true"
+                                                        required="{Boolean}true"
+                                                        fieldLabel="Tier Options">
+                                                        <field
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            required="true"
+                                                            name="./tierOptions">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <tierOptionLabel
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Label"
+                                                                    name="./tierOptionLabel"/>
+                                                                <tierOptionValue
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Value"
+                                                                    name="./tierOptionValue"/>
+                                                            </items>
+                                                        </field>
+                                                    </tierOptions>
+                                                </items>
+                                            </generalInformation>
                                         </items>
                                     </column>
                                 </items>

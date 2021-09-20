@@ -1,5 +1,5 @@
 "use strict";
-use(function () {
+use(['../common/utils.js'], function (utils) {
 
     var jsonObject = {};
     var productLinesGrid = {};
@@ -26,6 +26,18 @@ use(function () {
         }
     }
 
+    var tierOptionsValues = utils.getDataFromMultifield(resourceResolver, "tierOptions", function(childResource) {
+        var itemData = {};
+    
+        itemData.label = childResource.properties["tierOptionLabel"];
+        itemData.value = childResource.properties["tierOptionValue"];
+    
+        return itemData;
+    });
+
+    if (tierOptionsValues != null) {
+        informationTab["tierOptions"] = tierOptionsValues;
+    }
 
     if (this.uiServiceDomain != null) {
     	jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quotesPreviewEndPoint;

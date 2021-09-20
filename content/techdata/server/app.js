@@ -1312,6 +1312,50 @@ app.get("/ui-account/v1/getVendorConnections", function (req, res) {
     }, 2000)
 });
 
+app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
+
+  if (!req.headers["sessionid"]) {
+    return res.status(500).json({
+      error: {
+        code: 0,
+        message: [],
+        isError: true,
+      },
+    });
+  }
+  res.download(`file.zip`);
+});
+
+app.get("/ui-config/v1/getdealsFor", function (req, res) {
+  const { endUserName } = req.query;
+
+  res.json({
+
+    "content": {
+      "items": [
+        {
+          "bid": "3443554545",
+          "version": "001",
+          "dealId": "0012",
+          "endUserName": endUserName,
+        },
+        {
+          "bid": "212121323",
+          "version": "002",
+          "dealId": "0013",
+          "endUserName": endUserName,
+        },
+        {
+          "bid": "76676767",
+          "version": "004",
+          "dealId": "0014",
+          "endUserName": endUserName,
+        },
+      ]
+    }
+  });
+});
+
 app.get("/typeahead", function (req, res) {
   const { keyword } = req.query;
 
