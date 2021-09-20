@@ -45,9 +45,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 0;
+    margin-top: 0;
     min-width: 0;
-    position: relative;
-    width: 80%;
+  }
+
+  &--checked {
+    margin-left: -47%;
+    margin-top: 5%;
+    position: fixed;
+    width: 100%;
   }
 
   &__container {
@@ -110,8 +117,14 @@
     @include mobile {
       background-color: transparent;
       border: none !important;
+      padding: rem(16px);
+      margin: 0;
+    }
+
+    &--mobile {
       padding: 0;
-      margin: 0 rem(8px);
+      margin-left: rem(8px);
+      margin-right: rem(8px);
     }
 
     &--checked {
@@ -147,6 +160,7 @@
     z-index: 100;
 
     @include mobile {
+      box-shadow: none;
       position: relative;
       margin-bottom: rem(12px);
       min-width: rem(350px);
@@ -206,6 +220,12 @@
 
       @include mobile {
         min-width: rem(350px);
+      }
+    }
+
+    &:hover, &:active {
+      svg {
+        color: get-color(brand-white);
       }
     }
 
@@ -321,19 +341,11 @@
 }
 
 //AEM overriding Styling
-.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+ .experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
   margin-left: auto !important;
   width: 35% !important;
 
   @include mobile {
     width: 100% !important;
-  }
-}
-
-.experiencefragment.cmp-experiencefragment--header-mobile .cmp-experiencefragment>.cmp-container> div {
-  @include mobile {
-    height: auto;
-    min-height: rem(40px);
-    transition: height 400ms ease;
   }
 }
