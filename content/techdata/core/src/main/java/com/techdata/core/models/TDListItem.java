@@ -26,8 +26,8 @@ public class TDListItem extends VendorListItem  {
     private ListItem listItem;
     private String[] dropdownCategoryTags;
 
-    public TDListItem(String title, String overview, String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, ListItem listItem) {
-        super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
+    public TDListItem(String title, String overview, String awards,String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, ListItem listItem) {
+        super(title, overview, awards, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
         log.info("TDListItem contructor");
         this.listItem = listItem;
     }
@@ -71,6 +71,7 @@ public class TDListItem extends VendorListItem  {
     public static TDListItem getTDListItem(Resource pageContentResource, ListItem listItem){
         String title = pageContentResource.getValueMap().containsKey(JcrConstants.JCR_TITLE) ? pageContentResource.getValueMap().get(JcrConstants.JCR_TITLE, StringUtils.EMPTY) : StringUtils.EMPTY;
         String overview = StringUtils.EMPTY;
+        String awards = StringUtils.EMPTY;
         String vendorIcon = StringUtils.EMPTY;
         String pageLink = StringUtils.EMPTY;
         String vendorPageLabel = StringUtils.EMPTY;
@@ -104,7 +105,7 @@ public class TDListItem extends VendorListItem  {
             isIconSVG = evg != null && evg.isSvg();
         }
 
-        TDListItem tdListItem =  new TDListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
+        TDListItem tdListItem =  new TDListItem(title, overview, awards, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
         tdListItem.setIconSVG(isIconSVG);
         tdListItem.setDropdownCategoryTags(dropdownCategorytags);
         return tdListItem;

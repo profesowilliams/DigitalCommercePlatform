@@ -33,6 +33,8 @@ public class Constants {
     public static final String VENDOR_PRODUCT_LINK = "vendor-product-link";
     public static final String OVERVIEW = "overview";
     public static final String VENDOR_ICON = "vendor-icon";
+    public static final String AWARDS = "awards";
+
 
     public static final String WORKFLOW_ARGS_KEY = "PROCESS_ARGS";
     public static final String COMMA = ",";

@@ -3,11 +3,20 @@
     <div class="vendor-listing--container">
         <div class="vendor-listing--left-section">
             <sly data-sly-list.item1="${listUse.listItems}">
-                <div class="vendor-icon" data-type="${item1.title}">
-                    <div class="vendor-icon__container  ${item1List.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
-                        ${item1.vendorIcon @ context = 'scriptComment'}
+                <sly data-sly-test="${!properties.showAwardsVariation}">
+                    <div class="vendor-icon" data-type="${item1.title}">
+                        <div class="vendor-icon__container  ${item1List.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
+                            ${item1.vendorIcon @ context = 'scriptComment'}
+                        </div>
                     </div>
-                </div>
+                </sly>
+                <sly  data-sly-test="${properties.showAwardsVariation}">
+                    <div data-sly-test="${item1.awards}" class="vendor-icon" data-type="${item1.title}">
+                        <div class="vendor-icon__container  ${item1List.count == 1 ? 'activeIcon' : 'nonActiveIcon'}">
+                            ${item1.vendorIcon @ context = 'scriptComment'}
+                        </div>
+                    </div>
+                </sly>
             </sly>
         </div>
         <div class="vendor-listing--right-section">
@@ -22,7 +31,12 @@
                         </ul>
                     </sly>
                     <div class="vendor-section-desc">
-                        <p>${item.overview @ context = 'html'}</p>
+                        <sly data-sly-test.isAwards="${properties.showAwardsVariation}">
+                            <p>${item.awards @ context = 'html'}</p>
+                        </sly>
+                        <sly data-sly-test="${!isAwards}">
+                            <p>${item.overview @ context = 'html'}</p>
+                        </sly>
                     </div>
                     <div data-sly-test="${item.vendorPageLabel}" class="vendor-section-link-section">
                         <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
