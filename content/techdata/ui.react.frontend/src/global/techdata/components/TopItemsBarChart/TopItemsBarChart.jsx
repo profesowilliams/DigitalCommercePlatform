@@ -99,6 +99,34 @@ function TopItemsBarChart(props) {
 			createChart(ctx, payload.content.summary.items, chartOptions);
 		}
 	}, [payload]);
+
+	/**
+	 * Visual component that valid the lenght of the endUserName
+	 * and other operations if is necesary.
+	 * @param {Object} props
+	 * @param {string} props.endUserName
+	 * @param {string} props.formattedAmount
+	 * @param {string} props.amount
+	 * @param {number} props.index
+	 * @param {any} props.currencySymbol
+	 * @returns 
+	 */
+	 const InfoComponent = ({endUserName, formattedAmount, amount, index, currencySymbol}) => {
+		const MAX_END_USER_NAME_VALID = 20;
+		const example = endUserName;
+		const validEndUserName = example.substring(0, MAX_END_USER_NAME_VALID);
+		return (
+			<div key={index}>
+				<span className={`cmp-barChart__sub-title-color-${index + 1}`}></span>
+				<span className='cmp-barChart__sub-title'>{validEndUserName ?? null}</span>
+				<span className='cmp-barChart__sub-title-digits'>
+				{currencySymbol ?? '$'}{formatAmount(formattedAmount ?? amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
+				</span>
+			</div>
+		);
+	}
+
+
 	return (
 		<section>
 			<div className='cmp-barChart'>
@@ -110,13 +138,13 @@ function TopItemsBarChart(props) {
 								<div className='cmp-barChart__legend'>
 									{payload.content.summary.items.map((item, i) => {
 										return (
-											<div key={i} className={`cmp-barChart__legend-row`}>
-												<span className={`cmp-barChart__sub-title-color-${i + 1}`} />
-												<span className='cmp-barChart__sub-title'>{item.endUserName ?? null}</span>
-												<span className='cmp-barChart__sub-title-digits'>
-												{item.currencySymbol ?? '$'}{formatAmount(item.formattedAmount ?? item.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
-												</span>
-											</div>
+											<InfoComponent 
+												amount={item.amount}
+												currencySymbol={item.currencySymbol}
+												endUserName={item.endUserName}
+												index={i}
+												formattedAmount={item.formattedAmount}
+											/>	
 										);
 									})}
 								</div>
