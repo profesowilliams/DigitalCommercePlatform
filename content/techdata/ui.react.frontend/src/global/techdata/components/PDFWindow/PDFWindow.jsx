@@ -21,7 +21,7 @@ const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
     );
 }
 
-const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText) => {
+export const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText) => {
     const imagePath = logoURL;
 
     const PrintHelper = () => {
@@ -86,13 +86,6 @@ const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downl
         )
     }
 
-    const PDFViewerExample= () => {
-        return (
-            <PDFViewer>
-                <PrintHelper />
-            </PDFViewer>
-        )
-    }
 
     if (isDownloadLink)
     {

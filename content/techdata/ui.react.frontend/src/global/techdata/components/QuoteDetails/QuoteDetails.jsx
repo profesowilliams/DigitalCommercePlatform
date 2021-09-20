@@ -6,7 +6,6 @@ import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
 import QuoteDetailsCheckout from "./QuoteDetailsCheckout/QuoteDetailsCheckout";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import PDFWindow from "../PDFWindow/PDFWindow";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 
@@ -45,12 +44,6 @@ const QuoteDetails = ({ componentProp }) => {
 
   return quoteDetails ? (
     <>
-      <PDFWindow
-        quoteDetails={quoteDetails}
-        logoURL={logoURL}
-        fileName={fileName}
-        downloadLinkText={downloadLinkText}
-      />
       <QuotesSubHeader
         label={subheaderLabel}
         title={subheaderTitle}
@@ -91,6 +84,10 @@ const QuoteDetails = ({ componentProp }) => {
       <QuoteDetailsCheckout
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
+        quoteDetails={quoteDetails}
+        logoURL={logoURL}
+        fileName={fileName}
+        downloadLinkText={downloadLinkText}
       />
     </>
   ) : error ? (

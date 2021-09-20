@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Widgets/Dropdown";
+import {downloadClicked} from "../../PDFWindow/PDFWindow";
 
 function QuoteDetailsCheckout({
   config,
   onQuoteCheckout,
   onQuoteOptionChanged,
+  quoteDetails,
+  logoURL,
+  fileName,
+  downloadLinkText
 }) {
   const checkoutLabel = config?.checkoutLabel || "Checkout";
   const dropdownLabel = config?.dropdownLabel || "Quote Options";
@@ -36,13 +41,35 @@ function QuoteDetailsCheckout({
     }
   }
 
+  const triggerPDFDownload = () => {
+    let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
+    let downloadLinkATagCollection = downloadLinkDivTag.getElementsByTagName("a");
+    let downloadLinkATag = downloadLinkATagCollection.length > 0 ? downloadLinkATagCollection[0] : undefined;
+
+    if (downloadLinkATag)
+    {
+      downloadLinkATag.click();
+    }
+
+  }
+
+  useEffect(()=>{
+    downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText);
+  },[])
+
   useEffect(() => {
     selectedOption && onOptionChanged(selectedOption);
+
+    if (selectedOption && selectedOption.key === quoteOptions[1].key) {
+      triggerPDFDownload();
+    }
+
   }, [selectedOption]);
 
   return (
     <section>
       <div className="cmp-td-quote-checkout">
+        <div id="pdfDownloadLink" className="cmp-td-quote-checkout__pdf-download-link"></div>
         <div className="cmp-td-quote-checkout__button cmp-widget">
           <button className="cmp-quote-button" onClick={onCheckout}>
             <div className="cmp-td-quote-checkout__button__title">
