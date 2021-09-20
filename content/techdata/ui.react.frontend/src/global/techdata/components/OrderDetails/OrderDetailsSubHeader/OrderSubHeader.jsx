@@ -2,6 +2,7 @@ import React from "react";
 import { getUrlParams } from "../../../../../utils";
 import { If } from "../../../helpers/If";
 import { dateToString } from "../../../helpers/dates";
+import  { orderStatusValues } from "../orderStatus";
 
 const OrderSubHeader = ({
         headerConfig,
@@ -13,31 +14,31 @@ const {status} = orderDetails;
 
 const orderButton = (status) => {
     switch (status.toLowerCase()) {
-        case "open":
+        case orderStatusValues.OPEN:
             return (
                 <button className="cmp-td-order-details__header__status__open">Open</button>
             );
             break;
-        case "open and in process":
+        case orderStatusValues.OPEN_IN_PROCESS:
             return (
                 <button className="cmp-td-order-details__header__status__open">Open and in Process</button>
             );
-        case "cancelled":
+        case orderStatusValues.CANCELLED:
             return (
                 <button className="cmp-td-order-details__header__status__cancelled">Cancelled</button>
             );
             break;
-        case "sales review":
+        case orderStatusValues.CREDIT_REVIEW:
             return (
                 <button className="cmp-td-order-details__header__status__in-review">In Review</button>
             );
             break;
-        case "credit review":
+        case orderStatusValues.SALES_REVIEW:
             return (
                 <button className="cmp-td-order-details__header__status__in-review">In Review</button>
             );
             break;
-        case "shipped":
+        case orderStatusValues.SHIPPED:
             return (
                 <button className="cmp-td-order-details__header__status__shipped">Shipped</button>
             );
@@ -60,7 +61,7 @@ const orderButton = (status) => {
 
         <div className="cmp-td-order-details__header__status">
           <a href="#">{headerConfig.exportCSVLabel}</a>
-          <div>800-237-8931</div>
+          <div>{headerConfig.phoneNumberLabel}</div>
             {orderButton(status)}
         </div>
       </div>

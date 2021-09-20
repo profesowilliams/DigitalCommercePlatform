@@ -40,7 +40,7 @@
             font-weight: bold;
           }
 
-          &__status-icon, &__status-icon-inprocess {
+          &__status-icon, &__status-icon-inprocess, &__status-icon-open, &__status-icon-shipped, &__status-icon-inreview, &__status-icon-cancelled {
 
             svg, .fas {
               border-radius: 50%;
@@ -50,17 +50,27 @@
             }
           }
 
-          &__status-icon {
+          &__status-icon, &__status-icon-open, &__status-icon-inprocess, &__status-icon-shipped {
             svg, .fas {
               background-color: get-color(button-open);
               color: get-color(brand-white);
             }
           }
 
-          &__status-icon-inprocess{
+
+          &__status-icon-inreview {
             svg, .fas {
-              background-color: get-color(brand-text-gray);
-              color: get-color(brand-white);
+              background-color: get-color(brand-orange);
+              color: get-color(td-dark-blue);
+            }
+          }
+
+          &__status-icon-cancelled {
+            svg, .fas {
+              font-size: rem(25px);
+              background-color: get-color(brand-white);
+              color: get-color(brand-text-gray);
+              padding: 0;
             }
           }
         }
@@ -167,6 +177,7 @@
         font-size: $font-size-small;
         padding: rem(7px) rem(10px);
         border: 0;
+        font-weight: 600;
       }
 
       &__open, &__shipped, &__open-in-process {
@@ -180,8 +191,8 @@
       }
 
       &__in-review {
-        color: get-color(brand-white);
         background-color: get-color(brand-orange);
+        color: get-color(td-dark-blue);
       }
 
       &__error {

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import OrderDetailsStatusInfo from "./OrderDetailsStatusInfo";
 
 const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
 
@@ -10,72 +11,48 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
         blindPackagingUsed
     } = orderDetails;
 
-    const orderStatus = orderDetails?.status && orderDetails?.status === "shipped";
-
     return (
         <div className="cmp-td-order-details__info-cards">
-            <div className="cmp-td-order-details__info-cards__card">
-                <div className="cmp-td-order-details__info-cards__card__container">
-                    <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.orderStatusLabel}</h4>
-                    <div className="cmp-td-order-details__info-cards__card__container__status-body">
-
-                            {orderStatus ?
-                                <div className="cmp-td-order-details__info-cards__card__container__status-body__status-icon">
-                                    <i className="fas fa-check"></i>
-                                </div>
-                                    :
-                                <div className="cmp-td-order-details__info-cards__card__container__status-body__status-icon-inprocess">
-                                    <i className="fas fa-times"></i>
-                                </div>}
-
-                        <div className="cmp-td-order-details__info-cards__card__container__status-body__status-heading">
-                            {orderStatus ? infoConfig.orderStatusItemsShipped : infoConfig.orderStatusItemsInProcess}
-                        </div>
-                        <div
-                            className="cmp-td-order-details__info-cards__card__container__status-body__status-description">
-                            {orderStatus ? infoConfig.orderStatusItemsShippedDescription : infoConfig.orderStatusItemsInProcessDescription}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <OrderDetailsStatusInfo
+                infoConfig={infoConfig}
+                orderDetails={orderDetails}/>
             {endUser ?
-            <div className="cmp-td-order-details__info-cards__card">
-                <div className="cmp-td-order-details__info-cards__card__container">
-                    <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.endUserLabel}</h4>
-                    <div className="cmp-td-order-details__info-cards__card__container__end-user">
-                        <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
-                            {endUser.companyName}
-                        </div>
-                        <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-lines">
-                            <p>{endUser.line1}</p>
-                            {endUser.line2 ? <p>{endUser.line2}</p> : ""}
-                            {endUser.line3 ? <p>{endUser.line3}</p> : ""}
-                            <p>{endUser.city} {endUser.state} {endUser.postalCode}</p>
-                            <p>{endUser.country}</p>
-                        </div>
-                        <div className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-name">
-                            {endUser.name}
-                        </div>
-                        <div
-                            className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-details">
-                            <p><i className="fas fa-phone fa-flip-horizontal"></i> {endUser.phoneNumber}</p>
-                            <p><i className="fas fa-envelope"></i> {endUser.email}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            :
-            <div className="cmp-td-order-details__info-cards__card">
-                <div className="cmp-td-order-details__info-cards__card__container">
-                    <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.endUserLabel}</h4>
-                    <div className="cmp-td-order-details__info-cards__card__container__end-user">
-                        <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
-                            End User Information Not Found
+                <div className="cmp-td-order-details__info-cards__card">
+                    <div className="cmp-td-order-details__info-cards__card__container">
+                        <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.endUserLabel}</h4>
+                        <div className="cmp-td-order-details__info-cards__card__container__end-user">
+                            <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
+                                {endUser.companyName}
+                            </div>
+                            <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-lines">
+                                <p>{endUser.line1}</p>
+                                {endUser.line2 ? <p>{endUser.line2}</p> : ""}
+                                {endUser.line3 ? <p>{endUser.line3}</p> : ""}
+                                <p>{endUser.city} {endUser.state} {endUser.postalCode}</p>
+                                <p>{endUser.country}</p>
+                            </div>
+                            <div className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-name">
+                                {endUser.name}
+                            </div>
+                            <div
+                                className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-details">
+                                <p><i className="fas fa-phone fa-flip-horizontal"></i> {endUser.phoneNumber}</p>
+                                <p><i className="fas fa-envelope"></i> {endUser.email}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>}
+                :
+                <div className="cmp-td-order-details__info-cards__card">
+                    <div className="cmp-td-order-details__info-cards__card__container">
+                        <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.endUserLabel}</h4>
+                        <div className="cmp-td-order-details__info-cards__card__container__end-user">
+                            <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
+                                End User Information Not Found
+                            </div>
+                        </div>
+                    </div>
+                </div>}
             {shipTo ?
                 <div className="cmp-td-order-details__info-cards__card">
                     <div className="cmp-td-order-details__info-cards__card__container">
@@ -127,7 +104,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
-                                        Subtotal
+                                        {infoConfig.subTotalLabel}
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
@@ -138,7 +115,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
-                                        Tax
+                                        {infoConfig.taxLabel}
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
@@ -149,33 +126,54 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
-                                        Freight
+                                        {infoConfig.freightLabel}
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
                                         {paymentDetails.freightFormatted}
                                     </div>
                                 </div> : null}
+                            {paymentDetails.otherFeesFormatted ?
+                                <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
+                                    <div
+                                        className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
+                                        {infoConfig.otherFeesLabel}
+                                    </div>
+                                    <div
+                                        className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
+                                        {paymentDetails.otherFeesFormatted}
+                                    </div>
+                                </div> : null}
                             {paymentDetails.totalFormatted ?
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__total">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
-                                        Total
+                                        {infoConfig.paymentTotalLabel}
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
                                         {paymentDetails.totalFormatted}
                                     </div>
                                 </div> : null}
-                                {paymentDetails.paymentTermText ?
+                            {paymentDetails.paymentTermText ?
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
-                                        Terms:
+                                        {infoConfig.paymentTermsLabel}
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
                                         {paymentDetails.paymentTermText}
+                                    </div>
+                                </div> : null}
+                            {paymentDetails.currency ?
+                                <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
+                                    <div
+                                        className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
+                                    </div>
+                                    <div
+                                        className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
+                                        {infoConfig.currencyLabel} {paymentDetails.currency}
                                     </div>
                                 </div> : null}
                         </div>
@@ -187,7 +185,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                         <div className="cmp-td-order-details__info-cards__card__container__payment">
                             <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item__error">
-                                     Payment Details Not found
+                                    Payment Details Not found
                                 </div>
                             </div>
                         </div>
@@ -195,6 +193,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                 </div>}
         </div>
     );
+
 };
 
 
@@ -228,16 +227,32 @@ OrderDetailsInfo.propTypes = {
         phoneNumber: PropTypes.string,
     }),
     paymentDetails: PropTypes.shape({
-        paymentTermText: PropTypes.string,
-        companyName: PropTypes.string,
-        line1: PropTypes.string,
-        line2: PropTypes.string,
-        line3: PropTypes.string,
-        city: PropTypes.string,
-        state: PropTypes.string,
-        postalCode: PropTypes.string,
-        country: PropTypes.string,
-        email: PropTypes.string,
-        phoneNumber: PropTypes.string,
+        currency: PropTypes.string,
+        currencySymbol: PropTypes.string,
+        terms: PropTypes.string,
+        subTotalFormatted: PropTypes.string,
+        taxFormatted: PropTypes.string,
+        freightFormatted: PropTypes.string,
+        totalFormatted: PropTypes.string,
+    }),
+    infoConfig: PropTypes.shape({
+        subTotalLabel: PropTypes.string,
+        freightLabel: PropTypes.string,
+        taxLabel: PropTypes.string,
+        otherFeesLabel: PropTypes.string,
+        paymentTermsLabel: PropTypes.string,
+        paymentTotalLabel: PropTypes.string,
+        currencyLabel: PropTypes.string,
+        orderStatusLabel: PropTypes.string,
+        orderStatusItemsShipped: PropTypes.string,
+        orderStatusItemsInProcess: PropTypes.string,
+        orderStatusItemsInReview: PropTypes.string,
+        orderStatusItemsShippedDescription: PropTypes.string,
+        orderStatusItemsInProcessDescription: PropTypes.string,
+        orderStatusItemsInReviewDescription: PropTypes.string,
+        endUserLabel: PropTypes.string,
+        shipToLabel: PropTypes.string,
+        blindPackagingUsed: PropTypes.string,
+        blindPackagingNotUsed: PropTypes.string,
     }),
 };

@@ -19,12 +19,20 @@ use(function () {
         infoJsonObject["orderStatusItemsInProcess"] = properties["orderStatusItemsInProcess"];
     }
 
+    if (properties && properties["orderStatusItemsInReview"]) {
+        infoJsonObject["orderStatusItemsInReview"] = properties["orderStatusItemsInReview"];
+    }
+
     if (properties && properties["orderStatusItemsShippedDescription"]) {
         infoJsonObject["orderStatusItemsShippedDescription"] = properties["orderStatusItemsShippedDescription"];
     }
 
     if (properties && properties["orderStatusItemsInProcessDescription"]) {
         infoJsonObject["orderStatusItemsInProcessDescription"] = properties["orderStatusItemsInProcessDescription"];
+    }
+
+    if (properties && properties["orderStatusItemsInReviewDescription"]) {
+        infoJsonObject["orderStatusItemsInReviewDescription"] = properties["orderStatusItemsInReviewDescription"];
     }
 
     if (properties && properties["endUserLabel"]) {
@@ -47,6 +55,34 @@ use(function () {
         infoJsonObject["paymentLabel"] = properties["paymentLabel"];
     }
 
+    if (properties && properties["subTotalLabel"]) {
+        infoJsonObject["subTotalLabel"] = properties["subTotalLabel"];
+    }
+
+    if (properties && properties["freightLabel"]) {
+        infoJsonObject["freightLabel"] = properties["freightLabel"];
+    }
+
+    if (properties && properties["taxLabel"]) {
+        infoJsonObject["taxLabel"] = properties["taxLabel"];
+    }
+
+    if (properties && properties["otherFeesLabel"]) {
+        infoJsonObject["otherFeesLabel"] = properties["otherFeesLabel"];
+    }
+
+    if (properties && properties["paymentTermsLabel"]) {
+        infoJsonObject["paymentTermsLabel"] = properties["paymentTermsLabel"];
+    }
+
+    if (properties && properties["paymentTotalLabel"]) {
+        infoJsonObject["paymentTotalLabel"] = properties["paymentTotalLabel"];
+    }
+
+    if (properties && properties["currencyLabel"]) {
+        infoJsonObject["currencyLabel"] = properties["currencyLabel"];
+    }
+
     // header information json being constructed
     if (properties && properties["orderLabel"]) {
         headerJsonObject["orderLabel"] = properties["orderLabel"];
@@ -58,6 +94,10 @@ use(function () {
 
     if (properties && properties["purchaseOrderLabel"]) {
         headerJsonObject["purchaseOrderLabel"] = properties["purchaseOrderLabel"];
+    }
+
+    if (properties && properties["phoneNumberLabel"]) {
+        headerJsonObject["phoneNumberLabel"] = properties["phoneNumberLabel"];
     }
 
     if (properties && properties["exportCSVLabel"]) {
