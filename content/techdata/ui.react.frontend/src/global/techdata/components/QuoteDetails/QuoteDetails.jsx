@@ -12,8 +12,8 @@ import useGet from "../../hooks/useGet";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
-    createdLabel,
-    expiresLabel,
+    createdDateLabel,
+    expiresDateLabel,
     subheaderLabel,
     subheaderTitle,
     subtotalLabel,
@@ -55,6 +55,7 @@ const QuoteDetails = ({ componentProp }) => {
         label={subheaderLabel}
         title={subheaderTitle}
         quoteDetails={quoteDetails}
+        dateLabels={{createdDateLabel,expiresDateLabel}}
       />
       <QuoteContactInfo
         label={
