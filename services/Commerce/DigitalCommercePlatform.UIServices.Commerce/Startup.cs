@@ -30,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce
         {
             services.AddSingleton<ISubstringService, SubstringService>();
             services.AddScoped<IQuoteItemChildrenService, QuoteItemChildrenService>();
+            services.AddScoped<IOrderItemChildrenService, OrderItemChildrenService>();
             services.AddTransient<ICommerceService, CommerceService>();
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IOrderService, OrderService>();

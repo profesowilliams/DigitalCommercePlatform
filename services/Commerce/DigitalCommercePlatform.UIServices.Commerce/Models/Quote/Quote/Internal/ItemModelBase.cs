@@ -10,7 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string Id { get; set; }
         public string Parent { get; set; }
         public List<ProductModel> Product { get; set; }
-        //public int Quantity { get; set; }
+        public decimal? Quantity { get; set; }
         public string ContractNumber { get; set; }
         public string ContractType { get; set; }
         public string License { get; set; }

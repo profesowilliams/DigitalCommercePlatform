@@ -274,7 +274,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Type = "1",
                         }
                     };
-                    //item.Quantity = cartLine.Quantity;
+                    decimal tmpvalue;
+                    decimal? result = null;
+
+                    if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
+                        result = tmpvalue;
+                    item.Quantity = result;
                     request.CreateModelFrom.Items.Add(item);
                 }
             }
@@ -302,7 +307,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     itemModel.Product = new List<ProductModel> {
                         new ProductModel { Id = cartLine.ProductId, Manufacturer = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", }
                     };
-                    //itemModel.Quantity = cartLine.Quantity;
+                    decimal tmpvalue;
+                    decimal? result = null;
+
+                    if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
+                        result = tmpvalue;
+
+                    itemModel.Quantity = result;
                     createQuoteFrom.Items.Add(itemModel);
                 }
             }

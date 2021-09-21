@@ -35,7 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
             public List<Line> Items { get; set; }
-            public string QuoteNumber { get; set; }
             public string OrderNumber { get; set; }
             public string PONumber { get; set; }
             public string EndUserPO { get; set; }
@@ -52,7 +51,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 Customer = data?.Reseller?.CompanyName;
                 Items = data?.Lines;                
                 Status = data.Status.ToTitleCase();
-                QuoteNumber = string.Empty;
                 OrderNumber = data?.OrderNumber;
                 PONumber = data?.PONumber;
                 PODate = data?.PODate;
@@ -68,11 +66,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
         {
             private readonly ICommerceService _commerceQueryService;
             private readonly IMapper _mapper;
+            private readonly IOrderItemChildrenService _orderItemChildrenService;
 
-            public GetOrderHandler(ICommerceService commerceQueryService, IMapper mapper)
+            public GetOrderHandler(ICommerceService commerceQueryService,  IMapper mapper, IOrderItemChildrenService orderItemChildrenService)
             {
                 _commerceQueryService = commerceQueryService;
                 _mapper = mapper;
+                _orderItemChildrenService = orderItemChildrenService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -80,6 +80,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
                 var orderResponse = _mapper.Map<OrderDetailModel>(order);
                 var response = new Response(orderResponse);
+                if (response.Items != null)
+                {
+                    response.Items = _orderItemChildrenService.GetOrderLinesWithChildren(response);
+                }
                 return new ResponseBase<Response> { Content = response };
             }
 

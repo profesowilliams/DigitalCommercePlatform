@@ -1,35 +1,35 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
-    public class QuoteItemChildrenService : IQuoteItemChildrenService
+    public class OrderItemChildrenService : IOrderItemChildrenService
     {
         private readonly ISubstringService _substringService;
 
-        public QuoteItemChildrenService(ISubstringService substringService)
+        public OrderItemChildrenService(ISubstringService substringService)
         {
             _substringService = substringService ?? throw new ArgumentNullException(nameof(substringService));
         }
-        public List<Line> GetQuoteLinesWithChildren(QuotePreviewModel quotePreviewModel)
+        public List<Line> GetOrderLinesWithChildren(GetOrder.Response orderDetails)
         {
-            if(quotePreviewModel?.QuoteDetails?.Items == null)
+            if (orderDetails?.Items == null)
             {
                 return new List<Line>();
             }
 
-            var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
+            var parents = orderDetails.Items.Where(i => i.Parent == "0").ToList();
 
             var lines = new List<Line>();
 
             foreach (var item in parents)
             {
-                var children = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent != null &&
-                            _substringService.GetSubstring(i.Id,".") == _substringService.GetSubstring(item.Id, ".")).ToList();
+                var children = orderDetails.Items.Where(i => (i.Parent != null && i.Parent!="0") &&
+                            _substringService.GetSubstring(i.Id, ".") == _substringService.GetSubstring(item.Id, ".")).ToList();
 
                 lines.Add(new Line
                 {

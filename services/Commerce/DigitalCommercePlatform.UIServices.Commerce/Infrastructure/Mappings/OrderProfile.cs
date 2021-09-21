@@ -71,7 +71,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
-                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID));
 
         }
     }
@@ -213,6 +214,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public static string ToTitleCase(this string value)
         {
+            if (string.IsNullOrWhiteSpace(value)) return string.Empty;
+
             var result = value.ToString().ToLower();
 
             TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;

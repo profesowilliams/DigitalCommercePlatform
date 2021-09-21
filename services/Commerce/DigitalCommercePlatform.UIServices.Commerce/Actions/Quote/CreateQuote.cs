@@ -95,7 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     public ItemsValidator()
                     {
                         RuleFor(c => c.Id).NotNull();
-                        //RuleFor(c => c.Quantity).NotNull();
+                        RuleFor(c => c.Quantity).NotNull();
                         RuleFor(c => c.TotalPrice).NotNull();
                         RuleFor(c => c.UnitPrice).NotNull();
                         RuleFor(c => c.UnitListPrice).NotNull();
