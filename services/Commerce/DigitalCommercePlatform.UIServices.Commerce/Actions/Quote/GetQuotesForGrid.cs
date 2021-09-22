@@ -34,8 +34,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public int? PageSize { get; set; } = 25;
             public int? PageNumber { get; set; } = 1;
             public bool? WithPaginationInfo { get; set; } = true;
-            public string manufacturer { get; set; }
-            public string endUserName { get; set; }
+            public string Manufacturer { get; set; }
+            public string EndUserName { get; set; }
+            public bool Details { get; set; }
 
             public Request()
             {
@@ -74,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 var createdTo = request.CreatedTo?.ToShortDateString();
                 if (createdFrom != null) { dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true)); };
                 if (createdTo != null) { dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true)); };
-                request.endUserName = string.IsNullOrWhiteSpace(request.endUserName) ? null : request.endUserName + "*";
+                request.EndUserName = string.IsNullOrWhiteSpace(request.EndUserName) ? null : request.EndUserName + "*";
 
                 var query = new FindModel()
                 {
@@ -88,9 +89,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     Id = request.QuoteIdFilter,
                     VendorReference = request.VendorReference,
                     CreatedFrom = dateFrom,
-                    Manufacturer = request.manufacturer,
+                    Manufacturer = request.Manufacturer,
                     CreatedTo = dateTo,
-                    EndUserName = request.endUserName,
+                    EndUserName = request.EndUserName,
+                    Details = request.Details
                 };
                 var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                 var getProductResponse = _mapper.Map<Response>(quoteDetails);
@@ -113,30 +115,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                 if (quotes == null) { return new List<QuotesForGridModel>(); }
                 var vendorValue = response.Items.Where(x => x.Deals == null).ToList();
-                if (IsDummyData == "true" && vendorValue.Count == 0)
-                {
-                    var secondQuote = quotes.ElementAtOrDefault(1);
 
-                    if (secondQuote != null)
-                    {
-                        secondQuote.Deals = new List<VendorReferenceModel>
-                        {
-                            new VendorReferenceModel { Value = "1", Type = "2323232"}
-                        };
-                    }
 
-                    var thirdQuote = quotes.ElementAtOrDefault(2);
+                //if (IsDummyData == "true" && vendorValue.Count == 0)
+                //{
+                //    var secondQuote = quotes.ElementAtOrDefault(1);
 
-                    if (thirdQuote != null)
-                    {
-                        thirdQuote.Deals = new List<VendorReferenceModel>
-                        {
-                            new VendorReferenceModel {  Value = "1", Type = "7755444" },
-                            new VendorReferenceModel { Value = "1", Type = "9871234"}
-                        };
-                    }
+                //    if (secondQuote != null)
+                //    {
+                //        secondQuote.Deals = new List<VendorReferenceModel>
+                //        {
+                //            new VendorReferenceModel { Value = "1", Type = "2323232"}
+                //        };
+                //    }
 
-                }
+                //    var thirdQuote = quotes.ElementAtOrDefault(2);
+
+                //    if (thirdQuote != null)
+                //    {
+                //        thirdQuote.Deals = new List<VendorReferenceModel>
+                //        {
+                //            new VendorReferenceModel {  Value = "1", Type = "7755444" },
+                //            new VendorReferenceModel { Value = "1", Type = "9871234"}
+                //        };
+                //    }
+
+                //}
 
                 return quotes;
             }

@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public DateTime? Created { get; set; }
         public DateTime? Expires { get; set; }
         public string EndUserName { get; set; }
-        public List<VendorReferenceModel> Deals { get; set; }
+        public List<string> Deals { get; set; }
         public string Status { get; set; }
         public double QuoteValue { get; set; }
         public string FormatedQuoteValue { get; set; }

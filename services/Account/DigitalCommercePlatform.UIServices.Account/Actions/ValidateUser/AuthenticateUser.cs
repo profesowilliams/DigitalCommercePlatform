@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
@@ -34,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
         public class Response
         {
-            public User User { get; set; }
+            public Account.Models.Accounts.User User { get; set; }
         }
 
         public class RequestValidator : AbstractValidator<Request>
@@ -110,27 +111,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 }
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
-#pragma warning disable CS0618 // Type or member is obsolete
-                var roles = userResponse.User.Roles;
-#pragma warning restore CS0618 // Type or member is obsolete
-                if (roles == null)
-                    roles = new List<string>();
+                
 
-                if (roles.ToList().Count > 0 && userResponse.User.ID.Equals("516514"))
-                    roles.ToList().Add("hasDCPAccess");
-                else
-                    roles = userResponse.User.ID.Equals("516514") ? new List<string> { "hasDCPAccess" } : new List<string>();
+                var roleList = userResponse.User.RoleList.ToList();
+                if (roleList == null)
+                    roleList = new List<Role>();
 
-#pragma warning disable CS0618 // Type or member is obsolete
-                userResponse.User.Roles = roles;
-#pragma warning restore CS0618 // Type or member is obsolete
+#if DEBUG
+                var isRolePresent = roleList.Where(p => String.Equals(p.Entitlement, "hasDCPAccess", StringComparison.CurrentCulture)).Any();
+                if (roleList.ToList().Count > 0 && userResponse.User.ID.Equals("516514")&& !isRolePresent)
+                {
+                    userResponse.User.RoleList.Add(new Role { AccountId = "", Entitlement = "hasDCPAccess" });
+                }
+#endif
 
-                // Current requirement is to take the first customer from the list
-                userResponse.User.ActiveCustomer = userResponse.User.CustomerList?.FirstOrDefault();
+                userResponse.User.ActiveCustomer = userResponse.User?.ActiveCustomer;
 
                 _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
 
-                var userDto = _mapper.Map<User>(userResponse.User);
+                var userDto = _mapper.Map<Account.Models.Accounts.User>(userResponse.User);
 
                 var response = new ResponseBase<Response> { Content = new Response { User = userDto } };
                 return response;

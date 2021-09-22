@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
     [ExcludeFromCodeCoverage]
     public class QuoteDetailModel
     {
-       public QuoteDetails QuoteDetails { get; set; }
+        public QuoteDetails QuoteDetails { get; set; }
     }
     public class QuoteDetails
     {
@@ -32,7 +33,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string Tier { get; set; }
         public string Created { get; set; }
         public string Expires { get; set; }
-
+        public List<AttributeModel> Attributes { get; set; }
 
     }
+
 }

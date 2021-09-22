@@ -9,12 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
 {
     [ExcludeFromCodeCoverage]
 
-    //public class QuoteFindModel
-    //{
-    //    public QuoteModel QuoteModel { get; set; }
-    //}
-
-
     public class QuoteModel
     {
         public DateTime Published { get; set; }
@@ -52,5 +46,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
         public List<VendorReferenceModel> VendorReference { get; set; }
         public List<ItemModel> Items { get; set; }
         public List<AgreementModel> Agreements { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
+
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class AttributeModel
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

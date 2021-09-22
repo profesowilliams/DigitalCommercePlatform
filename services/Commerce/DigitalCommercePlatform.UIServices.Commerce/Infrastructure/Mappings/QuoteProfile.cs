@@ -35,7 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<AddressModel, Address>();
 
-
             CreateMap<QuoteModel, QuoteDetails>()
             .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
             .ForPath(dest => dest.ShipTo.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
@@ -60,6 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.EndUserPO, opt => opt.MapFrom(src => src.EndUserPO))
             .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
+            .ForPath(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.VendorReference != null ? src.VendorReference.FirstOrDefault().Type + ": " + src.VendorReference.FirstOrDefault().Value : string.Empty))
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
              .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
-             .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src.VendorReference))
+             .ForMember(dest => dest.Deals, opt => opt.MapFrom<DealResolver>())
              .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
              .ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src.Price))
              .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
@@ -92,7 +92,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<AccountAddress, ShipToModel>()
               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
-              .ForPath(dest => dest.Address, opt => opt.MapFrom(src => src))             
+              .ForPath(dest => dest.Address, opt => opt.MapFrom(src => src))
               ;
 
             CreateMap<AccountAddress, AddressModel>()
@@ -126,7 +126,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<SourceDto, VendorReferenceModel>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
-                ; 
+                ;
             CreateMap<EndUserDto, Address>()
                  .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))
                  .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Address2))
@@ -147,11 +147,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Zip, opt => opt.MapFrom(src => src.Address.PostalCode))
                 ;
             CreateMap<DetailedDto, QuotePreview>()
-               .ForMember(dest => dest.ConfigurationId, opt => opt.MapFrom(src => src.Source.Id))              
+               .ForMember(dest => dest.ConfigurationId, opt => opt.MapFrom(src => src.Source.Id))
                .ForMember(dest => dest.ShipTo, opt => opt.Ignore())
                .ForMember(dest => dest.Reseller, opt => opt.Ignore())
                .ForMember(dest => dest.EndUser, opt => opt.Ignore())
-               .ForPath(dest => dest.Source, opt => opt.MapFrom(src => src.Source))               
+               .ForPath(dest => dest.Source, opt => opt.MapFrom(src => src.Source))
                .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.TotalCost))
                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
@@ -160,6 +160,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
                //.ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller))
                ;
+        }
+    }
+    [ExcludeFromCodeCoverage]
+    public class DealResolver : IValueResolver<QuoteModel, QuotesForGridModel, List<string>>
+    {
+        public List<string> Resolve(QuoteModel source, QuotesForGridModel destination, List<string> destMember, ResolutionContext context)
+        {
+            var description = source.Attributes.Any() ? source.Attributes.Where(d => d.Name.ToUpper().Equals("DEALIDENTIFIER")).ToList().Select(n => n.Value).ToList() : new List<string>();
+            return description;
         }
     }
 }

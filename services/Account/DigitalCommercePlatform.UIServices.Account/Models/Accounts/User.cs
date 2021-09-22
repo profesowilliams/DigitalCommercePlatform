@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Models;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -15,6 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Accounts
         public string Phone { get; set; }
         public IEnumerable<string> Customers { get; set; }
         public IEnumerable<string> Roles { get; set; }
+        public IList<Role> RoleList { get; set; }
         public IEnumerable<Customer> CustomersV2 { get; set; }
         public Customer ActiveCustomer { get; set; }
     }

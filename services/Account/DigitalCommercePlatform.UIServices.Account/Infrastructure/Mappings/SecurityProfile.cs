@@ -20,11 +20,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CustomerName))
                 .ForMember(dest => dest.SalesOrg, opt => opt.MapFrom<SalesOrgResolver>());
 
-
-
-
             CreateMap<DigitalFoundation.Common.Models.User, User>()
-                .ForMember(dest => dest.CustomersV2, opt => opt.MapFrom(src => src.CustomerList));
+                .ForMember(dest => dest.CustomersV2, opt => opt.MapFrom(src => src.CustomerList))
+                .ForMember(dest => dest.RoleList, opt => opt.MapFrom(src => src.RoleList));
 
 
             CreateMap<ValidateUserResponseModel, AuthenticateUser.Response>();
@@ -47,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
             {
                 // Current requirement is to take the first customer from the list
                 return source?.SalesDivision?.FirstOrDefault()?.SalesOrg;
+                //return source?.SalesDivision?.Where(s=>s.CustomerGroupCodes.Contains("GV4")).FirstOrDefault().SalesOrg;
             }
         }
     }
