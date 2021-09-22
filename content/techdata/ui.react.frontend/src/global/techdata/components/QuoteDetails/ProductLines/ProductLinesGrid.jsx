@@ -96,7 +96,7 @@ function ProductLinesGrid({
       width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
-        return <ProductLinesItemInformation line={props.data} />;
+        return <ProductLinesItemInformation line={props.data} isChild={false} />;
       },
     },
     {

@@ -46,3 +46,48 @@
 	}
   }
 }
+[data-component="QuotePreview"], [data-component="QuoteDetails"]{
+  .cmp-product-lines-grid .ag-root-wrapper-body .ag-cell {
+      border-top: none !important;//overwrite aggrid library default lining separator 
+    }
+    .cmp-product-lines-grid__item-information__image-link {
+      border-top: none !important;//overwrite aggrid library default lining separator
+    }
+    
+    .ag-cell-focus,
+    .ag-cell-no-focus {
+      border: none !important; //overwrite library ag grid blue highlighting cell
+    }
+    .ag-cell:focus {
+      border: none !important; //overwrite library ag grid blue highlighting cell
+      outline: none;
+    }
+    
+    .ag-row.ag-row-even.ag-row-group.cmp-product-lines-grid__row.ag-row-position-absolute{
+        border-bottom: 0.0625rem solid #d8d8d8;
+    }
+    
+    .ag-row.ag-row-no-focus.ag-row-level-0.ag-row-group.ag-row-group-contracted.cmp-product-lines-grid__row.ag-row-position-absolute{
+        border-bottom: 0.0625rem solid #d8d8d8;
+    
+    }
+    
+    .cmp-product-lines-grid__child-grid__row .ag-cell:nth-child(n+3) {
+        border-bottom: 0.0625rem solid #d8d8d8;
+    }
+
+    a.cmp-product-lines-grid__item-information__image-link img[alt*="No Image"] {
+      padding-top: 15px;
+  }
+
+}
+
+[data-component="QuoteDetails"]{
+  .cmp-product-lines-grid__child-grid{
+    .ag-cell.ag-cell-not-inline-editing.ag-cell-auto-height.ag-cell-value{
+        &:nth-child(n+3){
+            border-bottom: 0.0625rem solid #d8d8d8;
+        }
+    }
+  }
+}
