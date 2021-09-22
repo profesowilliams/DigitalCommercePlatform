@@ -38,6 +38,9 @@ public class VendorComponentList implements List {
     @Inject @Optional @Via("resource")
     String isExecutiveListing;
 
+    @Inject @Optional @Via("resource")
+    String vendorDescriptionType;
+
     public String getIsExecutiveListing()
     {
         return this.isExecutiveListing;
@@ -67,7 +70,7 @@ public class VendorComponentList implements List {
                         FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfListItem.getPath());
                         listOfVendorItems.add(vi);
                     }else{
-                        VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem);
+                        VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem, vendorDescriptionType);
                         listOfVendorItems.add(vi);
                     }
 

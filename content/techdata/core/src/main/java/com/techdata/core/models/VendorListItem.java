@@ -19,7 +19,6 @@ public class VendorListItem implements ListItem {
     private static final Logger log = LoggerFactory.getLogger(VendorListItem.class);
 
     private String overview;
-    private String awards;
     private String vendorIcon;
     private String pageLink;
     private String vendorPageLabel;
@@ -63,7 +62,6 @@ public class VendorListItem implements ListItem {
     public String getOverview() {
         return overview;
     }
-    public String getAwards() {  return awards; }
     public String getVendorIcon() {
         return vendorIcon;
     }
@@ -91,7 +89,6 @@ public class VendorListItem implements ListItem {
     public VendorListItem(
         final String title,
         final String overview,
-        final String awards,
         final String vendorIcon,
         final String pageLink,
         final String vendorPageLabel,
@@ -100,7 +97,6 @@ public class VendorListItem implements ListItem {
         final List<String> tags,
         final ListItem listItem) {
         this.overview = overview;
-        this.awards = awards;
         this.vendorIcon = vendorIcon;
         this.pageLink = pageLink;
         this.vendorPageLabel = vendorPageLabel;
@@ -111,18 +107,16 @@ public class VendorListItem implements ListItem {
         this.vendorTitle = title;
     }
 
-    public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource, ListItem cfListItem){
+    public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource, ListItem cfListItem, String vendorDescriptionType){
 
         String title = StringUtils.EMPTY;
         String overview = StringUtils.EMPTY;
-        String awards = StringUtils.EMPTY;
         String vendorIcon = StringUtils.EMPTY;
         String pageLink = StringUtils.EMPTY;
         String vendorPageLabel = StringUtils.EMPTY;
         String vendorProductLabel = StringUtils.EMPTY;
         String vendorProductLink = StringUtils.EMPTY;
         List<String> tags = new ArrayList<>();
-
 
         for (Iterator<ContentElement> it = cf.getElements(); it.hasNext(); ) {
             ContentElement ce = it.next();
@@ -133,9 +127,6 @@ public class VendorListItem implements ListItem {
                     break;
                 case OVERVIEW:
                     overview = ce.getContent();
-                    break;
-                case AWARDS:
-                    awards = ce.getContent();
                     break;
                 case VENDOR_ICON:
                     vendorIcon = ce.getContent();
@@ -160,9 +151,23 @@ public class VendorListItem implements ListItem {
                     break;
             }
         }
-        VendorListItem v1 = new VendorListItem(title, overview, awards, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
+
+        overview = getVendorDescriptionType(vendorDescriptionType, cf, overview);
+
+        VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
         return v1;
+    }
+
+    private static String getVendorDescriptionType(String textType, ContentFragment cf, String overview){
+        if(textType !=null && !textType.isEmpty()){
+            String vendorTextType = textType.trim();
+            ContentElement contentElement = cf.getElement(vendorTextType);
+            if(contentElement != null){
+                return contentElement.getContent();
+            }
+        }
+        return overview;
     }
 
     private static List<String> prepareTags(ContentElement ce, Resource resource) {

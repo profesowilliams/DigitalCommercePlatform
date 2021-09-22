@@ -72,13 +72,12 @@
                                                     text="Show Vendor Category Tags"
                                                     uncheckedValue="false"
                                                     value="true"/>
-                                            <showAwardsVariation
+                                            <vendorDescriptionType
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    fieldDescription="Display Vendor Award Variation."
-                                                    name="./showAwardsVariation"
-                                                    text="Show Vendor Awards Variation"
-                                                    value="{Boolean}true"/>
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Vendor Description Type. Example 'overview, 'awards'."
+                                                    fieldLabel="Enter Vendor Description Type"
+                                                    name="./vendorDescriptionType"/>
                                         </items>
                                     </column>
                                 </items>
