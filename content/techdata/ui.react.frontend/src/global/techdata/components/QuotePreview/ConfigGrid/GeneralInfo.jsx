@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import axios from "axios";
 import Button from '../../Widgets/Button';
 
-function GeneralInfo({data, info, onValueChange}) {
-    const source = data.content.quotePreview.quoteDetails.source;
-    const initialState = {
-        deal: {
-            spaId: data.content.quotePreview.quoteDetails.spaId || '',
-        },
-        reference: data.content.quotePreview.quoteDetails.configurationName || '',
-        tier: data.content.quotePreview.quoteDetails.tier || '',
+function GeneralInfo({quoteDetails, info, onValueChange}) {
+    console.log('quoteDetails', quoteDetails);
+    const source = quoteDetails.source;
+    const initialGeneralInfoState = {
+        deal: {},
         endUserName: '',
+        spaId: quoteDetails.spaId || '',
+        quoteReference: 
+            quoteDetails.quoteReference ||
+            quoteDetails.configurationName ||
+            quoteDetails.configurationId || '',
+        tier: quoteDetails.tier || '',
     };
 
     const [editMode, setEditMode] = useState(false);
-    const [infoState, setInfoState] = useState(initialState);
+    const [generalInfoState, setGeneralInfoState] = useState(initialGeneralInfoState);
     const [dealsFound, setDealsFound] = useState([]);
     const [selectedDeal, setSelectedDeal] = useState(-1);
 
@@ -22,8 +25,8 @@ function GeneralInfo({data, info, onValueChange}) {
         setDealsFound([]);
     }
     
-    const handleModelChange = (e) => setInfoState({
-        ...infoState,
+    const handleModelChange = (e) => setGeneralInfoState({
+        ...generalInfoState,
         [e.target.name]: e.target.value,
     });
 
@@ -31,21 +34,16 @@ function GeneralInfo({data, info, onValueChange}) {
     const handleDealsChange = (e, index) => {
         setSelectedDeal(index);
 
-        setInfoState((previousInfo) => {
-            return {
+        setGeneralInfoState((previousInfo) => (
+            {
                 ...previousInfo,
-                deal: dealsFound[index]
+                deal: dealsFound[index],
+                endUserName: '',
+                spaId: dealsFound[index].spaId
             }
-        });
+        ));
 
         clearDealsFound();
-
-        setInfoState((previousInfo) => {
-            return {
-                ...previousInfo,
-                endUserName: ''
-            }
-        });
     };
 
     const handleEditModeChange = () => {
@@ -57,7 +55,7 @@ function GeneralInfo({data, info, onValueChange}) {
     };
 
     const handleSaveChanges = () => {
-        onValueChange(infoState);
+        onValueChange(generalInfoState);
 
         closeEditMode();
     };
@@ -70,37 +68,39 @@ function GeneralInfo({data, info, onValueChange}) {
             <div>
                 Deals found - cancel
                 <ul>
-                    {dealsFound.map((dealInfo, index) => {
-                        return (
-                            <li key={dealInfo.dealId}>
-                                <input type="radio" name={`deal${index}`}
-                                        value={index}
-                                        checked={selectedDeal.index == index} 
-                                        onChange={(e) => handleDealsChange(e, index)} />
-                                <div>{dealInfo.bid}</div>
-                                <div>{dealInfo.version}</div>
-                                <div>{dealInfo.dealId}</div>
-                                <div>{dealInfo.endUserName}</div>
-                            </li>
-                        );
-                    })}
+                    {dealsFound.map((dealInfo, index) => 
+                        <li key={dealInfo.dealId}>
+                            <input type="radio" name={`deal${index}`}
+                                    value={index}
+                                    checked={selectedDeal.index == index} 
+                                    onChange={(e) => handleDealsChange(e, index)} />
+                            <div>{dealInfo.bid}</div>
+                            <div>{dealInfo.version}</div>
+                            <div>{dealInfo.dealId}</div>
+                            <div>{dealInfo.endUserName}</div>
+                        </li>
+                    )}
                 </ul>
             </div>
         )
     }
     const handleCancelChanges = () => {
-        setInfoState(initialState);
+        setGeneralInfoState(initialGeneralInfoState);
 
         closeEditMode();
     };
 
-    const replaceSearchTerm = (originalStr, searchTerm) => {
-        return originalStr.replace("{end-user-name}", searchTerm);
-    }
-    const loadDeals = async (searchTerm) => {
-        const response = await axios.get(replaceSearchTerm('http://localhost:3000/ui-config/v1/getdealsFor?endUserName={end-user-name}', infoState.endUserName));
-
+    const clearSelectedDeal = () => {
         setSelectedDeal(-1);
+    }
+
+    const replaceSearchTerm = (originalStr, searchTerm) =>
+        originalStr.replace("{end-user-name}", searchTerm);
+
+    const loadDeals = async (searchTerm) => {
+        const response = await axios.get(replaceSearchTerm('http://localhost:3000/ui-config/v1/getdealsFor?endUserName={end-user-name}', generalInfoState.endUserName));
+
+        clearSelectedDeal();
 
         setDealsFound(response.data.content.items);
     };
@@ -108,17 +108,17 @@ function GeneralInfo({data, info, onValueChange}) {
     return (
         <div className="cmp-qp__general-info">
             <p onClick={handleEditModeChange} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
-            <div>{info.sourceLabel} {source.type} {source.value}</div>
+            {source && <div>{info.sourceLabel} {source.type} {source.value}</div>}
             {!editMode && (
                 <div>
-                    <div>{info.tierLabel} {infoState.tier}</div>
-                    {infoState.reference && <div>{info.referenceLabel} {infoState.reference}</div>}
-                    {infoState.deal.dealId && <div>
+                    <div>{info.tierLabel} {generalInfoState.tier}</div>
+                    {generalInfoState.reference && <div>{info.referenceLabel} {generalInfoState.reference}</div>}
+                    {generalInfoState.deal.dealId && <div>
                         {info.dealLabel} 
                         <div>
-                            {infoState.deal.bid}
-                            {infoState.deal.dealId}
-                            {infoState.deal.version}
+                            {generalInfoState.deal.bid}
+                            {generalInfoState.deal.dealId}
+                            {generalInfoState.deal.version}
                         </div>
                     </div>}
                 </div>
@@ -127,19 +127,22 @@ function GeneralInfo({data, info, onValueChange}) {
                 <div>
                     <div>
                         <label htmlFor="tier">{info.tierLabel}</label>
-                        <input
+                        <select
                             className="field element"
-                            value={infoState.tier}
                             name="tier"
                             id="tier"
-                            onChange={handleModelChange}
-                            type="text"/>
+                            value={generalInfoState.tier}
+                            onChange={handleModelChange}>
+                            {info.tierOptions.map((option, index) => 
+                                <option key={index} value={option.value}>{option.label}</option>
+                            )}
+                        </select>
                     </div>
                     <div>
                         <label htmlFor="reference">{info.referenceLabel}</label>
                         <input
                             className="field element"
-                            value={infoState.reference}
+                            value={generalInfoState.reference}
                             name="reference"
                             id="reference"
                             onChange={handleModelChange}
@@ -149,7 +152,7 @@ function GeneralInfo({data, info, onValueChange}) {
                         <label htmlFor="endUserName">{info.dealLabel}</label>
                         <input
                             className="field element"
-                            value={infoState.endUserName}
+                            value={generalInfoState.endUserName}
                             name="endUserName"
                             id="endUserName"
                             onChange={handleModelChange}
@@ -159,7 +162,7 @@ function GeneralInfo({data, info, onValueChange}) {
                             <i className="cmp-searchbar__icon fas fa-search" data-cmp-hook-search="icon"></i>
                         </button>
                         <div>
-                            {infoState.deal.dealId}
+                            {generalInfoState.deal.dealId}
                         </div>
                         {displayDealsFound()}
                     </div>

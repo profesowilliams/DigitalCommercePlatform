@@ -1,4 +1,4 @@
-import React, { Element, useCallback, useState } from "react";
+import React, { Element, useCallback, useState, useEffect } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
@@ -16,10 +16,18 @@ function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
   const getDetailsId = ({ id, isEstimateId }) => [id, isEstimateId];
   const [id, isEstimateId] = getDetailsId(getUrlParams());
-  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}`);
+  //http://localhost:8080/quote-preview?id=vg45356&isEstimate=true&vendor=dfsdfs
+  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}`); //vendor=cisco is missing here!
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
+  const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
+
+  useEffect(() => {
+    if(apiResponse?.content?.quotePreview?.quoteDetails) {
+      setQuoteDetails(apiResponse?.content?.quotePreview?.quoteDetails);
+    }
+  }, [apiResponse]); 
 
   const getSubTotal = (data) => {
     let subTotal = data.reduce((subTotal, {extendedPrice}) => subTotal + extendedPrice, 0);
@@ -54,6 +62,28 @@ function QuotePreview(props) {
 
   const handleQuickQuote = useCallback(createQuote, [data, loadingCreateQuote]);
 
+  const generalInfoChange = (generalInformation) =>{
+    setQuoteDetails((previousQuoteDetails) => (
+      {
+        ...previousQuoteDetails,
+        ...generalInformation,
+        /*tier: generalInformation.tier,
+        spaId: generalInformation.spaId,
+        quoteReference: generalInformation.quoteReference,*/
+      }
+    ));
+  }
+
+  const endUserInfoChange = (endUserlInformation) =>{
+    setQuoteDetails((previousQuoteDetails) => (
+      {
+        ...previousQuoteDetails,
+        endUser: endUserlInformation,
+      }
+    ));
+    console.log(endUserlInformation);
+  }
+
   return (
     <div className="cmp-quote-preview">
       <Loader visible={isLoading} />
@@ -66,7 +96,9 @@ function QuotePreview(props) {
         <section>
           <ConfigGrid
             gridProps={componentProp}
-            data={apiResponse}
+            quoteDetails={quoteDetails}
+            endUserInfoChange={endUserInfoChange}
+            generalInfoChange={generalInfoChange}
           />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />

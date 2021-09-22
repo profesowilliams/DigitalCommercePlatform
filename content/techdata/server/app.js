@@ -1355,19 +1355,19 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
         {
           "bid": "3443554545",
           "version": "001",
-          "dealId": "0012",
+          "spaId": "0012",
           "endUserName": endUserName,
         },
         {
           "bid": "212121323",
           "version": "002",
-          "dealId": "0013",
+          "spaId": "0013",
           "endUserName": endUserName,
         },
         {
           "bid": "76676767",
           "version": "004",
-          "dealId": "0014",
+          "spaId": "0014",
           "endUserName": endUserName,
         },
       ]
@@ -2440,7 +2440,21 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
         "quotePreview": {
           "quoteDetails": {
             "shipTo": null,
-            "endUser": null,
+            "endUser": {
+              "id": null,
+              "companyName": "Some Company",
+              "name": "name",
+              "line1": "line1",
+              "line2": "line2",
+              "line3": "line3",
+              "city": "city",
+              "state": "state",
+              "zip": "zip",
+              "postalCode": "postalCode",
+              "country": "country",
+              "email": "email",
+              "phoneNumber": "phoneNumber"
+            },
             "reseller": [
               {
                 "id": null,

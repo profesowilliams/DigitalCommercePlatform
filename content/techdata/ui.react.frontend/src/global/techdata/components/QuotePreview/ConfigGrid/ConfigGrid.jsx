@@ -5,16 +5,11 @@ import CompanyInfo from './CompanyInfo';
 import GeneralInfo from './GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
-function ConfigGrid({ data, gridProps }) {
+function ConfigGrid({ quoteDetails, gridProps, endUserInfoChange, generalInfoChange }) {
+    console.log('quoteDetails1', quoteDetails);
     const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
     const [companyInfoResponse, isLoading] = useGet(`${gridProps.companyInfoEndPoint}?criteria=CUS&ignoreSalesOrganization=false`);
 
-    const endUserInfoChange = (data) =>{
-        console.log(data);
-    }
-    const generalInfoChange = (data) =>{
-        console.log(data);
-    }
     return (
         <div className="cmp-qp__config-grid">
             <p className="cmp-qp__config-grid--title">{quotePreview}: <span>{confirm}</span></p>
@@ -25,8 +20,8 @@ function ConfigGrid({ data, gridProps }) {
                         <CompanyInfo data={companyInfoResponse} info={gridProps.information}/>
                     ) : null
                 }
-                <EndUserInfo data={data} info={gridProps.information} onValueChange={endUserInfoChange}/>
-                <GeneralInfo data={data} info={gridProps.information} onValueChange={generalInfoChange}/>
+                <EndUserInfo endUser={quoteDetails.endUser} info={gridProps.information} onValueChange={endUserInfoChange}/>
+                <GeneralInfo quoteDetails={quoteDetails} info={gridProps.information} onValueChange={generalInfoChange}/>
             </div>
             {/* <EndUserInfo />
                 <GeneralInfo />

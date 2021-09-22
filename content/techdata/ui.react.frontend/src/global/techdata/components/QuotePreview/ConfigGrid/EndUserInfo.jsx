@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import Button from '../../Widgets/Button';
 
-function GeneralInfo({data, info, onValueChange}) {
+function EndUserInfo({endUser, info, onValueChange}) {
     const initialState = {
-        companyName: data.content.quotePreview.quoteDetails.reseller[0].companyName || '',
-        name: data.content.quotePreview.quoteDetails.reseller[0].name || '',
+        companyName: endUser?.companyName || '',
+        name: endUser?.name || '',
+        line1: endUser?.line1 || '',
     };
 
     const [editMode, setEditMode] = useState(false);
     const [infoState, setInfoState] = useState(initialState);
-
-    const source = data.content.quotePreview.quoteDetails.source;
     
     const handleModelChange = (e) => setInfoState({
         ...infoState,
@@ -43,6 +42,7 @@ function GeneralInfo({data, info, onValueChange}) {
                 <div>
                     <div>{info.nameLabel} {infoState.name}</div>
                     <div>{info.companyLabel} {infoState.companyName}</div>
+                    <div>{info.addressLabel} {infoState.line1}</div>
                 </div>
             )}
             {editMode && (
@@ -67,6 +67,16 @@ function GeneralInfo({data, info, onValueChange}) {
                             onChange={handleModelChange}
                             type="text"/>
                     </div>
+                    <div>
+                        <label htmlFor="line1">{info.addressLabel}</label>
+                        <input
+                            className="field element"
+                            value={infoState.line1}
+                            name="line1"
+                            id="line1"
+                            onChange={handleModelChange}
+                            type="text"/>
+                    </div>
                     <div className="form-group">
                         <Button btnClass={"cmp-qp--save-address"} disabled={false} onClick={handleSaveChanges}>
                             {"Submit"}
@@ -81,4 +91,4 @@ function GeneralInfo({data, info, onValueChange}) {
     );
 }
 
-export default GeneralInfo;
+export default EndUserInfo;
