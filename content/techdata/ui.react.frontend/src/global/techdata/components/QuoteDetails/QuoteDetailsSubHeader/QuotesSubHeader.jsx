@@ -4,14 +4,15 @@ import { If } from "../../../helpers/If";
 import { dateToString } from "../../../helpers/dates";
 
 const QuotesSubHeader = ({
-  label,  
+  label,
   title,
-  quoteDetails={},
+  quoteDetails = {},
   dateLabels = {},
 }) => {
   const urlParams = getUrlParams();
-  const {createdDateLabel,expiresDateLabel}= dateLabels;
-  const {created, expires} = quoteDetails;
+  const { createdDateLabel = "created", expiresDateLabel = "expires" } =
+    dateLabels;
+  const { created, expires } = quoteDetails;
   const getQuoteId = ({ id }) => id;
   return (
     <div className="cmp-td-quote-subheader">
@@ -28,11 +29,13 @@ const QuotesSubHeader = ({
       </div>
 
       <div className="cmp-td-quote-subheader__dates">
-        <If condition={createdDateLabel || expiresDateLabel}>
+        <If condition={created}>
           <span className="date-created">
             {createdDateLabel}: {dateToString(created)}
           </span>
-          |
+        </If>
+        |
+        <If condition={expires}>
           <span className="date-expires">
             {expiresDateLabel}: {dateToString(expires)}
           </span>
