@@ -52,6 +52,15 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<Dto.FullSearch.Internal.SearchReportDto, Models.FullSearch.Internal.SearchReportModel>();
             CreateMap<AppSearchResponseDto, FullSearchResponseModel>()
                 .ForMember(dest => dest.RefinementsToDisplay, opt => opt.Ignore());
+
+            CreateMap<Dto.Content.ContentSearchResponseDto, Models.Content.FullSearchResponseModel>();
+            CreateMap<Dto.Content.Internal.RefinementDto, Models.Content.Internal.RefinementModel>();
+            CreateMap<Dto.Content.Internal.OptionDto, Models.Content.Internal.Option>();
+            CreateMap<Dto.Content.Internal.SearchResultDto, Models.Content.SearchResult>();
+
+            CreateMap<Models.Content.FullSearchRequestModel, Models.Content.App.AppFullSearchRequestModel>()
+                .ForMember(dest => dest.SearchString, opt => opt.MapFrom(x => x.Keyword));
+            CreateMap<Models.Content.Internal.RefinementRequestModel, Models.Content.App.Internal.RefinementRequestModel>();
         }
     }
 }
