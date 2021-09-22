@@ -771,7 +771,83 @@ module.exports = {
                         "isSubLine": false,
                         "displayLineNumber": "10"
                     }
-                ]
+                ],
+                "componentPropGrid":
+                
+                {"label":"Orders grid",
+    "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/orders/?details=true",
+    "downloadAllInvoicesEndpoint":"http://localhost:8080/test?id={order-id}",
+    "orderDetailUrl":"/language-masters/en/dcp/quote-details",
+    "itemsPerPage":"25",
+    "paginationStyle": "scroll",
+    "options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"},
+    "invoicesModal":{
+    "title":"Order",
+    "buttonLabel":"Download All Related Invoices",
+    "buttonIcon":"fas fa-download",
+    "content": "There are multiple Invoices associated with this Order. Click an invoice number to preview with the option to print or Download All for a zip file of all shown here",
+    "pendingInfo": "Invoice is pending and will appear here after shipment is processed"},
+    "labelList": [
+    {"labelKey":"multiple","labelValue":"Multiple"},
+    {"labelKey":"pending","labelValue":"Pending"}],
+    "searchCriteria":{
+    "title" : "Filter Orders",
+    "searchButtonLabel": "Apply",
+    "clearButtonLabel": "Clear All Filters",
+    "inputPlaceholder": "Enter your search",
+    "keywordDropdown" : {
+      "label": "Keyword",
+      "items": [
+      {"key": "id", "value": "TD Order #"},
+      {"key": "customerPO", "value": "Customer PO"}]
+    },
+    "vendorsDropdown" : {
+      "label": "Vendors",
+      "items": [
+      {"key": "allVendors", "value": "All Vendors"},
+      {"key": "cisco", "value": "Cisco"}]
+    },
+    "methodsDropdown" : {
+      "label": "Order Method",
+      "items": [
+      { "key": "allMethods", "value": "All Order Methods" },
+      { "key": "web", "value": "Web" },
+      { "key": "edi", "value": "EDI" },
+      { "key": "xml", "value": "XML" },
+      { "key": "phoneOrEmail", "value": "Phone/Email" }]
+    }},
+    "iconList": [
+    {"iconKey":"onHold","iconValue":"fas fa-hand-paper","iconText":"On Hold"},
+    {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
+    {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
+    // {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
+    {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Digital Download / Emailed"},
+    {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}],
+    "columnList":[
+        // {"columnLabel":"Order #","columnKey":"id", "sortable": true},
+        // {"columnLabel":"Order Date","columnKey":"created", "sortable": true},
+        // {"columnLabel":"Reseller Name","columnKey":"reseller", "sortable": false},
+        // {"columnLabel":"Vendor Name","columnKey":"vendor", "sortable": false},
+        // {"columnLabel":"Ship To","columnKey":"shipTo", "sortable": true},
+        // {"columnLabel":"Order Type 34","columnKey":"type", "sortable": false},
+        // {"columnLabel":"Order Value","columnKey":"priceFormatted", "sortable": true},
+        // {"columnLabel":"Invoice #","columnKey":"invoices", "sortable": false},
+        // {"columnLabel":"Status","columnKey":"status", "sortable": true},
+        // {"columnLabel":"Track","columnKey":"trackings", "sortable": false},
+        // {"columnLabel":"Returns","columnKey":"isReturn", "sortable": false},
+        {"columnLabel":"Line","columnKey":"id", "sortable": true},
+        {"columnLabel":"Mfr No","columnKey":"manufacturer", "sortable": false},
+        {"columnLabel":"Ref No","columnKey":"reseller", "sortable": true},
+        {"columnLabel":"Description","columnKey":"description", "sortable": false},
+        {"columnLabel":"Quantity","columnKey":"quantity", "sortable": true},
+        {"columnLabel":"Unit Price(USD)","columnKey":"unitPrice", "sortable": true},
+        {"columnLabel":"Total Pricce(USD)","columnKey":"totalPrice", "sortable": true},
+        {"columnLabel":"Status","columnKey":"status", "sortable": true},
+        {"columnLabel":"Ship Date","columnKey":"shipDate", "sortable": true},
+        {"columnLabel":"Serial","columnKey":"serial", "sortable": false},
+        {"columnLabel":"Invoice #","columnKey":"invoices", "sortable": false},
+    ]}
+                
         },
             "error": { "code": 0, "messages": [], "isError": false }
         }

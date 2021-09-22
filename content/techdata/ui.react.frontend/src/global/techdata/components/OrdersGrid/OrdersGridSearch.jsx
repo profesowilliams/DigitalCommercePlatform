@@ -31,6 +31,15 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
     ],
   };
 
+  const defaultSearchBydDropdown = {
+    label: "SearchBy",
+    items: [
+      { key: "allLines", value: "All Lines" },
+      { key: "contracts", value: "Contracts" },
+      { key: "licenses", value: "Licenses" },
+    ],
+  };
+
   const config = {
     keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
       ? componentProp?.keywordDropdown
@@ -38,6 +47,9 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
     vendorsDropdown: isNotEmpty(componentProp?.vendorsDropdown)
       ? componentProp?.vendorsDropdown
       : defaultVendorsDropdown,
+    searchByDropdown: isNotEmpty(componentProp?.searchbyDropdown)
+      ? componentProp?.searchbyDropdown
+      : defaultSearchBydDropdown,
     methodsDropdown: isNotEmpty(componentProp?.methodsDropdown)
       ? componentProp?.methodsDropdown
       : defaultMethodsDropdown,
@@ -74,7 +86,11 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
             query.to.value.setUTCHours(23, 59, 59)
           ).toISOString()}`
         : "";
-    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}`;
+    let searchby =
+      query.searchby?.key && query.searchby?.key !== "allLines"
+        ? `&searchBy=${query.searchby.key}`
+        : "";
+    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${searchby}`;
     if (isQueryValid(query)) {
       onQueryChanged(concatedQuery);
     } else {
@@ -109,6 +125,14 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
         placeholder={config.inputPlaceholder}
         onQueryChanged={(change) => handleFilterChange(change, "keyword")}
       ></QueryInput>
+      {/* NEW */}
+      <SimpleDropDown
+        key={"keyword"}
+        items={config.searchByDropdown.items}
+        placeholder={config.inputPlaceholder}
+        onItemSelected={(change) => handleFilterChange(change, "searchby")}
+      ></SimpleDropDown>
+      {/* NEW */}
       <SimpleDropDown
         key={"manufacturer"}
         items={config.vendorsDropdown.items}
