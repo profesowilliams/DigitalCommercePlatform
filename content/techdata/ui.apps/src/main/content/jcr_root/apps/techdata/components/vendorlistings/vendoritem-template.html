@@ -26,13 +26,14 @@
                     <div class="vendor-section-desc">
                         <p>${item.overview @ context = 'html'}</p>
                     </div>
-                    <div data-sly-test="${item.vendorPageLabel}" class="vendor-section-link-section">
-                        <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
-                    </div>
-                    <div data-sly-test="${item.vendorProductLabel}" class="vendor-section-link-section">
-                        <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
-                    </div>
-
+                    <sly data-sly-test="${properties.showVendorLinks}">
+                        <div data-sly-test="${item.vendorPageLabel}" class="vendor-section-link-section">
+                            <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                        </div>
+                        <div data-sly-test="${item.vendorProductLabel}" class="vendor-section-link-section">
+                            <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
+                        </div>
+                    </sly>
                 </div>
             </sly>
         </div>

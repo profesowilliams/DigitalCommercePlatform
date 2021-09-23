@@ -72,6 +72,14 @@
                                                     text="Show Vendor Category Tags"
                                                     uncheckedValue="false"
                                                     value="true"/>
+                                            <showVendorLinks
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="${not empty cqDesign.linkItems ? cqDesign.linkItems : false}"
+                                                    fieldDescription="Display Vendor Links."
+                                                    name="./showVendorLinks"
+                                                    text="Show Vendor Links"
+                                                    value="{Boolean}true"/>
                                             <vendorDescriptionType
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
