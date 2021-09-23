@@ -1,16 +1,18 @@
-// have the site/variables file added here as per old includes. 
+// have the site/variables file added here as per old includes.
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/variables';
 @import '../site/variables';
 @import './mixins';
 
-//$OpenSansVersion: "1.101" !default; 
-//== REM SASS Mixin 
+//$OpenSansVersion: "1.101" !default;
+//== REM SASS Mixin
 $rem-baseline: 16px;
 
 //== Font
 $font-base-path: '../resources/fonts';
 
-$fontawsome-font-family: 'fontawsome';
-$fontawsome-font-path: '../resources/fonts/fontawsome';
+$fontawesome-font-family: 'fontawesome';
+$fontawesome-font-path: '../resources/fonts/fontawesome';
 
 $font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
 	sans-serif;
@@ -18,7 +20,7 @@ $font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, 
 $font-primary-path: '../resources/fonts/OpenSans';
 $open-sans: "Open Sans", sans-serif;
 
-//== Techdata Color Palette 
+//== Techdata Color Palette
 $color-palette: (
         "brand-black":  #000000,
         "brand-primary-text":  #ffbc0d,

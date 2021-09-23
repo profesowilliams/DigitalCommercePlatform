@@ -1,3 +1,5 @@
+@import "../../../components/styles/_accordion.scss";
+
 // The next rule its temporal because its a core component class
 .cmp-accordion__panel.cmp-accordion__panel--hidden {
     display: none;
@@ -34,7 +36,7 @@
 
 /*
     below code is ported from ui.frontend/src/main/webpack/components/_accordion.scss.
-    That file doesn't target cmp-accordion but only .dp-accordion. 
+    That file doesn't target cmp-accordion but only .dp-accordion.
     TODO (Thomas): Refactor this CSS further once ported without style breakages.
 */
 
@@ -62,12 +64,12 @@
                 vertical-align: auto;
             }
             &__button[aria-expanded="true"] {
-                padding-bottom: 0px;
+                padding-bottom: 0;
             }
 
             &__panel--expanded {
                 color: #ffffff;
-                font-family: "Open Sans";
+                font-family: $font-family;
                 font-size: 0.7rem;
                 letter-spacing: 0;
                 line-height: 0.875rem;

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;700&display=swap');
 
 .cmp-accordion {
 }
@@ -44,12 +45,12 @@
       vertical-align: auto;
     }
     .cmp-accordion__button[aria-expanded="true"] {
-      padding-bottom: 0px;
+      padding-bottom: 0;
     }
 
     .cmp-accordion__panel--expanded {
       color: #ffffff;
-      font-family: "Open Sans";
+      font-family: $font-family;
       font-size: 0.7rem;
       letter-spacing: 0;
       line-height: 0.875rem;
@@ -104,7 +105,7 @@
       &:active,
       &:focus-visible,
       &:focus-within {
-          font-weight: 600;
+          font-weight: $font-weight-bold;
           color: get-color(brand-blue);
           outline: none !important;
       }
@@ -118,3 +119,72 @@
     }
   }
 }
+
+.cmp-accordion__body {
+  .cmp-accordion {
+    color: get-color(text-dark-grey);
+    font-family: $font-family;
+    font-size: rem(14px);
+    font-weight: $font-weight-normal;
+
+    .cmp-accordion__header, .cmp-accordion__item {
+      margin-bottom: rem(24px);
+    }
+
+    .cmp-accordion__button {
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: row;
+      height: rem(24px);
+      overflow: hidden;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      cursor: pointer;
+
+      .cmp-accordion__title {
+        font-weight: $font-weight-semi-bold;
+        font-size: rem(16px);
+        height: rem(24px);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: get-color(brand-blue);
+      }
+
+      .cmp-accordion__icon {
+        width: rem(24px);
+        height: rem(24px);
+        margin-left: auto;
+      }
+
+      &::after {
+        color: get-color(text-light-charcoal);
+        font-family: $fontawesome-font-family;
+        font-size: rem(14px);
+        font-weight: $font-weight-normal;
+        position: absolute;
+        right: 0;
+        width: rem(24px);
+      }
+
+      &[aria-expanded="true"] {
+        .cmp-accordion__title {
+          font-weight: $font-weight-extra-bold;
+        }
+
+        &::after {
+          content: fa-content($fa-var-chevron-down);
+        }
+      }
+      &[aria-expanded="false"]::after {
+        content: fa-content($fa-var-chevron-down);
+      }
+    }
+  }
+
+}
+

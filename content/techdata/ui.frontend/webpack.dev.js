@@ -254,6 +254,61 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "accordion-body.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/accordion-body.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-sample-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body-sample.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-expanded-item-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body-expanded-item.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-expanded-items-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body-expanded-items.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-single-expansion-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body-single-expansion.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "accordion-body-nested-comp",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                    "/static/partials/accordion-body/accordion-body-nested.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "list.html",
                 template: path.resolve(
                     __dirname,
@@ -796,7 +851,7 @@ module.exports = (env) => {
                     __dirname,
                     SOURCE_ROOT + "/static/my-configurations.html"
                 ),
-            }),    
+            }),
             new HtmlWebpackPlugin({
                 filename: "searchbar",
                 template: path.resolve(

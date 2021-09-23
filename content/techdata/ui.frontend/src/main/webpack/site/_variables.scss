@@ -126,10 +126,12 @@ $font-size-custom-xxsmall: rem(13px);
 $line-height-base:        1.5;
 $line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 
+$font-weight-extra-light: 100;
 $font-weight-light:      300;
 $font-weight-normal:     normal;
 $font-weight-semi-bold:  400;
 $font-weight-bold:       600;
+$font-weight-extra-bold: 700;
 
 //=== Page Layout
 $header-height: 200px;
