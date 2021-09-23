@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Product.Services;
 using DigitalFoundation.Common.Logging;
 using DigitalFoundation.Common.Services.StartupConfiguration;
 using DigitalFoundation.Common.Services.UI.ExceptionHandling;
@@ -21,6 +22,7 @@ namespace DigitalCommercePlatform.UIService.Product
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<IProductService, ProductService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 

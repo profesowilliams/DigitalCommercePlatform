@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Product.Actions;
 using DigitalCommercePlatform.UIServices.Product.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,13 +33,12 @@ namespace DigitalCommercePlatform.UIServices.Product.Controllers
         /// <summary>
         /// This method is used for the Searching the Products based on the category
         /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<ProductDetails.Response>> GetProductDetails([FromQuery] string[] ids)
+        public async Task<ActionResult<Task<ResponseBase<ProductDetails.Response>>>> GetProductDetails([FromQuery] string id)
         {
-            return await Mediator.Send(new ProductDetails.Request()).ConfigureAwait(false);
+            var response = await Mediator.Send(new ProductDetails.Request(id)).ConfigureAwait(false);
+            return Ok(response);
         }
     }
 }
