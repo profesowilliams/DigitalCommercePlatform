@@ -14,10 +14,8 @@ import FullScreenLoader from '../Widgets/FullScreenLoader';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const getDetailsId = ({ id, isEstimateId }) => [id, isEstimateId];
-  const [id, isEstimateId] = getDetailsId(getUrlParams());
-  //http://localhost:8080/quote-preview?id=vg45356&isEstimate=true&vendor=dfsdfs
-  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}`); //vendor=cisco is missing here!
+  const { id, isEstimateId, vendor } = getUrlParams();
+  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}&vendor=${vendor ? vendor : 'cisco'}`);
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
   const [quoteDetails, setQuoteDetails] = useState({});
@@ -66,10 +64,9 @@ function QuotePreview(props) {
     setQuoteDetails((previousQuoteDetails) => (
       {
         ...previousQuoteDetails,
-        ...generalInformation,
-        /*tier: generalInformation.tier,
+        tier: generalInformation.tier,
         spaId: generalInformation.spaId,
-        quoteReference: generalInformation.quoteReference,*/
+        quoteReference: generalInformation.quoteReference,
       }
     ));
   }

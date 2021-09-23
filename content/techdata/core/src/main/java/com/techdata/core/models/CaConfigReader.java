@@ -20,410 +20,420 @@ import javax.annotation.PostConstruct;
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
 
-	@ScriptVariable(name = "currentPage")
-	private Page page;
+    @ScriptVariable(name = "currentPage")
+    private Page page;
 
-	private String uiServiceDomain;
+    private String uiServiceDomain;
 
-	private String catalogEndpoint;
+    private String catalogEndpoint;
 
-	private String authorizationPageURL;
+    private String authorizationPageURL;
 
-	private String loginEndpoint;
+    private String loginEndpoint;
 
-	private String pingAppId;
+    private String pingAppId;
 
-	private String activeCartEndpoint;
+    private String activeCartEndpoint;
 
-	private String myConfigurationsEndpoint;
+    private String myConfigurationsEndpoint;
 
-	private String myOrdersEndpoint;
+    private String myOrdersEndpoint;
 
-	private String orderDetailEndpoint;
+    private String orderDetailEndpoint;
 
-	private String downloadAllInvoicesEndpoint;
+    private String downloadAllInvoicesEndpoint;
 
-	private String myQuotesEndpoint;
+    private String dealsForEndpoint;
 
-	private String myDealsEndpoint;
+    private String myQuotesEndpoint;
 
-	private String myOrderStatusEndpoint;
+    private String myDealsEndpoint;
 
-	private String myRenewalsEndpoint;
+    private String myOrderStatusEndpoint;
 
-	private String topItemsEndpoint;
+    private String myRenewalsEndpoint;
 
-	private String createQuoteEndpoint;
+    private String topItemsEndpoint;
 
-	private String cartDetailsEndpoint;
+    private String createQuoteEndpoint;
 
-	private String pricingConditionsEndPoint;
+    private String cartDetailsEndpoint;
 
-	private String estimatedIdListEndpoint;
+    private String pricingConditionsEndPoint;
 
-	private String estimatedIdDetailsEndpoint;
+    private String estimatedIdListEndpoint;
 
-	private String savedCartsEndpoint;
+    private String estimatedIdDetailsEndpoint;
 
-	private String quoteGridEndpoint;
+    private String savedCartsEndpoint;
 
-	private String quoteDetailEndpoint;
+    private String quoteGridEndpoint;
 
-	private String orderGridEndpoint;
+    private String quoteDetailEndpoint;
 
-	private String quotesPreviewEndPoint;
+    private String orderGridEndpoint;
 
-	private String quotesPreviewPricingEndPoint;
+    private String quotesPreviewEndPoint;
 
-	private String accountAdressEndPoint;
+    private String quotesPreviewPricingEndPoint;
 
-	private String vendorConnectionEndpoint;
+    private String accountAdressEndPoint;
 
-	private String configurationsEndpoint;
+    private String vendorConnectionEndpoint;
 
-	private  String shopDomain;
+    private String configurationsEndpoint;
 
-	private String cartURL;
+    private  String shopDomain;
 
-	private String tdPartSmart;
+    private String cartURL;
 
-	private String analyticsSnippet;
+    private String tdPartSmart;
 
-	private String allSearchEndpoint;
+    private String analyticsSnippet;
 
-	private String allSuggestionUrl;
+    private String allSearchEndpoint;
 
-	private String productSearchEndpoint;
+    private String allSuggestionUrl;
 
-	private String productSuggestionUrl;
+    private String productSearchEndpoint;
 
-	private String contentSearchEndpoint;
+    private String productSuggestionUrl;
 
-	private String contentSuggestionUrl;
+    private String contentSearchEndpoint;
 
-	private String quoteSearchEndpoint;
+    private String contentSuggestionUrl;
 
-	private String orderSearchEndpoint;
+    private String quoteSearchEndpoint;
 
-	private String spaSearchEndpoint;
+    private String orderSearchEndpoint;
 
-	private String typeAheadDomain;
+    private String spaSearchEndpoint;
 
-	private String typeAheadSearchTermSuffix;
+    private String typeAheadDomain;
 
-	private String typeAheadXDomainScript;
+    private String typeAheadSearchTermSuffix;
 
-	private String typeAheadProxyScript;
+    private String typeAheadXDomainScript;
 
-	private String searchDomain;
+    private String typeAheadProxyScript;
 
-	private String legacySearchEndpoint;
+    private String searchDomain;
 
-	private String searchKeywordParameter;
+    private String legacySearchEndpoint;
 
-	private String searchRefinementsParameter;
-
-	private String searchBParameter;
-
-	private String contentSearchTab;
-
-	private String dcpDashboardPage;
-
-	private String quoteListingPage;
-
-	private String quoteDetailPage;
-
-	private String quotePreviewPage;
-
-	private String orderListingPage;
-
-	private String orderDetailPage;
-
-	private String puchOutEndpoint;
-
-	@PostConstruct
-	public void init() {
-		ServiceEndPointsConfiguration serviceEndPointsConfiguration =
-				page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
-		MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
-		AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
-		SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
-		RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
-		uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
-		catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
-		authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
-		loginEndpoint = serviceEndPointsConfiguration.loginEndpoint();
-		pingAppId =  serviceEndPointsConfiguration.pingAppId();
-		activeCartEndpoint = serviceEndPointsConfiguration.activeCartEndpoint();
-		myConfigurationsEndpoint = serviceEndPointsConfiguration.myConfigurationsEndpoint();
-		myOrdersEndpoint = serviceEndPointsConfiguration.myOrdersEndpoint();
-		myQuotesEndpoint = serviceEndPointsConfiguration.myQuotesEndpoint();
-		myDealsEndpoint = serviceEndPointsConfiguration.myDealsEndpoint();
-		myOrderStatusEndpoint = serviceEndPointsConfiguration.myOrderStatusEndpoint();
-		myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
-		topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
-		createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
-		cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
-		pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();
-		estimatedIdListEndpoint = serviceEndPointsConfiguration.estimatedIdListEndpoint();
-		estimatedIdDetailsEndpoint = serviceEndPointsConfiguration.estimatedIdDetailsEndpoint();
-		savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
-		quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
-		quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
-		orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
-		downloadAllInvoicesEndpoint = serviceEndPointsConfiguration.downloadAllInvoicesEndpoint();
-		vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
-		orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
-		quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
-		quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
-		accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
-		configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
-		puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
-		shopDomain = mcConfiguration.shopDomain();
-		cartURL = mcConfiguration.cartURL();
-		tdPartSmart = mcConfiguration.tdPartSmart();
-		analyticsSnippet = analyticsConfiguration.analyticsSnippet();
-		allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
-		allSuggestionUrl = searchBarConfiguration.allSuggestionUrl();
-		productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
-		productSuggestionUrl = searchBarConfiguration.productSuggestionUrl();
-		contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
-		contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
-		orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
-		quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
-
-		spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
-		typeAheadDomain = searchBarConfiguration.typeAheadDomain();
-		typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
-		typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
-		typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();
-
-		searchDomain = searchBarConfiguration.searchDomain();
-		legacySearchEndpoint = searchBarConfiguration.legacySearchEndpoint();
-		searchKeywordParameter = searchBarConfiguration.searchKeywordParameter();
-		searchRefinementsParameter = searchBarConfiguration.searchRefinementsParameter();
-		searchBParameter = searchBarConfiguration.searchBParameter();
-		contentSearchTab = searchBarConfiguration.contentSearchTab();
-		dcpDashboardPage = redirectConfiguration.dcpDashboardPage();
-		quoteListingPage = redirectConfiguration.quoteListingPage();
-		quoteDetailPage = redirectConfiguration.quoteDetailPage();
-		quotePreviewPage = redirectConfiguration.quotePreviewPage();
-		orderListingPage = redirectConfiguration.orderListingPage();
-		orderDetailPage = redirectConfiguration.orderDetailPage();
-	}
-
-	public String getUiServiceDomain() {
-		return uiServiceDomain;
-	}
-
-	public String getCatalogEndpoint() {
-		return catalogEndpoint;
-	}
-
-	public String getAuthorizationPageURL() {
-		return authorizationPageURL;
-	}
-
-	public String getLoginEndpoint() {
-		return loginEndpoint;
-	}
-
-	public String getPingAppId() {
-		return pingAppId;
-	}
-
-	public String getActiveCartEndpoint() {
-		return activeCartEndpoint;
-	}
-
-	public String getMyConfigurationsEndpoint() {
-		return myConfigurationsEndpoint;
-	}
-
-	public String getMyOrdersEndpoint() {
-		return myOrdersEndpoint;
-	}
-
-	public String getMyQuotesEndpoint() {
-		return myQuotesEndpoint;
-	}
-
-	public String getMyDealsEndpoint() {
-		return myDealsEndpoint;
-	}
-
-	public String getMyOrderStatusEndpoint() {
-		return myOrderStatusEndpoint;
-	}
-
-	public String getMyRenewalsEndpoint() {
-		return myRenewalsEndpoint;
-	}
-
-	public String getTopItemsEndpoint() {
-		return topItemsEndpoint;
-	}
-
-	public String getCreateQuoteEndpoint() {
-		return createQuoteEndpoint;
-	}
-
-	public String getCartDetailsEndpoint() {
-		return cartDetailsEndpoint;
-	}
-
-	public String getPricingConditionsEndPoint() {
-		return pricingConditionsEndPoint;
-	}
-
-	public String getEstimatedIdListEndpoint() {
-		return estimatedIdListEndpoint;
-	}
-
-	public String getEstimatedIdDetailsEndpoint() {
-		return estimatedIdDetailsEndpoint;
-	}
-
-	public String getSavedCartsEndpoint() {
-		return savedCartsEndpoint;
-	}
-
-	public String getQuoteGridEndpoint() {
-		return quoteGridEndpoint;
-	}
-
-	public String getQuoteDetailEndpoint() {
-		return quoteDetailEndpoint;
-	}
-
-	public String getVendorConnectionEndpoint() {
-		return vendorConnectionEndpoint;
-	}
-
-	public String getOrderGridEndpoint() {
-		return orderGridEndpoint;
-	}
-
-	public String getQuotesPreviewEndPoint() {
-		return quotesPreviewEndPoint;
-	}
-
-	public String getQuotesPreviewPricingEndPoint() {
-		return quotesPreviewPricingEndPoint;
-	}
-
-	public String getAccountAdressEndPoint() {
-		return accountAdressEndPoint;
-	}
-
-	public String getConfigurationsEndpoint() {
-		return configurationsEndpoint;
-	}
-
-	public String getPuchOutEndpoint(){
-		return puchOutEndpoint;
-	}
-
-	public String getShopDomain() {
-		return shopDomain;
-	}
-
-	public String getCartURL() {
-		return cartURL;
-	}
-
-	public String getTdPartSmart() {
-		return tdPartSmart;
-	}
-
-	public String getAnalyticsSnippet() {
-		return analyticsSnippet;
-	}
-
-	public String getAllSearchEndpoint() {
-		return allSearchEndpoint;
-	}
-
-	public String getAllSuggestionUrl() {
-		return allSuggestionUrl;
-	}
-
-	public String getProductSearchEndpoint() {
-		return productSearchEndpoint;
-	}
-
-	public String getProductSuggestionUrl() {
-		return productSuggestionUrl;
-	}
-
-	public String getContentSearchEndpoint() {
-		return contentSearchEndpoint;
-	}
-
-	public String getContentSuggestionUrl() {
-		return contentSuggestionUrl;
-	}
-
-	public String getOrderSearchEndpoint() {
-		return orderSearchEndpoint;
-	}
-
-	public String getQuoteSearchEndpoint() {
-		return quoteSearchEndpoint;
-	}
-
-	public String getSpaSearchEndpoint() {
-		return spaSearchEndpoint;
-	}
-
-	public String getTypeAheadDomain() {
-		return typeAheadDomain;
-	}
-
-	public String getTypeAheadSearchTermSuffix() {
-		return typeAheadSearchTermSuffix;
-	}
-
-	public String getTypeAheadXDomainScript() {
-		return typeAheadXDomainScript;
-	}
-
-	public String getTypeAheadProxyScript() {
-		return typeAheadProxyScript;
-	}
-
-	public String getSearchDomain() {
-		return searchDomain;
-	}
-
-	public String getSearchKeywordParameter() {
-		return searchKeywordParameter;
-	}
-
-	public String getLegacySearchEndpoint() {
-		return legacySearchEndpoint;
-	}
-
-	public String getSearchRefinementsParameter() {
-		return searchRefinementsParameter;
-	}
-
-	public String getSearchBParameter(){return searchBParameter;}
-
-	public String getContentSearchTab(){return contentSearchTab;}
-
-	public String getDcpDashboardPage(){return dcpDashboardPage;}
-
-	public String getQuoteListingPage(){return quoteListingPage;}
-
-	public String getQuoteDetailPage(){return quoteDetailPage;}
-
-	public String getQuotePreviewPage(){return quotePreviewPage;}
-
-	public String getOrderListingPage(){return orderListingPage;}
-
-	public String getOrderDetailPage(){return orderDetailPage;}
-
-	public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
-	public String getDownloadAllInvoicesEndpoint() { return downloadAllInvoicesEndpoint;}
+    private String searchKeywordParameter;
+
+    private String searchRefinementsParameter;
+
+    private String searchBParameter;
+
+    private String contentSearchTab;
+
+    private String dcpDashboardPage;
+
+    private String quoteListingPage;
+
+    private String quoteDetailPage;
+
+    private String quotePreviewPage;
+
+    private String orderListingPage;
+
+    private String orderDetailPage;
+
+    private String puchOutEndpoint;
+
+    @PostConstruct
+    public void init() {
+        ServiceEndPointsConfiguration serviceEndPointsConfiguration =
+                page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
+        MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
+        AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
+        SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
+        RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
+        uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
+        catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
+        authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
+        loginEndpoint = serviceEndPointsConfiguration.loginEndpoint();
+        pingAppId =  serviceEndPointsConfiguration.pingAppId();
+        activeCartEndpoint = serviceEndPointsConfiguration.activeCartEndpoint();
+        myConfigurationsEndpoint = serviceEndPointsConfiguration.myConfigurationsEndpoint();
+        myOrdersEndpoint = serviceEndPointsConfiguration.myOrdersEndpoint();
+        myQuotesEndpoint = serviceEndPointsConfiguration.myQuotesEndpoint();
+        myDealsEndpoint = serviceEndPointsConfiguration.myDealsEndpoint();
+        myOrderStatusEndpoint = serviceEndPointsConfiguration.myOrderStatusEndpoint();
+        myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
+        topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
+        createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
+        cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
+        pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();
+        estimatedIdListEndpoint = serviceEndPointsConfiguration.estimatedIdListEndpoint();
+        estimatedIdDetailsEndpoint = serviceEndPointsConfiguration.estimatedIdDetailsEndpoint();
+        savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
+        quoteGridEndpoint = serviceEndPointsConfiguration.quoteGridEndpoint();
+        quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
+        orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
+        downloadAllInvoicesEndpoint = serviceEndPointsConfiguration.downloadAllInvoicesEndpoint();
+        dealsForEndpoint = serviceEndPointsConfiguration.dealsForEndpoint();
+        vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
+        orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
+        quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
+        quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
+        accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
+        configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
+        puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
+        shopDomain = mcConfiguration.shopDomain();
+        cartURL = mcConfiguration.cartURL();
+        tdPartSmart = mcConfiguration.tdPartSmart();
+        analyticsSnippet = analyticsConfiguration.analyticsSnippet();
+        allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
+        allSuggestionUrl = searchBarConfiguration.allSuggestionUrl();
+        productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
+        productSuggestionUrl = searchBarConfiguration.productSuggestionUrl();
+        contentSearchEndpoint = searchBarConfiguration.contentSearchEndpoint();
+        contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
+        orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
+        quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
+
+        spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
+        typeAheadDomain = searchBarConfiguration.typeAheadDomain();
+        typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
+        typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
+        typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();
+
+        searchDomain = searchBarConfiguration.searchDomain();
+        legacySearchEndpoint = searchBarConfiguration.legacySearchEndpoint();
+        searchKeywordParameter = searchBarConfiguration.searchKeywordParameter();
+        searchRefinementsParameter = searchBarConfiguration.searchRefinementsParameter();
+        searchBParameter = searchBarConfiguration.searchBParameter();
+        contentSearchTab = searchBarConfiguration.contentSearchTab();
+        dcpDashboardPage = redirectConfiguration.dcpDashboardPage();
+        quoteListingPage = redirectConfiguration.quoteListingPage();
+        quoteDetailPage = redirectConfiguration.quoteDetailPage();
+        quotePreviewPage = redirectConfiguration.quotePreviewPage();
+        orderListingPage = redirectConfiguration.orderListingPage();
+        orderDetailPage = redirectConfiguration.orderDetailPage();
+    }
+
+    public String getUiServiceDomain() {
+        return uiServiceDomain;
+    }
+
+    public String getCatalogEndpoint() {
+        return catalogEndpoint;
+    }
+
+    public String getAuthorizationPageURL() {
+        return authorizationPageURL;
+    }
+
+    public String getLoginEndpoint() {
+        return loginEndpoint;
+    }
+
+    public String getPingAppId() {
+        return pingAppId;
+    }
+
+    public String getActiveCartEndpoint() {
+        return activeCartEndpoint;
+    }
+
+    public String getMyConfigurationsEndpoint() {
+        return myConfigurationsEndpoint;
+    }
+
+    public String getMyOrdersEndpoint() {
+        return myOrdersEndpoint;
+    }
+
+    public String getMyQuotesEndpoint() {
+        return myQuotesEndpoint;
+    }
+
+    public String getMyDealsEndpoint() {
+        return myDealsEndpoint;
+    }
+
+    public String getMyOrderStatusEndpoint() {
+        return myOrderStatusEndpoint;
+    }
+
+    public String getMyRenewalsEndpoint() {
+        return myRenewalsEndpoint;
+    }
+
+    public String getTopItemsEndpoint() {
+        return topItemsEndpoint;
+    }
+
+    public String getCreateQuoteEndpoint() {
+        return createQuoteEndpoint;
+    }
+
+    public String getCartDetailsEndpoint() {
+        return cartDetailsEndpoint;
+    }
+
+    public String getPricingConditionsEndPoint() {
+        return pricingConditionsEndPoint;
+    }
+
+    public String getEstimatedIdListEndpoint() {
+        return estimatedIdListEndpoint;
+    }
+
+    public String getEstimatedIdDetailsEndpoint() {
+        return estimatedIdDetailsEndpoint;
+    }
+
+    public String getSavedCartsEndpoint() {
+        return savedCartsEndpoint;
+    }
+
+    public String getQuoteGridEndpoint() {
+        return quoteGridEndpoint;
+    }
+
+    public String getQuoteDetailEndpoint() {
+        return quoteDetailEndpoint;
+    }
+
+    public String getVendorConnectionEndpoint() {
+        return vendorConnectionEndpoint;
+    }
+
+    public String getOrderGridEndpoint() {
+        return orderGridEndpoint;
+    }
+
+    public String getQuotesPreviewEndPoint() {
+        return quotesPreviewEndPoint;
+    }
+
+    public String getQuotesPreviewPricingEndPoint() {
+        return quotesPreviewPricingEndPoint;
+    }
+
+    public String getAccountAdressEndPoint() {
+        return accountAdressEndPoint;
+    }
+
+    public String getConfigurationsEndpoint() {
+        return configurationsEndpoint;
+    }
+
+    public String getPuchOutEndpoint(){
+        return puchOutEndpoint;
+    }
+
+    public String getShopDomain() {
+        return shopDomain;
+    }
+
+    public String getCartURL() {
+        return cartURL;
+    }
+
+    public String getTdPartSmart() {
+        return tdPartSmart;
+    }
+
+    public String getAnalyticsSnippet() {
+        return analyticsSnippet;
+    }
+
+    public String getAllSearchEndpoint() {
+        return allSearchEndpoint;
+    }
+
+    public String getAllSuggestionUrl() {
+        return allSuggestionUrl;
+    }
+
+    public String getProductSearchEndpoint() {
+        return productSearchEndpoint;
+    }
+
+    public String getProductSuggestionUrl() {
+        return productSuggestionUrl;
+    }
+
+    public String getContentSearchEndpoint() {
+        return contentSearchEndpoint;
+    }
+
+    public String getContentSuggestionUrl() {
+        return contentSuggestionUrl;
+    }
+
+    public String getOrderSearchEndpoint() {
+        return orderSearchEndpoint;
+    }
+
+    public String getQuoteSearchEndpoint() {
+        return quoteSearchEndpoint;
+    }
+
+    public String getSpaSearchEndpoint() {
+        return spaSearchEndpoint;
+    }
+
+    public String getTypeAheadDomain() {
+        return typeAheadDomain;
+    }
+
+    public String getTypeAheadSearchTermSuffix() {
+        return typeAheadSearchTermSuffix;
+    }
+
+    public String getTypeAheadXDomainScript() {
+        return typeAheadXDomainScript;
+    }
+
+    public String getTypeAheadProxyScript() {
+        return typeAheadProxyScript;
+    }
+
+    public String getSearchDomain() {
+        return searchDomain;
+    }
+
+    public String getSearchKeywordParameter() {
+        return searchKeywordParameter;
+    }
+
+    public String getLegacySearchEndpoint() {
+        return legacySearchEndpoint;
+    }
+
+    public String getSearchRefinementsParameter() {
+        return searchRefinementsParameter;
+    }
+
+    public String getSearchBParameter(){return searchBParameter;}
+
+    public String getContentSearchTab(){return contentSearchTab;}
+
+    public String getDcpDashboardPage(){return dcpDashboardPage;}
+
+    public String getQuoteListingPage(){return quoteListingPage;}
+
+    public String getQuoteDetailPage(){return quoteDetailPage;}
+
+    public String getQuotePreviewPage(){return quotePreviewPage;}
+
+    public String getOrderListingPage(){return orderListingPage;}
+
+    public String getOrderDetailPage(){return orderDetailPage;}
+
+    public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
+
+    public String getDownloadAllInvoicesEndpoint() {
+        return downloadAllInvoicesEndpoint;
+    }
+
+    public String getDealsForEndpoint() {
+        return dealsForEndpoint;
+    }
 }

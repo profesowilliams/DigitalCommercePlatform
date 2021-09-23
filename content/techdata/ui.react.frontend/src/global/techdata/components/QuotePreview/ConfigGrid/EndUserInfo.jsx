@@ -39,14 +39,14 @@ function EndUserInfo({endUser, info, onValueChange}) {
         <div className="cmp-qp__enduser-info">
             <p onClick={handleEditModeChange} className="cmp-qp__enduser-info--title">{info.endUserHeaderLabel}</p>
             {!editMode && (
-                <div>
+                <div className="cmp-qp__enduser-info--address-group">
                     <div>{info.nameLabel} {infoState.name}</div>
                     <div>{info.companyLabel} {infoState.companyName}</div>
                     <div>{info.addressLabel} {infoState.line1}</div>
                 </div>
             )}
             {editMode && (
-                <div>
+                <div className="cmp-qp__enduser-info--address-group">
                     <div>
                         <label htmlFor="name">{info.nameLabel}</label>
                         <input

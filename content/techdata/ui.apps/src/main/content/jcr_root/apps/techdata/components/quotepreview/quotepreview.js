@@ -26,27 +26,12 @@ use(['../common/utils.js'], function (utils) {
         }
     }
 
-    var tierOptionsValues = utils.getDataFromMultifield(resourceResolver, "tierOptions", function(childResource) {
-        var itemData = {};
-    
-        itemData.label = childResource.properties["tierOptionLabel"];
-        itemData.value = childResource.properties["tierOptionValue"];
-    
-        return itemData;
-    });
-
-    if (tierOptionsValues != null) {
-        informationTab["tierOptions"] = tierOptionsValues;
-    }
-
     if (this.uiServiceDomain != null) {
     	jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quotesPreviewEndPoint;
-    }
-    if (this.uiServiceDomain != null) {
-    	jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
-    }
-    if (this.uiServiceDomain != null) {
-    	jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
+        jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
+        jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
+        jsonObject["dealsForEndpoint"] = this.uiServiceDomain + this.serviceData.dealsForEndpoint;
+        jsonObject["pricingConditionsEndpoint"] = this.uiServiceDomain + this.serviceData.pricingConditionsEndpoint;
     }
 
     if (properties && properties["headerLabel"]) {

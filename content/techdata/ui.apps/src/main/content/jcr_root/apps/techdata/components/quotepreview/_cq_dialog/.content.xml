@@ -166,31 +166,6 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldLabel="Tier Label"
                                                         name="./tierLabel"/>
-                                                    <tierOptions
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                        composite="{Boolean}true"
-                                                        required="{Boolean}true"
-                                                        fieldLabel="Tier Options">
-                                                        <field
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                            required="true"
-                                                            name="./tierOptions">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <tierOptionLabel
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    fieldLabel="Label"
-                                                                    name="./tierOptionLabel"/>
-                                                                <tierOptionValue
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    fieldLabel="Value"
-                                                                    name="./tierOptionValue"/>
-                                                            </items>
-                                                        </field>
-                                                    </tierOptions>
                                                 </items>
                                             </generalInformation>
                                         </items>

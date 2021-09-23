@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import useGet from "../../../hooks/useGet";
 import axios from "axios";
 import Button from '../../Widgets/Button';
 
-function GeneralInfo({quoteDetails, info, onValueChange}) {
-    console.log('quoteDetails', quoteDetails);
+function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
+    const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
+
     const source = quoteDetails.source;
     const initialGeneralInfoState = {
         deal: {},
@@ -69,14 +71,14 @@ function GeneralInfo({quoteDetails, info, onValueChange}) {
                 Deals found - cancel
                 <ul>
                     {dealsFound.map((dealInfo, index) => 
-                        <li key={dealInfo.dealId}>
+                        <li key={dealInfo.spaId}>
                             <input type="radio" name={`deal${index}`}
                                     value={index}
                                     checked={selectedDeal.index == index} 
                                     onChange={(e) => handleDealsChange(e, index)} />
                             <div>{dealInfo.bid}</div>
                             <div>{dealInfo.version}</div>
-                            <div>{dealInfo.dealId}</div>
+                            <div>{dealInfo.spaId}</div>
                             <div>{dealInfo.endUserName}</div>
                         </li>
                     )}
@@ -98,7 +100,7 @@ function GeneralInfo({quoteDetails, info, onValueChange}) {
         originalStr.replace("{end-user-name}", searchTerm);
 
     const loadDeals = async (searchTerm) => {
-        const response = await axios.get(replaceSearchTerm('http://localhost:3000/ui-config/v1/getdealsFor?endUserName={end-user-name}', generalInfoState.endUserName));
+        const response = await axios.get(replaceSearchTerm(gridProps.dealsForEndpoint, generalInfoState.endUserName));
 
         clearSelectedDeal();
 
@@ -108,23 +110,30 @@ function GeneralInfo({quoteDetails, info, onValueChange}) {
     return (
         <div className="cmp-qp__general-info">
             <p onClick={handleEditModeChange} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
-            {source && <div>{info.sourceLabel} {source.type} {source.value}</div>}
-            {!editMode && (
-                <div>
-                    <div>{info.tierLabel} {generalInfoState.tier}</div>
-                    {generalInfoState.reference && <div>{info.referenceLabel} {generalInfoState.reference}</div>}
-                    {generalInfoState.deal.dealId && <div>
-                        {info.dealLabel} 
-                        <div>
-                            {generalInfoState.deal.bid}
-                            {generalInfoState.deal.dealId}
-                            {generalInfoState.deal.version}
-                        </div>
-                    </div>}
-                </div>
-            )}
+            <div className="cmp-qp__general-info--address-group">
+                {source && <div>{info.sourceLabel} {source.type} {source.value}</div>}
+                {!editMode && (
+                    <>
+                        <div>{info.tierLabel} {generalInfoState.tier}</div>
+                        {generalInfoState.quoteReference &&
+                            <div>
+                                {info.referenceLabel} {generalInfoState.quoteReference}
+                            </div>
+                        }
+                        {generalInfoState.deal.dealId &&
+                            <div>
+                            {info.dealLabel} 
+                            <div>
+                                {generalInfoState.deal.bid}
+                                {generalInfoState.deal.dealId}
+                                {generalInfoState.deal.version}
+                            </div>
+                        </div>}
+                    </>
+                )}
+            </div>
             {editMode && (
-                <div>
+                <div className="cmp-qp__general-info--address-group">
                     <div>
                         <label htmlFor="tier">{info.tierLabel}</label>
                         <select
@@ -133,18 +142,19 @@ function GeneralInfo({quoteDetails, info, onValueChange}) {
                             id="tier"
                             value={generalInfoState.tier}
                             onChange={handleModelChange}>
-                            {info.tierOptions.map((option, index) => 
-                                <option key={index} value={option.value}>{option.label}</option>
+                            {!generalInfoState.tier && <option value="">Select an Option</option>}
+                            {pricingConditions?.content?.pricingConditions && pricingConditions.content.pricingConditions.items.map((option, index) => 
+                                <option key={index} value={option.value}>{option.key}</option>
                             )}
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="reference">{info.referenceLabel}</label>
+                        <label htmlFor="quoteReference">{info.referenceLabel}</label>
                         <input
                             className="field element"
-                            value={generalInfoState.reference}
-                            name="reference"
-                            id="reference"
+                            value={generalInfoState.quoteReference}
+                            name="quoteReference"
+                            id="quoteReference"
                             onChange={handleModelChange}
                             type="text"/>
                     </div>

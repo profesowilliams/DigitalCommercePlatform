@@ -6,7 +6,6 @@ import GeneralInfo from './GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
 function ConfigGrid({ quoteDetails, gridProps, endUserInfoChange, generalInfoChange }) {
-    console.log('quoteDetails1', quoteDetails);
     const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
     const [companyInfoResponse, isLoading] = useGet(`${gridProps.companyInfoEndPoint}?criteria=CUS&ignoreSalesOrganization=false`);
 
@@ -21,7 +20,7 @@ function ConfigGrid({ quoteDetails, gridProps, endUserInfoChange, generalInfoCha
                     ) : null
                 }
                 <EndUserInfo endUser={quoteDetails.endUser} info={gridProps.information} onValueChange={endUserInfoChange}/>
-                <GeneralInfo quoteDetails={quoteDetails} info={gridProps.information} onValueChange={generalInfoChange}/>
+                <GeneralInfo quoteDetails={quoteDetails} gridProps={gridProps} info={gridProps.information} onValueChange={generalInfoChange}/>
             </div>
             {/* <EndUserInfo />
                 <GeneralInfo />

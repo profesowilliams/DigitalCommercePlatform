@@ -97,4 +97,7 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Download All Invoices Endpoint", description = "Download All Invoices Endpoint")
     String downloadAllInvoicesEndpoint();
+
+    @Property(label = "Get Deals For Endpoint", description = "Get Deals For Endpoint")
+    String dealsForEndpoint();
 }

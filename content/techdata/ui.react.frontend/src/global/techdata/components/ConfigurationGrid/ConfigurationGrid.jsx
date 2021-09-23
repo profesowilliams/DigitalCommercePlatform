@@ -101,7 +101,7 @@ function ConfigurationGrid(props) {
       cellRenderer: (props) => {
         return (
           <div>
-            <a className="cmp-grid-url-not-underlined">{props.value}</a>
+            {props.value}
           </div>
         );
       },
@@ -150,7 +150,11 @@ function ConfigurationGrid(props) {
       field: "action",
       sortable: true,
       valueFormatter: (props) => {
-        return props.value;
+        return (
+          <div>
+            <a className="cmp-grid-url-not-underlined" >{props.value}</a>
+          </div>
+        );
       },
     },
   ];

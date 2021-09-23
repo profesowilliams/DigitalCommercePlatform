@@ -1375,6 +1375,66 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
   });
 });
 
+app.get("/ui-commerce/v1/pricingConditions", function (req, res) {
+  res.json({
+    "content": {
+      "pricingConditions": {
+        "items": [
+          {
+            "key": "Commercial (Non-Govt)",
+            "value": "Commercial"
+          },
+          {
+            "key": "Education (Student, Staff)",
+            "value": "EduStudentStaff"
+          },
+          {
+            "key": "Education (Higher)",
+            "value": "EduHigher"
+          },
+          {
+            "key": "Education (K - 12)",
+            "value": "EduK12"
+          },
+          {
+            "key": "Education E-Rate (K - 12)",
+            "value": "EduErate"
+          },
+          {
+            "key": "Federal",
+            "value": "GovtFederal"
+          },
+          {
+            "key": "Federal GSA",
+            "value": "GovtFederalGSA"
+          },
+          {
+            "key": "Local",
+            "value": "GovtLocal"
+          },
+          {
+            "key": "State",
+            "value": "GovtState"
+          },
+          {
+            "key": "Medical",
+            "value": "Medical"
+          },
+          {
+            "key": "SEWP Contract",
+            "value": "SEWPContract "
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  });
+});
+
 app.get("/typeahead", function (req, res) {
   const { keyword } = req.query;
 
