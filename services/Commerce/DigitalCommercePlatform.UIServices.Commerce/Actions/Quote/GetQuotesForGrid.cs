@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public bool? WithPaginationInfo { get; set; } = true;
             public string Manufacturer { get; set; }
             public string EndUserName { get; set; }
-            public bool Details { get; set; }
+            public bool Details { get; set; } = true;
 
             public Request()
             {

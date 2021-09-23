@@ -143,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             foreach (var item in findOrdersDto.Data)
             {
-                var invoiceDetails = item.Items.SelectMany(i => i.Invoices)
+                var invoiceDetails = item.Items?.SelectMany(i => i.Invoices)
                .Select(i => new InvoiceModel { ID = i.ID }).ToList();
                 var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
 

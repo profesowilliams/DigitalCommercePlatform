@@ -70,13 +70,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.TotalCharge))
                 .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
-                .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
-                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.PODate, opt => opt.MapFrom<DateResolver>())
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID));
 
         }
     }
-
+    [ExcludeFromCodeCoverage]
+    public class DateResolver : IValueResolver<OrderModel, OrderDetailModel, string>
+    {
+        public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
+        {
+            var poDate = source.PoDate.GetHashCode() == 0 ? string.Empty : source.PoDate?.ToString("MM/dd/yy");
+            return poDate;
+        }
+    }
     [ExcludeFromCodeCoverage]
     public class TDPartResolver : IValueResolver<Item, Line, string>
     {

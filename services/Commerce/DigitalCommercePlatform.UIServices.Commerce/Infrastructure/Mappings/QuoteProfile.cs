@@ -66,6 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
             .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+             .ForMember(dest => dest.Deals, opt => opt.MapFrom<DealDetailResolver>())
             .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
 
             CreateMap<QuoteModel, GetQuote.Response>()
@@ -166,6 +167,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     public class DealResolver : IValueResolver<QuoteModel, QuotesForGridModel, List<string>>
     {
         public List<string> Resolve(QuoteModel source, QuotesForGridModel destination, List<string> destMember, ResolutionContext context)
+        {
+            var description = source.Attributes.Any() ? source.Attributes.Where(d => d.Name.ToUpper().Equals("DEALIDENTIFIER")).ToList().Select(n => n.Value).ToList() : new List<string>();
+            return description;
+        }
+    }
+    [ExcludeFromCodeCoverage]
+    public class DealDetailResolver : IValueResolver<QuoteModel, QuoteDetails, List<string>>
+    {
+        public List<string> Resolve(QuoteModel source, QuoteDetails destination, List<string> destMember, ResolutionContext context)
         {
             var description = source.Attributes.Any() ? source.Attributes.Where(d => d.Name.ToUpper().Equals("DEALIDENTIFIER")).ToList().Select(n => n.Value).ToList() : new List<string>();
             return description;

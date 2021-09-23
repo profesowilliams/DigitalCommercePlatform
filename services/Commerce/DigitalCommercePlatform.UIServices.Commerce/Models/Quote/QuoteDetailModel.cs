@@ -33,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string Tier { get; set; }
         public string Created { get; set; }
         public string Expires { get; set; }
+        public List<string> Deals { get; set; }
         public List<AttributeModel> Attributes { get; set; }
 
     }
