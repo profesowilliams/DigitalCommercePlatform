@@ -34,7 +34,7 @@ function CompanyInfo({data, info}) {
                 </div>
             }
             {defaultAddress &&
-                <div className="cmp-qp__default-address">
+                <div className="cmp-qp__edit-mode">
                     <form>
                         <div className="form-check">
                             <label>
@@ -69,10 +69,10 @@ function CompanyInfo({data, info}) {
                             </label>
                         </div>
                         <div className="form-group">
-                            <Button btnClass={"cmp-qp--save-address"} disabled={false} onClick={handleDefaultAddress}>
+                            <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleDefaultAddress}>
                                 {"Submit"}
                             </Button>
-                            <Button btnClass={"cmp-qp--cancel-address"} disabled={false} onClick={handleDefaultAddress}>
+                            <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleDefaultAddress}>
                                 {"Cancel"}
                             </Button>
                         </div>

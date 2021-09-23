@@ -46,45 +46,47 @@ function EndUserInfo({endUser, info, onValueChange}) {
                 </div>
             )}
             {editMode && (
-                <div className="cmp-qp__enduser-info--address-group">
-                    <div>
-                        <label htmlFor="name">{info.nameLabel}</label>
-                        <input
-                            className="field element"
-                            value={infoState.name}
-                            name="name"
-                            id="name"
-                            onChange={handleModelChange}
-                            type="text"/>
-                    </div>
-                    <div>
-                        <label htmlFor="companyName">{info.companyLabel}</label>
-                        <input
-                            className="field element"
-                            value={infoState.companyName}
-                            name="companyName"
-                            id="companyName"
-                            onChange={handleModelChange}
-                            type="text"/>
-                    </div>
-                    <div>
-                        <label htmlFor="line1">{info.addressLabel}</label>
-                        <input
-                            className="field element"
-                            value={infoState.line1}
-                            name="line1"
-                            id="line1"
-                            onChange={handleModelChange}
-                            type="text"/>
-                    </div>
-                    <div className="form-group">
-                        <Button btnClass={"cmp-qp--save-address"} disabled={false} onClick={handleSaveChanges}>
-                            {"Submit"}
-                        </Button>
-                        <Button btnClass={"cmp-qp--cancel-address"} disabled={false} onClick={handleCancelChanges}>
-                            {"Cancel"}
-                        </Button>
-                    </div>
+                <div className="cmp-qp__edit-mode">
+                    <form>
+                        <div className="form-check">
+                            <label htmlFor="name">{info.nameLabel}</label>
+                            <input
+                                className="field element"
+                                value={infoState.name}
+                                name="name"
+                                id="name"
+                                onChange={handleModelChange}
+                                type="text"/>
+                        </div>
+                        <div className="form-check">
+                            <label htmlFor="companyName">{info.companyLabel}</label>
+                            <input
+                                className="field element"
+                                value={infoState.companyName}
+                                name="companyName"
+                                id="companyName"
+                                onChange={handleModelChange}
+                                type="text"/>
+                        </div>
+                        <div className="form-check">
+                            <label htmlFor="line1">{info.addressLabel}</label>
+                            <input
+                                className="field element"
+                                value={infoState.line1}
+                                name="line1"
+                                id="line1"
+                                onChange={handleModelChange}
+                                type="text"/>
+                        </div>
+                        <div className="form-group">
+                            <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
+                                {"Submit"}
+                            </Button>
+                            <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>
+                                {"Cancel"}
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             )}
         </div>

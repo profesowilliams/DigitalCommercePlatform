@@ -114,7 +114,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                 {source && <div>{info.sourceLabel} {source.type} {source.value}</div>}
                 {!editMode && (
                     <>
-                        <div>{info.tierLabel} {generalInfoState.tier}</div>
+                        {generalInfoState.tier && <div>{info.tierLabel} {generalInfoState.tier}</div>}
                         {generalInfoState.quoteReference &&
                             <div>
                                 {info.referenceLabel} {generalInfoState.quoteReference}
@@ -133,57 +133,59 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                 )}
             </div>
             {editMode && (
-                <div className="cmp-qp__general-info--address-group">
-                    <div>
-                        <label htmlFor="tier">{info.tierLabel}</label>
-                        <select
-                            className="field element"
-                            name="tier"
-                            id="tier"
-                            value={generalInfoState.tier}
-                            onChange={handleModelChange}>
-                            {!generalInfoState.tier && <option value="">Select an Option</option>}
-                            {pricingConditions?.content?.pricingConditions && pricingConditions.content.pricingConditions.items.map((option, index) => 
-                                <option key={index} value={option.value}>{option.key}</option>
-                            )}
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="quoteReference">{info.referenceLabel}</label>
-                        <input
-                            className="field element"
-                            value={generalInfoState.quoteReference}
-                            name="quoteReference"
-                            id="quoteReference"
-                            onChange={handleModelChange}
-                            type="text"/>
-                    </div>
-                    <div>
-                        <label htmlFor="endUserName">{info.dealLabel}</label>
-                        <input
-                            className="field element"
-                            value={generalInfoState.endUserName}
-                            name="endUserName"
-                            id="endUserName"
-                            onChange={handleModelChange}
-                            type="text"/>
-                        <button className="cmp-searchbar__button" onClick={loadDeals}>
-                
-                            <i className="cmp-searchbar__icon fas fa-search" data-cmp-hook-search="icon"></i>
-                        </button>
-                        <div>
-                            {generalInfoState.deal.dealId}
+                <div className="cmp-qp__edit-mode">
+                    <form>
+                        <div className="form-check">
+                            <label htmlFor="tier">{info.tierLabel}</label>
+                            <select
+                                className="field element"
+                                name="tier"
+                                id="tier"
+                                value={generalInfoState.tier}
+                                onChange={handleModelChange}>
+                                {!generalInfoState.tier && <option value="">Select an Option</option>}
+                                {pricingConditions?.content?.pricingConditions && pricingConditions.content.pricingConditions.items.map((option, index) => 
+                                    <option key={index} value={option.value}>{option.key}</option>
+                                )}
+                            </select>
                         </div>
-                        {displayDealsFound()}
-                    </div>
-                    <div className="form-group">
-                        <Button btnClass={"cmp-qp--save-address"} disabled={false} onClick={handleSaveChanges}>
-                            {"Submit"}
-                        </Button>
-                        <Button btnClass={"cmp-qp--cancel-address"} disabled={false} onClick={handleCancelChanges}>
-                            {"Cancel"}
-                        </Button>
-                    </div>
+                        <div className="form-check">
+                            <label htmlFor="quoteReference">{info.referenceLabel}</label>
+                            <input
+                                className="field element"
+                                value={generalInfoState.quoteReference}
+                                name="quoteReference"
+                                id="quoteReference"
+                                onChange={handleModelChange}
+                                type="text"/>
+                        </div>
+                        <div className="form-check">
+                            <label htmlFor="endUserName">{info.dealLabel}</label>
+                            <input
+                                className="field element"
+                                value={generalInfoState.endUserName}
+                                name="endUserName"
+                                id="endUserName"
+                                onChange={handleModelChange}
+                                type="text"/>
+                            <button className="cmp-searchbar__button" onClick={loadDeals}>
+                    
+                                <i className="cmp-searchbar__icon fas fa-search" data-cmp-hook-search="icon"></i>
+                            </button>
+                            <div>
+                                {generalInfoState.deal.dealId}
+                            </div>
+                            {displayDealsFound()}
+                        </div>
+                        <div className="form-group">
+                            <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
+                                {"Submit"}
+                            </Button>
+                            <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>
+                                {"Cancel"}
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             )}
         </div>
