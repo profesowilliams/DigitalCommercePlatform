@@ -1,34 +1,26 @@
-import React,{useCallback, useMemo} from "react";
+import React from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import thousandSeparator from "../../../helpers/thousandSeparator";
-import ImageLineInformation from "./ImageLineItemInformation";
 
 function ProductLinesChildGrid({ data, columns }) {
   const columnDefs = [
     {
       field: "id",
       sortable: false,
-      width: "146px",
+      width: "160px",
       rowClass: ({ node, data }) => "cmp-product-lines-grid__child-grid__row",
       cellRenderer: (props) => {
         return <section style={{ marginLeft: "60px" }}>{props.value}</section>;
       },
     },
     {
-      field:'imageGhost',
-      sortable:false,
-      width:'100px',
-      cellHeight: () => 80,
-      cellRenderer: (props) => <ImageLineInformation line={props.data}/>
-    },
-    {
       field: "shortDescription",
       sortable: false,
-      width: "333px",
+      width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
-        return <ProductLinesItemInformation line={props.data} isChild={true} />;
+        return <ProductLinesItemInformation line={props.data} />;
       },
     },
     {
@@ -48,22 +40,14 @@ function ProductLinesChildGrid({ data, columns }) {
       },
     },
   ];
- const addImageField = useCallback((columns)=>{
-   const columnsCopy = [...columns]; 
-   const hasShortDescription = columns.find(col => col.columnKey === "shortDescription");
-   if (hasShortDescription){
-     const imgField = {columnKey:'imageGhost', sortable:false};
-     columnsCopy.splice(1,0,imgField);
-   }
-   return columnsCopy;
-  },[columns])
+
   return (
     <section>
       <div className="cmp-product-lines-grid__child-grid">
         <Grid
           columnDefinition={columnDefs}
           config={{
-            columnList: addImageField(columns),
+            columnList: columns,
             serverSide: false,
             paginationStyle: "none",
           }}

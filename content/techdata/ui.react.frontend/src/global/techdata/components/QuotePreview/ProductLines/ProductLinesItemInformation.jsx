@@ -1,11 +1,11 @@
 import React from "react";
 import { If } from "../../../helpers/If";
 
-function ProductLinesItemInformation({ line, isChild=false }) {
+function ProductLinesItemInformation({ line }) {
   return (
     <section>
       <div className="cmp-product-lines-grid__item-information">
-        <If condition={!isChild}>
+
         <a
           href={line.urlProductSpec}
           target="_blank"
@@ -13,7 +13,7 @@ function ProductLinesItemInformation({ line, isChild=false }) {
         >
           <img alt={line.urlProductImage ? '' : 'No Image'} src={line.urlProductImage} />
         </a>
-        </If>
+       
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-product-lines-grid__item-information__box-text__header">
             <a
