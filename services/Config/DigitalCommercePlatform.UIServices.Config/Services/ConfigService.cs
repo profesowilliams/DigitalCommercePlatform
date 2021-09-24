@@ -184,7 +184,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 c.Quotes.Add(new TdQuoteIdDetails
                 {
-                    Status = i == 3 ? "Pending" : i == 5 ? "Failed" :  i == 2 ? "Expired" : "Created",
+                    Status = i == 3 ? "Pending" : i == 5 ? "Failed" : i == 2 ? "Expired" : "Created",
                     Created = i == 5 || i == 2 || i == 3 ? string.Empty : DateTime.UtcNow.AddDays(-1 * GetRandomNumber(1, 10)).ToShortDateString(),
                     Id = i == 5 || i == 2 || i == 3 ? string.Empty : $"CD_ID_{c.ConfigId}_{i + 1}",
                     Line = i == 5 || i == 2 || i == 3 ? string.Empty : $"{GetRandomNumber(1, 1000)}",
@@ -223,30 +223,38 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public async Task<string> GetPunchOutUrlAsync(PunchInModel request)
         {
-             if(request.ActionName=="edit")
+            try
             {
-                var estimateRequest = new Models.Configurations.FindModel();
-                estimateRequest.Id = request.IdValue;
-                estimateRequest.Type = "Estimate";
+                if (request.ActionName == "edit")
+                {
+                    var estimateRequest = new Models.Configurations.FindModel();
+                    estimateRequest.Id = request.IdValue;
+                    estimateRequest.Type = "Estimate";
 
-                var result = await FindConfigurations(new GetConfigurations.Request{Criteria= estimateRequest });
-                if (result.Count < 1)
-                    throw new InvalidOperationException($"Configuration Id is wrong");
-            }
-            const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
-            var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings) 
+                    var result = await FindConfigurations(new GetConfigurations.Request { Criteria = estimateRequest });
+                    if (result.Count < 1)
+                        throw new InvalidOperationException($"Configuration Id is wrong");
+                }
+                const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
+
+                var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
                 ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+                _logger.LogInformation($"Requested url is: {requestUrl}");
 
-            _logger.LogInformation($"Requested url is: {requestUrl}");
+                var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
+                var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+                var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
 
-            var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
-            var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
+                httpResponse.EnsureSuccessStatusCode();
 
-            httpResponse.EnsureSuccessStatusCode();
-
-            var url = await httpResponse.Content.ReadAsStringAsync();
-            return url;
+                var url = await httpResponse.Content.ReadAsStringAsync();
+                return url;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exception while calling Punchout url : {ex.Message + " inner Exception is " + ex.InnerException}");
+                throw ex;
+            }
         }
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
