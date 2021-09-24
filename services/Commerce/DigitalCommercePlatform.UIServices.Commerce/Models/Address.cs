@@ -15,6 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public string Email { get; set; }        
+        public string ContactEmail { get; set; }
         public string PhoneNumber { get; set; }
     }
 }

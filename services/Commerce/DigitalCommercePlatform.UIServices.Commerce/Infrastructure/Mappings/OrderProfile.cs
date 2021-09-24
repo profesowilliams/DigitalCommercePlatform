@@ -55,6 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<OrderModel, OrderDetailModel>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
+                .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
                 .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
                 .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
@@ -75,16 +76,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID));
 
         }
-    }
+    }    
+
     [ExcludeFromCodeCoverage]
     public class DateResolver : IValueResolver<OrderModel, OrderDetailModel, string>
     {
         public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
-        {
+        {            
             var poDate = source.PoDate.GetHashCode() == 0 ? string.Empty : source.PoDate?.ToString("MM/dd/yy");
             return poDate;
         }
-    }
+    } 
+
     [ExcludeFromCodeCoverage]
     public class TDPartResolver : IValueResolver<Item, Line, string>
     {
@@ -231,5 +234,40 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             return result;
         }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class EndUserResolver : IValueResolver<OrderModel, OrderDetailModel, List<Address>>
+    {
+        public List<Address> Resolve(OrderModel source, OrderDetailModel destination, List<Address> destMember, ResolutionContext context)
+        {
+            var orderLines = source.Items.Where(x => x.EndUser != null).ToList();
+            var lstEndUsers = new List<Address>();
+
+            foreach (Item orderLine in orderLines)
+            {
+                if (!lstEndUsers.Where(a => a.CompanyName.ToUpper().Contains(orderLine.EndUser.Name?.ToUpper())).Any())
+                {
+                    var address = new Address
+                    {
+                        City = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.City) ? string.Empty : orderLine.EndUser.Address.City,
+                        State = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.State) ? string.Empty : orderLine.EndUser.Address.State,
+                        Line1 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line1) ? string.Empty : orderLine.EndUser.Address.Line1,
+                        Line2 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line2) ? string.Empty : orderLine.EndUser.Address.Line2,
+                        Line3 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line3) ? string.Empty : orderLine.EndUser.Address.Line3,
+                        Country = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Country) ? string.Empty : orderLine.EndUser.Address.Country,
+                        Zip = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
+                        PostalCode = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
+                        CompanyName = string.IsNullOrWhiteSpace(orderLine.EndUser.Name) ? string.Empty : orderLine.EndUser.Name,
+                        PhoneNumber = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Phone) ? string.Empty : orderLine.EndUser.Contact?.Phone,
+                        Name = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Name) ? string.Empty : orderLine.EndUser.Contact?.Name,
+                        ContactEmail = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Email) ? string.Empty : orderLine.EndUser.Contact?.Email,
+                    };
+                    lstEndUsers.Add(address);
+                }
+            }
+            return lstEndUsers;
+        }
+
     }
 }

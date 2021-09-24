@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
         public class Response
         {
             public Address ShipTo { get; set; }
-            public Address EndUser { get; set; }
+            public List<Address> EndUser { get; set; }
             public PaymentDetails PaymentDetails { get; set; }
             public string Customer { get; set; }
             public List<Line> Items { get; set; }

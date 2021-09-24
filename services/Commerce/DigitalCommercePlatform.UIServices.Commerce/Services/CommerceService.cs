@@ -30,6 +30,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using ContactModel = DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.ContactModel;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {

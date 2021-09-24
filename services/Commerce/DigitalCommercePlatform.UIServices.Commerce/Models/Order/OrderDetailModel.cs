@@ -8,8 +8,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
     public class OrderDetailModel
     {
         public PaymentDetails PaymentDetails { get; set; }
-        public Address ShipTo { get; set; }
-        public Address EndUser { get; set; }
+        public Address ShipTo { get; set; }        
+        public List<Address> EndUser { get; set; }
         public bool CanBeExpedited { get; set; }
         public List<OrderNotification> EndUserNotifications { get; set; }
         public Customer Reseller { get; set; }
