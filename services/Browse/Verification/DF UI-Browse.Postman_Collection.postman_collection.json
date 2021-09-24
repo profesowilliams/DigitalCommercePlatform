@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b860875c-2f02-4502-8934-f41c3b080054",
+		"_postman_id": "fa98195e-bdd2-46e9-aa59-dcf04cd4bc23",
 		"name": "DF UI-Browse.Postman_Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -364,6 +364,61 @@
 						{
 							"key": "id",
 							"value": "FCS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ui.browse.product.id-single-details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "SessionId",
+						"value": "{{SessionId}}",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "123456-TracedId",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrlUiService}}ui-browse/v{{apiVersion}}/product/?id=10117056&details=true",
+					"host": [
+						"{{BaseUrlUiService}}ui-browse"
+					],
+					"path": [
+						"v{{apiVersion}}",
+						"product",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "10117056"
+						},
+						{
+							"key": "details",
+							"value": "true"
 						}
 					]
 				}
