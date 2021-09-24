@@ -20,9 +20,7 @@ const CreateConfig = ({ componentProp }) => {
         "PostBackURL": POST_BACK_URL,  
         "Vendor": methodSelected.label,
         "ConfigurationId": "",
-        "Function": (() => {
-          return (redirectUrl && redirectUrl.name) ? redirectUrl.name : "";
-        })(),
+        "Function": "CCW_ESTIMATE",
         "Action": "CREATE"
       },
     };
