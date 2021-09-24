@@ -1112,6 +1112,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/order-details.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "shop-demo-page",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/shop-page-simulation.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

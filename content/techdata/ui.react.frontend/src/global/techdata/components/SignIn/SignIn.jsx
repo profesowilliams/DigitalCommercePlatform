@@ -17,6 +17,7 @@ const FA = require('react-fontawesome');
 const SignIn = (props) => {
 	const ACTION_QUERY_PARAM = "action";
 	const ACTION_QUERY_PARAM_LOGOUT_VALUE = "logout";
+	const ACTION_QUERY_PARAM_DELIMITER = "|";
 	const REDIRECT_URL_QUERY_PARAM = "redirectUrl";
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(null);
@@ -62,14 +63,23 @@ const SignIn = (props) => {
 		//This will only get triggered if the query params are sent via shop
 		if (window.location.search) {
 			let actionParam = getQueryStringValue(ACTION_QUERY_PARAM);
-			if (actionParam)
+			if (actionParam && actionParam.startsWith(ACTION_QUERY_PARAM_LOGOUT_VALUE))
 			{
-				let redirectUrl = getQueryStringValue(REDIRECT_URL_QUERY_PARAM);
-				if (actionParam ===ACTION_QUERY_PARAM_LOGOUT_VALUE && redirectUrl)
+
+				let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
+
+				if (actionParamValues.length > 0)
 				{
-					let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
-					signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, redirectUrl);
+					let redirectUrl = actionParamValues.length > 1 ? actionParamValues[1] : "";
+					if (actionParam === ACTION_QUERY_PARAM_LOGOUT_VALUE && redirectUrl)
+					{
+						//what if redirectUrl value is non existent? Then logout will not occurr???
+						let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
+						signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, redirectUrl);
+					}
 				}
+
+
 			}
 		}
 	}

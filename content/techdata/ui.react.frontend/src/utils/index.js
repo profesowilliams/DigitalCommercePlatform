@@ -57,13 +57,12 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
   const { protocol, hostname, port, pathname } = window.location;
   let sessionId = localStorage.getItem('sessionId');
 
-    if(window.SHOP && window.SHOP.authentication) {
-        let returnUrl = encodeURIComponent(aemAuthUrl + "?action=logout%26redirectUrl="+ window.location.href);
-        window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
+  if(window.SHOP && window.SHOP.authentication) {
+    let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
+    window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {
     signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
   }
-
 }
 
 export const getUser = () => JSON.parse(localStorage.getItem('userData'))

@@ -27,6 +27,19 @@
             ContextHub.Constants.ANONYMOUS_HOME = "/home/users/X/XTDP0CFV0Jpai5LngSiC";
             ContextHub.Constants.MODE = "ui";
         }());
+
+        window.SHOP = window.SHOP || {};
+        window.SHOP.authentication = true;
+        let User = {
+                email: "test@test.com",
+                    contactFirstName: "FirstName",
+                ecid: "123",
+                contactLastName: "1234",
+        };
+
+        window.SHOP.dataLayer.User = User;
+
+
     </script><script src="/etc/cloudsettings.kernel.js/libs/settings/cloudsettings/legacy/contexthub" type="text/javascript"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"/>
@@ -2654,7 +2667,6 @@
                                                                         &#34;pingLogoutURL&#34;:&#34;http://localhost:8080/logoutservice&#34;,
                                                                         &#34;shopLogoutRedirectUrl&#34;:&#34;http://localhost:8080&#34;,
                                                                         &#34;errorPageUrl&#34;:&#34;#&#34;,
-                                                                        &#34;aemAuthUrl&#34;:&#34;http://localhost:8080/action=logout&#34;,
                                                                         &#34;label&#34;:&#34;Sign In&#34;,
                                                                         &#34;authenticationURL&#34;:&#34;http://localhost:3000&#34;,
                                                                         &#34;items&#34;:[{&#34;linkTitle&#34;:&#34;My Dashboard&#34;,
