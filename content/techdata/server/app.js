@@ -524,84 +524,65 @@ app.get("/ui-commerce/v1/order/details", function (req, res) {
 
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
-  const details = req.query.details || true;
-  const pageSize = req.query.PageSize || 25;
-  const pageNumber = req.query.PageNumber || 1;
-  const items = [];
-  const status = [
-      'onHold',
-      'inProcess',
-      'open',
-      'shipped',
-      'cancelled',
-  ];
+    const details = req.query.details || true;
+    const pageSize = req.query.PageSize || 25;
+    const pageNumber = req.query.PageNumber || 1;
+    const items = [];
+    const status = [
+        'onHold',
+        'inProcess',
+        'open',
+        'shipped',
+        'cancelled',
+    ];
+    function getRandom(maxValue) {
+        return Math.floor(Math.random() * maxValue);
+    }
 
-  const searchByStaus = [
-    'contracts',
-    'licenses',
-  ];
-
-  function getRandom(maxValue) {
-      return Math.floor(Math.random() * maxValue);
-  }
-
-  function getInvoices(noOfInvoices) {
-      const invoices = [];
-      for (let i = 0; i <= noOfInvoices; i++) {
-          const invoice = {
-              id: i % 2 ? Number(`${pageNumber}${4009754974 + i + getRandom(10)}`) : "Pending",
-              line: i % 2 ? 1 + getRandom(10) : "",
-              quantity: 1 + getRandom(100),
-              price: 4750.70 + getRandom(1000),
-              created: i % 2 ? new Date().toISOString() : null,
-          }
-          invoices.push(invoice);
-      }
-      return invoices;
-  }
-  for (let i = 0; i < pageSize; i++) {
-    const totalPrice = 73002.31 + getRandom(1000);
-    const statusID = getRandom(5);
-    const manufacturerExample = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 6);
-    items.push({
-        id: Number(`${pageNumber}${4009754974 + i}`),
-        created: new Date().toISOString(),
-        reseller: Number(`${pageNumber}${111048 + i}`),
-        shipTo: "UPS",
-        type: "Manual",
-        priceFormatted: 73002.31 + getRandom(1000),
-        invoices: getInvoices(getRandom(10) - 1),
-        status: status[statusID],
-        searchBy: searchByStaus[getRandom(2)],
-        trackings: i % 2 ? ['track1', 'track2'] : [],
-        isReturn: i % 2 ? true : false,
-        currency: "USD",
-        currencySymbol: "$",
-        line: Number(`${pageNumber}${4009754974 + i}`),
-        manufacturer: manufacturerExample.toUpperCase(),
-        description: "PLTNM TAB PRTNR STOCK $5+ MRC ACTIVATION",
-        quantity: getRandom(10),
-        serial: i % 2 ? 'View' : 'n/a',
-        unitPrice: totalPrice,
-        totalPrice: totalPrice,
-        shipDate: i % 2 ? new Date().toISOString() : 'Emailed',
-    })
-  }
-
-  const response = { 
-      content: {
-          items: items,
-          totalItems: 2500,
-          pageCount: 25,
-          pageSize
-      },
-      error: {
-          code: 0,
-          message: [],
-          isError: false,
-      },
-  };
-  res.json(response);
+    function getInvoices(noOfInvoices) {
+        const invoices = [];
+        for (let i = 0; i <= noOfInvoices; i++) {
+            const invoice = {
+                id: i % 2 ? Number(`${pageNumber}${4009754974 + i + getRandom(10)}`) : "Pending",
+                line: i % 2 ? 1 + getRandom(10) : "",
+                quantity: 1 + getRandom(100),
+                price: 4750.70 + getRandom(1000),
+                created: i % 2 ? new Date().toISOString() : null,
+            }
+            invoices.push(invoice);
+        }
+        return invoices;
+    }
+    for (let i = 0; i < pageSize; i++) {
+        items.push({
+            id: Number(`${pageNumber}${4009754974 + i}`),
+            created: new Date().toISOString(),
+            reseller: Number(`${pageNumber}${111048 + i}`),
+            shipTo: "UPS",
+            type: "Manual",
+            priceFormatted: 73002.31 + getRandom(1000),
+            invoices: getInvoices(getRandom(10) - 1),
+            status: status[getRandom(5)],
+            trackings: i % 2 ? ['track1', 'track2'] : [],
+            isReturn: i % 2 ? true : false,
+            currency: "USD",
+            currencySymbol: "$",
+        })
+    }
+    const response = {
+        content: {
+            items: items,
+            totalItems: 2500,
+            pageCount: 25,
+            pageSize
+        },
+        error: {
+            code: 0,
+            message: [],
+            isError: false,
+        },
+    };
+    res.json(response);
 });
 
 app.get("/browse", function (req, res) {
