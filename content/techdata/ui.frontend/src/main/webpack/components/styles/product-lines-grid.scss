@@ -74,16 +74,11 @@
         color: get-color(brand-white);
       }
     }
-    
+
     .ag-cell {
       border-top: rem(1px) solid get-color(brand-scrollbar);
-      &:not([aria-expanded="false"]){
-        &:first-child {
-          border-top:none;
-        }
-      }     
-    }  
-  
+    }
+
     .ag-row-group-expanded {
       + .cmp-product-lines-grid__row {
         .ag-cell {
@@ -102,6 +97,13 @@
     .ag-root-wrapper-body {
       border: unset;
       margin-top: 0;
+      .ag-cell {
+        &:not([aria-expanded="false"]) {
+          &:first-child {
+            border-top: none;
+          }
+        }
+      }
       .ag-header {
         display: none;
       }

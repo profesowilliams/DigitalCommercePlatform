@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import thousandSeparator from "../../../helpers/thousandSeparator";
 import Grid from "../../Grid/Grid";
-import ImageLineInformation from "./ImageLineItemInformation";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
@@ -27,6 +26,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
     serverSide: false,
     paginationStyle: "none",
   };
+
   const columnDefs = [
     {
       headerName: "Select All",
@@ -47,7 +47,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
-              columns={gridProps.columnList}
+              columns={columnDefs}
               data={data.children}
             ></ProductLinesChildGrid>
           </section>
@@ -58,7 +58,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       headerName: "Item Information",
       field: "shortDescription",
       sortable: false,
-      width: "400px",
+      width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation line={props.data} />;
