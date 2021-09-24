@@ -23,6 +23,7 @@ const QuoteDetails = ({ componentProp }) => {
     logoURL,
     fileName,
     downloadLinkText,
+    quoteOptions,
     whiteLabel,
   } = JSON.parse(componentProp);
 
@@ -48,7 +49,7 @@ const QuoteDetails = ({ componentProp }) => {
         label={subheaderLabel}
         title={subheaderTitle}
         quoteDetails={quoteDetails}
-        dateLabels={{createdDateLabel,expiresDateLabel}}
+        dateLabels={{ createdDateLabel, expiresDateLabel }}
       />
       <QuoteContactInfo
         label={
@@ -66,6 +67,7 @@ const QuoteDetails = ({ componentProp }) => {
       />
       <ProductLinesGrid
         gridProps={productLines}
+        labels={whiteLabel}
         data={quoteDetails}
         quoteOption={quoteOption}
         onMarkupChanged={(quote) => {
@@ -82,6 +84,7 @@ const QuoteDetails = ({ componentProp }) => {
         quoteOption={quoteOption}
       />
       <QuoteDetailsCheckout
+        labels={quoteOptions}
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
         quoteDetails={quoteDetails}

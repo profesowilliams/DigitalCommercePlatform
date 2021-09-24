@@ -12,7 +12,7 @@
     border-bottom: rem(1px) solid get-color(secondary-light-grey);
     color: get-color(border-light-gray);
     width: fit-content;
-    min-width: rem(300px);
+    width: rem(300px);
     &__line {
       margin: rem(12px) 0;
       text-align: right;
@@ -21,6 +21,79 @@
       justify-content: space-between;
       &--bold {
         color: get-color(brand-black);
+      }
+      &__add {
+        grid-column: 1/-1;
+        display: flex;
+        justify-content: flex-end;
+        &__new {
+          cursor: pointer;
+          font-size: rem(12px);
+          &::before {
+            margin-right: rem(12px);
+            color: get-color(tertiary-dark-blue);
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f067";
+          }
+        }
+        &__value {
+          &__input {
+            border: rem(1px) solid get-color(secondary-light-grey);
+            width: rem(120px);
+            margin-right: rem(2px);
+            &::placeholder {
+              font-size: rem(14px);
+              color: get-color(border-light-gray);
+            }
+          }
+          &__button {
+            height: 100%;
+            background-color: get-color(tertiary-dark-blue);
+            color: get-color(brand-white);
+          }
+        }
+      }
+      &__label {
+        margin-right: rem(16px);
+        &__ancillary {
+          &__remove {
+            visibility: hidden;
+            margin-right: unset;
+            &::before {
+              cursor: pointer;
+              color: get-color(tertiary-dark-blue);
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f057";
+            }
+          }
+          display: inline-flex;
+          justify-self: right;
+          white-space: normal;
+          &:hover {
+            .cmp-td-quote-subtotal__section__line__label__ancillary__remove {
+              visibility: visible;
+            }
+          }
+        }
+        &__icon {
+          margin-right: rem(16px);
+          cursor: pointer;
+          color: get-color(tertiary-dark-blue);
+          &::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f055";
+          }
+          &--expanded {
+            &::before {
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f056";
+            }
+          }
+        }
       }
     }
     &:last-child {

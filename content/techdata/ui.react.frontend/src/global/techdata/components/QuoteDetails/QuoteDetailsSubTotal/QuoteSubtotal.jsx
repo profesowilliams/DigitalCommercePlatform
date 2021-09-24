@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import thousandSeparator from "../../../helpers/thousandSeparator";
+import AncillaryItems from "./AncillaryItems";
 
 const QuoteSubtotal = ({
   labels,
@@ -16,6 +17,12 @@ const QuoteSubtotal = ({
       setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
   }, [quoteOption]);
 
+  function onAncillaryItemsChanged(items) {
+    setMarkups((markup) => {
+      return { ...markup, ancillaryItems: items };
+    });
+  }
+
   function sum(array, field) {
     if (!array) return 0;
     return array
@@ -27,17 +34,18 @@ const QuoteSubtotal = ({
     if (!store) return;
     switch (action.type) {
       case "getMSRP":
-        return [...store]
+        return [...store.quotes]
           .map((x) => Number(x.msrp || 0) + sum(x.children, "msrp"))
           .reduce((previous, current) => previous + current);
       case "getYourCost":
-        return [...store]
-          .map((x) =>
-            Number(x.calculatedCost || 0) + sum(x.children, "calculatedCost")
+        return [...store.quotes]
+          .map(
+            (x) =>
+              Number(x.calculatedCost || 0) + sum(x.children, "calculatedCost")
           )
           .reduce((previous, current) => previous + current);
       case "getYourMarkup":
-        return [...store]
+        return [...store.quotes]
           .map(
             (x) =>
               Number(x.appliedMarkup || 0) + sum(x.children, "appliedMarkup")
@@ -45,27 +53,32 @@ const QuoteSubtotal = ({
           .reduce((previous, current) => previous + current);
       case "getSubtotal":
         return amount;
-      case "getEndUserTotal":
-        return [...store]
-          .map(
-            (x) =>
-              Number(x.clientExtendedPrice || 0) +
-              sum(x.children, "clientExtendedPrice")
-          )
-          .reduce((previous, current) => previous + current);
+      case "getEndUserTotal": {
+        return (
+          [...store.quotes]
+            .map(
+              (x) =>
+                Number(x.clientExtendedPrice || 0) +
+                sum(x.children, "clientExtendedPrice")
+            )
+            .reduce((previous, current) => previous + current) +
+            store.ancillaryItems?.total || 0
+        );
+      }
       case "getSavings":
         return (
           markupReducer(store, { type: "getMSRP" }) -
           markupReducer(store, { type: "getEndUserTotal" })
         );
-
       default:
         return 0;
     }
   }
 
   useEffect(() => {
-    setMarkups(quoteWithMarkup);
+    setMarkups((markup) => {
+      return { ...markup, quotes: quoteWithMarkup };
+    });
   }, [quoteWithMarkup]);
 
   function line(store, label, reducer, isBold) {
@@ -104,11 +117,11 @@ const QuoteSubtotal = ({
             {line(markups, labels?.subtotalLabel || "Subtotal", "getSubtotal")}
           </section>
           <section className="cmp-td-quote-subtotal__section">
-            {line(
-              markups,
-              labels?.ancillaryItemsLabel || "Ancillary items",
-              "N/A"
-            )}
+            <AncillaryItems
+              labels={labels}
+              currencySymbol={currencySymbol}
+              onCollectionChanged={onAncillaryItemsChanged}
+            ></AncillaryItems>
           </section>
           <section className="cmp-td-quote-subtotal__section">
             {line(
