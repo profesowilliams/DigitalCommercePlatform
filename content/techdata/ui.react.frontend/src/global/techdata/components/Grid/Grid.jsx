@@ -16,7 +16,7 @@ function Grid(props) {
     onModelUpdateFinished,
     requestInterceptor,
   } = Object.assign({}, props);
-  const componentVersion = "1.1.8";
+  const componentVersion = "1.1.9";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({

@@ -2,6 +2,8 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
+	min-width: rem(1376px);
+	overflow:auto;
 	.ag-root-wrapper {
 	}
 	.ag-root {
