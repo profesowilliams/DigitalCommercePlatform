@@ -85,9 +85,29 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["dealLabel"]) {
         informationTab["dealLabel"]  = properties["dealLabel"];
     }
-     if (properties && properties["dealLabel"]) {
-        informationTab["dealLabel"]  = properties["dealLabel"];
+
+    if (properties && properties["searchingDealsLabel"]) {
+        informationTab["searchingDealsLabel"]  = properties["searchingDealsLabel"];
     }
+    if (properties && properties["dealsFoundLabel"]) {
+        informationTab["dealsFoundLabel"]  = properties["dealsFoundLabel"];
+    }
+    if (properties && properties["noDealsFoundLabel"]) {
+        informationTab["noDealsFoundLabel"]  = properties["noDealsFoundLabel"];
+    }
+    if (properties && properties["bidLabel"]) {
+        informationTab["bidLabel"]  = properties["bidLabel"];
+    }
+    if (properties && properties["versionLabel"]) {
+        informationTab["versionLabel"]  = properties["versionLabel"];
+    }
+    if (properties && properties["spaIdLabel"]) {
+        informationTab["spaIdLabel"]  = properties["spaIdLabel"];
+    }
+    if (properties && properties["endUserNameLabel"]) {
+        informationTab["endUserNameLabel"]  = properties["endUserNameLabel"];
+    }
+
      if (properties && properties["companyLabel"]) {
         informationTab["companyLabel"]  = properties["companyLabel"];
     }

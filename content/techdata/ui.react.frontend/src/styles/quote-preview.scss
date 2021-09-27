@@ -83,6 +83,61 @@
     }
 }
 
+.cmp-qp__dropdown {
+
+  .field {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    width: 100%;
+  }
+  
+  .cmp-qp__dropdown-icon {
+    position: absolute;
+    right: 38px;
+    pointer-events: none;
+    color: $brand-light-blue-icon;
+  }
+}
+
+.cmp-qp__general-info {
+    min-width: 300px;
+    .form-check, .cmp-qp__information-row--readonly {
+        display: grid;
+        grid-template-columns: 35% 65%;
+        height: 22px;
+        .element {
+            border-width:0px;
+            border:none;
+            border-bottom: 1px solid #d8d8d8;
+        }
+    }
+    .form-check.cmp-qp__edit-deal {
+        height: 100%;
+
+        .cmp-qp__edit-deal__button {
+            color: $brand-light-blue-icon;
+            background: white;
+            border-bottom: 1px solid #d8d8d8;
+        }
+
+        .cmp-qp-dealslist {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            &__item {
+                display: grid;
+                grid-template-columns: 10% 90%;
+                &-data {    
+                    display: grid;
+                    grid-template-columns: 35% 65%;
+                }
+                
+            }
+        }
+    }
+}
+
 .cmp-qp__company-info, .cmp-qp__general-info, .cmp-qp__enduser-info {
     &--title {
         color: $brand-blue;

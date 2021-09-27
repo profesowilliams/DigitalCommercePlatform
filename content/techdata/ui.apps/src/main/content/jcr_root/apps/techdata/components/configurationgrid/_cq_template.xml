@@ -4,4 +4,6 @@
     configDetailUrlSuffix="?id={id}"
     modalTitle="Config ID"
     modalContent="There are multiple items associated with this Config ID. Please choose the item you would like to review:"
-    modalQuotePreffixLabel="Quote: "/>
+    modalQuotePreffixLabel="Quote: "
+    paginationStyle="scroll"
+    itemsPerPage="25"/>
