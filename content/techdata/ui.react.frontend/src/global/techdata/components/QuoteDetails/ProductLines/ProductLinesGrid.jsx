@@ -121,6 +121,11 @@ function ProductLinesGrid({
       sortable: false,
     },
     {
+      headerName: "MSRP",
+      field: "msrp",
+      sortable: false,
+    },
+    {
       headerName: "Unit Price",
       field: "unitPrice",
       onDetailsShown: (row) => {},
@@ -158,83 +163,108 @@ function ProductLinesGrid({
       },
       sortable: false,
     },
+    {
+      headerName: "Markup",
+      field: "appliedMarkup",
+      onDetailsShown: (row) => {},
+      onDetailsHidden: (row) => {},
+      cellClass: ({ node, data }) => {
+        return "cmp-product-lines-grid__row__cell__markup";
+      },
+      headerClass: "cmp-product-lines-grid__th__markup",
+      cellRenderer: (props) => {
+        const { node, api, value, setValue, data } = props;
+        return (
+          <ProductLinesMarkupRow
+            onMarkupValueChanged={({ value, unit, source }) => {
+              setValue(value);
+              node.setDataValue(
+                "clientUnitPrice",
+                Number(value) + Number(data.unitPrice)
+              );
+              node.setDataValue(
+                "clientExtendedPrice",
+                (Number(value) + Number(data.unitPrice)) * Number(data.quantity)
+              );
+            }}
+            initialMarkup={value || 0}
+            resellerUnitPrice={data.unitPrice}
+            labels={labels}
+          ></ProductLinesMarkupRow>
+        );
+      },
+      sortable: false,
+    },
+    {
+      headerName: "Client Unit Price",
+      field: "clientUnitPrice",
+      onDetailsShown: (row) => {},
+      onDetailsHidden: (row) => {},
+      cellClass: ({ node, data }) => {
+        return "cmp-product-lines-grid__row__cell__client-cost";
+      },
+      headerClass: "cmp-product-lines-grid__th__client-cost",
+      cellRenderer: ({ node, api, value, setValue, data }) => {
+        return "$" + thousandSeparator(value);
+      },
+      sortable: false,
+    },
+    {
+      headerName: "Client Extended Price",
+      field: "clientExtendedPrice",
+      onDetailsShown: (row) => {},
+      onDetailsHidden: (row) => {},
+      cellClass: ({ node, data }) => {
+        return "cmp-product-lines-grid__row__cell__client-cost";
+      },
+      headerClass: "cmp-product-lines-grid__th__client-cost",
+      cellRenderer: ({ node, api, value, setValue, data }) => {
+        return "$" + thousandSeparator(value);
+      },
+      sortable: false,
+    },
   ];
 
   //whitelabel column defs
   const whiteLabelCols = () => {
-    const removedIds = ["discounts", "unitListPriceFormatted"];
-    const filteredCols = Object.assign([], columnDefs).filter(
-      (el) => !removedIds.includes(el.field)
-    );
-    const extended = [
-      ...filteredCols,
-      {
-        headerName: "Markup",
-        field: "appliedMarkup",
-        onDetailsShown: (row) => {},
-        onDetailsHidden: (row) => {},
-        cellClass: ({ node, data }) => {
-          return "cmp-product-lines-grid__row__cell__markup";
-        },
-        headerClass: "cmp-product-lines-grid__th__markup",
-        cellRenderer: (props) => {
-          const { node, api, value, setValue, data } = props;
-          return (
-            <ProductLinesMarkupRow
-              onMarkupValueChanged={({ value, unit, source }) => {
-                setValue(value);
-                node.setDataValue(
-                  "clientUnitPrice",
-                  Number(value) + Number(data.unitPrice)
-                );
-                node.setDataValue(
-                  "clientExtendedPrice",
-                  (Number(value) + Number(data.unitPrice)) *
-                    Number(data.quantity)
-                );
-              }}
-              initialMarkup={value || 0}
-              resellerUnitPrice={data.unitPrice}
-              labels={labels}
-            ></ProductLinesMarkupRow>
-          );
-        },
-        sortable: false,
-      },
-      {
-        headerName: "Client Unit Price",
-        field: "clientUnitPrice",
-        onDetailsShown: (row) => {},
-        onDetailsHidden: (row) => {},
-        cellClass: ({ node, data }) => {
-          return "cmp-product-lines-grid__row__cell__client-cost";
-        },
-        headerClass: "cmp-product-lines-grid__th__client-cost",
-        cellRenderer: ({ node, api, value, setValue, data }) => {
-          return "$" + thousandSeparator(value);
-        },
-        sortable: false,
-      },
-      {
-        headerName: "Client Extended Price",
-        field: "clientExtendedPrice",
-        onDetailsShown: (row) => {},
-        onDetailsHidden: (row) => {},
-        cellClass: ({ node, data }) => {
-          return "cmp-product-lines-grid__row__cell__client-cost";
-        },
-        headerClass: "cmp-product-lines-grid__th__client-cost",
-        cellRenderer: ({ node, api, value, setValue, data }) => {
-          return "$" + thousandSeparator(value);
-        },
-        sortable: false,
-      },
+    const cols = [
+      "id",
+      "shortDescription",
+      "quantity",
+      "msrp",
+      "unitPrice",
+      "extendedPriceFormatted",
+      "appliedMarkup",
+      "clientUnitPrice",
+      "clientExtendedPrice",
     ];
-    return extended.map((col) => {
+    //get whitelabel columns
+    const _ = cols.map((col) => {
+      return columnDefs.find((el) => col === el.field);
+    });
+    //decrease width for second column and return final columns
+    return _.map((col) => {
       if (col.field === "shortDescription") {
         col.width = "400px";
       }
       return col;
+    });
+  };
+
+  //quoteDetails column defs
+  const quoteDetailsCols = () => {
+    const cols = [
+      "id",
+      "shortDescription",
+      "unitListPriceFormatted",
+      "discounts",
+      "quantity",
+      "unitPrice",
+      "extendedPriceFormatted",
+    ];
+    //get quoteDetails columns
+    return cols.map((col) => {
+      return columnDefs.find((el) => col === el.field);
     });
   };
 
@@ -267,7 +297,9 @@ function ProductLinesGrid({
         </section>
         <Grid
           key={whiteLabelMode}
-          columnDefinition={whiteLabelMode ? whiteLabelCols() : columnDefs}
+          columnDefinition={
+            whiteLabelMode ? whiteLabelCols() : quoteDetailsCols()
+          }
           config={gridConfig}
           data={mutableGridData}
           onAfterGridInit={onAfterGridInit}
