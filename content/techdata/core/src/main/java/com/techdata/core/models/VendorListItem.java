@@ -97,7 +97,7 @@ public class VendorListItem implements ListItem {
         final List<String> tags,
         final ListItem listItem) {
         this.overview = overview;
-        this.vendorIcon = vendorIcon;
+        this.vendorIcon = vendorIcon.replaceAll("ZZ", "\"");
         this.pageLink = pageLink;
         this.vendorPageLabel = vendorPageLabel;
         this.vendorProductLabel = vendorProductLabel;
@@ -129,7 +129,7 @@ public class VendorListItem implements ListItem {
                     overview = ce.getContent();
                     break;
                 case VENDOR_ICON:
-                    vendorIcon = ce.getContent();
+                    vendorIcon = ce.getContent().replaceAll("ZZ", "\"");
                     break;
                 case VENDOR_PAGE_LINK:
                     pageLink = ce.getContent();

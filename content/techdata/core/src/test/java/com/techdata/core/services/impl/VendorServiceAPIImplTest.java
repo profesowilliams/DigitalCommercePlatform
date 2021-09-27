@@ -123,12 +123,15 @@ class VendorServiceAPIImplTest {
             "            \"vendor-name\": \"Acer\",\n" +
             "                \"vendor-title\": \"Acer\",\n" +
             "                \"vendor-abbreviation\": \"acer\",\n" +
-            "                \"vendor-designation\": \"TRUE\",\n" +
+            "                \"vendor-designation\": \"vendor:designation\",\n" +
             "                \"overview\": \"<h1>Lorem ipsum</h1>\",\n" +
             "                \"vendor-icon\": \"svg:blah\",\n" +
-            "                \"Solutions\": \"experience-fragments:variation/web,experience-fragments:variation/pinterest\",\n" +
-            "                \"vendor-category\": \"properties:orientation/square,properties:orientation/portrait\",\n" +
+            "                \"vendor-solutions\": \"experience-fragments:variation/web£experience-fragments:variation/pinterest\",\n" +
+            "                \"vendor-category\": \"properties:orientation/square£properties:orientation/portrait\",\n" +
             "                \"vendor-product-label\": \"Browse Products by Acer\",\n" +
+            "                \"vendor-page-label\": \"Browse Products by Acer\",\n" +
+            "                \"vendor-page-link\": \"Browse Products by Acer\",\n" +
+            "                \"awards\": \"my awards\",\n" +
             "                \"vendor-product-link\": \"shop-url\"\n" +
             "        }]}}";
 

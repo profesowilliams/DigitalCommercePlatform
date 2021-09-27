@@ -29,6 +29,7 @@ import javax.jcr.RepositoryException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -101,38 +102,47 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
                 map.put("first-character", fcar.toUpperCase());
                 String[] alphabetTags = getAlphabetTags(fcar.toLowerCase());
                 map.put("vendor-alpha-group", alphabetTags);
-                String featuredVendorFlag = "false";
-                String featuredVendorTag = StringUtils.EMPTY;
-                if (Objects.equals(jsonItemObject.get(VENDOR_DESIGNATION).getAsString().toLowerCase(), "true")) {
-                    featuredVendorTag = "vendor-designation:preferred";
-                    featuredVendorFlag = "true";
-                }
-                map.put("featured-vendor", featuredVendorFlag);
-                String[] solutionTags = jsonItemObject.get(VENDOR_SOLUTIONS).getAsString().split(",");
+
+                String[] vendorDesignationTags = jsonItemObject.get(VENDOR_DESIGNATION).getAsString().split("£");
+                map.put(VENDOR_DESIGNATION, vendorDesignationTags);
+
+                String svgIcon = jsonItemObject.get(VENDOR_ICON).getAsString().replaceAll("ZZ", "\"");
+                map.put(VENDOR_ICON, svgIcon);
+
+                String[] solutionTags = jsonItemObject.get(VENDOR_SOLUTIONS).getAsString().split("£");
                 map.put(VENDOR_SOLUTIONS, solutionTags);
-                String[] categoryTags = jsonItemObject.get(VENDOR_CATEGORY).getAsString().split(",");
+
+                String[] categoryTags = jsonItemObject.get(VENDOR_CATEGORY).getAsString().split("£");
                 map.put(VENDOR_CATEGORY, categoryTags);
-                map.put(VENDOR_PAGE_LINK, rootPagePath + "/" + name);
-                map.put(VENDOR_PAGE_LABEL, title);
+
+                String vendorPageLabel = jsonItemObject.get(VENDOR_PAGE_LABEL).getAsString();
+                String vendorPageLink = jsonItemObject.get(VENDOR_PAGE_LINK).getAsString();
+                map.put(VENDOR_PAGE_LINK, vendorPageLink);
+                map.put(VENDOR_PAGE_LABEL, vendorPageLabel);
                 map.put(VENDOR_TITLE, title);
-                String overview = jsonItemObject.get(OVERVIEW).getAsString();
+                String awards = jsonItemObject.get(AWARDS).getAsString().replaceAll("£", ",");
+                map.put(AWARDS, awards);
+
+                String overview = jsonItemObject.get(OVERVIEW).getAsString().replaceAll("£", ",");
                 String[] allTags = ArrayUtils.addAll(alphabetTags, solutionTags);
                 allTags = ArrayUtils.addAll(allTags, categoryTags);
-                allTags = ArrayUtils.addAll(allTags, featuredVendorTag);
-                createVendorPage(masterResource, name, title, overview, allTags, cfmResource);
+                allTags = ArrayUtils.addAll(allTags, vendorDesignationTags);
+
+                createVendorPage(masterResource, name, title, overview, allTags, vendorPageLink, cfmResource);
             }
         }
     }
 
     private void createVendorPage(Resource masterResource, String name, String title, String overview, String[] allTags,
-                                  Resource cfmResource) throws PersistenceException, WCMException {
+                                  String vendorPageRedirect, Resource cfmResource) throws PersistenceException, WCMException {
         // page creation
         ResourceResolver resourceResolverForPage = masterResource.getResourceResolver();
         PageManager pageManager = resourceResolverForPage.adaptTo(PageManager.class);
-        Page vendorPage = pageManager.create(rootPagePath, name, "/conf/techdata/settings/wcm/templates/vendor-page", title);
+        Page vendorPage = pageManager.create(rootPagePath, name.toLowerCase().replaceAll(" ", "-"), "/conf/techdata/settings/wcm/templates/vendor-page", title);
         Resource containerResource = vendorPage.getContentResource().getChild("root/container");
         ModifiableValueMap vendorPageContentResourceProps = vendorPage.getContentResource().adaptTo(ModifiableValueMap.class);
         vendorPageContentResourceProps.put("cq:tags", allTags);
+        vendorPageContentResourceProps.put("cq:redirectTarget", vendorPageRedirect);
 
         Map<String, Object> pageDataMap = new HashMap<>();
         pageDataMap.put("paragraphScope", "all");

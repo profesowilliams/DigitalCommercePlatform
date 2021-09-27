@@ -12,7 +12,7 @@ public class Constants {
     public static final String CATALOG_NO_NAME = "No name in Catalog";
     public static final String CATALOG_ROOT_PARENT_PATH = "/content/dam/techdata/catalog";
     public static final String CATALOG_CF_MODEL_PATH = "/conf/techdata/models/settings/dam/cfm/models/catalog";
-    public static final String VENDOR_CF_MODEL_PATH = "/conf/techdata/models/settings/dam/cfm/models/vendor";
+    public static final String VENDOR_CF_MODEL_PATH = "/conf/techdata/settings/dam/cfm/models/vendor";
     public static final String CATALOG_JSON_KEY_FIELD_NAME = "key";
     public static final String CATALOG_JSON_NAME_FIELD_NAME = "name";
     public static final String CATALOG_JSON_CHILDREN_FIELD_NAME = "children";
@@ -24,7 +24,7 @@ public class Constants {
     public static final String VENDOR_NAME = "vendor-name";
     public static final String VENDOR_TITLE = "vendor-title";
     public static final String VENDOR_DESIGNATION = "vendor-designation";
-    public static final String VENDOR_SOLUTIONS = "Solutions";
+    public static final String VENDOR_SOLUTIONS = "vendor-solutions";
     public static final String VENDOR_CATEGORY = "vendor-category";
     public static final String VENDOR_PAGE_LINK = "vendor-page-link";
     public static final String VENDOR_PAGE_LABEL = "vendor-page-label";
