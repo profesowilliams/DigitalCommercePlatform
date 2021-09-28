@@ -8,7 +8,7 @@
   text-align: left;
   width: 100%;
 
-  &:hover {
+  &:hover, &:active {
     background-color: get-color(td-primary-blue);
     color: get-color(brand-white);
 
@@ -51,7 +51,7 @@
   }
 
   &--checked {
-    margin-left: -47%;
+    margin-left: -57%;
     margin-top: 5%;
     position: fixed;
     width: 100%;
@@ -221,11 +221,11 @@
       @include mobile {
         min-width: rem(350px);
       }
-    }
 
-    &:hover, &:active {
-      svg {
-        color: get-color(brand-white);
+      &:hover, &:active {
+        svg {
+          color: get-color(brand-white);
+        }
       }
     }
 
@@ -341,7 +341,7 @@
 }
 
 //AEM overriding Styling
- .experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
   margin-left: auto !important;
   width: 35% !important;
 
