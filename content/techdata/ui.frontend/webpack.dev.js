@@ -860,10 +860,10 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "WhitelabelExportConfiguration",
+                filename: "white-label-export-configuration",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/WhitelabelExportConfiguration.html"
+                    SOURCE_ROOT + "/static/white-label-export-configuration.html"
                 ),
             }),
             new HtmlWebpackPlugin({
