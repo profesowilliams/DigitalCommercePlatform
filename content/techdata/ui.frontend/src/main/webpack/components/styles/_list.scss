@@ -183,7 +183,8 @@
 
   &--brand-grid-3 {
     .cmp-list {
-      align-items: center;
+      align-items: flex-start;
+      justify-content: left;
       @include tablet {
         justify-content: space-evenly;
       }
@@ -199,7 +200,9 @@
       }
     }
     .cmp-list__item-title {
-      display: none;
+      font-weight: $font-weight-normal;
+      font-size: rem(13px);
+      color: get-color(brand-text-gray);
     }
     .cmp-image__image-figure {
       height: auto;
@@ -225,6 +228,13 @@
     .cmp-list__item-link {
       text-decoration: none;
       padding: rem(10px);
+      &:hover {
+        .cmp-list__item-title {
+          color: $sky-dark;
+          font-size: $font-size-medium;
+          font-weight: $font-weight-bold;
+        }
+      }
     }
   }
 

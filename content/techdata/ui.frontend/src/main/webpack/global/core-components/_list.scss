@@ -221,6 +221,8 @@
 
   &--brand-grid-3 {
     .cmp-list {
+      align-items: flex-start;
+      justify-content: left;
       list-style-type: none;
     }
 
@@ -236,8 +238,8 @@
     }
 
     .cmp-list__item-title {
-      color: get-color(text-light-charcoal);
-      font-size: 13px;
+      color: get-color(brand-text-gray);
+      font-size: rem(13px);
       font-weight: $font-weight-normal;
     }
   }
