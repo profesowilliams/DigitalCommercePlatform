@@ -998,6 +998,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "todays-action-items",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/todays-action-items.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "orders-grid",
                 template: path.resolve(
                     __dirname,

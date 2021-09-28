@@ -1,0 +1,47 @@
+@import "../../variables";
+@import "../../../site/variables";
+
+.cmp-todays-action-items {
+  font-family: $font-family;
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  width: rem(460px);
+  height: rem(55px);
+  margin: 0 rem(15px);
+  &__title {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    color: get-color(text-mid-gray);
+    width: 100%;
+    text-transform: uppercase;
+    padding-bottom: rem(10px);
+  }
+  &__tab {
+    border-radius: rem(5px);
+    border: rem(1px) solid get-color(td-lightblue);
+    width: 49%;
+    height: rem(95px);
+    padding: rem(10px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__title {
+        font-size: $font-size-xsmall;
+        margin-bottom: rem(5px);
+        width: 100%;
+    }
+
+    &__items {
+        font-size: $font-size-custom-xlarge;
+        color: get-color(td-lightblue);
+    }
+
+    &__action-icon {
+        font-size: $font-size-custom-xxxlarge;
+        color: get-color(v-divider-gray);
+    }
+
+  }
+}
