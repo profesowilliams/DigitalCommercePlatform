@@ -616,7 +616,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             ExcelRange Rng = wsQuoteDetail.Cells[xlRow, xlCol, xlRow, xlCol + 8];
             Rng.Merge = true;
-            Rng.Value = "Tech Data Quote Details";
+            Rng.Value = "Tech Data Quote Details"; // Should this name be in a constant? Or replacable with reseller name?
             Rng.Style.Font.Size = 22;
             Rng.Style.Font.Name = "Lato Regular";
             Rng.Style.VerticalAlignment = ExcelVerticalAlignment.Bottom;

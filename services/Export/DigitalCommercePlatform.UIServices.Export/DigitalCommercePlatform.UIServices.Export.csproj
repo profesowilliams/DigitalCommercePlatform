@@ -25,6 +25,9 @@
     <None Remove="Infrastructure\Mappings\Quotes\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Content\td-synnex-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-config-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
@@ -42,9 +45,15 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.28" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.28" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.28" />
+    <Content Include="Content\td-synnex-logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DigitalFoundation.Common" Version="5.2.32" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.32" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.32" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />

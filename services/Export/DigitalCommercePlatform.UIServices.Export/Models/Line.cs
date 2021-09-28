@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public string VendorPartNo { get; set; }
         public string Manufacturer { get; set; }
         public string Description { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public decimal? UnitPrice { get; set; }
         public string UnitPriceFormatted { get { return string.Format(Constants.MoneyFormat, UnitPrice); } }
         public decimal? TotalPrice { get; set; }

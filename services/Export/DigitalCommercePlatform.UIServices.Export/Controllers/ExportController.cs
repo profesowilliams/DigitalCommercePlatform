@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("downloadQuoteDetails")]
         public async Task<ActionResult> DownloadQuoteDetails(DownloadQuoteDetails.Request request)
         {

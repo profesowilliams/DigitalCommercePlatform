@@ -3,7 +3,7 @@ using DigitalCommercePlatform.UIServices.Export.Models.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Export.Models
+namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
 {
     [ExcludeFromCodeCoverage]
     public class QuoteDetails

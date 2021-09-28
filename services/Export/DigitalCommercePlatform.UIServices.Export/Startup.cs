@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Export
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IExportService, ExportService>();
+            services.AddTransient<ICommerceService, CommerceService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddHttpClient("OneSourceClient");
         }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Export.Models;
 using DigitalCommercePlatform.UIServices.Export.Models.Common;
+using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using DigitalCommercePlatform.UIServices.Export.Models.UIServices.Commerce;
 using DigitalCommercePlatform.UIServices.Export.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -24,7 +25,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string QuoteId { get; set; }
-            public IFormFile Logo { get; set; }
+            public LineMarkup[] LineMarkup { get; set; }
+            public string Logo { get; set; }
         }
 
         public class Response
@@ -65,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                 var getQuoteRequest = new GetQuote.Request(new List<string> { request.QuoteId }, true);
                 var quoteModel = await _commerceService.GetQuote(getQuoteRequest);
                 var quoteDetails = _mapper.Map<QuoteDetails>(quoteModel);
-                var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request.Logo);
+                var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request.Logo, request.LineMarkup);
                 var file = new DownloadableFile(binaryContentXls, request.QuoteId + ".xls", 
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                 //var file = new DownloadableFile(binaryContentXls, request.QuoteId + ".xls", "application/vnd.ms-excel");
