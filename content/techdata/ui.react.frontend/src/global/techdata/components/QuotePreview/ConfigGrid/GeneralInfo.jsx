@@ -30,10 +30,14 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
         setDealsFound([]);
     }
     
-    const handleModelChange = (e) => setGeneralInfoState({
-        ...generalInfoState,
-        [e.target.name]: e.target.value,
-    });
+    const handleModelChange = (e) => {
+        setGeneralInfoState({
+            ...generalInfoState,
+            [e.target.name]: e.target.value,
+        });
+
+        setIsTiersDropDownFocused(false);
+    }
     
     const handleEndUserNameKeyPress = (e) => {
         if (e.key === "Enter") {
@@ -75,7 +79,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                 {isLoadingDeals &&
                     <>
                         <Loader visible={isLoadingDeals} />
-                        {info.searchingDealsLabel} cancel
+                        {info.searchingDealsLabel}
                     </>
                 }
                 {dealsFound?.length > 0 &&
@@ -148,11 +152,16 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
         setSelectedDeal(-1);
     }
 
-    const replaceSearchTerm = (originalStr, searchTerm) =>
-        originalStr.replace("{end-user-name}", searchTerm);
+    const replaceSearchTerm = (originalStr, searchTerm) => {
+        const productIds = quoteDetails.items?.map((lineItem) => lineItem.mfrNumber);
+
+        return originalStr
+            .replace("{end-user-name}", searchTerm)
+            .replace("{manufacturer-parts-id-array}", productIds.join(','))
+            .replace("{order-level}", generalInfoState.tier);
+    }
 
     const loadDeals = async (searchTerm) => {
-
         setIsLoadingDeals(true);
 
         const endpointUrl = replaceSearchTerm(gridProps.dealsForEndpoint, generalInfoState.endUserName);
@@ -242,8 +251,12 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                     <option key={index} value={option.value}>{option.key}</option>
                                 )}
                             </select>
-                            <i className={`cmp-qp__dropdown-icon fas fa-chevron-down ${isTiersDropDownFocused ? 'visible': 'invisible'}`}></i>
-                            <i className="cmp-qp__dropdown-icon fas fa-chevron-right"></i>
+                            <div className={`cmp-qp__dropdown-icon cmp-qp__dropdown-icon--${isTiersDropDownFocused ? 'visible': 'invisible'}`}>
+                                <i className="fas fa-chevron-down"></i>
+                            </div>
+                            <div className={`cmp-qp__dropdown-icon cmp-qp__dropdown-icon--${!isTiersDropDownFocused ? 'visible': 'invisible'}`}>
+                                <i className="fas fa-chevron-right"></i>
+                            </div>
                         </div>
                     </div>
                     <div className="form-check">

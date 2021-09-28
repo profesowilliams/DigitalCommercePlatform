@@ -84,20 +84,24 @@
 }
 
 .cmp-qp__dropdown {
+    .field {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        width: 100%;
+    }
 
-  .field {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
-    width: 100%;
-  }
-  
-  .cmp-qp__dropdown-icon {
-    position: absolute;
-    right: 38px;
-    pointer-events: none;
-    color: $brand-light-blue-icon;
-  }
+    .cmp-qp__dropdown-icon {
+        &--invisible {
+            display: none;
+        }
+        position: relative;
+        left: 95%;
+        top: -18px;
+        display: inline;
+        pointer-events: none;
+        color: $brand-light-blue-icon;
+    }
 }
 
 .cmp-qp__general-info {
