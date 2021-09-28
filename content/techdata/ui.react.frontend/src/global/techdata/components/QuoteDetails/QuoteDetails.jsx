@@ -70,6 +70,8 @@ const QuoteDetails = ({ componentProp }) => {
         labels={whiteLabel}
         data={quoteDetails}
         quoteOption={quoteOption}
+        quoteDetailColumns={productLines?.columnList}
+        whiteLabelColumns={whiteLabel?.columnList}
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}

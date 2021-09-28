@@ -5,12 +5,15 @@ import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
+import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 
 function ProductLinesGrid({
   gridProps,
   data,
   labels,
   quoteOption,
+  quoteDetailColumns,
+  whiteLabelColumns,
   onMarkupChanged,
 }) {
   const [gridApi, setGridApi] = useState(null);
@@ -32,10 +35,14 @@ function ProductLinesGrid({
   const mutableGridData = Object.assign([], gridData);
 
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
-  const gridConfig = {
-    ...gridProps,
-    serverSide: false,
-    paginationStyle: "none",
+
+  const gridConfig = (whiteLabelMode) => {
+    return {
+      ...gridProps,
+      serverSide: false,
+      paginationStyle: "none",
+      columnList: whiteLabelMode ? whiteLabelColumns : quoteDetailColumns,
+    };
   };
 
   function expandAll() {
@@ -80,7 +87,9 @@ function ProductLinesGrid({
       detailRenderer: ({ data }) => (
         <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
           <ProductLinesChildGrid
-            columnDefiniton={whiteLabelMode ? whiteLabelCols() : columnDefs}
+            columnDefiniton={
+              whiteLabelMode ? whiteLabelCols() : quoteDetailsCols()
+            }
             data={data.children}
             onModelUpdateFinished={() => {
               markupChanged(mutableGridData);
@@ -227,17 +236,19 @@ function ProductLinesGrid({
 
   //whitelabel column defs
   const whiteLabelCols = () => {
-    const cols = [
-      "id",
-      "shortDescription",
-      "quantity",
-      "msrp",
-      "unitPrice",
-      "extendedPriceFormatted",
-      "appliedMarkup",
-      "clientUnitPrice",
-      "clientExtendedPrice",
-    ];
+    const cols = isNotEmpty(whiteLabelColumns)
+      ? whiteLabelColumns.map((el) => el.columnKey)
+      : [
+          "id",
+          "shortDescription",
+          "quantity",
+          "msrp",
+          "unitPrice",
+          "extendedPriceFormatted",
+          "appliedMarkup",
+          "clientUnitPrice",
+          "clientExtendedPrice",
+        ];
     //get whitelabel columns
     const _ = cols.map((col) => {
       return columnDefs.find((el) => col === el.field);
@@ -253,15 +264,17 @@ function ProductLinesGrid({
 
   //quoteDetails column defs
   const quoteDetailsCols = () => {
-    const cols = [
-      "id",
-      "shortDescription",
-      "unitListPriceFormatted",
-      "discounts",
-      "quantity",
-      "unitPrice",
-      "extendedPriceFormatted",
-    ];
+    const cols = isNotEmpty(quoteDetailColumns)
+      ? quoteDetailColumns.map((el) => el.columnKey)
+      : [
+          "id",
+          "shortDescription",
+          "unitListPriceFormatted",
+          "discounts",
+          "quantity",
+          "unitPrice",
+          "extendedPriceFormatted",
+        ];
     //get quoteDetails columns
     return cols.map((col) => {
       return columnDefs.find((el) => col === el.field);
@@ -300,7 +313,7 @@ function ProductLinesGrid({
           columnDefinition={
             whiteLabelMode ? whiteLabelCols() : quoteDetailsCols()
           }
-          config={gridConfig}
+          config={gridConfig(whiteLabelMode)}
           data={mutableGridData}
           onAfterGridInit={onAfterGridInit}
           onModelUpdateFinished={() => {

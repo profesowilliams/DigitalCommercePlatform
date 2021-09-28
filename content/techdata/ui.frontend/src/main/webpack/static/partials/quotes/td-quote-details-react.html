@@ -4,72 +4,137 @@
     data-cmp-type="react"
     className="cmp-td-quote-details"
     data-config='{
-            "subheaderLabel": "Quote Preview: Confirm Details to Quote",
-            "subheaderTitle": "TD Quote",
-            "createdDateLabel": "Created",
-            "expiresDateLabel": "Expires",
-            "subtotalLabel": "Subtotal",
-            "confirmButtonLabel": "Continue with Quick Quote",
-            "subTotalLabel":"Sub Total",
-            "makeChoiceLabel": "Make this my default choice",
-            "continueStandardPriceLabel": "Continue With Standard Price Text instead",
-
-            "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details",
-            "information": {
-                "yourCompanyHeaderLabel": "Your Company Information",
-                "yourLogoLabel": "Your logo",
-                "productImagesLabel": "Product images",
-                "partNoManufacturerLabel": "Part number - manufacturer",
-                "partNoTDLabel": "Part number - Tech Data",
-                "trackingNoLabel": "UPC number",
-                "MSRPLabel": "MSRP",
-                "endUserHeaderLabel": "End User Information",
-                "generalHeaderLabel": "General Information",
-                "emailLabel": "Email",
-                "phoneLabel": "Phone",
-                "sourceLabel": "Source",
-                "tierLabel": "Tier",
-                "referenceLabel": "Reference",
-                "dealLabel": "Deal"
+        "subheaderLabel": "Quote Preview: Confirm Details to Quote",
+        "subheaderTitle": "TD Quote",
+        "createdDateLabel": "Created",
+        "expiresDateLabel": "Expires",
+        "subtotalLabel": "Subtotal",
+        "confirmButtonLabel": "Continue with Quick Quote",
+        "subTotalLabel": "Sub Total",
+        "makeChoiceLabel": "Make this my default choice",
+        "continueStandardPriceLabel": "Continue With Standard Price Text instead",
+        "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details",
+        "information": {
+          "yourCompanyHeaderLabel": "Your Company Information",
+          "yourLogoLabel": "Your logo",
+          "productImagesLabel": "Product images",
+          "partNoManufacturerLabel": "Part number - manufacturer",
+          "partNoTDLabel": "Part number - Tech Data",
+          "trackingNoLabel": "UPC number",
+          "MSRPLabel": "MSRP",
+          "endUserHeaderLabel": "End User Information",
+          "generalHeaderLabel": "General Information",
+          "emailLabel": "Email",
+          "phoneLabel": "Phone",
+          "sourceLabel": "Source",
+          "tierLabel": "Tier",
+          "referenceLabel": "Reference",
+          "dealLabel": "Deal"
+        },
+        "productLines": {
+          "label": "Line Item Details",
+          "applyMarkupLabel": "Apply your markup to the line items below",
+          "expandAllLabel": "Expand All",
+          "collapseAllLabel": "Collapse All",
+          "startDateLabel": "Start Date",
+          "autoRenewLabel": "Auto Renew",
+          "durationLabel": "Duration",
+          "billingLabel": "Billing",
+          "yesLabel": "Yes",
+          "noLabel": "No",
+          "columnList": [
+            {
+              "columnLabel": "Line Item",
+              "columnKey": "id"
             },
-            "productLines": {
-                "label": "Line Item Details",
-                "applyMarkupLabel": "Apply your markup to the line items below",
-                "expandAllLabel": "Expand All",
-                "collapseAllLabel": "Collapse All",
-                "startDateLabel": "Start Date",
-                "autoRenewLabel": "Auto Renew",
-                "durationLabel": "Duration",
-                "billingLabel": "Billing",
-                "yesLabel": "Yes",
-                "noLabel": "No",
-                "columnList":[
-                ]
+            {
+              "columnLabel": "Item Information",
+              "columnKey": "shortDescription"
             },
-            "quoteOptions": {
-                "dropdownLabel" : "Quote Options",
-                "exportToCSV": "Export to CSV",
-                "exportToPDF": "Export to PDF",
-                "whiteLabelQuote": "White Label Quote",
-                "checkoutLabel": "Check Out"
+            {
+              "columnLabel": "Unit List Price",
+              "columnKey": "unitListPriceFormatted"
             },
-            "whiteLabel":{
-                "markubLabel": "Markup",
-                "MSRPLabel": "MSRP",
-                "description": "Description",
-                "value": "Value",
-                "addNew": "Add new",
-                "yourCostLabel": "Your cost",
-                "yourCustomerPriceLabel": "Your cusotmers price",
-                "yourMarkupLabel": "Your markup",
-                "subtotalLabel": "Subtotal",
-                "ancillaryItemsLabel": "Ancillary items",
-                "endUserTotalLabel": "End user total",
-                "savingsLabel": "Savings over MSRP",
-                "applyToAllLabel": "Apply to all",
-                "applyMarkupLabel" : "Apply markup as",
-                "previewQuoteLabel": "Preview customer quote"
+            {
+              "columnLabel": "% Off List Price",
+              "columnKey": "discounts"
+            },
+            {
+              "columnLabel": "Quantity",
+              "columnKey": "quantity"
+            },
+            {
+              "columnLabel": "Unit Price",
+              "columnKey": "unitPrice"
+            },
+            {
+              "columnLabel": "Extended Price",
+              "columnKey": "extendedPriceFormatted"
             }
-        }'
+          ]
+        },
+        "quoteOptions": {
+          "dropdownLabel": "Quote Options",
+          "exportToCSV": "Export to CSV",
+          "exportToPDF": "Export to PDF",
+          "whiteLabelQuote": "White Label Quote",
+          "checkoutLabel": "Check Out"
+        },
+        "whiteLabel": {
+          "markubLabel": "Markup",
+          "MSRPLabel": "MSRP",
+          "description": "Description",
+          "value": "Value",
+          "addNew": "Add new",
+          "yourCostLabel": "Your cost",
+          "yourCustomerPriceLabel": "Your cusotmers price",
+          "yourMarkupLabel": "Your markup",
+          "subtotalLabel": "Subtotal",
+          "ancillaryItemsLabel": "Ancillary items",
+          "endUserTotalLabel": "End user total",
+          "savingsLabel": "Savings over MSRP",
+          "applyToAllLabel": "Apply to all",
+          "applyMarkupLabel": "Apply markup as",
+          "previewQuoteLabel": "Preview customer quote",
+          "columnList": [
+            {
+              "columnLabel": "Line Item",
+              "columnKey": "id"
+            },
+            {
+              "columnLabel": "Item Information",
+              "columnKey": "shortDescription"
+            },
+            {
+              "columnLabel": "Quantity",
+              "columnKey": "quantity"
+            },
+            {
+              "columnLabel": "MSRP",
+              "columnKey": "msrp"
+            },
+            {
+              "columnLabel": "Unit Price",
+              "columnKey": "unitPrice"
+            },
+            {
+              "columnLabel": "Extended Price",
+              "columnKey": "extendedPriceFormatted"
+            },
+            {
+              "columnLabel": "Markup",
+              "columnKey": "appliedMarkup"
+            },
+            {
+              "columnLabel": "Client Unit Price",
+              "columnKey": "clientUnitPrice"
+            },
+            {
+              "columnLabel": "Client Extended Price",
+              "columnKey": "clientExtendedPrice"
+            }
+          ]
+        }
+      }'
   ></div>
 </div>
