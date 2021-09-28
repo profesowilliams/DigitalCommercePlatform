@@ -55,5 +55,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
         public int? PageSize { get; set; } = 25;
         public bool? WithPaginationInfo { get; set; }
         public string VendorReference { get; set; }
+        public string DealId { get; set; }
     }
 }

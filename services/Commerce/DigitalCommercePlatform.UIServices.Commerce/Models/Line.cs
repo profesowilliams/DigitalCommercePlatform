@@ -58,6 +58,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string SupplierQuoteRef { get; set; }
         public string ConfigID { get; set; }
         public string LocationID { get; set; }
-        
+        public IList<string> Serials { get; set; }
+        public IList<string> PAKs { get; set; }
+
     }
 }

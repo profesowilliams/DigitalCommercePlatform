@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string Manufacturer { get; set; }
             public string EndUserName { get; set; }
             public bool Details { get; set; } = true;
+            public string DealId { get; set; }
 
             public Request()
             {
@@ -92,7 +93,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     Manufacturer = request.Manufacturer,
                     CreatedTo = dateTo,
                     EndUserName = request.EndUserName,
-                    Details = request.Details
+                    Details = request.Details,
+                    DealId=request.DealId
+                    
                 };
                 var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                 var getProductResponse = _mapper.Map<Response>(quoteDetails);

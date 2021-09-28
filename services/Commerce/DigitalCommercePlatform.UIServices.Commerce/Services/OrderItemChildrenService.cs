@@ -22,14 +22,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return new List<Line>();
             }
 
-            var parents = orderDetails.Items.Where(i => i.Parent == "0").ToList();
+            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList();
 
             var lines = new List<Line>();
 
             foreach (var item in parents)
             {
                 var children = orderDetails.Items.Where(i => (i.Parent != null && i.Parent!="0") &&
-                            _substringService.GetSubstring(i.Id, ".") == _substringService.GetSubstring(item.Id, ".")).ToList();
+                            _substringService.GetSubstring(i.Parent, ".") == _substringService.GetSubstring(item.Id, ".")).ToList();
 
                 lines.Add(new Line
                 {

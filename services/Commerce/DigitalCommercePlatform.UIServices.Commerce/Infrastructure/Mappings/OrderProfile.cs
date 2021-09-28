@@ -39,6 +39,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<VendorPartResolver>())
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
+                .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice));
 
 
@@ -50,19 +52,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<VendorPartResolver>())
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
+                .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice));
 
 
             CreateMap<OrderModel, OrderDetailModel>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
-                .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
                 .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
                 .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
                 .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
-                .ForPath(dest=> dest.PaymentDetails.PaymentTermText, opt => opt.MapFrom(src => src.PaymentTermText))
+                .ForPath(dest => dest.PaymentDetails.PaymentTermText, opt => opt.MapFrom(src => src.PaymentTermText))
                 .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
                 .ForPath(dest => dest.BlindPackaging, opt => opt.MapFrom(src => src.BlindPackaging))
                 .ForPath(dest => dest.PaymentDetails.Tax, opt => opt.MapFrom(src => src.Tax))
@@ -73,20 +76,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.PODate, opt => opt.MapFrom<DateResolver>())
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
-                .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID));
+                .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID))
+                .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>());
 
         }
-    }    
+    }
 
     [ExcludeFromCodeCoverage]
     public class DateResolver : IValueResolver<OrderModel, OrderDetailModel, string>
     {
         public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
-        {            
+        {
             var poDate = source.PoDate.GetHashCode() == 0 ? string.Empty : source.PoDate?.ToString("MM/dd/yy");
             return poDate;
         }
-    } 
+    }
 
     [ExcludeFromCodeCoverage]
     public class TDPartResolver : IValueResolver<Item, Line, string>
@@ -125,14 +129,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Manufacturer : "Unavailable";
             return description;
         }
-    }                   
+    }
 
     [ExcludeFromCodeCoverage]
     public class OrderPriceResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
     {
         public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
         {
-            return source.Price.HasValue ? CurrencyHelper.GetFormattedAmount(source.Price.Value) : string.Empty; 
+            return source.Price.HasValue ? CurrencyHelper.GetFormattedAmount(source.Price.Value) : string.Empty;
         }
     }
 
@@ -141,7 +145,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public List<Vendor> Resolve(OrderModel source, RecentOrdersModel destination, List<Vendor> destMember, ResolutionContext context)
         {
-            var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer!=null);
+            var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer != null);
             var vendorDetails = source.Items.SelectMany(i => i.Product).Where(i => i.Manufacturer != null).GroupBy(i => i.Manufacturer)
               .Select(i => new Vendor
               {
@@ -246,7 +250,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             foreach (Item orderLine in orderLines)
             {
-                if (!lstEndUsers.Where(a => a.CompanyName.ToUpper().Contains(orderLine.EndUser.Name?.ToUpper())).Any())
+                if (!lstEndUsers.Where(a => a.CompanyName != null && a.CompanyName.ToUpper().Contains(orderLine.EndUser.Name?.ToUpper())).Any())
                 {
                     var address = new Address
                     {
@@ -263,7 +267,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                         Name = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Name) ? string.Empty : orderLine.EndUser.Contact?.Name,
                         ContactEmail = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Email) ? string.Empty : orderLine.EndUser.Contact?.Email,
                     };
-                    lstEndUsers.Add(address);
+
+                    if (!string.IsNullOrWhiteSpace(address.CompanyName) || !string.IsNullOrWhiteSpace(address.Name))
+                        lstEndUsers.Add(address);
                 }
             }
             return lstEndUsers;
