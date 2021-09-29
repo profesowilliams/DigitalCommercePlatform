@@ -211,7 +211,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
         this.contentFragmentPath = vendorServiceConfig.contentFragmentPath();
     }
 
-    private static final String TAG_PREFIX = "vendor-alpha-group:";
+    private static final String TAG_PREFIX = "tech-data/vendor/vendor-alpha-group:";
     private static final Logger log = LoggerFactory.getLogger(VendorServiceAPIImpl.class);
 
 }
