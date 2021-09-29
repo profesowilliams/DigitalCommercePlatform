@@ -231,6 +231,7 @@
 
     .cmp-list__item-link {
       text-decoration: none;
+      padding: 0;
       &:hover {
         .cmp-list__item-title {
           color: $sky-dark;
