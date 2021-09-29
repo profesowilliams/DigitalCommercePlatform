@@ -107,6 +107,9 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["endUserNameLabel"]) {
         informationTab["endUserNameLabel"]  = properties["endUserNameLabel"];
     }
+    if (properties && properties["errorGettingDealsLabel"]) {
+        informationTab["errorGettingDealsLabel"]  = properties["errorGettingDealsLabel"];
+    }
 
      if (properties && properties["companyLabel"]) {
         informationTab["companyLabel"]  = properties["companyLabel"];

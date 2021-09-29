@@ -8,4 +8,5 @@
     versionLabel="Version:"
     spaIdLabel="Deal ID:"
     endUserNameLabel="End User:"
+    errorGettingDealsLabel="There was an error trying to get the Deals, please try again."
 />

@@ -201,6 +201,11 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldLabel="End User Label"
                                                         name="./endUserNameLabel"/>
+                                                    <errorGettingDealsLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Error Getting Deals Label"
+                                                        name="./errorGettingDealsLabel"/>
                                                 </items>
                                             </generalInformation>
                                         </items>

@@ -1313,8 +1313,9 @@ app.get("/ui-account/v1/getVendorConnections", function (req, res) {
 });
 
 app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
+  const { orderId } = req.query;
 
-  if (!req.headers["sessionid"]) {
+  if (!req.headers["sessionid"] || orderId === '14009754975') {
     return res.status(500).json({
       error: {
         code: 0,
@@ -1327,33 +1328,53 @@ app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
 });
 
 app.get("/ui-config/v1/getdealsFor", function (req, res) {
-  const { endUserName } = req.query;
+  const { endUserName, mfrPartNumbers, orderLevel } = req.query;
 
-  res.json({
+  console.log("/ui-config/v1/getdealsFor", endUserName, mfrPartNumbers, orderLevel);
 
-    "content": {
-      "items": [
-        {
-          "bid": "3443554545",
-          "version": "001",
-          "spaId": "0012",
-          "endUserName": endUserName,
-        },
-        {
-          "bid": "212121323",
-          "version": "002",
-          "spaId": "0013",
-          "endUserName": endUserName,
-        },
-        {
-          "bid": "76676767",
-          "version": "004",
-          "spaId": "0014",
-          "endUserName": endUserName,
-        },
-      ]
-    }
-  });
+  if (endUserName == 'error') {
+    res.status(500).json({
+      error: {
+        code: 0,
+        message: [],
+        isError: true,
+      },
+    });
+  }
+  else if (endUserName == 'empty') {
+    res.json({
+      "content": {
+        "items": [
+        ]
+      }
+    });
+  }
+  else {
+    res.json({
+      "content": {
+        "items": [
+          {
+            "bid": "3443554545",
+            "version": "001",
+            "dealId": "0012",
+            "endUserName": endUserName,
+          },
+          {
+            "bid": "212121323",
+            "version": "002",
+            "dealId": "0013",
+            "endUserName": endUserName,
+          },
+          {
+            "bid": "76676767",
+            "version": "004",
+            "dealId": "0014",
+            "endUserName": endUserName,
+          },
+        ]
+      }
+    });
+  }
 });
 
 app.get("/ui-commerce/v1/pricingConditions", function (req, res) {
@@ -3734,7 +3755,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             "currencySymbol": "$",
             "subTotal": 96957.48,
             "subTotalFormatted": "96,957.48",
-            "tier": null,
+            "tier": "EduErate",
             "configurationId": "QJ128146301OP",
             "description": "Deal ID 52296358",
             "vendor": "CISCO"

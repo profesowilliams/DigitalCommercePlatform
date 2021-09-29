@@ -119,10 +119,14 @@
     .form-check.cmp-qp__edit-deal {
         height: 100%;
 
+        .field.element {
+            width: 90%;
+        }
         .cmp-qp__edit-deal__button {
             color: $brand-light-blue-icon;
             background: white;
             border-bottom: 1px solid #d8d8d8;
+            width: 10%;
         }
 
         .cmp-qp-dealslist {

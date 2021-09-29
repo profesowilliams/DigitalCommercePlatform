@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useGet from "../../../hooks/useGet";
 import axios from "axios";
 import Button from '../../Widgets/Button';
@@ -24,7 +24,25 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
     const [isTiersDropDownFocused, setIsTiersDropDownFocused] = useState(false);
     const [isLoadingDeals, setIsLoadingDeals] = useState(false);
     const [dealsFound, setDealsFound] = useState([]);
+    const [noDealsFound, setNoDealsFound] = useState(false);
+    const [errorGettingDeals, setErrorGettingDeals] = useState(false);
     const [selectedDeal, setSelectedDeal] = useState(-1);
+
+    useEffect(() => {
+
+        setGeneralInfoState((previousInfo) => (
+            {
+                ...previousInfo,
+                tierUserFriendlyLabel: getPricingConditionLabel(generalInfoState.tier)
+            }
+        ));
+    }, [pricingConditions]);
+
+    const getPricingConditionLabel = (tier) => {
+        const pricingConditionsItems = pricingConditions?.content?.pricingConditions?.items;
+
+        return pricingConditionsItems?.find((orderLevel) => orderLevel.value === tier)?.key;
+    }
 
     const clearDealsFound = () => {
         setDealsFound([]);
@@ -34,6 +52,14 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
         setGeneralInfoState({
             ...generalInfoState,
             [e.target.name]: e.target.value,
+        });
+    }
+    
+    const handleTierChange = (e) => {
+        setGeneralInfoState({
+            ...generalInfoState,
+            [e.target.name]: e.target.value,
+            tierUserFriendlyLabel: getPricingConditionLabel(e.target.value),
         });
 
         setIsTiersDropDownFocused(false);
@@ -48,12 +74,16 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
     const handleDealsChange = (e, index) => {
         setSelectedDeal(index);
 
+        const spaId = dealsFound[index].dealId;
         setGeneralInfoState((previousInfo) => (
             {
                 ...previousInfo,
-                deal: dealsFound[index],
+                deal: {
+                    ...dealsFound[index],
+                    spaId
+                },
                 endUserName: '',
-                spaId: dealsFound[index].spaId
+                spaId
             }
         ));
     };
@@ -74,65 +104,75 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
     };
 
     const displayDealsFound = () => {
-        return (
-            <div>
-                {isLoadingDeals &&
-                    <>
-                        <Loader visible={isLoadingDeals} />
-                        {info.searchingDealsLabel}
-                    </>
-                }
-                {dealsFound?.length > 0 &&
-                    <>
-                        {info.dealsFoundLabel}
-                        <ul className="cmp-qp-dealslist">
-                            {dealsFound.map((dealInfo, index) => 
-                                <li key={dealInfo.spaId} className="cmp-qp-dealslist__item">
-                                    <input type="radio" name={`deal${index}`}
-                                            value={index}
-                                            checked={selectedDeal == index} 
-                                            onChange={(e) => handleDealsChange(e, index)} />
-                                    <div>
-                                        <div className="cmp-qp-dealslist__item-data">
-                                            <div>
-                                                {info.bidLabel}
+        if (errorGettingDeals) {
+            return info.errorGettingDealsLabel;
+        }
+        else if (isLoadingDeals) {
+            return (
+                <>
+                    <Loader visible={isLoadingDeals} />
+                    {info.searchingDealsLabel}
+                </>
+            );
+        }
+        else if (noDealsFound) {
+            return info.noDealsFoundLabel;
+        }
+        else {
+            return (
+                <div>
+                    {dealsFound?.length > 0 &&
+                        <>
+                            {info.dealsFoundLabel}
+                            <ul className="cmp-qp-dealslist">
+                                {dealsFound.map((dealInfo, index) => 
+                                    <li key={dealInfo.dealId} className="cmp-qp-dealslist__item">
+                                        <input type="radio" name={`deal${index}`}
+                                                value={index}
+                                                checked={selectedDeal == index} 
+                                                onChange={(e) => handleDealsChange(e, index)} />
+                                        <div>
+                                            <div className="cmp-qp-dealslist__item-data">
+                                                <div>
+                                                    {info.bidLabel}
+                                                </div>
+                                                <div>
+                                                    {dealInfo.bid}
+                                                </div>
                                             </div>
-                                            <div>
-                                                {dealInfo.bid}
+                                            <div className="cmp-qp-dealslist__item-data">
+                                                <div>
+                                                    {info.versionLabel}
+                                                </div>
+                                                <div>
+                                                    {dealInfo.version}
+                                                </div>
+                                            </div>
+                                            <div className="cmp-qp-dealslist__item-data">
+                                                <div>
+                                                    {info.spaIdLabel}
+                                                </div>
+                                                <div>
+                                                    {dealInfo.dealId}
+                                                </div>
+                                            </div>
+                                            <div className="cmp-qp-dealslist__item-data">
+                                                <div>
+                                                    {info.endUserNameLabel}
+                                                </div>
+                                                <div>
+                                                    {dealInfo.endUserName}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="cmp-qp-dealslist__item-data">
-                                            <div>
-                                                {info.versionLabel}
-                                            </div>
-                                            <div>
-                                                {dealInfo.version}
-                                            </div>
-                                        </div>
-                                        <div className="cmp-qp-dealslist__item-data">
-                                            <div>
-                                                {info.spaIdLabel}
-                                            </div>
-                                            <div>
-                                                {dealInfo.spaId}
-                                            </div>
-                                        </div>
-                                        <div className="cmp-qp-dealslist__item-data">
-                                            <div>
-                                                {info.endUserNameLabel}
-                                            </div>
-                                            <div>
-                                                {dealInfo.endUserName}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            )}
-                        </ul>
-                    </>
-                }
-            </div>
-        )
+                                    </li>
+                                )}
+                            </ul>
+                        </>
+                    }
+                </div>
+            )
+        }
     }
     const handleCancelChanges = () => {
         setGeneralInfoState(initialGeneralInfoState);
@@ -163,20 +203,24 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
 
     const loadDeals = async (searchTerm) => {
         setIsLoadingDeals(true);
+        setNoDealsFound(false);
+        setErrorGettingDeals(false);
 
         const endpointUrl = replaceSearchTerm(gridProps.dealsForEndpoint, generalInfoState.endUserName);
-        const response = axios.get(endpointUrl)
+        axios.get(endpointUrl)
             .then((response) => {
                 setIsLoadingDeals(false);
 
+                if (!response.data?.content?.items || response.data.content.items.length == 0) {
+                    setNoDealsFound(true);
+                }
                 clearSelectedDeal();
 
                 setDealsFound(response.data.content.items);
             })
             .catch((error) => {
-                console.log("OOPS!");
+                setErrorGettingDeals(true);
             });
-
     };
 
     return (
@@ -201,7 +245,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                     {info.tierLabel}
                                 </div>
                                 <div>
-                                    {generalInfoState.tier}
+                                    {generalInfoState.tierUserFriendlyLabel ? generalInfoState.tierUserFriendlyLabel : generalInfoState.tier }
                                 </div>
                             </div>
                         }
@@ -243,7 +287,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                 name="tier"
                                 id="tier"
                                 value={generalInfoState.tier}
-                                onChange={handleModelChange}
+                                onChange={handleTierChange}
                                 onFocus={handleDropDownFocus}
                                 onBlur={handleDropDownBlur}>
                                 {!generalInfoState.tier && <option value="">Select an Option</option>}
