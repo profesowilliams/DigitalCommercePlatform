@@ -860,13 +860,6 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "white-label-export-configuration",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/white-label-export-configuration.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
                 filename: "dropdown-menu-react",
                 template: path.resolve(
                     __dirname,
@@ -903,10 +896,10 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "white-label-grid",
+                filename: "white-label-quote-header",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/white-label-grid.html"
+                    SOURCE_ROOT + "/static/white-label-quote-header.html"
                 ),
             }),
             new HtmlWebpackPlugin({

@@ -181,6 +181,18 @@ const SearchBar = ({ data, componentProp }) => {
 
   console.log("useState checked", isChecked);
 
+  function handleMobileSearchStyling() {
+    if(mobileState && isMobile === true ){
+      return `cmp-searchbar cmp-searchbar--checked`
+    }else{
+      return `cmp-searchbar`
+    }
+  }
+
+  console.log('asdasdad',handleMobileSearchStyling())
+
+  console.log('useState checked', isChecked)
+
   const renderContextMenu = () => {
     if (!searchInputFocused) {
       return null;

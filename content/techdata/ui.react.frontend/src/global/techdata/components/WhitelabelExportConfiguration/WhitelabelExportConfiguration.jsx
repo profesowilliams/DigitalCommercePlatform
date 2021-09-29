@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, base64LogoHandler, optionsHandeler }) => {
-      /*const { id } = getUrlParams();
-      const {response, loading, error} = useGet(`${uiServiceEndPoint}?id=${id}`);
-      console.log("response ::", response, loading, error);*/
       const logoLabel = information ? information['yourLogoLabel'] : ''
       const defaultOptions = items ? Object.values(items) : []
       const wexcTitle = title ? title : ''
@@ -10,7 +7,6 @@ const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, b
       const [selectedFile, setFile] = useState('')
       const [options, setOptions] = useState([])
       const onChangeLogoHandler = (event) => {
-            console.log(event.target.files[0])
             const reader = new FileReader();
             reader.addEventListener("load", () => {
                 setFile(reader.result);
@@ -44,8 +40,8 @@ const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, b
             <div className={`${excClassName}__base`}>
                 <div className={`${excClassName}__base-quote`}>        
                     <ul>
-                        {defaultOptions.map(option=>(
-                            <li><label><input type='checkbox'  onChange={()=>onChangeHandler(option)}/>{option}</label></li>
+                        {defaultOptions.map((option, index)=>(
+                            <li key={`${index}`}><label><input type='checkbox'  onChange={()=>onChangeHandler(option)}/>{option}</label></li>
                         ))}
                     </ul>
                 </div>
@@ -53,7 +49,7 @@ const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, b
                     <div className={`${excClassName}__base-logo-upload`}>
                         {logoLabel.length > 0 && (<><img src={selectedFile} alt="logo" /><div className={`${excClassName}__base-logo-upload-file`}>
                             <input type="file" id="file" className={`${excClassName}__base-logo-upload-file-input`} accept="image/png" onChange={onChangeLogoHandler} />
-                            <label for="file">{logoLabel}</label>
+                            <label htmlFor="file">{logoLabel}</label>
                         </div><div className={`${excClassName}__base-logo-upload-suggested`}>
                                 {`Suggested:
                             500px x350px`}
