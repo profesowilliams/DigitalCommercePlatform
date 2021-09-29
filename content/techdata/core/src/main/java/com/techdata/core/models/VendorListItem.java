@@ -123,10 +123,10 @@ public class VendorListItem implements ListItem {
             String tagElement = ce.getName();
             switch (tagElement) {
                 case VENDOR_NAME:
-                    title = ce.getContent();
+                    title = ce.getContent().replaceAll("ZZ", "\"").replaceAll("£", ",");
                     break;
                 case OVERVIEW:
-                    overview = ce.getContent();
+                    overview = ce.getContent().replaceAll("ZZ", "\"").replaceAll("£", ",");
                     break;
                 case VENDOR_ICON:
                     vendorIcon = ce.getContent().replaceAll("ZZ", "\"");
@@ -135,7 +135,7 @@ public class VendorListItem implements ListItem {
                     pageLink = ce.getContent();
                     break;
                 case VENDOR_PAGE_LABEL:
-                    vendorPageLabel = ce.getContent();
+                    vendorPageLabel = ce.getContent().replaceAll("ZZ", "\"").replaceAll("£", ",");
                     break;
                 case VENDOR_PRODUCT_LABEL:
                     vendorProductLabel = ce.getContent().replaceAll("ZZ", "\"");

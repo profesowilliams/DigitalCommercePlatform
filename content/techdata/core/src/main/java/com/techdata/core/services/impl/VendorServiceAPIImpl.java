@@ -28,9 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.techdata.core.util.Constants.*;
 
@@ -77,7 +80,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
                 for (JsonElement jsonElement : vendorsArray) {
                     JsonObject jsonItemObject = jsonElement.getAsJsonObject();
                     String name = jsonItemObject.get(VENDOR_NAME).getAsString().toLowerCase().replaceAll("£", "");
-                    name = name.replaceAll("[^a-zA-Z0-9]", "");
+                    name = name.replaceAll("[^a-zA-Z0-9 ]", "").replaceAll(" ", "-");
                     String title = jsonItemObject.get(Constants.VENDOR_TITLE).getAsString().replaceAll("£", ",");
                     ContentFragment cfm = fragmentTemplate.createFragment(contentFragmentRootResource, name, title);
                     fragmentUtil.setContentElements(cfm, jsonItemObject);
@@ -127,6 +130,8 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
 
                 String overview = jsonItemObject.get(OVERVIEW).getAsString().replaceAll("£", ",");
                 overview = overview.replaceAll("ZZ", "\"");
+                map.put(OVERVIEW, overview);
+                overview = overview.replaceAll("ZZ", "\"");
                 String[] allTags = ArrayUtils.addAll(alphabetTags, solutionTags);
                 allTags = ArrayUtils.addAll(allTags, categoryTags);
                 allTags = ArrayUtils.addAll(allTags, vendorDesignationTags);
@@ -146,6 +151,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
         ModifiableValueMap vendorPageContentResourceProps = vendorPage.getContentResource().adaptTo(ModifiableValueMap.class);
         vendorPageContentResourceProps.put("cq:tags", allTags);
         vendorPageContentResourceProps.put("cq:redirectTarget", vendorPageRedirect);
+        vendorPageContentResourceProps.put("cfPath", cfmResource.getPath());
 
         Map<String, Object> pageDataMap = new HashMap<>();
         pageDataMap.put("paragraphScope", "all");
