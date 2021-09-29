@@ -215,13 +215,18 @@
 
     .cmp-list__item-link {
       text-decoration: none;
-      padding: 0.25rem;
     }
   }
 
   &--brand-grid-3 {
     .cmp-list {
       list-style-type: none;
+      line-height: rem(12px);
+      padding: 0;
+    }
+
+    .cmp-list__item {
+      width: 100%
     }
 
     .cmp-list__item-link {
@@ -236,9 +241,9 @@
     }
 
     .cmp-list__item-title {
-      color: get-color(text-light-charcoal);
-      font-size: 13px;
       font-weight: $font-weight-normal;
+      font-size: rem(13px);
+      color: get-color(brand-text-gray);
     }
   }
 
