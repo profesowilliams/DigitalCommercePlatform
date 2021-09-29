@@ -14,9 +14,11 @@ import com.techdata.core.slingcaconfig.VendorServiceConfig;
 import com.techdata.core.util.Constants;
 import com.techdata.core.util.ContentFragmentUtil;
 import com.techdata.core.util.UIServiceHelper;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.sling.api.resource.*;
+import org.apache.sling.api.resource.ModifiableValueMap;
+import org.apache.sling.api.resource.PersistenceException;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -26,12 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
-
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.techdata.core.util.Constants.*;
 
@@ -65,6 +64,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
      * @throws RepositoryException
      * @throws ContentFragmentException
      */
+    @SuppressWarnings("java:S2384")
     private void saveVendorsAsContentFragment(JsonArray vendorsArray, ResourceResolver resourceResolver)
             throws PersistenceException, ContentFragmentException, WCMException {
         log.debug("inside processSynchContentFragments. Processing for path {}", rootPagePath);
@@ -76,8 +76,9 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
             if(fragmentTemplate != null) {
                 for (JsonElement jsonElement : vendorsArray) {
                     JsonObject jsonItemObject = jsonElement.getAsJsonObject();
-                    String name = jsonItemObject.get(VENDOR_NAME).getAsString().toLowerCase();
-                    String title = jsonItemObject.get(Constants.VENDOR_TITLE).getAsString();
+                    String name = jsonItemObject.get(VENDOR_NAME).getAsString().toLowerCase().replaceAll("£", "");
+                    name = name.replaceAll("[^a-zA-Z0-9]", "");
+                    String title = jsonItemObject.get(Constants.VENDOR_TITLE).getAsString().replaceAll("£", ",");
                     ContentFragment cfm = fragmentTemplate.createFragment(contentFragmentRootResource, name, title);
                     fragmentUtil.setContentElements(cfm, jsonItemObject);
                     populateAdditionalAttributes(name, title, cfm, jsonItemObject);
@@ -90,6 +91,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
 
     }
 
+    @SuppressWarnings("java:S2384")
     private void populateAdditionalAttributes(String name, String title, ContentFragment cfm,
                                               JsonObject jsonItemObject) throws WCMException, PersistenceException {
         Resource cfmResource = cfm.adaptTo(Resource.class);
@@ -107,7 +109,7 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
                 map.put(VENDOR_DESIGNATION, vendorDesignationTags);
 
                 String svgIcon = jsonItemObject.get(VENDOR_ICON).getAsString().replaceAll("ZZ", "\"");
-                map.put(VENDOR_ICON, svgIcon);
+                map.put(VENDOR_ICON, svgIcon.replaceAll("£", ","));
 
                 String[] solutionTags = jsonItemObject.get(VENDOR_SOLUTIONS).getAsString().split("£");
                 map.put(VENDOR_SOLUTIONS, solutionTags);
@@ -115,15 +117,16 @@ public class VendorServiceAPIImpl implements VendorServiceAPI {
                 String[] categoryTags = jsonItemObject.get(VENDOR_CATEGORY).getAsString().split("£");
                 map.put(VENDOR_CATEGORY, categoryTags);
 
-                String vendorPageLabel = jsonItemObject.get(VENDOR_PAGE_LABEL).getAsString();
+                String vendorPageLabel = jsonItemObject.get(VENDOR_PAGE_LABEL).getAsString().replaceAll("£", ",");
                 String vendorPageLink = jsonItemObject.get(VENDOR_PAGE_LINK).getAsString();
                 map.put(VENDOR_PAGE_LINK, vendorPageLink);
                 map.put(VENDOR_PAGE_LABEL, vendorPageLabel);
                 map.put(VENDOR_TITLE, title);
                 String awards = jsonItemObject.get(AWARDS).getAsString().replaceAll("£", ",");
-                map.put(AWARDS, awards);
+                map.put(AWARDS, awards.replaceAll("ZZ", "\""));
 
                 String overview = jsonItemObject.get(OVERVIEW).getAsString().replaceAll("£", ",");
+                overview = overview.replaceAll("ZZ", "\"");
                 String[] allTags = ArrayUtils.addAll(alphabetTags, solutionTags);
                 allTags = ArrayUtils.addAll(allTags, categoryTags);
                 allTags = ArrayUtils.addAll(allTags, vendorDesignationTags);

@@ -138,7 +138,7 @@ public class VendorListItem implements ListItem {
                     vendorPageLabel = ce.getContent();
                     break;
                 case VENDOR_PRODUCT_LABEL:
-                    vendorProductLabel = ce.getContent();
+                    vendorProductLabel = ce.getContent().replaceAll("ZZ", "\"");
                     break;
                 case VENDOR_PRODUCT_LINK:
                     vendorProductLink = ce.getContent();
