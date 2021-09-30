@@ -17,18 +17,22 @@
 			background-color: get-color(brand-white);
 			background-clip: border-box;
 			color: get-color(text-dark-grey) !important;
-			cursor: pointer;
+			cursor: default;
 
 			&:hover {
 				color: get-color(brand-blue) !important;
-				cursor: pointer;
-				.cmp-teaser-hover{
-					.cmp-teaser__title-link {
-						color: get-color(brand-blue) !important;
-						font-weight: 600;
-						-webkit-font-smoothing: antialiased;
-						-moz-osx-font-smoothing: grayscale;
-					}
+				cursor: default;
+				.cmp-teaser__title-link {
+					color: get-color(brand-blue) !important;
+					font-weight: 600;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
+				}
+				.cmp-teaser__title {
+					color: get-color(brand-blue) !important;
+					font-weight: 600;
+					-webkit-font-smoothing: antialiased;
+					-moz-osx-font-smoothing: grayscale;
 				}
 				.cmp-teaser__image img {
 					box-shadow: 0 0 0 rem(6px) get-color(brand-blue);
@@ -49,7 +53,8 @@
 				justify-content: center;
 				font-size: 1.31rem;
 				margin: 0;
-				line-height: 1.5rem;
+				line-height: 1.5rem;				
+				font-weight: $font-weight-normal;
 				&-link {
 					text-decoration: none;
 					line-height: 1.5rem;
@@ -170,45 +175,23 @@
 			&.cmp-teaser__card {
 				.cmp-teaser {
 					min-height: rem(287px);
-					font-weight: $font-weight-normal;
 					&:hover {
-                        .cmp-teaser__title-link {
-                            a {
-                                font-weight: $font-weight-bold;
-                            }
-                            p {
-                                font-weight: $font-weight-normal;
-                            }
-                        }
-                        .cmp-teaser__image {
-                            a {
-                                .cmp-image__image {
-                                    svg {
-                                        path,
-                                        polygon {
-                                            fill: get-color(td-lightblue);
-                                        }
-                                    }
-                                }
-                            }
-                            div {
-                                .cmp-image__image {
-                                    svg {
-                                        path,
-                                        polygon {
-                                            fill: get-color(brand-black);
-                                        }
-                                    }
-                                }
-                            }                            
-                        }
-                        
-                        .cmp-teaser__description {
-                            p {
-                                color: get-color(text-dark-grey);
-                            }
-                        }
-                    }
+						.cmp-teaser__title-link {
+							font-weight: $font-weight-bold;
+						}
+						.cmp-image__image {
+							svg {
+								path,
+								polygon {
+									fill: get-color(td-lightblue);
+								}
+							}
+						}
+						.cmp-teaser__description {
+							color: get-color(text-dark-grey);
+						}
+					}
+
 					&__title {
 						&-link {
 							color: get-color(text-dark-grey);
