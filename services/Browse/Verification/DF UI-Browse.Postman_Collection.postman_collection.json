@@ -424,6 +424,57 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ui.browse.RelatedProducts.id-single",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "SessionId",
+						"value": "{{SessionId}}",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "123456-TracedId",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrlUiService}}ui-browse/v{{apiVersion}}/Detail/RelatedProducts?id=11395304",
+					"host": [
+						"{{BaseUrlUiService}}ui-browse"
+					],
+					"path": [
+						"v{{apiVersion}}",
+						"Detail",
+						"RelatedProducts"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "11395304"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
