@@ -104,7 +104,8 @@
     }
 }
 
-.cmp-qp__general-info {
+.cmp-qp__general-info,
+.cmp-qp__enduser-info {
     min-width: 300px;
     .form-check, .cmp-qp__information-row--readonly {
         display: grid;

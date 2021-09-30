@@ -63,13 +63,13 @@ public class VendorComponentList implements List {
                 String cfPath = pageMap.get(PAGE_PROPERTY_CF_PATH, StringUtils.EMPTY);
                 log.debug(" Content Fragment Path  = {}", cfPath);
                 Resource cfResource = resource.getResourceResolver().getResource(cfPath);
-                ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
-                if(contentFragment != null){
-                    if (isExecutiveListing!=null)
+                if(cfResource != null) {
+                    ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
+                    if (contentFragment !=null && isExecutiveListing!=null)
                     {
                         FilmStripListItem vi = FilmStripListItem.getProfileListItem(contentFragment, cfListItem.getPath());
                         listOfVendorItems.add(vi);
-                    }else{
+                    }else if(contentFragment !=null){
                         VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem, vendorDescriptionType);
                         listOfVendorItems.add(vi);
                     }
