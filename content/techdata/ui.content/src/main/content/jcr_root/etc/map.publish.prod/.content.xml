@@ -53,5 +53,21 @@
                 sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
                 sling:match="(.+)$"/>
         </techdata-digital-prod.adobecqms.net>
+        <www.mytecd.com
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac/my]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/apac/my/$1]"
+                sling:match="(.+)$"/>
+        </www.mytecd.com>
+        <mytecd.com
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac/my]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/apac/my/$1]"
+                sling:match="(.+)$"/>
+        </mytecd.com>
     </https>
 </jcr:root>

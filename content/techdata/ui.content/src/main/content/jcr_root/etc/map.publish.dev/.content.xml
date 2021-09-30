@@ -13,6 +13,14 @@
                 sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
                 sling:match="(.+)$"/>
         </uat.dc.tdebusiness.cloud>
+        <uat.dc.mytecd.cloud
+            jcr:primaryType="sling:Mapping"
+            sling:internalRedirect="[/content/techdata/apac/my]">
+            <redirect
+                jcr:primaryType="sling:Mapping"
+                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/apac/my/$1]"
+                sling:match="(.+)$"/>
+        </uat.dc.mytecd.cloud>
         <techdata-digital-dev.adobecqms.net
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
