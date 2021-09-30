@@ -33,15 +33,7 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
             // Initiate Ping Federate logout
             shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(window.location.href);
             pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
-            localStorage.removeItem('sessionId');
-            localStorage.removeItem('signin');
-            localStorage.removeItem('signout');
-            localStorage.removeItem('userData');
-            localStorage.removeItem('sessionMaxTimeout');
-            localStorage.removeItem('sessionIdleTimeout');
-            localStorage.removeItem('signInCode');
-            localStorage.removeItem('ActiveCart');
-            window.location.replace(pingLogoutUrl);
+            cleanupLocalStorage(pingLogoutUrl);
         }
       } catch(e){
         console.error('Error occurred when trying to logout');
@@ -49,8 +41,24 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
       }
 }
 
+export const cleanupLocalStorage = (logoutRedirectUrl) => {
+    localStorage.removeItem('sessionId');
+    localStorage.removeItem('signin');
+    localStorage.removeItem('signout');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('sessionMaxTimeout');
+    localStorage.removeItem('sessionIdleTimeout');
+    localStorage.removeItem('signInCode');
+    localStorage.removeItem('ActiveCart');
+    window.location.replace(logoutRedirectUrl);
+}
+
 export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
     signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
+}
+
+export const signOutForExpiredSession = () => {
+    cleanupLocalStorage(encodeURIComponent(window.location.href));
 }
 
 export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl) => {

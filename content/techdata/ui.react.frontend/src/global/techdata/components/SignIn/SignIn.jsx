@@ -10,7 +10,7 @@ import {
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import {usPost} from "../../../../utils/api";
-import { signOutBasedOnParam } from '../../../../utils';
+import { signOutBasedOnParam, signOutForExpiredSession } from '../../../../utils';
 
 const FA = require('react-fontawesome');
 
@@ -105,7 +105,7 @@ const SignIn = (props) => {
                 var sessionIdleTimeoutInt = parseInt(sessionIdleTimeout);
                 var currentTime = new Date().valueOf();
                 // checking if session expiration is before curr time
-                if(sessionMaxTimeout < currentTime || (sessionIdleTimeoutInt && sessionIdleTimeoutInt < currentTime)) {
+                if(sessionMaxTimeoutInt < currentTime || (sessionIdleTimeoutInt && sessionIdleTimeoutInt < currentTime)) {
                     return true;
                 }
             }
@@ -122,7 +122,7 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 	    if(isSessionExpired()) {
-           signOutBasedOnParam(logoutURL, pingLogoutURL, errorPageUrl, shopLogoutRedirectUrl);
+           signOutForExpiredSession(logoutURL, pingLogoutURL, errorPageUrl, shopLogoutRedirectUrl);
         }
 		redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
 		localStorage.setItem('signin', constructSignInURL());
