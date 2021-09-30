@@ -1,6 +1,9 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalFoundation.Common.Client;
@@ -22,17 +25,42 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly string _appSearchUrl;
         private readonly ILogger<SearchService> _logger;
         private readonly IUIContext _context;
+        private readonly IMapper _mapper;
 
         public SearchService(IMiddleTierHttpClient middleTierHttpClient,
-    ILogger<SearchService> logger, IAppSettings appSettings, IUIContext context)
+    ILogger<SearchService> logger, IAppSettings appSettings, IUIContext context, IMapper mapper)
         {
             _logger = logger;
             _context = context;
             _middleTierHttpClient = middleTierHttpClient;
             _appSearchUrl = appSettings.GetSetting("App.Search.Url");
+            var mapperConfig = new MapperConfiguration(x => x.AddProfiles(new Profile[] { new SearchProfile() }));
+            _mapper = mapperConfig.CreateMapper();
         }
 
-        public async Task<AppSearchResponseDto> GetProductData(AppSearchRequestModel request)
+        public async Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request)
+        {
+            var appSearchResponse = await GetProductData(request);
+            var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
+            if(fullSearchResponse != null)
+                MapFields(appSearchResponse, ref fullSearchResponse);
+            return fullSearchResponse;
+        }
+
+        private static void MapFields(AppSearchResponseDto appSearchResponse,  ref FullSearchResponseModel fullSearchResponse)
+        {
+            foreach (var product in fullSearchResponse?.Products) 
+            {
+                var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
+                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null) 
+                {
+                    product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
+                }
+                product.Status = appSearchProduct.Indicators?.Find(x => x.Type == "DisplayStatus")?.Value;
+            }
+        }
+
+        private async Task<AppSearchResponseDto> GetProductData(AppSearchRequestModel request)
         {
             var url = _appSearchUrl
            .AppendPathSegment("Product")

@@ -1,5 +1,7 @@
-﻿using DigitalCommercePlatform.UIServices.Search.Actions.Product;
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
@@ -13,8 +15,6 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly FakeLogger<SearchService> _logger;
         private readonly Mock<IUIContext> _context;
         private readonly SearchService _searchService;
+        private readonly Mapper _mapper;
 
         public SearchServiceTests() {
             _logger = new FakeLogger<SearchService>();
@@ -34,7 +35,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             _appSettingsMock = new Mock<IAppSettings>();
             _appSettingsMock.Setup(s => s.GetSetting("App.Search.Url")).Returns("http://app-Search/v1");
             _context = new Mock<IUIContext>();
-            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object);
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
+            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _mapper);
         }
 
         [Theory]
@@ -120,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new Exception("test"));
 
             //act
-            Func<Task> act = async () => await _searchService.GetProductData(request);
+            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request);
 
             //assert
             act.Should().ThrowAsync<Exception>();
@@ -136,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.NotFound, details: null));
 
             //act
-            var result = await _searchService.GetProductData(request);
+            var result = await _searchService.GetFullSearchProductData(request);
 
             //assert
             result.Should().BeNull();
@@ -152,7 +154,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.InternalServerError, details: null));
 
             //act
-            Func<Task> act = async () => await _searchService.GetProductData(request);
+            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request);
 
             //assert
             act.Should().ThrowAsync<Exception>();
@@ -168,7 +170,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .Returns(Task.FromResult(appResponse));
 
             //Act
-            var result = await _searchService.GetProductData(request);
+            var result = await _searchService.GetFullSearchProductData(request);
 
             //Assert
             result.Should().NotBeNull();

@@ -81,8 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     };
                 }
 
-                var getProductData = await _searchService.GetProductData(appRequest);
-                var response = _mapper.Map<FullSearchResponseModel>(getProductData);
+                var response = await _searchService.GetFullSearchProductData(appRequest);
                 if (!request.IsAnonymous && response.Products != null &&response.Products.Count == 1)
                 {
                     response.Products.FirstOrDefault().IsExactMatch = true;
