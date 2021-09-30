@@ -16,13 +16,11 @@ const CreateConfig = ({ componentProp }) => {
     setLoading(true);
     
     const params = {
-      body: {
-        "PostBackURL": POST_BACK_URL,  
-        "Vendor": methodSelected.label,
-        "ConfigurationId": "",
-        "Function": "CCW_ESTIMATE",
-        "Action": "CREATE"
-      },
+      "PostBackURL": POST_BACK_URL,  
+      "Vendor": methodSelected.label,
+      "ConfigurationId": "",
+      "Function": "CCW_ESTIMATE",
+      "Action": "CREATE"
     };
 
     try {
