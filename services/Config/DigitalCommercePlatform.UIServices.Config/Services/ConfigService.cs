@@ -240,6 +240,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
                 var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
                 ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+
                 _logger.LogInformation($"Requested url is: {requestUrl}");
 
                 var httpClient = _httpClientFactory.CreateClient("OneSourceClient");

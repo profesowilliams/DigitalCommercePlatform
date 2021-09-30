@@ -105,7 +105,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("getPunchOutUrl")]
-        public async Task<ActionResult> GetPunchOutUrl(GetPunchOutUrl.Request request)
+        public async Task<ActionResult> GetPunchOutUrl([FromBody]GetPunchOutUrl.Request request)
         {
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);

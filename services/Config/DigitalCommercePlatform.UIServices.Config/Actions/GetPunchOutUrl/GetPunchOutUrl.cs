@@ -65,27 +65,29 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
             }
         }
 
-        //public class Validator : AbstractValidator<Request>
-        //{
+        public class Validator : AbstractValidator<Request>
+        {
 
-        //    public Validator()
-        //    {
-        //        RuleFor(i => i.PostBackUrl)
-        //            .NotEmpty().WithMessage("PostBackUrl is required.");
-        //        RuleFor(i => i.Vendor)
-        //            .NotEmpty().WithMessage("Vendor  is required.");
-        //        RuleFor(i => i.Action)
-        //           .NotEmpty().WithMessage("Action is required.");
-        //        RuleFor(i => i.Function)
-        //            .NotEmpty().WithMessage("Function is required.");
-        //        When(i => i.Action.ToLower().Equals("edit"), () => {
-        //            RuleFor(i => i.ConfigurationId)
-        //          .NotEmpty().WithMessage("ConfigurationId is required.");
-        //          }).Otherwise(() => {
-        //          RuleFor(i => i.ConfigurationId)
-        //      .Empty().WithMessage("ConfigurationId is not required while creating configuration.");
-        //      });
-        //    }
-        //}
+            public Validator()
+            {
+                RuleFor(i => i.PostBackUrl)
+                    .NotEmpty().WithMessage("PostBackUrl is required.");
+                RuleFor(i => i.Vendor)
+                    .NotEmpty().WithMessage("Vendor  is required.");
+                RuleFor(i => i.Action)
+                   .NotEmpty().WithMessage("Action is required.");
+                RuleFor(i => i.Function)
+                    .NotEmpty().WithMessage("Function is required.");
+                When(i => i.Action.ToLower().Equals("edit"), () =>
+                {
+                    RuleFor(i => i.ConfigurationId)
+                  .NotEmpty().WithMessage("ConfigurationId is required.");
+                }).Otherwise(() =>
+                {
+                    RuleFor(i => i.ConfigurationId)
+                .Empty().WithMessage("ConfigurationId is not required while creating configuration.");
+                });
+            }
+        }
     }
 }
