@@ -1,22 +1,22 @@
-
 //== Font
 
-$font-family:           "Open Sans", sans-serif, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-size:             1rem;
-$font-height:           1.5;
-$font-size-body:        1rem;
+$font-family: "Open Sans", sans-serif, "Helvetica Neue", Helvetica, Arial,
+  sans-serif;
+$font-size: 1rem;
+$font-height: 1.5;
+$font-size-body: 1rem;
 
 //== Color
 
 // Normal mode
-$color-foreground:      #000C21;
-$color-background:      #FFFFFF;
-$color-link:           #00B1E2;
+$color-foreground: #000c21;
+$color-background: #ffffff;
+$color-link: #00b1e2;
 
 // Dark mode
 $color-foreground-dark: invert($color-foreground);
 $color-background-dark: invert($color-background);
-$color-link-dark:       ($color-link);
+$color-link-dark: ($color-link);
 
 // Width
 $container-max-width: 1440px;
@@ -40,19 +40,18 @@ $container-max-width: 1440px;
 //
 //## Gray and brand colors for use across theme.
 
-$black:                  #202020;
-$gray:                   #696969;
-$gray-light:             #EBEBEB;
-$gray-lighter:           #F7F7F7;
-$white:                  #ffffff;
-$brand-text-gray:        #555555;
-$yellow:                 #FFEA00;
-$blue:                   #0045FF;
-$brand-blue:             #000c21;
-$pink:                   #FF0058;
+$black: #202020;
+$gray: #696969;
+$gray-light: #ebebeb;
+$gray-lighter: #f7f7f7;
+$white: #ffffff;
+$brand-text-gray: #555555;
+$yellow: #ffea00;
+$blue: #0045ff;
+$brand-blue: #000c21;
+$pink: #ff0058;
 
-
-$brand-primary:           $yellow;
+$brand-primary: $yellow;
 
 //== Layout
 $gutter-padding: 14px;
@@ -69,26 +68,24 @@ $screen-large: 1200px;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:                   $white;
+$body-bg: $white;
 //** Global text color on `<body>`.
-$text-color:                $black;
-$text-color-inverse:        $gray-light;
+$text-color: $black;
+$text-color-inverse: $gray-light;
 
-$brand-secondary:           $black;
+$brand-secondary: $black;
 
-$brand-third:               $gray-light;
+$brand-third: $gray-light;
 
 //** Global textual link color.
-$link-color:                $blue;
+$link-color: $blue;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      $link-color;
+$link-hover-color: $link-color;
 //** Link hover decoration.
 $link-hover-decoration: underline;
 
 $nav-link: $black;
 $nav-link-inverse: $gray-light;
-
-
 
 //== Typography
 //
@@ -120,14 +117,17 @@ $font-size-custom-xxlarge: rem(38px);
 $font-size-custom-xlarge: rem(30px);
 $font-size-custom-large:  rem(25px);
 $font-size-custom-medium: rem(22px);
-$font-size-custom-midi:   rem(20px);
+$font-size-custom-midi: rem(20px);
 $font-size-custom-xxsmall: rem(13px);
+
+/*  FONT LOGO SIZE CUSTOM  */
+$font-size-custom-logo-large: rem(28px);
 
 /*  END of FONT SIZE CUSTOM  */
 
 //** Unit-less `line-height` for use in components like buttons.
-$line-height-base:        1.5;
-$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
+$line-height-base: 1.5;
+$line-height-computed: floor(($font-size-base * $line-height-base)); // ~20px
 
 $font-weight-extra-light: 100;
 $font-weight-light:      300;
@@ -143,23 +143,23 @@ $utility-nav-height: 25px;
 
 //=== Language Switcher
 //** Load country flags from this directory.
-$country-flag-path:          '../resources/images/country-flags';
-$country-flag-size:          25px;
+$country-flag-path: "../resources/images/country-flags";
+$country-flag-size: 25px;
 
 //=== WKND Item Styles (Up Next, CF elements)
 $list-item-height: 120px;
 $list-item-border: 5px solid $brand-third;
 
 $button-size: 48px;
-$unchecked-state-content: '\f0c8';
+$unchecked-state-content: "\f0c8";
 
 //===common icons
-@mixin icon($color,$background){
-    color: $color;
-    background: $background;
-    width: 14px;
-    height: 14px;
-    border-radius: 2.8px;
-    font-size: 10.27px;
-    padding: 2px;
+@mixin icon($color, $background) {
+  color: $color;
+  background: $background;
+  width: 14px;
+  height: 14px;
+  border-radius: 2.8px;
+  font-size: 10.27px;
+  padding: 2px;
 }

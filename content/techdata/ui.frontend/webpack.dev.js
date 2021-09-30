@@ -984,6 +984,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "track-my-order-modal",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/track-my-order-modal.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "create-config",
                 template: path.resolve(
                     __dirname,

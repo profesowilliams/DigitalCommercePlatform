@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
+import TrackOrderModal from './TrackOrderModal/TrackOrderModal';
 
 function OrdersGrid(props) {
     const componentProp = JSON.parse(props.componentProp);
@@ -213,9 +214,20 @@ function OrdersGrid(props) {
             headerName: 'Track',
             field: 'trackings',
             sortable: false,
-            cellRenderer: (props) => {
+            cellRenderer: ({ node, api, setValue, data, value }) => {                
                 return (
-                    <div className='icon'>{getTrackingStatus(props.value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
+                    <div 
+                    onClick={() => {
+                        invokeModal({
+                            content: ( 
+                                <TrackOrderModal data={data}></TrackOrderModal>
+                            ),
+                            properties: {
+                                title: `Track My Order `,
+                            }
+                        });
+                    }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
+
                 );
             },
         },
