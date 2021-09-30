@@ -32,30 +32,6 @@
                                                     fieldLabel="Items Per Page"
                                                     required="{Boolean}true"
                                                     name="./itemsPerPage"/>
-                                            <configDetailUrl
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                    fieldLabel="Config Details URL"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/techdata"
-                                                    name="./configDetailUrl"/>
-                                            <configDetailUrlSuffix
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Config Details URL Id Suffix"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/techdata"
-                                                    name="./configDetailUrlSuffix"/>
-                                            <quoteDetailUrl
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                    fieldLabel="Quote Details URL"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/techdata"
-                                                    name="./quoteDetailUrl"/>
-                                            <quoteDetailUrlSuffix
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Quote Details URL Id Suffix"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/techdata"
-                                                    name="./quoteDetailUrlSuffix"/>
                                             <multipleSPADealLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -121,10 +97,11 @@
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
                                             <actions
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    composite="{Boolean}true"
-                                                    fieldDescription="Click 'Add' to add labels">
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldLabel="Grid Columns Definition"
+                                                fieldDescription="Click 'Add' to add labels">
                                                 <field
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/container"
@@ -165,6 +142,48 @@
                                                     </items>
                                                 </field>
                                             </actions>
+                                            <configDetailUrl
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Config Details URL"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./configDetailUrl"/>
+                                            <configDetailUrlSuffix
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Config Details URL Id Suffix"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./configDetailUrlSuffix"/>
+                                            <quoteDetailUrl
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Quote Details URL"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./quoteDetailUrl"/>
+                                            <quoteDetailUrlSuffix
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Quote Details URL Id Suffix"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./quoteDetailUrlSuffix"/>
+                                            <actionColumnLabel
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Action Column Label"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./actionColumnLabel"/>
+                                            <createQuoteUrl
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Create Quote URL"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./createQuoteUrl"/>
+                                            <createQuoteUrlSuffix
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Create Quote URL parameters Suffix"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    rootPath="/content/techdata"
+                                                    name="./createQuoteUrlSuffix"/>
                                         </items>
                                     </column>
                                 </items>
@@ -229,12 +248,12 @@
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                         required="{Boolean}true"
-                                                                        fieldLabel="label Value"
+                                                                        fieldLabel="Label Value"
                                                                         name="./labelValue"/>
                                                                 <labelDescription
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldLabel="label Description"
+                                                                        fieldLabel="Label Description"
                                                                         name="./labelDescription"/>
                                                                 <buttonIcon
                                                                         jcr:primaryType="nt:unstructured"

@@ -7,6 +7,8 @@
         "uiServiceEndPoint":"http://localhost:3000/ui-config/v1/configurations",
         "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
         "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
+        "createQuoteUrl":"/quote-preview?id={id}&isEstimateId={is-estimated-id}&vendor={vendor}",
+        "actionColumnLabel":"Create Quote",
         "quotesModal":{
           "title":"Config ID",
           "content":"There are multiple items associated with this Config ID. Please choose the item you would like to review:",
@@ -29,7 +31,16 @@
         {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
         {"columnLabel":"TD Quote Id","columnKey":"quotes", "sortable": false},
         {"columnLabel":"Action","columnKey":"action", "sortable": false}],
-        "searchCriteria":{"keywordDropdown":{},"configurationTypesDropdown":{}},
+        "searchCriteria":{
+          "keywordDropdown":{},
+          "configurationTypesDropdown": {
+            "items":[
+              {"key":"Estimate","value":"Estimate"},
+              {"key":"VendorQuote","value":"Vendor Quote"},
+              {"key":"Deal","value":"Deal"}
+            ]
+          }
+        },
         "checkout":{"uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
         "redirectUrl": "https://shop.techdata.com/cart"},
         "spaDealsIdLabel": "multiple"}'

@@ -2,8 +2,100 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
     configDetailUrlSuffix="?id={id}"
+    quoteDetailUrlSuffix="?id={id}"
     modalTitle="Config ID"
     modalContent="There are multiple items associated with this Config ID. Please choose the item you would like to review:"
     modalQuotePreffixLabel="Quote: "
     paginationStyle="scroll"
-    itemsPerPage="25"/>
+    itemsPerPage="25"
+    actionColumnLabel="Create Quote"
+    createQuoteUrlSuffix="?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
+    defaultSortingColumnKey="created"
+    defaultSortingDirection="desc"
+>
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Config ID"
+            columnKey="configId"
+            sortable="{Boolean}true"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Type"
+            columnKey="configurationType"
+            sortable="{Boolean}false"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor"
+            columnKey="vendor"
+            sortable="{Boolean}false"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Created"
+            columnKey="created"
+            sortable="{Boolean}false"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Expires"
+            columnKey="expires"
+            sortable="{Boolean}false"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Config Name"
+            columnKey="configName"
+            sortable="{Boolean}true"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="End User Name"
+            columnKey="endUserName"
+            sortable="{Boolean}false"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD Quote Id"
+            columnKey="quotes"
+            sortable="{Boolean}false"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Action"
+            columnKey="action"
+            sortable="{Boolean}false"
+        />
+    </columnList>
+    <statusLabelsList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            labelKey="Multiple"
+            labelValue="Multiple"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            labelKey="Pending"
+            labelValue="Pending"
+        />
+    </statusLabelsList>
+    <configurationTypesList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="Estimate"
+            configurationTypesValue="Estimate"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="VendorQuote"
+            configurationTypesValue="Vendor Quote"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="Deal"
+            configurationTypesValue="Deal"
+        />
+    </configurationTypesList>
+</jcr:root>

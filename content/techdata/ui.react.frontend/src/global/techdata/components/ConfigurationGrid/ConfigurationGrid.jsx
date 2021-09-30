@@ -99,9 +99,11 @@ function ConfigurationGrid(props) {
       field: "configurationType",
       sortable: false,
       cellRenderer: (props) => {
+        const configurationTypeLabel = componentProp.searchCriteria?.configurationTypesDropdown?.items?.find((label) => label.key === props.value)?.value || props.value;
+
         return (
           <div>
-            {props.value}
+            {configurationTypeLabel}
           </div>
         );
       },
@@ -149,10 +151,13 @@ function ConfigurationGrid(props) {
       headerName: "Action",
       field: "action",
       sortable: true,
-      valueFormatter: (props) => {
+      cellRenderer: (props) => {
+        const createQuoteUrl = componentProp.createQuoteUrl?.replace("{id}", props.data.configId)
+                                  .replace("{is-estimated-id}", String(props.data.configurationType === 'Estimate'))
+                                  .replace("{vendor}", props.data.vendor);
         return (
           <div>
-            <a className="cmp-grid-url-not-underlined" >{props.value}</a>
+            <a className="cmp-grid-url-not-underlined" href={createQuoteUrl}>{componentProp.actionColumnLabel}</a>
           </div>
         );
       },

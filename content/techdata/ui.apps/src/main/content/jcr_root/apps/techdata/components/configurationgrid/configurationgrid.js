@@ -1,5 +1,5 @@
 "use strict";
-use(function () {
+use(['../common/utils.js'], function (utils) {
   var jsonObject = {};
   var resourceResolver = resource.getResourceResolver();
     var optionData = {};
@@ -11,6 +11,14 @@ use(function () {
 
   if (properties && properties["quoteDetailUrl"]) {
     jsonObject["quoteDetailUrl"] = properties["quoteDetailUrl"] + properties["quoteDetailUrlSuffix"];
+  }
+
+  if (properties && properties["actionColumnLabel"]) {
+    jsonObject["actionColumnLabel"] = properties["actionColumnLabel"];
+  }
+
+  if (properties && properties["createQuoteUrl"]) {
+    jsonObject["createQuoteUrl"] = properties["createQuoteUrl"] + properties["createQuoteUrlSuffix"];
   }
 
   //Modal Labels

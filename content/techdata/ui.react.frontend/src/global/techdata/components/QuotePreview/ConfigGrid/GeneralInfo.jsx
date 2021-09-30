@@ -9,7 +9,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
 
     const source = quoteDetails.source;
     const initialGeneralInfoState = {
-        deal: {},
+        deal: quoteDetails.deal || {},
         endUserName: '',
         spaId: quoteDetails.spaId || '',
         quoteReference: 
@@ -269,7 +269,10 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                         {generalInfoState.deal.spaId}
                                     </div>
                                     <div>
-                                        {generalInfoState.deal.endUserName}
+                                        {generalInfoState.deal.vendor}
+                                    </div>
+                                    <div>
+                                        {generalInfoState.deal.expiryDate}
                                     </div>
                                 </div>
                             </div>
