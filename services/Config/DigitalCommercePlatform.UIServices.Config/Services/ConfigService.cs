@@ -225,7 +225,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             try
             {
-                if (request.ActionName == "edit")
+                _logger.LogInformation($" {"Action Name is: " + request.ActionName + " Function Name is : " + request.FunctionName + " PostBackURL is : " + request.PostBackUrl + " Vendor Name is : " + request.VendorName + " EstimateId value is " + request.IdValue}");
+                if (request.ActionName?.ToLower() == "edit")
                 {
                     var estimateRequest = new Models.Configurations.FindModel();
                     estimateRequest.Id = request.IdValue;
