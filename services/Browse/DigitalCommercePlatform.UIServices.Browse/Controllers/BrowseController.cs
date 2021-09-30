@@ -5,9 +5,11 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
+using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -139,6 +141,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalog input)
         {
             var response = await Mediator.Send(new GetProductCatalogHandler.Request(input)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("Detail/RelatedProducts")]
+        public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids)
+        {
+            var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids }).ConfigureAwait(false);
             return Ok(response);
         }
     }

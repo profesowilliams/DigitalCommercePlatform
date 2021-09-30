@@ -6,9 +6,11 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
@@ -255,6 +257,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             }
 
             return catalog;
+        }
+
+        public async Task<RelatedProductResponseModel> GetRelatedProducts(RelatedProductRequestModel request)
+        {
+            var url = _appProductURL.AppendPathSegment("/RelatedProducts");
+            var getProductResponse = await _middleTierHttpClient.PostAsync<RelatedProductResponseModel>(url, null, request);
+            return getProductResponse;
         }
     }
 }
