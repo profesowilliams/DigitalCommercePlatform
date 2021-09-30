@@ -8,14 +8,10 @@ const QuoteSubtotal = ({
   currencySymbol,
   quoteOption,
   quoteWithMarkup,
+  onMarkupChanged,
 }) => {
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const [markups, setMarkups] = useState(null);
-
-  useEffect(() => {
-    quoteOption &&
-      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
-  }, [quoteOption]);
 
   function onAncillaryItemsChanged(items) {
     setMarkups((markup) => {
@@ -74,6 +70,31 @@ const QuoteSubtotal = ({
         return 0;
     }
   }
+
+  useEffect(() => {
+    if (typeof onMarkupChanged === "function" && markups?.quotes) {
+      const summary = {
+        msrp: markupReducer(markups, { type: "getMSRP" }),
+        subtotal: markupReducer(markups, { type: "getSubtotal" }),
+        yourCost: markupReducer(markups, { type: "getYourCost" }),
+        yourMarkup: markupReducer(markups, { type: "getYourMarkup" }),
+        endUserTotal: markupReducer(markups, { type: "getEndUserTotal" }),
+        endUserSavings: markupReducer(markups, { type: "getSavings" }),
+      };
+      onMarkupChanged({
+        quotes: [...markups.quotes],
+        summary: {
+          ...summary,
+          ancillaryItems: { ...markups.ancillaryItems },
+        },
+      });
+    }
+  }, [markups]);
+
+  useEffect(() => {
+    quoteOption &&
+      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
+  }, [quoteOption]);
 
   useEffect(() => {
     setMarkups((markup) => {

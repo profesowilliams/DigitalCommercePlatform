@@ -8,6 +8,7 @@ import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
+import { downloadClicked } from "../PDFWindow/PDFWindow";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -31,17 +32,70 @@ const QuoteDetails = ({ componentProp }) => {
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
   const [quoteDetails, setQuoteDetails] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
+  const [exportOption, setExportOption] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
+  const [actualQuoteLinesData, setActualQuoteLinesData] = useState(null);
 
   function onQuoteCheckout() {}
 
   function onOptionChanged(option) {
-    setQuoteOption(option);
+    option?.key !== "whiteLabelQuote"
+      ? setExportOption(option)
+      : setQuoteOption(option);
+  }
+
+  function exportToCSV(data) {
+    // call API to get CSV according to actual data
+  }
+
+  function exportToPDF(data) {
+    downloadClicked(
+      data.quoteDetails,
+      true,
+      logoURL,
+      fileName,
+      downloadLinkText
+    );
+    let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
+    let downloadLinkATagCollection =
+      downloadLinkDivTag.getElementsByTagName("a");
+    let downloadLinkATag =
+      downloadLinkATagCollection.length > 0
+        ? downloadLinkATagCollection[0]
+        : undefined;
+
+    if (downloadLinkATag) {
+      downloadLinkATag.click();
+    }
   }
 
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
   }, [response]);
+
+  useEffect(() => {
+    /*actualQuoteLinesData : {
+      quotes: Array -> contains data that represents actual state of quotes, regarding to applied markup etc;
+      summary: {
+        ancillaryItems : {total : -> sum of all ancillary AncillaryItems, 
+                          items: Array -> {description: description of item, value: actual value} }
+        endUserSavings: difference between msrp and endUserTotal,
+        endUserTotal: sum of the end user cost,
+        msrp: sum of msrp of all items in quote,
+        subtotal: subtotal value from api call (not calculated),
+        yourCost: sum of your cost for all items in quote,
+        yourMarkup: sum of your markup for all items in quote,
+        // for calculation logic check markupReducer function in QuoteSubtotal component
+      }
+    }
+    */
+    const data = {
+      quoteDetails: quoteDetails,
+      actualQuoteLinesData: actualQuoteLinesData,
+    };
+    exportOption?.key === "exportToCSV" && exportToCSV(data);
+    exportOption?.key === "exportToPDF" && exportToPDF(data);
+  }, [exportOption, quoteDetails, actualQuoteLinesData]);
 
   return quoteDetails ? (
     <>
@@ -84,15 +138,12 @@ const QuoteDetails = ({ componentProp }) => {
         }
         quoteWithMarkup={quoteWithMarkup}
         quoteOption={quoteOption}
+        onMarkupChanged={(data) => setActualQuoteLinesData(data)}
       />
       <QuoteDetailsCheckout
         labels={quoteOptions}
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
-        quoteDetails={quoteDetails}
-        logoURL={logoURL}
-        fileName={fileName}
-        downloadLinkText={downloadLinkText}
       />
     </>
   ) : error ? (

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Widgets/Dropdown";
-import { downloadClicked } from "../../PDFWindow/PDFWindow";
 
 function QuoteDetailsCheckout({
   labels,
   onQuoteCheckout,
   onQuoteOptionChanged,
-  quoteDetails,
-  logoURL,
-  fileName,
-  downloadLinkText,
 }) {
   const checkoutLabel = labels?.checkoutLabel || "Checkout";
   const dropdownLabel = labels?.dropdownLabel || "Quote Options";
@@ -23,6 +18,7 @@ function QuoteDetailsCheckout({
     },
   ];
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isWhiteLabelMode, setIsWhiteLabelMode] = useState(false);
 
   function onCheckout() {
     if (typeof onQuoteCheckout === "function") {
@@ -36,30 +32,10 @@ function QuoteDetailsCheckout({
     }
   }
 
-  const triggerPDFDownload = () => {
-    let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
-    let downloadLinkATagCollection =
-      downloadLinkDivTag.getElementsByTagName("a");
-    let downloadLinkATag =
-      downloadLinkATagCollection.length > 0
-        ? downloadLinkATagCollection[0]
-        : undefined;
-
-    if (downloadLinkATag) {
-      downloadLinkATag.click();
-    }
-  };
-
   useEffect(() => {
-    downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText);
-  }, []);
-
-  useEffect(() => {
-    selectedOption && onOptionChanged(selectedOption);
-
-    if (selectedOption && selectedOption.key === quoteOptions[1].key) {
-      triggerPDFDownload();
-    }
+    selectedOption?.key === "whiteLabelQuote" && setIsWhiteLabelMode(true);
+    onOptionChanged(selectedOption);
+    setSelectedOption(null);
   }, [selectedOption]);
 
   return (
@@ -69,23 +45,27 @@ function QuoteDetailsCheckout({
           id="pdfDownloadLink"
           className="cmp-td-quote-checkout__pdf-download-link"
         ></div>
-        <div className="cmp-td-quote-checkout__button cmp-widget">
-          <button className="cmp-quote-button" onClick={onCheckout}>
-            <div className="cmp-td-quote-checkout__button__title">
-              {checkoutLabel}
-            </div>
-          </button>
-        </div>
-        {selectedOption?.key !== "whiteLabelQuote" && (
-          <div className="cmp-td-quote-checkout__dropdown cmp-widget">
-            <Dropdown
-              selected={selectedOption || { label: dropdownLabel }}
-              setValue={setSelectedOption}
-              options={quoteOptions}
-              label={dropdownLabel}
-            />
+        {!isWhiteLabelMode && (
+          <div className="cmp-td-quote-checkout__button cmp-widget">
+            <button className="cmp-quote-button" onClick={onCheckout}>
+              <div className="cmp-td-quote-checkout__button__title">
+                {checkoutLabel}
+              </div>
+            </button>
           </div>
         )}
+        <div className="cmp-td-quote-checkout__dropdown cmp-widget">
+          <Dropdown
+            selected={selectedOption || { label: dropdownLabel }}
+            setValue={setSelectedOption}
+            options={
+              isWhiteLabelMode
+                ? [...quoteOptions].filter((el) => el.key !== "whiteLabelQuote")
+                : quoteOptions
+            }
+            label={dropdownLabel}
+          />
+        </div>
       </div>
     </section>
   );
