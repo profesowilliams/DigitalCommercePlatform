@@ -60,6 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
                     DefaultOrdering = null
                 };
 
+
                 var url = await _configService.GetPunchOutUrlAsync(punchInDto);
                 return new ResponseBase<Response> { Content = new Response { Url = url } };
             }
@@ -67,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
 
         public class Validator : AbstractValidator<Request>
         {
+            
             public Validator()
             {
                 RuleFor(i => i.PostBackUrl)
@@ -77,13 +79,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
                    .NotEmpty().WithMessage("Action is required.");
                 RuleFor(i => i.Function)
                     .NotEmpty().WithMessage("Function is required.");
-                When(i => i.Action.ToLower().Equals("edit"), () => {
-                    RuleFor(i => i.ConfigurationId)
-                   .NotEmpty().WithMessage("ConfigurationId is required.");
-                }).Otherwise(() => {
-                    RuleFor(i => i.ConfigurationId)
-                   .Empty().WithMessage("ConfigurationId is not required while creating configuration.");
-                });
+                //When(i => i.Action.ToLower().Equals("edit"), () => {
+                //    RuleFor(i => i.ConfigurationId)
+                //   .NotEmpty().WithMessage("ConfigurationId is required.");
+                //}).Otherwise(() => {
+                //    RuleFor(i => i.ConfigurationId)
+                //   .Empty().WithMessage("ConfigurationId is not required while creating configuration.");
+                //});
             }
         }
     }
