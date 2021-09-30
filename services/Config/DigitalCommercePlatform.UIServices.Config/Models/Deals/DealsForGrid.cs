@@ -10,5 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         public decimal Version { get; set; }
         public string DealId { get; set; }
         public string EndUserName { get; set; }
+        public string Vendor { get; set; }
+        public string ExpiryDate { get; set; }
     }
 }

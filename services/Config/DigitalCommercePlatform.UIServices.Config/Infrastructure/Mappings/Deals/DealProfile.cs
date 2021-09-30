@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal;
 using DigitalFoundation.Common.Models;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals
@@ -16,6 +17,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
     {       
         public DealProfile()
         {
+            CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("MM/dd/yy"));
+
             CreateMap<Paginated, Models.Deals.Internal.FindModel>()
                 .Include<Models.Deals.FindModel, Models.Deals.Internal.FindModel>()
                 .ForMember(d => d.Page, o => o.MapFrom(s => s.PageNumber))
@@ -72,6 +75,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Source.Version))
                 .ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src.VendorBidNumber))
                 .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUserName))
+                .ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => src.ExpirationDate))
+                .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorName))
                 ;
 
             CreateMap<FindResponse<DealsBase>, GetDealsFor.Response>()

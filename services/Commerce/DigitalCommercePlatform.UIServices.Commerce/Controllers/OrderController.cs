@@ -89,7 +89,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("pricingConditions")]
+        [Route("orderLevel")]
         public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, string Id)
         {
             var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, Id)).ConfigureAwait(false);

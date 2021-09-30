@@ -259,6 +259,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
         {
+            request.MfrPartNumbers = null;
+            request.ProductIds = null;
+            request.OrderLevel = null;
             var getDealsForGrid = GetDealsDetails(request);
             return getDealsForGrid;
         }

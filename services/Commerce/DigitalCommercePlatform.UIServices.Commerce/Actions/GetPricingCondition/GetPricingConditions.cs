@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
         {
             public Validator()
             {
-                RuleFor(c => c.Id).NotEmpty();
+                RuleFor(c => c.GetAll).NotEmpty();
             }
         }
     }
