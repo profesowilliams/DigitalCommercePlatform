@@ -1,6 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
-using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
+using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
@@ -16,23 +17,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetRelatedProd
     {
         private readonly Mock<IBrowseService> _mockBrowseService;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
+        private readonly Mock<IMapper> _mapper;
 
         public RelatedProductsHandlerTests()
         {
             _mockBrowseService = new Mock<IBrowseService>();
             _mockSiteSettings = new Mock<ISiteSettings>();
+            _mapper = new Mock<IMapper>();
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetRelatedProductsTest(RelatedProductResponseModel expected)
+        public async Task GetRelatedProductsTest(RelatedProductResponseDto expected)
         {
             // Arrange
             _mockBrowseService.Setup(x => x.GetRelatedProducts(
-                       It.IsAny<RelatedProductRequestModel>()
+                       It.IsAny<RelatedProductRequestDto>()
                        ))
                    .ReturnsAsync(expected);
-            var handler = new GetRelatedProductsHandler.Handler(_mockBrowseService.Object, _mockSiteSettings.Object);
+            var handler = new GetRelatedProductsHandler.Handler(_mockBrowseService.Object, _mockSiteSettings.Object, _mapper.Object);
             var productIds = new[] { "11395304" };
             var request = new GetRelatedProductsHandler.Request { ProductId = productIds };
             // Act

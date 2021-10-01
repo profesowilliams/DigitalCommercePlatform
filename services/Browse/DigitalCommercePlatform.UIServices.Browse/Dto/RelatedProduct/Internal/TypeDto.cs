@@ -8,6 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
     public class TypeDto
     {
         public string Type { get; set; }
-        public List<CategoryModel> Categories { get; set; }
+        public List<CategoryDto> Categories { get; set; }
     }
 }

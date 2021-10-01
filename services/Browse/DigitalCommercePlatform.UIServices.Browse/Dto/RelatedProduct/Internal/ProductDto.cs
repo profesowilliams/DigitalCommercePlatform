@@ -4,13 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class ProductModel
+    public class ProductDto
     {
-        public SourceModel Source { get; set; }
+        public SourceDto Source { get; set; }
         public int? Quantity { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public string DisplayName { get; set; }
         public string ThumbnailImage { get; set; } 
-        public PriceModel Pricing { get; set; }
+        public PriceDto Pricing { get; set; }
     }
 }

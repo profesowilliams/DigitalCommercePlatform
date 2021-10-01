@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class PriceModel
+    public class PriceDto
     {
         public decimal? ListPrice { get; set; }
         public decimal? BestPrice { get; set; }

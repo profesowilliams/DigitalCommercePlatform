@@ -1,4 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Internal;
@@ -35,23 +37,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
         {
             private readonly IBrowseService _productRepositoryServices;
             private readonly ISiteSettings _siteSettings;
+            private readonly IMapper _mapper;
 
-            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings)
+            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _siteSettings = siteSettings;
+                _mapper = mapper;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 RelatedProductTypes relatedProductsTypesConfig = GetRelatedProductTypesFromSiteSettings();
-                var requestModel = new RelatedProductRequestModel
+                var requestModel = new RelatedProductRequestDto
                 {
                     ProductId = request.ProductId,
                     Type = relatedProductsTypesConfig.Types.Select(x => x.Type).ToArray(),
                 };
                 var result = await _productRepositoryServices.GetRelatedProducts(requestModel).ConfigureAwait(false);
-                var response = new Response(result);
+                var resultModel = _mapper.Map<RelatedProductResponseModel>(result);
+                var response = new Response(resultModel);
                 return new ResponseBase<Response> { Content = response };
             }
 

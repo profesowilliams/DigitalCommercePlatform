@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SourceModel
+    public class SourceDto
     {
         public string System { get; set; }
         public string Id { get; set; }
