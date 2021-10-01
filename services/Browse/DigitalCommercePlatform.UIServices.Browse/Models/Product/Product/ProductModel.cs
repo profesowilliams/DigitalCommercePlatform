@@ -20,13 +20,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
         public string Status { get; set; }
         public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
         public PriceModel Price { get; set; }
-        public object Authorization { get; set; } // to fill
+        public AuthorizationModel Authorization { get; set; }
         public IEnumerable<NoteModel> Notes { get; set; }
         [JsonProperty("indicators")]
-        public IndicatorFlags IndicatorsFlag { get; set; }
+        public IndicatorFlags IndicatorsFlags { get; set; }
         public ProductSpecificationsModel Specifications { get; set; }
         public StockModel Stock { get; set; }
-        public IEnumerable<PlantModel> Plants { get; set; }
         public string MarketingDescription { get; set; } // to fill
         public string[] ProductFeatures { get; set; } // to fill
         public string[] KeySellingPoints { get; set; } // to fill

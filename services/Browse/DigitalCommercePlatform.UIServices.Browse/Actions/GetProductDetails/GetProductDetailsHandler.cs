@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
@@ -18,6 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
+            public string SalesOrg { get; set; }
 
             public Request(IReadOnlyCollection<string> id, bool details)
             {
@@ -44,9 +46,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
+                Task<IEnumerable<ValidateDto>> validateDtoTask = _productRepositoryServices.ValidateProductTask(request.Id);
+                var validateDto = await validateDtoTask.ConfigureAwait(false);
+
                 var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
                 var productsModel = _mapper.Map<IEnumerable<ProductModel>>(productDetails);
-                productsModel = ProductProfile.ConvertProductsFromDtoToModel(productDetails, productsModel);
+                productsModel = ProductProfile.ConvertProductsFromDtoToModel(productDetails, productsModel, request, validateDto);
                 var getProductResponse = _mapper.Map<Response>(productsModel);
                 return new ResponseBase<Response> { Content = getProductResponse };
             }

@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
@@ -6,8 +7,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     [ExcludeFromCodeCoverage]
     public class StockModel
     {
-        public int Total { get; set; }
-        public int Td { get; set; }
-        public int VendorDesignated { get; set; }
+        public int? TotalAvailable { get; set; }
+        public int? VendorDirectInventory { get; set; }
+        public bool VendorShipped { get; set; }
+        public IEnumerable<PlantModel> Plants { get; set; }
     }
 }

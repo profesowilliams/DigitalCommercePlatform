@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
@@ -36,5 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request);
 
         Task<RelatedProductResponseDto> GetRelatedProducts(RelatedProductRequestDto request);
+
+        Task<IEnumerable<ValidateDto>> ValidateProductTask(IEnumerable<string> productIds);
     }
 }

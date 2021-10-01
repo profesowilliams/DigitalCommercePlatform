@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
@@ -264,6 +265,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var url = _appProductURL.AppendPathSegment("/RelatedProducts");
             var getProductResponse = await _middleTierHttpClient.PostAsync<RelatedProductResponseDto>(url, null, request);
             return getProductResponse;
+        }
+
+        public Task<IEnumerable<ValidateDto>> ValidateProductTask(IEnumerable<string> productIds)
+        {
+            var validateProductUrl = _appProductURL.AppendPathSegment("Validate").SetQueryParam("id", productIds);
+            return _middleTierHttpClient.GetAsync<IEnumerable<ValidateDto>>(validateProductUrl);
         }
     }
 }
