@@ -30,7 +30,6 @@
       aria-roledescription="slide"
       aria-label="${'Slide {0} of {1}' @ format=[itemList.count, carousel.items.size], i18n}"
       data-cmp-data-layer="${item.data.json}"
-      data-cmp-carousel-number="${itemList.count}"
       data-cmp-hook-carousel="item"></div>
     <div 
       role="tablist" 
@@ -42,6 +41,7 @@
           role="tab" 
           aria-controls="${carousel.id}-item-${itemList.index}"
           aria-label="${'Slide {0}' @ format=[itemList.count], i18n}"
+          data-cmp-carousel-number="${itemList.count}"
           data-cmp-clickable
           data-cmp-hook-carousel="indicator"
           class="dp-carousel__nav-label ${properties.navigationColor} ${properties.navigationSize}${itemList.first ? ' cmp-carousel__indicator--active' : ''}">

@@ -72,7 +72,7 @@
     function carouselTeaserClickHandler(teaserDivElement, carouselItemDivElement, elementClicked) {
         let carouselRootElement = carouselItemDivElement.closest(CAROUSEL_DIV_CLASSNAME);
         let componentDataLayer = getDataLayerObjectFromDataAttribute(carouselRootElement);
-        let carouselDepth = JSON.parse(carouselItemDivElement.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
+        let carouselDepth = JSON.parse(elementClicked.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
         let clickInfo = updateClickInfo(componentDataLayer);
         if (carouselDepth) {
             clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = carouselDepth;
@@ -90,7 +90,7 @@
         let carouselRootElement = document.getElementById(carouselId);
         let componentDataLayer = getDataLayerObjectFromDataAttribute(carouselRootElement);
         let carouselItemDivElement = carouselRootElement.querySelector(CAROUSEL_ACTIVE_ITEM_CLASS_NAME);
-        let carouselDepth = JSON.parse(carouselItemDivElement.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
+        let carouselDepth = JSON.parse(elementClicked.getAttribute(CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME));
         let clickInfo = updateClickInfo(componentDataLayer);
         if (carouselDepth) {
             clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = carouselDepth;
