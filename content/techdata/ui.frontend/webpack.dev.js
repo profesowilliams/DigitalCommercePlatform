@@ -896,13 +896,6 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "white-label-quote-header",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/white-label-quote-header.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
                 filename: "quotes-subheader-react",
                 template: path.resolve(
                     __dirname,

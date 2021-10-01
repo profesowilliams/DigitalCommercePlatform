@@ -4,6 +4,7 @@ import QuoteContactInfo from "./QuoteDetailsContactInfo/QuoteContactInfo";
 import QuoteSubtotal from "./QuoteDetailsSubTotal/QuoteSubtotal";
 import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
 import QuoteDetailsCheckout from "./QuoteDetailsCheckout/QuoteDetailsCheckout";
+import WhiteLabelQuoteHeader from "./WhiteLabelQuoteHeader/WhiteLabelQuoteHeader";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { getUrlParams } from "../../../../utils";
@@ -34,6 +35,7 @@ const QuoteDetails = ({ componentProp }) => {
   const [quoteOption, setQuoteOption] = useState(null);
   const [exportOption, setExportOption] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
+  const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const [actualQuoteLinesData, setActualQuoteLinesData] = useState(null);
 
   function onQuoteCheckout() {}
@@ -74,6 +76,11 @@ const QuoteDetails = ({ componentProp }) => {
   }, [response]);
 
   useEffect(() => {
+    quoteOption &&
+      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
+  }, [quoteOption]);
+
+  useEffect(() => {
     /*actualQuoteLinesData : {
       quotes: Array -> contains data that represents actual state of quotes, regarding to applied markup etc;
       summary: {
@@ -105,20 +112,28 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
         dateLabels={{ createdDateLabel, expiresDateLabel }}
       />
-      <QuoteContactInfo
-        label={
-          information?.yourCompanyHeaderLabel
-            ? information?.yourCompanyHeaderLabel
-            : ""
-        }
-        contact={quoteDetails?.reseller}
-      />
-      <QuoteContactInfo
-        label={
-          information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""
-        }
-        contact={quoteDetails?.endUser}
-      />
+      {
+        whiteLabelMode 
+          ? ( <WhiteLabelQuoteHeader componentProp={componentProp} /> )
+          : (
+            <>
+              <QuoteContactInfo
+                label={
+                  information?.yourCompanyHeaderLabel
+                    ? information?.yourCompanyHeaderLabel
+                    : ""
+                }
+                contact={quoteDetails?.reseller}
+              />
+            <QuoteContactInfo
+              label={
+                information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""
+              }
+              contact={quoteDetails?.endUser}
+            />
+          </>
+          )
+      }
       <ProductLinesGrid
         gridProps={productLines}
         labels={whiteLabel}

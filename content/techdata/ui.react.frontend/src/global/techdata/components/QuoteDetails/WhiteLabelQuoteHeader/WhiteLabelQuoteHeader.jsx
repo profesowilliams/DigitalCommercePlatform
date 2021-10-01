@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getUrlParams } from "../../../../utils";
+import { getUrlParams } from "../../../../../utils";
 import WhiteLabelQuoteContactInfo from "./WhiteLabelQuoteContactInfo";
-import WhitelabelExportConfiguration from "../WhitelabelExportConfiguration/WhitelabelExportConfiguration";
-import useGet from "../../hooks/useGet";
-import Loader from "../Widgets/Loader";
-import FullScreenLoader from "../Widgets/FullScreenLoader";
+import WhitelabelExportConfiguration from "./WhitelabelExportConfiguration";
+import useGet from "../../../hooks/useGet";
+import Loader from "../../Widgets/Loader";
+import FullScreenLoader from "../../Widgets/FullScreenLoader";
 
 const WhiteLabelQuoteHeader = ({ componentProp }) => {
   const { uiServiceEndPoint, information, title, subtitle, items } = JSON.parse(componentProp);
