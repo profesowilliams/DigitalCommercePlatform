@@ -2,9 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App.Internal;
 using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles

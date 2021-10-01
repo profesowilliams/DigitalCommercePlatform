@@ -24,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Search
         {
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<IRedirectService, RedirectService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
         }
 
