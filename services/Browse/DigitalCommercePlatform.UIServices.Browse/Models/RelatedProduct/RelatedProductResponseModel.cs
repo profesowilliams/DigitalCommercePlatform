@@ -8,7 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct
     [ExcludeFromCodeCoverage]
     public class RelatedProductResponseModel
     {
-        public Dictionary<string, List<TypeModel>> Product { get; set; }
-        public string[] ProductsNotFound { get; set; }
+        public Dictionary<string, List<TypeModel>> ProductTypes { get; set; }
     }
 }

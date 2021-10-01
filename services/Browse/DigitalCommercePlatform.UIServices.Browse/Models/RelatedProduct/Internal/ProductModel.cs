@@ -6,11 +6,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Intern
     [ExcludeFromCodeCoverage]
     public class ProductModel
     {
-        public SourceModel Source { get; set; }
+        public string Id { get; set; }
         public int? Quantity { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public string DisplayName { get; set; }
-        public string ThumbnailImage { get; set; } 
+        public string ThumbnailImage { get; set; }
+        public AuthorizationModel Authorization { get; set; }
         public PriceModel Pricing { get; set; }
     }
 }

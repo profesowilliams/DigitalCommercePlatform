@@ -11,11 +11,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
     {
         public RelatedProductsProfile()
         {
-            CreateMap<RelatedProductResponseDto, RelatedProductResponseModel>();
+            CreateMap<RelatedProductResponseDto, RelatedProductResponseModel>()
+                .ForMember(dest => dest.ProductTypes, opt => opt.MapFrom(src => src.Product));
 
-            CreateMap<TypeDto, TypeModel>();
+            CreateMap<TypeDto, TypeModel>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Categories));
+
+            CreateMap<ProductDto, ProductModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.Id))
+                .ForMember(dest => dest.Authorization, opt => opt.MapFrom(src => new AuthorizationModel() { CanOrder = true }));
+
             CreateMap<CategoryDto, CategoryModel>();
-            CreateMap<ProductDto, ProductModel>();
             CreateMap<SourceDto, SourceModel>();
             CreateMap<PriceDto, PriceModel>();
         }
