@@ -58,7 +58,7 @@ export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, sh
 }
 
 export const signOutForExpiredSession = () => {
-    cleanupLocalStorage(encodeURIComponent(window.location.href));
+    cleanupLocalStorage(window.location.href);
 }
 
 export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl) => {

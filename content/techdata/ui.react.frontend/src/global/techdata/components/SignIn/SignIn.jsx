@@ -122,7 +122,7 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 	    if(isSessionExpired()) {
-           signOutForExpiredSession(logoutURL, pingLogoutURL, errorPageUrl, shopLogoutRedirectUrl);
+           signOutForExpiredSession();
         }
 		redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
 		localStorage.setItem('signin', constructSignInURL());
