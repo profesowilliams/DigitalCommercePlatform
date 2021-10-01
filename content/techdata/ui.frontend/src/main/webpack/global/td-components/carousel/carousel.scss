@@ -228,6 +228,8 @@
 
 .carousel-max-height-500 .cmp-teaser__image .cmp-image__image {
     max-height: 500px;
+    object-fit: cover;
+    object-position: center;
 }
 
 // .dp-carousel__nav-dot{

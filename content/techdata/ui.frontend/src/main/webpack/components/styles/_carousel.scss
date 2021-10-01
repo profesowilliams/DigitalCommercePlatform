@@ -250,6 +250,9 @@
 
 .carousel-max-height-500 .cmp-teaser__image .cmp-image__image {
     max-height: 500px;
+    object-fit: cover;
+    object-position: top;
+    object-position: center;
 }
 
 // New nav dots styling
