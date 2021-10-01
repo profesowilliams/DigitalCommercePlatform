@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     {
         // The suffix "Flag" was added to avoid using C# reserved keywords like new, virtual
         public bool NewFlag { get; set; }
+
         public bool ReturnableFlag { get; set; }
         public bool EndUserRequiredFlag { get; set; }
         public bool RefurbishedFlag { get; set; }
