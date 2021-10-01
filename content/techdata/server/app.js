@@ -2560,7 +2560,7 @@ app.get("/ui-config/v1/configurations", function (req, res) {
 });
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
-    const { id, isEstimateId } = req.query;
+    const { id, isEstimateId, vendor } = req.query;
 
     if (!req.headers["sessionid"] || !id || !isEstimateId) {
         return res.status(500).json({
@@ -2609,7 +2609,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
               }
             ],
             "source": {
-              "type": "Estimate",
+              "type": isEstimateId=== 'true' ? "Estimate": "VendorQuote",
               "value": "QJ128146301OP"
             },
             "notes": null,
@@ -3832,7 +3832,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             "tier": "EduErate",
             "configurationId": "QJ128146301OP",
             "description": "Deal ID 52296358",
-            "vendor": "CISCO"
+            "vendor": vendor || "CISCO"
           }
         }
       },

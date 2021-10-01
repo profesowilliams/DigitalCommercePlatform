@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Button from '../Widgets/Button';
 import Link from '../Widgets/Link';
 
-function QuotePreviewContinue({gridProps, handleQuickQuote}) {
+function QuotePreviewContinue({gridProps, quoteDetails, disableQuickQuoteButton, handleQuickQuote}) {
     const [isDefault, setIsDefault] = useState(false);
 
     const handleInputChange = () => {
@@ -11,7 +11,7 @@ function QuotePreviewContinue({gridProps, handleQuickQuote}) {
 
     return (
         <div className="cmp-qp-continue">
-            <Button btnClass={'cmp-qp-continue__btn'} disabled={false} onClick={handleQuickQuote}>
+            <Button btnClass={'cmp-qp-continue__btn'} disabled={disableQuickQuoteButton} onClick={handleQuickQuote}>
                 {gridProps.confirmButtonLabel}
             </Button>
             <div className="cmp-qp-continue__checkbox">

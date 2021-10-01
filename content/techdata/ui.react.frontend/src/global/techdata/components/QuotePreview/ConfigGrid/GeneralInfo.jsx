@@ -4,11 +4,11 @@ import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 
-function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
+function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueChange}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
 
     const source = quoteDetails.source;
-    const initialGeneralInfoState = {
+    const initialGeneralInfoState = () => ({
         deal: quoteDetails.deal || {},
         endUserName: '',
         spaId: quoteDetails.spaId || '',
@@ -17,7 +17,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
             quoteDetails.configurationName ||
             quoteDetails.configurationId || '',
         tier: quoteDetails.tier || '',
-    };
+    });
 
     const [editMode, setEditMode] = useState(false);
     const [generalInfoState, setGeneralInfoState] = useState(initialGeneralInfoState);
@@ -29,14 +29,17 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
     const [selectedDeal, setSelectedDeal] = useState(-1);
 
     useEffect(() => {
+        updateTierFriendlyLabel(generalInfoState.tier);
+    }, [pricingConditions]);
 
+    const updateTierFriendlyLabel = (currentTier) => {
         setGeneralInfoState((previousInfo) => (
             {
                 ...previousInfo,
-                tierUserFriendlyLabel: getPricingConditionLabel(generalInfoState.tier)
+                tierUserFriendlyLabel: getPricingConditionLabel(currentTier)
             }
         ));
-    }, [pricingConditions]);
+    }
 
     const getPricingConditionLabel = (tier) => {
         const pricingConditionsItems = pricingConditions?.content?.pricingConditions?.items;
@@ -45,6 +48,8 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
     }
 
     const clearDealsFound = () => {
+        setSelectedDeal(-1);
+
         setDealsFound([]);
     }
     
@@ -71,6 +76,18 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
         }
     };
 
+    const handleClearSelectedDeal = (e) => {
+        setSelectedDeal(-1);
+
+        setGeneralInfoState((previousInfo) => (
+            {
+                ...previousInfo,
+                deal: {},
+                spaId: ''
+            }
+        ));
+    }
+
     const handleDealsChange = (e, index) => {
         setSelectedDeal(index);
 
@@ -82,13 +99,16 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                     ...dealsFound[index],
                     spaId
                 },
-                endUserName: '',
                 spaId
             }
         ));
     };
 
     const handleEditModeChange = () => {
+        setGeneralInfoState(initialGeneralInfoState);
+
+        updateTierFriendlyLabel(quoteDetails.tier);
+
         setEditMode(prevEditMode => !prevEditMode);
     };
 
@@ -103,9 +123,17 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
         closeEditMode();
     };
 
+    const handleCancelChanges = () => {
+        setGeneralInfoState(initialGeneralInfoState);
+
+        updateTierFriendlyLabel(quoteDetails.tier);
+
+        closeEditMode();
+    };
+
     const displayDealsFound = () => {
         if (errorGettingDeals) {
-            return info.errorGettingDealsLabel;
+            return <div>{info.errorGettingDealsLabel}</div>;
         }
         else if (isLoadingDeals) {
             return (
@@ -116,11 +144,11 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
             );
         }
         else if (noDealsFound) {
-            return info.noDealsFoundLabel;
+            return <div>{info.noDealsFoundLabel}</div>;
         }
         else {
             return (
-                <div>
+                <div className="cmp-qp-deals-cotainer">
                     {dealsFound?.length > 0 &&
                         <>
                             {info.dealsFoundLabel}
@@ -131,7 +159,7 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                                 value={index}
                                                 checked={selectedDeal == index} 
                                                 onChange={(e) => handleDealsChange(e, index)} />
-                                        <div>
+                                        <div onClick={(e) => handleDealsChange(e, index)}>
                                             <div className="cmp-qp-dealslist__item-data">
                                                 <div>
                                                     {info.bidLabel}
@@ -168,17 +196,15 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                                     </li>
                                 )}
                             </ul>
+                            <div className="cmp-qp-dealslist-note">
+                                {info.dealsPricingNote}
+                            </div>
                         </>
                     }
                 </div>
             )
         }
     }
-    const handleCancelChanges = () => {
-        setGeneralInfoState(initialGeneralInfoState);
-
-        closeEditMode();
-    };
 
     const handleDropDownFocus = () => {
         setIsTiersDropDownFocused(true);
@@ -316,23 +342,49 @@ function GeneralInfo({quoteDetails, gridProps, info, onValueChange}) {
                             onChange={handleModelChange}
                             type="text"/>
                     </div>
-                    <div className="form-check cmp-qp__edit-deal">
-                        <label htmlFor="endUserName">{info.dealLabel}</label>
-                        <div>
-                            <input
-                                className="field element"
-                                value={generalInfoState.endUserName}
-                                name="endUserName"
-                                id="endUserName"
-                                onChange={handleModelChange}
-                                onKeyPress={handleEndUserNameKeyPress}
-                                type="text"/>
-                            <button className="cmp-qp__edit-deal__button" onClick={loadDeals}>
-                                <i className="cmp-qp__edit-deal__icon fas fa-search" data-cmp-hook-search="icon"></i>
-                            </button>
-                            {displayDealsFound()}
+                    {!hideDealSelector && (
+                        <div className="form-check cmp-qp__edit-deal">
+                            <label htmlFor="endUserName">{info.dealLabel}</label>
+                            <div>
+
+                                {generalInfoState.deal.spaId && (
+                                    <div className="cmp-qp__edit-deal--selected">
+                                        <div>
+                                            {generalInfoState.deal.spaId}
+                                        </div>
+                                        <div>
+                                            {generalInfoState.deal.vendor}
+                                        </div>
+                                        <div>
+                                            {generalInfoState.deal.expiryDate}
+                                        </div>
+
+                                        <button
+                                            className="cmp-qp__edit-deal-remove--selected"
+                                            onClick={handleClearSelectedDeal}>
+                                            <i
+                                                className="fas fa-times"
+                                                data-cmp-hook-search="icon"
+                                            ></i>
+                                        </button>
+                                    </div>
+                                )}
+                                <input
+                                    className="field element"
+                                    value={generalInfoState.endUserName}
+                                    placeholder={info.searchDealsPlaceholder}
+                                    name="endUserName"
+                                    id="endUserName"
+                                    onChange={handleModelChange}
+                                    onKeyPress={handleEndUserNameKeyPress}
+                                    type="text"/>
+                                <button className="cmp-qp__edit-deal__button" onClick={loadDeals}>
+                                    <i className="cmp-qp__edit-deal__icon fas fa-search" data-cmp-hook-search="icon"></i>
+                                </button>
+                                {displayDealsFound()}
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <div className="form-group">
                         <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
                             {"Submit"}

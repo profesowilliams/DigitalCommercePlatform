@@ -82,6 +82,14 @@ use(['../common/utils.js'], function (utils) {
         informationTab["referenceLabel"]  = properties["referenceLabel"];
     }
 
+    if (properties && properties["searchDealsPlaceholder"]) {
+        informationTab["searchDealsPlaceholder"]  = properties["searchDealsPlaceholder"];
+    }
+
+    if (properties && properties["dealsPricingNote"]) {
+        informationTab["dealsPricingNote"]  = properties["dealsPricingNote"];
+    }
+
     if (properties && properties["dealLabel"]) {
         informationTab["dealLabel"]  = properties["dealLabel"];
     }

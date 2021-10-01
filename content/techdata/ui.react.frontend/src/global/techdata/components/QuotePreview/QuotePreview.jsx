@@ -11,13 +11,15 @@ import axios from 'axios';
 import data from './QuotePreviewSample';
 import Loader from '../Widgets/Loader';
 import FullScreenLoader from '../Widgets/FullScreenLoader';
+import { isQuickQuoteButtonDisabled, isDealSelectorHidden } from "./QuoteTools";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const { id, isEstimateId, vendor } = getUrlParams();
-  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId || true}&vendor=${vendor ? vendor : 'cisco'}`);
+  const { id, isEstimateId = true, vendor = 'cisco' } = getUrlParams();
+  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId}&vendor=${vendor}`);
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [subTotal, setSubTotal] = useState(null);
+  const [didQuantitiesChange, setDidQuantitiesChange] = useState(false);
   const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
 
@@ -27,11 +29,13 @@ function QuotePreview(props) {
     }
   }, [apiResponse]); 
 
-  const getSubTotal = (data) => {
+  const handleQuantityChange = (data, didQuantitiesChange) => {
     let subTotal = data.reduce((subTotal, {extendedPrice}) => subTotal + extendedPrice, 0);
     subTotal = Math.round((subTotal + Number.EPSILON) * 100) / 100
 
     setSubTotal(subTotal);
+
+    setDidQuantitiesChange(didQuantitiesChange);
   };
 
   const createQuote = async (e) => {
@@ -67,6 +71,7 @@ function QuotePreview(props) {
         tier: generalInformation.tier,
         spaId: generalInformation.spaId,
         quoteReference: generalInformation.quoteReference,
+        deal: generalInformation.deal,
       }
     ));
   }
@@ -78,7 +83,6 @@ function QuotePreview(props) {
         endUser: endUserlInformation,
       }
     ));
-    console.log(endUserlInformation);
   }
 
   return (
@@ -96,6 +100,7 @@ function QuotePreview(props) {
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
             generalInfoChange={generalInfoChange}
+            hideDealSelector={isDealSelectorHidden(quoteDetails)}
           />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />
@@ -104,7 +109,7 @@ function QuotePreview(props) {
             <QuotePreviewGrid
               gridProps={componentProp.productLines}
               data={apiResponse}
-              onQuoteLinesUpdated={getSubTotal}
+              onQuoteLinesUpdated={handleQuantityChange}
             ></QuotePreviewGrid>
             <QuotePreviewSubTotal 
               currencySymbol={currencySymbol} 
@@ -112,7 +117,11 @@ function QuotePreview(props) {
               subtotalLabel={componentProp.subtotalLabel}
             />
           </div>
-          <QuotePreviewContinue gridProps={componentProp} handleQuickQuote={handleQuickQuote}/>
+          <QuotePreviewContinue
+            gridProps={componentProp}
+            quoteDetails={quoteDetails}
+            disableQuickQuoteButton={isQuickQuoteButtonDisabled(quoteDetails, didQuantitiesChange)}
+            handleQuickQuote={handleQuickQuote}/>
         </section>
       )}
     </div>

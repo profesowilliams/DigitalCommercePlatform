@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
+    searchDealsPlaceholder="Search End User or Leave Blank"
     searchingDealsLabel="Searching Deals"
     noDealsFoundLabel="No Deal(s) Found"
     dealsFoundLabel="Deal(s) Found"
@@ -9,4 +10,5 @@
     spaIdLabel="Deal ID:"
     endUserNameLabel="End User:"
     errorGettingDealsLabel="There was an error trying to get the Deals, please try again."
+    dealsPricingNote="Note: The pricing updates will be reflected when you create a TD quote."
 />

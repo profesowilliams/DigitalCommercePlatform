@@ -106,7 +106,7 @@
 
 .cmp-qp__general-info,
 .cmp-qp__enduser-info {
-    min-width: 300px;
+    min-width: 335px;
     .form-check, .cmp-qp__information-row--readonly {
         display: grid;
         grid-template-columns: 35% 65%;
@@ -130,18 +130,35 @@
             width: 10%;
         }
 
-        .cmp-qp-dealslist {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            &__item {
-                display: grid;
-                grid-template-columns: 10% 90%;
-                &-data {    
+        .cmp-qp__edit-deal--selected {
+            position: relative;
+
+            .cmp-qp__edit-deal-remove--selected {
+                color: $brand-light-blue-icon;
+                background: white;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+
+        .cmp-qp-deals-cotainer {
+            padding-top: 15px;
+            .cmp-qp-dealslist {
+                list-style-type: none;
+                padding: 0;
+                padding-top: 15px;
+                margin: 0;
+                &__item {
+                    padding-bottom: 15px;
                     display: grid;
-                    grid-template-columns: 35% 65%;
+                    grid-template-columns: 10% 90%;
+                    &-data {    
+                        display: grid;
+                        grid-template-columns: 35% 65%;
+                    }
+                    
                 }
-                
             }
         }
     }

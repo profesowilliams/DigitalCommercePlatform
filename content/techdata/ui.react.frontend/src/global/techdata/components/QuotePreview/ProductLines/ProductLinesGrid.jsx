@@ -117,7 +117,9 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       rowNode.selected && selectedLinesModel.push(_row);
     });
     if (typeof onQuoteLinesUpdated === "function") {
-      onQuoteLinesUpdated(selectedLinesModel);
+      const didQuantitiesChange = !!gridData.find((row, index) => row.quantity !== mutableGridData[index].quantity);
+
+      onQuoteLinesUpdated(selectedLinesModel, didQuantitiesChange);
     }
   }
 
