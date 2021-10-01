@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
         public PriceModel Price { get; set; }
         public object Authorization { get; set; } // to fill
         public IEnumerable<NoteModel> Notes { get; set; }
+        [JsonProperty("indicators")]
         public IndicatorFlags IndicatorsFlag { get; set; }
         public ProductSpecificationsModel Specifications { get; set; }
         public StockModel Stock { get; set; }
