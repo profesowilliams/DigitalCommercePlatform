@@ -30,20 +30,22 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
             CreateMap<ProductDto, ProductModel>()
-                .ForPath(dest => dest.Specifications.MainSpecifications, opt => opt.MapFrom(src => src.MainSpecifications))
-                .ForPath(dest => dest.Specifications.ExtendedSpecifications, opt => opt.MapFrom(src => src.ExtendedSpecifications))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.Id))
                 .ForMember(dest => dest.IndicatorsFlag, opt => opt.MapFrom(src => src.Indicators))
                 .ForMember(dest => dest.Notes, opt => opt.MapFrom(src => src.SalesOrganizations))
+                .ForMember(dest => dest.Status, opt => opt.Ignore()) // Will be filled by ConvertProductsFromDtoToModel
                 // to fill
                 .ForMember(dest => dest.SubstituteMaterialNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.UPC_EAN, opt => opt.Ignore())
-                .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.MarketingDescription, opt => opt.Ignore())
                 .ForMember(dest => dest.ProductFeatures, opt => opt.Ignore())
                 .ForMember(dest => dest.KeySellingPoints, opt => opt.Ignore())
                 .ForMember(dest => dest.WhatsInTheBox, opt => opt.Ignore())
-                .ForMember(dest => dest.Documents, opt => opt.Ignore());
+                .ForMember(dest => dest.Documents, opt => opt.Ignore())
+                
+                .ForPath(dest => dest.Specifications.MainSpecifications, opt => opt.MapFrom(src => src.MainSpecifications))
+                .ForPath(dest => dest.Specifications.ExtendedSpecifications, opt => opt.MapFrom(src => src.ExtendedSpecifications));
 
             CreateMap<IEnumerable<IndicatorDto>, IndicatorFlags>().ConvertUsing(new ProductIndicatorsConverter());
             CreateMap<IEnumerable<PlantDto>, IEnumerable<PlantModel>>().ConvertUsing(new ListPlantConverter());
@@ -65,6 +67,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
             CreateMap<AliasDto, AliasModel>();
             CreateMap<WarehouseDto, WarehouseModel>();
             CreateMap<MarketingDto, MarketingModel>();
+        }
+
+        public static IEnumerable<ProductModel> ConvertProductsFromDtoToModel(IEnumerable<ProductDto> dto, IEnumerable<ProductModel> models)
+        {
+            if (models != null)
+            {
+                foreach (var product in models)
+                {
+                    // There is probably a cleaner way to do this directly with Automapper
+                    product.Status = product.IndicatorsFlag?.DisplayStatus;
+                }
+            }
+            return models;
         }
     }
 
@@ -88,6 +103,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                             if (indicatorParam.Key == "DropShip" && indicatorParam.Value?.Value == "Y") { destination.DropShipFlag = true; }
                             if (indicatorParam.Key == "Warehouse" && indicatorParam.Value?.Value == "Y") { destination.WarehouseFlag = true; }
                             if (indicatorParam.Key == "Virtual" && indicatorParam.Value?.Value == "Y") { destination.VirtualFlag = true; }
+                            if (indicatorParam.Key == "DisplayStatus")
+                            {
+                                destination.DisplayStatus = indicatorParam.Value?.Value;
+                            }
                         }
                     }
                 }
@@ -109,7 +128,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                     var destPlant = new PlantModel()
                     {
                         Name = sourcePlant?.Id,
-                        Quantity = sourcePlant?.Stock.Stock,
+                        Quantity = sourcePlant?.Stock?.Stock,
                     };
                     result.Add(destPlant);
                 }

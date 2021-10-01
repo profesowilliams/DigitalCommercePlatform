@@ -88,5 +88,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Automapper
             // Assert
             result.Should().BeNull();
         }
+
+        [Fact]
+        public void ConvertProductsFromDtoToModelTestNull()
+        {
+            // Act
+            var result = ProductProfile.ConvertProductsFromDtoToModel(null, null);
+            // Assert
+            result.Should().BeNull();
+        }
     }
 }

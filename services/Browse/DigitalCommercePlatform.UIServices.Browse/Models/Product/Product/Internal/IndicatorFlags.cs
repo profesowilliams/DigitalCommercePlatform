@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
@@ -15,5 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public bool DropShipFlag { get; set; }
         public bool WarehouseFlag { get; set; }
         public bool VirtualFlag { get; set; }
+        [JsonIgnore] // This field is used in the field ProductModel.Status
+        public string DisplayStatus { get; set; }
     }
 }

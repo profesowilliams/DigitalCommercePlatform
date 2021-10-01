@@ -9,14 +9,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
     [ExcludeFromCodeCoverage]
     public class ProductModel
     {
-        public SourceModel Source { get; set; }
+        public string Id { get; set; }
         public string MaterialType { get; set; }
         public string DisplayName { get; set; }
+        public string Description { get; set; }
         public string SubstituteMaterialNumber { get; set; }
         public string ManufacturerPartNumber { get; set; }
         [JsonProperty("UPC_EAN")]
         public string UPC_EAN { get; set; }
-        public string Status { get; set; } // to fill
+        public string Status { get; set; }
         public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
         public PriceModel Price { get; set; }
         public object Authorization { get; set; } // to fill

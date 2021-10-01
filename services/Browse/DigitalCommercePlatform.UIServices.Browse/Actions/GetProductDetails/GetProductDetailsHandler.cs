@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -45,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             {
                 var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
                 var productsModel = _mapper.Map<IEnumerable<ProductModel>>(productDetails);
+                productsModel = ProductProfile.ConvertProductsFromDtoToModel(productDetails, productsModel);
                 var getProductResponse = _mapper.Map<Response>(productsModel);
                 return new ResponseBase<Response> { Content = getProductResponse };
             }
