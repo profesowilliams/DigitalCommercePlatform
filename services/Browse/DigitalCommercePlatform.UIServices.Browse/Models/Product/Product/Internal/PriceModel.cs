@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -8,9 +9,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     public class PriceModel
     {
         public decimal? ListPrice { get; set; }
-        public decimal? UnpromotedPrice { get; set; }
+        public decimal? BasePrice { get; set; }
         public decimal? BestPrice { get; set; }
-        public List<PromoPrice> PromoPrices { get; set; }
+        public DateTime? BestPriceExpiration { get; set; }
+        public decimal? PromoAmount { get; set; }
         public List<VolumePricingModel> VolumePricing { get; set; }
     }
 }

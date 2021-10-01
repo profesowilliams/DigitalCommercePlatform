@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
@@ -29,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         Task<SummaryDetails> FindSummaryDetails(FindSummaryHandler.Request request);
 
-        Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsHandler.Request request);
+        Task<IEnumerable<ProductDto>> GetProductDetails(GetProductDetailsHandler.Request request);
 
         Task<SummaryModel> GetProductSummary(GetProductSummaryHandler.Request request);
 

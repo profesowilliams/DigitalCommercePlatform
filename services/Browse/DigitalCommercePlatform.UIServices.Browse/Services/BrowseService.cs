@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
@@ -148,10 +149,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return getProductResponse;
         }
 
-        public async Task<IEnumerable<ProductModel>> GetProductDetails(GetProductDetailsHandler.Request request)
+        public async Task<IEnumerable<ProductDto>> GetProductDetails(GetProductDetailsHandler.Request request)
         {
             var ProductURL = _appProductURL.BuildQuery(request);
-            var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductModel>>(ProductURL);
+            var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductDto>>(ProductURL);
             return getProductResponse;
         }
 

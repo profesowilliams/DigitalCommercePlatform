@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
@@ -30,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductDetails(IEnumerable<ProductModel> expected)
+        public async Task GetProductDetails(IEnumerable<ProductDto> expected)
         {
             _mockBrowseService.Setup(x => x.GetProductDetails(
                        It.IsAny<GetProductDetailsHandler.Request>()

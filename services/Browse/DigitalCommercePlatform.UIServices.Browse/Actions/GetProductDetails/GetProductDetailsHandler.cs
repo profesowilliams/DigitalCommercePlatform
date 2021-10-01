@@ -44,7 +44,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var productDetails = await _productRepositoryServices.GetProductDetails(request).ConfigureAwait(false);
-                var getProductResponse = _mapper.Map<Response>(productDetails);
+                var productsModel = _mapper.Map<IEnumerable<ProductModel>>(productDetails);
+                var getProductResponse = _mapper.Map<Response>(productsModel);
                 return new ResponseBase<Response> { Content = getProductResponse };
             }
         }

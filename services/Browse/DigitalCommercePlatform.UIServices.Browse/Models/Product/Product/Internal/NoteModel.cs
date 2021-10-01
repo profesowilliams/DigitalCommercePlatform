@@ -1,12 +1,11 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class PlantModel
+    public class NoteModel
     {
-        public string Name { get; set; }
-        public int? Quantity { get; set; }
+        public string Value { get; set; }
     }
 }

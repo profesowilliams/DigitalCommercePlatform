@@ -4,9 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class PlantModel
+    public class StockModel
     {
-        public string Name { get; set; }
-        public int? Quantity { get; set; }
+        public int Total { get; set; }
+        public int Td { get; set; }
+        public int VendorDesignated { get; set; }
     }
 }
