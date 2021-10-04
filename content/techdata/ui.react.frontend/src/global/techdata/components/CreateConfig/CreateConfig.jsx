@@ -16,7 +16,7 @@ const CreateConfig = ({ componentProp }) => {
     setLoading(true);
     
     const params = {
-      "PostBackURL": POST_BACK_URL,  
+      "PostBackURL": window.location.href || POST_BACK_URL,
       "Vendor": methodSelected.label,
       "ConfigurationId": "",
       "Function": "CCW_ESTIMATE",
