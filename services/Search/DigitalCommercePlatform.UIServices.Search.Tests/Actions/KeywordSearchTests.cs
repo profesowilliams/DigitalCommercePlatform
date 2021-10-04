@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public void HandleReturnsError(KeywordSearch.Request request)
         {
             //arrange
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).ThrowsAsync(new Exception("test"));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).ThrowsAsync(new Exception("test"));
 
             var sut = GetHandler();
 
@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             Func<Task> act = async () => await sut.Handle(request, default);
             //assert
             _ = act.Should().ThrowAsync<Exception>();
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Theory]
@@ -74,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public async Task HandleReturnsNullWhenNotFoundReturned(KeywordSearch.Request request)
         {
             //arrange
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(new FullSearchResponseModel()));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).Returns(Task.FromResult(new FullSearchResponseModel()));
 
             var sut = GetHandler();
             
@@ -84,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
             result.Should().NotBeNull();
             result.Results.Should().NotBeNull();
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Theory]
@@ -93,7 +93,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         {
             //arrange
             request.IsAnonymous = false;
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appSearchResponse));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).Returns(Task.FromResult(appSearchResponse));
 
             var sut = GetHandler();
 
@@ -103,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
             result.Should().NotBeNull();
             result.Results.Should().NotBeNull();
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Theory]
@@ -111,7 +111,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public async Task HandleReturnsCorrectResult(KeywordSearch.Request request, FullSearchResponseModel appResponse)
         {
             //Arrange
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
             var sut = GetHandler();
 
             //Act
@@ -120,7 +120,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //Assert
             result.Results.Should().NotBeNull();
 
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Theory]
@@ -132,7 +132,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             appResponse.Products.Clear();
             appResponse.Products.Add(exactMatch);
             request.IsAnonymous = false;
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
             var sut = GetHandler();
 
             //Act
@@ -141,7 +141,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //Assert
             result.Results.Should().NotBeNull();
             result.Results.Products.FirstOrDefault().IsExactMatch.Should().BeTrue();
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Theory]
@@ -149,7 +149,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public async Task HandleReturnsCorrectResultWhenSiteSettingIsNull(KeywordSearch.Request request, FullSearchResponseModel appResponse)
         {
             //Arrange
-            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
             var _siteSettingsMockEmpty = new Mock<ISiteSettings>();
             var sut = new KeywordSearch.Handler(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMockEmpty.Object);
 
@@ -158,7 +158,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
 
             //Assert
             result.Results.Should().NotBeNull();
-            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>()), Times.Once);
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<AppSearchRequestModel>(), It.IsAny<bool>()), Times.Once);
         }
 
 

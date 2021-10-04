@@ -12,6 +12,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         public Task<List<TypeAheadModel>> GetTypeAhead(TypeAhead.Request request);
 
-        public Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request);
+        public Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request, bool isAnonymous);
     }
 }

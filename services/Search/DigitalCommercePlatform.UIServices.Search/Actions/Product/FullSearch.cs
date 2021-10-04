@@ -57,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 {
                     appRequest.GetDetails ??= new Dictionary<Details, bool>() { { Details.All, true } };
                 }
-                return new Response(await _searchService.GetFullSearchProductData(appRequest));
+                return new Response(await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous));
             }
         }
 

@@ -122,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new Exception("test"));
 
             //act
-            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request);
+            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request, true);
 
             //assert
             act.Should().ThrowAsync<Exception>();
@@ -138,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.NotFound, details: null));
 
             //act
-            var result = await _searchService.GetFullSearchProductData(request);
+            var result = await _searchService.GetFullSearchProductData(request, true);
 
             //assert
             result.Should().BeNull();
@@ -154,7 +154,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.InternalServerError, details: null));
 
             //act
-            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request);
+            Func<Task> act = async () => await _searchService.GetFullSearchProductData(request, true);
 
             //assert
             act.Should().ThrowAsync<Exception>();
@@ -170,7 +170,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 .Returns(Task.FromResult(appResponse));
 
             //Act
-            var result = await _searchService.GetFullSearchProductData(request);
+            var result = await _searchService.GetFullSearchProductData(request, true);
 
             //Assert
             result.Should().NotBeNull();

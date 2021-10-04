@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly string _appSearchUrl;
+        private readonly string _appProductUrl;
         private readonly ILogger<SearchService> _logger;
         private readonly IUIContext _context;
         private readonly IMapper _mapper;
@@ -34,20 +35,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _context = context;
             _middleTierHttpClient = middleTierHttpClient;
             _appSearchUrl = appSettings.GetSetting("App.Search.Url");
+            _appProductUrl = appSettings.GetSetting("App.Product.Url");
             var mapperConfig = new MapperConfiguration(x => x.AddProfiles(new Profile[] { new SearchProfile() }));
             _mapper = mapperConfig.CreateMapper();
         }
 
-        public async Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request)
+        public async Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request, bool isAnonymous)
         {
             var appSearchResponse = await GetProductData(request);
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
-            if(fullSearchResponse != null)
-                MapFields(appSearchResponse, ref fullSearchResponse);
+            if (fullSearchResponse != null)
+                MapFields(appSearchResponse, isAnonymous, ref fullSearchResponse);
             return fullSearchResponse;
         }
 
-        private static void MapFields(AppSearchResponseDto appSearchResponse,  ref FullSearchResponseModel fullSearchResponse)
+        private static void MapFields(AppSearchResponseDto appSearchResponse, bool isAnonymous,  ref FullSearchResponseModel fullSearchResponse)
         {
             foreach (var product in fullSearchResponse?.Products) 
             {
@@ -57,6 +59,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                     product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
                 }
                 product.Status = appSearchProduct.Indicators?.Find(x => x.Type == "DisplayStatus")?.Value;
+                if (!isAnonymous) 
+                {
+                    var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
+                    SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
+                }
             }
         }
 
