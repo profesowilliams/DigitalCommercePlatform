@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { get } from "../../../../utils/api";
+import { get, usPost } from "../../../../utils/api";
 import WidgetTitle from "../Widgets/WidgetTitle";
 import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
 import Loader from '../Widgets/Loader';
 import { waitFor } from "../../../../utils/utils";
 import axios from 'axios';
-import { makeRequest } from "../../helpers/helpers";
 
 const EditConfig = ({ componentProp }) => {
     // useEffect(() => {
@@ -48,9 +47,9 @@ const EditConfig = ({ componentProp }) => {
         }
         setLoadingGetUrl(true);
         waitFor(3000);
-        const result = await makeRequest("POST",puchOutEndpoint,body);
+        const result = await usPost(puchOutEndpoint,body)
         setLoadingGetUrl(false);
-        const {url} = result?.content;
+        const {url} = result?.data?.content;
         window.open(
                 url,
             '_blank' 
