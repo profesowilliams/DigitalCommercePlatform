@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [SetContextFromHeader]
     [ApiController]
     [ApiVersion("1")]
-    [Route("/v{apiVersion}")]
+    [Route("/v{apiVersion}/[controller]")]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class CompareController : BaseUIServiceController
     {
