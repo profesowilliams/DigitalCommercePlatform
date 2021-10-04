@@ -45,11 +45,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var appSearchResponse = await GetProductData(request);
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
             if (fullSearchResponse != null)
-                MapFields(appSearchResponse, isAnonymous, ref fullSearchResponse);
+                MapFields(appSearchResponse, ref fullSearchResponse);
             return fullSearchResponse;
         }
 
-        private static void MapFields(AppSearchResponseDto appSearchResponse, bool isAnonymous,  ref FullSearchResponseModel fullSearchResponse)
+        private static void MapFields(AppSearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
             foreach (var product in fullSearchResponse?.Products) 
             {
@@ -59,11 +59,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                     product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
                 }
                 product.Status = appSearchProduct.Indicators?.Find(x => x.Type == "DisplayStatus")?.Value;
-                if (!isAnonymous) 
-                {
-                    var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
-                    SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
-                }
+                var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
+                SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
             }
         }
 
