@@ -8,6 +8,7 @@ using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
+using FluentValidation.TestHelper;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -119,7 +120,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                     Values = new Dictionary<string, IndicatorValueDto>
                                     {
                                         {"DropShip", new IndicatorValueDto{ Value="Y"} },
-                                        { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} }
+                                        { "AuthRequiredPrice", new IndicatorValueDto{ Value="N"} }
                                     }
                                 },
                                 new IndicatorDto
@@ -220,6 +221,211 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             }
                         }
                     }
+                },
+                new object[]
+                {
+                    new List<ProductDto>
+                    {
+                        new ProductDto
+                        {
+                            Source=new SourceDto{ Id =  "p1", System="2"},
+                            ManufacturerPartNumber="ManufacturerPartNumber1",
+                            Description="Description1",
+                            ShortDescription="shortDescription1",
+
+                            Images = new Dictionary<string, IEnumerable<ImageDto>>
+                            {
+                                { "75x75", new List<ImageDto>{ new ImageDto { Type="Product shot", Url="url"} } }
+                            },
+                            Stock = new StockDto
+                            {
+                                VendorDesignated=1,
+                                Td=1,
+                                Total=2
+                            },
+                            Plants = new List<PlantDto>
+                            {
+                                new PlantDto
+                                {
+                                    Id="Plant",
+                                    Stock = new LocationStockDto
+                                    {
+                                        AvailableToPromise=1
+                                    }
+                                }
+                            },
+                            Price = new PriceDto
+                            {
+                                BasePrice=10,
+                                BestPrice=1,
+                                BestPriceExpiration=new DateTime(2100,1,1),
+                                ListPrice= 2,
+                                VolumePricing = new List<VolumePricingDto>
+                                {
+                                    new VolumePricingDto
+                                    {
+                                        MinQuantity=1,
+                                        Price=3
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new List<ValidateDto>
+                    {
+                        new ValidateDto
+                        {
+                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Restriction="DENY"
+                        }
+                    },
+                    new ProductModel
+                    {
+                        Id="p1",
+                        ManufacturerPartNumber="ManufacturerPartNumber1",
+                        Description="Description1",
+                        DisplayName = "shortDescription1",
+                        ThumbnailImage="url",
+                        Stock = new StockModel
+                        {
+                            TotalAvailable=2,
+                            VendorDirectInventory=1,
+                            VendorShipped=false,
+                            Plants = new List<PlantModel>
+                            {
+                                new PlantModel
+                                {
+                                    Name="Plant",
+                                    Quantity=1
+                                }
+                            }
+                        },
+                        Authorization= new AuthorizationModel
+                        {
+                            CanOrder=false,
+                            CanViewPrice=true
+                        },
+                        Price = new PriceModel
+                        {
+                            BasePrice=10,
+                            BestPrice=1,
+                            BestPriceExpiration=new DateTime(2100,1,1),
+                            ListPrice=2,
+                            VolumePricing= new List<VolumePricingModel>
+                            {
+                                new VolumePricingModel
+                                {
+                                    MinQuantity=1,
+                                    Price=3
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void Validator_ReturnValid(Browse.Actions.GetProductsCompare.Request request)
+        {
+            //arrange
+            var sut = new Browse.Actions.GetProductsCompare.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(Validator_ReturnInValid_Data))]
+        public void Validator_ReturnInValid(Browse.Actions.GetProductsCompare.Request request, string notValidProperty)
+        {
+            //arrange
+            var sut = new Browse.Actions.GetProductsCompare.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldHaveValidationErrorFor(notValidProperty);
+        }
+
+        public static IEnumerable<object> Validator_ReturnInValid_Data()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=null,
+                        SalesOrg="0100",
+                        Site="US"
+                    },
+                    "Ids"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=Array.Empty<string>(),
+                        SalesOrg="0100",
+                        Site="US"
+                    },
+                    "Ids"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=new string[]{"id1" },
+                        SalesOrg="0100",
+                        Site="US"
+                    },
+                    "Ids"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=new string[]{"id1", "id2" },
+                        SalesOrg=null,
+                        Site="US"
+                    },
+                    "SalesOrg"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=new string[]{"id1", "id2" },
+                        SalesOrg="",
+                        Site="US"
+                    },
+                    "SalesOrg"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=new string[]{"id1", "id2" },
+                        SalesOrg="0100",
+                        Site=""
+                    },
+                    "Site"
+                },
+                new object[]
+                {
+                    new Browse.Actions.GetProductsCompare.Request
+                    {
+                        Ids=new string[]{"id1", "id2" },
+                        SalesOrg="0100",
+                        Site=null
+                    },
+                    "Site"
                 }
             };
         }

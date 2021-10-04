@@ -34,16 +34,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         [HttpGet("")]
         public async Task<ActionResult> Get([FromQuery] string[] ids)
         {
-            var activeCustomerSalesOrgs = this.Context?.User?.ActiveCustomer?.SalesDivision?.Select(x => x.SalesOrg);
-            var activeCustomeruserSystem = this.Context?.User?.ActiveCustomer?.System;
+            var activeCustomerSalesOrgs = Context?.User?.ActiveCustomer?.SalesDivision?.Select(x => x.SalesOrg);
+            var activeCustomeruserSystem = Context?.User?.ActiveCustomer?.System;
 
-            var salesOrg = this.SalesOrg.FirstOrDefault(x => x.System == activeCustomeruserSystem && (activeCustomerSalesOrgs?.Contains(x.Value) ?? false));
+            var salesOrg = SalesOrg.FirstOrDefault(x => x.System == activeCustomeruserSystem && (activeCustomerSalesOrgs?.Contains(x.Value) ?? false));
 
             if (activeCustomerSalesOrgs == null || !activeCustomerSalesOrgs.Any() || activeCustomeruserSystem == null || salesOrg == null)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
-            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg.Value };
+            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg.Value, Site = Context?.Site };
 
             var data = await Mediator.Send(request).ConfigureAwait(false);
 

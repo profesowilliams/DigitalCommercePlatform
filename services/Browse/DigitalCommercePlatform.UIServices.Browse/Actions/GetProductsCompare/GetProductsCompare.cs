@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
@@ -22,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
         {
             public IEnumerable<string> Ids { get; set; }
             public string SalesOrg { get; set; }
+            public string Site { get; set; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
@@ -29,7 +31,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
         {
             private const string ALLOW = "ALLOW";
             private const string DropShip = "DropShip";
-            private const string N = "N";
             private const string Orderable = "Orderable";
             private const string AuthRequiredPrice = "AuthRequiredPrice";
             private const string Y = "Y";
@@ -141,20 +142,55 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 };
             }
 
+            public static Dictionary<string, IndicatorValueDto> ExtractFinalIndicators(IEnumerable<IndicatorDto> indicators, string salesOrg, string site)
+            {
+                var finalIndicators = new Dictionary<string, IndicatorValueDto>();
+                if (indicators == null || !indicators.Any())
+                {
+                    return finalIndicators;
+                }
+
+                var siteIndicators = indicators.FirstOrDefault(x => x.Context != null && string.Equals(x.Context.SalesOrganization, salesOrg, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && string.Equals(x.Context.Site, site, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && x.Context.Location == null)?.Values;
+
+                AddContextIndicatorsToFinalIndicators(finalIndicators, siteIndicators);
+
+                var salesOrgIndicators = indicators.FirstOrDefault(x => x.Context != null && string.Equals(x.Context.SalesOrganization, salesOrg, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && x.Context.Site == null
+                                                                         && x.Context.Location == null)?.Values;
+
+                AddContextIndicatorsToFinalIndicators(finalIndicators, salesOrgIndicators);
+
+                var defaultIndicators = indicators.FirstOrDefault(x => x.Context == null || (x.Context.SalesOrganization == null
+                                                                                                && x.Context.Site == null
+                                                                                                && x.Context.Location == null))?.Values;
+
+                AddContextIndicatorsToFinalIndicators(finalIndicators, defaultIndicators);
+
+                return finalIndicators;
+            }
+
+            private static void AddContextIndicatorsToFinalIndicators(Dictionary<string, IndicatorValueDto> finalIndicators, IDictionary<string, IndicatorValueDto> siteIndicators)
+            {
+                if (siteIndicators == null)
+                    return;
+
+                foreach (var entry in siteIndicators)
+                {
+                    finalIndicators.TryAdd(entry.Key, entry.Value);
+                }
+            }
+
             private static (bool vendorShipped, bool orderable, bool authrequiredprice) GetFlags(Request request, ProductDto x)
             {
-                var vendorShipped = false;
-                var orderable = false;
-                var authrequiredprice = false;
-                var indicatorsForSalesOrg = x.Indicators?.FirstOrDefault(x => x.Context != null && string.Equals(x.Context.SalesOrganization, request.SalesOrg, StringComparison.InvariantCultureIgnoreCase) && x.Context.Consumer == null && x.Context.Location == null && x.Context.Site == null);
-                var indicatorsDefault = x.Indicators?.FirstOrDefault(x => x.Context?.SalesOrganization == null && x.Context?.Consumer == null && x.Context?.Location == null && x.Context?.Site == null);
+                var indicators = ExtractFinalIndicators(x.Indicators, request.SalesOrg, request.Site);
 
-                vendorShipped = x.Stock?.VendorDesignated != null && indicatorsForSalesOrg?.Values?.FirstOrDefault(i => string.Equals(i.Key, DropShip, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value?.Value, N, StringComparison.InvariantCultureIgnoreCase)).Key == null;
+                var vendorShipped = x.Stock?.VendorDesignated != null && indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, StringComparison.InvariantCultureIgnoreCase);
 
-                orderable = indicatorsForSalesOrg?.Values?.FirstOrDefault(i => string.Equals(i.Key, Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value?.Value, N, StringComparison.InvariantCultureIgnoreCase)).Key == null
-                                                                  && indicatorsDefault?.Values?.FirstOrDefault(i => string.Equals(i.Key, Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value?.Value, Y, StringComparison.InvariantCultureIgnoreCase)).Key != null;
+                var orderable = indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, StringComparison.InvariantCultureIgnoreCase);
 
-                authrequiredprice = indicatorsForSalesOrg?.Values?.FirstOrDefault(i => string.Equals(i.Key, AuthRequiredPrice, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value?.Value, Y, StringComparison.InvariantCultureIgnoreCase)).Key != null;
+                var authrequiredprice = indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, Y, StringComparison.InvariantCultureIgnoreCase);
 
                 return (vendorShipped, orderable, authrequiredprice);
             }
@@ -244,7 +280,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             public Validator()
             {
                 RuleFor(x => x.Ids).NotEmpty();
+                When(x => x.Ids != null, () =>
+                {
+                    RuleFor(x => x.Ids).Must(x => x.Count() > 1).WithMessage("At least two product ids are required");
+                });
                 RuleFor(x => x.SalesOrg).NotEmpty();
+                RuleFor(x => x.Site).NotEmpty();
             }
         }
     }
