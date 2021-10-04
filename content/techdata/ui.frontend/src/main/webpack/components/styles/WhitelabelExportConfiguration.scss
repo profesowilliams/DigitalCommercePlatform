@@ -72,12 +72,20 @@
                  position: relative;
                  cursor: pointer;
                  width: 100%;
-                 color: #093765;
+                 color: #00558C;
                  font-family: "Open Sans";
                  font-size: 14px;
                  letter-spacing: 0;
                  line-height: 15px;
                  text-align: right;
+                 &::before{
+                  content: "\F303";
+                  left: 0;
+                  font-weight: 900;
+                  padding-right: 3px;
+                  font-family: 'Font Awesome 5 Free';
+                  color: #00558C;
+                 }
              }
          }
          &-suggested {

@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
-const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, base64LogoHandler, optionsHandeler }) => {
+const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxItems, information, base64LogoHandler, optionsHandeler }) => {
       const logoLabel = information ? information['yourLogoLabel'] : ''
-      const defaultOptions = items ? Object.values(items) : []
-      const wexcTitle = title ? title : ''
-      const wexcSubitle = subtitle ? subtitle : ''
+      const optionItems = checkboxItems ? Object.values(checkboxItems) : []
+      const wexcTitle = titleLabel ? titleLabel : ''
+      const wexcSubitle = subtitleLabel ? subtitleLabel : ''
       const [selectedFile, setFile] = useState('')
-      const [options, setOptions] = useState([])
+      let filterOptions = [...optionItems]
+      const index = filterOptions.indexOf("Part number- Tech data");
+      filterOptions.splice(index,1)
+      const [options, setOptions] = useState([...filterOptions])
       const onChangeLogoHandler = (event) => {
             const reader = new FileReader();
             reader.addEventListener("load", () => {
@@ -40,8 +43,8 @@ const  WhitelabelExportConfiguration = ({ title, subtitle, items, information, b
             <div className={`${excClassName}__base`}>
                 <div className={`${excClassName}__base-quote`}>        
                     <ul>
-                        {defaultOptions.map((option, index)=>(
-                            <li key={`${index}`}><label><input type='checkbox'  onChange={()=>onChangeHandler(option)}/>{option}</label></li>
+                        {optionItems.map((option, index)=>(
+                            <li key={`${index}`}><label><input defaultChecked={filterOptions.includes(option)} type='checkbox'  onChange={()=>onChangeHandler(option)}/>{option}</label></li>
                         ))}
                     </ul>
                 </div>

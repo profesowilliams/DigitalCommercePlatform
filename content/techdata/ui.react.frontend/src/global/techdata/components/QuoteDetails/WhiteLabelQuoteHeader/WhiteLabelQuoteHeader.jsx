@@ -7,7 +7,8 @@ import Loader from "../../Widgets/Loader";
 import FullScreenLoader from "../../Widgets/FullScreenLoader";
 
 const WhiteLabelQuoteHeader = ({ componentProp }) => {
-  const { uiServiceEndPoint, information, title, subtitle, items } = JSON.parse(componentProp);
+  const { uiServiceEndPoint, whiteLabel } = JSON.parse(componentProp);
+  const { information, titleLabel, subtitleLabel, checkboxItems } = whiteLabel;
 
   const { id } = getUrlParams();
   const [response, loading] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -20,9 +21,9 @@ const WhiteLabelQuoteHeader = ({ componentProp }) => {
   return quoteDetails ? (
     <div className="cmp-whitelabelquoteheader">
       <WhitelabelExportConfiguration 
-        title={title} 
-        subtitle={subtitle} 
-        items={items} 
+        titleLabel={titleLabel} 
+        subtitleLabel={subtitleLabel} 
+        checkboxItems={checkboxItems} 
         information={information}
         base64LogoHandler={(base64String)=>{
           console.log("base64String :: ", base64String)
