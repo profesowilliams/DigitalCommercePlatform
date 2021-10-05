@@ -28,5 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request);
         Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request);
+        Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);
+
     }
 }

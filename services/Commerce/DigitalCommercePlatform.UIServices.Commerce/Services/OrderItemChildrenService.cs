@@ -22,14 +22,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return new List<Line>();
             }
 
-            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList();
+            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o=>o.Id);
 
             var lines = new List<Line>();
-
+            double displayNumber = 0;
+            double displayChildNumber = 0.0;
             foreach (var item in parents)
             {
-                var children = orderDetails.Items.Where(i => (i.Parent != null && i.Parent!="0") &&
-                            _substringService.GetSubstring(i.Parent, ".") == _substringService.GetSubstring(item.Id, ".")).ToList();
+                displayNumber = displayNumber + 1.0;
+                item.DisplayLineNumber = displayNumber.ToString();
+                var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                foreach (var child in subLines)
+                {
+                    displayChildNumber = displayChildNumber + 0.1;
+                    child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
+                }
+
 
                 lines.Add(new Line
                 {
@@ -37,9 +45,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Parent = item.Parent,
                     Availability = item.Availability,
                     Description = item.Description,
+                    DisplayLineNumber = item.DisplayLineNumber,
                     Discounts = item.Discounts,
                     ExtendedPrice = item.ExtendedPrice,
                     Invoice = item.Invoice,
+                    Invoices = item.Invoices,
                     Manufacturer = item.Manufacturer,
                     MFRNumber = item.MFRNumber,
                     MSRP = item.MSRP,
@@ -55,7 +65,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     URLProductImage = item.URLProductImage,
                     URLProductSpecs = item.URLProductSpecs,
                     VendorPartNo = item.VendorPartNo,
-                    Children = children
+                    LicenseStartDate = item.LicenseStartDate,
+                    LicenseEndDate = item.LicenseEndDate,
+                    ContractStartDate = item.ContractStartDate,
+                    ContractEndDate = item.ContractEndDate,
+                    ContractNo = item.ContractNo,
+                    ContractType = item.ContractType,
+                    License = item.License,
+                    VendorStatus = item.VendorStatus,
+                    Status = item.Status ?? string.Empty,
+                    CustomerPOLine = item.CustomerPOLine,
+                    SupplierQuoteRef = item.SupplierQuoteRef,
+                    ConfigID = item.ConfigID,
+                    LocationID = item.LocationID,
+                    Serials = item.Serials,
+                    PAKs = item.PAKs,
+                    Trackings = item.Trackings,
+                    Children = subLines
                 });
 
             }

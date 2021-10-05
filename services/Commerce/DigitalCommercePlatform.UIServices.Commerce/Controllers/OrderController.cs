@@ -104,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         }
 
         [HttpGet]
-        [Route("downloadInvoice")]
+        [Route("downloadInvoice")]        
         public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
             var response = await Mediator.Send(new DownloadInvoice.Request(orderId, invoiceId, downloadAll)).ConfigureAwait(false);

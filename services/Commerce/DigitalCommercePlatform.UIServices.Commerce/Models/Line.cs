@@ -1,8 +1,10 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -24,6 +26,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
+        public List<InvoiceModel> Invoices { get; set; }
+        public List<TrackingDetails> Trackings { get; set; }
         public Discount[] Discounts { get; set; }
         public ContractDto Contract { get; set; }
         //added details
@@ -44,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string AncillaryChargesWithTitles { get; set; }
         public Annuity Annuity { get; set; }
         public bool IsSubLine { get { return false; } }
-        public string DisplayLineNumber { get { return Id; } }
+        public string DisplayLineNumber { get; set; }
         public DateTime? LicenseStartDate { get; set; }
         public DateTime? LicenseEndDate { get; set; }
         public DateTime? ContractStartDate { get; set; }
@@ -53,6 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string ContractNo { get; set; }
         public string ContractType { get; set; }
         public string License { get; set; }
+        public string Status { get; set; }
         public string VendorStatus { get; set; }
         public string CustomerPOLine { get; set; }
         public string SupplierQuoteRef { get; set; }
@@ -60,6 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string LocationID { get; set; }
         public IList<string> Serials { get; set; }
         public IList<string> PAKs { get; set; }
+        public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
 
     }
 }

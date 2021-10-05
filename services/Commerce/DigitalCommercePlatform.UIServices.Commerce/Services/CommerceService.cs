@@ -73,6 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
             var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<Models.Order.Internal.OrderModel>>(url);
+
             Models.Order.Internal.OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
             return result;
         }
@@ -89,7 +90,89 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             decimal? Tax = +order.Tax == null ? 0 : order.Tax;
 
             order.Total = subtotal + Other + Freight + Tax;
+
             return order;
+        }
+
+        public async Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName)
+        {
+            _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
+            string productUrl = "";
+            string productId = "";
+            string manufacturer = "";
+            string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
+            string[] arrProductIds = new string[items.Count];
+            string[] arrManufacturer = new string[items.Count];
+            ProductData productDetails;
+
+            //convert for-each statment to linq statment after App-Service is ready.
+            int i = 0;
+            foreach (var item in items)
+            {
+                productId = item?.VendorPartNo ?? item?.MFRNumber?? ""; // Fix this once app service is ready
+                if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
+                {
+
+                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                    item.Manufacturer = item.Manufacturer ?? system;
+                    manufacturer = item.Manufacturer ?? system;
+                    arrManufacturer[i] = manufacturer;
+                    arrProductIds[i] = productId;
+                    i++;
+                }
+            }
+
+            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
+            arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
+            // call product app service
+            productUrl = _appProductServiceURL.AppendPathSegment("Find")
+             .SetQueryParams(new
+             {
+                 MfrPartNumber = arrProductIds,
+                 Details = true,
+                 SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg,//"0100"; Goran Needs to Fix this
+                 Manufacturer = arrManufacturer
+             });
+            
+            try
+            {
+                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
+                ProductsModel product;
+                foreach (var line in items)
+                {
+                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
+                    if (product != null && line != null)
+                    {
+                        line.ShortDescription = string.IsNullOrWhiteSpace(product?.ShortDescription) ? line.ShortDescription : product?.ShortDescription;
+                        line.TDNumber = product?.Source.ID;
+                        line.URLProductImage = GetImageUrlForProduct(product);
+                        line.Images = product.Images;
+                        line.MSRP = product?.Price?.UnpromotedPrice;
+                        line.MFRNumber = product?.ManufacturerPartNumber;
+                    }
+                }
+            }
+            catch (Exception ex )
+            {
+                _logger.LogError(ex, "Exception at getting product details : " + nameof(CommerceService));
+            }            
+
+            return items;
+        }
+
+        private static string GetImageUrlForProduct(ProductsModel product)
+        {
+            if (product.Images.Any())
+            {
+                if (product?.Images?.Count == 1)
+                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
+                else if (product.Images.Where(a => a.Key == "75x75").Any())
+                    return product.Images.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
+                else
+                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
+            }
+
+            return string.Empty;
         }
 
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
@@ -233,6 +316,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuote(CreateQuote.Request request)
         {
+            // var createQuoteRequest = BuildCreateQuoteRequest(request);
+
             _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             CreateModelResponse response;
@@ -387,59 +472,63 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
 
                 MapEndUserAndReseller(configurationFindResponse, quotePreview); // Fix this using AutoMapper
+                quotePreview.Items = await PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
+                
+                #region Delete this after testing
+                //string productUrl = "";
+                //string productId = "";
+                //string manufacturer = "";
+                //string system = configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
+                //string[] arrProductIds = new string[quotePreview.Items.Count];
+                //string[] arrManufacturer = new string[quotePreview.Items.Count];
+                //ProductData productDetails;
 
-                string productUrl = "";
-                string productId = "";
-                string manufacturer = "";
-                string system = configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
-                string[] arrProductIds = new string[quotePreview.Items.Count];
-                string[] arrManufacturer = new string[quotePreview.Items.Count];
-                ProductData productDetails;
+                ////convert for-each statment to linq statment after App-Service is ready.
+                //int i = 0;
+                //foreach (var item in quotePreview.Items)
+                //{
+                //    productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
+                //    if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
+                //    {
 
-                //convert for-each statment to linq statment after App-Service is ready.
-                int i = 0;
-                foreach (var item in quotePreview.Items)
-                {
-                    productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
-                    if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
-                    {
+                //        item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                //        item.Manufacturer = item.Manufacturer ?? system;
+                //        manufacturer = item.Manufacturer ?? system;
+                //        arrManufacturer[i] = manufacturer;
+                //        arrProductIds[i] = productId;
+                //        i++;
+                //    }
+                //}
 
-                        item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                        item.Manufacturer = item.Manufacturer ?? system;
-                        manufacturer = item.Manufacturer ?? system;
-                        arrManufacturer[i] = manufacturer;
-                        arrProductIds[i] = productId;
-                        i++;
-                    }
-                }
+                //arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
+                //arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
+                //// call product app service
+                //productUrl = _appProductServiceURL.AppendPathSegment("Find")
+                // .SetQueryParams(new
+                // {
+                //     MfrPartNumber = arrProductIds,
+                //     Details = true,
+                //     SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
+                //     Manufacturer = arrManufacturer
+                // });
 
-                arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
-                arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
-                // call product app service
-                productUrl = _appProductServiceURL.AppendPathSegment("Find")
-                 .SetQueryParams(new
-                 {
-                     MfrPartNumber = arrProductIds,
-                     Details = true,
-                     SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
-                     Manufacturer = arrManufacturer
-                 });
+                //productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
 
-                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
-
-                ProductsModel product;
-                foreach (var line in quotePreview.Items)
-                {
-                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
-                    if (product != null && line != null)
-                    {
-                        line.TDNumber = product?.Source.ID;
-                        line.URLProductImage = product?.Images?.Where(a => a.Key == "75x75")?.FirstOrDefault().Value?.FirstOrDefault().Url;
-                        line.MSRP = product?.Price?.UnpromotedPrice;
-                        line.MFRNumber = product?.ManufacturerPartNumber;
-                    }
-                }
-
+                //ProductsModel product;
+                //foreach (var line in quotePreview.Items)
+                //{
+                //    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
+                //    if (product != null && line != null)
+                //    {
+                //        line.ShortDescription = string.IsNullOrWhiteSpace(product?.ShortDescription) ?  line.ShortDescription: product?.ShortDescription;
+                //        line.TDNumber = product?.Source.ID;
+                //        line.URLProductImage = product?.Images?.Where(a => a.Key == "75x75")?.FirstOrDefault().Value?.FirstOrDefault().Url;
+                //        line.MSRP = product?.Price?.UnpromotedPrice;
+                //        line.MFRNumber = product?.ManufacturerPartNumber;
+                //    }
+                //}
+                #endregion
+                
                 QuotePreviewModel response = new QuotePreviewModel
                 {
                     QuoteDetails = quotePreview

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
@@ -236,6 +237,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     if (result.Count < 1)
                         throw new InvalidOperationException($"Configuration Id is wrong");
                 }
+
                 const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
 
                 var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
@@ -250,6 +252,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 httpResponse.EnsureSuccessStatusCode();
 
                 var url = await httpResponse.Content.ReadAsStringAsync();
+                try
+                {
+                    var response = Regex.Replace(url, "^\"|\"$", ""); //remove last and first double quotes.
+                    return response;
+                }
+                catch (Exception)
+                {
+                    _logger.LogInformation("error in replacing double quotes using regex  ");
+                }
+
                 return url;
             }
             catch (Exception ex)

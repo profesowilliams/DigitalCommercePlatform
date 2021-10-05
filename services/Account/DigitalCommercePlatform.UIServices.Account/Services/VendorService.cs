@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -119,9 +118,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                           Vendor = request.Vendor
                       });
 
-                var response = await _middleTierHttpClient.GetAsync<bool>(url).ConfigureAwait(false);
-
-                return await Task.FromResult(response);
+                var response = await _middleTierHttpClient.GetAsync<string>(url);
+                return await Task.FromResult(true);
             }
             catch (RemoteServerHttpException ex)
             {
@@ -133,8 +131,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
             }
+            // return await Task.FromResult(false); // if no error and status != 200 
         }
-       
+
         public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request)
         {
             var url = string.Empty;

@@ -83,6 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 if (response.Items != null)
                 {
                     response.Items = _orderItemChildrenService.GetOrderLinesWithChildren(response);
+                    response.Items = await _commerceQueryService.PopulateLinesFor(response.Items, string.Empty);
                 }
                 return new ResponseBase<Response> { Content = response };
             }

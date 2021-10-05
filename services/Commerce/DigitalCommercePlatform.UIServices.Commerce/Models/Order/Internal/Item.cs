@@ -34,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public string ContractType { get; set; }
         public string License { get; set; }
         public string VendorStatus { get; set; }
+        public string Status { get; set; }
         public string CustomerPOLine { get; set; }
         public string SupplierQuoteRef { get; set; }
         public string ConfigID { get; set; }
