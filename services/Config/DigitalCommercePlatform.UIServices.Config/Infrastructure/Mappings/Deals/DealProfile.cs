@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 ;
 
             CreateMap<FindResponse<DealsBase>, GetDealsFor.Response>()
-               .ForMember(dest => dest.response, opt => opt.MapFrom(src => src.Data));
+               .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data));
 
         }
     }

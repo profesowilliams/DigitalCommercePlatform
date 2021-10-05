@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
 
         public class Response
         {
-            public IList<DealsdetailsForProducts> response { get; set; }
+            public IList<DealsdetailsForProducts> Items { get; set; }
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
@@ -60,8 +60,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
                 var dealsDetails = await _configService.GetDealsFor(request).ConfigureAwait(false);
                 var dealsResponse = _mapper.Map<Response>(dealsDetails);
                 var getDealsResponse = new Response
-                {                  
-                    response = dealsResponse.response,
+                {    
+                    Items= dealsResponse.Items,
                 };
                 return new ResponseBase<Response> { Content = getDealsResponse };
             }

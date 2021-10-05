@@ -135,7 +135,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 
-            statusCode.Should().Be(HttpStatusCode.BadRequest);
+            statusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Theory]

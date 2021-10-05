@@ -19,7 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string CurrencySymbol { get; set; } = "$";
         public string Status { get; set; }
         public string Invoice { get; set; }
-        public string IsReturn { get; set; }
+        public bool IsReturn { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
         public List<InvoiceDetails> Invoices { get; set; }
     }
