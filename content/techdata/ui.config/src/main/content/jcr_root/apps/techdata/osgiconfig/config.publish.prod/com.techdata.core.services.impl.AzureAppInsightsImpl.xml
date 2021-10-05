@@ -9,4 +9,4 @@
     getEnableAjaxPerfTracking="{Boolean}true"
     getEnableApplicationInsights="{Boolean}true"
     getEnableCorsCorrelation="{Boolean}true"
-    getInstrumentationKey=""/>
+    getInstrumentationKey="3d713c27-3656-4180-8354-e75d92c51236"/>
