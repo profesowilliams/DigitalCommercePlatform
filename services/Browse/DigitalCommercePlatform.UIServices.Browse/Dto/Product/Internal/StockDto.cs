@@ -6,8 +6,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal
     [ExcludeFromCodeCoverage]
     public class StockDto
     {
-        public int Total { get; set; }        
+        public int Total { get; set; }
         public int Td { get; set; }
-        public int VendorDesignated { get; set; }
+        public int? VendorDesignated { get; set; }
     }
 }

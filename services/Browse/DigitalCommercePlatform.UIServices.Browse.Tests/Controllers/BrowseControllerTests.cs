@@ -9,6 +9,7 @@ using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
@@ -41,8 +42,29 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
             mockLoggerFactory = new Mock<ILogger<BrowseController>>();
             mockContext = new Mock<IUIContext>();
+
+            var user = new User
+            {
+                ActiveCustomer = new Customer
+                {
+                    CustomerNumber = "cust",
+                    System = "2",
+                    SalesDivision = new List<SalesDivision>
+                    {
+                        new SalesDivision
+                        {
+                            SalesOrg="0100"
+                        }
+                    }
+                }
+            };
+
+            mockContext.Setup(x => x.User).Returns(user);
+
             mockContext.SetupGet(x => x.Language).Returns("en-us");
             mockSiteSettings = new Mock<ISiteSettings>();
+
+            mockSiteSettings.Setup(x => x.TryGetSetting<List<SalesOrg>>("SalesOrg")).Returns(new List<SalesOrg> { new SalesOrg { System = "2", Value = "0100" } });
         }
 
         private BrowseController GetController()
@@ -144,7 +166,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductDetails(ResponseBase<GetProductDetailsHandler.Response> expected)
+        public async Task GetProductDetails(GetProductDetailsHandler.Response expected)
         {
             var data = new List<string> { "123" };
 
@@ -153,23 +175,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetProduct(data, true).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetProductSummary(ResponseBase<GetProductSummaryHandler.Response> expected)
-        {
-            var data = new List<string> { "123" };
-
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetProductSummaryHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-            var controller = GetController();
-            var result = await controller.GetProduct(data, false).ConfigureAwait(false);
+            var result = await controller.GetProduct(data).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

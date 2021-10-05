@@ -49,10 +49,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _memoryCache = new MemoryCache(new MemoryCacheOptions());
             _cachingService = new CachingService(_memoryCache, _cachelogger.Object);
             _browseService = new BrowseService(_middleTierHttpClient.Object, _cachingService, _appSettings.Object, _uiContext.Object, _mapper.Object, _logger.Object);
-                               
-                
-              
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetHeader(GetHeaderHandler.Request request)
@@ -62,6 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+
         [Fact]
         public async Task GetCustomerDetails()
         {
@@ -70,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetCartDetails(GetCartHandler.Request request)
@@ -99,6 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             Assert.Null(result);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task FindSummaryDetails(FindSummaryHandler.Request request)
@@ -108,6 +109,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             Assert.Null(result);
         }
+
         [Theory]
         [AutoDomainData]
         public async Task GetProductDetails(GetProductDetailsHandler.Request request)
@@ -116,15 +118,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             var result = await _browseService.GetProductDetails(request);
             // Assert
             Assert.NotNull(result);
-        }
-        [Theory]
-        [AutoDomainData]
-        public async Task GetProductSummary(GetProductSummaryHandler.Request request)
-        {
-            // Act
-            var result = await _browseService.GetProductSummary(request);
-            // Assert
-            Assert.Null(result);
         }
 
         [Theory]
@@ -141,7 +134,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
                 ShortenSubcategories = true
             };
 
-           
             GetProductCatalogHandler.Request request = new GetProductCatalogHandler.Request(productCatalog);
             // Act
             var result = await _browseService.GetProductCatalogDetails(request);

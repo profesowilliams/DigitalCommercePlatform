@@ -122,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         }
 
         [Theory]
-        [InlineData("v1/Product?id=13&details=true")]
+        [InlineData("v1/Product/Details?id=13")]
         public async Task GetProductWithDetails(string input)
         {
             using var scope = fixture.CreateChildScope();
@@ -131,19 +131,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
                 .Returns<ResponseBase<GetProductDetailsHandler.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
             var response = await client.RunTest<ResponseBase<GetProductDetailsHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
-        [InlineData("v1/Product?id=13&details=false")]
-        public async Task GetProduct(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("details=false")
-                .Returns<ResponseBase<GetProductSummaryHandler.Response>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetProductSummaryHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
 

@@ -1,14 +1,11 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -24,21 +21,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 {
     public class ProductDetailsHandlerTests
     {
-        private readonly Mock<IMiddleTierHttpClient> _httpClientMock;
         private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<IBrowseService> _mockBrowseService;
-        private readonly Mock<IMapper> _mapper;
+        private readonly Mock<ISiteSettings> _siteSettingsMock;
 
         public ProductDetailsHandlerTests()
         {
             _mockBrowseService = new();
-            _mapper = new Mock<IMapper>();
-            _httpClientMock = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
             _appSettingsMock.Setup(x => x.GetSetting("App.Product.Url")).Returns("http://appproduct");
 
-            _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _mapper.Object);
+            _siteSettingsMock = new Mock<ISiteSettings>();
+            _siteSettingsMock.Setup(x => x.GetSetting("ImagesSize")).Returns("400x300");
+
+            _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _siteSettingsMock.Object);
         }
 
         public IReadOnlyCollection<string> Id { get; private set; }
@@ -53,11 +50,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                        ))
                    .ReturnsAsync(expected);
 
-            var handler = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _mapper.Object);
+            var request = new GetProductDetailsHandler.Request(Id, "0100", "US");
 
-            var request = new GetProductDetailsHandler.Request(Id,Details);
-
-            var result = await handler.Handle(request, It.IsAny<CancellationToken>());
+            var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
 
             result.Should().NotBeNull();
         }
@@ -69,12 +64,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             //arrange
             request.SalesOrg = "0100";
 
-            productDtos.First().ExtendedSpecifications = null;
-
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _mockBrowseService.Setup(x => x.GetProductDetails(request))
                 .ReturnsAsync(productDtos)
                 .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _mockBrowseService.Setup(x => x.ValidateProductTask(request.Id))
                 .ReturnsAsync(validateDtos)
                 .Verifiable();
 
@@ -83,6 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             //assert
             actual.Should().NotBeNull();
+            actual.Content.First().Should().BeEquivalentTo(expectedProduct);
         }
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
@@ -98,6 +92,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Source=new SourceDto{ Id =  "p1", System="2"},
                             ManufacturerPartNumber="ManufacturerPartNumber1",
                             Description="Description1",
+                            DisplayName="DisplayName",
                             Indicators = new List<IndicatorDto>
                             {
                                 new IndicatorDto
@@ -106,7 +101,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Values = new Dictionary<string, IndicatorValueDto>
                                     {
                                         {"DropShip", new IndicatorValueDto{ Value="Y"} },
-                                        { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} }
+                                        { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} },
+                                        { "EndUserRequired", new IndicatorValueDto{ Value="Y"} },
+                                        { "New", new IndicatorValueDto{ Value="Y"} },
+                                        { "Refurbished", new IndicatorValueDto{ Value="Y"} },
+                                        { "Returnable", new IndicatorValueDto{ Value="Y"} },
+                                        { "Virtual", new IndicatorValueDto{ Value="Y"} },
+                                        { "Warehouse", new IndicatorValueDto{ Value="Y"} },
+                                        { "DisplayStatus", new IndicatorValueDto{ Value="Active"} },
                                     }
                                 },
                                 new IndicatorDto
@@ -121,7 +123,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "75x75", new List<ImageDto>{ new ImageDto { Type="Product shot", Url="url"} } }
+                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } }
+                            },
+                            Logos = new Dictionary<string, IEnumerable<LogoDto>>
+                            {
+                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } }
                             },
                             Stock = new StockDto
                             {
@@ -154,6 +160,44 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         Price=3
                                     }
                                 }
+                            },
+                            ExtendedSpecifications = new List<ExtendedSpecificationDto>
+                            {
+                                new ExtendedSpecificationDto
+                                {
+                                    GroupName="group1",
+                                    Specifications = new List<SpecificationDto>
+                                    {
+                                        new SpecificationDto
+                                        {
+                                            Name="specName",
+                                            Value="specValue"
+                                        }
+                                    }
+                                }
+                            },
+                            MainSpecifications = new List<MainSpecificationDto>
+                                    {
+                                        new MainSpecificationDto
+                                        {
+                                            Name="specName",
+                                            Value="specValue"
+                                        }
+                                    },
+                            SalesOrganizations = new List<SalesOrganizationDto>
+                            {
+                                new SalesOrganizationDto
+                                {
+                                    Id="0100",
+                                    ProductNotes = new List<ProductNoteDto>
+                                    {
+                                        new ProductNoteDto
+                                        {
+                                            Type="PromoText",
+                                            Note="note"
+                                        }
+                                    }
+                                }
                             }
                         }
                     },
@@ -170,12 +214,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         Id="p1",
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
-                        DisplayName = "shortDescription1",
+                        DisplayName = "DisplayName",
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
                             VendorDirectInventory=1,
-                            VendorShipped=true,
+                            VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
@@ -203,6 +247,55 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     MinQuantity=1,
                                     Price=3
                                 }
+                            }
+                        },
+                        Images = new List<ImageModel>
+                        {
+                            new ImageModel{ Angle = "Product shot", Url="imgurl"},
+                            new ImageModel{ Angle = "Logo", Url="logourl"},
+                        },
+                        IndicatorsFlags = new IndicatorFlags
+                        {
+                            DropShip=true,
+                            EndUserRequired=true,
+                            New=true,
+                            Refurbished=true,
+                            Returnable=true,
+                            Virtual=true,
+                            Warehouse=true
+                        },
+                        Status="Active",
+                        Specifications = new ProductSpecificationsModel
+                        {
+                            ExtendedSpecifications=new List<ExtendedSpecificationModel>
+                            {
+                                new ExtendedSpecificationModel
+                                {
+                                    Group="group1",
+                                    GroupSpecifications = new List<SpecificationModel>
+                                    {
+                                        new SpecificationModel
+                                        {
+                                            Name="specName",
+                                            Value="specValue"
+                                        }
+                                    }
+                                }
+                            },
+                            MainSpecifications = new List<MainSpecificationModel>
+                            {
+                                new MainSpecificationModel
+                                {
+                                    Name="specName",
+                                    Value="specValue"
+                                }
+                            }
+                        },
+                        Notes = new List<NoteModel>
+                        {
+                            new NoteModel
+                            {
+                                Value="note"
                             }
                         }
                     }

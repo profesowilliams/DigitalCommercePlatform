@@ -12,7 +12,18 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public decimal? BasePrice { get; set; }
         public decimal? BestPrice { get; set; }
         public DateTime? BestPriceExpiration { get; set; }
-        public decimal? PromoAmount { get; set; }
-        public List<VolumePricingModel> VolumePricing { get; set; }
+
+        public decimal? PromoAmount
+        {
+            get
+            {
+                if (!BasePrice.HasValue || !BestPrice.HasValue)
+                    return null;
+
+                return BasePrice.Value - BestPrice.Value;
+            }
+        }
+
+        public IEnumerable<VolumePricingModel> VolumePricing { get; set; }
     }
 }

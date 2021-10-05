@@ -151,16 +151,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<IEnumerable<ProductDto>> GetProductDetails(GetProductDetailsHandler.Request request)
         {
-            var ProductURL = _appProductURL.BuildQuery(request);
+            var ProductURL = _appProductURL.BuildQuery(new
+            {
+                id = request.Id,
+                details = true
+            });
             var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductDto>>(ProductURL);
             return getProductResponse;
-        }
-
-        public async Task<SummaryModel> GetProductSummary(GetProductSummaryHandler.Request request)
-        {
-            var ProductURL = _appProductURL.BuildQuery(request);
-            var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<SummaryModel>>(ProductURL);
-            return getProductResponse.FirstOrDefault();
         }
 
         public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)

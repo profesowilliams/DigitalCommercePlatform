@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
+using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
@@ -16,6 +17,7 @@ using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -100,19 +102,18 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="details"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("product")]
-        public async Task<ActionResult<object>> GetProduct([FromQuery] IReadOnlyList<string> id, [FromQuery] bool details)
+        [Route("product/details")]
+        public async Task<ActionResult> GetProduct([FromQuery] IReadOnlyList<string> id)
         {
-            if (details)
+            var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
+
+            if (salesOrg == null)
             {
-                var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, details)).ConfigureAwait(false);
-                return Ok(response);
+                return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
-            else
-            {
-                var response = await Mediator.Send(new GetProductSummaryHandler.Request(id, details)).ConfigureAwait(false);
-                return Ok(response);
-            }
+
+            var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site)).ConfigureAwait(false);
+            return Ok(response);
         }
 
         /// <summary>

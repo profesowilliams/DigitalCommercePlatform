@@ -15,15 +15,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
         public string Description { get; set; }
         public string SubstituteMaterialNumber { get; set; }
         public string ManufacturerPartNumber { get; set; }
+
         [JsonProperty("UPC_EAN")]
         public string UPC_EAN { get; set; }
+
         public string Status { get; set; }
-        public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
+        public IEnumerable<ImageModel> Images { get; set; }
         public PriceModel Price { get; set; }
         public AuthorizationModel Authorization { get; set; }
         public IEnumerable<NoteModel> Notes { get; set; }
+
         [JsonProperty("indicators")]
         public IndicatorFlags IndicatorsFlags { get; set; }
+
         public ProductSpecificationsModel Specifications { get; set; }
         public StockModel Stock { get; set; }
         public string MarketingDescription { get; set; } // to fill

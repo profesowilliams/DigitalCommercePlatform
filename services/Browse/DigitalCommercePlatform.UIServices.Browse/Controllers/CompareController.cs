@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions;
+using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Controllers
@@ -34,16 +34,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         [HttpGet("")]
         public async Task<ActionResult> Get([FromQuery] string[] ids)
         {
-            var activeCustomerSalesOrgs = Context?.User?.ActiveCustomer?.SalesDivision?.Select(x => x.SalesOrg);
-            var activeCustomeruserSystem = Context?.User?.ActiveCustomer?.System;
+            var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
 
-            var salesOrg = SalesOrg.FirstOrDefault(x => x.System == activeCustomeruserSystem && (activeCustomerSalesOrgs?.Contains(x.Value) ?? false));
-
-            if (activeCustomerSalesOrgs == null || !activeCustomerSalesOrgs.Any() || activeCustomeruserSystem == null || salesOrg == null)
+            if (salesOrg == null)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
-            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg.Value, Site = Context?.Site };
+            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site };
 
             var data = await Mediator.Send(request).ConfigureAwait(false);
 
