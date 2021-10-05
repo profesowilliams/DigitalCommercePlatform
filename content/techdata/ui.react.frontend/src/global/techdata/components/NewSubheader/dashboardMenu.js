@@ -11,17 +11,17 @@ export const dashboardMenu = (dashboardMenuItems, hasDCPAccess) => {
                 <img src={dashboardMenuItems[first].imagePath}/>
             </a>
         </div>
-        {hasDCPAccess ? null : <div className="cmp-sub-header__wrapper__tablist__menu__item">
+        <div className="cmp-sub-header__wrapper__tablist__menu__item">
             <h2>{dashboardMenuItems[1].title}</h2>
             <a href={dashboardMenuItems[1].link ? dashboardMenuItems[0].link : "#"}>
                 <img src={dashboardMenuItems[1].imagePath}/>
             </a>
-        </div>}
-        <div className="cmp-sub-header__wrapper__tablist__menu__item">
+        </div>
+        {hasDCPAccess ? <div className="cmp-sub-header__wrapper__tablist__menu__item">
             <h2>{dashboardMenuItems[last].title}</h2>
             <a href={dashboardMenuItems[last].link ? dashboardMenuItems[last].link : "#"}>
                 <img src={dashboardMenuItems[last].imagePath}/>
             </a>
-        </div>
+        </div> : null}
     </div>)
 }
