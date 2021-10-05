@@ -31,7 +31,7 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
         jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
         jsonObject["dealsForEndpoint"] = this.uiServiceDomain + this.serviceData.dealsForEndpoint;
-        jsonObject["pricingConditionsEndpoint"] = this.uiServiceDomain + this.serviceData.pricingConditionsEndpoint;
+        jsonObject["pricingConditionsEndpoint"] = this.uiServiceDomain + this.serviceData.pricingConditionsEndPoint;
     }
 
     if (properties && properties["headerLabel"]) {
