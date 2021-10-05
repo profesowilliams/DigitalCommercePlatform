@@ -216,6 +216,16 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldLabel="Deals Pricing Note"
                                                         name="./dealsPricingNote"/>
+                                                    <submitLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Submit Button Label"
+                                                            name="./submitLabel"/>
+                                                    <cancelLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Cancel Button Label"
+                                                            name="./cancelLabel"/>
                                                 </items>
                                             </generalInformation>
                                         </items>

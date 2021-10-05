@@ -118,6 +118,12 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["errorGettingDealsLabel"]) {
         informationTab["errorGettingDealsLabel"]  = properties["errorGettingDealsLabel"];
     }
+    if (properties && properties["submitLabel"]) {
+        informationTab["submitLabel"]  = properties["submitLabel"];
+    }
+    if (properties && properties["cancelLabel"]) {
+        informationTab["cancelLabel"]  = properties["cancelLabel"];
+    }
 
      if (properties && properties["companyLabel"]) {
         informationTab["companyLabel"]  = properties["companyLabel"];
