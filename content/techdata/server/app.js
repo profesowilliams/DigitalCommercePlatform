@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
     );
     res.header(
         "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site"
+        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id"
     );
     res.header("Consumer", "*");
     res.header("SessionId", "*");
@@ -140,6 +140,43 @@ app.post("/login", function (req, res) {
                     { number: "0038048612", name: "Company 2" },
                 ],
                 roles: [],
+                roleList: [{
+                    entitlement: "CanPlaceOrder",
+                    account: "0038055347"
+                },
+                    {
+                        entitlement: " hasDCPAccess",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanViewInvoices",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanDownloadPriceFiles",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanViewCreditStatement",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CreditCardUser",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "AdminUser",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanAccessAccount",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanManageOwnProfile",
+                        account: ""
+                    }
+                ],
             },
         },
         error: { code: 0, messages: [], isError: false },

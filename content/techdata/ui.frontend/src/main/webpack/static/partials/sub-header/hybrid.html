@@ -5,34 +5,34 @@
   <div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
     <div class="tabs" >
       <div data-cmp-is="tabs" id="tabs-d734aa9c61" class="cmp-tabs cmp-sub-header" data-cmp-data-layer="{&quot;tabs-d734aa9c61&quot;:{&quot;shownItems&quot;:[&quot;tabs-d734aa9c61-item-236e9c3f08&quot;],&quot;@type&quot;:&quot;core-components-examples/components/tabs&quot;,&quot;repo:modifyDate&quot;:&quot;2018-12-07T12:12:10Z&quot;}}" data-placeholder-text="false">
-        <div class="cmp-sub-header--sub-nav">
-          <ol role="tablist" class="cmp-tabs__tablist" aria-multiselectable="false">
-            <li role="tab" id="tabs-d734aa9c61-item-236e9c3f08-tab" class="cmp-tabs__tab cmp-tabs__tab--active" aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabindex="0" data-cmp-hook-tabs="tab" aria-selected="true">
-              <a href="">
-                My Dashboard
-              </a>
-            </li>
-            <li role="tab" id="tabs-d734aa9c61-item-1948bed6ab-tab" class="cmp-tabs__tab" aria-controls="tabs-d734aa9c61-item-1948bed6ab-tabpanel" tabindex="-1" data-cmp-hook-tabs="tab" aria-selected="false">
-              <span>
-                Configurations
-              </span>
-            </li>
-            <li role="tab" id="tabs-d734aa9c61-item-705e21779e-tab" class="cmp-tabs__tab" aria-controls="tabs-d734aa9c61-item-705e21779e-tabpanel" tabindex="-1" data-cmp-hook-tabs="tab" aria-selected="false">
-              <span>
-                Deals
-              </span>
-            </li>
-            <li role="tab" data-tab-name="Tools" id="tabs-d734aa9c61-item-706e21779e" class="cmp-tabs__tab" aria-controls="tabs-d734aa9c61-item-706e21779e-tabpanel" tabindex="-1" data-cmp-hook-tabs="tab" aria-selected="false">
-              <span>
-                Tools
-              </span>
-            </li>
-          </ol>
+        <div class="">
           <div
             data-component="Subheader"
             data-cmp-type="react"
-            class="cmp-sub-header__wrapper"
-            data-config='{ "minified": true, "accountnumberLabel": "custom label", "vendorConnectionsModal":{
+            class="cmp-sub-header--sub-nav cmp-sub-header__wrapper"
+            data-config='{ "minified": true, "accountnumberLabel": "custom label",
+              "menuItems":[{
+              "title":"My Dashboard",
+              "link" : "",
+              "active": true
+              },
+              {"title":"Configuration",
+              "link" : "",
+              "active": false
+              },
+              {"title":"Deals",
+              "link" : "",
+              "active": false
+              },
+              {"title":"Tools",
+              "link" : "",
+              "active": false
+              },
+              {"title":"My Dashboard",
+              "link" : "",
+              "active": false
+              }],
+            "vendorConnectionsModal":{
               "uiServiceEndPoint":"http://localhost:3000/ui-account/v1",
               "title":"Vendor Connections",
               "buttonLabel":"Connect All",

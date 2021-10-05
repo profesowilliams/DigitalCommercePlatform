@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="nt:unstructured"
+    >
+    <content jcr:primaryType="nt:unstructured">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured">
+                <items jcr:primaryType="nt:unstructured">
+                    <properties jcr:primaryType="nt:unstructured">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <accountNumber
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:orderBefore="activeItem"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Handle the content type for each item."
+                                                fieldLabel="Account Number Label"
+                                                name="./accountNumber"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </properties>
+                    <linksTab
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Sub-header Menu Items"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <menuItem
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    composite="{Boolean}true"
+                                    fieldLabel="Sub-header Links">
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        name="./primaryMenus">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <primaryLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                emptyText="Link Label"
+                                                name="./primaryLabel"/>
+                                        <primaryLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                rootPath="/content/techdata"
+                                                name="./primaryLink"/>
+                                        <containerFlag
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/foundation/form/checkbox"
+                                                fieldDescription="Does this Menu Item have a Drop Down?"
+                                                text="Drop Down Menu??"
+                                                name="./containerFlag"/>
+                                    </items>
+                                </field>
+                            </menuItem>
+                            <dashboardMenuItems
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    composite="{Boolean}true"
+                                    fieldLabel="Sub-header Dashboard">
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        name="./dashboardMenus">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <dashboardItemLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                emptyText="Link Label"
+                                                name="./dashboardItemLabel"/>
+                                        <dashboardImagePath
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                rootPath="/content/dam/techdata"
+                                                name="./dashboardImagePath"/>
+                                        <dashboardLink
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldDescription="Target of the dashboard (internal or external)"
+                                                text="Dashboard Target Link"
+                                                rootPath="/content/techdata"
+                                                name="./dashboardLink"/>
+                                    </items>
+                                </field>
+                            </dashboardMenuItems>
+
+                        </items>
+                    </linksTab>
+                    <vendorConnections
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Vendor Connections"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                            <title
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Vendor Title"
+                                                    fieldLabel="Title"
+                                                    name="./title"/>
+                                            <buttonLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Button Label"
+                                                    fieldLabel="Button Label"
+                                                    name="./buttonLabel"/>
+                                            <buttonIcon
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Button Icon"
+                                                    fieldLabel="Button Icon"
+                                                    name="./buttonIcon"/>
+                                            <content
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Content for the modal"
+                                                    fieldLabel="Content"
+                                                    name="./content"/>
+                                            <connectedLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Connected Label"
+                                                    fieldLabel="Connected Label"
+                                                    name="./connectedLabel"/>
+                                            <disconnectedLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Disconnected Label"
+                                                    fieldLabel="Disconnected Label"
+                                                    name="./disconnectedLabel"/>
+                                            <icons
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldDescription="Click 'Add' to add vendor icon key and value">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./iconsList">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter Key"
+                                                                        fieldLabel="Key"
+                                                                        name="./key"/>
+                                                                <iconPath
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                        fieldDescription="Select Icon"
+                                                                        rootPath="/content/dam/techdata"
+                                                                        fieldLabel="Select Icon"
+                                                                        name="./iconPath"/>
+                                                                <logInUrl
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Enter login URL"
+                                                                        rootPath="/content/dam/techdata"
+                                                                        fieldLabel="login URL"
+                                                                        name="./logInUrl"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </icons>
+                                        </items>
+                                    </column>
+                        </items>
+                    </vendorConnections>
+                    <tabitems jcr:primaryType="nt:unstructured">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <tabitems
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/apps/techdata/components/childreneditor"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </tabitems>
+                </items>
+            </tabs>
+            <include-clientlib
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/includeclientlibs"
+                js="cq.include"/>
+        </items>
+    </content>
+</jcr:root>

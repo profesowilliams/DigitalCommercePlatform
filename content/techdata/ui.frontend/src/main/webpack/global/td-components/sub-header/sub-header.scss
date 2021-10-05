@@ -8,7 +8,7 @@
   &__wrapper{
     align-self: center;
     margin-left: auto;
-    ul{
+    ul {
       margin: 0;
       padding: 0;
       display: flex;
@@ -23,6 +23,42 @@
         a,span{
           color: get-color(brand-white);
           text-decoration: none;
+        }
+
+      }
+    }
+
+    &__tablist{
+      &__menu {
+        position: absolute;
+        z-index: 999;
+        top: rem(60px);
+        left: rem(0);
+        background-color: get-color(brand-white);
+        width: 1440px;
+        height: rem(417px);
+        display: flex;
+        justify-content: space-between;
+        &__item {
+          padding-left: rem(15px);
+          padding-right: rem(30px);
+          h2 {
+            font-size: $font-size-custom-xxsmall;
+            color: get-color(text-light-charcoal);
+            text-align: left;
+          }
+
+          img {
+            width: rem(392px);
+            height: rem(280px);
+          }
+          &--two-items {
+            width: 0.5vw;
+          }
+
+          &--three-items {
+            width: 0.33vw;
+          }
         }
       }
     }
