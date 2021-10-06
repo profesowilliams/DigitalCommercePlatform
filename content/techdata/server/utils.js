@@ -50,7 +50,7 @@ module.exports = {
                     },
                     "endUser": {
                         "id": null,
-                        "companyName": "PEIGENESISCOM",
+                        "companyName": "PEIGENESISCOM123",
                         "name": "Daniel  Vogt",
                         "line1": "2180 HORNIG RD",
                         "line2": null,
@@ -699,9 +699,9 @@ module.exports = {
                     "phoneNumber": "(424)-244-7789",
                     "blindPackaging" : false
                 },
-                "endUser": {
+                "endUser": [{
                     "id": null,
-                    "companyName": "PEIGENESISCOM",
+                    "companyName": "PEIGENESISCOM123",
                     "name": "Daniel  Vogt",
                     "line1": "2180 HORNIG RD",
                     "line2": null,
@@ -712,8 +712,8 @@ module.exports = {
                     "postalCode": "19116",
                     "country": "US",
                     "email": "Daniel.Vogt@techdata.com",
-                    "phoneNumber": "(000)-000-0000"
-                },
+                    "phoneNumber": "0000"
+                }],
                 "paymentDetails": {
                     "netValue": "50.00",
                     "reference": "L-4426992",

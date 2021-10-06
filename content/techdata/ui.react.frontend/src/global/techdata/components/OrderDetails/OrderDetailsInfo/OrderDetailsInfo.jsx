@@ -4,6 +4,8 @@ import OrderDetailsStatusInfo from "./OrderDetailsStatusInfo";
 
 const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
 
+    console.log(`order details`)
+    console.log(orderDetails)
     const {
         shipTo,
         endUser,
@@ -11,33 +13,35 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
         blindPackagingUsed
     } = orderDetails;
 
+    let endUserInfo = endUser && endUser.length > 0 ?  endUser[0] : undefined;
+
     return (
         <div className="cmp-td-order-details__info-cards">
             <OrderDetailsStatusInfo
                 infoConfig={infoConfig}
                 orderDetails={orderDetails}/>
-            {endUser ?
+            {endUserInfo ?
                 <div className="cmp-td-order-details__info-cards__card">
                     <div className="cmp-td-order-details__info-cards__card__container">
                         <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.endUserLabel}</h4>
                         <div className="cmp-td-order-details__info-cards__card__container__end-user">
                             <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
-                                {endUser.companyName}
+                                {endUserInfo.companyName}
                             </div>
                             <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-lines">
-                                <p>{endUser.line1}</p>
-                                {endUser.line2 ? <p>{endUser.line2}</p> : ""}
-                                {endUser.line3 ? <p>{endUser.line3}</p> : ""}
-                                <p>{endUser.city} {endUser.state} {endUser.postalCode}</p>
-                                <p>{endUser.country}</p>
+                                <p>{endUserInfo.line1}</p>
+                                {endUserInfo.line2 ? <p>{endUserInfo.line2}</p> : ""}
+                                {endUserInfo.line3 ? <p>{endUserInfo.line3}</p> : ""}
+                                <p>{endUserInfo.city} {endUserInfo.state} {endUserInfo.postalCode}</p>
+                                <p>{endUserInfo.country}</p>
                             </div>
                             <div className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-name">
-                                {endUser.name}
+                                {endUserInfo.name}
                             </div>
                             <div
                                 className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-details">
-                                <p><i className="fas fa-phone fa-flip-horizontal"></i> {endUser.phoneNumber}</p>
-                                <p><i className="fas fa-envelope"></i> {endUser.email}</p>
+                                <p><i className="fas fa-phone fa-flip-horizontal"></i> {endUserInfo.phoneNumber}</p>
+                                <p><i className="fas fa-envelope"></i> {endUserInfo.email}</p>
                             </div>
                         </div>
                     </div>
