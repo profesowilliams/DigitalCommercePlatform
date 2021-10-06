@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Search.Actions.Content;
 using DigitalCommercePlatform.UIServices.Search.Dto.Content;
 using DigitalCommercePlatform.UIServices.Search.Models.Content;
-using DigitalCommercePlatform.UIServices.Search.Models.Content.App;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
@@ -40,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public void GetContentThrowsExceptionOtherThanRemoteServerHttpException(AppFullSearchRequestModel request)
+        public void GetContentThrowsExceptionOtherThanRemoteServerHttpException(FullSearchRequestDto request)
         {
             //arrange
             _middleTierHttpClient.Setup(x => x.GetAsync<ContentSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
@@ -56,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public async Task GetContentThrowsWhenNotFoundReturned(AppFullSearchRequestModel request)
+        public async Task GetContentThrowsWhenNotFoundReturned(FullSearchRequestDto request)
         {
             //arrange
             _middleTierHttpClient.Setup(x => x.GetAsync<ContentSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
@@ -72,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public void GetContentThrowsOtherThanNotFound(AppFullSearchRequestModel request)
+        public void GetContentThrowsOtherThanNotFound(FullSearchRequestDto request)
         {
             //arrange
             _middleTierHttpClient.Setup(x => x.GetAsync<ContentSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
@@ -88,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public async Task GetContentReturnsCorrectResult(AppFullSearchRequestModel request, ContentSearchResponseDto appResponse)
+        public async Task GetContentReturnsCorrectResult(FullSearchRequestDto request, ContentSearchResponseDto appResponse)
         {
             //Arrange
             _middleTierHttpClient.Setup(x => x.GetAsync<ContentSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))

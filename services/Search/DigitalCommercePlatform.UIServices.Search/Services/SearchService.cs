@@ -4,7 +4,6 @@ using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
@@ -40,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _mapper = mapperConfig.CreateMapper();
         }
 
-        public async Task<FullSearchResponseModel> GetFullSearchProductData(AppSearchRequestModel request, bool isAnonymous)
+        public async Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous)
         {
             var appSearchResponse = await GetProductData(request);
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
@@ -49,12 +48,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             return fullSearchResponse;
         }
 
-        private static void MapFields(AppSearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
+        private static void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
-            foreach (var product in fullSearchResponse?.Products) 
+            foreach (var product in fullSearchResponse?.Products)
             {
                 var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
-                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null) 
+                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null)
                 {
                     product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
                 }
@@ -64,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             }
         }
 
-        private async Task<AppSearchResponseDto> GetProductData(AppSearchRequestModel request)
+        private async Task<SearchResponseDto> GetProductData(SearchRequestDto request)
         {
             var url = _appSearchUrl
            .AppendPathSegment("Product")
@@ -72,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
             try
             {
-                return await _middleTierHttpClient.PostAsync<AppSearchResponseDto>(url, null, request).ConfigureAwait(false);
+                return await _middleTierHttpClient.PostAsync<SearchResponseDto>(url, null, request).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

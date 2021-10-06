@@ -1,6 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Dto.Content;
-using DigitalCommercePlatform.UIServices.Search.Models.Content.App;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -29,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _appSearchUrl = appSettings.GetSetting("App.Search.Url");
         }
 
-        public async Task<ContentSearchResponseDto> GetContentData(AppFullSearchRequestModel request)
+        public async Task<ContentSearchResponseDto> GetContentData(FullSearchRequestDto request)
         {
             var url = _appSearchUrl.AppendPathSegment("/Content").SetQueryParams(new
             {

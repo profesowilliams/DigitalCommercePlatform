@@ -1,8 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Enums;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using FluentValidation;
 using MediatR;
@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var appRequest = _mapper.Map<AppSearchRequestModel>(request.FullSearchRequestModel);
+                var appRequest = _mapper.Map<SearchRequestDto>(request.FullSearchRequestModel);
                 if (!request.IsAnonymous) 
                 {
                     appRequest.GetDetails ??= new Dictionary<Details, bool>() { { Details.All, true } };

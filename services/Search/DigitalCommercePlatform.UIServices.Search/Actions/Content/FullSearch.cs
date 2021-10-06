@@ -1,7 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Search.Dto.Content;
 using DigitalCommercePlatform.UIServices.Search.Models.Content;
-using DigitalCommercePlatform.UIServices.Search.Models.Content.App;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using FluentValidation;
 using MediatR;
@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Content
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var appRequest = _mapper.Map<AppFullSearchRequestModel>(request.FullSearchRequestModel);
+                var appRequest = _mapper.Map<FullSearchRequestDto>(request.FullSearchRequestModel);
                 var getContentData = await _contentService.GetContentData(appRequest);
                 return new Response(_mapper.Map<FullSearchResponseModel>(getContentData));
             }

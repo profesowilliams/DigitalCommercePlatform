@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App.Internal
+namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class RefinementGroupRequestModel
+    public class RefinementGroupRequestDto
     {
         public string Group { get; set; }
-        public List<RefinementRequestModel> Refinements { get; set; }
+        public List<RefinementRequestDto> Refinements { get; set; }
     }
 }

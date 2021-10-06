@@ -3,7 +3,6 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Content;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.Content;
-using DigitalCommercePlatform.UIServices.Search.Models.Content.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Content;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Settings;
@@ -53,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
         public void HandleReturnsError(FullSearch.Request request)
         {
             //arrange
-            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>())).ThrowsAsync(new Exception("test"));
+            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<FullSearchRequestDto>())).ThrowsAsync(new Exception("test"));
 
             var sut = GetHandler();
 
@@ -61,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
             Func<Task> act = async () => await sut.Handle(request, default);
             //assert
             _ = act.Should().ThrowAsync<Exception>();
-            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>()), Times.Once);
+            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<FullSearchRequestDto>()), Times.Once);
         }
 
         [Theory]
@@ -69,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
         public async Task HandleReturnsNullWhenNotFoundReturned(FullSearch.Request request)
         {
             //arrange
-            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>())).Returns(Task.FromResult(new ContentSearchResponseDto()));
+            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<FullSearchRequestDto>())).Returns(Task.FromResult(new ContentSearchResponseDto()));
 
             var sut = GetHandler();
 
@@ -79,7 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
             //assert
             result.Should().NotBeNull();
             result.Results.Should().NotBeNull();
-            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>()), Times.Once);
+            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<FullSearchRequestDto>()), Times.Once);
         }
 
         [Theory]
@@ -115,7 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
         public async Task HandleReturnsCorrectResult(FullSearch.Request request, ContentSearchResponseDto appResponse)
         {
             //Arrange
-            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>())).Returns(Task.FromResult(appResponse));
+            _contentServiceMock.Setup(x => x.GetContentData(It.IsAny<FullSearchRequestDto>())).Returns(Task.FromResult(appResponse));
             var sut = GetHandler();
 
             //Act
@@ -124,7 +123,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions.Content
             //Assert
             result.Results.Should().NotBeNull();
 
-            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<AppFullSearchRequestModel>()), Times.Once);
+            _contentServiceMock.Verify(x => x.GetContentData(It.IsAny<FullSearchRequestDto>()), Times.Once);
         }
 
         private FullSearch.Handler GetHandler() => new(_contentServiceMock.Object, _logger, _mapper);

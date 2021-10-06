@@ -1,9 +1,10 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Search.Dto.Content;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Enums;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,15 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
         private const string Orderable = "Orderable";
         private const string AuthRequiredPrice = "AuthRequiredPrice";
         private const string Y = "Y";
+
         public SearchProfile()
         {
-            CreateMap<RangeModel, Models.FullSearch.App.Internal.RangeModel>();
-            CreateMap<RefinementRequestModel, Models.FullSearch.App.Internal.RefinementRequestModel>();
-            CreateMap<RefinementGroupRequestModel, Models.FullSearch.App.Internal.RefinementGroupRequestModel>();
-            CreateMap<RangeFilterModel, Models.FullSearch.App.Internal.RangeFilterModel>();
-            CreateMap<SortRequestModel, Models.FullSearch.App.Internal.SortRequestModel>();
-            CreateMap<FullSearchRequestModel, AppSearchRequestModel>()
+            CreateMap<RangeModel, RangeDto>();
+            CreateMap<RefinementRequestModel, Dto.FullSearch.Internal.RefinementRequestDto>();
+            CreateMap<RefinementGroupRequestModel, RefinementGroupRequestDto>();
+            CreateMap<RangeFilterModel, RangeFilterDto>();
+            CreateMap<SortRequestModel, SortRequestDto>();
+            CreateMap<FullSearchRequestModel, SearchRequestDto>()
                 .ForMember(dest => dest.RangeFilters, opt => opt.Ignore())
                 .ForMember(dest => dest.GetDetails, opt => opt.Ignore());
             CreateMap<MainSpecificationDto, MainSpecificationModel>();
@@ -52,12 +54,12 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<CategoryBreadcrumbDto, CategoryBreadcrumbModel>();
             CreateMap<RefinementOptionDto, RefinementOptionModel>();
             CreateMap<RangeDto, RangeModel>();
-            CreateMap<RefinementDto, RefinementModel>()
+            CreateMap<Dto.FullSearch.Internal.RefinementDto, RefinementModel>()
                 .ForMember(dest => dest.Priority, opt => opt.Ignore());
             CreateMap<RefinementGroupResponseDto, RefinementGroupResponseModel>();
             CreateMap<AlternateSearchSuggestionDto, AlternateSearchSuggestionModel>();
             CreateMap<SearchReportDto, SearchReportModel>();
-            CreateMap<AppSearchResponseDto, FullSearchResponseModel>()
+            CreateMap<SearchResponseDto, FullSearchResponseModel>()
                 .ForMember(dest => dest.RefinementsToDisplay, opt => opt.Ignore());
 
             CreateMap<Dto.Content.ContentSearchResponseDto, Models.Content.FullSearchResponseModel>();
@@ -65,9 +67,21 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<Dto.Content.Internal.OptionDto, Models.Content.Internal.Option>();
             CreateMap<Dto.Content.Internal.SearchResultDto, Models.Content.SearchResult>();
 
-            CreateMap<Models.Content.FullSearchRequestModel, Models.Content.App.AppFullSearchRequestModel>()
+            CreateMap<Models.Content.FullSearchRequestModel, FullSearchRequestDto>()
                 .ForMember(dest => dest.SearchString, opt => opt.MapFrom(x => x.Keyword));
-            CreateMap<Models.Content.Internal.RefinementRequestModel, Models.Content.App.Internal.RefinementRequestModel>();
+            CreateMap<Models.Content.Internal.RefinementRequestModel, Dto.Content.Internal.RefinementRequestDto>();
+
+            CreateMap<ExportRequestModel, SearchRequestDto>()
+                .ForMember(dest => dest.Page, opt => opt.MapFrom(src => 1))
+                .ForMember(dest => dest.PageSize, opt => opt.Ignore()) //will be set in action handler
+                .ForMember(dest => dest.RangeFilters, opt => opt.Ignore())
+                .ForMember(dest => dest.GetDetails, opt => opt.MapFrom(src => new Dictionary<Details, bool> { { Details.Authorizations, false }, { Details.Price, true }, { Details.Refinements, false } }))
+                .ForMember(dest => dest.RefinementGroups, opt => opt.MapFrom(src => src.RefinementGroups))
+                .ForMember(dest => dest.SearchString, opt => opt.MapFrom(src => src.SearchString))
+                .ForMember(dest => dest.Sort, opt => opt.MapFrom(src => src.Sort))
+                .ForMember(dest => dest.Territories, opt => opt.MapFrom(src => src.Territories))
+                .ForMember(dest => dest.Countries, opt => opt.MapFrom(src => src.Countries))
+            ;
         }
 
         public static (bool orderable, bool authrequiredprice) GetFlags(ElasticItemDto x)

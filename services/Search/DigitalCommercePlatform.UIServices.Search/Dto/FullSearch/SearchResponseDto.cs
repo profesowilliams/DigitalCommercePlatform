@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
 {
     [ExcludeFromCodeCoverage]
-    public class AppSearchResponseDto
+    public class SearchResponseDto
     {
         public int Page { get; set; } = 1;
         public int PageSize { get; set; }

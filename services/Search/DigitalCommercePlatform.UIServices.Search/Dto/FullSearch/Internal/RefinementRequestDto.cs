@@ -1,13 +1,13 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App.Internal
+namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class RefinementRequestModel
+    public class RefinementRequestDto
     {
         public string Id { get; set; }
         public string Value { get; set; }
-        public RangeModel Range { get; set; }
+        public RangeDto Range { get; set; }
     }
 }

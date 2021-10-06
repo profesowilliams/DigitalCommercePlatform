@@ -18,6 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
 
         public string Name { get; set; }
         public string DisplayName { get; set; }
+        public string CNETManufacturer { get; set; }
         public string GlobalManufacturer { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }

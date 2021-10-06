@@ -1,7 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Settings;
 using MediatR;
@@ -58,20 +59,20 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                var appRequest = new AppSearchRequestModel();
+                var appRequest = new SearchRequestDto();
                 if (!string.IsNullOrEmpty(request.Keyword))
                 {
                     appRequest.SearchString = request.Keyword;
                 }
                 if (!string.IsNullOrEmpty(request.CategoryId))
                 {
-                    appRequest.RefinementGroups = new List<Models.FullSearch.App.Internal.RefinementGroupRequestModel>() {
-                        new Models.FullSearch.App.Internal.RefinementGroupRequestModel()
+                    appRequest.RefinementGroups = new List<RefinementGroupRequestDto>() {
+                        new RefinementGroupRequestDto()
                         {
                             Group = _categories,
-                            Refinements = new List<Models.FullSearch.App.Internal.RefinementRequestModel>()
+                            Refinements = new List<RefinementRequestDto>()
                             {
-                                new Models.FullSearch.App.Internal.RefinementRequestModel()
+                                new RefinementRequestDto()
                                 {
                                     Id = _catalog,
                                     Value = request.CategoryId
@@ -82,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 }
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
-                if (!request.IsAnonymous && response.Products != null &&response.Products.Count == 1)
+                if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)
                 {
                     response.Products.FirstOrDefault().IsExactMatch = true;
                 }

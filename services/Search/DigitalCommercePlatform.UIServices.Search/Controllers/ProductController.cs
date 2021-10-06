@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
+using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalFoundation.Common.Contexts;
@@ -9,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Search.Controllers
@@ -21,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
     public class ProductController : BaseUIServiceController
     {
         private readonly IContext _context;
+
         public ProductController(
             IMediator mediator,
             ILogger<ProductController> logger,
@@ -48,6 +51,29 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         {
             var response = await Mediator.Send(new KeywordSearch.Request(_context.User == null, keyword, categoryId)).ConfigureAwait(false);
             return Ok(response.Results);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("Export")]
+        public async Task<IActionResult> Export(ExportRequestModel request)
+        {
+            var data = await Mediator.Send(new ExportSearch.Request { Data = request }).ConfigureAwait(false);
+
+            if (data == null || !data.Any())
+            {
+                return NotFound();
+            }
+
+            switch (request.ExportFormat)
+            {
+                case ExportFormatEnum.csv:
+                    return new CsvActionResult<ExportResponseModel>(data, "SearchResults");
+
+                case ExportFormatEnum.json:
+                default:
+                    return Ok(data);
+            }
         }
     }
 }

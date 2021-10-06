@@ -3,7 +3,6 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Client;
@@ -115,10 +114,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public void GetProductThrowsExceptionOtherThanRemoteServerHttpException(AppSearchRequestModel request)
+        public void GetProductThrowsExceptionOtherThanRemoteServerHttpException(SearchRequestDto request)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
                 .ThrowsAsync(new Exception("test"));
 
             //act
@@ -126,15 +125,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            _middleTierHttpClient.Verify(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductThrowsWhenNotFoundReturned(AppSearchRequestModel request)
+        public async Task GetProductThrowsWhenNotFoundReturned(SearchRequestDto request)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.NotFound, details: null));
 
             //act
@@ -142,15 +141,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             result.Should().BeNull();
-            _middleTierHttpClient.Verify(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
         }
 
         [Theory]
         [AutoDomainData]
-        public void GetProductThrowsOtherThanNotFound(AppSearchRequestModel request)
+        public void GetProductThrowsOtherThanNotFound(SearchRequestDto request)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.InternalServerError, details: null));
 
             //act
@@ -158,15 +157,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            _middleTierHttpClient.Verify(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductReturnsCorrectResult(AppSearchRequestModel request, AppSearchResponseDto appResponse)
+        public async Task GetProductReturnsCorrectResult(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
-            _middleTierHttpClient.Setup(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
                 .Returns(Task.FromResult(appResponse));
 
             //Act
@@ -175,7 +174,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Assert
             result.Should().NotBeNull();
 
-            _middleTierHttpClient.Verify(x => x.PostAsync<AppSearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
         }
     }
 }

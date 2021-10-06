@@ -2,10 +2,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.App.Internal
+namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SortRequestModel
+    public class SortRequestDto
     {
         public string Type { get; set; }
         public bool Direction { get; set; }
