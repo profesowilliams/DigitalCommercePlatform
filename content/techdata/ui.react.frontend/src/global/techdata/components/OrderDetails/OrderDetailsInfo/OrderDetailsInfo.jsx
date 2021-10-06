@@ -5,9 +5,6 @@ import thousandSeparator from "../../../helpers/thousandSeparator";
 
 
 const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
-
-    console.log(`order details`)
-    console.log(orderDetails)
     const {
         shipTo,
         endUser,

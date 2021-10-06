@@ -548,7 +548,7 @@ app.get("/ui-commerce/v1/quotedetails", function (req, res) {
 app.get("/ui-commerce/v1/orderdetails", function (req, res) {
   console.log(req.url)
   const id = req.query.id;
-  const response = {};
+  const response = utils.getOrderDetailsResponse();
   res.json(response);
 }); 
 
@@ -572,6 +572,11 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         'shipped',
         'cancelled',
     ];
+    const searchByStatus = [
+      'contracts',
+      'licenses',
+    ];
+  
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
@@ -591,51 +596,63 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         return invoices;
     }
     for (let i = 0; i < pageSize; i++) {
-        items.push({
-            id: Number(`${pageNumber}${4009754974 + i}`),
-            created: new Date().toISOString(),
-            reseller: Number(`${pageNumber}${111048 + i}`),
-            shipTo: "UPS",
-            type: "Manual",
-            priceFormatted: 73002.31 + getRandom(1000),
-            invoices: getInvoices(getRandom(10) - 1),
-            status: status[getRandom(5)],
-            trackings: [
-              {
-                  "orderNumber": "6030684674",
-                  "invoiceNumber": null,
-                  "id": null,
-                  "carrier": "FEDEX",
-                  "serviceLevel": "FEDEX GROUND",
-                  "trackingNumber": "486197188378",
-                  "trackingLink": "http://www.fedex.com/Tracking?&cntry_code=us&language=english&tracknumbers=486197188378",
-                  "type": "W0",
-                  "description": "FEDX GRND",
-                  "date": "07-13-2021",
-                  "dNote": "7038811481",
-                  "dNoteLineNumber": "30",
-                  "goodsReceiptNo": null
-              },
-              {
-                  "orderNumber": "6030684674",
-                  "invoiceNumber": null,
-                  "id": null,
-                  "carrier": "FEDEX",
-                  "serviceLevel": "FEDEX GROUND",
-                  "trackingNumber": "486197188378",
-                  "trackingLink": "http://www.fedex.com/Tracking?&cntry_code=us&language=english&tracknumbers=486197188378",
-                  "type": "W0",
-                  "description": "FEDX GRND",
-                  "date": "07-13-2021",
-                  "dNote": "7038811481",
-                  "dNoteLineNumber": "10",
-                  "goodsReceiptNo": null
-              }
+      const totalPrice = 73002.31 + getRandom(1000);
+      const statusID = getRandom(5);
+      const manufacturerExample = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 6);
+      items.push({
+          id: Number(`${pageNumber}${4009754974 + i}`),
+          created: new Date().toISOString(),
+          reseller: Number(`${pageNumber}${111048 + i}`),
+          shipTo: "UPS",
+          type: "Manual",
+          priceFormatted: 73002.31 + getRandom(1000),
+          invoices: getInvoices(getRandom(10) - 1),
+          status: status[statusID],
+          searchBy: searchByStatus[getRandom(2)],
+          trackings: [
+            {
+                "orderNumber": "6030684674",
+                "invoiceNumber": null,
+                "id": null,
+                "carrier": "FEDEX",
+                "serviceLevel": "FEDEX GROUND",
+                "trackingNumber": "486197188378",
+                "trackingLink": "http://www.fedex.com/Tracking?&cntry_code=us&language=english&tracknumbers=486197188378",
+                "type": "W0",
+                "description": "FEDX GRND",
+                "date": "07-13-2021",
+                "dNote": "7038811481",
+                "dNoteLineNumber": "30",
+                "goodsReceiptNo": null
+            },
+            {
+                "orderNumber": "6030684674",
+                "invoiceNumber": null,
+                "id": null,
+                "carrier": "FEDEX",
+                "serviceLevel": "FEDEX GROUND",
+                "trackingNumber": "486197188378",
+                "trackingLink": "http://www.fedex.com/Tracking?&cntry_code=us&language=english&tracknumbers=486197188378",
+                "type": "W0",
+                "description": "FEDX GRND",
+                "date": "07-13-2021",
+                "dNote": "7038811481",
+                "dNoteLineNumber": "10",
+                "goodsReceiptNo": null
+            }
           ],
-            isReturn: i % 2 ? true : false,
-            currency: "USD",
-            currencySymbol: "$",
-        })
+          isReturn: i % 2 ? true : false,
+          currency: "USD",
+          currencySymbol: "$",
+          line: Number(`${pageNumber}${4009754974 + i}`),
+          manufacturer: manufacturerExample.toUpperCase(),
+          description: "PLTNM TAB PRTNR STOCK $5+ MRC ACTIVATION",
+          quantity: getRandom(10),
+          serial: i % 2 ? 'View' : 'n/a',
+          unitPrice: totalPrice,
+          totalPrice: totalPrice,
+          shipDate: i % 2 ? new Date().toISOString() : 'Emailed',
+      })
     }
     const response = {
         content: {

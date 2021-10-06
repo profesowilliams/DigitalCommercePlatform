@@ -22,7 +22,6 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
-
   function expandAll() {
     gridApi?.forEachNode((node) => {
       node.expanded = true;
