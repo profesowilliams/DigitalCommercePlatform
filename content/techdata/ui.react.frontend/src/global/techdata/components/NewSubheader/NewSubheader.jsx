@@ -131,39 +131,47 @@ const NewSubheader = ({ componentProp }) => {
 
 
 	return (
-		<ol role="tablist" className="cmp-tabs__tablist" aria-multiselectable="false">
+		<>
+		<ol role="tablist" className="cmp-sub-header__wrapper__child" aria-multiselectable="false">
 			{getMenuItems(menuItems, dashboardMenuItems)}
+		</ol>
 			{userData ?
-			<>
-				{userData.companyName ? <li>
-					<a href='#'>{userData.companyName}</a>
-				</li> : null}
+				<>
+				<ul className="cmp-sub-header__wrapper__child">
+					{userData.companyName && (
+						<li>
+							<a href='#'>{userData.companyName}</a>
+						</li>
+					)}
 					<li>
-					<a href='#'>
-						{accountnumberLabel}: {getAccountNumber()}
-					</a>
-				</li>
-				<li
-					onClick={() =>
-						invokeModal({
-							content: (
-								<VendorConnection
-									vendors={vendorModal.vendors}
-									apiUrl={vendorModal.uiServiceEndPoint}
-									connectedLabel={vendorModal.connectedLabel}
-									disconnectedLabel={vendorModal.disconnectedLabel}
-									header={vendorModal.content}
-								></VendorConnection>
-							),
-							properties: vendorModal,
-						})
-					}>
-					<a href='#'>
-						<i className='fas fa-link'></i>
-					</a>
-				</li> </>	: null }
-			{modal}
-		</ol>)
+						<a href='#'>
+							{accountnumberLabel}: {getAccountNumber()}
+						</a>
+					</li>
+					<li
+						onClick={() =>
+							invokeModal({
+								content: (
+									<VendorConnection
+										vendors={vendorModal.vendors}
+										apiUrl={vendorModal.uiServiceEndPoint}
+										connectedLabel={vendorModal.connectedLabel}
+										disconnectedLabel={vendorModal.disconnectedLabel}
+										header={vendorModal.content}
+									></VendorConnection>
+								),
+								properties: vendorModal,
+							})
+						}
+					>
+						<a href='#'>
+							<i className='fas fa-link'></i>
+						</a>
+					</li>
+				</ul>
+					{modal}
+				</>: null }
+		</>)
 };
 
 export default NewSubheader;
