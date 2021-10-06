@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import OrderDetailsStatusInfo from "./OrderDetailsStatusInfo";
+import thousandSeparator from "../../../helpers/thousandSeparator";
+
 
 const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
 
@@ -104,7 +106,6 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                     <div className="cmp-td-order-details__info-cards__card__container">
                         <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.paymentLabel}</h4>
                         <div className="cmp-td-order-details__info-cards__card__container__payment">
-                            {paymentDetails.subTotalFormatted ?
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -112,10 +113,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
-                                        {paymentDetails.subTotalFormatted}
+                                        {thousandSeparator(paymentDetails.subtotal)}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.taxFormatted ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -123,10 +123,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
-                                        {paymentDetails.taxFormatted}
+                                        {thousandSeparator(paymentDetails.tax)}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.freightFormatted ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -134,10 +133,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
-                                        {paymentDetails.freightFormatted}
+                                        {thousandSeparator(paymentDetails.freight)}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.otherFeesFormatted ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -145,10 +143,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
-                                        {paymentDetails.otherFeesFormatted}
+                                        {thousandSeparator(paymentDetails.otherFees)}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.totalFormatted ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__total">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -156,10 +153,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                     </div>
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
-                                        {paymentDetails.totalFormatted}
+                                        {thousandSeparator(paymentDetails.total)}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.paymentTermText ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -169,8 +165,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
                                         {paymentDetails.paymentTermText}
                                     </div>
-                                </div> : null}
-                            {paymentDetails.currency ?
+                                </div>
                                 <div className="cmp-td-order-details__info-cards__card__container__payment__line-item">
                                     <div
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__left">
@@ -179,7 +174,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                         className="cmp-td-order-details__info-cards__card__container__payment__line-item__right">
                                         {infoConfig.currencyLabel} {paymentDetails.currency}
                                     </div>
-                                </div> : null}
+                                </div>
                         </div>
                     </div>
                 </div> :
@@ -197,8 +192,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                 </div>}
         </div>
     );
-
-};
+}
 
 
 export default OrderDetailsInfo;
