@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import Search from "../../../../../../ui.frontend/src/main/webpack/resources/icons/Search.svg";
 
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
@@ -180,6 +179,20 @@ const SearchBar = ({ data, componentProp }) => {
     }
   };
 
+  console.log("useState checked", isChecked);
+
+  function handleMobileSearchStyling() {
+    if(mobileState && isMobile === true ){
+      return `cmp-searchbar cmp-searchbar--checked`
+    }else{
+      return `cmp-searchbar`
+    }
+  }
+
+  console.log('asdasdad',handleMobileSearchStyling())
+
+  console.log('useState checked', isChecked)
+
   const renderContextMenu = () => {
     if (!searchInputFocused) {
       return null;
@@ -231,12 +244,10 @@ const SearchBar = ({ data, componentProp }) => {
             }
             onClick={mobileSearchOpener}
           >
-            <Search data-cmp-hook-search="icon" 
-            className={
-                isClicked
-                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
-                  : "cmp-searchbar__icon"
-              }/>
+            <i
+              className="cmp-searchbar__icon fas fa-search"
+              data-cmp-hook-search="icon"
+            ></i>
           </button>
         </>
       );
@@ -266,12 +277,14 @@ const SearchBar = ({ data, componentProp }) => {
             }
             onClick={redirectToShop}
           >
-            <Search data-cmp-hook-search="icon" 
-            className={
+            <i
+              className={
                 isClicked
-                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
-                  : "cmp-searchbar__icon"
-              }/>
+                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked fas fa-search"
+                  : "cmp-searchbar__icon fas fa-search"
+              }
+              data-cmp-hook-search="icon"
+            ></i>
           </button>
         </>
       );
@@ -280,9 +293,7 @@ const SearchBar = ({ data, componentProp }) => {
   return (
     <div
       id={id}
-      className={`cmp-searchbar ${
-        isChecked === true ? "cmp-searchbar--checked" : " "
-      }`}
+      className={`cmp-searchbar ${isChecked === true ? "cmp-searchbar--checked" : " "}`}
       onMouseLeave={lostFocus}
       onMouseEnter={gotFocus}
     >

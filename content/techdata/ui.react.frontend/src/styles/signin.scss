@@ -8,13 +8,11 @@
 	}
 
 	&-button {
-		display: flex;
-		align-items: center;
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
 		padding: 10px 0;
-		color: #000;
+		color: #1798d1;
 		font-family: 'Open Sans', sans-serif;
 		font-size: 14px;
 		letter-spacing: 0;
@@ -44,6 +42,8 @@
 		}
 
 		svg {
+			font-size: 19px;
+			margin-top: 10px;
 			margin-right: 10px;
 		}
 	}

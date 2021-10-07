@@ -68,7 +68,6 @@
   &__input {
     border: rem(1px) solid get-color(brand-black);
     border-radius: rem(6px) 0 0 rem(6px);
-    border-right: 0;
     box-sizing: border-box;
     outline: none;
     padding: rem(10px) rem(14px);
@@ -103,7 +102,7 @@
     border-left: 0 !important;
     border-radius: 0 rem(6px) rem(6px) 0;
     box-sizing: border-box;
-    padding: 5.5px 8px;
+    padding: rem(9.5px) rem(13.5px);
     transition: all 200ms ease;
 
     &:hover {
@@ -142,14 +141,14 @@
   }
 
   &__icon {
-    stroke: get-color(brand-white);
+    color: get-color(brand-white);
 
     @include mobile {
-      stroke: get-color(brand-light-blue);
+      color: get-color(brand-light-blue);
     }
 
     &--checked {
-      stroke: get-color(brand-black);
+      color: get-color(brand-black);
     }
   }
 
