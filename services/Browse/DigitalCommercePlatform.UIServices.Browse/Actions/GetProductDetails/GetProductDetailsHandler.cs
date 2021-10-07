@@ -1,5 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Dto.MarketingXML;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
@@ -11,8 +14,11 @@ using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
@@ -40,7 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, Response>
         {
             private const string ALLOW = "ALLOW";
@@ -61,11 +66,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string PromoText = "PromoText";
             private readonly IBrowseService _productRepositoryServices;
             private readonly string _imageSize;
+            private readonly IMapper _mapper;
 
-            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings)
+            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("ImagesSize");
+                _mapper = mapper;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -79,7 +86,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 var productDetails = productDetailsTask.Result;
 
-                var result = productDetails.Select(x =>
+                var result = productDetails.Select(async x =>
                 {
                     var product = new ProductModel();
                     var flags = ExtractFlags(validateDto, x, request.SalesOrg, request.Site);
@@ -100,10 +107,58 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                     MapStock(x, product, flags.DropShip);
 
+                    await MapMarketing(x, product);
+
+                    MapDocuments(x, product);
+
                     return product;
                 });
 
-                return new Response(result);
+                return new Response(await Task.WhenAll(result));
+            }
+
+            private void MapDocuments(ProductDto x, ProductModel product)
+            {
+                if (x.Marketing == null)
+                    return;
+
+                var documents = new List<DocumentModel>();
+                var quickStartGuide = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.QuickStartGuide));
+                if (quickStartGuide != null)
+                    documents.Add(quickStartGuide);
+                var userManual = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.UserManual));
+                if (userManual != null)
+                    documents.Add(userManual);
+                var productDataSheet = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductDataSheet));
+                if (productDataSheet != null)
+                    documents.Add(productDataSheet);
+                if (documents.Any())
+                    product.Documents = documents;
+            }
+
+            private async Task MapMarketing(ProductDto x, ProductModel product)
+            {
+                if (x.Marketing == null)
+                    return;
+
+                var (keySellingPointsUrl, marketingDescriptionUrl, productFeaturesUrl, whatsInTheBox) = GetMarketingUrls(x.Marketing);
+
+                var keySellingPointsTask = GetXmlDocument(keySellingPointsUrl);
+                var marketingDescriptionTask = GetXmlDocument(marketingDescriptionUrl);
+                var productFeaturesTask = GetXmlDocument(productFeaturesUrl);
+                var whatsInTheTask = GetXmlDocument(whatsInTheBox);
+
+                Task.WaitAll(keySellingPointsTask, marketingDescriptionTask, productFeaturesTask, whatsInTheTask);
+
+                var keySellingPointsDoc = await keySellingPointsTask.ConfigureAwait(false);
+                var marketingDescriptionDoc = await marketingDescriptionTask.ConfigureAwait(false);
+                var productFeaturesDoc = await productFeaturesTask.ConfigureAwait(false);
+                var whatsInTheDoc = await whatsInTheTask.ConfigureAwait(false);
+
+                product.KeySellingPoints = SerializeUlList(keySellingPointsDoc)?.Ul?.Li?.Select(x => x.Text).ToArray();
+                product.MarketingDescription = marketingDescriptionDoc?.InnerText;
+                product.ProductFeatures = SerializeUlList(productFeaturesDoc)?.Ul?.Li?.Select(x => $"{x.Strong}. {x.Text}").ToArray();
+                product.WhatsInTheBox = SerializeUlList(whatsInTheDoc)?.Ul?.Li?.Select(x => x.Text).ToArray();
             }
 
             private void MapStock(ProductDto x, ProductModel product, bool dropShip)
@@ -269,6 +324,37 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 flags.DisplayStatus = indicators.ContainsKey(DisplayStatus) ? indicators[DisplayStatus].Value : null;
 
                 return flags;
+            }
+
+            private async Task<XmlDocument> GetXmlDocument(string url)
+            {
+                if (string.IsNullOrEmpty(url))
+                    return null;
+                XmlDocument xml = new();
+                var wrq = WebRequest.Create(url) as HttpWebRequest;
+                var response = await wrq.GetResponseAsync().ConfigureAwait(false);
+                xml.Load(new XmlTextReader(response.GetResponseStream()));
+                return xml;
+            }
+
+            private UlListXmlDto SerializeUlList(XmlDocument document)
+            {
+                if (document == null)
+                    return null;
+                XmlSerializer serializer = new(typeof(UlListXmlDto));
+                using XmlReader reader = new XmlNodeReader(document);
+                var response = (UlListXmlDto)serializer.Deserialize(reader);
+                return response;
+            }
+
+            static (string keySellingPointsUrl, string marketingDescriptionUrl, string productFeaturesUrl, string whatsInTheBox) GetMarketingUrls(IEnumerable<MarketingDto> marketings) 
+            {
+                var keySellingPointsUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.KeySellingPoints)?.Url;
+                var marketingDescriptionUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.MarketingDescription)?.Url;
+                var productFeaturesUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductFeatures)?.Url;
+                var whatsInTheBox = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.WhatsInTheBox)?.Url;
+
+                return (keySellingPointsUrl, marketingDescriptionUrl, productFeaturesUrl, whatsInTheBox);
             }
 
             private struct Flags

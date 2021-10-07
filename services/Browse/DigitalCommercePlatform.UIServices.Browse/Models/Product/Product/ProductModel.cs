@@ -30,10 +30,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
 
         public ProductSpecificationsModel Specifications { get; set; }
         public StockModel Stock { get; set; }
-        public string MarketingDescription { get; set; } // to fill
-        public string[] ProductFeatures { get; set; } // to fill
-        public string[] KeySellingPoints { get; set; } // to fill
-        public string[] WhatsInTheBox { get; set; } // to fill
-        public object Documents { get; set; } // to fill
+        public string MarketingDescription { get; set; }
+        public string[] ProductFeatures { get; set; }
+        public string[] KeySellingPoints { get; set; }
+        public string[] WhatsInTheBox { get; set; }
+        public List<DocumentModel> Documents { get; set; }
     }
 }
