@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "d3892c0b-1350-4104-ab1b-cd77c1e725ab",
+		"name": "DF UI-Search.Postman_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ui.search.export-to-json",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "SessionId",
+						"value": "{{SessionId}}",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"SearchString\":\"hp led monitor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrlUiService}}ui-search/v{{apiVersion}}/product/export",
+					"host": [
+						"{{BaseUrlUiService}}ui-search"
+					],
+					"path": [
+						"v{{apiVersion}}",
+						"product",
+						"export"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ui.search.export-to-csv",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-us",
+						"type": "text"
+					},
+					{
+						"key": "Consumer",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "SessionId",
+						"value": "{{SessionId}}",
+						"type": "text"
+					},
+					{
+						"key": "Site",
+						"value": "NA",
+						"type": "text"
+					},
+					{
+						"key": "TraceId",
+						"value": "{{$guid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"SearchString\":\"hp led monitor\",\r\n    \"ExportFormat\":\"csv\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrlUiService}}ui-search/v{{apiVersion}}/product/export",
+					"host": [
+						"{{BaseUrlUiService}}ui-search"
+					],
+					"path": [
+						"v{{apiVersion}}",
+						"product",
+						"export"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

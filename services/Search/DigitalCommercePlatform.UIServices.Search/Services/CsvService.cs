@@ -1,11 +1,13 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 
 using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Search.Services
@@ -26,6 +28,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     public class CsvService : ICsvService, IDisposable
     {
         private readonly List<IDisposable> _streamToDispose;
+        private static readonly Dictionary<Type, Type> _mappings;
+
+        static CsvService()
+        {
+            _mappings = typeof(CsvService).Assembly
+                .GetTypes()
+                .Where(t => !t.IsAbstract
+                                    && !t.IsInterface
+                                    && t.BaseType != null
+                                    && t.BaseType.IsGenericType
+                                    && t.BaseType.GetGenericTypeDefinition() == typeof(ClassMap<>))
+                .Select(x => new { MapperType = x, ModelType = x.BaseType.GetGenericArguments()[0] })
+                .GroupBy(x => x.ModelType)
+                .ToDictionary(k => k.Key, v => v.First().MapperType)
+                ;
+        }
 
         public CsvService()
         {
@@ -83,6 +101,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var sw = CreateStream(new StreamWriter(ms));
 
             var csv = CreateStream(new CsvWriter(sw, CultureInfo.CurrentCulture, true));
+
+            if (_mappings.ContainsKey(typeof(T)))
+                csv.Context.RegisterClassMap(_mappings[typeof(T)]);
 
             csv.WriteRecords(data);
             csv.Flush();

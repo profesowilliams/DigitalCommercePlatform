@@ -53,7 +53,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
             return Ok(response.Results);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("Export")]
         public async Task<IActionResult> Export(ExportRequestModel request)
