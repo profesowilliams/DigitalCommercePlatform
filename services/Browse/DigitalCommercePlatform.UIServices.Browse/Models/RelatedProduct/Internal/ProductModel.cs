@@ -1,4 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Internal
@@ -13,5 +15,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Intern
         public string ThumbnailImage { get; set; }
         public AuthorizationModel Authorization { get; set; }
         public PriceModel Pricing { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<MainSpecificationModel> MainSpecifications { get; set; }
     }
 }

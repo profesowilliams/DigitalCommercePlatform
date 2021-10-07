@@ -46,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, Response>
         {
             private const string ALLOW = "ALLOW";
@@ -347,7 +348,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return response;
             }
 
-            static (string keySellingPointsUrl, string marketingDescriptionUrl, string productFeaturesUrl, string whatsInTheBox) GetMarketingUrls(IEnumerable<MarketingDto> marketings) 
+            private static (string keySellingPointsUrl, string marketingDescriptionUrl, string productFeaturesUrl, string whatsInTheBox) GetMarketingUrls(IEnumerable<MarketingDto> marketings)
             {
                 var keySellingPointsUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.KeySellingPoints)?.Url;
                 var marketingDescriptionUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.MarketingDescription)?.Url;

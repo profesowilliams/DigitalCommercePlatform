@@ -5,9 +5,11 @@ using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
+    [ExcludeFromCodeCoverage]
     public class ProductProfile : Profile
     {
         public ProductProfile()

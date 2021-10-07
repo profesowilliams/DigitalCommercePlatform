@@ -4,9 +4,11 @@ using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Internal;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 {
+    [ExcludeFromCodeCoverage]
     public class RelatedProductsProfile : Profile
     {
         public RelatedProductsProfile()
@@ -24,6 +26,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
             CreateMap<CategoryDto, CategoryModel>();
             CreateMap<SourceDto, SourceModel>();
             CreateMap<PriceDto, PriceModel>();
+
+            CreateMap<MainSpecificationDto, MainSpecificationModel>();
         }
     }
 }
