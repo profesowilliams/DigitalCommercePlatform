@@ -8,7 +8,7 @@ import FullScreenLoader from "../../Widgets/FullScreenLoader";
 
 const WhiteLabelQuoteHeader = ({ componentProp }) => {
   const { uiServiceEndPoint, whiteLabel } = JSON.parse(componentProp);
-  const { information, titleLabel, subtitleLabel, checkboxItems } = whiteLabel;
+  const { information, titleLabel, subtitleLabel, checkboxItems } = whiteLabel || {};
 
   const { id } = getUrlParams();
   const [response, loading] = useGet(`${uiServiceEndPoint}?id=${id}`);
