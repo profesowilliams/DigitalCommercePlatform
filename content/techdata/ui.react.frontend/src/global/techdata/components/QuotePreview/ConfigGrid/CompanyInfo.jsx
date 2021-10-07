@@ -70,10 +70,10 @@ function CompanyInfo({data, info}) {
                         </div>
                         <div className="form-group">
                             <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleDefaultAddress}>
-                                {"Submit"}
+                                {info.submitLabel}
                             </Button>
                             <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleDefaultAddress}>
-                                {"Cancel"}
+                                {info.cancelLabel}
                             </Button>
                         </div>
                     </form>

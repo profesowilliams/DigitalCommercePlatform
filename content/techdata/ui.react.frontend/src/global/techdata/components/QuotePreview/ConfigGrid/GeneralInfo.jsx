@@ -387,10 +387,10 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                     )}
                     <div className="form-group">
                         <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
-                            {"Submit"}
+                            {info.submitLabel}
                         </Button>
                         <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>
-                            {"Cancel"}
+                            {info.cancelLabel}
                         </Button>
                     </div>
                 </div>
