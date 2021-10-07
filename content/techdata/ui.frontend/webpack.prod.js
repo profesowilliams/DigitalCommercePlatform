@@ -5,6 +5,9 @@ const common                  = require('./webpack.common.js');
 
 module.exports = merge(common, {
     mode: 'production',
+    module: {
+        rules: [{ test: /\.svg$/, use: 'react-svg-loader' }],
+    },
     optimization: {
         minimize: true,
         minimizer: [

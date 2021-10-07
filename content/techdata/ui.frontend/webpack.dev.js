@@ -19,6 +19,9 @@ module.exports = (env) => {
         mode: "development",
         devtool: "inline-source-map",
         performance: { hints: "warning" },
+        module: {
+            rules: [{ test: /\.svg$/, use: 'react-svg-loader' }],
+        },
         plugins: [
             new HtmlWebpackPlugin({
                 filename: "dashboard.html",
