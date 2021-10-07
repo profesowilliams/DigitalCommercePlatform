@@ -16,27 +16,30 @@
             <sly data-sly-list.item="${listUse.listItems}">
                 <div class="vendor-content-section ${itemList.count == 1 ? 'active' : ''}" data-type="${item.title}">
                     <h2 class="vendor-section-title">${item.title}</h2>
-                    <sly data-sly-test="${properties.showCategory}">
-                        <ul class="vendor-section-checks">
-                            <sly data-sly-list.tag="${item.categoryTag}">
-                                <li>${tag}</li>
-                            </sly>
-                        </ul>
-                    </sly>
-                    <div class="vendor-section-desc">
-                        <p>${item.overview @ context = 'html'}</p>
+                    <div class="vendor-icon__container">
+                        ${item.vendorIcon @ context = 'scriptComment'}
                     </div>
-                    <sly data-sly-test="${properties.showVendorLinks}">
-                        <div data-sly-test="${item.vendorPageLabel}" class="vendor-section-link-section">
-                            <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
-                        </div>
-                        <div data-sly-test="${item.vendorProductLabel}" class="vendor-section-link-section">
-                            <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
-                        </div>
-                    </sly>
+                    <sly data-sly-test="${properties.showCategory}">
+            <ul class="vendor-section-checks">
+                <sly data-sly-list.tag="${item.categoryTag}">
+                    <li>${tag}</li>
+                </sly>
+            </ul>
+            </sly>
+            <div class="vendor-section-desc">
+                <p>${item.overview @ context = 'html'}</p>
+            </div>
+            <sly data-sly-test="${properties.showVendorLinks}">
+                <div data-sly-test="${item.vendorPageLabel}" class="vendor-section-link-section">
+                    <a href="${item.pageLink}" class="vendor-section-link">${item.vendorPageLabel}</a>
+                </div>
+                <div data-sly-test="${item.vendorProductLabel}" class="vendor-section-link-section">
+                    <a href="${item.vendorProductLink}" class="vendor-section-link">${item.vendorProductLabel}</a>
                 </div>
             </sly>
         </div>
+        </sly>
+    </div>
     </div>
 </template>
 <template data-sly-template.executives="${@ listUse}">
