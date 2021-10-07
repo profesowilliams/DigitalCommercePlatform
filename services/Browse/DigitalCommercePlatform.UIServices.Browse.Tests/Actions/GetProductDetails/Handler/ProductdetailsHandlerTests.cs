@@ -373,19 +373,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         { 
                             new DocumentModel
                             {
-                                Title = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf",
+                                Title = "Quick Start Guide",
                                 Type = "Quick Start Guide",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             },
                             new DocumentModel
                             {
-                                Title = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf",
+                                Title = "Product Data Sheet / Brochure",
                                 Type = "Product Data Sheet / Brochure",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             },
                             new DocumentModel
                             {
-                                Title = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf",
+                                Title = "User Manual",
                                 Type = "User Manual",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             }
