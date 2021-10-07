@@ -393,8 +393,10 @@
 }
 
 .vendor-listing--right-section {
-  .vendor-icon__container {
-    display: none;
+  &.vendor-type--right-section {
+    .vendor-icon__container {
+      display: none;
+    }
   }
 }
 
@@ -434,7 +436,8 @@
           }
         }
         .vendor-section-desc,
-        .vendor-icon__container {
+        .vendor-icon__container,
+        .vendor-section-link-section {
           display: none;
         }
         &.mobile-active {
@@ -445,7 +448,8 @@
             }
           }
           .vendor-section-desc,
-          .vendor-icon__container {
+          .vendor-icon__container,
+          .vendor-section-link-section {
             display: block;
           }
         }
