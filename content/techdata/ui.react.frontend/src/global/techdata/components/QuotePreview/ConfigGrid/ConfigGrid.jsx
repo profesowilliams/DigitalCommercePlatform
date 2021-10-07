@@ -11,27 +11,31 @@ function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChan
 
     return (
         <div className="cmp-qp__config-grid">
-            <p className="cmp-qp__config-grid--title">{quotePreview}: <span>{confirm}</span></p>
+            <p className="cmp-qp__config-grid--title">
+                {quotePreview}: <span>{confirm}</span>
+            </p>
             <div className="info-container">
-                <Loader visible={isLoading} />
-                {
-                    (companyInfoResponse && !isLoading) ? (
-                        <CompanyInfo data={companyInfoResponse} info={gridProps.information}/>
-                    ) : null
-                }
-                <EndUserInfo endUser={quoteDetails.endUser} info={gridProps.information} onValueChange={endUserInfoChange}/>
+                {companyInfoResponse && !isLoading ? (
+                    <CompanyInfo
+                        data={companyInfoResponse}
+                        info={gridProps.information}
+                    />
+                ) : <Loader visible={isLoading} />}
+                <EndUserInfo
+                    endUser={quoteDetails.endUser}
+                    info={gridProps.information}
+                    onValueChange={endUserInfoChange}
+                />
                 <GeneralInfo
                     quoteDetails={quoteDetails}
                     gridProps={gridProps}
                     info={gridProps.information}
                     hideDealSelector={hideDealSelector}
-                    onValueChange={generalInfoChange}/>
+                    onValueChange={generalInfoChange}
+                />
             </div>
-            {/* <EndUserInfo />
-                <GeneralInfo />
-            */}
         </div>
-    )
+    );
 }
 
 export default ConfigGrid;

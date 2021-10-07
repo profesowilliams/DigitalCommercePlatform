@@ -201,6 +201,14 @@
     flex: 1 0 auto;
     justify-content: space-between;
     padding: 20px 40px;
+    .cmp-loader-roller {
+        display: flex;
+        flex-basis: 33.33%;
+        flex-grow: 0;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
 }
 
 .cmp-qp__edit-mode {

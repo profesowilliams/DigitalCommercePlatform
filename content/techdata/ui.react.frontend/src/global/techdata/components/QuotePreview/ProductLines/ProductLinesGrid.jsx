@@ -7,7 +7,7 @@ import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
 function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
   const [gridApi, setGridApi] = useState(null);
-  const gridData = data.content?.quotePreview?.quoteDetails.items ?? [];
+  const gridData = data.items ?? [];
   /*
     grid data can be mutated intentionally by changing quantity in each row. 
     so in order to not mutate props, mutableGridData is clone of the data that is
