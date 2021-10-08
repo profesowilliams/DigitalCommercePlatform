@@ -16,7 +16,7 @@ function Grid(props) {
     onModelUpdateFinished,
     requestInterceptor,
   } = Object.assign({}, props);
-  const componentVersion = "1.1.9";
+  const componentVersion = "1.2.0";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({
@@ -33,11 +33,19 @@ function Grid(props) {
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
   const gridApi = useRef(null);
+  const DEFAULT_ROW_HEIGHT = 25;
 
   const updatingFinished =
     typeof onModelUpdateFinished === "function"
-      ? debouncer(500, () => onModelUpdateFinished())
+      ? debouncer(200, () => onModelUpdateFinished())
       : null;
+
+  const getAgGridDomLayout = () => {
+    if (serverSide) {
+      return pagination ? "autoHeight" : "normal";
+    }
+    return "autoHeight";
+  };
 
   /*
 	function that returns AG grid vnode outside main return function to keep that
@@ -57,13 +65,14 @@ function Grid(props) {
       serverSideDatasource={serverSide && createDataSource()}
       serverSideStoreType={serverSide ? "partial" : "full"}
       rowSelection="single"
+      rowHeight={DEFAULT_ROW_HEIGHT}
       onViewportChanged={onViewportChanged}
       blockLoadDebounceMillis={100}
       masterDetail={true}
       detailCellRenderer={"$$detailRenderer"}
       detailRowAutoHeight={true}
       animateRows={false}
-      domLayout={serverSide ? "normal" : "autoHeight"}
+      domLayout={getAgGridDomLayout()}
       onFirstDataRendered={onFirstDataRendered}
       onRowGroupOpened={onRowGroupOpened}
       onExpandOrCollapseAll={onExpandOrCollapseAll}
@@ -205,11 +214,7 @@ function Grid(props) {
   }
 
   function onModelUpdated(data) {
-    updatingFinished &&
-      updatingFinished.call(() => {
-        // empty call, after specified amount of time defined in updatingFinished deboncer
-        // if no new call will be registered, onUpdatingFinished callback will be fired
-      });
+    updatingFinished && updatingFinished.call(true);
   }
 
   function onGridReady(data) {
@@ -265,11 +270,28 @@ function Grid(props) {
     if (config.paginationStyle === "scroll") {
       const renderedNodes = data.api.getRenderedNodes();
       if (renderedNodes.length > 0) {
-        const firstIndex = renderedNodes[0].rowIndex;
-        const lastIndex = renderedNodes[renderedNodes.length - 1].rowIndex;
+        const rowContainer =
+          gridNodeRef.current.querySelector(".ag-body-viewport");
+        const bbox = rowContainer.getBoundingClientRect();
+        // DEFAULT_ROW_HEIGHT / 2 is fix for FireFox
+        // FF is unable to get element from bottom bbox coords
+        // so margin has to be applied
+        const firstRowIndex = parseInt(
+          document
+            .elementFromPoint(bbox.x, bbox.y)
+            ?.closest(".ag-row")
+            ?.getAttribute("row-index")
+        );
+        const lastRowIndex = parseInt(
+          document
+            .elementFromPoint(bbox.x, bbox.bottom - DEFAULT_ROW_HEIGHT / 2)
+            ?.closest(".ag-row")
+            ?.getAttribute("row-index")
+        );
+
         setActualRange({
-          from: firstIndex + 1,
-          to: lastIndex + 1,
+          from: !isNaN(firstRowIndex) ? firstRowIndex + 1 : "",
+          to: !isNaN(firstRowIndex) ? lastRowIndex + 1 : "",
           total: data.api.getDisplayedRowCount(),
         });
       } else {
@@ -329,7 +351,7 @@ function Grid(props) {
         }
       });
       const maxHeight = Math.max(...heights);
-      return maxHeight > 0 ? maxHeight : null;
+      return maxHeight > 0 ? maxHeight : DEFAULT_ROW_HEIGHT;
     }
   }
 
@@ -355,7 +377,7 @@ function Grid(props) {
       let awaiter = (fn, arg) => setTimeout(() => fn.call(this, arg), interval);
       return {
         call: (fn) => {
-          fn();
+          if (typeof fn === "function") fn();
           calls++;
           awaiter((_calls) => {
             if (_calls === calls) {
@@ -370,6 +392,13 @@ function Grid(props) {
   useEffect(() => {
     !data && getGridData();
     setAgGrid(<AgGrid />);
+    // set minimum height if height wasn't explicitly set in css
+    if (getAgGridDomLayout() !== "autoHeight") {
+      window.getComputedStyle(gridNodeRef.current).height === "0px"
+        ? (gridNodeRef.current.style.height =
+            DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px")
+        : null;
+    }
     window.addEventListener("resize", onResize);
     return () => {
       gridApi?.current?.destroy();

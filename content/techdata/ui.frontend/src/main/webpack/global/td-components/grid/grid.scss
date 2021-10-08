@@ -1,194 +1,193 @@
 .cmp-grid {
-	position: relative;
-	height: 100%;
-	width: 100%;
-	min-width: rem(1376px);
-	overflow:auto;
-	.ag-root-wrapper {
-	}
-	.ag-root {
-	  font-size: $font-size-xsmall;
-	}
-	.ag-header {
-	  border-top: 2px solid get-color(brand-blue);
-	  border-bottom: 1px solid get-color(brand-blue);
-	  color: get-color(td-dark-blue);
-	  height: rem(34px) !important;
-	  min-height: rem(34px) !important;
-	}
-	.ag-header-viewport {
-	}
-	.ag-header-container {
-	}
-	.ag-header-row {
-	  height: rem(34px) !important;
-	  color: get-color(td-dark-blue);
-	  font-weight: normal;
-	}
-	.ag-header-cell {
-	}
-  
-	.ag-body-viewport {
-	}
-	.ag-body {
-	}
-	.ag-row {
-	  color: get-color(brand-text-gray);
-	  font-weight: normal;
-	  font-size: $font-size-xsmall;
-	  border-bottom-style: none;
-	}
-	.ag-cell {
-	  line-height: rem(34px);
-  
-	  button {
-		line-height: rem(18px);
-	  }
-	}
-  
-	.ag-row-odd {
-	  background-color: $gray-5;
-	}
-	.ag-icon-previous,
-	.ag-icon-next {
-	  color: get-color(brand-light-blue-icon);
-	}
-  
-	.cmp-grid-url-underlined {
-	  text-decoration: underline;
-	  color: get-color(brand-button-blue);
-	}
-  
-	.cmp-grid-url-not-underlined {
-	  text-decoration: none;
-	  color: get-color(brand-button-blue);
-	}
-  
-	.ag-root-wrapper-body {
-	  margin-top: rem(30px);
-	}
-  
-	.ag-paging-panel {
-	  position: absolute;
-	  top: 0;
-	  right: 0;
-	  border-top: none;
-	  height: rem(30px) !important;
-	}
-  
-	.ag-icon-previous,
-	.ag-icon-next {
-	  color: get-color(brand-light-blue-icon);
-	}
-  
-	// *** custom sorting arrows *** //
-	.ag-header-cell-sortable {
-	  .ag-icon,
-	  .ag-header-icon {
-		display: none;
-	  }
-	  & .ag-header-cell-text {
-		margin-left: 0.5rem;
-		&::before {
-		  position: absolute;
-		  top: 0.7rem;
-		  left: 1rem;
-		  display: block;
-		  font-family: "Font Awesome 5 Free";
-		  font-weight: 900;
-		}
-	  }
-	  & .ag-header-cell-sorted-none .ag-header-cell-text::before {
-		content: "\f0dc";
-	  }
-	  & .ag-header-cell-sorted-asc .ag-header-cell-text::before {
-		content: "\f0de";
-	  }
-	  & .ag-header-cell-sorted-desc .ag-header-cell-text::before {
-		content: "\f0dd";
-	  }
-	}
-	// *** horizontal scrollbar fix on column auto width *** //
-	.ag-body-horizontal-scroll {
-	  display: none;
-	}
-	// *** custom page info *** //
-	.hidden {
-	  display: none;
-	}
-	.page-info {
-	  z-index: 1;
-	  position: absolute;
-	  top: 0.5rem;
-	  right: 1rem;
-	  color: get-color(brand-text-gray);
-	}
-	// *** custom expand/collapse/checked/unchecked for child rows *** //
-	.ag-icon-tree-open {
-	  color: get-color(brand-light-blue-icon);
-	  &::before {
-		padding-right: 0.3rem;
-		display: block;
-		font-family: "Font Awesome 5 Free";
-		font-weight: 900;
-		content: "\f078";
-	  }
-	}
-	.ag-icon-tree-closed {
-	  color: get-color(brand-light-blue-icon);
-	  &::before {
-		padding-right: 0.5rem;
-		display: block;
-		font-family: "Font Awesome 5 Free";
-		font-weight: 900;
-		content: "\f054";
-	  }
-	}
-	.ag-checkbox-input-wrapper,
-	.ag-checkbox-input-wrapper.ag-indeterminate {
-	  &::after {
-		padding-right: 1rem;
-		font-size: 1.2rem;
-		display: block;
-		font-family: "Font Awesome 5 Free";
-		content: $unchecked-state-content;
-		color: get-color(td-dark-blue);
-	  }
-	}
-	.ag-checkbox-input-wrapper.ag-indeterminate {
-	  &::after {
-		font-family: "Font Awesome 5 Free";
-		font-weight: $font-weight-semi-bold;
-	  }
-	}
-	.ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
-	  font-weight: $font-weight-bold;
-	}
-	.ag-checkbox-input-wrapper.ag-checked {
-	  &::after {
-		color: get-color(td-dark-blue);
-		content: "\f14a";
-	  }
-	}
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-width: rem(1376px);
+  overflow: auto;
+  .ag-root-wrapper {
   }
-  
-  .ag-input-field-input .ag-checkbox-input{
-	&::after{
-	  font-weight: $font-weight-bold;
-	}
+  .ag-root {
+    font-size: $font-size-xsmall;
   }
-  .ag-checkbox-input-wrapper.ag-checked{
-	&::after{
-	  font-weight: $font-weight-bold;
-	}
+  .ag-header {
+    border-top: 2px solid get-color(brand-blue);
+    border-bottom: 1px solid get-color(brand-blue);
+    color: get-color(td-dark-blue);
+    height: rem(34px) !important;
+    min-height: rem(34px) !important;
   }
-  
-  .ag-cell-label-container{
-	.ag-header-cell-label{
-	  span.ag-header-cell-text{
-		white-space: break-spaces;
-	  }
-	}
+  .ag-header-viewport {
   }
-  
-  
+  .ag-header-container {
+  }
+  .ag-header-row {
+    height: rem(34px) !important;
+    color: get-color(td-dark-blue);
+    font-weight: normal;
+  }
+  .ag-header-cell {
+  }
+
+  .ag-body-viewport {
+  }
+  .ag-body {
+  }
+  .ag-row {
+    color: get-color(brand-text-gray);
+    font-weight: normal;
+    font-size: $font-size-xsmall;
+    border-bottom-style: none;
+  }
+  .ag-cell {
+    display: grid;
+    align-content: center;
+	line-height: rem(32px);
+    button {
+      line-height: rem(16px);
+    }
+  }
+
+  .ag-row-odd {
+    background-color: $gray-5;
+  }
+  .ag-icon-previous,
+  .ag-icon-next {
+    color: get-color(brand-light-blue-icon);
+  }
+
+  .cmp-grid-url-underlined {
+    text-decoration: underline;
+    color: get-color(brand-button-blue);
+  }
+
+  .cmp-grid-url-not-underlined {
+    text-decoration: none;
+    color: get-color(brand-button-blue);
+  }
+
+  .ag-root-wrapper-body {
+    margin-top: rem(30px);
+  }
+
+  .ag-paging-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: none;
+    height: rem(30px) !important;
+  }
+
+  .ag-icon-previous,
+  .ag-icon-next {
+    color: get-color(brand-light-blue-icon);
+  }
+
+  // *** custom sorting arrows *** //
+  .ag-header-cell-sortable {
+    .ag-icon,
+    .ag-header-icon {
+      display: none;
+    }
+    & .ag-header-cell-text {
+      margin-left: 0.5rem;
+      &::before {
+        position: absolute;
+        top: 0.7rem;
+        left: 1rem;
+        display: block;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+      }
+    }
+    & .ag-header-cell-sorted-none .ag-header-cell-text::before {
+      content: "\f0dc";
+    }
+    & .ag-header-cell-sorted-asc .ag-header-cell-text::before {
+      content: "\f0de";
+    }
+    & .ag-header-cell-sorted-desc .ag-header-cell-text::before {
+      content: "\f0dd";
+    }
+  }
+  // *** horizontal scrollbar fix on column auto width *** //
+  .ag-body-horizontal-scroll {
+    display: none;
+  }
+  // *** custom page info *** //
+  .hidden {
+    display: none;
+  }
+  .page-info {
+    z-index: 1;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    color: get-color(brand-text-gray);
+  }
+  // *** custom expand/collapse/checked/unchecked for child rows *** //
+  .ag-icon-tree-open {
+    color: get-color(brand-light-blue-icon);
+    &::before {
+      padding-right: 0.3rem;
+      display: block;
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: "\f078";
+    }
+  }
+  .ag-icon-tree-closed {
+    color: get-color(brand-light-blue-icon);
+    &::before {
+      padding-right: 0.5rem;
+      display: block;
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: "\f054";
+    }
+  }
+  .ag-checkbox-input-wrapper,
+  .ag-checkbox-input-wrapper.ag-indeterminate {
+    &::after {
+      padding-right: 1rem;
+      font-size: 1.2rem;
+      display: block;
+      font-family: "Font Awesome 5 Free";
+      content: $unchecked-state-content;
+      color: get-color(td-dark-blue);
+    }
+  }
+  .ag-checkbox-input-wrapper.ag-indeterminate {
+    &::after {
+      font-family: "Font Awesome 5 Free";
+      font-weight: $font-weight-semi-bold;
+    }
+  }
+  .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
+    font-weight: $font-weight-bold;
+  }
+  .ag-checkbox-input-wrapper.ag-checked {
+    &::after {
+      color: get-color(td-dark-blue);
+      content: "\f14a";
+    }
+  }
+}
+
+.ag-input-field-input .ag-checkbox-input {
+  &::after {
+    font-weight: $font-weight-bold;
+  }
+}
+.ag-checkbox-input-wrapper.ag-checked {
+  &::after {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.ag-cell-label-container {
+  .ag-header-cell-label {
+    span.ag-header-cell-text {
+      white-space: break-spaces;
+    }
+  }
+}

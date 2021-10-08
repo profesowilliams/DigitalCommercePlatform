@@ -91,7 +91,7 @@ const AncillaryItems = ({ labels, currencySymbol, onCollectionChanged }) => {
                 <div className="cmp-td-quote-subtotal__section__line__add__value">
                   <input
                     placeholder={labels?.description || "Description"}
-                    maxlength="50"
+                    maxLength="50"
                     onChange={(e) =>
                       handleChange("description", e.target.value)
                     }
