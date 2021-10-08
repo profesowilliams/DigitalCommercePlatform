@@ -1,4 +1,12 @@
 
+.status {
+  display: flex;
+}
+.icon {
+  display: flex;
+  margin-top: rem(11px);
+  margin-right: rem(5px);
+}
 .cmp-td-order-details {
 
   &__parent-container {

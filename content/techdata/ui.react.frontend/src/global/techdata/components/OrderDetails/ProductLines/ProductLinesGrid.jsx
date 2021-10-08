@@ -12,6 +12,7 @@ function ProductLinesGrid({
   labels,
   quoteOption,
   onMarkupChanged,
+  iconList,
 }) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items ?? [];
@@ -22,6 +23,22 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
+  const columnsArray = gridConfig.columnList;
+  const STATUS = {
+    onHold: 'onHold',
+    inProcess: 'inProcess',
+    open: 'open',
+    shipped: 'shipped',
+    cancelled: 'cancelled',
+  };
+  const defaultIcons = [
+    { iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
+    { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
+    { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
+    { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
+    { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
+  ];
+
   function expandAll() {
     gridApi?.forEachNode((node) => {
       node.expanded = true;
@@ -46,11 +63,17 @@ function ProductLinesGrid({
     }
   }
 
+  function applyStatusIcon(statusKey) {
+    let icon = iconList?.find((icon) => icon.iconKey === statusKey);
+    if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
+    return icon;
+  }
+  
   //default column defs
   const columnDefs = [
     {
-      headerName: "Line Item",
-      field: "id",
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[0].columnLabel : "Line Item",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[0].columnKey : "id",
       width: "100px",
       sortable: false,
       expandable: true,
@@ -64,80 +87,106 @@ function ProductLinesGrid({
       detailRenderer: ({ data }) => (
         <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
           <ProductLinesChildGrid
-            columnDefiniton={whiteLabelMode ? whiteLabelCols() : columnDefs}
+            columnDefiniton={columnDefs}
             data={data.children}
           ></ProductLinesChildGrid>
         </section>
       ),
     },
     {
-      headerName: "Item Information",
-      field: "shortDescription",
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[1].columnLabel : "Item Information",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[1].columnKey :"shortDescription",
       sortable: false,
-      width: "600px",
-      cellHeight: () => 80,
+    },
+    {
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[2].columnLabel : "Unit List Price",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[2].columnKey : "unitListPriceFormatted",
+      sortable: false,
+    },
+    {
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[3].columnLabel : "% Off List Price",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[3].columnKey : "discounts",
+      sortable: false,
+      width: "250px",
       cellRenderer: (props) => {
-        return <ProductLinesItemInformation line={props.data} />;
+        return (
+          <a
+            className="cmp-grid-url-underlined"
+            href={props.value}
+            target="_blank"
+          >
+            {props.value}
+          </a>
+        );
       },
     },
     {
-      headerName: "Unit List Price",
-      field: "unitListPriceFormatted",
-      sortable: false,
-      valueFormatter: ({ value }) => {
-        return "$" + value;
-      },
-    },
-    {
-      headerName: "% Off List Price",
-      field: "discounts",
-      sortable: false,
-      valueFormatter: ({ value }) => {
-        return value || 0;
-      },
-    },
-    {
-      headerName: "Quantity",
-      field: "quantity",
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[4].columnLabel : "Quantity",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[4].columnKey : "quantity",
       sortable: false,
     },
     {
-      headerName: "Unit Price",
-      field: "unitPrice",
-      onDetailsShown: (row) => {},
-      onDetailsHidden: (row) => {},
-      cellClass: ({ node, data }) => {
-        return whiteLabelMode
-          ? "cmp-product-lines-grid__row__cell__your-cost"
-          : "";
-      },
-      headerClass: ({ node, data }) => {
-        return whiteLabelMode ? "cmp-product-lines-grid__th__your-cost" : "";
-      },
-      enableRowGroup: true,
-      valueFormatter: ({ data }) => {
-        return "$" + thousandSeparator(data.unitPrice);
-      },
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[5].columnLabel : "Unit Price",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[5].columnKey : "unitPrice",
+      sortable: false,
+      valueFormatter: (props) => {
+        return props.value.toLocaleString();
+    },
+    },
+    {
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[6].columnLabel : "Extended Price",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[6].columnKey : "extendedPriceFormatted",
       sortable: false,
     },
     {
-      headerName: "Extended Price",
-      field: "extendedPriceFormatted",
-      onDetailsShown: (row) => {},
-      onDetailsHidden: (row) => {},
-      cellClass: ({ node, data }) => {
-        return whiteLabelMode
-          ? "cmp-product-lines-grid__row__cell__your-cost"
-          : "";
-      },
-      headerClass: ({ node, data }) => {
-        return whiteLabelMode ? "cmp-product-lines-grid__th__your-cost" : "";
-      },
-      enableRowGroup: true,
-      valueFormatter: ({ data }) => {
-        return "$" + thousandSeparator(data.unitPrice * data.quantity);
-      },
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[7].columnLabel : "Status",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[7].columnKey : "status",
       sortable: false,
+      cellRenderer: (props) => {
+        return (
+            <span className='status'>
+                <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
+                <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
+            </span>
+        );
+      },
+    },
+    {
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[8].columnLabel : "Serial",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[8].columnKey : "extendedPriceFormatted",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+          props.value ? (
+            <a
+              className="cmp-grid-url-underlined"
+              href={props.value}
+              target="_blank"
+            >
+              view
+            </a>
+          ) : (
+            <div>n/a</div>
+          )
+        );
+      },
+    },
+    {
+      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[9].columnLabel : "Extended Price",
+      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[9].columnKey : "extendedPriceFormatted",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+            <span className='status'>
+              <a 
+                className='cmp-grid-url-underlined'
+                href={props.value ? props.value : '#'}
+                target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </span>
+        );
+      },
     },
   ];
 
