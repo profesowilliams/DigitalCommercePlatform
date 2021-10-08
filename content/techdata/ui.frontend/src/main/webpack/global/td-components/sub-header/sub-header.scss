@@ -7,6 +7,7 @@
   position: relative;
   &__wrapper{
     align-self: center;
+    justify-content: space-between;
     margin-left: auto;
     ul {
       margin: 0;
@@ -28,13 +29,13 @@
       }
     }
     &__child {
-      width: 50%;
+
       align-items: center;
       &--right {
-
+          align-items: center;
       }
       &--left {
-
+          align-items: center;
       }
     }
 

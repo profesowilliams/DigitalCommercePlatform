@@ -132,12 +132,12 @@ const NewSubheader = ({ componentProp }) => {
 
 	return (
 		<>
-		<ol role="tablist" className="cmp-sub-header__wrapper__child" aria-multiselectable="false">
+		<ol role="tablist" className="cmp-sub-header__wrapper__child--left" aria-multiselectable="false">
 			{getMenuItems(menuItems, dashboardMenuItems)}
 		</ol>
 			{userData ?
 				<>
-				<ul className="cmp-sub-header__wrapper__child">
+				<ul className="cmp-sub-header__wrapper__child--right">
 					{userData.companyName && (
 						<li>
 							<a href='#'>{userData.companyName}</a>
