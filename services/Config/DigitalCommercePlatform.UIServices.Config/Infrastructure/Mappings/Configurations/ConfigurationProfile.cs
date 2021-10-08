@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.SortBy, o => o.Ignore())
                 .ForMember(d => d.SortByAscending, o => o.Ignore())
                 .ForMember(d => d.WithPaginationInfo, o => o.Ignore())
+                .ForMember(d => d.Name, o => o.Ignore())
                 ;
 
             CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
@@ -42,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.CreatedTo, o => o.MapFrom(s => s.CreatedTo))
                 .ForMember(d => d.EndUser, o => o.MapFrom(s => s.EndUser))
                 .ForMember(d => d.SortBy, o => o.MapFrom(s => s.SortBy))
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.ConfigName))
                 .ForMember(d => d.SortByAscending, o => o.MapFrom<SortByResolver>())
                 .ForMember(d => d.WithPaginationInfo, o => o.Ignore())
                 ;

@@ -64,7 +64,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
                     ResellerName = "resellerName1",
                     SortBy = "any",
                     SortDirection = SortDirection.asc,
-                    Type = "type1"
+                    Type = "type1",
+                    ConfigName="test"
                 });
             }
         }
@@ -80,6 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             result.Details.Should().Be(model.Details);
             result.EndUser.Should().Be(model.EndUser);
             result.Id.Should().Be(model.Id);
+            result.Name.Should().Be(model.ConfigName);
             result.Manufacturer.Should().Be(model.Manufacturer);
             result.Page.Should().Be(model.PageNumber);
             result.PageSize.Should().Be(model.PageSize);

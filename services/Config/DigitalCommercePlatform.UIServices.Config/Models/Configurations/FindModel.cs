@@ -19,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string EndUser { get; set; }
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
+        public string ConfigName { get; set; }
     }
 }

@@ -21,5 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public int Page { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
+        public string Name { get; set; }
+
     }
 }
