@@ -146,6 +146,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
 
+                var stringUrl = configurationFindUrl.ToString();
+                if (stringUrl.Contains("SortBy = Enduser"))
+                {
+                    configurationFindUrl = new Url(stringUrl.Replace("SortBy=Enduser", "SortBy=EndUser"));
+                }
+
                 FindResponse<Configuration> result = new();
 
                 if (appServiceRequest.Details)
