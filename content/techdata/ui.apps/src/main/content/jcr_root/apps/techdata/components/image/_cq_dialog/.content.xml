@@ -178,6 +178,12 @@
                                 required="{Boolean}false"/>
                         </items>
                     </styles>
+                    <analytics
+                            jcr:primaryType="nt:unstructured"
+                            path="techdata/components/analytics/analytics"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            margin="{Boolean}true">
+                    </analytics>
                 </items>
             </tabs>
         </items>
