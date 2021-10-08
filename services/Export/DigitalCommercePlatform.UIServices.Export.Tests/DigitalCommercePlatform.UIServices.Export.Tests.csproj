@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="5.2.28" />
+    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="5.2.54" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
