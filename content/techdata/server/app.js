@@ -1207,46 +1207,74 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
 
 
     const response = {
-        "content": {
-            "items": [
-                {
-                    "name": "SHI INTERNATIONAL CORP",
-                    "companies": [
-                        {
-                            "companyCode": "0100",
-                            "paymentTermsCode": "Z271",
-                            "paymentTermsText": "1.50 % 10 Net 30"
-                        },
-                        {
-                            "companyCode": "0101",
-                            "paymentTermsCode": "Z271",
-                            "paymentTermsText": "1.50 % 10 Net 30"
-                        }
-                    ],
-                    "addresses": [
-                        {
-                            "addressNumber": "0001445402",
-                            "addressLine1": "290 Davidson Ave",
-                            "addressLine2": " ",
-                            "addressLine3": " ",
-                            "city": "Somerset",
-                            "state": "NJ",
-                            "country": "US",
-                            "zip": "08873-4145",
-                            "email": null,
-                            "addressType": "CUS",
-                            "phone": "8005276389",
-                            "salesOrganization": "0100"
-                        }
-                    ]
-                }
-            ]
-        },
-        "error": {
-            "code": 0,
-            "messages": [],
-            "isError": false
-        }
+      content: {
+        items: [
+          {
+            name: "SHI INTERNATIONAL CORP",
+            companies: [
+              {
+                companyCode: "0100",
+                paymentTermsCode: "Z271",
+                paymentTermsText: "1.50 % 10 Net 30",
+              },
+              {
+                companyCode: "0101",
+                paymentTermsCode: "Z271",
+                paymentTermsText: "1.50 % 10 Net 30",
+              },
+            ],
+            addresses: [
+              {
+                addressNumber: "0001445402",
+                addressLine1: "290 Davidson Ave",
+                addressLine2: " ",
+                addressLine3: " ",
+                city: "Somerset",
+                state: "NJ",
+                country: "US",
+                zip: "08873-4145",
+                email: null,
+                addressType: "PAY",
+                phoneNumber: "8005276389",
+                salesOrganization: "0100",
+              },
+              {
+                addressNumber: "0001369841",
+                addressLine1: "4111 Northside Parkway",
+                addressLine2: " ",
+                addressLine3: " ",
+                city: "ATLANTA",
+                state: "GA",
+                country: "US",
+                zip: "30327",
+                email: null,
+                addressType: "PAY",
+                phoneNumber: "8005276389",
+                salesOrganization: "0100",
+              },
+              {
+                addressNumber: "0001369845",
+                addressLine1: "116 Inverness Dr E",
+                addressLine2: "Ste 375",
+                addressLine3: " ",
+                city: "Englewood",
+                state: "CO",
+                country: "US",
+                zip: "80112-5149",
+                email: null,
+                addressType: "PAY",
+                phoneNumber: " ",
+                salesOrganization: "0100",
+              },
+            ],
+          },
+        ],
+      },
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
     };
 
     setTimeout(() => {
@@ -2647,19 +2675,19 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             },
             "reseller": [
               {
-                "id": null,
-                "companyName": null,
-                "name": " ",
-                "line1": null,
-                "line2": null,
-                "line3": null,
-                "city": null,
-                "state": null,
-                "zip": null,
-                "postalCode": null,
-                "country": null,
-                "email": null,
-                "phoneNumber": null
+                companyName: "Some Company",
+                name: "thomas",
+                addressNumber: "0001369841",
+                line1: "4111 Northside Parkway",
+                line2: " ",
+                line3: " ",
+                city: "ATLANTA",
+                state: "GA",
+                country: "US",
+                postalCode: "30327",
+                email: null,
+                phoneNumber: "8005276389",
+                salesOrganization: "0100",
               }
             ],
             "source": {

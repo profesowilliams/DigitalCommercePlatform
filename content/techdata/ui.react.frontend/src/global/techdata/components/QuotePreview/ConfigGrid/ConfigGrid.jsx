@@ -1,13 +1,11 @@
 import React from 'react';
-import useGet from "../../../hooks/useGet";
-import Loader from '../../Widgets/Loader';
 import CompanyInfo from './CompanyInfo';
 import GeneralInfo from './GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
 function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChange, generalInfoChange }) {
     const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
-    const [companyInfoResponse, isLoading] = useGet(`${gridProps.companyInfoEndPoint}?criteria=CUS&ignoreSalesOrganization=false`);
+    // const [companyInfoResponse, isLoading] = useGet(`${gridProps.companyInfoEndPoint}?criteria=CUS&ignoreSalesOrganization=false`);
 
     return (
         <div className="cmp-qp__config-grid">
@@ -15,12 +13,11 @@ function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChan
                 {quotePreview}: <span>{confirm}</span>
             </p>
             <div className="info-container">
-                {companyInfoResponse && !isLoading ? (
-                    <CompanyInfo
-                        data={companyInfoResponse}
-                        info={gridProps.information}
-                    />
-                ) : <Loader visible={isLoading} />}
+                <CompanyInfo
+                    url={gridProps.companyInfoEndPoint}
+                    reseller={quoteDetails.reseller}
+                    info={gridProps.information}
+                />
                 <EndUserInfo
                     endUser={quoteDetails.endUser}
                     info={gridProps.information}

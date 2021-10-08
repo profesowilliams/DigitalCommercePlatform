@@ -1,86 +1,144 @@
-import React, { useState } from 'react';
-import Button from '../../Widgets/Button';
+import React, { useState } from "react";
 
-function CompanyInfo({data, info}) {
-    const {content: {items}} = data;
-    const res = items[0];
-    const [defaultAddress, setDefaultAddress] = useState(false);
-    const [selectedAddress, setSelectedAddress] = useState(1);
+import Loader from "../../Widgets/Loader";
+import Button from "../../Widgets/Button";
+import { usGet } from "../../../../../utils/api";
 
-    const handleOptionChange = e => {
-        setSelectedAddress(+(e.target.value))
+function CompanyInfo({ reseller, info, url }) {
+  const initialAddress = reseller[0];
+  const [editView, setEditView] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(initialAddress);
+  const [addressIndex, setAddressIndex] = useState(0);
+  const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleOptionChange = (e) => {
+    setAddressIndex(+e.target.value);
+  };
+
+  const handleCancelBtn = (e) => {
+    e.preventDefault();
+    setEditView(false);
+  };
+
+  const handleDefaultAddress = () => {
+    /* don't make API call if customer address was already fetched. */
+    if (addresses.length !== 0) {
+      setEditView(true);
+      return;
+    }
+    setLoading(true);
+    setEditView(true);
+
+    const fetchCustomerAddress = async () => {
+      try {
+        const res = await usGet(
+          `${url}?criteria=CUS&ignoreSalesOrganization=false`
+        );
+        const data = res?.data?.content?.items[0];
+        setAddresses(data["addresses"]);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleDefaultAddress = () => {
-        setDefaultAddress(prevDefaultAddress => !prevDefaultAddress);
-    };
+    fetchCustomerAddress();
+  };
 
+  const CompanyInfo = () => {
     return (
-        <div className="cmp-qp__company-info">
-            <p onClick={handleDefaultAddress} className="cmp-qp__company-info--title">{info.yourCompanyHeaderLabel}</p>
-            <p className="cmp-qp__company-info--sub-title">{res.name}</p>
-            {!defaultAddress && 
-                <div className="cmp-qp__company-info--address-group">
-                    <p>
-                        {/* <span>Wade Wilson</span> */}
-                        <span>{selectedAddress ? res.addresses[0]['addressLine' + '' + selectedAddress] : res.addresses[0].addressLine1}</span>
-                        <span>{res.addresses[0].city}, {res.addresses[0].state} {res.addresses[0].zip}</span>
-                        <span>{res.addresses[0].country}</span>
-                    </p>
-                    <p>
-                        <span>Email: {res.addresses[0].email || 'NA'}</span>
-                        <span>Phone: {res.addresses[0].phone}</span>
-                    </p>
-                </div>
-            }
-            {defaultAddress &&
-                <div className="cmp-qp__edit-mode">
-                    <form>
-                        <div className="form-check">
-                            <label>
-                                <input type="radio" name="address1" 
-                                        value={1}  
-                                        checked={selectedAddress === 1} 
-                                        onChange={handleOptionChange} />
-                                <span>Default Address</span>
-                                <span><b>{res.addresses[0].addressLine1}</b></span>
-                                {/* commenting out as there's nothing from API as of now */}
-                                {/* <span>West Hollywood, CA 90069</span> */}
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <label>
-                                <input type="radio" name="addres2" 
-                                        value={2} 
-                                        checked={selectedAddress === 2} 
-                                        onChange={handleOptionChange} />
-                                <span><b>{res.addresses[0].addressLine2}</b></span>
-                                {/* <span>Homestead, FL 33033</span> */}
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <label>
-                                <input type="radio" name="address3" 
-                                        value={3}
-                                        checked={selectedAddress === 3}
-                                        onChange={handleOptionChange} />
-                                <span><b>{res.addresses[0].addressLine3}</b></span>
-                                {/* <span>Lake Wales, FL 33853</span> */}
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleDefaultAddress}>
-                                {info.submitLabel}
-                            </Button>
-                            <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleDefaultAddress}>
-                                {info.cancelLabel}
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-            }
+      <div className="cmp-qp__company-info--address-group">
+        <p>
+          <span>{selectedAddress.name}</span>
+          <span>{selectedAddress.line1}</span>
+          <span>
+            {selectedAddress.city}, {selectedAddress.state}{" "}
+            {selectedAddress.zip}
+          </span>
+          <span>{selectedAddress.country}</span>
+        </p>
+        <p>
+          <span>Email: {selectedAddress.email || "NA"}</span>
+          <span>Phone: {selectedAddress.phoneNumber}</span>
+        </p>
+      </div>
+    );
+  };
+
+  const CompanyInfoEdit = () => {
+    return (
+      <form>
+        {addresses.map((address, index) => {
+          return (
+            <div key={`address${index}`} className="form-check">
+              <label>
+                <input
+                  type="radio"
+                  name={`address${index}`}
+                  value={index}
+                  checked={addressIndex === index}
+                  onChange={handleOptionChange}
+                />
+                {index === 0 ? <span>Default Address</span> : null}
+                <span>
+                  <b>{address.addressLine1}</b>
+                </span>
+                <span>
+                  {address.city}, {address.state} {address.zip}
+                </span>
+              </label>
+            </div>
+          );
+        })}
+        <FormActions />
+      </form>
+    );
+  };
+
+  const FormActions = () => {
+    return (
+      <div className="form-group">
+          <Button
+            btnClass="cmp-qp--save-information"
+            disabled={false}
+            onClick={handleDefaultAddress}
+          >
+            {info.submitLabel}
+          </Button>
+          <Button
+            btnClass="cmp-qp--cancel-information"
+            disabled={false}
+            onClick={handleCancelBtn}
+          >
+            {info.cancelLabel}
+          </Button>
         </div>
     )
+  }
+
+  return (
+    <div className="cmp-qp__company-info">
+      <p onClick={handleDefaultAddress} className="cmp-qp__company-info--title">
+        {info.yourCompanyHeaderLabel}
+      </p>
+      <p className="cmp-qp__company-info--sub-title">
+        {selectedAddress.companyName}
+      </p>
+      {editView ? (
+        <div className="cmp-qp__edit-mode">
+          {addresses && !loading ? (
+            <CompanyInfoEdit />
+          ) : (
+            <Loader visible={loading} />
+          )}
+        </div>
+      ) : (
+        <CompanyInfo />
+      )}
+    </div>
+  );
 }
 
 export default CompanyInfo;
