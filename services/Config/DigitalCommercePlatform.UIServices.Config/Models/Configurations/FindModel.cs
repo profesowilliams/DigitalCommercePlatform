@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string SortBy { get; set; }
         public SortDirection SortDirection { get; set; }
         public string ConfigName { get; set; }
+        public string ConfigId { get; set; }
     }
 }

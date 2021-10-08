@@ -57,6 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
                     Details = true,
                     EndUser = "enduser1",
                     Id = "id1",
+                    ConfigId = "id1",
                     Manufacturer = "manufacturer1",
                     PageNumber = 2,
                     PageSize = 20,

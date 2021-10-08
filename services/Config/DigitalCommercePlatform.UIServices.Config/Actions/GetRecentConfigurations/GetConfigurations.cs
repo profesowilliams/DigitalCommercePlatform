@@ -48,6 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurati
             {
                 try
                 {
+                    request.Criteria.Id = request.Criteria.ConfigId ?? request.Criteria.Id;
                     var findResponse = await _configService.FindConfigurations(request).ConfigureAwait(false);
                     return new ResponseBase<Response> { Content = new Response(findResponse, request.Criteria) };
                 }
