@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
 
-function Modal({ isModalVisible, modalProperties, modalContent, modalAction, onModalClosed, componentProp }) {
+function Modal({ isModalVisible, modalProperties, modalContent, modalAction, actionErrorMessage, onModalClosed, componentProp }) {
 	const { title, buttonLabel, buttonIcon } = modalProperties ?? JSON.parse(componentProp);
 	const [modalVisible, setModalVisible] = useState(isModalVisible ?? false);
 
@@ -19,7 +19,6 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, onM
 		if (modalAction) {
 			modalAction();
 		}
-		hideModal();
 	};
 
 	useEffect(() => {
@@ -46,8 +45,11 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, onM
 							<p dangerouslySetInnerHTML={{ __html: modalContent || '' }}></p>
 						)}
 					</div>
-					{modalAction ? (
+					{modalAction && (
 						<div className='cmp-modal_footer'>
+							<div className="cmp-modal_error-message">
+								{actionErrorMessage}
+							</div>
 							<button className='cmp-modal_btn' onClick={invokeModalAction}>
 								<span className='cmp-modal_btn_text'>
 									<i className={`cmp-modal_btn-icon ${buttonIcon}`}></i>
@@ -55,7 +57,7 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, onM
 								</span>
 							</button>
 						</div>
-					) : null}
+					)}
 				</div>
 			</div>
 		</div>

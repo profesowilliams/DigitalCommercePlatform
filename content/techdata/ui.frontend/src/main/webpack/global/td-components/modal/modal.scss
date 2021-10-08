@@ -99,6 +99,14 @@
 	&_footer {
 		height: rem(50px);
 	}
+	.cmp-modal_error-message {
+		margin: 2rem;
+		text-align: left;
+		max-width: rem(500px);
+		font-size: $font-size-small;
+		margin-bottom: rem(20px);
+		color: get-color('brand-red-brilliant');
+	}
 }
 
 ///details info modal content style///

@@ -8,8 +8,8 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
-      { key: "endUserName", value: "End User" },
-      { key: "configId", value: "Config ID" },
+      { key: "EndUser", value: "End User" },
+      { key: "Id", value: "Config ID" },
       { key: "configName", value: "Config Name" },
     ],
   };

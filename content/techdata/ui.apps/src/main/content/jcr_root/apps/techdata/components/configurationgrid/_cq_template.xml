@@ -13,6 +13,23 @@
     defaultSortingColumnKey="created"
     defaultSortingDirection="desc"
 >
+    <configurationTypesList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="End User"
+            configurationTypesKey="EndUser"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="Config ID"
+            configurationTypesKey="Id"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="Config Name"
+            configurationTypesKey="configName"
+        />
+    </configurationTypesList>
     <columnList jcr:primaryType="nt:unstructured">
         <item0
             jcr:primaryType="nt:unstructured"

@@ -58,15 +58,7 @@ function OrdersGrid(props) {
     };
 
     function invokeModal(modal) {
-        setModal(
-            <Modal
-                modalAction={modal.action}
-                modalContent={modal.content}
-                modalProperties={modal.properties}
-                modalAction={modal.modalAction}
-                onModalClosed={() => setModal(null)}
-            ></Modal>
-        );
+        setModal(modal);
     }
 
     function applyStatusIcon(statusKey) {
@@ -86,17 +78,28 @@ function OrdersGrid(props) {
 
     function downloadInvoice(orderId) {
         return async () => {
-            const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
-            const response = await axios.get(downloadOrderInvoicesUrl, { responseType: 'blob' });
+            try {
+                const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
+                const response = await axios.get(downloadOrderInvoicesUrl, { responseType: 'blob' });
 
-            const type = response.headers['content-type'];
-            const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
-            const link = document.createElement('a');
+                const type = response.headers['content-type'];
+                const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
+                const link = document.createElement('a');
 
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'file.zip';
-            link.click();
-            link.remove();
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `order-${orderId}-invoices.zip`;
+                link.click();
+                link.remove();
+
+                setModal(null);
+            } catch (error) {
+                setModal((previousInfo) => (
+                    {
+                        ...previousInfo,
+                        errorMessage: componentProp.invoicesModal?.errorMessage
+                    }
+                ));
+            }
         }
     }
 
@@ -259,7 +262,14 @@ function OrdersGrid(props) {
                     requestInterceptor={(request) => filteringExtension.requestInterceptor(request)}
                 ></Grid>
             </div>
-            {modal}
+            {modal && <Modal
+                modalAction={modal.action}
+                modalContent={modal.content}
+                modalProperties={modal.properties}
+                modalAction={modal.modalAction}
+                actionErrorMessage={modal.errorMessage}
+                onModalClosed={() => setModal(null)}
+            ></Modal>}
         </section>
     );
 }
