@@ -1,11 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Modal from '../Modal/Modal';
 import VendorConnection from './VendorConnection';
 import {dashboardMenu} from "./dashboardMenu";
+import {getAbsolutePosition} from "../../helpers/absolutePosition";
 
 const NewSubheader = ({ componentProp }) => {
-	const { accountnumberLabel = 'Account Number', vendorConnectionsModal, menuItems, dashboardMenuItems } = JSON.parse(componentProp);
+	const dashboardMenuIndex = 0;
+	const { accountnumberLabel = 'Account Number', vendorConnectionsModal, menuItems, dashboardMenuItems, toolsIndex } = JSON.parse(componentProp);
+	let tempToolsIndex = parseInt(toolsIndex);
+	// Tools Menu Index cannot be the first Menu Item. First Menu Item is Dashboard
+	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
+	console.log(toolsIndexInt);
 	const [userData, setUserData] = useState(null);
+	const menuItemRefs = useRef([]);
 
 	useEffect(() => {
 		let user = JSON.parse(localStorage.getItem("userData"));
@@ -15,7 +22,17 @@ const NewSubheader = ({ componentProp }) => {
 		hasDCPAccess();
 	}, []);
 
+	const hideOtherMenus = (sourceIndex) => {
+
+		if (sourceIndex==dashboardMenuIndex)
+		{
+			showHideToolsMenu(menuItemRefs.current[toolsIndexInt], true);
+		}else if (sourceIndex==toolsIndexInt) {
+			setShowDashboard(false);
+		}
+	}
 	function showHideDashboard() {
+		hideOtherMenus(dashboardMenuIndex);
 		setShowDashboard(!showDashboard);
 		return undefined;
 	}
@@ -36,6 +53,41 @@ const NewSubheader = ({ componentProp }) => {
 		}
 		return false;
 	}
+	const returnClickHandler = (index) => {
+		if (index==0)
+		{
+			return showHideDashboard();
+		}else if (index==toolsIndexInt) {
+			return showHideToolsMenu(menuItemRefs.current[index], false);
+		}
+	}
+
+	const showHideToolsMenu = (eventObject, overRide) => {
+		let toolsMenu = document.getElementsByClassName("cmp-new-subheader");
+		if (toolsMenu.length > 0)
+		{
+			let menuCategoryElementArray = toolsMenu[0].getElementsByClassName("menucategorieslist");
+			if (menuCategoryElementArray && menuCategoryElementArray.length > 0)
+			{
+				let menuCategoryElement = menuCategoryElementArray[0];
+				let menuToolsElementArray = menuCategoryElement.getElementsByClassName("cmp-tools");
+				if (overRide)
+				{
+					menuCategoryElement.style.display = "none";
+				}else if (menuCategoryElement && menuToolsElementArray && !overRide && menuToolsElementArray.length> 0 && (menuCategoryElement.style.display == "none" || menuCategoryElement.style.display == "")) {
+					hideOtherMenus(toolsIndexInt);
+					let cmpToolsElement = menuToolsElementArray[0];
+					menuCategoryElement.style.display = "block";
+					let elementRect = getAbsolutePosition(eventObject);
+					cmpToolsElement.style.top = `${elementRect.top + elementRect.height}px`;
+				}else {
+					menuCategoryElement.style.display = "none";
+				}
+			}
+		}else{
+			console.error("sub-header not found in DOM");
+		}
+	};
 
 	const getMenuItems = (menuItems, dashboardMenuItems) => {
 
@@ -44,9 +96,12 @@ const NewSubheader = ({ componentProp }) => {
 		if (menuItems && menuItems.length > 0)
 		{
 			return  menuItems.map((item, index) =>
-				<li key={`tabs-${index}`} role="tab" id={`tabs-${index}`} className={item.active ? "cmp-tabs__tab cmp-tabs__tab--active" : "cmp-tabs__tab"}
+				<li key={`tabs-${index}`}
+					ref={el => menuItemRefs.current[index] = el}
+					role="tab" id={`tabs-${index}`}
+					className={item.active ? "cmp-tabs__tab cmp-tabs__tab--active" : "cmp-tabs__tab"}
 					aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabIndex="0" data-cmp-hook-tabs="tab"
-					aria-selected="true" onClick={index == 0 ? () => showHideDashboard() : null}>
+					aria-selected="true" onClick={(e) => returnClickHandler(index)}>
 					<a href={item.link ? item.link : "#"}>
 						{item.title}
 					</a>

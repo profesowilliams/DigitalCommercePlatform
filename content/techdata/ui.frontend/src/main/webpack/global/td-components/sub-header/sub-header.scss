@@ -125,3 +125,37 @@
     }
   }
 }
+
+.cmp-new-subheader {
+  .cmp-sub-header__menu--hide {
+    display: none;
+  }
+  .menucategorieslist {
+    background-color: white;
+    .cmp-tools {
+      z-index: 999;
+      opacity: 1;
+      .cmp-tools__category-name {
+        background-color: white;
+
+      }
+    }
+
+  }
+
+  .menucategorieslist-aem-editor {
+    background-color: white;
+    position: relative;
+    .cmp-tools {
+      z-index: 999;
+      opacity: 1;
+      .cmp-tools__category-name {
+        background-color: white;
+
+      }
+    }
+
+  }
+}
+
+

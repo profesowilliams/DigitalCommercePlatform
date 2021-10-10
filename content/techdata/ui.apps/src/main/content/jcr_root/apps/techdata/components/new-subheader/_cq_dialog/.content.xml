@@ -90,7 +90,12 @@
                                     </items>
                                 </field>
                             </dashboardMenuItems>
-
+                            <toolsIndex
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="Tools Index Value. (1 means first menu item, etc...)"
+                                    fieldLabel="Index of the Tools Menu"
+                                    name="./toolsIndex"/>
                         </items>
                     </linksTab>
                     <vendorConnections

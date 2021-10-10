@@ -14,6 +14,13 @@ use(function () {
 	 if (properties && properties["accountNumber"]) {
         jsonObject["accountnumberLabel"] = properties["accountNumber"];
     }
+
+    if (properties && properties["toolsIndex"]) {
+        jsonObject["toolsIndex"] = properties["toolsIndex"] || 2;
+    }else {
+        jsonObject["toolsIndex"] = "2";
+    }
+
     if (this.uiServiceDomain != null) {
     vendorConnectionsModalObject["uiServiceEndPoint"] = this.uiServiceDomain+this.vendorConnectionEndpoint;
 	}

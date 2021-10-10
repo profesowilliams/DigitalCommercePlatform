@@ -2,11 +2,10 @@
     @include tablet {
         display: none;
     }
-    .cmp-tools {
+    .cmp-tools, .cmp-tools--editor {
         margin: 0;
         padding: rem(10px);
         display: flex;
-        position: absolute;
         top: 50px;
         left: 0;
         width: 100%;
@@ -37,4 +36,9 @@
             }
         }
     }
+
+    .cmp-tools {
+        position: absolute;
+    }
+
 }

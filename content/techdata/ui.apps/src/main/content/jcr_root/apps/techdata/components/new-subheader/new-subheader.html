@@ -1,6 +1,9 @@
-<div class="cmp-tabs cmp-sub-header" data-cmp-is="tabs" data-sly-use.serviceData="com.techdata.core.models.CaConfigReader" data-sly-use.model="${'subheader.js' @uiServiceDomain=serviceData.uiServiceDomain,vendorConnectionEndpoint=serviceData.vendorConnectionEndpoint}">
+<div class="cmp-tabs cmp-sub-header" data-sly-use.serviceData="com.techdata.core.models.CaConfigReader" data-sly-use.model="${'subheader.js' @uiServiceDomain=serviceData.uiServiceDomain,vendorConnectionEndpoint=serviceData.vendorConnectionEndpoint}">
     <div class="">
         <div data-component="NewSubheader" data-cmp-type="react" class="cmp-sub-header--sub-nav cmp-sub-header__wrapper"
              data-config="${model.configJson}"></div>
     </div>
+</div>
+<div class="${wcmmode.edit ? 'menucategorieslist-aem-editor' : 'menucategorieslist  cmp-sub-header__menu--hide'}">
+    <sly data-sly-resource="${'menucategorieslist' @ resourceType='techdata/components/menucategorieslist'}"></sly>
 </div>
