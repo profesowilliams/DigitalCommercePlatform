@@ -5,6 +5,57 @@ use(function () {
 
     var headerJsonObject = {};
     var infoJsonObject = {};
+    var iconValues = [];
+    var listValues = [];
+    var productInfo = {};
+
+    var resourceResolver = resource.getResourceResolver();
+
+    var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
+
+    if (node !== null) {
+        var childrenList = node.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var columnLabel = res.properties["columnLabel"];
+            var columnKey = res.properties["columnKey"];
+            var sortable = res.properties["sortable"];
+            var itemData = {};
+            itemData.columnLabel = columnLabel;
+            itemData.columnKey = columnKey;
+            itemData.sortable = sortable;
+            listValues.push(itemData);
+
+        }
+    }
+
+    var iconListNode = resourceResolver.getResource(currentNode.getPath() + "/iconList");
+
+    if (iconListNode !== null) {
+        var childrenList = iconListNode.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var iconKey = res.properties["iconKey"];
+            var iconValue = res.properties["iconValue"];
+            var iconText = res.properties["iconText"];
+            var itemData = {};
+            itemData.iconKey = iconKey;
+            itemData.iconValue = iconValue;
+            itemData.iconText = iconText;
+            iconValues.push(itemData);
+
+        }
+
+
+    }
+
+    if (listValues != null) {
+        productInfo["columnList"] = listValues;
+    }
+
+    if (iconValues != null) {
+        productInfo["iconList"] = iconValues;
+    }
 
     //info section json being constructed
     if (properties && properties["orderStatusLabel"]) {
@@ -110,6 +161,7 @@ use(function () {
 
     jsonObject["headerConfig"] = headerJsonObject;
     jsonObject["infoConfig"] = infoJsonObject;
+    jsonObject["productLines"] = productInfo;
 
     return {
         configJson: JSON.stringify(jsonObject)

@@ -70,6 +70,16 @@
                             </columns>
                         </items>
                     </orderHeader>
+                    <columnConfiguration
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="/mnt/overlay/techdata/components/ordersgrid/cq:dialog/content/items/column/items/tabs/items/elements"
+                    />
+                    <iconConfiguration
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="/mnt/overlay/techdata/components/ordersgrid/cq:dialog/content/items/column/items/tabs/items/tab3"
+                    />
                     <orderInfo
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Order Information Configuration"

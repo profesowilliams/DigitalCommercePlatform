@@ -23,6 +23,7 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
+
   const columnsArray = gridConfig.columnList;
   const STATUS = {
     onHold: 'onHold',
@@ -72,8 +73,8 @@ function ProductLinesGrid({
   //default column defs
   const columnDefs = [
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[0].columnLabel : "Line Item",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[0].columnKey : "id",
+      headerName: "Line Item",
+      field: "id",
       width: "100px",
       sortable: false,
       expandable: true,
@@ -94,18 +95,18 @@ function ProductLinesGrid({
       ),
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[1].columnLabel : "Item Information",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[1].columnKey :"shortDescription",
+      headerName: "Mfr No",
+      field: "mfrNumber",
       sortable: false,
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[2].columnLabel : "Unit List Price",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[2].columnKey : "unitListPriceFormatted",
+      headerName: "Ref No",
+      field: "tdNumber",
       sortable: false,
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[3].columnLabel : "% Off List Price",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[3].columnKey : "discounts",
+      headerName: "Description",
+      field: "description",
       sortable: false,
       width: "250px",
       cellRenderer: (props) => {
@@ -121,26 +122,26 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[4].columnLabel : "Quantity",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[4].columnKey : "quantity",
+      headerName: "Quantity",
+      field: "quantity",
       sortable: false,
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[5].columnLabel : "Unit Price",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[5].columnKey : "unitPrice",
+      headerName: "Unit Price",
+      field: "unitPrice",
       sortable: false,
       valueFormatter: (props) => {
         return props.value.toLocaleString();
     },
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[6].columnLabel : "Extended Price",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[6].columnKey : "extendedPriceFormatted",
+      headerName: "Total price (USD)",
+      field: "totalPrice",
       sortable: false,
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[7].columnLabel : "Status",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[7].columnKey : "status",
+      headerName: "Status",
+      field: "status",
       sortable: false,
       cellRenderer: (props) => {
         return (
@@ -152,8 +153,8 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[8].columnLabel : "Serial",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[8].columnKey : "extendedPriceFormatted",
+      headerName: "Serial",
+      field: "serial",
       sortable: false,
       cellRenderer: (props) => {
         return (
@@ -172,8 +173,8 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: columnsArray?.length && columnsArray.length > 0 ? columnsArray[9].columnLabel : "Extended Price",
-      field: columnsArray?.length && columnsArray.length > 0 ? columnsArray[9].columnKey : "extendedPriceFormatted",
+      headerName: "Invoice",
+      field: "invoice",
       sortable: false,
       cellRenderer: (props) => {
         return (
