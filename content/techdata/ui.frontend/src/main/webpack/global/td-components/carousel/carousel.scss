@@ -1,8 +1,7 @@
 // TODO: Remove unwanted comments and commented out styles.
 .dp-carousel{
-    position: relative; // this property isn't found on old carousal.scss, revisit if this causes issues.
+    position: relative;
   &.dp-carousel__navigation--hero1{
-    //default
     .dp-carousel__nav{
       justify-content: flex-end;
       width: 100%;
@@ -10,18 +9,11 @@
       bottom: 0;
       padding: rem(8px) rem(24px);
       box-sizing: border-box;
-      //m-0 px-4 py-2 position-absolute w-100 bottom-0
       @include tablet {
         justify-content: center;
       }
-      @include desktop {
-        background: linear-gradient(180deg, rgba(0,12,33,0) 0%, get-color(brand-blue) 100%);
-        height: 135px;
-        align-content: flex-end;
-      }
     }
     .dp-carousel__nav-labels{
-      //d-flex font-12
       display: flex;
       align-items: center;
       @include tablet {
@@ -32,7 +24,6 @@
       font-size: .75rem;
       cursor: pointer;
       color: get-color(secondary-light-grey)!important;
-      //text-decoration-none position-relative mx-3 py-1
       padding: rem(4px) 0;
       margin: 0 rem(16px);
       position: relative;
@@ -68,6 +59,7 @@
       &:hover{
         color: get-color(brand-white);
         opacity: 1;
+        background-color: transparent;
         @include tablet {
           opacity: 0.5;
         }
@@ -76,11 +68,7 @@
         }
       }
     }
-    // .dp-carousel__nav-dots{
-    //   display: none;
-    // }
     .dp-carousel__nav-label-separator{
-      //text-white py-1
       color: get-color(secondary-light-grey);
       padding: rem(4px) 0;
       position: absolute;
@@ -88,7 +76,7 @@
       top: 0;
       display: inline-block;
     }
-  } //end navigation hero class 
+  }
   
   &.dp-carousel__alert--hero1{
     .dp-carousel__alert{
@@ -162,21 +150,21 @@
     .dp-carousel__alert-button-color{
       color: get-color(brand-light-blue);
     }
-  }
-  //nav items styles
-  //nav alignment
-  //alert alignment
-  //alert background color
-  //alert background opacity
-  //alert text color
-  //select navigation
-  &.dp-carousel__nav-use-dots{
-    // .dp-carousel__nav-dots{
-    //   display: flex;
-    // }
-    // .dp-carousel__nav-labels{
-    //   display: none;
-    // }
+    @include desktop {
+      .cmp-carousel {
+        .cmp-carousel__content {
+          &::after {
+            background: linear-gradient(180deg, rgba(0,12,33,0) 0%, get-color(brand-blue) 100%);
+            height: 135px;
+            content: ' ';
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            z-index: 0;
+          }
+        }
+      }
+    }
   }
 }
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
@@ -199,6 +187,7 @@
     &.cmp-carousel__indicator--active,
     &:hover{
       color: get-color(brand-white);
+      background-color: transparent;
       opacity: 1;
     }
   }
