@@ -11,6 +11,7 @@
     const DATA_LAYER_DATA_ATTRIBUTE_NAME = "data-cmp-data-layer";
     const CAROUSEL_DEPTH_DATA_ATTRIBUTE_NAME = "data-cmp-carousel-number";
     const DATA_LAYER_CATEGORY_PN = "analyticsCategory";
+    const DATA_LAYER_TITLE = "jcr:title";
     const DATA_LAYER_NAME_PN = "carouselName";
     const DATA_LAYER_REGION_PN = "analyticsRegion";
     const ANALYTICS_EVENTINFO_CATEGORY_PN = "category";
@@ -102,6 +103,29 @@
         pushToDataLayer(clickInfo);
     }
 
+    function titleClickEventHandler(componentId, elementClicked) {
+        let titleRootElement = document.getElementById(componentId);
+        let componentDataLayer = getDataLayerObjectFromDataAttribute(titleRootElement);
+        let clickInfo = updateClickInfo(componentDataLayer);
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = populateTitle(componentDataLayer);
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = '';
+        clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = '';
+        clickInfo[ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN] = '';
+        pushToDataLayer(clickInfo);
+    }
+
+    function populateTitle(dataLayer) {
+        let title = '';
+        var firstKey = Object.keys(dataLayer).length > 0 ? Object.keys(dataLayer)[0]:undefined;
+        if (firstKey) {
+            if (DATA_LAYER_TITLE in dataLayer[firstKey]) {
+                title = dataLayer[firstKey][DATA_LAYER_TITLE]
+            }
+        }
+        return title;
+   }
+
     function teaserClickHandler(componentDivId, elementClicked) {
         let componentDivElement = document.getElementById(componentDivId);
         if (componentDivElement) {
@@ -136,11 +160,13 @@
             carouselClickHandler(componentId, element);
         }else if (componentId.startsWith(TEASER_COMPONENT_NAME)){
             teaserClickHandler(componentId, element)
+        } else if(componentId.startsWith("title-")) {
+            titleClickEventHandler(componentId, element);
         }
 
     }
 
-    function carouselClickEventHandler() {
+    function clickEventHandler() {
         dataLayer = window.adobeDataLayer || [];
         var clickableElements = document.querySelectorAll("[data-cmp-clickable]");
 
@@ -151,8 +177,8 @@
 
 
     if (document.readyState !== "loading") {
-        carouselClickEventHandler();
+        clickEventHandler();
     } else {
-        document.addEventListener("DOMContentLoaded", carouselClickEventHandler);
+        document.addEventListener("DOMContentLoaded", clickEventHandler);
     }
 })();
