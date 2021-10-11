@@ -11,6 +11,9 @@ module.exports = merge(common, {
     mode: 'development',
     devtool: 'inline-source-map',
     performance: {hints: "warning"},
+    module: {
+        rules: [{ test: /\.svg$/, use: 'react-svg-loader' }],
+    },
     plugins: [
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'development',

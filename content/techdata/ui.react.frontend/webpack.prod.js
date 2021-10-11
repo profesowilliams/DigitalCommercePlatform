@@ -6,6 +6,9 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
     mode: 'production',
+    module: {
+        rules: [{ test: /\.svg$/, use: 'react-svg-loader' }],
+    },
     plugins: [
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'production',
