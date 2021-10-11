@@ -36,7 +36,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
       const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
       if( isError ) return alert('Error');
       if( isValid ){
-        onClick(selected.id);
+        onClick(selected.id,{redirectToPreview:true});
       }else{
         alert('Invalid estimated ID')
       }

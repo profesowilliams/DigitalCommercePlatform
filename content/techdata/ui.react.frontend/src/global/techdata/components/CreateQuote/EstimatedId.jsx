@@ -21,7 +21,7 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 	const prevStep = () => {
 		setStep(0);
 	};
-	const goToNext = (id) => next(id)
+	const goToNext = (id,options) => next(id,options)
 	const getonErrorObj = () => {
     let result = {
 			errorMsg: 'We couldn´t find the Estimate ID:',

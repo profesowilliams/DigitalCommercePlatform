@@ -44,9 +44,14 @@ const QuoteCreate = ({
       return { isError: true, message: 'Not a valid cart available' };
     }
   }
-  const goToPricing = (id) => {
+  const goToPricing = (id,{redirectToPreview=false}) => {
     if( id ){ 
       setCartID(id);
+      if (redirectToPreview){
+        const {origin} = window.location;
+        window.location.replace(`${origin}/content/techdata/quotes/quote-preview.html?id=${id}&isEstimateId=true`);
+        return;
+      }
       setStep(1);
     }else if( methodSelected.key === 'active'  ){
       const { isError, message } = validateActiveCart();
@@ -84,7 +89,7 @@ const QuoteCreate = ({
       window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
   }
 
-	useEffect(async () => {
+	useEffect(() => {
 		const result = JSON.parse(localStorage.getItem('ActiveCart'));
 		if (result) setCurrentCart({ totalQuantity: result.totalQuantity });
 	}, []);
