@@ -11,8 +11,6 @@ import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import {usPost} from "../../../../utils/api";
 import { signOutBasedOnParam, signOutForExpiredSession } from '../../../../utils';
-import SignOutIcon from "../../../../icons/sign-out.svg";
-import SignInIcon from "../../../../icons/sign-in.svg";
 
 const FA = require('react-fontawesome');
 
@@ -177,7 +175,7 @@ const SignIn = (props) => {
 	const signInButton = () => {
 		return (
 			<button className='cmp-sign-in-button' onClick={onSignIn}>
-				{ isAuthenticated === null ?  <SignInIcon /> : <SignOutIcon /> }
+				<i className='far fa-user'></i>
 				{configDataAEM.label}
 			</button>
 		);
