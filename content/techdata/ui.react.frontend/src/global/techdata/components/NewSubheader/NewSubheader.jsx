@@ -79,7 +79,9 @@ const NewSubheader = ({ componentProp }) => {
 					let cmpToolsElement = menuToolsElementArray[0];
 					menuCategoryElement.style.display = "block";
 					let elementRect = getAbsolutePosition(eventObject);
+					let cmpNewSubheaderElementRect = getAbsolutePosition(toolsMenu[0]);
 					cmpToolsElement.style.top = `${elementRect.top + elementRect.height}px`;
+					cmpToolsElement.style.left = `${cmpNewSubheaderElementRect.left}px`;
 				}else {
 					menuCategoryElement.style.display = "none";
 				}

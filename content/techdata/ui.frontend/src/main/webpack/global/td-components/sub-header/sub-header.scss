@@ -1,6 +1,9 @@
 @import "../../variables";
 @import "../../../site/variables";
 
+
+
+
 .cmp-sub-header {
   font-family: "Open Sans", sans-serif;
   font-size: $font-size-custom-xxsmall;
@@ -121,6 +124,11 @@
           display: flex;
           visibility: visible;
         }
+
+        &:first-child {
+          margin-right: rem(70px);
+        }
+
       }
     }
   }
@@ -131,5 +139,7 @@
     display: none;
   }
 }
+
+
 
 

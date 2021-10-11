@@ -1,3 +1,10 @@
+// to handle the container max-width style
+.cmp-container--max-1440 {
+    .cmp-tools {
+        max-width: rem(1440px);
+    }
+}
+
 .menucategorieslist {
     @include tablet {
         display: none;
