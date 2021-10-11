@@ -13,7 +13,7 @@ export const dashboardMenu = (dashboardMenuItems, hasDCPAccess) => {
         </div>
         <div className="cmp-sub-header__wrapper__tablist__menu__item">
             <h2>{dashboardMenuItems[1].title}</h2>
-            <a href={dashboardMenuItems[1].link ? dashboardMenuItems[0].link : "#"}>
+            <a href={dashboardMenuItems[1].link ? dashboardMenuItems[1].link : "#"}>
                 <img src={dashboardMenuItems[1].imagePath}/>
             </a>
         </div>

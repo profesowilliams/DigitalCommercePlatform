@@ -7,6 +7,15 @@ use(function () {
     var primaryMenuArray = [];
     var dashboardMenuArray = [];
 
+    function sanitizeURL(url) {
+        if (url.startsWith("http"))
+        {
+            return url;
+        }else if (url.startsWith("/content")){
+            return url + ".html";
+        }
+    }
+
     var resourceResolver = resource.getResourceResolver();
 
 	jsonObject["minified"] = "true";
@@ -89,7 +98,7 @@ use(function () {
 
         for (var [key, res] in Iterator(childrenList)) {
             var label = res.properties["dashboardItemLabel"];
-            var link = res.properties["dashboardLink"];
+            var link = sanitizeURL(res.properties["dashboardLink"]);
             var imagePath = res.properties["dashboardImagePath"];
             var itemData = {};
             itemData.title = label;

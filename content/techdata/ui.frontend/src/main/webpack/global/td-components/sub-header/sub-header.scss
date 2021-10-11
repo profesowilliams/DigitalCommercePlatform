@@ -53,7 +53,8 @@
         width: 1440px;
         height: rem(417px);
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
+
         &__item {
           padding-left: rem(15px);
           padding-right: rem(30px);
@@ -67,13 +68,7 @@
             width: rem(392px);
             height: rem(280px);
           }
-          &--two-items {
-            width: 0.5vw;
-          }
 
-          &--three-items {
-            width: 0.33vw;
-          }
         }
       }
     }

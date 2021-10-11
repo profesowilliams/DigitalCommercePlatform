@@ -10,7 +10,6 @@ const NewSubheader = ({ componentProp }) => {
 	let tempToolsIndex = parseInt(toolsIndex);
 	// Tools Menu Index cannot be the first Menu Item. First Menu Item is Dashboard
 	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
-	console.log(toolsIndexInt);
 	const [userData, setUserData] = useState(null);
 	const menuItemRefs = useRef([]);
 
