@@ -94,47 +94,101 @@
                                                 fieldLabel="Phone Label"
                                                 name="./phoneLabel"/>
                                             <companyLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Company Label"
-                                                    fieldLabel="Company Label"
-                                                    name="./companyLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Company Label"
+                                                fieldLabel="Company Label"
+                                                name="./companyLabel"/>
                                             <nameLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Name Label"
-                                                    fieldLabel="Name Label"
-                                                    name="./nameLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Name Label"
+                                                fieldLabel="Name Label"
+                                                name="./nameLabel"/>
                                             <addressLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Address Label"
-                                                    fieldLabel="Address Label"
-                                                    name="./addressLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Address Label"
+                                                fieldLabel="Address Label"
+                                                name="./addressLabel"/>
                                             <cityLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter City Label"
-                                                    fieldLabel="City Label"
-                                                    name="./cityLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter City Label"
+                                                fieldLabel="City Label"
+                                                name="./cityLabel"/>
                                             <stateLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter State Label"
-                                                    fieldLabel="State Label"
-                                                    name="./stateLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter State Label"
+                                                fieldLabel="State Label"
+                                                name="./stateLabel"/>
                                             <zipLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Zip Label"
-                                                    fieldLabel="Zip Label"
-                                                    name="./zipLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Zip Label"
+                                                fieldLabel="Zip Label"
+                                                name="./zipLabel"/>
                                             <countryLabel
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="Enter Country Label"
-                                                    fieldLabel="Country Label"
-                                                    name="./countryLabel"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Country Label"
+                                                fieldLabel="Country Label"
+                                                name="./countryLabel"/>
+                                            <userInfoIndustlabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Industries label"
+                                                fieldLabel="User Information Industries label"
+                                                name="./userInfoIndustlabel"/>
+                                            <userInfoNameLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Name label"
+                                                fieldLabel="User Information  Name label"
+                                                name="./userInfoNamelabel"/>
+                                            <userInfoaddressLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information  Address Label"
+                                                fieldLabel="User Information  Address Label"
+                                                name="./userInfoAddressLabel"/>
+                                            <userInfoCitylabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information City  label"
+                                                fieldLabel="User Information City label"
+                                                name="./userInfoCitylabel"/>
+                                            <userInfoStatelabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information State  label"
+                                                fieldLabel="User Information State label"
+                                                name="./userInfoStatelabel"/>
+                                            <userInfoZiplabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Zip  label"
+                                                fieldLabel="User Information Zip  label"
+                                                name="./userInfoZiplabel"/>
+                                            <userInfoCountryLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Country  label"
+                                                fieldLabel="User Information Country  label"
+                                                name="./userInfoCountryLabel"/>
+                                            <userInfoEmailLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Email label"
+                                                fieldLabel="User Information Email label"
+                                                name="./userInfoEmailLabel"/>
+                                            <userInfoPhoneLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="User Information Phone label"
+                                                fieldLabel="User Information Phone label"
+                                                name="./userInfoPhoneLabel"/>
                                             <generalInformation
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"

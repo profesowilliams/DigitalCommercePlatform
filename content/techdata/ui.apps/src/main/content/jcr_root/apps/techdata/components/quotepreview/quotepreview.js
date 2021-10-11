@@ -146,6 +146,33 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["countryLabel"]) {
         informationTab["countryLabel"]  = properties["countryLabel"];
     }
+    if (properties && properties["userInfoIndustlabel"]) {
+        informationTab["userInfoIndustlabel"]  = properties["userInfoIndustlabel"];
+    }
+	if (properties && properties["userInfoNamelabel"]) {
+        informationTab["userInfoNamelabel"]  = properties["userInfoNamelabel"];
+    }
+	if (properties && properties["userInfoAddressLabel"]) {
+        informationTab["userInfoAddressLabel"]  = properties["userInfoAddressLabel"];
+    }
+	if (properties && properties["userInfoCitylabel"]) {
+        informationTab["userInfoCitylabel"]  = properties["userInfoCitylabel"];
+    }
+    if (properties && properties["userInfoStatelabel"]) {
+        informationTab["userInfoStatelabel"]  = properties["userInfoStatelabel"];
+    }
+    if (properties && properties["userInfoZiplabel"]) {
+        informationTab["userInfoZiplabel"]  = properties["userInfoZiplabel"];
+    }
+    if (properties && properties["userInfoCountryLabel"]) {
+        informationTab["userInfoCountryLabel"]  = properties["userInfoCountryLabel"];
+    }
+    if (properties && properties["userInfoEmailLabel"]) {
+        informationTab["userInfoEmailLabel"]  = properties["userInfoEmailLabel"];
+    }
+    if (properties && properties["userInfoPhoneLabel"]) {
+        informationTab["userInfoPhoneLabel"]  = properties["userInfoPhoneLabel"];
+    }
     if (properties && properties["label"]) {
         productLinesGrid["label"]  = properties["label"];
     }
