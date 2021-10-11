@@ -11,7 +11,9 @@ using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -133,26 +135,35 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public async Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request)
         {
+            FindResponse<Configuration> result = new();
             try
             {
-                if (!string.IsNullOrWhiteSpace(request?.Criteria?.SortBy))
-                {
-                    TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-                    request.Criteria.SortBy = textInfo.ToTitleCase(request.Criteria.SortBy.Replace("_", " "));
-                }
-
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
-
                 var stringUrl = configurationFindUrl.ToString();
-                if (stringUrl.Contains("SortBy = Enduser"))
+                if (!string.IsNullOrWhiteSpace(request?.Criteria?.SortBy))
                 {
-                    configurationFindUrl = new Url(stringUrl.Replace("SortBy=Enduser", "SortBy=EndUser"));
+                    TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+                    
+                    if (stringUrl.Contains("SortBy = Enduser"))
+                    {
+                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Enduser", "SortBy=EndUser"));
+                    }
+                    else if (stringUrl.Contains("SortBy=Configid"))
+                    {
+                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Configid", "SortBy=Id"));
+                    }
+                    else if (stringUrl.Contains("SortBy=Expires"))
+                    {
+                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Expires", "SortBy=Expirydate"));
+                    }
+                    else
+                    {
+                        request.Criteria.SortBy = textInfo.ToTitleCase(request.Criteria.SortBy.Replace("_", " "));
+                    }
                 }
-
-                FindResponse<Configuration> result = new();
 
                 if (appServiceRequest.Details)
                 {
@@ -166,14 +177,25 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                         .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
                     BuildResult(result, configurationFindResponse);
                 }
-
-                return result;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if(ex.Message.Contains("Reported an error: NotFound"))
+                {
+                    return result;
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
                 throw;
             }
+            return result;
         }
 
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
@@ -240,8 +262,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     estimateRequest.Type = "Estimate";
 
                     var result = await FindConfigurations(new GetConfigurations.Request { Criteria = estimateRequest });
-                    if (result.Count < 1)
-                        throw new InvalidOperationException($"Configuration Id is wrong");
+                    
+                    if (result.Count < 1 || result.Count== null)
+                        return $"This Config ID is not recognized";
                 }
 
                 const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
@@ -269,13 +292,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 }
 
                 return url;
-            }
+        }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Exception while calling Punchout url : {ex.Message + " inner Exception is " + ex.InnerException}");
                 throw ex;
             }
-        }
+}
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
         {

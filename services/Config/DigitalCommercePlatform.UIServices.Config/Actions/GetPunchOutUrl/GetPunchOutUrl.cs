@@ -61,7 +61,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
                 };
 
                 var url = await _configService.GetPunchOutUrlAsync(punchInDto);
-                return new ResponseBase<Response> { Content = new Response { Url = url } };
+                if (url == "This Config ID is not recognized")
+                     return new ResponseBase<Response> { Error = new ErrorInformation { Messages = { url } } };
+                else
+                    return new ResponseBase<Response> { Content = new Response { Url = url } };
             }
         }
 
@@ -90,3 +93,4 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl
         }
     }
 }
+

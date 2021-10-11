@@ -23,8 +23,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<Models.Quote.Quote.Internal.AgreementModel, Models.Quote.AgreementModel>();
 
             CreateMap<ItemModel, Line>()
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product[0].Name))
-                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom(src => src.Product[0].Id))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom<ItemDescriptionResolver>())
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ItemManufacturerResolver>())
+                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<ItemTDPartNumberResolver>())
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<ItemMFRPartNumberResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.UnitListPrice, opt => opt.MapFrom(src => src.UnitListPrice))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
@@ -192,5 +194,46 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             return description;
         }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class ItemMFRPartNumberResolver : IValueResolver<ItemModel, Line, string>
+    {
+        public string Resolve(ItemModel source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ItemTDPartNumberResolver : IValueResolver<ItemModel, Line, string>
+    {
+        public string Resolve(ItemModel source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ItemDescriptionResolver : IValueResolver<ItemModel, Line, string>
+    {
+        public string Resolve(ItemModel source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA", StringComparison.Ordinal)).FirstOrDefault()?.Name ?? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Name : string.Empty;
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ItemManufacturerResolver : IValueResolver<ItemModel, Line, string>
+    {
+        public string Resolve(ItemModel source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Manufacturer : string.Empty;
+            return description;
+        }
+    }
+    
 }
 
