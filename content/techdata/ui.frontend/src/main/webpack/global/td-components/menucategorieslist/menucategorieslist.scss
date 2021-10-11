@@ -12,6 +12,7 @@
         min-height: 190px;
         background: get-color(brand-white);
         box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.5);
+        z-index: 999;
         ul,li {
             padding: 0;
             margin: 0;
