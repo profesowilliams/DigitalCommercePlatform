@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View , PDFViewer, PDFDownloadLink} from '@react-pdf/renderer';
+import { Document, Page, Text, View , Image, PDFDownloadLink} from '@react-pdf/renderer';
 import * as ReactDOM from "react-dom";
 import PDFStyles from "./PDFStyles";
 import PDFTable from "./../PDFTable/PDFTable";
@@ -21,16 +21,15 @@ const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
     );
 }
 
-export const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText) => {
+export const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText, whiteLabelLogo) => {
     const imagePath = logoURL;
-
-    const PrintHelper = () => {
+    const PDFDocument = () => {
         return (
                 <Document>
                     <Page size="A4" orientation="landscape" style={styles.page}>
                         <View style={styles.pageWidthSection}>
                             <View style={{width: '100', margin:'0'}}>
-                                <ReactPDFImageWrapper path={imagePath} />
+                                { whiteLabelLogo ? <Image src={whiteLabelLogo}/> : <ReactPDFImageWrapper path={imagePath}/>}
                             </View>
                             <View style={styles.headerSection}>
                                 <View style={styles.addressSectionYourCompany}>
@@ -73,14 +72,12 @@ export const downloadClicked = async (details, isDownloadLink, logoURL, fileName
         )
     }
 
-    const DownLoadLink = ({fileName, downloadLinkText}) => {
+    const DownLoadLink = () => {
 
         return (
-            <PDFDownloadLink document={<PrintHelper />} fileName={fileName}>
-                {({ blob, url, loading, error }) => {
-                    let downloadLinkParent = document.getElementById("downloadlink")
-                    return loading ? 'Preparing PDF to download...' : downloadLinkText
-                }
+            <PDFDownloadLink document={<PDFDocument />} fileName={fileName}>
+                {({ blob, url, loading, error }) =>
+                    loading ? 'Preparing PDF to download...' : downloadLinkText
                 }
             </PDFDownloadLink>
         )
@@ -89,14 +86,7 @@ export const downloadClicked = async (details, isDownloadLink, logoURL, fileName
 
     if (isDownloadLink)
     {
-        let pdfDownloadBtn = document.getElementById("pdfDownloadButton");
-
-        if (pdfDownloadBtn) {
-            pdfDownloadBtn.style.display = "none";
-        }
         ReactDOM.render(<DownLoadLink fileName={fileName} downloadLinkText={downloadLinkText}/>, document.getElementById("pdfDownloadLink"));
-    }else{
-        ReactDOM.render(<PDFViewerExample />, document.getElementById("pdfPreviewButton"));
     }
 };
 

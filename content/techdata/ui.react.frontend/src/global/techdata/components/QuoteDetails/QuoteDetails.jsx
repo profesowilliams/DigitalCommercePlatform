@@ -50,6 +50,10 @@ const QuoteDetails = ({ componentProp }) => {
     // call API to get CSV according to actual data
   }
 
+  const handleUploadFileSelected = (whiteLabelLogo) => {
+    downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText, whiteLabelLogo);
+  }
+
   function exportToPDF(data) {
     downloadClicked(
       data.quoteDetails,
@@ -114,7 +118,7 @@ const QuoteDetails = ({ componentProp }) => {
       />
       {
         whiteLabelMode 
-          ? ( <WhiteLabelQuoteHeader componentProp={componentProp} /> )
+          ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} /> )
           : (
             <>
               <QuoteContactInfo
@@ -159,6 +163,8 @@ const QuoteDetails = ({ componentProp }) => {
         labels={quoteOptions}
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
+        quoteDetails={quoteDetails}
+
       />
     </>
   ) : error ? (

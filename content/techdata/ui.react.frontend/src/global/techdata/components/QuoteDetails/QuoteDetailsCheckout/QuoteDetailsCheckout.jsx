@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Widgets/Dropdown";
+import {downloadClicked} from "../../PDFWindow/PDFWindow";
 
 function QuoteDetailsCheckout({
   labels,
@@ -32,7 +33,29 @@ function QuoteDetailsCheckout({
     }
   }
 
+  const triggerPDFDownload = () => {
+    let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
+    let downloadLinkATagCollection = downloadLinkDivTag.getElementsByTagName("a");
+    let downloadLinkATag = downloadLinkATagCollection.length > 0 ? downloadLinkATagCollection[0] : undefined;
+
+    if (downloadLinkATag)
+    {
+      downloadLinkATag.click();
+    }
+
+  }
+
   useEffect(() => {
+    // downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText, null);
+  },[])
+
+  useEffect(() => {
+    selectedOption && onOptionChanged(selectedOption);
+
+    if (selectedOption && selectedOption.key === quoteOptions[1].key) {
+      triggerPDFDownload();
+    }
+
     selectedOption?.key === "whiteLabelQuote" && setIsWhiteLabelMode(true);
     onOptionChanged(selectedOption);
     setSelectedOption(null);
