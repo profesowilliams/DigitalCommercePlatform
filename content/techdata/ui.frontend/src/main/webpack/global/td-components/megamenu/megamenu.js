@@ -7,9 +7,9 @@ import bp from '../../../common-utils/js/media-match';
    if (sessionId) return;
     for (const navItem of navPrimaryItems){
       if (navItem.dataset.cmpIsprivate === "true"){
-        navItem.style.pointerEvents = "none";
-        navItem.style.opacity = "0.2";
         navItem.href = "";
+        navItem.style.pointerEvents = "none";
+        navItem.style.display = "none";
       }
     }
   }
