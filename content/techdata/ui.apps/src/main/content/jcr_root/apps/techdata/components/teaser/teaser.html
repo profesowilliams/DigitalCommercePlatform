@@ -9,8 +9,10 @@
      data-sly-test.hasContent="${teaser.imageResource || teaser.pretitle || teaser.title || teaser.description || teaser.actions.size > 0}"
      id="${component.id}"
      class="cmp-teaser${!wcmmode.disabled && teaser.imageResource ? ' cq-dd-image' : ''}"
-     data-cmp-data-layer="${dataLayer.dataLayerJson}"
-     data-sly-use.dataLayer="${'teaserHelper.js' @ data=teaser.data.json}"
+     data-category="${properties.analyticsCategory}"
+     data-region="${properties.analyticsRegion}"
+     data-cmp-clickable="${teaser.linkURL ? true : false}"
+     data-title="${teaser.title}"
 >
     <sly data-sly-call="${imageTemplate.image @ teaser=teaser}"></sly>
 

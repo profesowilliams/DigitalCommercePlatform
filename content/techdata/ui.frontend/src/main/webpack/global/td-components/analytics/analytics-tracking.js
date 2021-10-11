@@ -5,6 +5,7 @@
     const ALERT_CAROUSEL_COMPONENT_NAME = "alertcarousel";
     const CAROUSEL_COMPONENT_NAME= "carousel";
     const TEASER_COMPONENT_NAME = "teaser";
+    const IMAGE_COMPONENT_NAME = "title-";
     const CAROUSEL_ITEM_DIV_CLASSNAME = ".cmp-carousel__item";
     const CAROUSEL_DIV_CLASSNAME = ".cmp-carousel";
     const CAROUSEL_ACTIVE_ITEM_CLASS_NAME = ".cmp-carousel__item--active"
@@ -22,7 +23,9 @@
     const ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN = "selectionDepth";
     const ANALYTICS_EVENTINFO_TYPE_PN = "type"
     const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link"
+    const ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL = "image"
     const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta"
+    const IMAGE_CSS_CLASSNAME = "cmp-image"
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
@@ -115,6 +118,18 @@
         pushToDataLayer(clickInfo);
     }
 
+    function imageClickEventHandler(componentId, elementClicked) {
+        let clickInfo = {};
+        clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = elementClicked.getAttribute('data-category');
+        clickInfo[ANALYTICS_EVENTINFO_REGION_PN] = elementClicked.getAttribute('data-region');
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = elementClicked.getAttribute('data-title');
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = '';
+        clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = '';
+        clickInfo[ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN] = '';
+        pushToDataLayer(clickInfo);
+    }
+
     function populateTitle(dataLayer) {
         let title = '';
         var firstKey = Object.keys(dataLayer).length > 0 ? Object.keys(dataLayer)[0]:undefined;
@@ -148,20 +163,29 @@
         }
 
         var componentElement = element.closest("[data-cmp-data-layer]");
-        return Object.keys(JSON.parse(componentElement.dataset.cmpDataLayer))[0];
+        if(componentElement) {
+            return Object.keys(JSON.parse(componentElement.dataset.cmpDataLayer))[0];
+        }
+        return null;
     }
 
     function addClickToDataLayer(event) {
-        var element = event.currentTarget;
-        var componentId = getClickId(element);
-
-        if (componentId.startsWith(CAROUSEL_COMPONENT_NAME) || componentId.startsWith(ALERT_CAROUSEL_COMPONENT_NAME))
-        {
-            carouselClickHandler(componentId, element);
-        }else if (componentId.startsWith(TEASER_COMPONENT_NAME)){
-            teaserClickHandler(componentId, element)
-        } else if(componentId.startsWith("title-")) {
-            titleClickEventHandler(componentId, element);
+        var className = event.currentTarget.className;
+        if (className && className.startsWith(IMAGE_CSS_CLASSNAME)) {
+            imageClickEventHandler(event.currentTarget.id, event.currentTarget);
+        } else {
+            var element = event.currentTarget;
+            var componentId = getClickId(element);
+            if(componentId) {
+                if (componentId.startsWith(CAROUSEL_COMPONENT_NAME) || componentId.startsWith(ALERT_CAROUSEL_COMPONENT_NAME))
+                {
+                    carouselClickHandler(componentId, element);
+                }else if (componentId.startsWith(TEASER_COMPONENT_NAME)) {
+                    teaserClickHandler(componentId, element)
+                } else if(componentId.startsWith(IMAGE_COMPONENT_NAME)){
+                    titleClickEventHandler(componentId, element);
+                }
+            }
         }
 
     }
