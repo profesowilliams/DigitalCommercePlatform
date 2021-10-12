@@ -1235,7 +1235,7 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
                 zip: "08873-4145",
                 email: null,
                 addressType: "PAY",
-                phoneNumber: "8005276389",
+                phone: "8005276389",
                 salesOrganization: "0100",
               },
               {
@@ -1249,7 +1249,7 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
                 zip: "30327",
                 email: null,
                 addressType: "PAY",
-                phoneNumber: "8005276389",
+                phone: "8005276389",
                 salesOrganization: "0100",
               },
               {
@@ -1263,7 +1263,7 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
                 zip: "80112-5149",
                 email: null,
                 addressType: "PAY",
-                phoneNumber: " ",
+                phone: " ",
                 salesOrganization: "0100",
               },
             ],

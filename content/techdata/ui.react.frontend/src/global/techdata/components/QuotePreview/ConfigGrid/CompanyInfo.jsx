@@ -4,24 +4,31 @@ import Loader from "../../Widgets/Loader";
 import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
 
-function CompanyInfo({ reseller, info, url }) {
+function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller[0];
   const [editView, setEditView] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(initialAddress);
-  const [addressIndex, setAddressIndex] = useState(0);
+  const [selectedAddressId, setSelectedAddressId] = useState(0);
+  const [savedAddressId, setSavedAddressId] = useState(0);
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleOptionChange = (e) => {
-    setAddressIndex(+e.target.value);
+    setSelectedAddressId(+e.target.value);
+  };
+
+  const handleSubmitBtn = () => {
+    companyInfoChange(addresses[selectedAddressId]);
+    setEditView(false);
+    setSavedAddressId(selectedAddressId);
   };
 
   const handleCancelBtn = (e) => {
     e.preventDefault();
     setEditView(false);
+    setSelectedAddressId(savedAddressId);
   };
 
-  const handleDefaultAddress = () => {
+  const handleTitleClick = () => {
     /* don't make API call if customer address was already fetched. */
     if (addresses.length !== 0) {
       setEditView(true);
@@ -38,7 +45,7 @@ function CompanyInfo({ reseller, info, url }) {
         const data = res?.data?.content?.items[0];
         setAddresses(data["addresses"]);
       } catch (err) {
-        console.log(err);
+        throw new Error(err);
       } finally {
         setLoading(false);
       }
@@ -51,17 +58,17 @@ function CompanyInfo({ reseller, info, url }) {
     return (
       <div className="cmp-qp__company-info--address-group">
         <p>
-          <span>{selectedAddress.name}</span>
-          <span>{selectedAddress.line1}</span>
+          <span>{initialAddress.name}</span>
+          <span>{initialAddress.line1}</span>
           <span>
-            {selectedAddress.city}, {selectedAddress.state}{" "}
-            {selectedAddress.zip}
+            {initialAddress.city}, {initialAddress.state}{" "}
+            {initialAddress.zip}
           </span>
-          <span>{selectedAddress.country}</span>
+          <span>{initialAddress.country}</span>
         </p>
         <p>
-          <span>Email: {selectedAddress.email || "NA"}</span>
-          <span>Phone: {selectedAddress.phoneNumber}</span>
+          <span>Email: {initialAddress.email || "NA"}</span>
+          <span>Phone: {initialAddress.phoneNumber}</span>
         </p>
       </div>
     );
@@ -69,7 +76,7 @@ function CompanyInfo({ reseller, info, url }) {
 
   const CompanyInfoEdit = () => {
     return (
-      <form>
+      <div>
         {addresses.map((address, index) => {
           return (
             <div key={`address${index}`} className="form-check">
@@ -78,7 +85,7 @@ function CompanyInfo({ reseller, info, url }) {
                   type="radio"
                   name={`address${index}`}
                   value={index}
-                  checked={addressIndex === index}
+                  checked={selectedAddressId === index}
                   onChange={handleOptionChange}
                 />
                 {index === 0 ? <span>Default Address</span> : null}
@@ -93,7 +100,7 @@ function CompanyInfo({ reseller, info, url }) {
           );
         })}
         <FormActions />
-      </form>
+      </div>
     );
   };
 
@@ -103,7 +110,7 @@ function CompanyInfo({ reseller, info, url }) {
           <Button
             btnClass="cmp-qp--save-information"
             disabled={false}
-            onClick={handleDefaultAddress}
+            onClick={handleSubmitBtn}
           >
             {info.submitLabel}
           </Button>
@@ -120,11 +127,11 @@ function CompanyInfo({ reseller, info, url }) {
 
   return (
     <div className="cmp-qp__company-info">
-      <p onClick={handleDefaultAddress} className="cmp-qp__company-info--title">
+      <p onClick={handleTitleClick} className="cmp-qp__company-info--title">
         {info.yourCompanyHeaderLabel}
       </p>
       <p className="cmp-qp__company-info--sub-title">
-        {selectedAddress.companyName}
+        {initialAddress.companyName}
       </p>
       {editView ? (
         <div className="cmp-qp__edit-mode">

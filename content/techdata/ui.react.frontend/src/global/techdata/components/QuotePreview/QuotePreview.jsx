@@ -80,6 +80,35 @@ function QuotePreview(props) {
     ));
   }
 
+  /**
+   * The keys for company info (reseller) from API response is different when compared to
+   * response obtained from getAddress API call. Manually mapping to exact keys in
+   * the client side.
+   *
+   * Since selected address maybe entirely new address and we don't want to mix up
+   * keys from original address, we just replace the old with new but retaining same keys.
+   */
+  const companyInfoChange = (selectedCompanyInfo) => {
+    setQuoteDetails((previousQuoteDetails) => ({
+      ...previousQuoteDetails,
+      reseller: [
+        {
+          addressNumber: selectedCompanyInfo.addressNumber,
+          name: selectedCompanyInfo.name,
+          line1: selectedCompanyInfo.addressLine1,
+          city: selectedCompanyInfo.city,
+          state: selectedCompanyInfo.state,
+          zip: selectedCompanyInfo.zip,
+          country: selectedCompanyInfo.country,
+          email: selectedCompanyInfo.email,
+          phoneNumber: selectedCompanyInfo.phone,
+          postalCode: selectedCompanyInfo.zip,
+          salesOrganization: selectedCompanyInfo.salesOrganization,
+        },
+      ],
+    }));
+  };
+
   return (
     <div className="cmp-quote-preview">
       <Loader visible={isLoading} />
@@ -95,6 +124,7 @@ function QuotePreview(props) {
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
             generalInfoChange={generalInfoChange}
+            companyInfoChange={companyInfoChange}
             hideDealSelector={isDealSelectorHidden(quoteDetails)}
           />
           <div className="cmp-quote-preview__note">

@@ -3,9 +3,8 @@ import CompanyInfo from './CompanyInfo';
 import GeneralInfo from './GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
-function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChange, generalInfoChange }) {
+function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChange, generalInfoChange, companyInfoChange }) {
     const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
-    // const [companyInfoResponse, isLoading] = useGet(`${gridProps.companyInfoEndPoint}?criteria=CUS&ignoreSalesOrganization=false`);
 
     return (
         <div className="cmp-qp__config-grid">
@@ -17,6 +16,7 @@ function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChan
                     url={gridProps.companyInfoEndPoint}
                     reseller={quoteDetails.reseller}
                     info={gridProps.information}
+                    companyInfoChange={companyInfoChange}
                 />
                 <EndUserInfo
                     endUser={quoteDetails.endUser}
