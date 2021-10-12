@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Controllers;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Enums;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -53,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
                 .ReturnsAsync(expected);
 
             var controller = GetController();
-            var createModel = new CreateQuoteModel();
+            var createModel = new QuotePreviewModel();
             // Act
             var result = await controller.Create(createModel).ConfigureAwait(false);
             // Assert

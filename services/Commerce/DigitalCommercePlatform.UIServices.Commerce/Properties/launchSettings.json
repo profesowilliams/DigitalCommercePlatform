@@ -18,6 +18,7 @@
     "DigitalCommercePlatform.UIServices.Commerce": {
       "commandName": "Project",
       "commandLineArgs": "-c debug --n=\"UI.Commerce\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5603 --urls=\"http://localhost\" --islocal=1",
+      "launchBrowser": true,
       "launchUrl": "http://localhost:5603/swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

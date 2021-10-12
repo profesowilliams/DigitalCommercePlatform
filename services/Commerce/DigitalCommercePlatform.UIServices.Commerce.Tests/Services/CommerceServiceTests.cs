@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
+using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
@@ -50,10 +51,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 TargetSystem = "R13",
                 CreateFromId = "96722368",
                 CreateFromType = Models.Enums.QuoteCreationSourceType.SavedCart,
-                PricingCondition = "2"
+                PricingCondition = "EduStudentStaff"
             };
 
-            
+
             Type type = typeof(CommerceService);
             var objType = Activator.CreateInstance(type,
                 _middleTierHttpClient.Object,
@@ -80,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("CON-SNT-CTSIX520", true,"cisco");
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("CON-SNT-CTSIX520", true, "cisco");
 
 
             Type type = typeof(CommerceService);
@@ -127,20 +128,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             QuotePreview quotePreview = new QuotePreview();
 
-           
-            Type type = typeof(CommerceService);
-            var objType = Activator.CreateInstance(type,
-                _middleTierHttpClient.Object,
-                _logger.Object,
-                _appSettings.Object,
-                _cartService.Object,
-                _uiContext.Object,
-                _mapper.Object,
-                 _helperService.Object
-                );
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
 
             var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "MapEndUserAndReseller" && x.IsPrivate)
+                .Where(x => x.Name == "MapEndUserAndResellerForQuotePreview" && x.IsPrivate)
                 .First();
             //Act
             requestToQuote.Invoke(objType, new object[] { configurationFindResponse, quotePreview });
@@ -148,7 +141,86 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(quotePreview);
 
         }
-       
+
+        [Fact]
+        public void MapQuoteLinesForCreatingQuote()
+        {
+
+            //arrange
+            var createQuoteModel = new CreateQuoteModel
+            {
+                SalesOrg = "0100",
+                Creator = "516514",
+                Reseller = new Models.Quote.Quote.Internal.ResellerModel { Id = "123123", Name = "Nilesh Madhavi" },
+                EndUser = null,
+                VendorReference = null,
+                Items = null
+            };
+
+            QuotePreviewModel quotePreview = new QuotePreviewModel { 
+            QuoteDetails = new QuotePreview { Items = null},
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "MapQuoteLinesForCreatingQuote" && x.IsPrivate)
+                .First();
+            //Act
+            requestToQuote.Invoke(objType, new object[] { createQuoteModel, quotePreview });
+            Assert.NotNull(createQuoteModel);
+            Assert.NotNull(quotePreview);
+
+        }
+
+        [Fact]
+        public void GetLinesforRequest()
+        {
+            //arrange
+            var testLine = new Line
+            {
+                TDNumber = "1231234444",
+                MFRNumber = "CISCO_35345",
+                Manufacturer = "CISCO",
+                ShortDescription = "TEST PRODUCT",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08
+            };
+
+            QuotePreviewModel quotePreview = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview { Items = null },
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var requestItemModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "GetLinesforRequest" && x.IsPrivate)
+                .First();
+            //Act
+            var result = requestItemModel.Invoke(objType, new object[] { testLine });
+            Assert.NotNull(testLine);
+            Assert.NotNull(result);
+
+        }
+
+        private void InitiateCommerceService(out Type type, out object objType)
+        {
+            type = typeof(CommerceService);
+            objType = Activator.CreateInstance(type,
+                _middleTierHttpClient.Object,
+                _logger.Object,
+                _appSettings.Object,
+                _cartService.Object,
+                _uiContext.Object,
+                _mapper.Object,
+                _helperService.Object
+                );
+        }
 
     }
 }

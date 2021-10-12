@@ -53,6 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 if (productDetails != null)
                 {
                     getQuoteResponse.Details = _mapper.Map<QuoteDetails>(productDetails);
+                    getQuoteResponse.Details.Items = await _commerceRepositoryServices.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
                 }
                 else
                 {

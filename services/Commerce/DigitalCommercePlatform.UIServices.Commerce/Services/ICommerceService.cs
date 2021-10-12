@@ -22,10 +22,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request);
         Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query);
         Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request);
-        Task<CreateModelResponse> CreateQuote(CreateQuote.Request request);
+        Task<CreateModelResponse> CreateQuoteFrom(CreateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request);
-        Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);
-        Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request);
+        Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);       
         Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request);
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);

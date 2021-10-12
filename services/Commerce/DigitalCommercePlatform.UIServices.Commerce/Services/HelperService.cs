@@ -76,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 orderLevel = new LevelModel
                 {
                     Id = response.LevelId,
-                    Value = response.LevelId,
+                    Value = response.Level,
                 };
 
             }
@@ -105,16 +105,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             List<OrderPricingCondtionMapping> pricingDetails = new List<OrderPricingCondtionMapping>
                 {
-                    new OrderPricingCondtionMapping {Id ="0",  Type ="", TypeId="", Level="", LevelId="", SalesOrganization = "0100", Site="US", Description="Commercial"},
-                    new OrderPricingCondtionMapping { Id ="1",  Type ="001", TypeId="", Level="EF", LevelId="", SalesOrganization = "0100", Site="US", Description="Education (Student & Staff)" },
-                    new OrderPricingCondtionMapping { Id ="2",  Type ="001", TypeId="", Level="EH", LevelId="", SalesOrganization = "0100", Site="US", Description="Education (Higher)" },
-                    new OrderPricingCondtionMapping { Id ="3",  Type ="001", TypeId="", Level="EL", LevelId="", SalesOrganization = "0100", Site="US", Description="Education (K-12)" },
-                    new OrderPricingCondtionMapping { Id ="4",  Type ="001", TypeId="", Level="ER", LevelId="", SalesOrganization = "0100", Site="US", Description="Education (Erate)" },
-                    new OrderPricingCondtionMapping { Id ="5",  Type ="001", TypeId="", Level="FE", LevelId="", SalesOrganization = "0100", Site="US", Description="Federal" },
-                    new OrderPricingCondtionMapping { Id ="6",  Type ="001", TypeId="", Level="FG", LevelId="", SalesOrganization = "0100", Site="US", Description="Federal GSA" },
-                    new OrderPricingCondtionMapping { Id ="7",  Type ="001", TypeId="", Level="ST", LevelId="", SalesOrganization = "0100", Site="US", Description="State" },
-                    new OrderPricingCondtionMapping { Id ="8",  Type ="001", TypeId="", Level="MD", LevelId="", SalesOrganization = "0100", Site="US", Description="Medical" },
-                    new OrderPricingCondtionMapping { Id ="11", Type ="001", TypeId="", Level="S5", LevelId="", SalesOrganization = "0100", Site="US", Description="SEWP Contract" },
+                    new OrderPricingCondtionMapping {Id ="Commercial",  TypeId ="000", Type="Commercial", Level="", LevelId="", SalesOrganization = "0100", Site="US", Description="Commercial"},
+                    new OrderPricingCondtionMapping { Id ="EduStudentStaff",  TypeId ="001", Type="", LevelId="EF", Level="", SalesOrganization = "0100", Site="US", Description="Education (Student & Staff)" },
+                    new OrderPricingCondtionMapping { Id ="EduHigher",  TypeId ="001", Type="Government", LevelId="EH", Level="Education (Higher)", SalesOrganization = "0100", Site="US", Description="Education (Higher)" },
+                    new OrderPricingCondtionMapping { Id ="EduK12",  TypeId ="001", Type="Government", LevelId="EL", Level="Education (K-12)", SalesOrganization = "0100", Site="US", Description="Education (K-12)" },
+                    new OrderPricingCondtionMapping { Id ="EduErate",  TypeId ="001", Type="", LevelId="ER", Level="", SalesOrganization = "0100", Site="US", Description="Education (Erate)" },
+                    new OrderPricingCondtionMapping { Id ="GovtFederal",  TypeId ="001", Type="Government", LevelId="FE", Level="Federal", SalesOrganization = "0100", Site="US", Description="Federal" },
+                    new OrderPricingCondtionMapping { Id ="GovtFederalGSA",  TypeId ="001", Type="", LevelId="FG", Level="", SalesOrganization = "0100", Site="US", Description="Federal GSA" },
+                    new OrderPricingCondtionMapping { Id ="GovtLocal",  TypeId ="001", Type="Government", LevelId="LO", Level="Local", SalesOrganization = "0100", Site="US", Description="Local" },
+                    new OrderPricingCondtionMapping { Id ="GovtState",  TypeId ="001", Type="Government", LevelId="ST", Level="State", SalesOrganization = "0100", Site="US", Description="State" },
+                    new OrderPricingCondtionMapping { Id ="Medical",  TypeId ="001", Type="Government", LevelId="MD", Level="Medical", SalesOrganization = "0100", Site="US", Description="Medical" },
+                    new OrderPricingCondtionMapping { Id ="SEWPContract", Type ="001", TypeId="Government", Level="S5", LevelId="SEWP Contract", SalesOrganization = "0100", Site="US", Description="SEWP Contract" },
                 };
 
             //var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == _context.User.ActiveCustomer.SalesOrganization).FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
@@ -221,6 +222,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             headerRangeBorder.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
             #endregion
+            
             #region Line/SubLine
             InnerHeaderRange(xlRow, xlCol, wsQuoteDetail);
             using (var innerHeaderBorder = wsQuoteDetail.Cells[xlRow + 10, xlCol + 1, xlRow + 10, xlCol + 14])
@@ -322,6 +324,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 totalRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
             }
             #endregion
+            
             #region TERMS & CONDITION
             xlRow += 7 + ancillaryLines;
             using (var conditionHeading = wsQuoteDetail.Cells[xlRow + 1, xlCol + 1, xlRow + 1, xlCol + 13])

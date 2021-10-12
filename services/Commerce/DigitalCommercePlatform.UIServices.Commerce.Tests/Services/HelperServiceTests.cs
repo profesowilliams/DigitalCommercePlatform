@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .Where(x => x.Name == "GetOrderPricingConditionMappings" && x.IsPrivate)
                 .First();
             //Act
-            var getOrderPricingMappings = (OrderPricingCondtionMapping)getOrderPricingConditionMappings.Invoke(objType, new object[] { "2" });
+            var getOrderPricingMappings = (OrderPricingCondtionMapping)getOrderPricingConditionMappings.Invoke(objType, new object[] { "EduStudentStaff" });
             Assert.NotNull(getOrderPricingMappings);
 
         }

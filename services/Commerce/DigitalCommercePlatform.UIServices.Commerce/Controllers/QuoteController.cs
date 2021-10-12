@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -36,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> Create([FromBody] CreateQuoteModel create)
+        public async Task<IActionResult> Create([FromBody] QuotePreviewModel create)
         {
             var response = await Mediator.Send(new CreateQuote.Request(create)).ConfigureAwait(false);
             return Ok(response);

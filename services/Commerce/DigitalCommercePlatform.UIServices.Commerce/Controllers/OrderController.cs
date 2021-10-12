@@ -34,7 +34,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             : base(mediator, logger, context, appSettings, siteSettings)
         {
         }
-
+        /// <summary>
+        /// returns order detials
+        /// </summary>
+        /// <param name="id">orer id</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("order")]
         public async Task<ActionResult> GetOrderDetailsAsync([FromQuery] string id)
@@ -50,6 +54,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        /// <summary>
+        /// for Grid and search
+        /// </summary>
+        /// <param name="getOrdersRequest"></param>
+        /// <returns></returns>
         [HttpGet] 
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
@@ -72,7 +81,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
                 return Ok(ordersResponse);
             }
         }
-
+        /// <summary>
+        /// returns order lines 
+        /// </summary>
+        /// <param name="id">order id</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("orderLines")]
         public async Task<ActionResult> GetOrderLinesAsync([FromQuery] string id)
@@ -88,6 +101,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        /// <summary>
+        /// returns order levels (pricing conditions/Tiers) 
+        /// </summary>
+        /// <param name="getAll"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("orderLevel")]
         public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, string Id)
@@ -103,6 +122,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             }
         }
 
+        /// <summary>
+        /// download invoices
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="invoiceId"></param>
+        /// <param name="downloadAll"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("downloadInvoice")]        
         public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)

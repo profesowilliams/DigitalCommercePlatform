@@ -59,11 +59,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     case QuoteCreationSourceType.SavedCart:
                         createModelResponse = await _quoteService.CreateQuoteFromSavedCart(request);
                         break;
-
-                    case QuoteCreationSourceType.EstimationId:
-                        createModelResponse = await _quoteService.CreateQuoteFromEstimationId(request);
-                        break;
-
                     case QuoteCreationSourceType.Expired:
                         createModelResponse = await _quoteService.CreateQuoteFromExpired(request);
                         break;

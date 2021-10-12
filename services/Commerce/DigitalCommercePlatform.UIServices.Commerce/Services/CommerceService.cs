@@ -162,7 +162,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private static string GetImageUrlForProduct(ProductsModel product)
         {
-            if (product.Images.Any())
+            if (product.Images != null)
             {
                 if (product?.Images?.Count == 1)
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
@@ -178,9 +178,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
             _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
 
-            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
+            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);            
             return getQuoteResponse?.FirstOrDefault();
         }
 
@@ -314,16 +315,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return await Task.FromResult(response);
         }
 
-        public async Task<CreateModelResponse> CreateQuote(CreateQuote.Request request)
+        public async Task<CreateModelResponse> CreateQuoteFrom(CreateQuote.Request request)
         {
-            // var createQuoteRequest = BuildCreateQuoteRequest(request);
+            var createQuoteRequest = CreateQuoteRequestFromQuotePreview(request.CreateModel);
 
+
+            //await CallCreateQuote(createQuoteRequest); // we need to call this method 
+           
             _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             CreateModelResponse response;
             try
             {
-                response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, request.CreateModel);
+                response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteRequest);
             }
             catch (RemoteServerHttpException ex)
             {
@@ -339,6 +343,131 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
             }
             return response;
+        }
+
+        private CreateQuoteModel CreateQuoteRequestFromQuotePreview(QuotePreviewModel input)
+        {
+            CreateQuoteModel createModelFrom = new CreateQuoteModel();
+
+            if (_uiContext.User != null)
+            {
+                input.QuoteDetails.Tier = string.IsNullOrWhiteSpace(input.QuoteDetails.Tier) ? "Commercial" : input.QuoteDetails.Tier;
+                _helperService.GetOrderPricingConditions(input.QuoteDetails.Tier, out TypeModel orderType, out LevelModel orderLevel);
+                createModelFrom.Type = orderType;
+                createModelFrom.Level = orderLevel;
+                createModelFrom.SalesOrg = "0100"; // read from user context once it is available
+                var customerAddress = GetAddress("CUS", false).Result;
+                // map customer address
+                createModelFrom.ShipTo = _mapper.Map<ShipToModel>(customerAddress.ToList().FirstOrDefault().addresses.ToList().FirstOrDefault());
+                createModelFrom.Reseller = new ResellerModel
+                {
+                    Address = MapAddress(input.QuoteDetails.Reseller),
+                    Name = input.QuoteDetails.Reseller.FirstOrDefault().CompanyName,
+                    Id = input.QuoteDetails.Reseller.FirstOrDefault().Id,
+                    Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.Reseller.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.Reseller.FirstOrDefault().Name, Phone = input.QuoteDetails.Reseller.FirstOrDefault().PhoneNumber } },
+                };
+#if DEBUG
+                input.QuoteDetails.EndUser = input.QuoteDetails.EndUser != null ? input.QuoteDetails.EndUser : input.QuoteDetails.Reseller;
+#endif
+                if ( input.QuoteDetails.EndUser != null)
+                {
+                    createModelFrom.EndUser = new EndUserModel
+                    {
+                        Address = MapAddress(input.QuoteDetails.EndUser),
+                        Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.EndUser.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.EndUser.FirstOrDefault().Name, Phone = input.QuoteDetails.EndUser.FirstOrDefault().PhoneNumber } },
+                        Name = input.QuoteDetails.EndUser.FirstOrDefault().CompanyName,
+                        Id = input.QuoteDetails.EndUser.FirstOrDefault().Id,
+                    };
+                }
+                createModelFrom.Creator = _uiContext.User.ID;
+            }
+            MapQuoteLinesForCreatingQuote(createModelFrom, input);
+            createModelFrom.CustomerPo = "";
+            createModelFrom.EndUserPo = "";
+            createModelFrom.Agreements = null;
+
+            if (input.QuoteDetails.Source != null)
+            {
+                createModelFrom.VendorReference = new VendorReferenceModel
+                {
+                    Type = input.QuoteDetails.Source.Type ?? string.Empty,  // Expected Values : Estimate / Renewal / VendorQuote / ""
+                    Value = input.QuoteDetails.Source.Value ?? string.Empty // 
+                };
+            }
+            createModelFrom.TargetSystem = "R3"; // verify logic for this
+            return createModelFrom;
+        }
+
+        private void MapQuoteLinesForCreatingQuote(CreateQuoteModel createModelFrom, QuotePreviewModel input)
+        {
+            if (input.QuoteDetails.Items == null) 
+                return;
+
+            var lstItems = new List<ItemModel>();
+            foreach (var item in input.QuoteDetails.Items)
+            {
+                ItemModel requestItem = GetLinesforRequest(item);
+                lstItems.Add(requestItem);
+                
+                if (item.Children !=null)
+                {
+                    foreach (var subline in item.Children)
+                    {
+                        ItemModel sublineItem = GetLinesforRequest(subline);
+                        lstItems.Add(sublineItem);
+                    } 
+                }
+                
+            }
+            createModelFrom.Items = lstItems;            
+        }
+
+        private ItemModel GetLinesforRequest(Line item)
+        {
+            var lstProduct = new List<ProductModel>{
+                    new ProductModel {
+                        Id = item.TDNumber?? item.MFRNumber,
+                        Type = !string.IsNullOrWhiteSpace(item.TDNumber) ? "TECHDATA" : "MANUFACTURER",
+                        Manufacturer = item.Manufacturer,
+                        Name = item.ShortDescription
+                    }
+                };
+
+            var requestItem = new ItemModel
+            {
+                Id = item.Id,
+                Parent = item.Parent,
+                Quantity = item.Quantity,
+                UnitPrice = (decimal)item.UnitPrice,
+                UnitListPrice = (decimal)item.UnitPrice,
+                ExtendedListPrice = (decimal)item.UnitPrice * item.Quantity,
+                TotalPrice = (decimal)item.UnitPrice * item.Quantity,
+                UnitCost = (decimal)item.UnitPrice,
+                Product = lstProduct
+            };
+            return requestItem;
+        }
+
+        private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList)
+        {
+            if (addressList.Any())
+            {
+                var requestAddress = addressList.FirstOrDefault();
+                var address = new Models.Quote.Quote.Internal.AddressModel
+                {
+                    City = requestAddress.City,
+                    Country = requestAddress.Country,
+                    Id = requestAddress.Id,
+                    Line1 = requestAddress.Line1,
+                    Line2 = requestAddress.Line2,
+                    Line3 = requestAddress.Line3,
+                    State = requestAddress.State,
+                    PostalCode = requestAddress.PostalCode
+                };
+                return address;
+            }
+            else
+                return new Models.Quote.Quote.Internal.AddressModel();
         }
 
         public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
@@ -424,18 +553,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         }
 
-        public async Task<CreateModelResponse> CreateQuoteFromEstimationId(CreateQuoteFrom.Request request)
-        {
-            // TO_DO: Missing implementation, so we return dummy response for now
-
-            var response = new CreateModelResponse
-            {
-                Id = "TIW777" + GetRandomNumber(10000, 60000),
-                Confirmation = "CONFIRM_" + GetRandomNumber(10000, 60000),
-            };
-            return await Task.FromResult(response);
-        }
-
         public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
         {
             // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
@@ -471,63 +588,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
 
-                MapEndUserAndReseller(configurationFindResponse, quotePreview); // Fix this using AutoMapper
+                MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview); 
                 quotePreview.Items = await PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
-                
-                #region Delete this after testing
-                //string productUrl = "";
-                //string productId = "";
-                //string manufacturer = "";
-                //string system = configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
-                //string[] arrProductIds = new string[quotePreview.Items.Count];
-                //string[] arrManufacturer = new string[quotePreview.Items.Count];
-                //ProductData productDetails;
-
-                ////convert for-each statment to linq statment after App-Service is ready.
-                //int i = 0;
-                //foreach (var item in quotePreview.Items)
-                //{
-                //    productId = item?.VendorPartNo ?? ""; // Fix this once app service is ready
-                //    if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
-                //    {
-
-                //        item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                //        item.Manufacturer = item.Manufacturer ?? system;
-                //        manufacturer = item.Manufacturer ?? system;
-                //        arrManufacturer[i] = manufacturer;
-                //        arrProductIds[i] = productId;
-                //        i++;
-                //    }
-                //}
-
-                //arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
-                //arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
-                //// call product app service
-                //productUrl = _appProductServiceURL.AppendPathSegment("Find")
-                // .SetQueryParams(new
-                // {
-                //     MfrPartNumber = arrProductIds,
-                //     Details = true,
-                //     SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg; Goran Needs to Fix this
-                //     Manufacturer = arrManufacturer
-                // });
-
-                //productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
-
-                //ProductsModel product;
-                //foreach (var line in quotePreview.Items)
-                //{
-                //    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
-                //    if (product != null && line != null)
-                //    {
-                //        line.ShortDescription = string.IsNullOrWhiteSpace(product?.ShortDescription) ?  line.ShortDescription: product?.ShortDescription;
-                //        line.TDNumber = product?.Source.ID;
-                //        line.URLProductImage = product?.Images?.Where(a => a.Key == "75x75")?.FirstOrDefault().Value?.FirstOrDefault().Url;
-                //        line.MSRP = product?.Price?.UnpromotedPrice;
-                //        line.MFRNumber = product?.ManufacturerPartNumber;
-                //    }
-                //}
-                #endregion
                 
                 QuotePreviewModel response = new QuotePreviewModel
                 {
@@ -542,7 +604,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
         }
 
-        private bool MapEndUserAndReseller(FindResponse<List<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
+        private bool MapEndUserAndResellerForQuotePreview(FindResponse<List<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
         {
             if (configurationFindResponse.Data?.FirstOrDefault().EndUser != null)
             {
