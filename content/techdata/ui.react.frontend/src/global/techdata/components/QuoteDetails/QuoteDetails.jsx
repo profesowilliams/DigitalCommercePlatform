@@ -10,6 +10,7 @@ import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -167,19 +168,11 @@ const QuoteDetails = ({ componentProp }) => {
 
       />
     </>
-  ) : error ? (
-    <div className="cmp-error">
-      <div className="cmp-error__header">
-        Error {error.code && error.code} {error.status && error.status}.
-      </div>
-      <div className="cmp-error__message">
-        {" "}
-        {error.code === 401 || error.status === 401
-          ? "You have to be logged in to use this feature."
-          : "Contact your site administrator."}
-      </div>
-    </div>
-  ) : (
+  ) : error ?
+    <ErrorMessage
+        error={error}
+        messageObject={{"message401" : "You need to be logged in to view this"}}
+    /> : (
     <FullScreenLoader>
       <Loader visible={true}></Loader>
     </FullScreenLoader>
