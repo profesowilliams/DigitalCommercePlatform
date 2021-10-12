@@ -2,7 +2,6 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
@@ -49,16 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _memoryCache = new MemoryCache(new MemoryCacheOptions());
             _cachingService = new CachingService(_memoryCache, _cachelogger.Object);
             _browseService = new BrowseService(_middleTierHttpClient.Object, _cachingService, _appSettings.Object, _uiContext.Object, _mapper.Object, _logger.Object);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetHeader(GetHeaderHandler.Request request)
-        {
-            // Act
-            var result = await _browseService.GetHeader(request);
-            // Assert
-            Assert.NotNull(result);
         }
 
         [Fact]

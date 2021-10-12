@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
@@ -40,19 +39,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             ISiteSettings siteSettings)
             : base(mediator, logger, context, appSettings, siteSettings)
         {
-        }
-
-        /// <summary>
-        /// Get the Cart, Customer, Catalogue details in a single call
-        /// </summary>
-        /// <param name="catalogueCriteria"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("header")]
-        public async Task<ActionResult<GetHeaderHandler.Response>> GetHeader(string catalogueCriteria, bool isDefault = true)
-        {
-            var response = await Mediator.Send(new GetHeaderHandler.Request(catalogueCriteria, isDefault)).ConfigureAwait(false);
-            return Ok(response);
         }
 
         /// <summary>

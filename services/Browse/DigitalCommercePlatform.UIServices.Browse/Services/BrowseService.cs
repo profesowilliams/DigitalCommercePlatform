@@ -3,7 +3,6 @@ using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
@@ -59,28 +58,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _appProductURL = appSettings.GetSetting("App.Product.Url");
             _productCatalogURL = appSettings.GetSetting("External.Product.Catalog.Url");
             _productCatalogFeature = appSettings.GetSetting("Feature.DF.ProuctCatalog");
-        }
-
-        public async Task<GetHeaderHandler.Response> GetHeader(GetHeaderHandler.Request request)
-        {
-            var cartRequest = new GetCartHandler.Request(request.IsDefault);
-            var CatalogRequest = new GetCatalogHandler.Request(request.CatalogCriteria);
-            var cartResponse = await GetCartDetails(cartRequest);
-            var customerDetailsResponse = await GetCustomerDetails();
-            var CatalogDetailsResponse = await GetCatalogDetails(CatalogRequest);
-
-            var getHeaderResponse = new GetHeaderHandler.Response
-            {
-                CartId = cartResponse.CartId,
-                CartItemCount = cartResponse.CartItemCount,
-                CustomerId = customerDetailsResponse.FirstOrDefault()?.Source?.ID,
-                CustomerName = customerDetailsResponse.FirstOrDefault()?.Name,
-                UserId = "12345", //Hardcoded now , in future it will come from the UI Security service
-                UserName = "Techdata User", //Hardcoded now , in future it will come from the UI Security service
-                                            //CatalogHierarchies = CatalogDetailsResponse.Children,
-            };
-
-            return getHeaderResponse;
         }
 
         public async Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request)

@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetHeaderDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
@@ -66,21 +65,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         {
             this.fixture = fixture;
             TestOutput.Output = output;
-        }
-
-        [Theory]
-        [InlineData("v1/header?catalogueCriteria=ALT&isDefault=true")]
-        public async Task GetHeader(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("app-customer")
-                .Returns(() => new List<CustomerModel>() { new CustomerModel() { Source = new DigitalFoundation.Common.MongoDb.Models.Source() } })
-                .MatchContains("app-catalog")
-                .Returns(() => new GetHeaderHandler.Response() { CatalogHierarchies = new List<CatalogHierarchyModel>() { new CatalogHierarchyModel() } });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetHeaderHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
         }
 
         [Theory]
