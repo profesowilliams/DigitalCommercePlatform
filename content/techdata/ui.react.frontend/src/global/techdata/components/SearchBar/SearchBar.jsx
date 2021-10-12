@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 
@@ -179,20 +178,6 @@ const SearchBar = ({ data, componentProp }) => {
     }
   };
 
-  console.log("useState checked", isChecked);
-
-  function handleMobileSearchStyling() {
-    if(mobileState && isMobile === true ){
-      return `cmp-searchbar cmp-searchbar--checked`
-    }else{
-      return `cmp-searchbar`
-    }
-  }
-
-  console.log('asdasdad',handleMobileSearchStyling())
-
-  console.log('useState checked', isChecked)
-
   const renderContextMenu = () => {
     if (!searchInputFocused) {
       return null;
@@ -244,10 +229,36 @@ const SearchBar = ({ data, componentProp }) => {
             }
             onClick={mobileSearchOpener}
           >
-            <i
-              className="cmp-searchbar__icon fas fa-search"
-              data-cmp-hook-search="icon"
-            ></i>
+            <svg
+              className={
+                isClicked
+                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
+                  : "cmp-searchbar__icon"
+              }
+              width="26px"
+              height="26px"
+              viewBox="0 0 28 28"
+              version="1.1"
+            >
+              <g id="Symbols" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Icon---Search" stroke-width="2">
+                  <g id="Group-5" transform="translate(1.000000, 1.000000)">
+                    <path
+                      d="M10.0000394,0 C15.5228817,0 20.0000789,4.53561095 20.0000789,10.1309296 C20.0000789,15.7259892 15.5228817,20.2616001 10.0000394,20.2616001 C4.47719715,20.2616001 0,15.7259892 0,10.1309296 C0,4.53561095 4.47719715,0 10.0000394,0 Z"
+                      id="Stroke-1"
+                    ></path>
+                    <line
+                      x1="18.9999724"
+                      y1="18.9096442"
+                      x2="26"
+                      y2="26"
+                      id="Stroke-3"
+                      stroke-linecap="square"
+                    ></line>
+                  </g>
+                </g>
+              </g>
+            </svg>
           </button>
         </>
       );
@@ -277,14 +288,36 @@ const SearchBar = ({ data, componentProp }) => {
             }
             onClick={redirectToShop}
           >
-            <i
+            <svg
               className={
                 isClicked
-                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked fas fa-search"
-                  : "cmp-searchbar__icon fas fa-search"
+                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
+                  : "cmp-searchbar__icon"
               }
-              data-cmp-hook-search="icon"
-            ></i>
+              width="26px"
+              height="26px"
+              viewBox="0 0 28 28"
+              version="1.1"
+            >
+              <g id="Symbols" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Icon---Search" stroke-width="2">
+                  <g id="Group-5" transform="translate(1.000000, 1.000000)">
+                    <path
+                      d="M10.0000394,0 C15.5228817,0 20.0000789,4.53561095 20.0000789,10.1309296 C20.0000789,15.7259892 15.5228817,20.2616001 10.0000394,20.2616001 C4.47719715,20.2616001 0,15.7259892 0,10.1309296 C0,4.53561095 4.47719715,0 10.0000394,0 Z"
+                      id="Stroke-1"
+                    ></path>
+                    <line
+                      x1="18.9999724"
+                      y1="18.9096442"
+                      x2="26"
+                      y2="26"
+                      id="Stroke-3"
+                      stroke-linecap="square"
+                    ></line>
+                  </g>
+                </g>
+              </g>
+            </svg>
           </button>
         </>
       );
@@ -293,7 +326,9 @@ const SearchBar = ({ data, componentProp }) => {
   return (
     <div
       id={id}
-      className={`cmp-searchbar ${isChecked === true ? "cmp-searchbar--checked" : " "}`}
+      className={`cmp-searchbar ${
+        isChecked === true ? "cmp-searchbar--checked" : " "
+      }`}
       onMouseLeave={lostFocus}
       onMouseEnter={gotFocus}
     >

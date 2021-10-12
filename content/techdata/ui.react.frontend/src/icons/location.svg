@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="Icons/Interface/Location-Pin">
+    <path d="M15 7.41177C15 13.7647 7.49999 18 7.49999 18C7.49999 18 -1.52312e-05 13.7647 0 7.41177C9.81399e-06 3.31835 3.49998 -1.46873e-05 7.49999 0C11.5 1.46873e-05 15 3.31835 15 7.41177ZM9.62208 9.23806C8.45095 10.41 6.55128 10.4106 5.37934 9.23944C4.20739 8.06804 4.20684 6.16864 5.37934 4.99532C6.55128 3.82392 8.45095 3.82475 9.62208 4.99669C10.7926 6.16809 10.7926 8.06639 9.62208 9.23806Z" transform="translate(3.5 1.9999853)" id="Combined-Shape" fill="#BD0017" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>
