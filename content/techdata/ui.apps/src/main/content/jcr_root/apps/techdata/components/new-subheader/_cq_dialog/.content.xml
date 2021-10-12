@@ -44,18 +44,26 @@
                                         <primaryLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Link Label"
                                                 emptyText="Link Label"
                                                 name="./primaryLabel"/>
                                         <primaryLink
-                                                jcr:primaryType="nt:unstructured"
+                                                jcr:primaryType="nt:unstructured"                                                
+                                                fieldLabel="DCP Link"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                 rootPath="/content/techdata"
                                                 name="./primaryLink"/>
+                                        <legacyLink
+                                                jcr:primaryType="nt:unstructured"
+                                                fieldLabel="Legacy Link"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                rootPath="/content/techdata"
+                                                name="./legacyLink"/>        
                                         <containerFlag
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/foundation/form/checkbox"
                                                 fieldDescription="Does this Menu Item have a Drop Down?"
-                                                text="Drop Down Menu??"
+                                                text="Drop Down Menu ?"
                                                 name="./containerFlag"/>
                                     </items>
                                 </field>

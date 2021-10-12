@@ -1,5 +1,5 @@
 "use strict";
-use(function () {
+use(function() {
     var itemsList = [];
     var jsonObject = {};
     var vendorConnectionsModalObject = {};
@@ -8,52 +8,51 @@ use(function () {
     var dashboardMenuArray = [];
 
     function sanitizeURL(url) {
-        if (url.startsWith("http"))
-        {
+        if (url.startsWith("http")) {
             return url;
-        }else if (url.startsWith("/content")){
+        } else if (url.startsWith("/content")) {
             return url + ".html";
         }
     }
 
     var resourceResolver = resource.getResourceResolver();
 
-	jsonObject["minified"] = "true";
+    jsonObject["minified"] = "true";
 
-	 if (properties && properties["accountNumber"]) {
+    if (properties && properties["accountNumber"]) {
         jsonObject["accountnumberLabel"] = properties["accountNumber"];
     }
 
     if (properties && properties["toolsIndex"]) {
         jsonObject["toolsIndex"] = properties["toolsIndex"] || 2;
-    }else {
+    } else {
         jsonObject["toolsIndex"] = "2";
     }
 
     if (this.uiServiceDomain != null) {
-    vendorConnectionsModalObject["uiServiceEndPoint"] = this.uiServiceDomain+this.vendorConnectionEndpoint;
-	}
+        vendorConnectionsModalObject["uiServiceEndPoint"] = this.uiServiceDomain + this.vendorConnectionEndpoint;
+    }
     if (properties && properties["title"]) {
         vendorConnectionsModalObject["title"] = properties["title"];
     }
 
-	if (properties && properties["buttonLabel"]) {
+    if (properties && properties["buttonLabel"]) {
         vendorConnectionsModalObject["buttonLabel"] = properties["buttonLabel"];
     }
 
-	if (properties && properties["buttonIcon"]) {
+    if (properties && properties["buttonIcon"]) {
         vendorConnectionsModalObject["buttonIcon"] = properties["buttonIcon"];
     }
 
-	if (properties && properties["content"]) {
+    if (properties && properties["content"]) {
         vendorConnectionsModalObject["content"] = properties["content"];
     }
 
-	if (properties && properties["connectedLabel"]) {
+    if (properties && properties["connectedLabel"]) {
         vendorConnectionsModalObject["connectedLabel"] = properties["connectedLabel"];
     }
 
-	if (properties && properties["disconnectedLabel"]) {
+    if (properties && properties["disconnectedLabel"]) {
         vendorConnectionsModalObject["disconnectedLabel"] = properties["disconnectedLabel"];
     }
 
@@ -84,9 +83,11 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var label = res.properties["primaryLabel"];
             var link = res.properties["primaryLink"];
+            var legacyLink = res.properties["legacyLink"];
             var itemData = {};
             itemData.title = label;
             itemData.link = link;
+            itemData.legacyLink = legacyLink;
             primaryMenuArray.push(itemData);
         }
     }
@@ -109,24 +110,20 @@ use(function () {
     }
 
     if (iconValues != null) {
-            vendorConnectionsModalObject["vendors"] = iconValues;
-        }
+        vendorConnectionsModalObject["vendors"] = iconValues;
+    }
 
-    if (primaryMenuArray != null)
-    {
+    if (primaryMenuArray != null) {
         jsonObject["menuItems"] = primaryMenuArray;
     }
 
-    if (dashboardMenuArray != null)
-    {
+    if (dashboardMenuArray != null) {
         jsonObject["dashboardMenuItems"] = dashboardMenuArray;
     }
 
     if (vendorConnectionsModalObject != null) {
-            jsonObject["vendorConnectionsModal"] = vendorConnectionsModalObject;
-        }
-
-
+        jsonObject["vendorConnectionsModal"] = vendorConnectionsModalObject;
+    }
 
     return {
         configJson: JSON.stringify(jsonObject)
