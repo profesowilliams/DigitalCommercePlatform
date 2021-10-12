@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxItems, information, base64LogoHandler, optionsHandeler, logoUploadHandler }) => {
-      const logoLabel = information ? information['yourLogoLabel'] : ''
+      const logoLabel = information['yourWhiteLogoLabel'] ? information['yourWhiteLogoLabel'] : '';
       const optionItems = checkboxItems ? Object.values(checkboxItems) : []
       const wexcTitle = titleLabel ? titleLabel : ''
       const wexcSubitle = subtitleLabel ? subtitleLabel : ''
