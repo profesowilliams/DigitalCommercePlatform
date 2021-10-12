@@ -1,5 +1,6 @@
 .cmp-orders-grid {
 	width: 100%;
+	overflow: auto;
 	& .status {
 		display: flex;
 	}

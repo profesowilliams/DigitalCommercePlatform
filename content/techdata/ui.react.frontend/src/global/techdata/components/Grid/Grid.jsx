@@ -290,8 +290,8 @@ function Grid(props) {
         );
 
         setActualRange({
-          from: !isNaN(firstRowIndex) ? firstRowIndex + 1 : "",
-          to: !isNaN(firstRowIndex) ? lastRowIndex + 1 : "",
+          from: isNaN(firstRowIndex) ? "" : firstRowIndex + 1,
+          to: isNaN(firstRowIndex) ? "" : lastRowIndex + 1,
           total: data.api.getDisplayedRowCount(),
         });
       } else {

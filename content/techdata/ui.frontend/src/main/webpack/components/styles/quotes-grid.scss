@@ -1,5 +1,6 @@
 .cmp-quotes-grid {
 	width: 100%;
+	overflow: auto;
 	&__checkout-icon {
 		color: get-color(brand-light-blue-icon);
 		margin-left: rem(20px);
