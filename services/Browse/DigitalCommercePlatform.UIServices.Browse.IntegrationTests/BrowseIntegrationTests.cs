@@ -1,8 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIService.Browse;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -65,19 +63,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         {
             this.fixture = fixture;
             TestOutput.Output = output;
-        }
-
-        [Theory]
-        [InlineData("v1/cart")]
-        public async Task GetCartDetails(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains(input)
-                .Returns<ResponseBase<GetCartHandler.Response>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetCartHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
         }
 
         [Theory]

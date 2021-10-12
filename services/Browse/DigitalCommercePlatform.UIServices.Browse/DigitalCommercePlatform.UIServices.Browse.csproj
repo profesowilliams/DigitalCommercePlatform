@@ -40,8 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Actions\GetCartDetails\GetCartRequest.cs" />
-    <Compile Remove="Actions\GetCartDetails\GetCartResponse.cs" />
     <Compile Remove="Actions\GetCatalogDetails\GetCatalogueRequest.cs" />
     <Compile Remove="Actions\GetCatalogDetails\GetCatalogueResponse.cs" />
     <Compile Remove="Actions\GetCustomerDetails\GetCustomerRequest.cs" />

@@ -1,7 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIService.Browse.Model.Customer;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
@@ -30,7 +29,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     public class BrowseService : IBrowseService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _coreCartURL;
         private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _productCatalogURL;
@@ -52,7 +50,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _cachingService = cachingService;
             _mapper = mapper;
             _logger = logger;
-            _coreCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
             _appProductURL = appSettings.GetSetting("App.Product.Url");
@@ -93,22 +90,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var CustomerURL = _appCustomerURL.BuildQuery("Id=" + customerId);
             var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<IEnumerable<CustomerModel>>(CustomerURL);
             return getCustomerDetailsResponse;
-        }
-
-        public Task<GetCartHandler.Response> GetCartDetails(GetCartHandler.Request request)
-        {
-            string userId = _uiContext.User.ID;
-            string customerId = _uiContext.User.Customers.FirstOrDefault();
-            var CartURL = _coreCartURL.BuildQuery("UserId=" + userId + "&CustomerId=" + customerId);
-            Random rnd = new Random();
-            var v1 = new GetCartHandler.Response
-            {
-                CartId = "1",//Hardcoded now , in future it will come from the app service
-#pragma warning disable CA5394 // Do not use insecure randomness
-                CartItemCount = rnd.Next(1, 40)//Hardcoded now , in future it will come from the app service
-#pragma warning restore CA5394 // Do not use insecure randomness
-            };
-            return Task.FromResult(v1);
         }
 
         public async Task<ProductData> FindProductDetails(FindProductHandler.Request request)

@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -70,22 +69,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         {
             return new BrowseController(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
                 _appSettingsMock.Object, mockSiteSettings.Object);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetCartDetails(ResponseBase<GetCartHandler.Response> expected)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCartHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-
-            var result = await controller.GetCartDetails(true).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
         }
 
         [Theory]

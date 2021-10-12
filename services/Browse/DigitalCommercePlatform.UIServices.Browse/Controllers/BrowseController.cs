@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -39,20 +38,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             ISiteSettings siteSettings)
             : base(mediator, logger, context, appSettings, siteSettings)
         {
-        }
-
-        /// <summary>
-        /// Get the Cart Name and Cart Id
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("cart")]
-        public async Task<ActionResult<ResponseBase<GetCartHandler.Response>>> GetCartDetails(bool isDefault = true)//(string userId, string customerId)
-        {
-            var response = await Mediator.Send(new GetCartHandler.Request(isDefault)).ConfigureAwait(false);
-            return Ok(response);
         }
 
         /// <summary>

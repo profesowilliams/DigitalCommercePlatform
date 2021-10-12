@@ -1,6 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCartDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
@@ -55,16 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
         {
             // Act
             var result = await _browseService.GetCustomerDetails();
-            // Assert
-            Assert.NotNull(result);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetCartDetails(GetCartHandler.Request request)
-        {
-            // Act
-            var result = await _browseService.GetCartDetails(request);
             // Assert
             Assert.NotNull(result);
         }
