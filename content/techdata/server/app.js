@@ -3999,3 +3999,36 @@ app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
     });
 });
 
+//---TOP n OPEN CONFIG MOCK API---//
+app.get("/ui-account/v1/topActions", function (req, res) {
+  // try {
+    function getRandom(maxValue) {
+      return Math.floor(Math.random() * maxValue);
+  }
+    if (!req.headers["sessionid"]) {
+      return res.status(500).json({
+          error: {
+              code: 0,
+              message: ['No SessionId'],
+              isError: true,
+          },
+      });
+    }
+    const response = {
+        content: {
+            summary: {
+              newOpportunities: getRandom(20),
+              ordersBlocked: getRandom(20),
+              expiringDeals: getRandom(20)
+            },
+        },
+        error: {
+            code: 0,
+            message: [],
+            isError: false,
+        },
+    };
+
+    res.json(response);
+});
+

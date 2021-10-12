@@ -1126,6 +1126,13 @@ module.exports = (env) => {
                                 SOURCE_ROOT + "/static/teaser-demo-new.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "todays-action-items-react",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/todays-action-items-react.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
