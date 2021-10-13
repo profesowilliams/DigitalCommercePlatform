@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
@@ -17,8 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     public interface IBrowseService
     {
         Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request);
-
-        Task<IEnumerable<CustomerModel>> GetCustomerDetails();
 
         Task<ProductData> FindProductDetails(FindProductHandler.Request request);
 

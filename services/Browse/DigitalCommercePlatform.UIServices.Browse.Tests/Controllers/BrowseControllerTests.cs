@@ -1,6 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
@@ -69,22 +68,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
         {
             return new BrowseController(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
                 _appSettingsMock.Object, mockSiteSettings.Object);
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetCustomerDetails(ResponseBase<GetCustomerHandler.Response> expected)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCustomerHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-
-            var result = await controller.GetCustomer().ConfigureAwait(false);
-
-            result.Should().NotBeNull();
         }
 
         [Theory]

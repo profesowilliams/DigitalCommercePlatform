@@ -1,6 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
@@ -11,7 +10,6 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -50,19 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         public async Task<ActionResult<GetCatalogHandler.Response>> GetCatalog(string id)
         {
             var response = await Mediator.Send(new GetCatalogHandler.Request(id)).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-        /// <summary>
-        /// Get the customer details
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("customer")]
-        public async Task<ActionResult<GetCustomerHandler.Response>> GetCustomer()
-        {
-            var response = await Mediator.Send(new GetCustomerHandler.Request()).ConfigureAwait(false);
             return Ok(response);
         }
 

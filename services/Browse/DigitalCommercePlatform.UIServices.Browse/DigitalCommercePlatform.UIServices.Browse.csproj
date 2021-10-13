@@ -42,8 +42,6 @@
   <ItemGroup>
     <Compile Remove="Actions\GetCatalogDetails\GetCatalogueRequest.cs" />
     <Compile Remove="Actions\GetCatalogDetails\GetCatalogueResponse.cs" />
-    <Compile Remove="Actions\GetCustomerDetails\GetCustomerRequest.cs" />
-    <Compile Remove="Actions\GetCustomerDetails\GetCustomerResponse.cs" />
     <Compile Remove="Actions\GetProductDetails\GetProductHandler.cs" />
     <Compile Remove="Actions\GetProductSummary\GetProductSummaryHandler.cs" />
   </ItemGroup>

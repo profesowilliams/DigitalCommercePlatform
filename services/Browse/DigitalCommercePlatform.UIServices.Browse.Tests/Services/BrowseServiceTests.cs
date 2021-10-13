@@ -46,16 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _mapper = new Mock<IMapper>();
             _memoryCache = new MemoryCache(new MemoryCacheOptions());
             _cachingService = new CachingService(_memoryCache, _cachelogger.Object);
-            _browseService = new BrowseService(_middleTierHttpClient.Object, _cachingService, _appSettings.Object, _uiContext.Object, _mapper.Object, _logger.Object);
-        }
-
-        [Fact]
-        public async Task GetCustomerDetails()
-        {
-            // Act
-            var result = await _browseService.GetCustomerDetails();
-            // Assert
-            Assert.NotNull(result);
+            _browseService = new BrowseService(_middleTierHttpClient.Object, _cachingService, _appSettings.Object, _mapper.Object, _logger.Object);
         }
 
         [Theory]

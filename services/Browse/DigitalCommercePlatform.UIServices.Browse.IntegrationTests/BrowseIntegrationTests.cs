@@ -1,8 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIService.Browse;
-using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCustomerDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
@@ -63,31 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         {
             this.fixture = fixture;
             TestOutput.Output = output;
-        }
-
-        [Theory]
-        [InlineData("v1/catalogue?id=14")]
-        public async Task GetCatalog(string input)
-        {
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("id=14")
-                .Returns(() => new GetCatalogHandler.Response() { });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetCatalogHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
-        [InlineData("v1/customer")]
-        public async Task GetCustomer(string input)
-        {
-            fixture.CreateChildScope().OverrideClient<object>()
-                .MatchContains(input)
-                .Returns(() => new List<CustomerModel>() { new CustomerModel() });
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetCustomerHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
         }
 
         [Theory]

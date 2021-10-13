@@ -1,6 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIService.Browse.Model.Customer;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
@@ -29,28 +28,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     public class BrowseService : IBrowseService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _appCustomerURL;
         private readonly string _appCatalogURL;
         private readonly string _productCatalogURL;
         private readonly string _appProductURL;
         private readonly string _productCatalogFeature;
         private readonly ILogger<BrowseService> _logger;
         private readonly ICachingService _cachingService;
-        private readonly IUIContext _uiContext;
         private readonly IMapper _mapper;
 
         public BrowseService(IMiddleTierHttpClient middleTierHttpClient,
             ICachingService cachingService,
             IAppSettings appSettings,
-            IUIContext uiContext,
             IMapper mapper, ILogger<BrowseService> logger)
         {
-            _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _cachingService = cachingService;
             _mapper = mapper;
             _logger = logger;
-            _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
             _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
             _appProductURL = appSettings.GetSetting("App.Product.Url");
             _productCatalogURL = appSettings.GetSetting("External.Product.Catalog.Url");
@@ -82,14 +76,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 }
             }
             return getCatalogResponse;
-        }
-
-        public async Task<IEnumerable<CustomerModel>> GetCustomerDetails()
-        {
-            var customerId = _uiContext.User.Customers.FirstOrDefault();
-            var CustomerURL = _appCustomerURL.BuildQuery("Id=" + customerId);
-            var getCustomerDetailsResponse = await _middleTierHttpClient.GetAsync<IEnumerable<CustomerModel>>(CustomerURL);
-            return getCustomerDetailsResponse;
         }
 
         public async Task<ProductData> FindProductDetails(FindProductHandler.Request request)
