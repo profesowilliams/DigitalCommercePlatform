@@ -2,6 +2,7 @@ package com.techdata.core.models;
 
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageFilter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.techdata.core.slingcaconfig.CatalogServiceConfiguration;
@@ -149,14 +150,12 @@ public class SubNavLinks {
     }
 
     public void childPageIterator(ResourceResolver resolver){
-        Iterator<Page> itr = navPage.listChildren();
+        Iterator<Page> itr = navPage.listChildren(new PageFilter());
         while(itr.hasNext()){
             Page childPage = itr.next();
-            if(!childPage.isHideInNav()){
-                hasChildPages = "true";
-                SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle, this.rootParentLink);
-                subNavLinkslist.add(childNav);
-            }
+            hasChildPages = "true";
+            SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle, this.rootParentLink);
+            subNavLinkslist.add(childNav);
         }
     }
 

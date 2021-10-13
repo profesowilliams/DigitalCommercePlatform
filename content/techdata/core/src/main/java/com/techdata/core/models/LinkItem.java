@@ -1,6 +1,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
 import com.techdata.core.util.ContentFragmentHelper;
 import lombok.Getter;
@@ -98,7 +99,7 @@ public class LinkItem {
             log.debug("page root also present. path is {}", navigationRoot);
             Page rootPage = resolver.adaptTo(PageManager.class).getPage(navigationRoot);
             if(rootPage != null){
-                Iterator<Page> children = rootPage.listChildren();
+                Iterator<Page> children = rootPage.listChildren(new PageFilter());
                 while(children.hasNext()){
                     Page childPage = children.next();
                     SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl);
