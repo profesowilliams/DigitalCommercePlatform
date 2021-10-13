@@ -51,33 +51,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _productCatalogFeature = appSettings.GetSetting("Feature.DF.ProuctCatalog");
         }
 
-        public async Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request)
-        {
-            var CatalogURL = _appCatalogURL.BuildQuery(request);
-
-            var getCatalogResponse = await _cachingService.GetCatalogFromCache(request.Id);
-            if (getCatalogResponse == null)
-            {
-                var response = await _middleTierHttpClient.GetAsync<CatalogDto>(CatalogURL).ConfigureAwait(false);
-                if (response != null && response.Catalogs.Any())
-                {
-                    var tempResponse = _mapper.Map<CatalogModel>(response);
-                    getCatalogResponse = new List<CatalogResponse>();
-                    var objCatalogResponse = new CatalogResponse
-                    {
-                        Key = request.Id,
-                        Name = null,
-                        DocCount = 0, //Fix This
-                        Children = tempResponse.Catalogs
-                    };
-
-                    getCatalogResponse.Add(objCatalogResponse);
-                    await _cachingService.SetCatalogCache(getCatalogResponse, request.Id);
-                }
-            }
-            return getCatalogResponse;
-        }
-
         public async Task<ProductData> FindProductDetails(FindProductHandler.Request request)
         {
             var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);

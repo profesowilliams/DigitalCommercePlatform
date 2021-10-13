@@ -39,19 +39,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         }
 
         /// <summary>
-        /// Get the catalog details
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("catalogue")]
-        public async Task<ActionResult<GetCatalogHandler.Response>> GetCatalog(string id)
-        {
-            var response = await Mediator.Send(new GetCatalogHandler.Request(id)).ConfigureAwait(false);
-            return Ok(response);
-        }
-
-        /// <summary>
         /// Get the product details on the ProductId
         /// </summary>
         /// <param name="id"></param>

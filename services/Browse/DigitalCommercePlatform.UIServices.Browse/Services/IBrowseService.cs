@@ -15,8 +15,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
     public interface IBrowseService
     {
-        Task<List<CatalogResponse>> GetCatalogDetails(GetCatalogHandler.Request request);
-
         Task<ProductData> FindProductDetails(FindProductHandler.Request request);
 
         Task<SummaryDetails> FindSummaryDetails(FindSummaryHandler.Request request);

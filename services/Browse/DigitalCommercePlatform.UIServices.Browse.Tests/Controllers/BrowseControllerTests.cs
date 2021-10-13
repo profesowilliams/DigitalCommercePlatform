@@ -72,21 +72,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetCatalogDetails(ResponseBase<GetCatalogHandler.Response> expected)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetCatalogHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-            var result = await controller.GetCatalog("FCS").ConfigureAwait(false);
-
-            result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
         public async Task FindProductDetails(ResponseBase<FindProductHandler.Response> expected,
             FindProductModel model)
         {
