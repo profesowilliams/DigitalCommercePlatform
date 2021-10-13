@@ -59,27 +59,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             return Ok(response);
         }
 
-        /// <summary>
-        /// This method is used for the Searching the Products based on the category
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("product/summary")]
-        public async Task<IActionResult> FindProduct([FromQuery] FindProductModel query, bool WithPaginationInfo = true)
-        {
-            if (query.Details)
-            {
-                var response = await Mediator.Send(new FindProductHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false);
-                return Ok(response);
-            }
-            else
-            {
-                var response = await Mediator.Send(new FindSummaryHandler.Request(query, WithPaginationInfo)).ConfigureAwait(false);
-                return Ok(response);
-            }
-        }
-
         [HttpGet]
         [Route("getProductCatalog")]
         public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalog input)

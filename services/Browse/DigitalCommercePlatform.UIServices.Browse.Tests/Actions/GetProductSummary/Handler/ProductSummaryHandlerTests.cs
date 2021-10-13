@@ -43,24 +43,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             result.Should().NotBeNull();
         }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task FindSummaryHandler(SummaryDetails expected, FindProductModel query)
-        {
-            _mockBrowseService.Setup(x => x.FindSummaryDetails(
-                       It.IsAny<FindSummaryHandler.Request>()
-                       ))
-                   .ReturnsAsync(expected);
-
-            var handler = new FindSummaryHandler.Handler(_mockBrowseService.Object, _mapper.Object);
-
-            var request = new FindSummaryHandler.Request(query, withPaginationInfo);
-
-            var result = await handler.Handle(request, It.IsAny<CancellationToken>());
-
-            result.Should().NotBeNull();
-        }
     }
 }
 

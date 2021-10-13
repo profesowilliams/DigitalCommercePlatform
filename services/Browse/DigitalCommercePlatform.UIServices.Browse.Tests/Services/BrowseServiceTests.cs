@@ -61,16 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public async Task FindSummaryDetails(FindSummaryHandler.Request request)
-        {
-            // Act
-            var result = await _browseService.FindSummaryDetails(request);
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Theory]
-        [AutoDomainData]
         public async Task GetProductDetails(GetProductDetailsHandler.Request request)
         {
             // Act

@@ -8,9 +8,7 @@ using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
@@ -56,13 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
 
             var getProductResponse = await _middleTierHttpClient.GetAsync<ProductData>(ProductURL);
-            return getProductResponse;
-        }
-
-        public async Task<SummaryDetails> FindSummaryDetails(FindSummaryHandler.Request request)
-        {
-            var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
-            var getProductResponse = await _middleTierHttpClient.GetAsync<SummaryDetails>(ProductURL).ConfigureAwait(false);
             return getProductResponse;
         }
 

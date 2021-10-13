@@ -72,36 +72,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task FindProductDetails(ResponseBase<FindProductHandler.Response> expected,
-            FindProductModel model)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<FindProductHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-            var controller = GetController();
-            var result = await controller.FindProduct(model).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task FindSummaryDetails(ResponseBase<FindSummaryHandler.Response> expected,
-            FindProductModel model)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<FindSummaryHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-            var controller = GetController();
-            var result = await controller.FindProduct(model).ConfigureAwait(false);
-
-            result.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
         public async Task GetProductDetails(GetProductDetailsHandler.Response expected)
         {
             var data = new List<string> { "123" };

@@ -4,7 +4,6 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
@@ -15,8 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         public ProductProfile()
         {
             CreateMap<ProductData, FindProductHandler.Response>()
-                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
-            CreateMap<SummaryDetails, FindSummaryHandler.Response>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
             CreateMap<MarketingDto, DocumentModel>()
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Url))

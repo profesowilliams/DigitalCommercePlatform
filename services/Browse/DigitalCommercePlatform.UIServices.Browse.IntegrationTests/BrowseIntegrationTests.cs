@@ -77,36 +77,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         }
 
         [Theory]
-        [AutoDomainData]
-        public async Task FindProductWithDetails(FindProductModel model)
-        {
-            model.Details = true;
-            var input = "v1/product/summary".BuildQuery(model);
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("find")
-                .Returns<IEnumerable<ProductModel>>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<FindProductHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task FindProduct(FindProductModel model)
-        {
-            model.Details = false;
-            var input = "v1/product/summary".BuildQuery(model);
-            using var scope = fixture.CreateChildScope();
-            scope.OverrideClient<object>()
-                .MatchContains("find")
-                .Returns<SummaryModel>();
-            var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<FindSummaryHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().NotBeNull();
-        }
-
-        [Theory]
         [InlineDomainData("/v1/getProductCatalog?IsSourceDF=true&id=ALT&level=3&shortenSubcategories=true&cultureName=&corporateCode=0100")]
         public async Task GetProductCatalogService(string input)
         {

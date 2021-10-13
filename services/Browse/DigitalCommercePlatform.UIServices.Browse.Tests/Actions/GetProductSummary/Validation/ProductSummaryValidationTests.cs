@@ -30,19 +30,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             result.Should().NotBeNull();
             result.IsValid.Should().BeFalse();
         }
-
-
-        [Theory]
-        [AutoDomainData]
-        public async Task FindSummaryValidations(FindSummaryHandler.Request request)
-        {
-            var validator = new FindSummaryHandler.Validator();
-            var result = await validator.TestValidateAsync(request);
-
-            result.Should().NotBeNull();
-            result.IsValid.Should().BeTrue();
-        }
-
     }
 }
 
