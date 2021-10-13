@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Content.Actions;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
+using DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Infrastructure.Filters;
@@ -66,12 +67,29 @@ namespace DigitalCommercePlatform.UIServices.Content.Controllers
             var response = await Mediator.Send(new AddCartItem.Request(itemModels)).ConfigureAwait(false);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Create Quote with QuoteId
+        /// </summary>
+        /// <param name="QuoteId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("CreateByQuote")]
         public async Task<IActionResult> CreateByQuote([FromQuery] string QuoteId)
         {
             var response = await Mediator.Send(new GetCreateCartByQuote.Request(QuoteId)).ConfigureAwait(false);
+            return Ok(response);
+        }
+        /// <summary>
+        /// Check Out for Quotes Grid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("replaceCart")]
+        public async Task<ActionResult> ReplaceCart([FromQuery] string id, string type = "quote")
+        {
+            var response = await Mediator.Send(new ReplaceCart.Request(id,type)).ConfigureAwait(false);
             return Ok(response);
         }
     }

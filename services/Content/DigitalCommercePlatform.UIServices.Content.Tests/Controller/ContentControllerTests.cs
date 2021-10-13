@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Content.Actions;
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
 using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
+using DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Controllers;
@@ -135,6 +136,37 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Controller
             var validator = new GetCreateCartByQuote.Validator();
             string QuoteId = "1234";
             var cmd = new GetCreateCartByQuote.Request(QuoteId);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.True(validationResult.IsValid);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task ReplaceCart(ResponseBase<ReplaceCart.Response> expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<ReplaceCart.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.ReplaceCart("12","type").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
+
+        
+        [Fact]
+        public async Task ReplaceCartValidation()
+        {
+            // Arrange
+            var validator = new ReplaceCart.Validator();
+            string cartId = "1234";
+            string Type = "Quote";
+            var cmd = new ReplaceCart.Request(cartId,Type);
             // Act
             var validationResult = await validator.ValidateAsync(cmd);
             // Assert

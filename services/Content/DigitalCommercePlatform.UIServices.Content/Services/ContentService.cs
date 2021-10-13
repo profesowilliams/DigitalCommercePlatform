@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Content.Actions;
 using DigitalCommercePlatform.UIServices.Content.Actions.CreateCartByQuote;
+using DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
@@ -117,6 +118,39 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at Create cart by Quote : " + nameof(ContentService));
+                throw ex;
+            }
+        }
+
+        public async Task<bool> ReplaceCart(string id)
+        {
+            try
+            {
+                var cartURL = _appCartUrl.AppendPathSegment("/Replace/"+id);
+                var result = await _middleTierHttpClient.PutAsync<ReplaceCart.Response>(cartURL, null, null);
+                return true;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Message.Contains("Error"))
+                {
+                    _logger.LogError(ex, "Exception at getting replace cart: " + nameof(ContentService));
+                    _logger.LogInformation("$Record's not found for " + id);
+                    if (ex.Message.ToLower().Contains("error"))//need to fix this
+                    {
+                        return false;
+                    }
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(ContentService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at replace cart by Quote : " + nameof(ContentService));
                 throw ex;
             }
         }

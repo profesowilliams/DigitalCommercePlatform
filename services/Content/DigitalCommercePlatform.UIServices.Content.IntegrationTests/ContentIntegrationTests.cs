@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Content.Actions.ActiveCart;
+using DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes;
 using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalFoundation.Common.Client;
@@ -94,6 +95,19 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
             var client = fixture.CreateClient().SetDefaultHeaders();
             var response = await client.RunTest<ResponseBase<GetActiveCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
+        }
+
+        [Theory]
+        [InlineData("v1/replaceCart?type=quote&id=1234")]
+        public async Task ReplaceCart(string input)
+        {
+            using var scope = fixture.CreateChildScope();
+            scope.OverrideClient<object>()
+                .MatchContains(input)
+                .Returns<ResponseBase<ReplaceCart.Request>>();
+            var client = fixture.CreateClient().SetDefaultHeaders();
+            var response = await client.RunTest<ResponseBase<ReplaceCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            response.Should().BeNull();
         }
     }
 }
