@@ -66,7 +66,7 @@ const ManuallyTyped = ({
         msgAfterlink={msgAfterlink}
         linklabel={linklabel}
         linkFunction={linkFunction}
-        errorMsg={`${errorMsg} ${inputValue}`}
+        errorMsg={`${errorMsg} ${invalidCartName}`}
         isActive={invalidCartName}
       />
       <p>
