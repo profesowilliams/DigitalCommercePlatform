@@ -94,9 +94,7 @@ function Grid(props) {
             cellRenderer={
               column.expandable
                 ? "agGroupCellRenderer"
-                : renderers[column.field]
-                ? column.field
-                : null
+                : renderers[column.field] && column.field
             }
             suppressMenu={true}
             key={column.field}
@@ -117,16 +115,14 @@ function Grid(props) {
 
   // overwrite config in column definitions with config from AEM
   config?.columnList?.forEach((column) => {
-    const el = columnDefinition.find((el) => {
-      return el.field === column.columnKey;
+    const el = columnDefinition.find((_) => {
+      return _.field === column.columnKey;
     });
     if (el) {
       // translation
-      column.columnLabel !== undefined
-        ? (el.headerName = column.columnLabel)
-        : null;
+      column.columnLabel !== undefined && (el.headerName = column.columnLabel);
       // sortable attribute
-      column.sortable !== undefined ? (el.sortable = column.sortable) : null;
+      column.sortable !== undefined && (el.sortable = column.sortable);
       // check for render function
       if (el.cellRenderer) renderers[el.field] = el.cellRenderer;
       // attach detail renderer if exist
@@ -149,7 +145,7 @@ function Grid(props) {
   // overwrite options with options from AEM
   if (options) {
     for (let key in options) {
-      config.options[key] ? (options[key] = config.options[key]) : null;
+      config.options[key] && (options[key] = config.options[key]);
     }
   } else {
     options = config.options;
@@ -188,11 +184,10 @@ function Grid(props) {
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true`
           : "";
       let pathName = url.pathname ?? "";
-      pathName.slice(-1) === "/" ? (pathName = pathName.slice(0, -1)) : null;
-      let apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}`;
-      url.search !== ""
-        ? (apiUrl += `&${pages}${sortParams}`)
-        : (apiUrl += `?${pages}${sortParams}`);
+      pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
+      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${
+        url.search !== "" ? "&" : "?"
+      }${pages}${sortParams}`;
       let response = null;
       // check if request interceptor is attached and use it.
       // otherwise get data according to grid state
@@ -213,21 +208,21 @@ function Grid(props) {
     }
   }
 
-  function onModelUpdated(data) {
+  function onModelUpdated(_) {
     updatingFinished && updatingFinished.call(true);
   }
 
-  function onGridReady(data) {
+  function onGridReady(_) {
     if (!gridId.current) {
       let str = Math.floor(1000 * Math.random()).toString();
       let pad = "0000";
       gridId.current = pad.substring(0, pad.length - str.length) + str;
     }
-    data.api.sizeColumnsToFit();
-    gridApi.current = data.api;
+    _.api.sizeColumnsToFit();
+    gridApi.current = _.api;
     // apply default sorting
     if (options?.defaultSortingColumnKey) {
-      data.columnApi.applyColumnState({
+      _.columnApi.applyColumnState({
         state: [
           {
             colId: options.defaultSortingColumnKey,
@@ -242,21 +237,21 @@ function Grid(props) {
     globalThis[`$$tdGrid${gridId.current}`] = {
       version: componentVersion,
       node: gridNodeRef.current,
-      api: data.api,
+      api: _.api,
       props: props,
       onAjaxCall: globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall
         ? globalThis[`$$tdGrid${gridId.current}`].onAjaxCall
-        : (apiUrl) => {},
+        : (apiUrl) => null,
       onNewGridDataLoaded: globalThis[`$$tdGrid${gridId.current}`]
         ?.onNewGridDataLoaded
         ? globalThis[`$$tdGrid${gridId.current}`].onNewGridDataLoaded
-        : (response) => {},
+        : (response) => null,
     };
     // fire onAfterGridInit callback and pass AG grid object to parent
     if (typeof onAfterGridInit === "function") {
       onAfterGridInit({
         node: gridNodeRef.current,
-        api: data.api,
+        api: _.api,
         gridResetRequest: () => resetGrid(),
       });
     }
@@ -266,10 +261,10 @@ function Grid(props) {
     gridApi?.current?.sizeColumnsToFit();
   }
 
-  function onViewportChanged(data) {
+  function onViewportChanged(_) {
     if (config.paginationStyle === "scroll") {
-      const renderedNodes = data.api.getRenderedNodes();
-      if (renderedNodes.length > 0) {
+      const renderedNodes = _.api.getRenderedNodes();
+      const applyRange = () => {
         const rowContainer =
           gridNodeRef.current.querySelector(".ag-body-viewport");
         const bbox = rowContainer.getBoundingClientRect();
@@ -292,11 +287,10 @@ function Grid(props) {
         setActualRange({
           from: isNaN(firstRowIndex) ? "" : firstRowIndex + 1,
           to: isNaN(firstRowIndex) ? "" : lastRowIndex + 1,
-          total: data.api.getDisplayedRowCount(),
+          total: _.api.getDisplayedRowCount(),
         });
-      } else {
-        setActualRange({ from: 0, to: 0, total: 0 });
-      }
+      };
+      renderedNodes.length > 0 && applyRange();
     }
   }
 
@@ -332,8 +326,8 @@ function Grid(props) {
     onRowExpandOrCollapse(row);
   }
 
-  function onExpandOrCollapseAll(data) {
-    data.api.forEachNode((node) => {
+  function onExpandOrCollapseAll(_) {
+    _.api.forEachNode((node) => {
       onRowExpandOrCollapse(node);
     });
   }
@@ -394,10 +388,9 @@ function Grid(props) {
     setAgGrid(<AgGrid />);
     // set minimum height if height wasn't explicitly set in css
     if (getAgGridDomLayout() !== "autoHeight") {
-      window.getComputedStyle(gridNodeRef.current).height === "0px"
-        ? (gridNodeRef.current.style.height =
-            DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px")
-        : null;
+      window.getComputedStyle(gridNodeRef.current).height === "0px" &&
+        (gridNodeRef.current.style.height =
+          DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px");
     }
     window.addEventListener("resize", onResize);
     return () => {
