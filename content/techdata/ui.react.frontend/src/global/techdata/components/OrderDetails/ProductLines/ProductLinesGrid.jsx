@@ -23,8 +23,8 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
-
-  const columnsArray = gridConfig.columnList;
+  
+  const columnsList = gridConfig.columnList;
   const STATUS = {
     onHold: 'onHold',
     inProcess: 'inProcess',
@@ -69,12 +69,17 @@ function ProductLinesGrid({
     if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
     return icon;
   }
-  
+
+  function getDateTransformed(dateUTC) {
+    const formatedDate = new Date(dateUTC).toLocaleDateString();
+    return formatedDate;
+}
+  console.log('columnsArray', columnsList);
   //default column defs
   const columnDefs = [
     {
-      headerName: "Line Item",
-      field: "id",
+      headerName: columnsList.length > 0 ? columnsList[0].columnLabel : "Line Item",
+      field: columnsList.length > 0 ? columnsList[0].columnKey :"id",
       width: "100px",
       sortable: false,
       expandable: true,
@@ -95,18 +100,18 @@ function ProductLinesGrid({
       ),
     },
     {
-      headerName: "Mfr No",
-      field: "mfrNumber",
+      headerName: columnsList.length > 0 ? columnsList[1].columnLabel : "Mfr No",
+      field: columnsList.length > 0 ? columnsList[1].columnKey : "mfrNumber",
       sortable: false,
     },
     {
-      headerName: "Ref No",
-      field: "tdNumber",
+      headerName: columnsList.length > 0 ? columnsList[2].columnLabel : "Ref No",
+      field: columnsList.length > 0 ? columnsList[2].columnKey : "tdNumber",
       sortable: false,
     },
     {
-      headerName: "Description",
-      field: "description",
+      headerName: columnsList.length > 0 ? columnsList[3].columnLabel : "Description",
+      field: columnsList.length > 0 ? columnsList[3].columnKey : "description",
       sortable: false,
       width: "250px",
       cellRenderer: (props) => {
@@ -122,26 +127,27 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: "Quantity",
-      field: "quantity",
+      headerName: columnsList.length > 0 ? columnsList[4].columnLabel : "***Quantity",
+      field: columnsList.length > 0 ? columnsList[4].columnKey : "quantity",
       sortable: false,
     },
     {
-      headerName: "Unit Price",
-      field: "unitPrice",
+      headerName: columnsList.length > 0 ? columnsList[5].columnLabel : "Unit Price",
+      field: columnsList.length > 0 ? columnsList[5].columnKey : "unitPrice",
       sortable: false,
       valueFormatter: (props) => {
         return props.value.toLocaleString();
     },
     },
     {
-      headerName: "Total price (USD)",
-      field: "totalPrice",
+      headerName: columnsList.length > 0 ? columnsList[6].columnLabel : "Total price (USD)",
+      field: columnsList.length > 0 ? columnsList[6].columnKey : "totalPrice",
       sortable: false,
     },
+    
     {
-      headerName: "Status",
-      field: "status",
+      headerName: columnsList.length > 0 ? columnsList[7].columnLabel : "Status",
+      field: columnsList.length > 0 ? columnsList[7].columnKey : "status",
       sortable: false,
       cellRenderer: (props) => {
         return (
@@ -153,8 +159,16 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: "Serial",
-      field: "serial",
+      headerName: columnsList.length > 0 ? columnsList[8].columnLabel : "Ship Date",
+      field: columnsList.length > 0 ? columnsList[8].columnKey : "shipDate",
+      sortable: false,
+      valueFormatter: (props) => {
+        return getDateTransformed(props.value);
+      },
+    },
+    {
+      headerName:  columnsList.length > 0 ? columnsList[9].columnLabel : "Serial",
+      field:  columnsList.length > 0 ? columnsList[9].columnKey : "serial",
       sortable: false,
       cellRenderer: (props) => {
         return (
@@ -173,8 +187,8 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: "Invoice",
-      field: "invoice",
+      headerName: columnsList.length > 0 ? columnsList[10].columnLabel : "Invoice",
+      field: columnsList.length > 0 ? columnsList[10].columnKey : "invoice",
       sortable: false,
       cellRenderer: (props) => {
         return (

@@ -681,6 +681,10 @@ module.exports = {
         const  getRandomNumber = (maxValue) => {
             return Math.floor(Math.random() * maxValue + 1);
         };
+        const randomDate = (start, end) => {
+            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+        }
+
         return {
             "content": {
                 "id": "121764062",
@@ -748,6 +752,7 @@ module.exports = {
                         "unitPrice": 1548.22,
                         "status": "shipped",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "unitPriceFormatted": "50.00",
                         "totalPrice": 1548.22,
                         "totalPriceFormatted": "0.00",
@@ -788,6 +793,7 @@ module.exports = {
                         "msrp": null,
                         "status": "onHold",
                         "serial": null,
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "invoice": null,
                         "discounts": null,
                         "contract": null,
@@ -819,6 +825,7 @@ module.exports = {
                         "msrp": null,
                         "status": "cancelled",
                         "serial": null,
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "invoice": null,
                         "discounts": null,
                         "contract": null,
@@ -853,6 +860,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "shipped",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000013387287",
                         "upcNumber": null,
                         "unitListPrice": "827.8900000",
@@ -883,6 +891,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "shipped",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000013366560",
                         "upcNumber": null,
                         "unitListPrice": "200.7000000",
@@ -913,6 +922,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "shipped",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000013387287",
                         "upcNumber": null,
                         "unitListPrice": "827.8900000",
@@ -943,6 +953,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "open",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000011262480",
                         "upcNumber": null,
                         "unitListPrice": "333.1600000",
@@ -974,6 +985,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "inProcess",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000011262480",
                         "upcNumber": null,
                         "unitListPrice": "333.1600000",
@@ -1005,6 +1017,7 @@ module.exports = {
                         "shortDescription": null,
                         "status": "shipped",
                         "serial": getRandomNumber(1000000),
+                        "shipDate": randomDate(new Date(2021, 0, 1), new Date()),
                         "tdNumber": "000000000011262480",
                         "upcNumber": null,
                         "unitListPrice": "333.1600000",
