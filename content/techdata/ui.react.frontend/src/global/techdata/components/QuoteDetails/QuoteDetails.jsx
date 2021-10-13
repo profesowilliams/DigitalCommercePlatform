@@ -11,6 +11,7 @@ import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import GeneralInfo from "../QuotePreview/ConfigGrid/GeneralInfo"
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -110,7 +111,7 @@ const QuoteDetails = ({ componentProp }) => {
   }, [exportOption, quoteDetails, actualQuoteLinesData]);
 
   return quoteDetails ? (
-    <>
+    <div className="cmp-quote-details">
       <QuotesSubHeader
         label={subheaderLabel}
         title={subheaderTitle}
@@ -135,6 +136,12 @@ const QuoteDetails = ({ componentProp }) => {
                 information?.endUserHeaderLabel ? information.endUserHeaderLabel : ""
               }
               contact={quoteDetails?.endUser}
+            />
+            <GeneralInfo
+                quoteDetails={quoteDetails}
+                gridProps={quoteDetails}
+                info={information}
+                readOnly={true}
             />
           </>
           )
@@ -167,7 +174,7 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
 
       />
-    </>
+    </div>
   ) : error ?
     <ErrorMessage
         error={error}

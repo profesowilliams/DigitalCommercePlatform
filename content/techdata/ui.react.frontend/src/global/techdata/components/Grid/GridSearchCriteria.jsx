@@ -47,7 +47,11 @@ function GridSearchCriteria({ label, componentProp, Filters, onSearchRequest, on
 			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
-					<Filters key={reset} componentProp={componentProp} onQueryChanged={(query) => handleChange(query)}></Filters>
+					<Filters
+						key={reset}
+						componentProp={componentProp}
+						onQueryChanged={(query) => handleChange(query)}>
+					</Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>
 					<Button disabled={!filterActive} onClick={() => onSearch()}>

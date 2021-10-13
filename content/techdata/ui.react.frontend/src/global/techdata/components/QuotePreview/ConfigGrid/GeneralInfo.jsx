@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 
-function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueChange}) {
+function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
 
     const source = quoteDetails.source;
@@ -251,7 +251,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
 
     return (
         <div className="cmp-qp__general-info">
-            <p onClick={handleEditModeChange} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
+            <p onClick={!readOnly && handleEditModeChange} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
             <div className="cmp-qp__general-info--address-group">
                 {source &&
                     <div className="cmp-qp__information-row--readonly">
@@ -306,7 +306,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                     </>
                 )}
             </div>
-            {editMode && (
+            {!readOnly && editMode && (
                 <div className="cmp-qp__edit-mode">
                     <div className="form-check">
                         <label htmlFor="tier">{info.tierLabel}</label>

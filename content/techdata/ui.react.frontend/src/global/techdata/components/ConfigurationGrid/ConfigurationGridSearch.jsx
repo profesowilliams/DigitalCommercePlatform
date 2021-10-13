@@ -10,7 +10,7 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
     items: [
       { key: "EndUser", value: "End User" },
       { key: "Id", value: "Config ID" },
-      { key: "configName", value: "Config Name" },
+      { key: "ConfigName", value: "Config Name" },
     ],
   };
 

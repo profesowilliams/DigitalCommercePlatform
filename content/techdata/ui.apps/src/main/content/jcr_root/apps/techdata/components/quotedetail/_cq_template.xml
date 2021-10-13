@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    logoLabel="The reseller logo"
+    imageLabel="Product images"
+    manufacturerLabel="Part number - manufacturer"
+    partNumberTDLabel="Part number - Tech data"
+    msrpLabel="MSRP/List price"
+>
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Line Item"
+            columnKey="id"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Item Information"
+            columnKey="shortDescription"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit List Price"
+            columnKey="unitListPriceFormatted"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="&#37; Off List Price"
+            columnKey="discounts"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quantity"
+            columnKey="quantity"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit Price"
+            columnKey="unitPrice"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Extended Price"
+            columnKey="extendedPriceFormatted"
+        />
+    </columnList>
+    <whiteLabelColumnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Line Item"
+            columnKey="id"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Item Information"
+            columnKey="shortDescription"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quantity"
+            columnKey="quantity"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="MSRP"
+            columnKey="msrp"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit Price"
+            columnKey="unitPrice"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Extended Price"
+            columnKey="extendedPriceFormatted"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Markup"
+            columnKey="appliedMarkup"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Client Unit Price"
+            columnKey="clientUnitPrice"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Client Extended Price"
+            columnKey="clientExtendedPrice"
+        />
+    </whiteLabelColumnList>
+</jcr:root>

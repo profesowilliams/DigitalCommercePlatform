@@ -27,7 +27,7 @@
         <item2
             jcr:primaryType="nt:unstructured"
             configurationTypesValue="Config Name"
-            configurationTypesKey="configName"
+            configurationTypesKey="ConfigName"
         />
     </configurationTypesList>
     <columnList jcr:primaryType="nt:unstructured">

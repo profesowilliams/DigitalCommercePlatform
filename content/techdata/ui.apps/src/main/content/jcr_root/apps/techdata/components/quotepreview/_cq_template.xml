@@ -11,4 +11,62 @@
     endUserNameLabel="End User:"
     errorGettingDealsLabel="There was an error trying to get the Deals, please try again."
     dealsPricingNote="Note: The pricing updates will be reflected when you create a TD quote."
-/>
+>
+
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Select All"
+            columnKey="id"
+            sortable="{Boolean}false"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Type"
+            columnKey="configurationType"
+            sortable="{Boolean}false"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor"
+            columnKey="vendor"
+            sortable="{Boolean}false"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Created"
+            columnKey="created"
+            sortable="{Boolean}false"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Expires"
+            columnKey="expires"
+            sortable="{Boolean}false"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Config Name"
+            columnKey="configName"
+            sortable="{Boolean}true"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="End User Name"
+            columnKey="endUserName"
+            sortable="{Boolean}false"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD Quote Id"
+            columnKey="quotes"
+            sortable="{Boolean}false"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Action"
+            columnKey="action"
+            sortable="{Boolean}false"
+        />
+    </columnList>
+</jcr:root>
