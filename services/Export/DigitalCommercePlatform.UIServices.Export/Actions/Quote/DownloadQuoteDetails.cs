@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
             public string QuoteId { get; set; }
             public LineMarkup[] LineMarkup { get; set; }
             public string Logo { get; set; }
+            public AncillaryItem[] AncillaryItems { get; set; }
         }
 
         public class Response
@@ -67,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                 var getQuoteRequest = new GetQuote.Request(new List<string> { request.QuoteId }, true);
                 var quoteModel = await _commerceService.GetQuote(getQuoteRequest);
                 var quoteDetails = _mapper.Map<QuoteDetails>(quoteModel);
-                var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request.Logo, request.LineMarkup);
+                var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request);
                 var file = new DownloadableFile(binaryContentXls, request.QuoteId + ".xls", 
                     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                 //var file = new DownloadableFile(binaryContentXls, request.QuoteId + ".xls", "application/vnd.ms-excel");

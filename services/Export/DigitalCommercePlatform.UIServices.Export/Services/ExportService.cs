@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Microsoft.AspNetCore.Http;
+using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
 
 namespace DigitalCommercePlatform.UIServices.Export.Services
 {
@@ -33,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
         
         [SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
-        public async Task<byte[]> GetQuoteDetailsAsXls(QuoteDetails quoteDetails, string logo, LineMarkup[] markupData)
+        public async Task<byte[]> GetQuoteDetailsAsXls(QuoteDetails quoteDetails, DownloadQuoteDetails.Request request)
         {
             string estimateDealId = string.Empty;
             bool isHPEQuote = true;
@@ -138,16 +139,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                 innerHeaderBorder.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             }
             xlRow += 11;
-            string[] colstoExport = new string[] { };
+            string[] colstoExport = Array.Empty<string>();
             // populate the Header for Line / Subline Details
             getLineHeader(ref wsQuoteDetail, ref xlRow, ref colstoExport);
-            applyMarkup(quoteDetails, markupData);
+            applyMarkup(quoteDetails, request.LineMarkup);
             //Load data for Line/SubLine
             if (quoteDetails.Items?.Count > 0)
             {
-                ancillaryChargesWithTitle = quoteDetails.Items.First().AncillaryChargesWithTitles == null
-                    ? string.Empty
-                    : quoteDetails.Items.First().AncillaryChargesWithTitles;
+                ancillaryChargesWithTitle = quoteDetails.Items.First().AncillaryChargesWithTitles ?? string.Empty;
                 //totalAmount = quoteLines.First().Total;
 
                 foreach (Line line in quoteDetails.Items.OrderBy(i => i.Id))
@@ -183,24 +182,20 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 11].Value = "Subtotal";
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 12, xlRow + 3, xlCol + 13].Merge = true;
-            wsQuoteDetail.Cells[xlRow + 3, xlCol + 12, xlRow + 3, xlCol + 13].Value = subTotal > 0 ? String.Format("{0:$#,##0.00;($#,##0.00);$0.00}", Math.Round(subTotal, 2)) : "$0.00";
+            wsQuoteDetail.Cells[xlRow + 3, xlCol + 12, xlRow + 3, xlCol + 13].Value = subTotal > 0 
+                ? string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", Math.Round(subTotal, 2)) 
+                : "$0.00";
 
             //Ancillary charges
             var ancillaryLines = 0;
-            foreach (var anciCharge in SplitString(ancillaryChargesWithTitle, ",_,"))
+            foreach (AncillaryItem ancillaryItem in request.AncillaryItems)
             {
-                if (!string.IsNullOrEmpty(anciCharge) && anciCharge.Length > 0)
-                {
-                    var arrCharges = SplitString(anciCharge, ":^:");
-                    if (arrCharges.Length >= 2)
-                    {
-                        decimal val = Decimal.Parse(arrCharges[1]);
-                        wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 11].Value = arrCharges[0].Trim();
-                        wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Merge = true;
-                        wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Value = val > 0 ? String.Format("{0:$#,##0.00;($#,##0.00);$0.00}", Math.Round(val, 2)) : "$0.00";
-                        ancillaryLines++;
-                    }
-                }
+                wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 11].Value = $"Ancillary item ({ancillaryItem.Description.Trim()})";
+                wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Merge = true;
+                wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Value = ancillaryItem.Value > 0 
+                    ? string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", Math.Round(ancillaryItem.Value, 2)) 
+                    : "$0.00";
+                ancillaryLines++;
             }
 
             var shippingAndHandlingRow = xlRow + 4 + ancillaryLines;
@@ -321,7 +316,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             wsQuoteDetail.Cells[xlRow + 1, xlCol, xlRow + 1, xlCol + 14].Style.Border.Top.Style = ExcelBorderStyle.None;
 
             xlCol = 2;
-            SetHeaderImage(xlRow, xlCol, wsQuoteDetail, logo);
+            SetHeaderImage(xlRow, xlCol, wsQuoteDetail, request.Logo);
 
             return await Task.FromResult(pkg.GetAsByteArray());
 
@@ -862,12 +857,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             termsConditionLines.Style.Font.Size = 10;
             termsConditionLines.Style.WrapText = true;
             return termsConditionLines;
-        }
-
-        private string[] SplitString(string data, string seperator)
-        {
-            string[] values = data.Split(new string[] { seperator }, StringSplitOptions.None);
-            return values;
         }
 
         private void getLineHeader(ref ExcelWorksheet wsQuoteDetail, ref int xlRow, ref string[] colsToExport)
