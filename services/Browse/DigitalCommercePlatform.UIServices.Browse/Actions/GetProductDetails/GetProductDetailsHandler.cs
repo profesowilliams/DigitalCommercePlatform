@@ -72,7 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper)
             {
                 _productRepositoryServices = productRepositoryServices;
-                _imageSize = siteSettings.GetSetting("ImagesSize");
+                _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
                 _mapper = mapper;
             }
 

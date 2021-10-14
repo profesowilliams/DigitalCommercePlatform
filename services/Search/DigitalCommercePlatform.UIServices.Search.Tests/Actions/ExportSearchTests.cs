@@ -32,9 +32,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _httpClientMock = new Mock<IMiddleTierHttpClient>();
             _mapperMock = new Mock<IMapper>();
             _appsettingsMock = new Mock<IAppSettings>();
-            _appsettingsMock.Setup(x => x.GetSetting("App.Search.Url")).Returns("http://appsearch");
+            _appsettingsMock.Setup(x => x.GetSetting("Search.App.Url")).Returns("http://appsearch");
             _siteSettingsMock = new Mock<ISiteSettings>();
-            _siteSettingsMock.Setup(x => x.GetSetting<int>("Search.Export.MaxProducts")).Returns(100);
+            _siteSettingsMock.Setup(x => x.GetSetting<int>("Search.UI.Export.MaxProducts")).Returns(100);
             _logger = new FakeLogger<ExportSearch.Handler>();
 
             _sut = new ExportSearch.Handler(_httpClientMock.Object, _mapperMock.Object, _appsettingsMock.Object, _logger, _siteSettingsMock.Object);

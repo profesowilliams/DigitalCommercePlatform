@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _searchService = searchService;
                 _logger = logger;
                 _mapper = mapper;
-                _catalog = siteSettings.TryGetSetting("Catalog")?.ToString();
+                _catalog = siteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)

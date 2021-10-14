@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         {
             _httpClientMock = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
-            _appSettingsMock.Setup(x => x.GetSetting("App.Product.Url")).Returns("http://appproduct");
+            _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
 
             _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object);
         }

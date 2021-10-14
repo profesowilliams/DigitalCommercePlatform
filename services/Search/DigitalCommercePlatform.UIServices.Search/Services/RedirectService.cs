@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         {
             _logger = logger;
             _middleTierHttpClient = middleTierHttpClient;
-            _appSearchUrl = appSettings.GetSetting("App.Search.Url");
+            _appSearchUrl = appSettings.GetSetting("Search.App.Url");
         }
 
         public async Task<ContentDto> GetRedirects(string keyword)

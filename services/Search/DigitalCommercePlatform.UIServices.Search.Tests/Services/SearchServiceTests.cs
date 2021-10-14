@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             _logger = new FakeLogger<SearchService>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
-            _appSettingsMock.Setup(s => s.GetSetting("App.Search.Url")).Returns("http://app-Search/v1");
+            _appSettingsMock.Setup(s => s.GetSetting("Search.App.Url")).Returns("http://app-Search/v1");
             _context = new Mock<IUIContext>();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
             _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _mapper);

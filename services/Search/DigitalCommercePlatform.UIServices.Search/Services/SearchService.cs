@@ -33,8 +33,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _logger = logger;
             _context = context;
             _middleTierHttpClient = middleTierHttpClient;
-            _appSearchUrl = appSettings.GetSetting("App.Search.Url");
-            _appProductUrl = appSettings.GetSetting("App.Product.Url");
+            _appSearchUrl = appSettings.GetSetting("Search.App.Url");
+            _appProductUrl = appSettings.GetSetting("Product.App.Url");
             var mapperConfig = new MapperConfiguration(x => x.AddProfiles(new Profile[] { new SearchProfile() }));
             _mapper = mapperConfig.CreateMapper();
         }

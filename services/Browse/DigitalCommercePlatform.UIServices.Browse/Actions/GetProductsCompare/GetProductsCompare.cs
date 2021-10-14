@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             public Handler(IMiddleTierHttpClient httpClient, IAppSettings appSettings)
             {
                 _httpClient = httpClient;
-                _productAppUrl = appSettings.GetSetting("App.Product.Url");
+                _productAppUrl = appSettings.GetSetting("Product.App.Url");
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)

@@ -27,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _logger = new FakeLogger<TypeAhead.Handler>();
             _searchServiceMock = new Mock<ISearchService>();
             _siteSettingsMock = new Mock<ISiteSettings>();
-            _siteSettingsMock.Setup(s => s.TryGetSetting("Content.SearchUI.TypeAhead")).Returns("{ \"Type\" : \"Product\", \"MaximumResults\": 10 }");
+            _siteSettingsMock.Setup(s => s.TryGetSetting("Search.UI.TypeAhead")).Returns("{ \"Type\" : \"Product\", \"MaximumResults\": 10 }");
         }
 
         [Theory]

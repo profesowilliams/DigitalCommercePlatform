@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock = new Mock<ISearchService>();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
             _siteSettingsMock = new Mock<ISiteSettings>();
-            _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog")).Returns("FCS");
+            _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog.All.DefaultCatalog")).Returns("FCS");
         }
 
         [Theory]

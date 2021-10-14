@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
                 var defaultRelatedProductType = new RelatedProductType { Type = RelatedProductConstHelper.All, MaximumResults = null };
                 var defaultRelatedProductTypes = new RelatedProductTypes { Types = new List<RelatedProductType> { defaultRelatedProductType } };
 
-                var relatedProductsTypesConfigString = _siteSettings.TryGetSetting("Product.Detail.RelatedProductsTypes")?.ToString();
+                var relatedProductsTypesConfigString = _siteSettings.TryGetSetting("Browse.UI.RelatedProductsTypes")?.ToString();
                 var relatedProductsTypesConfig = JsonHelper.DeserializeObjectSafely<RelatedProductTypes>(
                     value: relatedProductsTypesConfigString,
                     settings: JsonSerializerSettingsHelper.GetJsonSerializerSettings(),

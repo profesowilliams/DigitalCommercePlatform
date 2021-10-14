@@ -38,9 +38,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _logger = new Mock<ILogger<BrowseService>>();
             _cachelogger = new Mock<ILogger<CachingService>>();
             _appSettings = new Mock<IAppSettings>();
-            _appSettings.Setup(s => s.GetSetting("App.Catalog.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1");
+            _appSettings.Setup(s => s.GetSetting("Catalog.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1");
             _appSettings.Setup(s => s.GetSetting("Feature.DF.ProuctCatalog")).Returns("false");
-            _appSettings.Setup(s => s.GetSetting("External.Product.Catalog.Url")).Returns("https://mtapnew.stage.svc.us.cstenet.com/ProductService/api/VendorProduct/getProductCatalog");
+            _appSettings.Setup(s => s.GetSetting("Browse.UI.External.Catalog.Url")).Returns("https://mtapnew.stage.svc.us.cstenet.com/ProductService/api/VendorProduct/getProductCatalog");
             _uiContext = new Mock<IUIContext>();
             _uiContext.SetupGet(x => x.User).Returns(new User { ActiveCustomer = new Customer { CustomerNumber = "123", System = "2" }, Customers = new List<string>() });
             _mapper = new Mock<IMapper>();

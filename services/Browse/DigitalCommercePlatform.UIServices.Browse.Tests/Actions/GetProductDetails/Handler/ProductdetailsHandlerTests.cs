@@ -33,10 +33,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         {
             _mockBrowseService = new();
             _appSettingsMock = new Mock<IAppSettings>();
-            _appSettingsMock.Setup(x => x.GetSetting("App.Product.Url")).Returns("http://appproduct");
+            _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
 
             _siteSettingsMock = new Mock<ISiteSettings>();
-            _siteSettingsMock.Setup(x => x.GetSetting("ImagesSize")).Returns("400x300");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageSize")).Returns("400x300");
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 

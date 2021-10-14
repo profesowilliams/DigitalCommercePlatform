@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             _logger = new FakeLogger<RedirectService>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
-            _appSettingsMock.Setup(s => s.GetSetting("App.Search.Url")).Returns("http://app-Search/v1");
+            _appSettingsMock.Setup(s => s.GetSetting("Search.App.Url")).Returns("http://app-Search/v1");
         }
 
         [Theory]

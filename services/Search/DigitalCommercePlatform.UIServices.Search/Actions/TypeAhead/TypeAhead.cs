@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead
                 _searchService = searchService;
                 _logger = logger;
                 _searchTypeAhead = JsonHelper.DeserializeObjectSafely<TypeAheadType>(
-                    value: siteSettings.TryGetSetting("Content.SearchUI.TypeAhead")?.ToString(),
+                    value: siteSettings.TryGetSetting("Search.UI.TypeAhead")?.ToString(),
                     settings: JsonSerializerSettingsHelper.GetJsonSerializerSettings(),
                     defaultValue: null);
             }

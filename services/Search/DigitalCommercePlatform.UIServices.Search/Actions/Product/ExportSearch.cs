@@ -39,8 +39,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _httpClient = httpClient;
                 _mapper = mapper;
                 _logger = logger;
-                _appSearchUrl = appSettings.GetSetting("App.Search.Url");
-                _maxResults = siteSettings.GetSetting<int>("Search.Export.MaxProducts");
+                _appSearchUrl = appSettings.GetSetting("Search.App.Url");
+                _maxResults = siteSettings.GetSetting<int>("Search.UI.Export.MaxProducts");
             }
 
             public async Task<IEnumerable<ExportResponseModel>> Handle(Request request, CancellationToken cancellationToken)

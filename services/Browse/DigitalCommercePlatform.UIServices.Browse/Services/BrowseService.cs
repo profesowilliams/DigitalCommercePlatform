@@ -43,9 +43,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _cachingService = cachingService;
             _mapper = mapper;
             _logger = logger;
-            _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
-            _appProductURL = appSettings.GetSetting("App.Product.Url");
-            _productCatalogURL = appSettings.GetSetting("External.Product.Catalog.Url");
+            _appCatalogURL = appSettings.GetSetting("Catalog.App.Url");
+            _appProductURL = appSettings.GetSetting("Product.App.Url");
+            _productCatalogURL = appSettings.GetSetting("Browse.UI.External.Catalog.Url");
             _productCatalogFeature = appSettings.GetSetting("Feature.DF.ProuctCatalog");
         }
 
