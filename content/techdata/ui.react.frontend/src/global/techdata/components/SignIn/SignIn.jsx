@@ -207,7 +207,7 @@ const SignIn = (props) => {
     return (
       <button className="cmp-sign-in-button" onClick={onSignIn}>
         {isAuthenticated === null ? (
-          <svg width="23px" height="28px" viewBox="0 0 23 28" version="1.1">
+          <svg width="26px" height="26px" viewBox="0 0 23 28" version="1.1">
             <g
               id="Symbols"
               stroke="none"

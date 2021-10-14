@@ -75,8 +75,8 @@ const MiniCart = ({ componentProp }) => {
     <MiniCartWrapper shopUrl={shopUrl} cartActive={cartActive}>
       <span className="cmp-cart__icon">
         {cartActive ? (
-          <svg width="30px" height="27px" viewBox="0 0 30 27" version="1.1">
-            <title>Icon_Cart_Line (1)</title>
+          <svg width="26px" height="26px" viewBox="0 0 30 27" version="1.1">
+            <title>Icon_Cart_Line</title>
             <g id="Page-1" stroke-width="1" fill="none" fill-rule="evenodd">
               <g
                 id="Artboard"
@@ -109,7 +109,7 @@ const MiniCart = ({ componentProp }) => {
             </g>
           </svg>
         ) : (
-          <svg width="31px" height="26px" viewBox="0 0 31 26" version="1.1">
+          <svg width="26px" height="26px" viewBox="0 0 31 26" version="1.1">
             <title>Icon_Cart_Solid</title>
             <g id="Page-1" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="Artboard" transform="translate(2.000000, 1.000000)">
