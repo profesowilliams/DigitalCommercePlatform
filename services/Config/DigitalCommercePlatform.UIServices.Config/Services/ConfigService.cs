@@ -138,6 +138,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             FindResponse<Configuration> result = new();
             try
             {
+                if (request.Criteria.SortBy.ToLower() == "configid")
+                    request.Criteria.SortBy = "Id";
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
@@ -150,10 +152,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     if (stringUrl.Contains("SortBy = Enduser"))
                     {
                         configurationFindUrl = new Url(stringUrl.Replace("SortBy=Enduser", "SortBy=EndUser"));
-                    }
-                    else if (stringUrl.Contains("SortBy=Configid"))
-                    {
-                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Configid", "SortBy=Id"));
                     }
                     else if (stringUrl.Contains("SortBy=Expires"))
                     {
