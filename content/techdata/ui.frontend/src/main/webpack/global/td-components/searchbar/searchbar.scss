@@ -8,13 +8,9 @@
   text-align: left;
   width: 100%;
 
-  &:hover, &:active {
-    background-color: get-color(td-primary-blue);
-    color: get-color(brand-white);
-
-    svg {
-      color: get-color(brand-white);
-    }
+  &:hover,
+  &:active {
+    background-color: get-color(border-light-gray);
   }
 }
 
@@ -45,20 +41,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -44%;
-    margin-top: -7%;
+    margin-left: 0;
+    top: 0.5%;
     position: fixed;
     min-width: 0;
+    width: auto;
   }
 
   &--checked {
-    margin-left: -57%;
+    margin-left: 0;
     margin-top: 5%;
     width: 100%;
+    left: 0;
+    top: 3.5%;
   }
 
   &__container {
     display: flex;
+    background-color: get-color(brand-white);
     align-items: center;
     justify-content: center;
     margin: 0 auto;
@@ -66,7 +66,7 @@
   }
 
   &__input {
-    border: rem(1px) solid get-color(brand-black);
+    border: rem(1px) solid get-color(text-shadow);
     border-radius: rem(6px) 0 0 rem(6px);
     border-right: 0;
     box-sizing: border-box;
@@ -75,8 +75,13 @@
     transition: all 400ms ease;
     width: 100%;
 
-    &::placeholder{
-      color: get-color(brand-text-gray);
+    &:focus {
+      border: rem(1px) solid get-color(td-dark-blue);
+    }
+
+    &::placeholder {
+      color: get-color(border-light-gray);
+      font-style: italic;
     }
 
     @include mobile {
@@ -96,10 +101,10 @@
   }
 
   &__button {
-    background-color: get-color(brand-black);
-    border-right: rem(1.5px) solid get-color(brand-black) !important;
-    border-top: rem(1.5px) solid get-color(brand-black) !important;
-    border-bottom: rem(1.5px) solid get-color(brand-black) !important;
+    background-color: get-color(brand-white);
+    border-right: rem(1.5px) solid get-color(text-shadow) !important;
+    border-top: rem(1.5px) solid get-color(text-shadow) !important;
+    border-bottom: rem(1.5px) solid get-color(text-shadow) !important;
     border-left: 0 !important;
     border-radius: 0 rem(6px) rem(6px) 0;
     box-sizing: border-box;
@@ -107,7 +112,6 @@
     transition: all 200ms ease;
 
     &:hover {
-      background-color: get-color(brand-text-gray);
       cursor: pointer;
 
       @include mobile {
@@ -118,7 +122,7 @@
     @include mobile {
       background-color: transparent;
       border: none !important;
-      padding: rem(16px);
+      padding: rem(8px);
       margin: 0;
     }
 
@@ -129,27 +133,23 @@
     }
 
     &--checked {
-      background-color: get-color(brand-white);
-
-      &:hover {
-        background-color: get-color(brand-light-gray);
-      }
-
-      svg {
-        color: get-color(brand-black);
-      }
+      background-color: get-color(td-dark-blue);
     }
   }
 
   &__icon {
-    stroke: get-color(brand-white);
+    stroke: get-color(td-dark-blue);
 
     @include mobile {
       stroke: get-color(brand-light-blue);
     }
 
     &--checked {
-      stroke: get-color(brand-black);
+      stroke: get-color(brand-white);
+
+      @include mobile {
+        stroke: get-color(brand-light-blue);
+      }
     }
   }
 
@@ -192,9 +192,17 @@
     }
   }
 
+  &__area {
+    background-color: get-color(brand-white);
+  }
 
   &__button {
     @include nav-button;
+
+    &:hover {
+      background-color: map-get($color-palette, "td-lighter-gray");
+      color: get-color(brand-text-gray);
+    }
   }
 
   &__selectedarea {
@@ -223,9 +231,13 @@
         min-width: rem(350px);
       }
 
-      &:hover, &:active {
+      &:hover,
+      &:active {
+        background-color: map-get($color-palette, "td-lighter-gray");
+        color: get-color(brand-text-gray);
+        
         svg {
-          color: get-color(brand-white);
+          color: get-color(brand-nav-blue);
         }
       }
     }
@@ -254,7 +266,7 @@
 }
 /* Buttons */
 .cmp-searcharea::-webkit-scrollbar-button {
-  display: none
+  display: none;
 }
 
 //Search Suggestions styles
@@ -295,7 +307,7 @@
     }
 
     &:hover {
-      background-color: map-get($color-palette, 'td-lighter-gray');
+      background-color: map-get($color-palette, "td-lighter-gray");
       color: get-color(brand-white);
     }
   }
@@ -323,7 +335,6 @@
       }
     }
   }
-
 }
 
 //Loading indicator Styling
@@ -342,11 +353,33 @@
 }
 
 //AEM overriding Styling
-.experiencefragment.cmp-experiencefragment--header .cmp-experiencefragment>.cmp-container .aem-Grid .search {
+.experiencefragment.cmp-experiencefragment--header
+  .cmp-experiencefragment
+  > .cmp-container
+  .aem-Grid
+  .search {
   margin-left: auto !important;
   width: 35% !important;
 
   @include mobile {
     width: 100% !important;
+  }
+}
+
+//Searchbar width on UAT
+#cmp-techdata-header.cmp-container .aem-Grid .search {
+  width: 30%;
+}
+
+//Separeted active class for re-use on all the component
+.activeClass {
+  background-color: get-color(brand-nav-blue);
+
+  .cmp-searcharea__button {
+    color: get-color(brand-white);
+
+    &:hover {
+      background-color: get-color(brand-nav-blue);
+    }
   }
 }

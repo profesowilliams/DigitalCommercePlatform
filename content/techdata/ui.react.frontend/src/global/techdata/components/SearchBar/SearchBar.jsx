@@ -45,6 +45,7 @@ const SearchBar = ({ data, componentProp }) => {
   const [isMobile, setMobile] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(false);
+  const [isFocus, setFocus] = useState(false);
 
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
@@ -87,7 +88,7 @@ const SearchBar = ({ data, componentProp }) => {
         }
         return window.location.origin + selectedArea.dcpSearchPage;
       } catch (err) {
-        console.log(
+        console.error(
           `Error calling UI Serivce Endpoint (${
             uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint
           }): ${err}`
@@ -154,16 +155,22 @@ const SearchBar = ({ data, componentProp }) => {
   const gotFocus = () => {
     setMobile(true);
     setSearchInputFocused(true);
+    setFocus(true);
   };
 
   const lostFocus = () => {
     setMobile(false);
     setSearchInputFocused(false);
     setChecked(false);
+    setFocus(false);
   };
 
   const toggleSearchIcon = () => {
     setClicked(!isClicked);
+  };
+
+  const toggleFocusSearchStyles = () => {
+    setFocus(!isFocus);
   };
 
   const mobileSearchOpener = () => {
@@ -183,7 +190,10 @@ const SearchBar = ({ data, componentProp }) => {
       return null;
     }
     return (
-      <div className="cmp-searchbar__context-menu">
+      <div
+        className="cmp-searchbar__context-menu"
+        onFocus={() => setFocus(true)}
+      >
         <SearchAreas
           areaList={areaList}
           selectedArea={selectedArea}
@@ -217,7 +227,8 @@ const SearchBar = ({ data, componentProp }) => {
             aria-invalid="false"
             onChange={onSearchTermTextChange}
             onKeyPress={onSearchTermTextKeyPress}
-            onFocus={gotFocus}
+            onFocus={toggleFocusSearchStyles}
+            onBlur={() => setFocus(false)}
             value={searchTermText}
             placeholder={placeholder}
           />
@@ -227,7 +238,7 @@ const SearchBar = ({ data, componentProp }) => {
                 ? "cmp-searchbar__button cmp-searchbar__button--mobile"
                 : "cmp-searchbar__button"
             }
-            onClick={mobileSearchOpener}
+            onClick={searchTermText === '' ? mobileSearchOpener : redirectToShop}
           >
             <svg
               className={
@@ -276,13 +287,14 @@ const SearchBar = ({ data, componentProp }) => {
             aria-invalid="false"
             onChange={onSearchTermTextChange}
             onKeyPress={onSearchTermTextKeyPress}
-            onFocus={gotFocus}
+            onFocus={toggleFocusSearchStyles}
+            onBlur={() => setFocus(false)}
             value={searchTermText}
             placeholder={placeholder}
           />
           <button
             className={
-              isClicked
+              isFocus
                 ? "cmp-searchbar__button cmp-searchbar__button--checked"
                 : "cmp-searchbar__button"
             }
@@ -290,7 +302,7 @@ const SearchBar = ({ data, componentProp }) => {
           >
             <svg
               className={
-                isClicked
+                isFocus
                   ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
                   : "cmp-searchbar__icon"
               }
@@ -330,7 +342,6 @@ const SearchBar = ({ data, componentProp }) => {
         isChecked === true ? "cmp-searchbar--checked" : " "
       }`}
       onMouseLeave={lostFocus}
-      onMouseEnter={gotFocus}
     >
       <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
         <i className="cmp-searchbar__clear-icon"></i>
