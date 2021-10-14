@@ -17,7 +17,7 @@ export const setSessionId = (sessionId) =>
 
 export const getSessionId = () => localStorage.getItem('sessionId')
 
-export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
+export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
     /**
      * 2 step logout process:
      *  - initiate UI service logout
@@ -31,7 +31,9 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
         const response = await usPost(redirectURL, { });
                 if( response.status == 200 || response.status == 401 ) {
             // Initiate Ping Federate logout
-            shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(window.location.href);
+            if(!ignoreAEMRoundTrip) {
+                shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(window.location.href);
+            }
             pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
             cleanupLocalStorage(pingLogoutUrl);
         }
@@ -53,8 +55,8 @@ export const cleanupLocalStorage = (logoutRedirectUrl) => {
     window.location.replace(logoutRedirectUrl);
 }
 
-export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl) => {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
+export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip);
 }
 
 export const signOutForExpiredSession = () => {
@@ -69,7 +71,7 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
     let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
     window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl);
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl), false /*redirect back to current url*/;
   }
 }
 

@@ -99,14 +99,15 @@ const SignIn = (props) => {
         if (actionParamValues.length > 0) {
           let redirectUrl =
             actionParamValues.length > 1 ? actionParamValues[1] : "";
-          if (actionParam === ACTION_QUERY_PARAM_LOGOUT_VALUE && redirectUrl) {
+          if (redirectUrl) {
             //what if redirectUrl value is non existent? Then logout will not occurr???
             let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
             signOutBasedOnParam(
               logoutURL,
               pingLogoutURL,
               errorPageUrl,
-              redirectUrl
+              redirectUrl,
+              true /*ignore aem roundtrip*/
             );
           }
         }
