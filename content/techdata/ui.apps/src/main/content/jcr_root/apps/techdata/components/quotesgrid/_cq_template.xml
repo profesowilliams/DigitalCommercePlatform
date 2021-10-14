@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    spaDealsIdLabel="multiple"
+>
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD Quote ID"
+            columnKey="id"
+            sortable="{Boolean}true"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quote Reference"
+            columnKey="quoteReference"
+            sortable="{Boolean}false"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor"
+            columnKey="vendor"
+            sortable="{Boolean}false"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="End User Name"
+            columnKey="endUserName"
+            sortable="{Boolean}false"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="SPA/Deal IDs"
+            columnKey="dealId"
+            sortable="{Boolean}false"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Created"
+            columnKey="created"
+            sortable="{Boolean}true"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Expires"
+            columnKey="expires"
+            sortable="{Boolean}false"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quote Value"
+            columnKey="quoteValue"
+            sortable="{Boolean}true"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Checkout"
+            columnKey="canCheckOut"
+            sortable="{Boolean}false"
+        />
+    </columnList>
+    <vendorList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            vendorKey="allVendors"
+            vendorValue="All Vendors"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            vendorKey="cisco"
+            vendorValue="Cisco"
+        />
+    </vendorList>
+    <keywordList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            key="quoteIdFilter"
+            value="TD Quote ID"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            key="endUserName"
+            value="End User Name"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            key="configIdFilter"
+            value="Deal ID"
+        />
+    </keywordList>
+</jcr:root>

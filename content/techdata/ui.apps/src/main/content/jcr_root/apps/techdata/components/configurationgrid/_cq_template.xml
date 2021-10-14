@@ -115,4 +115,21 @@
             configurationTypesValue="Deal"
         />
     </configurationTypesList>
+    <keywordList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            key="EndUser"
+            value="End User"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            key="Id"
+            value="Config ID"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            key="ConfigName"
+            value="Config Name"
+        />
+    </keywordList>
 </jcr:root>

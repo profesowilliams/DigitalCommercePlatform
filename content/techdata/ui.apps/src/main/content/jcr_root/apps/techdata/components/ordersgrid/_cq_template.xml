@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
+    itemsPerPage="25"
+    paginationStyle="scroll"
     errorMessage="This data is currently unavailable. Please try again later or contact your sales representative."
 >
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Order #"
+            columnKey="id"
+            sortable="{Boolean}true"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Order Date"
+            columnKey="created"
+            sortable="{Boolean}true"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Reseller Name"
+            columnKey="reseller"
+            sortable="{Boolean}false"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor Name"
+            columnKey="vendor"
+            sortable="{Boolean}false"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Ship To"
+            columnKey="shipTo"
+            sortable="{Boolean}false"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Order Type"
+            columnKey="type"
+            sortable="{Boolean}true"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Order Value"
+            columnKey="priceFormatted"
+            sortable="{Boolean}true"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Invoice #"
+            columnKey="invoices"
+            sortable="{Boolean}false"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Status"
+            columnKey="status"
+            sortable="{Boolean}true"
+        />
+        <item9
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Track"
+            columnKey="trackings"
+            sortable="{Boolean}false"
+        />
+        <item10
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Returns"
+            columnKey="isReturn"
+            sortable="{Boolean}false"
+        />
+    </columnList>
 </jcr:root>

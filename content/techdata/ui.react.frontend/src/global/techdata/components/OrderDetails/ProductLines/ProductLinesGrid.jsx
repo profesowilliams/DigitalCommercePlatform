@@ -198,7 +198,7 @@ function ProductLinesGrid({
                 className='cmp-grid-url-underlined'
                 href={props.value ? props.value : '#'}
                 target="_blank">
-                <i class="fas fa-external-link-alt"></i>
+                <i className="fas fa-external-link-alt"></i>
               </a>
             </span>
         );

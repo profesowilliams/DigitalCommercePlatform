@@ -177,8 +177,12 @@ use(function () {
         invoicesModalData.content = properties["content"];
     }
 
-     if (properties && properties["pendingInfo"]) {
-        invoicesModalData.pendingInfo = properties["pendingInfo"];
+    if (properties && properties["pendingInfo"]) {
+       invoicesModalData.pendingInfo = properties["pendingInfo"];
+    }
+
+    if (properties && properties["errorMessage"]) {
+        invoicesModalData.errorMessage = properties["errorMessage"];
     }
 
     if (listValues != null) {

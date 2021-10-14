@@ -235,6 +235,11 @@
                                             fieldDescription="Enter Pending Info"
                                             fieldLabel="Pending Info"
                                             name="./pendingInfo"/>
+                                    <pendingInfo
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Download Invoices Error Message"
+                                            name="./errorMessage"/>
                                 </items>
                             </invoiceModal>
                             <labelList
