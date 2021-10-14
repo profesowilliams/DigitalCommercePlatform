@@ -6,7 +6,6 @@ import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
 import { getUrlParams } from "../../../../utils";
-import { waitFor } from "../../../../utils/utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
@@ -40,15 +39,14 @@ function QuotePreview(props) {
     setDidQuantitiesChange(didQuantitiesChange);
   };
 
-  const createQuote = async (e) => {
-    e.preventDefault();
-    const params = quoteDetails;
-
+  const createQuote = async () => {
     try {
       setLoadingCreateQuote(true);
-      // dummy timeout to delay API call and see loader. DELETE AFTER TESTING
-      await waitFor(1000);
-      const result = await usPost(componentProp.quickQuoteEndpoint, params);
+      const result = await usPost(componentProp.quickQuoteEndpoint, quoteDetails);
+      if (result.data?.content) {
+        /** TODO: next steps with quoteId & confirmationId */
+        console.log(result.data.content);
+      }
       return result.data;
     } catch( error ) {
       return error;
@@ -58,6 +56,15 @@ function QuotePreview(props) {
   };
 
   const handleQuickQuote = useCallback(createQuote, [quoteDetails, loadingCreateQuote]);
+
+  const handleQuickQuoteWithoutDeals = (e) => {
+    e.preventDefault();
+    // remove deal if present
+    if (quoteDetails.hasOwnProperty("deal")) {
+      delete quoteDetails.deal;
+    }
+    handleQuickQuote();
+  }
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => (
@@ -146,7 +153,8 @@ function QuotePreview(props) {
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             disableQuickQuoteButton={isQuickQuoteButtonDisabled(quoteDetails, didQuantitiesChange)}
-            handleQuickQuote={handleQuickQuote}/>
+            handleQuickQuote={handleQuickQuote}
+            handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}/>
         </section>
       )}
     </div>

@@ -3962,22 +3962,19 @@ app.post("/ui-config/v1/getPunchOutURL", function (req,res){
 }) })
 
 //---QUICK QUOTE CONTINUE BTN---//
-app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
-
-    console.log("post submit");
-    console.log(req.body);
-
+app.post("/ui-commerce/v1/quote/create", function (req, res) {
     if (!req.headers["sessionid"]) return res.status(401);
 
     res.json({
-        content: {
-            // some data from respone
-        },
-        error: {
-            code: "",
-            message: "",
-            isError: false,
-        },
+      content: {
+        quoteId: "121772374",
+        confirmationId: "1734535579",
+      },
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
     });
 });
 
