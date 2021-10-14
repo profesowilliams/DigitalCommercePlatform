@@ -49,6 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 WithPaginationInfo = paging.WithPaginationInfo;
                 OrderMethod = filtering.OrderMethod;
                 ConfirmationNumber = filtering.ConfirmationNumber;
+                InvoiceId = filtering.InvoiceId;
             }
         }
 
