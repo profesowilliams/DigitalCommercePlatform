@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { get } from '../../../../utils/api';
+import { removeStringDecimals } from '../../helpers/formatting';
 
 const MyQuotes = ({ componentProp }) => {
     const [myQuotesDetails, setMyQuotes] = useState({});
@@ -12,12 +13,6 @@ const MyQuotes = ({ componentProp }) => {
         labelActiveQuoteValue,
         uiServiceEndPoint
     } = JSON.parse(componentProp);
-    useEffect(async () => {
-        const body = { code: localStorage.getItem("signInCode") };
-        const { data: { content: { items } } } = await get(uiServiceEndPoint, { params: body });
-        console.log('items: ', items);
-        setMyQuotes(items)
-    }, [])
     const {
         converted,
         open,
@@ -25,6 +20,15 @@ const MyQuotes = ({ componentProp }) => {
         formattedAmount,
         currencySymbol
     } = myQuotesDetails;
+    useEffect(() => {
+        (async function(){
+            const body = { code: localStorage.getItem("signInCode") };
+            const { data: { content: { items } } } = await get(uiServiceEndPoint, { params: body });
+            console.log('items: ', items);
+            setMyQuotes(items)
+        })()
+    }, [])
+  
     return (
         <section id="cmp-quotes">
             <div className="cmp-quotes">
@@ -46,7 +50,7 @@ const MyQuotes = ({ componentProp }) => {
             </div>
             <div className="cmp-quotes">
                 <div className="cmp-quotes__active-value">
-                    <div className="cmp-quotes__active-value--price">{`${currencySymbol}${formattedAmount}`}</div>
+                    <div className="cmp-quotes__active-value--price">{`${currencySymbol}${removeStringDecimals(formattedAmount)}`}</div>
                     <div className="cmp-quotes__active-value--title">{labelActiveQuoteValue}</div>
                 </div>
             </div>

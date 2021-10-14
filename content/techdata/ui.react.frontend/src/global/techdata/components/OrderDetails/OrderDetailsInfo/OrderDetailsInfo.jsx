@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import OrderDetailsStatusInfo from "./OrderDetailsStatusInfo";
-import thousandSeparator from "../../../helpers/thousandSeparator";
+
 
 
 const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {

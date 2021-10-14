@@ -1,7 +1,7 @@
 import React from "react";
 import { getUrlParams } from "../../../../../utils";
+import { dateToString } from "../../../helpers/formatting";
 import { If } from "../../../helpers/If";
-import { dateToString } from "../../../helpers/dates";
 
 const QuotesSubHeader = ({
   label,

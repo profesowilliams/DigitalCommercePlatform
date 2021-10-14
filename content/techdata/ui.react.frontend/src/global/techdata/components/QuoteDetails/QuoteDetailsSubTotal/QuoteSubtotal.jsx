@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import thousandSeparator from "../../../helpers/thousandSeparator";
+import { thousandSeparator } from "../../../helpers/formatting";
+
 import AncillaryItems from "./AncillaryItems";
 
 const QuoteSubtotal = ({

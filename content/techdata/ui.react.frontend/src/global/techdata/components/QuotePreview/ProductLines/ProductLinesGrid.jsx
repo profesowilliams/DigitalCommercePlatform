@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import thousandSeparator from "../../../helpers/thousandSeparator";
+import { thousandSeparator } from "../../../helpers/formatting";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";

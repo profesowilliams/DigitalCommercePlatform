@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
-import thousandSeparator from "../../../helpers/thousandSeparator";
+import { thousandSeparator } from "../../../helpers/formatting";
 
 const AncillaryItems = ({ labels, currencySymbol, onCollectionChanged }) => {
   const [expanded, setExpanded] = useState(false);

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import thousandSeparator from "../../../helpers/thousandSeparator";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
+import { thousandSeparator } from "../../../helpers/formatting";
 
 function ProductLinesGrid({
   gridProps,

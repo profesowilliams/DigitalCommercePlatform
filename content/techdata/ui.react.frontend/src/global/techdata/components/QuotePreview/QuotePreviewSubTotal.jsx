@@ -1,5 +1,5 @@
 import React from "react";
-import thousandSeparator from "../../helpers/thousandSeparator";
+import { thousandSeparator } from "../../helpers/formatting";
 
 function QuotePreviewSubTotal({ currencySymbol, subTotal, subtotalLabel }) {
   return (
