@@ -31,7 +31,10 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Actions
         [AutoDomainData]
         public async Task GetReplaceCart(Content.Actions.ReplaceCartQuotes.ReplaceCart.Response expected)
         {
-            Moq.Language.Flow.ISetup<IContentService, Task<bool>> setup = _mockContentService.Setup(x => x.ReplaceCart(Id));
+            _mockContentService.Setup(x => x.ReplaceCart(
+                     It.IsAny<Content.Actions.ReplaceCartQuotes.ReplaceCart.Request>()
+                     ))
+                 .ReturnsAsync(expected);
 
             var handler = new Content.Actions.ReplaceCartQuotes.ReplaceCart.Handler(_mockContentService.Object, _mapper.Object, _logger.Object);
 

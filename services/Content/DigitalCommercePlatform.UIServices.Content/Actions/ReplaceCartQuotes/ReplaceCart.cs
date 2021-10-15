@@ -48,19 +48,8 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes
             {
                 request.Type = request.Type ?? string.Empty;
 
-                if (request.Type.ToLower() == "quote")
-                {
-                    var isSucess = await _contentServices.ReplaceCart(request.Id).ConfigureAwait(false);
-                    var response = new Response
-                    {
-                        IsSuccess = isSucess
-                    };
-                    return new ResponseBase<Response> { Content = response };
-                }
-                else
-                {
-                    return new ResponseBase<Response> { Error = new ErrorInformation { Messages = { "Error while calling Type " + request.Type + " and Id : "+request.Id } } };
-                }
+                var isSucess = await _contentServices.ReplaceCart(request).ConfigureAwait(false);
+                return new ResponseBase<Response> { Content = isSucess };
             }
         }
         public class Validator : AbstractValidator<Request>

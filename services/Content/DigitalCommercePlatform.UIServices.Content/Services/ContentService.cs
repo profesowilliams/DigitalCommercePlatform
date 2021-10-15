@@ -122,24 +122,30 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             }
         }
 
-        public async Task<bool> ReplaceCart(string id)
+        public async Task<ReplaceCart.Response> ReplaceCart(ReplaceCart.Request request)
         {
             try
             {
-                var cartURL = _appCartUrl.AppendPathSegment("/Replace/"+id);
-                var result = await _middleTierHttpClient.PutAsync<ReplaceCart.Response>(cartURL, null, null);
-                return true;
+                var requestUrl = "";
+                if (request.Type.ToLower() == "cart")
+                    requestUrl = _appCartUrl.AppendPathSegment("/Replace/" + request.Id);
+                else
+                    requestUrl = _appCartUrl.AppendPathSegment("/CreateByQuote").AppendPathSegment(request.Id);
+
+                var replaceResponse = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(requestUrl, null, null);
+                var result = replaceResponse?.StatusCode ?? HttpStatusCode.OK;
+
+                var response = new ReplaceCart.Response();
+                response.IsSuccess = result == HttpStatusCode.OK ? true : false;
+                return response;
             }
             catch (RemoteServerHttpException ex)
             {
                 if (ex.Message.Contains("Error"))
                 {
-                    _logger.LogError(ex, "Exception at getting replace cart: " + nameof(ContentService));
-                    _logger.LogInformation("$Record's not found for " + id);
-                    if (ex.Message.ToLower().Contains("error"))//need to fix this
-                    {
-                        return false;
-                    }
+                    var response = new ReplaceCart.Response();
+                    response.IsSuccess = false;
+                    return response;
                     throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 else
@@ -147,6 +153,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
                     _logger.LogError(ex, "Exception at : " + nameof(ContentService));
                     throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
+               
             }
             catch (Exception ex)
             {

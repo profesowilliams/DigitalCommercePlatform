@@ -19,6 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         public Task<ActiveCartModel> GetActiveCartDetails();
         Task<AddCartItem.Response> AddItemCart(AddCartItem.Request request);
         Task<GetCreateCartByQuote.Response> CreateCartByQuote(string QuoteId);
-        public Task<bool> ReplaceCart(string id);
+        public Task<ReplaceCart.Response> ReplaceCart(ReplaceCart.Request request);
     }
 }
