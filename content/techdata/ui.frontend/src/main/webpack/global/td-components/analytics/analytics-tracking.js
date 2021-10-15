@@ -21,11 +21,12 @@
     const ANALYTICS_EVENTINFO_REGION_PN = "region";
     const ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN = "mastheadlevel"
     const ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN = "selectionDepth";
-    const ANALYTICS_EVENTINFO_TYPE_PN = "type"
-    const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link"
-    const ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL = "image"
-    const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta"
-    const IMAGE_CSS_CLASSNAME = "cmp-image"
+    const ANALYTICS_EVENTINFO_TYPE_PN = "type";
+    const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link";
+    const ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL = "image";
+    const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta";
+    const IMAGE_CSS_CLASSNAME = "cmp-image";
+    const TEASER_CONTENT_CSS_CLASSNAME = "cmp-teaser__content";
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
@@ -171,7 +172,7 @@
 
     function addClickToDataLayer(event) {
         var className = event.currentTarget.className;
-        if (className && className.startsWith(IMAGE_CSS_CLASSNAME)) {
+        if (className && (className.startsWith(IMAGE_CSS_CLASSNAME) || className.startsWith(TEASER_CONTENT_CSS_CLASSNAME))) {
             imageClickEventHandler(event.currentTarget.id, event.currentTarget);
         } else {
             var element = event.currentTarget;
