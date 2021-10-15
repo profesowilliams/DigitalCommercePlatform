@@ -36,10 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.56" />
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.56" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.56" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.56" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.2.57" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.57" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.57" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.57" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
