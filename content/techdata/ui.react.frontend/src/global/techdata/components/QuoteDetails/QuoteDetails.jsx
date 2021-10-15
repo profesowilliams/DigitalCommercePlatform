@@ -11,7 +11,7 @@ import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import GeneralInfo from "../QuotePreview/ConfigGrid/GeneralInfo"
+import GeneralInfo from "../common/quotes/GeneralInfo"
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -110,6 +110,26 @@ const QuoteDetails = ({ componentProp }) => {
     exportOption?.key === "exportToPDF" && exportToPDF(data);
   }, [exportOption, quoteDetails, actualQuoteLinesData]);
 
+  const getAttributeInformation = (attributes, name) => 
+    attributes?.find((attribute) => attribute.name.toUpperCase() === name);
+
+  const getGeneralInformationData = (quoteDetails) => {
+    const dealIdAttribute = getAttributeInformation(quoteDetails.attributes, 'DEALIDENTIFIER');
+    const sourceAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDORQUOTEID');
+    const vendorAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDOR');
+
+    return {
+      ...quoteDetails,
+      source: {
+        value: sourceAttribute?.value
+      },
+      deal: {
+        spaId: dealIdAttribute?.value,
+        vendor: vendorAttribute?.value,
+      } 
+    };
+  }
+
   return quoteDetails ? (
     <div className="cmp-quote-details">
       <QuotesSubHeader
@@ -138,7 +158,7 @@ const QuoteDetails = ({ componentProp }) => {
               contact={quoteDetails?.endUser}
             />
             <GeneralInfo
-                quoteDetails={quoteDetails}
+                quoteDetails={getGeneralInformationData(quoteDetails)}
                 gridProps={quoteDetails}
                 info={information}
                 readOnly={true}

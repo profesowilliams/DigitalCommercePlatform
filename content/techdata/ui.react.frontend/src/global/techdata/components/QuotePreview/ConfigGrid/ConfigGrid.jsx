@@ -1,6 +1,6 @@
 import React from 'react';
 import CompanyInfo from './CompanyInfo';
-import GeneralInfo from './GeneralInfo';
+import GeneralInfo from '../../common/quotes/GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
 function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, endUserInfoChange, generalInfoChange, companyInfoChange }) {

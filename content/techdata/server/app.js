@@ -935,7 +935,38 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "ancillaryChargesWithTitles": null,
           "annuity": null,
           "isSubLine": false,
-          "displayLineNumber": i
+          "displayLineNumber": i,
+          "attributes": [{
+            "name": "VENDORQUOTEID",
+            "value": "4734509146"
+          }, {
+            "name": "DF_CONFIRMATION_NO",
+            "value": "1320795298"
+          }, {
+            "name": "PRICELISTID",
+            "value": "1109"
+          }, {
+            "name": "CustomerPoNumber",
+            "value": "JoseDemoOctober_Deal-B-again"
+          }, {
+            "name": "VENDOR",
+            "value": "CISCO"
+          }, {
+            "name": "DEALIDENTIFIER",
+            "value": "686450750"
+          }, {
+            "name": "VENDORQUOTETYPE",
+            "value": "CCW"
+          }, {
+            "name": "INTERNAL_COMMENT",
+            "value": "Can't check UAN with no renewalQuoteId."
+          }, {
+            "name": "ShipCompleteType",
+            "value": "NA"
+          }, {
+            "name": "TAKEOVER",
+            "value": "true"
+          }]
         }
       )
     }
@@ -1017,7 +1048,38 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         "subTotalFormatted": "5,422.30",
         "tier": "Government",
         "created": "07/14/20",
-        "expires": "12/31/21"
+        "expires": "12/31/21",
+        "attributes": [{
+          "name": "VENDORQUOTEID",
+          "value": "4734509146"
+        }, {
+          "name": "DF_CONFIRMATION_NO",
+          "value": "1320795298"
+        }, {
+          "name": "PRICELISTID",
+          "value": "1109"
+        }, {
+          "name": "CustomerPoNumber",
+          "value": "JoseDemoOctober_Deal-B-again"
+        }, {
+          "name": "VENDOR",
+          "value": "CISCO"
+        }, {
+          "name": "DEALIDENTIFIER",
+          "value": "686450750"
+        }, {
+          "name": "VENDORQUOTETYPE",
+          "value": "CCW"
+        }, {
+          "name": "INTERNAL_COMMENT",
+          "value": "Can't check UAN with no renewalQuoteId."
+        }, {
+          "name": "ShipCompleteType",
+          "value": "NA"
+        }, {
+          "name": "TAKEOVER",
+          "value": "true"
+        }]
       }
     },
     "error": {

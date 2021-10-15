@@ -1,1 +1,19 @@
-@import "../../../components/styles/td-quote-general-info.scss";
+.cmp-quote-details {
+  .cmp-qp__general-info {
+    display: inline-grid;
+    width: 33%;
+    margin: rem(30px) 0;
+    padding-left: rem(65px);
+    box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
+    &--title {
+        cursor: auto;
+        position: unset;
+        &::before {
+            content: none;
+        }
+    }
+    &--address-group {
+        margin-left: 0.9375rem;
+    }
+  }
+}
