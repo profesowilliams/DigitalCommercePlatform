@@ -138,8 +138,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             FindResponse<Configuration> result = new();
             try
             {
-                if (request.Criteria.SortBy.ToLower() == "configid")
+                if (request.Criteria?.SortBy?.ToLower() == "configid")
                     request.Criteria.SortBy = "Id";
+
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
@@ -198,27 +199,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
         {
-            var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
-            mappingResult.ToList().ForEach(c => GenerateConfigurationDetails(c));
+            var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);           
             result.Count = configurationFindResponse.Count;
             result.Data = mappingResult;
-        }
-
-        private static void GenerateConfigurationDetails(Configuration c)
-        {
-            c.Quotes = new List<TdQuoteIdDetails>();
-            for (int i = 0; i < GetRandomNumber(2, 6); i++)
-            {
-                c.Quotes.Add(new TdQuoteIdDetails
-                {
-                    Status = i == 3 ? "Pending" : i == 5 ? "Failed" : i == 2 ? "Expired" : "Created",
-                    Created = i == 5 || i == 2 || i == 3 ? string.Empty : DateTime.UtcNow.AddDays(-1 * GetRandomNumber(1, 10)).ToShortDateString(),
-                    Id = i == 5 || i == 2 || i == 3 ? string.Empty : $"CD_ID_{c.ConfigId}_{i + 1}",
-                    Line = i == 5 || i == 2 || i == 3 ? string.Empty : $"{GetRandomNumber(1, 1000)}",
-                    Price = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(2, 100),
-                    Quantity = i == 5 || i == 2 || i == 3 ? 0 : GetRandomNumber(1, 10)
-                });
-            }
         }
 
         private Models.Configurations.Internal.FindModel BuildConfigurationsAppServiceRequest(GetConfigurations.Request request)
