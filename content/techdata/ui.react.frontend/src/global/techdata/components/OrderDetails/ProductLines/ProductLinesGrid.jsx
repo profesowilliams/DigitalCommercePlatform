@@ -6,6 +6,8 @@ import ProductLinesItemInformation from "../../QuotePreview/ProductLines/Product
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 import { thousandSeparator } from "../../../helpers/formatting";
+import Modal from "../../Modal/Modal";
+import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 
 function ProductLinesGrid({
   gridProps,
@@ -15,10 +17,12 @@ function ProductLinesGrid({
   onMarkupChanged,
   iconList,
 }) {
+
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items ?? [];
   const mutableGridData = Object.assign([], gridData);
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
+  const [modal, setModal] = useState(null);
   const gridConfig = {
     ...gridProps,
     serverSide: false,
@@ -40,6 +44,10 @@ function ProductLinesGrid({
     { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
   ];
+
+  function invokeModal(modal) {
+    setModal(modal);
+  }
 
   function expandAll() {
     gridApi?.forEachNode((node) => {
@@ -75,80 +83,86 @@ function ProductLinesGrid({
     const formatedDate = new Date(dateUTC).toLocaleDateString();
     return formatedDate;
 }
-  console.log('columnsArray', columnsList);
   //default column defs
   const columnDefs = [
     {
-      headerName: columnsList.length > 0 ? columnsList[0].columnLabel : "Line Item",
-      field: columnsList.length > 0 ? columnsList[0].columnKey :"id",
+      headerName: "Line Item",
+      field: "id",
       width: "100px",
       sortable: false,
       expandable: true,
       rowClass: ({ node, data }) => {
         return `cmp-product-lines-grid__row ${
-          !data?.children || data.children.length === 0
-            ? "cmp-product-lines-grid__row--notExpandable"
-            : ""
+            !data?.children || data.children.length === 0
+                ? "cmp-product-lines-grid__row--notExpandable"
+                : ""
         }`;
       },
       detailRenderer: ({ data }) => (
-        <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
-          <ProductLinesChildGrid
-            columnDefiniton={columnDefs}
-            data={data.children}
-          ></ProductLinesChildGrid>
-        </section>
+          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+            <ProductLinesChildGrid
+                columnDefiniton={columnDefs}
+                data={data.children}
+            ></ProductLinesChildGrid>
+          </section>
       ),
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[1].columnLabel : "Mfr No",
-      field: columnsList.length > 0 ? columnsList[1].columnKey : "mfrNumber",
+      headerName: "Mfr No",
+      field: "mfrNumber",
       sortable: false,
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[2].columnLabel : "Ref No",
-      field: columnsList.length > 0 ? columnsList[2].columnKey : "tdNumber",
+      headerName: "Ref No",
+      field: "tdNumber",
       sortable: false,
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[3].columnLabel : "Description",
-      field: columnsList.length > 0 ? columnsList[3].columnKey : "description",
+      headerName: "Description",
+      field: "description",
       sortable: false,
       width: "250px",
       cellRenderer: (props) => {
         return (
-          <a
-            className="cmp-grid-url-underlined"
-            href={props.value}
-            target="_blank"
-          >
-            {props.value}
-          </a>
+            <a
+                className="cmp-grid-url-underlined"
+                href={props.value}
+                target="_blank"
+            >
+              {props.value}
+            </a>
         );
       },
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[4].columnLabel : "***Quantity",
-      field: columnsList.length > 0 ? columnsList[4].columnKey : "quantity",
+      headerName: "Quantity",
+      field: "quantity",
       sortable: false,
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[5].columnLabel : "Unit Price",
-      field: columnsList.length > 0 ? columnsList[5].columnKey : "unitPrice",
+      headerName: "Unit Price",
+      field: "unitPrice",
       sortable: false,
       valueFormatter: (props) => {
         return props.value.toLocaleString();
-    },
+      },
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[6].columnLabel : "Total price (USD)",
-      field: columnsList.length > 0 ? columnsList[6].columnKey : "totalPrice",
+      headerName: "Total price (USD)",
+      field: "totalPrice",
       sortable: false,
     },
-    
     {
-      headerName: columnsList.length > 0 ? columnsList[7].columnLabel : "Status",
-      field: columnsList.length > 0 ? columnsList[7].columnKey : "status",
+      headerName: "Ship Date",
+      field: "shipDate",
+      sortable: false,
+      valueFormatter: (props) => {
+        return getDateTransformed(props.value);
+      },
+    },
+    {
+      headerName: "Status",
+      field: "status",
       sortable: false,
       cellRenderer: (props) => {
         return (
@@ -160,44 +174,54 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[8].columnLabel : "Ship Date",
-      field: columnsList.length > 0 ? columnsList[8].columnKey : "shipDate",
+      headerName: "Ship Date",
+      field: "shipDate",
       sortable: false,
       valueFormatter: (props) => {
         return getDateTransformed(props.value);
       },
     },
     {
-      headerName:  columnsList.length > 0 ? columnsList[9].columnLabel : "Serial",
-      field:  columnsList.length > 0 ? columnsList[9].columnKey : "serial",
+      headerName: "Serial",
+      field: "serial",
       sortable: false,
       cellRenderer: (props) => {
         return (
-          props.value ? (
-            <a
-              className="cmp-grid-url-underlined"
-              href={props.value}
-              target="_blank"
-            >
-              view
-            </a>
-          ) : (
-            <div>n/a</div>
-          )
+            props.value && props.value.length ? (
+                <div
+                    className="cmp-grid-url-underlined"
+                    href="#"
+                    target="_blank"
+                    onClick={() => {
+                      invokeModal({
+                        content: (
+                            <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
+                        ),
+                        properties: {
+                          title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
+                        }
+                      });
+                    }}
+                >
+                  {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
+                </div>
+            ) : (
+                <div>n/a</div>
+            )
         );
       },
     },
     {
-      headerName: columnsList.length > 0 ? columnsList[10].columnLabel : "Invoice",
-      field: columnsList.length > 0 ? columnsList[10].columnKey : "invoice",
+      headerName: "Invoice",
+      field: "invoice",
       sortable: false,
       cellRenderer: (props) => {
         return (
             <span className='status'>
-              <a 
-                className='cmp-grid-url-underlined'
-                href={props.value ? props.value : '#'}
-                target="_blank">
+              <a
+                  className='cmp-grid-url-underlined'
+                  href={props.value ? props.value : '#'}
+                  target="_blank">
                 <i className="fas fa-external-link-alt"></i>
               </a>
             </span>
@@ -333,6 +357,14 @@ function ProductLinesGrid({
           onAfterGridInit={onAfterGridInit}
         ></Grid>
       </div>
+      {modal && <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={() => setModal(null)}
+      ></Modal>}
     </section>
   );
 }

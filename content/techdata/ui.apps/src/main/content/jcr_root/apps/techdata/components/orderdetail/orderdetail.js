@@ -57,6 +57,16 @@ use(function () {
         productInfo["iconList"] = iconValues;
     }
 
+    //Serial No Label section
+    if (properties && properties["serialCellLabel"]) {
+        productInfo["serialCellLabel"] = properties["serialCellLabel"];
+    }
+
+    //Serial No Label section
+    if (properties && properties["serialModal"]) {
+        productInfo["serialModal"] = properties["serialModal"];
+    }
+
     //info section json being constructed
     if (properties && properties["orderStatusLabel"]) {
         infoJsonObject["orderStatusLabel"] = properties["orderStatusLabel"];

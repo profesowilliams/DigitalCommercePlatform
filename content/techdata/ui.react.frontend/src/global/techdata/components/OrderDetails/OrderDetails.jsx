@@ -23,7 +23,7 @@ const OrderDetails = ({ componentProp }) => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
-  // const [orderDetails, setOrderDetails] = useState(null);
+
   useEffect(() => {
     response?.content && setOrderDetails(response.content);
   }, [response]);

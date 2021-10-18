@@ -977,6 +977,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "order-details-serial-numbers-modal",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/order-details-serial-numbers-modal.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "track-my-order-modal",
                 template: path.resolve(
                     __dirname,

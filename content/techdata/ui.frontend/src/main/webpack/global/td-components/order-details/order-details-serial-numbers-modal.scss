@@ -1,0 +1,24 @@
+.cmp-order-details-serial-numbers-modal {
+        max-width: rem(500px);
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        
+        &__info {
+            font-size: $font-size-small;
+            margin-bottom: rem(20px);
+            color: get-color(brand-text-gray);
+        }
+
+        &__line {
+            align-items: flex-start;
+            padding: rem(15px);            
+            text-align: left;
+            font-size: $font-size-small;
+            color: get-color(brand-text-gray);
+            margin-bottom: rem(15px);
+            background-color: get-color(td-lighter-gray);
+        }
+    
+}

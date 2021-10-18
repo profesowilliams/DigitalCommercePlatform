@@ -15,7 +15,7 @@
                 <items jcr:primaryType="nt:unstructured">
                     <orderHeader
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Order Subheader Configuration"
+                        jcr:title="Order Label Configuration"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         margin="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
@@ -64,6 +64,18 @@
                                                     fieldDescription="Export to CSV Label"
                                                     fieldLabel="Export to CSV Label"
                                                     name="./exportCSVLabel"/>
+                                            <serialCellLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Serial Cell Label"
+                                                    fieldLabel="Serial Cell Label"
+                                                    name="./serialCellLabel"/>
+                                            <serialModal
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Serial Modal Label"
+                                                    fieldLabel="Serial Modal Label"
+                                                    name="./serialModal"/>
                                         </items>
                                     </column2>
                                 </items>
@@ -73,6 +85,7 @@
                     <columnConfiguration
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
+                            jcr:title="Column Configuration"
                             path="/mnt/overlay/techdata/components/ordersgrid/cq:dialog/content/items/column/items/tabs/items/elements"
                     />
                     <iconConfiguration
