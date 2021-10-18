@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { get, usPost } from "../../../../utils/api";
+import { checkApiErrorMessage, get, usPost } from "../../../../utils/api";
 import WidgetTitle from "../Widgets/WidgetTitle";
 import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
@@ -48,6 +48,10 @@ const EditConfig = ({ componentProp }) => {
         setLoadingGetUrl(true);
         waitFor(3000);
         const result = await usPost(puchOutEndpoint,body)
+        const errorMessagesList = checkApiErrorMessage(result);
+        if (errorMessagesList){
+            window.alert(errorMessagesList[0])
+        }
         setLoadingGetUrl(false);
         const {url} = result?.data?.content;
         window.open(

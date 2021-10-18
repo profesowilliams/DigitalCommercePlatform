@@ -25,3 +25,11 @@ axios.defaults.headers.common['Site'] = 'NA';
 export const { get: usGet, post: usPost } = USaxios;
 
 export const { get, post } = axios;
+
+export const checkApiErrorMessage = (apiResponse) => {
+  const errorMessagesList = apiResponse?.data?.error?.messages;
+  if (!errorMessagesList.length){  
+    return false;
+  } 
+  return [...errorMessagesList];
+}
