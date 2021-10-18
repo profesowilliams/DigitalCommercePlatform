@@ -15,7 +15,6 @@ function ProductLinesGrid({
   labels,
   quoteOption,
   onMarkupChanged,
-  iconList,
 }) {
 
   const [gridApi, setGridApi] = useState(null);
@@ -28,8 +27,8 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
-  
-  const columnsList = gridConfig.columnList;
+  const columnsArray = gridConfig.columnList;
+  const iconList = gridProps.iconList
   const STATUS = {
     onHold: 'onHold',
     inProcess: 'inProcess',
@@ -40,7 +39,7 @@ function ProductLinesGrid({
   const defaultIcons = [
     { iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
     { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
-    { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
+    { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Opeeeen' },
     { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
   ];

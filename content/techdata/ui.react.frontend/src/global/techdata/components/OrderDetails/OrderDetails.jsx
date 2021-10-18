@@ -16,14 +16,12 @@ const OrderDetails = ({ componentProp }) => {
       uiServiceEndPoint,
       productLines,
       whiteLabel,
-      iconList,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?details=true&id=${id}`);
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
-
   useEffect(() => {
     response?.content && setOrderDetails(response.content);
   }, [response]);
@@ -44,7 +42,6 @@ const OrderDetails = ({ componentProp }) => {
         data={orderDetails}
         labels={whiteLabel}
         quoteOption={quoteOption}
-        iconList={iconList}
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}
