@@ -1,6 +1,7 @@
-import moment from "moment"
-export function dateToString(date, body = 'll') {
-    return moment(date).format(body);
+import {format} from "date-fns"
+
+export function dateToString(date, body = "MMM do',' y") {
+    return format(new Date(date),body);
 }
 
 export function removeStringDecimals (stringNumber=""){
