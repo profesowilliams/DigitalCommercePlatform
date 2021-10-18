@@ -39,7 +39,7 @@ function QuotePreview(props) {
     setDidQuantitiesChange(didQuantitiesChange);
   };
 
-  const createQuote = async () => {
+  const createQuote = async (quoteDetails) => {
     try {
       setLoadingCreateQuote(true);
       const result = await usPost(componentProp.quickQuoteEndpoint, quoteDetails);
@@ -55,16 +55,18 @@ function QuotePreview(props) {
     }
   };
 
-  const handleQuickQuote = useCallback(createQuote, [quoteDetails, loadingCreateQuote]);
+  const handleQuickQuote = useCallback(() => createQuote(quoteDetails), [quoteDetails]);
 
   const handleQuickQuoteWithoutDeals = (e) => {
     e.preventDefault();
+    const quoteDetailsCopy = { ...quoteDetails };
+
     // remove deal if present
-    if (quoteDetails.hasOwnProperty("deal")) {
-      delete quoteDetails.deal;
+    if (quoteDetailsCopy.hasOwnProperty("deal")) {
+      delete quoteDetailsCopy.deal;
     }
-    handleQuickQuote();
-  }
+    createQuote(quoteDetailsCopy);
+  };
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => (
