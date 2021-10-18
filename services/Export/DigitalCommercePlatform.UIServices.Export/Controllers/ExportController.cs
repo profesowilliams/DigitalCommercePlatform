@@ -38,12 +38,5 @@ namespace DigitalCommercePlatform.UIServices.Export.Controllers
                 return new NotFoundResult(); 
             return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
         }
-
-        [HttpGet]
-        [Route("test")]
-        public ActionResult<string> TestMethod(string testparam)
-        {
-            return "test ok " + testparam;
-        }
     }
 }
