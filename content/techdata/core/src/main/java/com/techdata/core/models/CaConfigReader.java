@@ -143,6 +143,8 @@ public class CaConfigReader {
 
     private String puchOutEndpoint;
 
+    private String actionItemsEndpoint;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -213,6 +215,7 @@ public class CaConfigReader {
         quotePreviewPage = redirectConfiguration.quotePreviewPage();
         orderListingPage = redirectConfiguration.orderListingPage();
         orderDetailPage = redirectConfiguration.orderDetailPage();
+        actionItemsEndpoint = serviceEndPointsConfiguration.actionItemsEndpoint();
     }
 
     public String getUiServiceDomain() {
@@ -435,5 +438,9 @@ public class CaConfigReader {
 
     public String getDealsForEndpoint() {
         return dealsForEndpoint;
+    }
+
+    public String getActionItemsEndpoint() {
+        return actionItemsEndpoint;
     }
 }

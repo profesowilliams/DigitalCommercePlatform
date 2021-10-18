@@ -1,0 +1,15 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+    <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+        <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+    </sly>
+    <sly data-sly-use.model="${'actionitems.js' @ uiServiceDomain=serviceData.uiServiceDomain,topItemsEndpoint=serviceData.actionItemsEndpoint}">
+
+        <div id="TodaysActionItems" data-observe-mutation>
+            <div data-component="TodaysActionItems" data-cmp-type="react" className="cmp-actionItems" data-config="${model.configJson}">
+            </div>
+        </div>
+    </sly>
+</sly>
+
+
+

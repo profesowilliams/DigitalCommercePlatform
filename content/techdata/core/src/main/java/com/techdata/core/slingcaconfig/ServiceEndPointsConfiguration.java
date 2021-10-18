@@ -100,4 +100,7 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Get Deals For Endpoint", description = "Get Deals For Endpoint")
     String dealsForEndpoint();
+
+    @Property(label = "Get Action Items Endpoint", description = "Get Action Items Endpoint")
+    String actionItemsEndpoint();
 }
