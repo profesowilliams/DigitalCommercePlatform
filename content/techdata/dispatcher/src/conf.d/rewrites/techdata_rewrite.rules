@@ -2,7 +2,7 @@
 RedirectMatch "^/$" "/us"
 
 # robot.txt
-RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt
+RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt [PT,L]
 
 # apac
 RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]
