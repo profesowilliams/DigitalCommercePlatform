@@ -6,9 +6,8 @@
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
-  width: rem(460px);
+  width: rem(444px);
   height: rem(55px);
-  margin: 0 rem(15px);
   &__title {
     font-size: $font-size-small;
     text-transform: uppercase;
@@ -28,19 +27,24 @@
     justify-content: space-between;
 
     &__title {
-        font-size: $font-size-xsmall;
-        margin-bottom: rem(5px);
         width: 100%;
+        font-size: $font-size-xsmall;
+        font: $open-sans;
+        line-height: 17px;
+        text-transform: uppercase;
+        color: get-color(td-dark-blue);
     }
 
     &__items {
-        font-size: $font-size-custom-xlarge;
+        font-size: rem(36px);
         color: get-color(td-lightblue);
     }
 
     &__action-icon {
         font-size: $font-size-custom-xxxlarge;
         color: get-color(v-divider-gray);
+        size: 39.51px;
+        line-height: 40px;
     }
 
   }

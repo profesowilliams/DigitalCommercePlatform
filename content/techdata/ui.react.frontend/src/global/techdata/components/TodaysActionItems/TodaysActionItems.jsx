@@ -34,24 +34,24 @@ function TodaysActionItems(props) {
                                 {TITLE_LABEL}
                             </div>
                             <div className="cmp-todays-action-items__tab">
-                                <div className="cmp-todays-action-items__tab--title">
+                                <div className="cmp-todays-action-items__tab__title">
                                     {ORDERS_LABEL}
                                 </div>
-                                <div className="cmp-todays-action-items__tab--items">
+                                <div className="cmp-todays-action-items__tab__items">
                                 {ordersBlocked}
                                 </div>
-                                <div className="cmp-todays-action-items__tab--action-icon">
+                                <div className="cmp-todays-action-items__tab__action-icon">
                                     <i className={ORDERS_LABEL_ICON}></i>
                                 </div>
                             </div>
                             <div className="cmp-todays-action-items__tab">
-                                <div className="cmp-todays-action-items__tab--title">
+                                <div className="cmp-todays-action-items__tab__title">
                                     {DEALS_LABEL}
                                 </div>
-                                <div className="cmp-todays-action-items__tab--items">
+                                <div className="cmp-todays-action-items__tab__items">
                                     {expiringDeals}
                                 </div>
-                                <div className="cmp-todays-action-items__tab--action-icon">
+                                <div className="cmp-todays-action-items__tab__action-icon">
                                     <i className={DEALS_LABEL_ICON}></i>
                                 </div>
                             </div>
