@@ -66,6 +66,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public IList<string> Serials { get; set; }
         public IList<string> PAKs { get; set; }
         public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
-
+        public string DisplayName { get; internal set; }
     }
 }

@@ -48,8 +48,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var result = sut.GetQuoteLinesWithChildren(quotePreviewModel);
 
             Assert.Equal(2, result.Count);
-            Assert.Equal(3, result[0].Children.Count);
-            Assert.Equal(4, result[1].Children.Count);
         }
     }
 }

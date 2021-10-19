@@ -6,6 +6,7 @@ using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -13,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 {
-    [ExcludeFromCodeCoverage]
     public sealed class GetQuote
     {
         public class Request : IRequest<ResponseBase<Response>>
@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public class Response
         {
             public QuoteDetails Details { get; set; }
@@ -38,12 +39,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             private readonly ICommerceService _commerceRepositoryServices;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
-
-            public Handler(ICommerceService commerceRepositoryServices, IMapper mapper, ILogger<Handler> logger)
+            private readonly IQuoteItemChildrenService _quoteItemChildrenService;
+            public Handler(ICommerceService commerceRepositoryServices, IMapper mapper,
+                ILogger<Handler> logger,
+                IQuoteItemChildrenService quoteItemChildrenService
+                )
             {
                 _commerceRepositoryServices = commerceRepositoryServices;
                 _mapper = mapper;
                 _logger = logger;
+                _quoteItemChildrenService = quoteItemChildrenService ?? throw new ArgumentNullException(nameof(quoteItemChildrenService));
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -53,7 +58,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 if (productDetails != null)
                 {
                     getQuoteResponse.Details = _mapper.Map<QuoteDetails>(productDetails);
-                    getQuoteResponse.Details.Items = await _commerceRepositoryServices.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
+                    if (getQuoteResponse.Details != null)
+                    {
+                        getQuoteResponse.Details.Items = await _commerceRepositoryServices.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
+                        getQuoteResponse.Details.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(new QuotePreviewModel { QuoteDetails = new QuotePreview { Items = getQuoteResponse.Details.Items } });
+                    }
                 }
                 else
                 {

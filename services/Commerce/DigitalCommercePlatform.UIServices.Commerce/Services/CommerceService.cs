@@ -143,7 +143,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
                     if (product != null && line != null)
                     {
-                        line.ShortDescription = string.IsNullOrWhiteSpace(product?.ShortDescription) ? line.ShortDescription : product?.ShortDescription;
+                        line.ShortDescription = string.IsNullOrWhiteSpace(product.ShortDescription) ? line.ShortDescription : product.ShortDescription;
+                        line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
                         line.TDNumber = product?.Source.ID;
                         line.URLProductImage = GetImageUrlForProduct(product);
                         line.Images = product.Images;

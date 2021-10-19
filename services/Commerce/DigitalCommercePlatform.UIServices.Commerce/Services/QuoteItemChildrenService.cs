@@ -25,11 +25,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
 
             var lines = new List<Line>();
+            double displayNumber = 0;
+            double displayChildNumber = 0.0;
 
             foreach (var item in parents)
             {
-                var children = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent != null &&
-                            _substringService.GetSubstring(i.Id,".") == _substringService.GetSubstring(item.Id, ".")).ToList();
+                displayNumber = displayNumber + 1.0;
+                item.DisplayLineNumber = displayNumber.ToString();
+
+                var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                foreach (var child in subLines)
+                {
+                    displayChildNumber = displayChildNumber + 0.1;
+                    child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
+                }
 
                 lines.Add(new Line
                 {
@@ -38,6 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Availability = item.Availability,
                     Description = item.Description,
                     Discounts = item.Discounts,
+                    DisplayName = item.DisplayName,
+                    DisplayLineNumber = item.DisplayLineNumber,
                     ExtendedPrice = item.ExtendedPrice,
                     Invoice = item.Invoice,
                     Manufacturer = item.Manufacturer,
@@ -55,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     URLProductImage = item.URLProductImage,
                     URLProductSpecs = item.URLProductSpecs,
                     VendorPartNo = item.VendorPartNo,
-                    Children = children
+                    Children = subLines
                 });
 
             }

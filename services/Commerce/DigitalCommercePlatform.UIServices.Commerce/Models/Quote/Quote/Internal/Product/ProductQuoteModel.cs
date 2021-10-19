@@ -15,6 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
     {
         public SourceModel Source { get; set; }
         public string Name { get; set; }
+        public string DisplayName { get; set; }
         public string Description { get; set; }
         public string ShortDescription { get; set; }
         public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
