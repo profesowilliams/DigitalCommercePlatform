@@ -140,30 +140,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 if (request.Criteria?.SortBy?.ToLower() == "configid")
                     request.Criteria.SortBy = "Id";
+               else if (request.Criteria?.SortBy?.ToLower() == "endusername")
+                    request.Criteria.SortBy = "EndUser";
+                else if (request.Criteria?.SortBy?.ToLower() == "expires")
+                    request.Criteria.SortBy = "Expirydate";
+                else
+                    request.Criteria.SortBy = "Created";
 
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
                 var stringUrl = configurationFindUrl.ToString();
-                if (!string.IsNullOrWhiteSpace(request?.Criteria?.SortBy))
-                {
-                    TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-                    
-                    if (stringUrl.Contains("SortBy = Enduser"))
-                    {
-                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Enduser", "SortBy=EndUser"));
-                    }
-                    else if (stringUrl.Contains("SortBy=Expires"))
-                    {
-                        configurationFindUrl = new Url(stringUrl.Replace("SortBy=Expires", "SortBy=Expirydate"));
-                    }
-                    else
-                    {
-                        request.Criteria.SortBy = textInfo.ToTitleCase(request.Criteria.SortBy.Replace("_", " "));
-                    }
-                }
-
+                
                 if (appServiceRequest.Details)
                 {
                     var configurationFindResponse = await _middleTierHttpClient
