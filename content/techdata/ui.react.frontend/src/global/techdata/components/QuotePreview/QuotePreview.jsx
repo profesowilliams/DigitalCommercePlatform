@@ -44,8 +44,13 @@ function QuotePreview(props) {
       setLoadingCreateQuote(true);
       const result = await usPost(componentProp.quickQuoteEndpoint, quoteDetails);
       if (result.data?.content) {
-        /** TODO: next steps with quoteId & confirmationId */
-        console.log(result.data.content);
+        /** TODO: next steps with quoteId & confirmationId
+         * Next screens are not refined, will show confirmation via alert
+         * for now. This will be replaced with new logic at a later time.
+         */
+        if (result.data.content.quoteId && window) {
+          window.alert("Deal applied");
+        }
       }
       return result.data;
     } catch( error ) {
