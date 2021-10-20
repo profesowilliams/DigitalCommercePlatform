@@ -2,4 +2,61 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
 >
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Line edited"
+            columnKey="id"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Mfr No edit"
+            columnKey="mfrNumber"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Ref No"
+            columnKey="tdNumber"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Description"
+            columnKey="description"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quantity"
+            columnKey="quantity"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit Price"
+            columnKey="unitPrice"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Total price (USD)"
+            columnKey="totalPrice"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Status"
+            columnKey="status"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Ship Date"
+            columnKey="shipDate"
+        />
+        <item9
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Serial No"
+            columnKey="serial"
+        />
+        <item10
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Invoice"
+            columnKey="invoice"
+        />
+    </columnList>
 </jcr:root>
