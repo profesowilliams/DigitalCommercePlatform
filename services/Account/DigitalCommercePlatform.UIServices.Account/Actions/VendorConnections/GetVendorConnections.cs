@@ -35,7 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections
             public Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var vendorConnections = _vendorService.GetVendorConnectionsAsync();
-
                 var response = new ResponseBase<Response> { Content = new Response { Items = vendorConnections.Result } };
                 return Task.FromResult(response);
             }

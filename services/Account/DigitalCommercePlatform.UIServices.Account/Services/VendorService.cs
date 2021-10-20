@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
+using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Account.Models.Vendors;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -45,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return _allowedVendorValues;
         }
 
-        public async Task<bool> SetVendorConnection(SetVendorConnection.Request request)
+        public async Task<SetVendorConnection.Response> SetVendorConnection(SetVendorConnection.Request request)
         {
             try
             {
@@ -57,14 +59,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                           RedirectUri = request.RedirectURL,
                       });
 
-                var response = await _middleTierHttpClient.GetAsync<bool>(url).ConfigureAwait(false);
+                var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url).ConfigureAwait(false);
 
-                return await Task.FromResult(response);
+                var result = vendorResponse?.StatusCode ?? HttpStatusCode.OK;
+
+                var response = new SetVendorConnection.Response();
+                response.Items = result == HttpStatusCode.OK ? true : false;
+                return response;
             }
             catch (RemoteServerHttpException ex)
             {
-                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
-                throw new UIServiceException("Error while calling Core-Security Service" + ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                if (ex.Message.Contains("Error"))
+                {
+                    var response = new SetVendorConnection.Response();
+                    response.Items = false;
+                    return response;
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(VendorService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
             }
             catch (Exception ex)
             {
@@ -73,42 +89,61 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
         }
 
-        public Task<List<VendorConnection>> GetVendorConnectionsAsync()
+        public async Task<List<VendorConnection>> GetVendorConnectionsAsync()
         {
-            var vendorConnections = new List<VendorConnection>()
+            try
             {
-                new VendorConnection
-                {
-                    Vendor = "Cisco",
-                    IsConnected = true,
-                    ConnectionDate = new DateTime(2021,12,4,12,54,46),
-                    IsValidRefreshToken = true
-                },
-                new VendorConnection
-                {
-                    Vendor = "HP",
-                    IsConnected = false,
-                    ConnectionDate = new DateTime(2021,3,4,10,24,16),
-                    IsValidRefreshToken = false
-                }
-            };
-
-            return Task.FromResult(vendorConnections);
+                var url = _coreSecurityUrl.AppendPathSegment("/GetVendorConnections");
+                var vendorResponse = await _middleTierHttpClient.GetAsync<List<VendorConnection>>(url).ConfigureAwait(false);
+                return vendorResponse;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw ex;
+            }            
         }
 
         public async Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request)
         {
-            var url = _coreSecurityUrl.AppendPathSegment("VendorRefreshToken")
+            try
+            {
+                var url = _coreSecurityUrl.AppendPathSegment("VendorRefreshToken")
                         .SetQueryParams(new
                         {
                             request.Vendor
                         });
 
-            await _middleTierHttpClient.GetAsync<string>(url);
-            return new VendorRefreshToken.Response { IsSuccess = true };
+                var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url);
+                var result = vendorResponse?.StatusCode ?? HttpStatusCode.OK;
+
+                var response = new VendorRefreshToken.Response();
+                response.IsSuccess = result == HttpStatusCode.OK ? true : false;
+                return response;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Message.Contains("Error"))
+                {
+                    var response = new VendorRefreshToken.Response();
+                    response.IsSuccess = false;
+                    return response;
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(VendorService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                throw ex;
+            }            
         }
 
-        public async Task<bool> VendorDisconnect(GetVendorDisconnect.Request request)
+        public async Task<GetVendorDisconnect.Response> VendorDisconnect(GetVendorDisconnect.Request request)
         {
             try
             {
@@ -118,13 +153,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                           Vendor = request.Vendor
                       });
 
-                var response = await _middleTierHttpClient.GetAsync<string>(url);
-                return await Task.FromResult(true);
+                var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url);
+                var result = vendorResponse?.StatusCode ?? HttpStatusCode.OK;
+
+                var response = new GetVendorDisconnect.Response();
+                response.Items = result == HttpStatusCode.OK ? true : false;
+                return response;
             }
             catch (RemoteServerHttpException ex)
             {
-                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
-                throw new UIServiceException("Error while calling Core-Security Service " + ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                if (ex.Message.Contains("Error"))
+                {
+                    var response = new GetVendorDisconnect.Response();
+                    response.Items = false;
+                    return response;
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(VendorService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
@@ -10,10 +11,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 {
     public interface IVendorService
     {
-        Task<bool> SetVendorConnection(Actions.ConnectToVendor.SetVendorConnection.Request request);
+        Task<SetVendorConnection.Response> SetVendorConnection(SetVendorConnection.Request request);
         Task<List<VendorConnection>> GetVendorConnectionsAsync();
         Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request);
-        Task<bool> VendorDisconnect(GetVendorDisconnect.Request request);
+        Task<GetVendorDisconnect.Response> VendorDisconnect(GetVendorDisconnect.Request request);
         public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request);
     }
 }
