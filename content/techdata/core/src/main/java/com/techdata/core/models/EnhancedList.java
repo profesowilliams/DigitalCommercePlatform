@@ -8,7 +8,6 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -17,16 +16,15 @@ import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = BrandList.RESOURCE_TYPE)
-public class BrandList implements List {
+@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = EnhancedList.RESOURCE_TYPE)
+public class EnhancedList implements List {
 
-    private static final Logger log = LoggerFactory.getLogger(BrandList.class);
+    private static final Logger log = LoggerFactory.getLogger(EnhancedList.class);
 
-    public static final String RESOURCE_TYPE = "techdata/components/brandlist";
+    public static final String RESOURCE_TYPE = "techdata/components/enhancedlist";
     private static final String PAGE_PROPERTY_CQ_TAGS = "cq:tags";
     @Self
     private SlingHttpServletRequest request;
@@ -58,7 +56,7 @@ public class BrandList implements List {
             if(pageMap.containsKey(PAGE_PROPERTY_CQ_TAGS)){
                 String[] cqTags = pageMap.get(PAGE_PROPERTY_CQ_TAGS, String[].class);
                 ArrayList<String> cqTagsList = convertArrayToList(cqTags);
-                BrandListItem item = new BrandListItem();
+                EnhancedListItem item = new EnhancedListItem();
                 item.setTitle(page.getTitle());
                 if(brandTags != null && linkItems.equals("true")){
                     boolean foundMatch = compareTagList(brandTagsList, cqTagsList);

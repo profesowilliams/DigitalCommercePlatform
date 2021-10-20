@@ -2,7 +2,7 @@ package com.techdata.core.models;
 
 import com.adobe.cq.wcm.core.components.models.ListItem;
 
-public class BrandListItem implements ListItem {
+public class EnhancedListItem implements ListItem {
 
     protected String title;
     protected String link;
