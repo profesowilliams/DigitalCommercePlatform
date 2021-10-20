@@ -772,5 +772,38 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             sheet.Cells[xlRow, xlCol].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             sheet.Cells[xlRow, xlCol].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
         }
+        /// <summary>
+        /// TO DO : return out put string with details PHASE 2
+        /// </summary>
+        /// <param name="poType"></param>
+        /// <param name="docType"></param>
+        /// <returns></returns>
+        public Task<string> GetOrderType(string poType, string docType)
+        {
+            string orderType = poType + ":" + docType;
+            if(string.IsNullOrWhiteSpace(orderType)) return Task.FromResult("Manual");            
+            
+            string response = "Manual";
+            
+            switch (orderType.ToUpper())
+            {
+                case var ot when new[] { "#:ZZOR", "ZZED:ZZED", "ZZEK:ZZED", "ZZED:ZZKE", "ZZOR", "ZZED","ZZKE", "ZZEK" }.Contains(ot):
+                    response ="B2B";
+                    break;
+                case var ot when new[] { "#:ZZSB", "ZQ2O:ZZOR", "#:ZZDR", "ZZUP:ZZSB", "ZQ2O:ZZSB", "YIPO:ZZDR", "ZZSB", "ZQ2O", "ZZOR", "ZZDR", "ZZUP", "YIPO" }.Contains(ot):
+                    response = "Manual";
+                    break;
+                case  var ot when new[] { "ZZWE:ZZIT", "ZZIT:ZZIT", "ZZLS:ZZIT", "DFUE:ZZST", "ZZYP:ZZIT", "ZZ1S:ZZIT", "ZZTB:ZZIT", "ZZST", "ZZWE", "ZZIT", "ZZLS", "DFUE", "ZZYP", "ZZ1S", "ZZTB" }.Contains(ot):
+                    response = "Web";
+                    break;
+                case var ot when new[] { "ZZXL:ZZED", "ZZAP:ZZIT" }.Contains(ot):
+                    response = "API";
+                    break;
+                case "default":
+                    response = "Manual";
+                    break;
+            }
+            return Task.FromResult(response);
+        }
     }
 }

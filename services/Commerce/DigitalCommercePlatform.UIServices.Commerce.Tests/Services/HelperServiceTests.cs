@@ -79,5 +79,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(getOrderPricingMappings);
 
         }
+
+        [Fact]
+        public void TestOrderLevel()
+        {
+            var orderLevel = GetHelperService().GetOrderType("ZZED", "ZZED");
+            Assert.NotNull(orderLevel);
+        }
     }
 }

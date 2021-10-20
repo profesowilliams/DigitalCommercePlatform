@@ -229,6 +229,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             foreach (var item in findOrdersDto.Data)
             {
+
+                item.OrderMethod = await _helperService.GetOrderType(string.IsNullOrWhiteSpace(item.PoType) ? "#" : item.PoType.ToUpper(), string.IsNullOrWhiteSpace(item.DocType) ? "#" : item.DocType.ToUpper());
                 var invoiceDetails = item.Items?.SelectMany(i => i.Invoices)
                .Select(i => new InvoiceModel { ID = i.ID }).ToList();
                 var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();

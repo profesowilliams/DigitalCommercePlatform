@@ -13,6 +13,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public AddressModel ShipTo { get; set; }
         public DateTime? Created { get; set; }
         public string DocType { get; set; }
+        public string PoType { get; set; }        
+        public string OrderMethod { get; set; }
         public decimal? Price { get; set; }
         public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
