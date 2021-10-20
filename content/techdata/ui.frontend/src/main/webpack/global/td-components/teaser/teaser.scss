@@ -788,7 +788,6 @@ $teaser-headings-mobile: (
 }
 
 // Quadriptych Teaser
-
 .cmp-quadriptych-teaser {
   display: flex;
   justify-content: space-between;
@@ -837,6 +836,11 @@ $teaser-headings-mobile: (
         font-size: $font-size-medium;
         font-weight: bold;
       }
+    }
+  }
+  .cmp-teaser {
+    &__image {
+      width: 100%;
     }
   }
 }
