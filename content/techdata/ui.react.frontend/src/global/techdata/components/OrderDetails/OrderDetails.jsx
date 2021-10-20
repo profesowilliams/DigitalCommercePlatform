@@ -3,11 +3,9 @@ import OrderSubHeader from "./OrderDetailsSubHeader/OrderSubHeader";
 import OrderDetailsInfo from "./OrderDetailsInfo/OrderDetailsInfo";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import OrdersGrid from "../OrdersGrid/OrdersGrid";
 import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
-
 
 const OrderDetails = ({ componentProp }) => {
   const {
@@ -16,6 +14,8 @@ const OrderDetails = ({ componentProp }) => {
       uiServiceEndPoint,
       productLines,
       whiteLabel,
+      iconList,
+      searchCriteria,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?details=true&id=${id}`);
@@ -24,6 +24,7 @@ const OrderDetails = ({ componentProp }) => {
   const [quoteOption, setQuoteOption] = useState(null);
   useEffect(() => {
     response?.content && setOrderDetails(response.content);
+    response?.content.componentPropGrid && setComponentPropGrid(response.content.componentPropGrid);
   }, [response]);
 
   return orderDetails ? (
@@ -42,6 +43,8 @@ const OrderDetails = ({ componentProp }) => {
         data={orderDetails}
         labels={whiteLabel}
         quoteOption={quoteOption}
+        iconList={iconList}
+        searchCriteria={searchCriteria}
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}

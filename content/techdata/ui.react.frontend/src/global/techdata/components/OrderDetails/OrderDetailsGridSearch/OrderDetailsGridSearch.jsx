@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import QueryInput from "../Widgets/QueryInput";
-import SimpleDropDown from "../Widgets/SimpleDropDown";
-import SimpleDatePicker from "../Widgets/SimpleDatePicker";
-import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
+import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
+import QueryInput from "../../Widgets/QueryInput";
+import SimpleDatePicker from "../../Widgets/SimpleDatePicker";
+import SimpleDropDown from "../../Widgets/SimpleDropDown";
 
 function OrdersGridSearch({ componentProp, onQueryChanged }) {
   const defaultKeywordDropdown = {
@@ -119,12 +119,6 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 
   return (
     <div className="cmp-orders-grid__search">
-      <QueryInput
-        key={"keyword"}
-        items={config.keywordDropdown.items}
-        placeholder={config.inputPlaceholder}
-        onQueryChanged={(change) => handleFilterChange(change, "keyword")}
-      ></QueryInput>
       {/* NEW */}
       <SimpleDropDown
         key={"keyword"}
@@ -133,30 +127,6 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
         onItemSelected={(change) => handleFilterChange(change, "searchby")}
       ></SimpleDropDown>
       {/* NEW */}
-      <SimpleDropDown
-        key={"manufacturer"}
-        items={config.vendorsDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "manufacturer")}
-      ></SimpleDropDown>
-      <SimpleDropDown
-        key={"method"}
-        items={config.methodsDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "method")}
-      ></SimpleDropDown>
-      <SimpleDatePicker
-        pickerKey={"from"}
-        placeholder={config.datePlaceholder}
-        label={config.fromLabel}
-        forceZeroUTC={true}
-        onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
-      ></SimpleDatePicker>
-      <SimpleDatePicker
-        pickerKey={"to"}
-        placeholder={config.datePlaceholder}
-        label={config.toLabel}
-        forceZeroUTC={true}
-        onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
-      ></SimpleDatePicker>
     </div>
   );
 }

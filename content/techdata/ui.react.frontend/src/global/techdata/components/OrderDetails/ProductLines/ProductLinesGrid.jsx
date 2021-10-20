@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
-import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
+import TrackOrderModal from "../TrackOrderModal/TrackOrderModal";
+import useGridFiltering from "../../../hooks/useGridFiltering";
+import OrderDetailsSearch from "../OrderDetailsGridSearch/OrderDetailsGridSearch";
+import GridSearchCriteria from "../../Grid/GridSearchCriteria";
 import { thousandSeparator } from "../../../helpers/formatting";
 import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
@@ -15,20 +17,29 @@ function ProductLinesGrid({
   labels,
   quoteOption,
   onMarkupChanged,
+  iconList,
+  searchCriteria,
 }) {
 
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items ?? [];
+  /**
+   * @type {any[]}
+   */
   const mutableGridData = Object.assign([], gridData);
+  const [filterGridData, setfilterGridData] =  useState();
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
+  const [queryChange, setQuerychange] = useState('');
   const [modal, setModal] = useState(null);
   const gridConfig = {
     ...gridProps,
     serverSide: false,
     paginationStyle: "none",
   };
+  
+  const filteringExtension = useGridFiltering();  
+  const columnsList = gridConfig.columnList;
   const columnsArray = gridConfig.columnList;
-  const iconList = gridProps.iconList
   const STATUS = {
     onHold: 'onHold',
     inProcess: 'inProcess',
@@ -43,6 +54,7 @@ function ProductLinesGrid({
     { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
   ];
+  const [flagData, setFlagData] = useState(false);
 
   function invokeModal(modal) {
     setModal(modal);
@@ -81,30 +93,18 @@ function ProductLinesGrid({
   function getDateTransformed(dateUTC) {
     const formatedDate = new Date(dateUTC).toLocaleDateString();
     return formatedDate;
+  }
+
+  function getTrackingStatus(trackingArray) {
+    return trackingArray.length ? trackingArray.length > 0 : false;
 }
-  //default column defs
-  const columnDefs = [
+
+  // Childs column defs
+  const  columDefsChildren = [
     {
       headerName: "Line Item",
       field: "id",
-      width: "100px",
       sortable: false,
-      expandable: true,
-      rowClass: ({ node, data }) => {
-        return `cmp-product-lines-grid__row ${
-            !data?.children || data.children.length === 0
-                ? "cmp-product-lines-grid__row--notExpandable"
-                : ""
-        }`;
-      },
-      detailRenderer: ({ data }) => (
-          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
-            <ProductLinesChildGrid
-                columnDefiniton={columnDefs}
-                data={data.children}
-            ></ProductLinesChildGrid>
-          </section>
-      ),
     },
     {
       headerName: "Mfr No",
@@ -120,7 +120,165 @@ function ProductLinesGrid({
       headerName: "Description",
       field: "description",
       sortable: false,
-      width: "250px",
+      cellRenderer: (props) => {
+        return (
+            <a
+                className="cmp-grid-url-underlined"
+                href={props.value}
+                target="_blank"
+            >
+              {props.value}
+            </a>
+        );
+      },
+    },
+    {
+      headerName: "Quantity",
+      field: "quantity",
+      sortable: false,
+    },
+    {
+      headerName: "Unit Price",
+      field: "unitPrice",
+      sortable: false,
+      valueFormatter: (props) => {
+        return props.value.toLocaleString();
+      },
+    },
+    {
+      headerName: "Total price (USD)",
+      field: "totalPrice",
+      sortable: false,
+    },
+    {
+      headerName: "Status",
+      field: "status",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+            <span className='status'>
+                <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
+                <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
+            </span>
+        );
+      },
+    },
+    {
+      headerName: "Ship Date",
+      field: "shipDate",
+      sortable: false,
+      valueFormatter: (props) => {
+        return getDateTransformed(props.value);
+      },
+    },
+    {
+      headerName: "Serial",
+      field: "serial",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+            props.value && props.value.length ? (
+                <div
+                    className="cmp-grid-url-underlined"
+                    href="#"
+                    target="_blank"
+                    onClick={() => {
+                      invokeModal({
+                        content: (
+                            <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
+                        ),
+                        properties: {
+                          title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
+                        }
+                      });
+                    }}
+                >
+                  {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
+                </div>
+            ) : (
+                <div>n/a</div>
+            )
+        );
+      },
+    },
+    {
+      headerName: "Invoice",
+      field: "invoice",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+            <span className='status'>
+              <a
+                  className='cmp-grid-url-underlined'
+                  href={props.value ? props.value : '#'}
+                  target="_blank">
+                <i className="fas fa-external-link-alt"></i>
+              </a>
+            </span>
+        );
+      },
+    },
+    {
+      headerName: 'Track',
+      field: 'trackings',
+      sortable: false,
+      cellRenderer: ({ node, api, setValue, data, value }) => {   
+          return (
+              <div 
+              onClick={() => {
+                  invokeModal({
+                      content: ( 
+                          <TrackOrderModal data={data}></TrackOrderModal>
+                      ),
+                      properties: {
+                          title: `Track My Order `,
+                      }
+                  });
+              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
+
+          );
+      },
+    },
+  ]
+
+  //default column defs
+  const columnDefs = [
+    {
+      headerName: "Line Item",
+      field: "id",
+      sortable: false,
+      expandable: true,
+      rowClass: ({ node, data }) => {
+        return `cmp-product-lines-grid__row ${
+            !data?.children || data.children.length === 0
+                ? "cmp-product-lines-grid__row--notExpandable"
+                : ""
+        }`;
+      },
+      detailRenderer: ({ data }) => {
+        return (
+          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+            <ProductLinesChildGrid
+                columnDefiniton={columDefsChildren}
+                data={data.children}
+            ></ProductLinesChildGrid>
+          </section>
+      )},
+    },
+    {
+      headerName: "Mfr No",
+      field: "mfrNumber",
+      sortable: false,
+    },
+    {
+      headerName: "Ref No",
+      field: "tdNumber",
+      sortable: false,
+    },
+    {
+      headerName: "Description",
+      field: "description",
+      sortable: false,
       cellRenderer: (props) => {
         return (
             <a
@@ -227,6 +385,27 @@ function ProductLinesGrid({
         );
       },
     },
+    {
+      headerName: 'Track',
+      field: 'trackings',
+      sortable: false,
+      cellRenderer: ({ node, api, setValue, data, value }) => {
+          return (
+              <div
+              onClick={() => {
+                  invokeModal({
+                      content: (
+                          <TrackOrderModal data={data}></TrackOrderModal>
+                      ),
+                      properties: {
+                          title: `Track My Order `,
+                      }
+                  });
+              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
+
+          );
+      },
+    },
   ];
 
   //whitelabel column defs
@@ -321,6 +500,45 @@ function ProductLinesGrid({
       setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
   }, [quoteOption]);
 
+  useEffect(() => {
+    if (queryChange !== '') {
+      const queryString = queryChange.queryString; 
+      const resul = queryString.split('=')[1]
+      let _filterData = [];
+      if (resul === 'licenses') {
+        _filterData = mutableGridData.filter(m => m.license !== null)
+      } else {
+        _filterData = mutableGridData.filter(m => m.contract !== null)
+      }
+      setfilterGridData(_filterData)
+      setFlagData(true);
+      setQuerychange('');
+    }
+  },[mutableGridData, queryChange]);
+
+  const updateItems = () => {
+    gridApi.applyTransaction({ remove: mutableGridData });
+    const res = gridApi.applyTransaction({ add: filterGridData });
+    setfilterGridData([]);
+  };
+
+  useEffect(() => {
+    if (flagData) {
+      updateItems();
+      setFlagData(false)
+    }
+  }, [flagData]);
+
+  const onSearchRequest = (query) => 
+    setQuerychange(query);
+
+  const onClearSearchRequest = () => {
+    gridApi.setRowData([]);
+    setfilterGridData([]);
+    setQuerychange('')
+    gridApi.applyTransaction({ add: mutableGridData });
+  };
+
   return (
     <section>
       {whiteLabelMode && (
@@ -331,29 +549,50 @@ function ProductLinesGrid({
           }}
         ></ProductLinesMarkupGlobal>
       )}
+       
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
-          <span className="cmp-product-lines-grid__header__title">
-            {gridProps?.label || "Line Item Details"}
-          </span>
-          <span className="cmp-product-lines-grid__header__expand-collapse">
-            <span onClick={() => expandAll()}>
-              {" "}
-              {gridProps?.expandAllLabel || "Expand All"}
-            </span>{" "}
-            |
-            <span onClick={() => collapseAll()}>
-              {" "}
-              {gridProps?.collapseAllLabel || "Collapse All"}
+          <div style={{display: "flex"}}>
+            <span className="cmp-product-lines-grid__header__title">
+              {gridProps?.label || "Line Item Details"}
             </span>
-          </span>
+            <span className="cmp-product-lines-grid__header__expand-collapse">
+              <span onClick={() => expandAll()}>
+                {" "}
+                {gridProps?.expandAllLabel || "Expand All"}
+              </span>{" "}
+              |
+              <span onClick={() => collapseAll()}>
+                {" "}
+                {gridProps?.collapseAllLabel || "Collapse All"}
+              </span>
+            </span>
+          </div>
         </section>
+        
+        <GridSearchCriteria
+            Filters={OrderDetailsSearch}
+            label={searchCriteria?.title ?? 'Filter Orders'}
+            componentProp={searchCriteria}
+            onSearchRequest={onSearchRequest}
+            onClearRequest={onClearSearchRequest}
+            
+          ></GridSearchCriteria>
+          
         <Grid
           key={whiteLabelMode}
           columnDefinition={whiteLabelMode ? whiteLabelCols() : columnDefs}
           config={gridConfig}
           data={mutableGridData}
           onAfterGridInit={onAfterGridInit}
+          requestInterceptor={(request) =>
+            filteringExtension.requestInterceptor(request)
+          }
+          flagData={flagData}
+          setFlagData={setFlagData}
+          requestLocalFilter={(request) =>
+            filteringExtension.requestLocalFilter(request)
+          }
         ></Grid>
       </div>
       {modal && <Modal

@@ -552,9 +552,17 @@ app.get("/ui-commerce/v1/orderdetails", function (req, res) {
   res.json(response);
 }); 
 
-app.get("/ui-commerce/v1/order/details", function (req, res) {
-    console.log(req.url)
-    const id = req.query.id;
+app.get("/ui-commerce/v1/order/", function (req, res) {
+    const id = req.query.id || 0;
+    const details = req.query.details || true;
+    const pageSize = req.query.PageSize || 25;
+    const pageNumber = req.query.PageNumber || 1;
+
+    // console.log('id', id);
+    // console.log('details', details);
+    // console.log('pageSize', pageSize);
+    // console.log('pageNumber', pageNumber);
+
     const response = utils.getOrderDetailsResponse();
     res.json(response);
 });
