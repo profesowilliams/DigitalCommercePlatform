@@ -188,7 +188,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             //Ancillary charges
             var ancillaryLines = 0;
-            foreach (AncillaryItem ancillaryItem in request.AncillaryItems)
+            foreach (AncillaryItem ancillaryItem in request.AncillaryItems ?? new AncillaryItem[0])
             {
                 wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 11].Value = $"Ancillary item ({ancillaryItem.Description.Trim()})";
                 wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Merge = true;
