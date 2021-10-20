@@ -3,7 +3,7 @@ import Grid from "../../Grid/Grid";
 
 function ProductLinesChildGrid({ data, columns, columnDefiniton, ...rest }) {
   const cols = columnDefiniton.map((col) => {
-    col.field === "id" &&
+    col.field === "displayLineNumber" &&
       (col.cellRenderer = (props) => {
         return <section style={{ marginLeft: "32px" }}>{props.value}</section>;
       });

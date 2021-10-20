@@ -73,7 +73,7 @@ function ProductLinesGrid({
   const columnDefs = [
     {
       headerName: "Line Item",
-      field: "id",
+      field: "displayLineNumber",
       width: "100px",
       sortable: false,
       expandable: true,
@@ -100,7 +100,7 @@ function ProductLinesGrid({
     },
     {
       headerName: "Item Information",
-      field: "shortDescription",
+      field: "displayName",
       sortable: false,
       width: "600px",
       cellHeight: () => 80,
@@ -239,8 +239,8 @@ function ProductLinesGrid({
     const cols = isNotEmpty(whiteLabelColumns)
       ? whiteLabelColumns.map((el) => el.columnKey)
       : [
-          "id",
-          "shortDescription",
+          "displayLineNumber",
+          "displayName",
           "quantity",
           "msrp",
           "unitPrice",
@@ -250,12 +250,14 @@ function ProductLinesGrid({
           "clientExtendedPrice",
         ];
     //get whitelabel columns
-    const _ = cols.map((col) => {
-      return columnDefs.find((el) => col === el.field);
-    });
+    const _ = cols
+      .map((col) => {
+        return columnDefs.find((el) => col === el.field);
+      })
+      .filter((e) => e);
     //decrease width for second column and return final columns
     return _.map((col) => {
-      if (col.field === "shortDescription") {
+      if (col.field === "displayName") {
         col.width = "400px";
       }
       return col;
@@ -267,8 +269,8 @@ function ProductLinesGrid({
     const cols = isNotEmpty(quoteDetailColumns)
       ? quoteDetailColumns.map((el) => el.columnKey)
       : [
-          "id",
-          "shortDescription",
+          "displayLineNumber",
+          "displayName",
           "unitListPriceFormatted",
           "discounts",
           "quantity",
@@ -276,9 +278,11 @@ function ProductLinesGrid({
           "extendedPriceFormatted",
         ];
     //get quoteDetails columns
-    return cols.map((col) => {
-      return columnDefs.find((el) => col === el.field);
-    });
+    return cols
+      .map((col) => {
+        return columnDefs.find((el) => col === el.field);
+      })
+      .filter((e) => e);
   };
 
   useEffect(() => {

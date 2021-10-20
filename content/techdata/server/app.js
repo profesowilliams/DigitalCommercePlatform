@@ -793,10 +793,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
       items.push(
         {
           "id": i,
+          "displayLineNumber": i,
           "parent": null,
           "vendorPartNo": null,
           "manufacturer": null,
           "description": "MS321DN LASERPR 38PPM USB TAA LV",
+          "displayName": "MS321DN LASERPR 38PPM USB TAA LV",
           "quantity": 30+i,
           "unitPrice": i,
           "unitPriceFormatted": "0.00",
@@ -821,10 +823,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "children": [
             {
               "id": i+".1",
+              "displayLineNumber":  i+".1",
               "parent": i,
               "vendorPartNo": "DUO-MFA-FED",
               "manufacturer": "CISCO",
               "description": "Cisco Duo MFA edition for Federal customers",
+              "displayName": "Cisco Duo MFA edition for Federal customers",
               "quantity": 20+i,
               "unitPrice": 36,
               "unitPriceFormatted": "36.00",
@@ -866,14 +870,15 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
               "ancillaryChargesWithTitles": null,
               "annuity": null,
               "isSubLine": false,
-              "displayLineNumber": "100.1"
             },
             {
-              "id": i+".1",
+              "id": i+".2",
+              "displayLineNumber":  i+".2",
               "parent": i,
               "vendorPartNo": "SVS-DUO-FED-SUP-B",
               "manufacturer": "CISCO",
               "description": "Cisco Duo Basic Support - Federal",
+              "displayName": "Cisco Duo MFA edition for Federal customers",
               "quantity": 1,
               "unitPrice": 0,
               "unitPriceFormatted": "0.00",
@@ -914,8 +919,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
               "agreements": null,
               "ancillaryChargesWithTitles": null,
               "annuity": null,
-              "isSubLine": false,
-              "displayLineNumber": "100.2"
+              "isSubLine": false
             }
           ],
           "agreements": [

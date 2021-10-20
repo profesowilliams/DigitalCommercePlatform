@@ -24,7 +24,7 @@ const QuoteSubtotal = ({
     if (!array) return 0;
     return array
       .map((x) => Number(x[field] || 0))
-      .reduce((previous, current) => previous + current);
+      .reduce((previous, current) => previous + current, 0);
   }
 
   function markupReducer(store, action) {
@@ -33,21 +33,21 @@ const QuoteSubtotal = ({
       case "getMSRP":
         return [...store.quotes]
           .map((x) => Number(x.msrp || 0) + sum(x.children, "msrp"))
-          .reduce((previous, current) => previous + current);
+          .reduce((previous, current) => previous + current, 0);
       case "getYourCost":
         return [...store.quotes]
           .map(
             (x) =>
               Number(x.calculatedCost || 0) + sum(x.children, "calculatedCost")
           )
-          .reduce((previous, current) => previous + current);
+          .reduce((previous, current) => previous + current, 0);
       case "getYourMarkup":
         return [...store.quotes]
           .map(
             (x) =>
               Number(x.appliedMarkup || 0) + sum(x.children, "appliedMarkup")
           )
-          .reduce((previous, current) => previous + current);
+          .reduce((previous, current) => previous + current, 0);
       case "getSubtotal":
         return amount;
       case "getEndUserTotal": {
@@ -58,7 +58,7 @@ const QuoteSubtotal = ({
                 Number(x.clientExtendedPrice || 0) +
                 sum(x.children, "clientExtendedPrice")
             )
-            .reduce((previous, current) => previous + current) +
+            .reduce((previous, current) => previous + current, 0) +
             store.ancillaryItems?.total || 0
         );
       }
