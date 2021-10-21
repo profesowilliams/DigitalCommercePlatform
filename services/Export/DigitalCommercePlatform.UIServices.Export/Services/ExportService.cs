@@ -13,7 +13,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using Microsoft.AspNetCore.Http;
 using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
 
 namespace DigitalCommercePlatform.UIServices.Export.Services
@@ -141,8 +140,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             xlRow += 11;
             string[] colstoExport = Array.Empty<string>();
             // populate the Header for Line / Subline Details
-            getLineHeader(ref wsQuoteDetail, ref xlRow, ref colstoExport);
-            applyMarkup(quoteDetails, request.LineMarkup);
+            GetLineHeader(ref wsQuoteDetail, ref xlRow, ref colstoExport);
+            ApplyMarkup(quoteDetails, request.LineMarkup);
             //Load data for Line/SubLine
             if (quoteDetails.Items?.Count > 0)
             {
@@ -151,7 +150,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
                 foreach (Line line in quoteDetails.Items.OrderBy(i => i.Id))
                 {
-                    MapLineLevelData(ref wsQuoteDetail, line, xlRow, estimateDealId, line.Annuity);
+                    MapLineLevelData(ref wsQuoteDetail, line, xlRow, estimateDealId);
                     xlRow += 1;
                     if (!line.IsSubLine && line.Annuity != null && !isAnnuityPresent && !string.IsNullOrEmpty(line.DisplayLineNumber))
                         isAnnuityPresent = true;
@@ -188,7 +187,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             //Ancillary charges
             var ancillaryLines = 0;
-            foreach (AncillaryItem ancillaryItem in request.AncillaryItems ?? new AncillaryItem[0])
+            foreach (AncillaryItem ancillaryItem in request.AncillaryItems)
             {
                 wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 11].Value = $"Ancillary item ({ancillaryItem.Description.Trim()})";
                 wsQuoteDetail.Cells[xlRow + 4 + ancillaryLines, xlCol + 12, xlRow + 4 + ancillaryLines, xlCol + 13].Merge = true;
@@ -618,7 +617,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             #endregion
         }
 
-        private void applyMarkup(QuoteDetails quoteDetails, LineMarkup[] markupData)
+        private void ApplyMarkup(QuoteDetails quoteDetails, LineMarkup[] markupData)
         {
             foreach(var line in quoteDetails.Items)
             {
@@ -859,7 +858,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             return termsConditionLines;
         }
 
-        private void getLineHeader(ref ExcelWorksheet wsQuoteDetail, ref int xlRow, ref string[] colsToExport)
+        private void GetLineHeader(ref ExcelWorksheet wsQuoteDetail, ref int xlRow, ref string[] colsToExport)
         {
             int xlCol = 2;
             if (colsToExport.Length <= 0)
@@ -881,7 +880,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             xlRow++;
         }
 
-        private static void MapLineLevelData(ref ExcelWorksheet sheet, Line line, int xlRow, string estimateDealId, Annuity annuity)
+        private static void MapLineLevelData(ref ExcelWorksheet sheet, Line line, int xlRow, string estimateDealId)
         {
             for (int column = 3; column < 15; column++)
             {
@@ -890,7 +889,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             if (!line.IsSubLine && !string.IsNullOrEmpty(line.DisplayLineNumber))
             {
-                FillLineNumberData(sheet, line, xlRow, annuity);
+                FillLineNumberData(sheet, line, xlRow);
             }
             else if (!string.IsNullOrEmpty(estimateDealId) && line.IsSubLine && !string.IsNullOrEmpty(line.DisplayLineNumber))
             {
@@ -935,25 +934,28 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                 sheet.Cells[xlRow, 14].Value = "N/A";
         }
 
-        private static void FillLineNumberData(ExcelWorksheet sheet, Line line, int xlRow, Annuity annuity)
+        private static void FillLineNumberData(ExcelWorksheet sheet, Line line, int xlRow)
         {
             sheet.Cells[xlRow, 3].Value = line.DisplayLineNumber;
             sheet.Cells[xlRow, 3].Style.Numberformat.Format = "0.0";
-
             sheet.Cells[xlRow, 4].Value = !string.IsNullOrEmpty(line.Description) ? line.Description : "Not available";
-
             sheet.Cells[xlRow, 5].Value = !string.IsNullOrEmpty(line.VendorPartNo) ? line.VendorPartNo: "Not available";
 
-            sheet.Cells[xlRow, 6].Value = (annuity?.StartDate != null ? annuity.StartDate : "n/a");
+            var startDate = line.Attributes.FirstOrDefault(a => a.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            sheet.Cells[xlRow, 6].Value = startDate ?? "n/a";
 
-            sheet.Cells[xlRow, 7].Value = (annuity?.AutoRenewal != null ? (annuity.AutoRenewal > 0 ? "Yes" : "No") : "n/a");
+            var autoRenew = line.Attributes.FirstOrDefault(a => a.Name.Equals("AUTORENEWALTERM"))?.Value;
+            sheet.Cells[xlRow, 7].Value = int.TryParse(autoRenew, out int autoRenewInt)
+                ? autoRenewInt > 0 ? "Yes" : "No"
+                : "n/a";
 
-            sheet.Cells[xlRow, 8].Value = (annuity?.Duration != null ? annuity.Duration.ToString() + " months" : "n/a");
+            var duration = line.Attributes.FirstOrDefault(a => a.Name.Equals("INITIALTERM"))?.Value;
+            sheet.Cells[xlRow, 8].Value = duration != null ? duration + " months" : "n/a";
 
-            sheet.Cells[xlRow, 9].Value = (annuity?.BillingFrequency != null ? annuity.BillingFrequency.Replace(" Billing", "") : "n/a");
+            var billing = line.Attributes.FirstOrDefault(a => a.Name.Equals("BILLINGTERM"))?.Value;
+            sheet.Cells[xlRow, 9].Value = billing != null ? billing.Replace(" Billing", "") : "n/a";
 
             sheet.Cells[xlRow, 10].Value = !string.IsNullOrEmpty(line.TDNumber) ? line.TDNumber: "Not available";
-
             sheet.Cells[xlRow, 11].Value = line.Quantity;
             sheet.Cells[xlRow, 11].Style.Numberformat.Format = "0";
 

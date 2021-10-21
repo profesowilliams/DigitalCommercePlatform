@@ -38,6 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public string URLProductImage { get; set; }
         public string URLProductSpecs { get; set; }
         public List<Line> Children { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
         public List<AgreementModel> Agreements { get; set; }
         public string AncillaryChargesWithTitles { get; set; }
 

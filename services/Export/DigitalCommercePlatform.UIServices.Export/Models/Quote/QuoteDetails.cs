@@ -28,7 +28,5 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public string Tier { get; set; }
         public string Created { get; set; }
         public string Expires { get; set; }
-
-
     }
 }

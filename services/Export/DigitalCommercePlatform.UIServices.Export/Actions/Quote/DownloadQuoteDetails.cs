@@ -10,14 +10,12 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
 {
-    
+
     public sealed class DownloadQuoteDetails
     {
         public static readonly string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -26,9 +24,15 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string QuoteId { get; set; }
+            public AncillaryItem[] AncillaryItems { get; set; }
             public LineMarkup[] LineMarkup { get; set; }
             public string Logo { get; set; }
-            public AncillaryItem[] AncillaryItems { get; set; }
+
+            public Request()
+            {
+                AncillaryItems = System.Array.Empty<AncillaryItem>();
+                LineMarkup = System.Array.Empty<LineMarkup>();
+            }
         }
 
         [ExcludeFromCodeCoverage]
@@ -82,24 +86,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                 }
 
                 return await Task.FromResult(new ResponseBase<Response> { Content = response });
-            }
-
-            protected static byte[] GenerateZipFile(List<DownloadableFile> listDownloadableFiles)
-            {
-                byte[] archiveFile;
-                using MemoryStream zipStream = new();
-                using (ZipArchive zip = new(zipStream, ZipArchiveMode.Create, leaveOpen: true))
-                {
-                    foreach (var file in listDownloadableFiles)
-                    {
-                        var entry = zip.CreateEntry(file.Filename);
-                        using var sourceStream = new MemoryStream(file.BinaryContent);
-                        using StreamWriter entryStream = new(entry.Open());
-                        sourceStream.CopyTo(entryStream.BaseStream);
-                    }
-                }
-                archiveFile = zipStream.ToArray();
-                return archiveFile;
             }
         }
 

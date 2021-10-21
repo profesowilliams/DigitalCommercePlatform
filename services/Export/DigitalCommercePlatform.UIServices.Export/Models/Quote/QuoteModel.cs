@@ -18,11 +18,11 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public string ActiveFlag { get; set; }
         public string Request { get; set; }
         public string EndUserPO { get; set; }
+        public AlternateIdentifierModel AlternateIdentifier { get; set; }
         public string CustomerPO { get; set; }
         public decimal Price { get; set; }
-        public string PriceFormatted { get { return string.Format(Constants.MoneyFormat, Price); } }
         public string Currency { get; set; }
-        public string CurrencySymbol { get; set; } = "$";
+        public string QuoteType { get; set; }
         public string DocumentType { get; set; }
         public TypeModel Type { get; set; }
         public LevelModel Level { get; set; }
@@ -35,6 +35,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public ResellerModel Reseller { get; set; }
         public ShipToModel ShipTo { get; set; }
         public EndUserModel EndUser { get; set; }
+        public string EndUserType { get; set; }
+        public AccountOwnerModel AccountOwner { get; set; }
         public VendorSalesRepModel VendorSalesRep { get; set; }
         public VendorSalesAssociateModel VendorSalesAssociate { get; set; }
         public SalesTeamModel SalesTeam { get; set; }
@@ -44,6 +46,28 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public List<OrderModel> Orders { get; set; }
         public List<VendorReferenceModel> VendorReference { get; set; }
         public List<ItemModel> Items { get; set; }
-        public List<AgreementModel> Agreements { get; set; }
+        public decimal FEMAmount { get; set; }
+        public decimal POMAmount { get; set; }
+        public decimal SAMAmount { get; set; }
+        public decimal NSMAmount { get; set; }
+        public decimal FEMPercentage { get; set; }
+        public decimal POMPercentage { get; set; }
+        public decimal SAMPercentage { get; set; }
+        public decimal NSMPercentage { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
+        public string ProgramName { get; set; }
+        public bool? QuoteCurrent { get; set; }
+        public DateTime FirstAvailableOrderDate { get; set; }
+        public DateTime LastOrderDate { get; set; }
+        public string StatusText { get; set; }
+        public decimal? AmountSaved { get; set; }
+        public List<string> LinkedRenewals { get; set; }
+        public string RenewalGroupId { get; set; }
+        public BillToModel BillTo { get; set; }
+        public InstallSiteModel InstallSite { get; set; }
+        public DateTime DueDate { get; set; }
+        public bool? Incumbent { get; set; }
+        public decimal? TotalReinstatementFeeCost { get; set; }
+        public decimal? TotalReinstatementFeeSell { get; set; }
     }
 }
