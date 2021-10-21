@@ -64,15 +64,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
                 return NotFound();
             }
 
-            switch (request.ExportFormat)
+            return request.ExportFormat switch
             {
-                case ExportFormatEnum.csv:
-                    return new CsvActionResult<ExportResponseModel>(data, "SearchResults");
-
-                case ExportFormatEnum.json:
-                default:
-                    return Ok(data);
-            }
+                ExportFormatEnum.csv => new CsvActionResult<ExportResponseModel>(data, "SearchResults"),
+                _ => Ok(data),
+            };
         }
     }
 }

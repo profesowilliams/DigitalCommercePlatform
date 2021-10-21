@@ -24,7 +24,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public ExportRequestModel Data { get; set; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, IEnumerable<ExportResponseModel>>
         {
             private readonly int _maxResults;
@@ -68,20 +67,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 var models = resultDto.Products.Select(p =>
                 {
-                    var export = new ExportResponseModel();
-
-                    export.ManufacturerName = p.CNETManufacturer ?? p.GlobalManufacturer;
-                    export.ManufacturerPartNumber = p.ManufacturerPartNumber;
-                    export.Id = p.Id;
-                    export.UpcNumber = p.UpcEan;
-                    export.TotalStock = p.Stock?.Total ?? 0;
-                    export.ProductStatus = p.Indicators?.FirstOrDefault(x => x.Type == DisplayStatus)?.Value;
-                    export.Description = !string.IsNullOrWhiteSpace(p.LongDescription) ? p.LongDescription : !string.IsNullOrWhiteSpace(p.ShortDescription) ? p.ShortDescription : p.Name;
-                    export.ListPrice = p.Price?.ListPrice;
-                    export.BestPrice = p.Price?.BestPrice;
-                    export.BestPriceExpiration = p.Price?.BestPriceExpiration;
-                    export.PromoIndicator = p.Price != null && p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO";
-                    export.MaximumResults = resultDto.TotalResults <= _maxResults;
+                    var export = new ExportResponseModel
+                    {
+                        ManufacturerName = p.CNETManufacturer ?? p.GlobalManufacturer,
+                        ManufacturerPartNumber = p.ManufacturerPartNumber,
+                        Id = p.Id,
+                        UpcNumber = p.UpcEan,
+                        TotalStock = p.Stock?.Total ?? 0,
+                        ProductStatus = p.Indicators?.FirstOrDefault(x => x.Type == DisplayStatus)?.Value,
+                        Description = !string.IsNullOrWhiteSpace(p.LongDescription) ? p.LongDescription : !string.IsNullOrWhiteSpace(p.ShortDescription) ? p.ShortDescription : p.Name,
+                        ListPrice = p.Price?.ListPrice,
+                        BestPrice = p.Price?.BestPrice,
+                        BestPriceExpiration = p.Price?.BestPriceExpiration,
+                        PromoIndicator = p.Price != null && p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO",
+                        MaximumResults = resultDto.TotalResults <= _maxResults
+                    };
 
                     return export;
                 });

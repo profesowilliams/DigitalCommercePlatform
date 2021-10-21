@@ -50,7 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(x => x.LongDescription))
                 .ForMember(dest => dest.Upc, opt => opt.MapFrom(x => x.UpcEan))
                 .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.FirstOrDefault().Value))
-                .ForMember(dest => dest.Authorization, opt => opt.Ignore());
+                .ForMember(dest => dest.Authorization, opt => opt.Ignore())
+                .ForMember(dest => dest.Indicators, opt => opt.Ignore());
             CreateMap<CategoryBreadcrumbDto, CategoryBreadcrumbModel>();
             CreateMap<RefinementOptionDto, RefinementOptionModel>();
             CreateMap<RangeDto, RangeModel>();
@@ -82,6 +83,8 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.Territories, opt => opt.MapFrom(src => src.Territories))
                 .ForMember(dest => dest.Countries, opt => opt.MapFrom(src => src.Countries))
             ;
+
+            CreateMap<IndicatorDto, IndicatorModel>();
         }
 
         public static (bool orderable, bool authrequiredprice) GetFlags(ElasticItemDto x)
@@ -99,9 +102,11 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
 
         public static void MapAuthorizations(ElasticItemModel product, bool isValid, bool orderable, bool authrequiredprice)
         {
-            product.Authorization = new AuthorizationModel();
-            product.Authorization.CanOrder = isValid && orderable;
-            product.Authorization.CanViewPrice = isValid || !authrequiredprice;
+            product.Authorization = new AuthorizationModel
+            {
+                CanOrder = isValid && orderable,
+                CanViewPrice = isValid || !authrequiredprice
+            };
         }
     }
 }

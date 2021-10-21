@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 refinements = string.Join(",", request.Refinements.Select(r => string.Format("{0}:{1}", r.Id, r.Value)).ToArray()),
                 page = request.Page,
                 pagesize = request.PageSize
-            }); ;
+            });
 
             try
             {

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using static DigitalCommercePlatform.UIServices.Search.Helpers.IndicatorsConstants;
 
 namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 {
@@ -26,16 +27,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly FakeLogger<SearchService> _logger;
         private readonly Mock<IUIContext> _context;
         private readonly SearchService _searchService;
-        private readonly Mapper _mapper;
 
-        public SearchServiceTests() {
+        public SearchServiceTests()
+        {
             _logger = new FakeLogger<SearchService>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
             _appSettingsMock.Setup(s => s.GetSetting("Search.App.Url")).Returns("http://app-Search/v1");
             _context = new Mock<IUIContext>();
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
-            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _mapper);
+            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object);
         }
 
         [Theory]
@@ -175,6 +175,33 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Should().NotBeNull();
 
             _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetFullSearchProduct_CheckIndicators(SearchRequestDto request, SearchResponseDto appResponse)
+        {
+            //Arrange
+            appResponse.Products[0].Indicators = new()
+            {
+                new Dto.FullSearch.Internal.IndicatorDto
+                {
+                    Type = FreeShipping,
+                    Value = "test"
+                }
+            };
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .Returns(Task.FromResult(appResponse));
+
+            //Act
+            var result = await _searchService.GetFullSearchProductData(request, true);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Products[0].Indicators.Should().NotBeNullOrEmpty();
+            result.Products[0].Indicators.Find(e => e.Type == FreeShipping).Should().NotBeNull();
+            result.Products[1].Indicators.Should().BeEmpty();
+            result.Products[2].Indicators.Should().BeEmpty();
         }
     }
 }

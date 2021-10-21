@@ -3,7 +3,9 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static DigitalCommercePlatform.UIServices.Search.Helpers.IndicatorsConstants;
 
 namespace DigitalCommercePlatform.UIServices.Search.Services
 {
@@ -27,8 +30,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly IUIContext _context;
         private readonly IMapper _mapper;
 
-        public SearchService(IMiddleTierHttpClient middleTierHttpClient,
-    ILogger<SearchService> logger, IAppSettings appSettings, IUIContext context, IMapper mapper)
+        public SearchService(
+            IMiddleTierHttpClient middleTierHttpClient,
+            ILogger<SearchService> logger,
+            IAppSettings appSettings,
+            IUIContext context)
         {
             _logger = logger;
             _context = context;
@@ -48,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             return fullSearchResponse;
         }
 
-        private static void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
+        private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
             foreach (var product in fullSearchResponse?.Products)
             {
@@ -57,9 +63,27 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 {
                     product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
                 }
-                product.Status = appSearchProduct.Indicators?.Find(x => x.Type == "DisplayStatus")?.Value;
+                product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
                 var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
                 SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
+                AddIndicators(appSearchProduct, product);
+            }
+        }
+
+        private void AddIndicators(ElasticItemDto productDto, ElasticItemModel productModel)
+        {
+            if (productModel.Indicators == null)
+                productModel.Indicators = new();
+
+            AddFreeShuppingIndicator(productDto, productModel);
+        }
+
+        private void AddFreeShuppingIndicator(ElasticItemDto productDto, ElasticItemModel productModel)
+        {
+            var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
+            if (freeShipping != null)
+            {
+                productModel.Indicators.Add(_mapper.Map<IndicatorModel>(freeShipping));
             }
         }
 
