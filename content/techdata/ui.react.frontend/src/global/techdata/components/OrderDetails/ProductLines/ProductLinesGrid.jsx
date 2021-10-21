@@ -99,153 +99,11 @@ function ProductLinesGrid({
     return trackingArray.length ? trackingArray.length > 0 : false;
 }
 
-  // Childs column defs
-  const  columDefsChildren = [
-    {
-      headerName: "Line Item",
-      field: "id",
-      sortable: false,
-    },
-    {
-      headerName: "Mfr No",
-      field: "mfrNumber",
-      sortable: false,
-    },
-    {
-      headerName: "Ref No",
-      field: "tdNumber",
-      sortable: false,
-    },
-    {
-      headerName: "Description",
-      field: "description",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            <a
-                className="cmp-grid-url-underlined"
-                href={props.value}
-                target="_blank"
-            >
-              {props.value}
-            </a>
-        );
-      },
-    },
-    {
-      headerName: "Quantity",
-      field: "quantity",
-      sortable: false,
-    },
-    {
-      headerName: "Unit Price",
-      field: "unitPrice",
-      sortable: false,
-      valueFormatter: (props) => {
-        return props.value.toLocaleString();
-      },
-    },
-    {
-      headerName: "Total price (USD)",
-      field: "totalPrice",
-      sortable: false,
-    },
-    {
-      headerName: "Status",
-      field: "status",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            <span className='status'>
-                <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
-                <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
-            </span>
-        );
-      },
-    },
-    {
-      headerName: "Ship Date",
-      field: "shipDate",
-      sortable: false,
-      valueFormatter: (props) => {
-        return getDateTransformed(props.value);
-      },
-    },
-    {
-      headerName: "Serial",
-      field: "serial",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            props.value && props.value.length ? (
-                <div
-                    className="cmp-grid-url-underlined"
-                    href="#"
-                    target="_blank"
-                    onClick={() => {
-                      invokeModal({
-                        content: (
-                            <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
-                        ),
-                        properties: {
-                          title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
-                        }
-                      });
-                    }}
-                >
-                  {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
-                </div>
-            ) : (
-                <div>n/a</div>
-            )
-        );
-      },
-    },
-    {
-      headerName: "Invoice",
-      field: "invoice",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            <span className='status'>
-              <a
-                  className='cmp-grid-url-underlined'
-                  href={props.value ? props.value : '#'}
-                  target="_blank">
-                <i className="fas fa-external-link-alt"></i>
-              </a>
-            </span>
-        );
-      },
-    },
-    {
-      headerName: 'Track',
-      field: 'trackings',
-      sortable: false,
-      cellRenderer: ({ node, api, setValue, data, value }) => {   
-          return (
-              <div 
-              onClick={() => {
-                  invokeModal({
-                      content: ( 
-                          <TrackOrderModal data={data}></TrackOrderModal>
-                      ),
-                      properties: {
-                          title: `Track My Order `,
-                      }
-                  });
-              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
-
-          );
-      },
-    },
-  ]
-
   //default column defs
   const columnDefs = [
     {
       headerName: "Line Item",
-      field: "id",
+      field: "displayLineNumber",
       sortable: false,
       expandable: true,
       rowClass: ({ node, data }) => {
@@ -259,8 +117,9 @@ function ProductLinesGrid({
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
-                columnDefiniton={columDefsChildren}
+                columnDefiniton={columnDefsChildren}
                 data={data.children}
+                columns={gridConfig.columnList}
             ></ProductLinesChildGrid>
           </section>
       )},
@@ -292,6 +151,22 @@ function ProductLinesGrid({
       },
     },
     {
+      headerName: "Description",
+      field: "displayName",
+      sortable: false,
+      cellRenderer: (props) => {
+        return (
+            <a
+                className="cmp-grid-url-underlined"
+                href={props.value}
+                target="_blank"
+            >
+              {props.value}
+            </a>
+        );
+      },
+    },
+    {
       headerName: "Quantity",
       field: "quantity",
       sortable: false,
@@ -339,36 +214,6 @@ function ProductLinesGrid({
       },
     },
     {
-      headerName: "Serial",
-      field: "serial",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            props.value && props.value.length ? (
-                <div
-                    className="cmp-grid-url-underlined"
-                    href="#"
-                    target="_blank"
-                    onClick={() => {
-                      invokeModal({
-                        content: (
-                            <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
-                        ),
-                        properties: {
-                          title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
-                        }
-                      });
-                    }}
-                >
-                  {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
-                </div>
-            ) : (
-                <div>n/a</div>
-            )
-        );
-      },
-    },
-    {
       headerName: "Invoice",
       field: "invoice",
       sortable: false,
@@ -385,28 +230,90 @@ function ProductLinesGrid({
         );
       },
     },
-    {
-      headerName: 'Track',
-      field: 'trackings',
-      sortable: false,
-      cellRenderer: ({ node, api, setValue, data, value }) => {
+
+  ];
+
+  //copying arrays
+  const columnDefsChildren = JSON.parse(JSON.stringify(columnDefs));
+
+  //Serials behave differently in parent grid and child grid
+  columnDefsChildren.push(
+      {
+        headerName: "Serial",
+        field: "serials",
+        sortable: false,
+        cellRenderer: (props) => {
           return (
-              <div
+              props.value && props.value.length ? (
+                  <div
+                      className="cmp-grid-url-underlined"
+                      href="#"
+                      target="_blank"
+                      onClick={() => {
+                        invokeModal({
+                          content: (
+                              <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
+                          ),
+                          properties: {
+                            title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
+                          }
+                        });
+                      }}
+                  >
+                    {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
+                  </div>
+              ) : (
+                  <div>n/a123</div>
+              )
+          );
+        },
+      }
+  );
+
+  columnDefsChildren.push(    {
+    headerName: 'Track',
+    field: 'trackings',
+    sortable: false,
+    cellRenderer: ({ node, api, setValue, data, value }) => {
+      return (
+          <div
               onClick={() => {
-                  invokeModal({
-                      content: (
-                          <TrackOrderModal data={data}></TrackOrderModal>
-                      ),
-                      properties: {
-                          title: `Track My Order `,
-                      }
-                  });
+                invokeModal({
+                  content: (
+                      <TrackOrderModal data={data}></TrackOrderModal>
+                  ),
+                  properties: {
+                    title: `Track My Order `,
+                  }
+                });
               }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
 
-          );
-      },
+      );
     },
-  ];
+  });
+
+  //Serials behave differently in parent grid and child grid
+  columnDefs.push({
+    headerName: "Serial",
+    field: "serials",
+    sortable: false,
+    cellRenderer: () => {
+      return (
+              <div></div>
+      );
+    },
+  });
+
+  columnDefs.push(    {
+    headerName: 'Track',
+    field: 'trackings',
+    sortable: false,
+    cellRenderer: () => {
+      return (
+          <div></div>
+      );
+    },
+  });
 
   //whitelabel column defs
   const whiteLabelCols = () => {

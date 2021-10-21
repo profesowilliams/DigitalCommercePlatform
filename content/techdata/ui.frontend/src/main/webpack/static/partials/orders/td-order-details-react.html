@@ -5,8 +5,33 @@
                 "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order?details=true&id=I008137556",
                 "headerConfig":{"orderLabel":"Order Label","orderDateLabel":"Order Date Label","purchaseOrderLabel":"Purchase Order Label","exportCSVLabel":"Export to CSV Label","phoneNumberLabel":"(123)-456-7890"},
                 "infoConfig":{"orderStatusLabel":"Status Card Label","orderStatusItemsShipped":"All Items Shipped Message","orderStatusItemsOpen":"All Items Open Message","orderStatusItemsCancelled":"Order Cancelled Message","orderStatusItemsInProcess":"Items are being Processed message","orderStatusItemsInReview":"Order in Review Message","orderStatusItemsShippedDescription":"All Items Shipped Very Very long Message, very very very looong","orderStatusItemsCancelledDescription":"All Items Cancelled Very Very long Message, very very very looong","orderStatusItemsInProcessDescription":"Items are being Processed Very Very long Message, very very very looong","orderStatusItemsOpenDescription":"Items are Open Very Very long Message, very very very looong","orderStatusItemsInReviewDescription":"Order in Review Descriptive Message","endUserLabel":"End-user Card Label","shipToLabel":"Ship-To Card Label","blindPackagingUsed":"Blind packaging used Label","blindPackagingNotUsed":"Blind packaging not used Label","paymentLabel":"Payment Card Label","subTotalLabel":"subTotalLabel Label","freightLabel":"freightLabel Label","taxLabel":"taxLabel  Label","otherFeesLabel":"otherFeesLabel  Label","paymentTermsLabel":"paymentTermsLabel Label","paymentTotalLabel":"paymentTotalLabel Label","currencyLabel":"currencyLabel  Label"},"productLines": {"label": "Line Item Details","applyMarkupLabel": "Apply your markup to the line items below","expandAllLabel": "Expand All","collapseAllLabel": "Collapse All","startDateLabel": "Start Date","autoRenewLabel": "Auto Renew","durationLabel": "Duration","billingLabel": "Billing","yesLabel": "Yes","noLabel": "No",
-                "columnList": [{"columnLabel": "Line edited","columnKey": "id"},{"columnLabel": "Mfr No edit","columnKey": "mfrNumber"},{"columnLabel": "Ref No","columnKey": "tdNumber"},{"columnLabel": "Description","columnKey": "description"},{"columnLabel": "Quantity","columnKey": "quantity"},{"columnLabel": "Unit Price","columnKey": "unitPrice"},{"columnLabel": "Total price (USD)","columnKey": "totalPrice"},{"columnLabel": "Status","columnKey": "status"},{"columnLabel": "Ship Date","columnKey": "shipDate"},{"columnLabel": "Serial No","columnKey": "serial"},{"columnLabel": "Invoice","columnKey": "invoice"},{"columnLabel": "Track","columnKey": "trackings"}]},
-                "iconList": [{"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},{"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},{"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},{"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},{"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}], 
-                "searchCriteria":{"title" : "Filter Orders","searchButtonLabel": "Apply","clearButtonLabel": "Clear All Filters","inputPlaceholder": "Enter your search","keywordDropdown" : {"label": "Keyword","items": [{"key": "id", "value": "TD Order #"},{"key": "customerPO", "value": "Customer PO"}]}}}'></div>
+                "columnList": [
+                {"columnLabel": "Line edited","columnKey": "displayLineNumber"},
+                {"columnLabel": "Mfr No edit","columnKey": "mfrNumber"},
+                {"columnLabel": "Ref No","columnKey": "tdNumber"},
+                {"columnLabel": "Description","columnKey": "description"},
+                {"columnLabel": "Quantity","columnKey": "quantity"},
+                {"columnLabel": "Unit Price","columnKey": "unitPrice"},
+                {"columnLabel": "Total price (USD)","columnKey": "totalPrice"},
+                {"columnLabel": "Status","columnKey": "status"},
+                {"columnLabel": "Ship Date","columnKey": "shipDate"},
+                {"columnLabel": "Serial No","columnKey": "serials"},
+                {"columnLabel": "Invoice","columnKey": "invoice"},
+                {"columnLabel": "Track","columnKey": "trackings"}]},
+                "iconList": [
+                    {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
+                    {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
+                    {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
+                    {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
+                    {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}],
+                "searchCriteria":{
+                "title" : "Filter Orders","searchButtonLabel": "Apply",
+                "clearButtonLabel": "Clear All Filters",
+                "inputPlaceholder": "Enter your search",
+                "keywordDropdown" : {"label": "Keyword",
+                "items": [
+                    {"key": "id", "value": "TD Order #"},
+                    {"key": "customerPO", "value": "Customer PO"}]
+                }}}'></div>
     </div>
 </div>
