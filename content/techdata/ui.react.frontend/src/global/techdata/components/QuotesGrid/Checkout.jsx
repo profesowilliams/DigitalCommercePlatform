@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import { usGet } from "../../../../utils/api";
+import { usPut } from "../../../../utils/api";
 import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 
 function Checkout({ line, checkoutConfig }) {
   const config = {
     uiServiceEndPoint: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.uiServiceEndPoint
-      : "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
+      : "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/replaceCart",
     redirectUrl: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.redirectUrl
       : "https://shop.techdata.com/cart",
@@ -14,7 +14,7 @@ function Checkout({ line, checkoutConfig }) {
 
   async function redirectToCart(quoteId) {
     try {
-      await usGet(config.uiServiceEndPoint + `?QuoteId=${quoteId}`);
+      await usPut(config.uiServiceEndPoint + `?QuoteId=${quoteId}&type=quote`);
       window.location.replace(config.redirectUrl);
     } catch (e) {
       console.error(`Quote ${quoteId} checkout failed:`);

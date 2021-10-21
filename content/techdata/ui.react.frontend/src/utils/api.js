@@ -22,9 +22,9 @@ axios.defaults.headers.common['SessionId'] = sessionId;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Site'] = 'NA';
 
-export const { get: usGet, post: usPost } = USaxios;
+export const { get: usGet, post: usPost, put: usPut } = USaxios;
 
-export const { get, post } = axios;
+export const { get, post, put } = axios;
 
 export const checkApiErrorMessage = (apiResponse) => {
   const errorMessagesList = apiResponse?.data?.error?.messages;
