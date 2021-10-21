@@ -550,7 +550,14 @@ app.get("/ui-commerce/v1/orderdetails", function (req, res) {
   const id = req.query.id;
   const response = utils.getOrderDetailsResponse();
   res.json(response);
-}); 
+});
+
+app.get("/ui-commerce/v1/order/details", function (req, res) {
+    console.log(req.url)
+    const id = req.query.id;
+    const response = utils.getOrderDetailsResponse();
+    res.json(response);
+});
 
 app.get("/ui-commerce/v1/order/", function (req, res) {
     const id = req.query.id || 0;

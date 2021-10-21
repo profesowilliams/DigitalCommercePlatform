@@ -1026,12 +1026,12 @@ module.exports = {
                       "configID": null,
                       "locationID": null,
                       "serials": [
-                        "MSNA005",
-                        "MSNA001",
-                        "MSNA004",
-                        "MSNA000",
-                        "MSNA002",
-                        "MSNA003"            ],
+                      //   "MSNA005",
+                      //   "MSNA001",
+                      //   "MSNA004",
+                      //   "MSNA000",
+                      //   "MSNA002",
+                      /*"MSNA003" */           ],
                       "paKs": null,
                       "images": null,
                       "displayName": null          }

@@ -67,6 +67,11 @@ use(function () {
         productInfo["serialModal"] = properties["serialModal"];
     }
 
+    //Serial No Not present label
+    if (properties && properties["serialCellNotFoundMessage"]) {
+        productInfo["serialCellNotFoundMessage"] = properties["serialCellNotFoundMessage"];
+    }
+
     //info section json being constructed
     if (properties && properties["orderStatusLabel"]) {
         infoJsonObject["orderStatusLabel"] = properties["orderStatusLabel"];

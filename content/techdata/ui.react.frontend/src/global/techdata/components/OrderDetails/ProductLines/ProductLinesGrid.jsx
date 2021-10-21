@@ -95,6 +95,13 @@ function ProductLinesGrid({
     return formatedDate;
   }
 
+  function getShipDateFromTracking(trackingObject)
+  {
+    console.log("inside getShipDateFromTracking");
+    console.log(trackingObject);
+    return getDateTransformed(trackingObject.date)
+  }
+
   function getTrackingStatus(trackingArray) {
     return trackingArray.length ? trackingArray.length > 0 : false;
 }
@@ -185,14 +192,6 @@ function ProductLinesGrid({
       sortable: false,
     },
     {
-      headerName: "Ship Date",
-      field: "shipDate",
-      sortable: false,
-      valueFormatter: (props) => {
-        return getDateTransformed(props.value);
-      },
-    },
-    {
       headerName: "Status",
       field: "status",
       sortable: false,
@@ -203,14 +202,6 @@ function ProductLinesGrid({
                 <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
             </span>
         );
-      },
-    },
-    {
-      headerName: "Ship Date",
-      field: "shipDate",
-      sortable: false,
-      valueFormatter: (props) => {
-        return getDateTransformed(props.value);
       },
     },
     {
@@ -255,7 +246,7 @@ function ProductLinesGrid({
                               <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
                           ),
                           properties: {
-                            title: gridProps.serialModal ? gridProps.serialModal : "Serial Modal",
+                            title: gridProps.serialModal ? gridProps.serialModal : "Serial Numbers",
                           }
                         });
                       }}
@@ -263,13 +254,14 @@ function ProductLinesGrid({
                     {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
                   </div>
               ) : (
-                  <div>n/a123</div>
+                  <div>{gridProps.serialCellNotFoundMessage ? gridProps.serialCellNotFoundMessage : "n/a"}</div>
               )
           );
         },
       }
   );
 
+  //Tracking behaves differently between parent and child
   columnDefsChildren.push(    {
     headerName: 'Track',
     field: 'trackings',
@@ -292,6 +284,17 @@ function ProductLinesGrid({
     },
   });
 
+  columnDefsChildren.push({
+    headerName: 'Ship Date',
+    field: 'trackings',
+    sortable: false,
+    cellRenderer: ({ data }) => {
+      return (
+          <div>{getShipDateFromTracking(data)}</div>
+      );
+    },
+  });
+
   //Serials behave differently in parent grid and child grid
   columnDefs.push({
     headerName: "Serial",
@@ -304,6 +307,7 @@ function ProductLinesGrid({
     },
   });
 
+  //Tracking behaves differently between parent and child
   columnDefs.push(    {
     headerName: 'Track',
     field: 'trackings',
@@ -314,6 +318,20 @@ function ProductLinesGrid({
       );
     },
   });
+
+  //Shipped Date behaves differently between parent and child
+  columnDefs.push( {
+    headerName: "Ship Date",
+    field: "trackings",
+    sortable: false,
+    cellRenderer: () => {
+      return (
+          <div></div>
+      );
+    },
+  });
+
+
 
   //whitelabel column defs
   const whiteLabelCols = () => {
