@@ -251,7 +251,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
 
     return (
         <div className="cmp-qp__general-info">
-            <p onClick={!readOnly && handleEditModeChange} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
+            <p onClick={!readOnly ? handleEditModeChange : undefined} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
             <div className="cmp-qp__general-info--address-group">
                 {source &&
                     <div className="cmp-qp__information-row--readonly">

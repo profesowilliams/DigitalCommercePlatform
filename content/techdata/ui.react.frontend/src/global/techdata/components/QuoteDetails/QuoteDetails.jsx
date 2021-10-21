@@ -118,16 +118,27 @@ const QuoteDetails = ({ componentProp }) => {
     const sourceAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDORQUOTEID');
     const vendorAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDOR');
 
-    return {
-      ...quoteDetails,
-      source: {
+    let generalInformationData = {
+      ...quoteDetails
+    }
+
+    if (sourceAttribute?.value) {
+      generalInformationData.source = {
         value: sourceAttribute?.value
-      },
-      deal: {
+      }
+    }
+    else {
+      generalInformationData.source = null;
+    }
+
+    if (dealIdAttribute?.value || vendorAttribute?.value) {
+      generalInformationData.deal = {
         spaId: dealIdAttribute?.value,
         vendor: vendorAttribute?.value,
       } 
-    };
+    }
+
+    return generalInformationData;
   }
 
   return quoteDetails ? (
