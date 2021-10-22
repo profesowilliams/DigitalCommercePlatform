@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import SearchAreas from "./SearchAreas";
@@ -29,6 +29,19 @@ const getSearchTermFromUrl = () => {
   return searchQueryStringParameter ? searchQueryStringParameter : "";
 };
 
+function useWindowSize() {
+  const [size, setSize] = useState([0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
+
 const SearchBar = ({ data, componentProp }) => {
   const {
     id,
@@ -39,14 +52,18 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
   } = JSON.parse(componentProp);
 
+  
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
-
+  
   const [isMobile, setMobile] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [isFocus, setFocus] = useState(false);
-
+  
+  const [width] = useWindowSize();
+  const mobileState = width <= 767;
+  
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
   useEffect(() => {
@@ -143,8 +160,6 @@ const SearchBar = ({ data, componentProp }) => {
       window.location.href = await getSearchUrl(searchTermText);
     }
   };
-
-  const mobileState = window.innerWidth <= 767;
 
   const changeSelectedArea = (areaConfiguration) => {
     setSelectedArea(areaConfiguration);

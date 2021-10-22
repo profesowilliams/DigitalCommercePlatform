@@ -50,10 +50,10 @@
   &--checked {
     background-color: get-color(brand-white);
     margin-left: 0;
-    margin-top: 5%;
+    margin-top: 0;
     width: 100%;
     left: 0;
-    top: 0;
+    top: 5%;
     z-index: -1;
     max-height: 80px;
     position: fixed;
