@@ -48,8 +48,7 @@ const QuoteCreate = ({
     if( id ){ 
       setCartID(id);
       if (redirectToPreview){
-        const {origin} = window.location;
-        window.location.replace(`${origin}/content/techdata/quotes/quote-preview.html?id=${id}&isEstimateId=true`);
+        window.location.href = `quotes/quote-preview.html?id=${id}&isEstimateId=true`
         return;
       }
       setStep(1);
