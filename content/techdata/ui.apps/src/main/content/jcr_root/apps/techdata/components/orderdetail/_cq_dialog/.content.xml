@@ -100,6 +100,58 @@
                             sling:resourceType="granite/ui/components/coral/foundation/include"
                             path="/mnt/overlay/techdata/components/ordersgrid/cq:dialog/content/items/column/items/tabs/items/tab3"
                     />
+                    <searchCriteria
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Search Configuration"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="/mnt/overlay/techdata/components/ordersgrid/cq:dialog/content/items/column/items/tabs/items/searchCriteria"
+                    >
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                            >
+                                <items jcr:primaryType="nt:unstructured">
+                                    <clearButtonLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Enter Clear Button Label"
+                                            fieldLabel="Clear Button Label"
+                                            name="./clearButtonLabel"/>
+                                    <inputPlaceholder
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true"/>
+                                    <keywordDropdownLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <actions
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <vendorDropdownLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <vendorActions
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <methodDropdownLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <methodActions
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <fromLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true"/>
+                                    <toLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true" />
+                                    <datePlaceholder
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true"/>
+                                </items>
+                            </column>
+                        </items>
+                    </searchCriteria>
                     <orderInfo
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Order Information Configuration"

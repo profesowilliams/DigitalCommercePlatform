@@ -28,6 +28,24 @@
                 "otherFeesLabel":"otherFeesLabel  Label","paymentTermsLabel":"paymentTermsLabel Label",
                 "paymentTotalLabel":"paymentTotalLabel Label","currencyLabel":"currencyLabel  Label"},
                 "productLines": {
+                    "searchCriteria": {
+                        "title" : "Filter Orders","searchButtonLabel": "Apply",
+                        "clearButtonLabel": "Clear All Filters",
+                        "inputPlaceholder": "Enter your search",
+                        "keywordDropdown" : {
+                            "label": "Keyword",
+                            "items": [
+                                {"key": "id", "value": "TD Order #"},
+                                {"key": "customerPO", "value": "Customer PO"}]
+                        },
+                    "searchbyDropdown": {
+                            "label": "SearchBy",
+                            "items": [
+                            { "key": "allLines", "value": "All Lines++" },
+                            { "key": "contracts", "value": "Contracts" },
+                            { "key": "licenses", "value": "Licenses" }]
+                        }
+                    },
                     "label": "Line Item Details",
                     "serialCellLabel":"view from config",
                     "serialModal":"Serial Modal title from config",
@@ -52,28 +70,15 @@
                         {"columnLabel": "Ship Date","columnKey": "trackings"},
                         {"columnLabel": "Serial No","columnKey": "serials"},
                         {"columnLabel": "Invoice","columnKey": "invoice"},
-                        {"columnLabel": "Track","columnKey": "trackings"}]},
-                    "iconList": [
-                        {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
-                        {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
-                        {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
-                        {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
-                        {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}],
-                    "searchCriteria":{
-                        "title" : "Filter Orders","searchButtonLabel": "Apply",
-                        "clearButtonLabel": "Clear All Filters",
-                        "inputPlaceholder": "Enter your search",
-                        "keywordDropdown" : {
-                            "label": "Keyword",
-                            "items": [
-                                {"key": "id", "value": "TD Order #"},
-                                {"key": "customerPO", "value": "Customer PO"}]},
-                        "searchbyDropdown": {
-                            "label": "SearchBy",
-                            "items": [
-                            { "key": "allLines", "value": "All Lines" },
-                            { "key": "contracts", "value": "Contracts" },
-                            { "key": "licenses", "value": "Licenses" }]
-                        }}}'></div>
+                        {"columnLabel": "Track","columnKey": "trackings"}
+                    ]
+                },
+                "iconList": [
+                    {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
+                    {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
+                    {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
+                    {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
+                    {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}]
+            }'></div>
     </div>
 </div>

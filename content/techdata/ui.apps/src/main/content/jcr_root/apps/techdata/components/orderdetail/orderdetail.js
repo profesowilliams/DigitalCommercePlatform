@@ -8,6 +8,9 @@ use(function () {
     var iconValues = [];
     var listValues = [];
     var productInfo = {};
+    var keywordDropdownData = {};
+    var searchCriteriaData = {};
+    var searchByDropDown = {};
 
     var resourceResolver = resource.getResourceResolver();
 
@@ -71,6 +74,43 @@ use(function () {
     if (properties && properties["serialCellNotFoundMessage"]) {
         productInfo["serialCellNotFoundMessage"] = properties["serialCellNotFoundMessage"];
     }
+
+    var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
+
+    if (keywordListNode !== null) {
+        var childrenList = keywordListNode.getChildren();
+        var keyValues = [];
+        for (var [key, res] in Iterator(childrenList)) {
+            var labelKey = res.properties["key"];
+            var labelValue = res.properties["value"];
+            var labelData = {};
+            labelData.key = labelKey;
+            labelData.value = labelValue;
+            keyValues.push(labelData);
+            searchByDropDown.items = keyValues;
+        }
+    }
+
+    if (properties && properties["keywordDropdownLabel"]) {
+        searchByDropDown.label = properties["keywordDropdownLabel"];
+    }
+
+    if (properties && properties["searchButtonLabel"]) {
+        searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
+    }
+
+    if (properties && properties["clearButtonLabel"]) {
+        searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
+    }
+
+    if (properties && properties["inputPlaceholder"]) {
+        searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
+    }
+
+    if (properties && properties["searchTitle"]) {
+        searchCriteriaData.title = properties["searchTitle"];
+    }
+
 
     //info section json being constructed
     if (properties && properties["orderStatusLabel"]) {
@@ -172,6 +212,18 @@ use(function () {
 
     if (this.uiServiceDomain != null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
+    }
+
+    if (searchByDropDown != null) {
+        keywordDropdownData["searchbyDropdown"] = searchByDropDown;
+    }
+
+    if (keywordDropdownData != null) {
+        searchCriteriaData["searchbyDropdown"] = searchByDropDown;
+    }
+
+    if (searchCriteriaData != null) {
+        productInfo["searchCriteria"] = searchCriteriaData;
     }
 
     jsonObject["headerConfig"] = headerJsonObject;

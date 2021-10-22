@@ -17,8 +17,7 @@ function ProductLinesGrid({
   labels,
   quoteOption,
   onMarkupChanged,
-  iconList,
-  searchCriteria,
+  iconList
 }) {
 
   const [gridApi, setGridApi] = useState(null);
@@ -501,11 +500,10 @@ function ProductLinesGrid({
         
         <GridSearchCriteria
             Filters={OrderDetailsSearch}
-            label={searchCriteria?.title ?? 'Filter Orders'}
-            componentProp={searchCriteria}
+            label={gridProps.searchCriteria?.title ?? 'Filter Orders'}
+            componentProp={gridProps.searchCriteria}
             onSearchRequest={onSearchRequest}
             onClearRequest={onClearSearchRequest}
-            
           ></GridSearchCriteria>
           
         <Grid
