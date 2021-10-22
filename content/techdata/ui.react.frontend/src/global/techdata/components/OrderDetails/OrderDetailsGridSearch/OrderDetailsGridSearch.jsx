@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
-import QueryInput from "../../Widgets/QueryInput";
-import SimpleDatePicker from "../../Widgets/SimpleDatePicker";
 import SimpleDropDown from "../../Widgets/SimpleDropDown";
 
 function OrdersGridSearch({ componentProp, onQueryChanged }) {
+  const [flag, setFlag] = useState(false);
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -90,6 +89,11 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
       query.searchby?.key && query.searchby?.key !== "allLines"
         ? `&searchBy=${query.searchby.key}`
         : "";
+    // If the value match with the default value, prepare a query value to filter and keep the flow
+    if (query.searchby?.key === 'allLines') {
+      searchby = `&searchBy=${query.searchby.key}`;
+    }
+
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${searchby}`;
     if (isQueryValid(query)) {
       onQueryChanged(concatedQuery);
@@ -119,14 +123,17 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
 
   return (
     <div className="cmp-orders-grid__search">
-      {/* NEW */}
       <SimpleDropDown
         key={"keyword"}
         items={config.searchByDropdown.items}
         placeholder={config.inputPlaceholder}
-        onItemSelected={(change) => handleFilterChange(change, "searchby")}
+        onItemSelected={(change) => {
+          if (flag) {
+            handleFilterChange(change, "searchby")
+          }
+          setFlag(true);
+        }}
       ></SimpleDropDown>
-      {/* NEW */}
     </div>
   );
 }

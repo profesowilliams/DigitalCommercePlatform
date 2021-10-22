@@ -428,7 +428,11 @@ function ProductLinesGrid({
   useEffect(() => {
     if (queryChange !== '') {
       const queryString = queryChange.queryString; 
-      const resul = queryString.split('=')[1]
+      const resul = queryString.split('=')[1];
+      if (resul === 'allLines') {
+        onClearSearchRequest();
+        return;
+      }
       let _filterData = [];
       if (resul === 'licenses') {
         _filterData = mutableGridData.filter(m => m.license !== null)
