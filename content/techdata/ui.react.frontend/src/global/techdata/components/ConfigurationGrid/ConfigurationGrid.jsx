@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
-import Modal from '../Modal/Modal';
+import Modal from "../Modal/Modal";
 import ConfigurationGridSearch from "./ConfigurationGridSearch";
-import { QuoteDetailsLink, MultipleQuotesInvokeModal, SingleQuotesInvokeModal } from './QuotesModals'
+import {
+  QuoteDetailsLink,
+  MultipleQuotesInvokeModal,
+  SingleQuotesInvokeModal,
+} from "./QuotesModals";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -40,10 +44,9 @@ function ConfigurationGrid(props) {
     );
   }
   function getQuoteCellConfiguration(line) {
-    if(!line.quotes) {
-      return '';
-    }
-    else if (line.quotes.length && line.quotes.length > 1) {
+    if (!line.quotes) {
+      return "";
+    } else if (line.quotes.length && line.quotes.length > 1) {
       return (
         <MultipleQuotesInvokeModal
           invokeModal={invokeModal}
@@ -54,8 +57,10 @@ function ConfigurationGrid(props) {
         ></MultipleQuotesInvokeModal>
       );
     } else {
-      const status = componentProp.statusLabelsList.find((label) => label.labelKey === line.quotes[0]?.status);
-      if (status || line.quotes[0]?.status === 'Pending') {
+      const status = componentProp.statusLabelsList.find(
+        (label) => label.labelKey === line.quotes[0]?.status
+      );
+      if (status || line.quotes[0]?.status === "Pending") {
         return (
           <SingleQuotesInvokeModal
             invokeModal={invokeModal}
@@ -68,10 +73,13 @@ function ConfigurationGrid(props) {
         );
       } else if (line.quotes[0]?.id) {
         return (
-          <QuoteDetailsLink quote={line.quotes[0]} quoteDetailUrl={componentProp.quoteDetailUrl}></QuoteDetailsLink>
-        )
+          <QuoteDetailsLink
+            quote={line.quotes[0]}
+            quoteDetailUrl={componentProp.quoteDetailUrl}
+          ></QuoteDetailsLink>
+        );
       } else {
-        return '';
+        return "";
       }
     }
   }
@@ -85,9 +93,7 @@ function ConfigurationGrid(props) {
         return (
           <a
             className="cmp-grid-url-underlined"
-            href={
-              componentProp.configDetailUrl?.replace('{id}', props.value)
-            }
+            href={componentProp.configDetailUrl?.replace("{id}", props.value)}
           >
             {props.value}
           </a>
@@ -99,13 +105,12 @@ function ConfigurationGrid(props) {
       field: "configurationType",
       sortable: false,
       cellRenderer: (props) => {
-        const configurationTypeLabel = componentProp.searchCriteria?.configurationTypesDropdown?.items?.find((label) => label.key === props.value)?.value || props.value;
+        const configurationTypeLabel =
+          componentProp.searchCriteria?.configurationTypesDropdown?.items?.find(
+            (label) => label.key === props.value
+          )?.value || props.value;
 
-        return (
-          <div>
-            {configurationTypeLabel}
-          </div>
-        );
+        return <div>{configurationTypeLabel}</div>;
       },
     },
     {
@@ -144,7 +149,11 @@ function ConfigurationGrid(props) {
       field: "quotes",
       sortable: false,
       cellRenderer: (props) => {
-        return <div className='cmp-grid-url-underlined'>{getQuoteCellConfiguration(props.data)}</div>;
+        return (
+          <div className="cmp-grid-url-underlined">
+            {getQuoteCellConfiguration(props.data)}
+          </div>
+        );
       },
     },
     {
@@ -152,12 +161,18 @@ function ConfigurationGrid(props) {
       field: "action",
       sortable: true,
       cellRenderer: (props) => {
-        const createQuoteUrl = componentProp.createQuoteUrl?.replace("{id}", props.data.configId)
-                                  .replace("{is-estimated-id}", String(props.data.configurationType === 'Estimate'))
-                                  .replace("{vendor}", props.data.vendor);
+        const createQuoteUrl = componentProp.createQuoteUrl
+          ?.replace("{id}", props.data.configId)
+          .replace(
+            "{is-estimated-id}",
+            String(props.data.configurationType === "Estimate")
+          )
+          .replace("{vendor}", props.data.vendor);
         return (
           <div>
-            <a className="cmp-grid-url-not-underlined" href={createQuoteUrl}>{componentProp.actionColumnLabel}</a>
+            <a className="cmp-grid-url-not-underlined" href={createQuoteUrl}>
+              {componentProp.actionColumnLabel}
+            </a>
           </div>
         );
       },

@@ -4,7 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 
-function OrdersGridSearch({ componentProp, onQueryChanged }) {
+function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -124,6 +124,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
         items={config.keywordDropdown.items}
         placeholder={config.inputPlaceholder}
         onQueryChanged={(change) => handleFilterChange(change, "keyword")}
+        onKeyPress={(isEnter) => onKeyPress(isEnter)}
       ></QueryInput>
       {/* NEW */}
       <SimpleDropDown

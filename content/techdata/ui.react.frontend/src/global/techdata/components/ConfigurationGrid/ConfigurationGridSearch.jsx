@@ -1,10 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 
-function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
+function ConfigurationGridSearch({
+  componentProp,
+  onQueryChanged,
+  onKeyPress,
+}) {
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -28,7 +32,9 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
     keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
       ? componentProp?.keywordDropdown
       : defaultKeywordDropdown,
-    configurationTypesDropdown: isNotEmpty(componentProp?.configurationTypesDropdown)
+    configurationTypesDropdown: isNotEmpty(
+      componentProp?.configurationTypesDropdown
+    )
       ? componentProp?.configurationTypesDropdown
       : defaultConfigurationTypesDropdown,
     inputPlaceholder: componentProp?.inputPlaceholder ?? "Enter Your Search",
@@ -45,16 +51,21 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
         ? `&${query.keyword.key}=${query.keyword.value}`
         : "";
     let configurations =
-      query.configurations?.key && query.configurations?.key !== "AllConfigurationTypes"
+      query.configurations?.key &&
+      query.configurations?.key !== "AllConfigurationTypes"
         ? `&Type=${query.configurations.key}`
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? `&createdFrom=${new Date(query.from.value.setUTCHours(0, 0, 0)).toISOString()}`
+        ? `&createdFrom=${new Date(
+            query.from.value.setUTCHours(0, 0, 0)
+          ).toISOString()}`
         : "";
     let to =
       query.to?.key && query.to?.value
-        ? `&createdTo=${new Date(query.to.value.setUTCHours(23, 59, 59)).toISOString()}`
+        ? `&createdTo=${new Date(
+            query.to.value.setUTCHours(23, 59, 59)
+          ).toISOString()}`
         : "";
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
@@ -90,11 +101,14 @@ function ConfigurationGridSearch({ componentProp, onQueryChanged }) {
         items={config.keywordDropdown.items}
         placeholder={config.inputPlaceholder}
         onQueryChanged={(change) => handleFilterChange(change, "keyword")}
+        onKeyPress={(isEnter) => onKeyPress(isEnter)}
       ></QueryInput>
       <SimpleDropDown
         key={"configurations"}
         items={config.configurationTypesDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "configurations")}
+        onItemSelected={(change) =>
+          handleFilterChange(change, "configurations")
+        }
       ></SimpleDropDown>
       <SimpleDatePicker
         pickerKey={"from"}

@@ -4,7 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 
-function QuotesGridSearch({ componentProp, onQueryChanged }) {
+function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -48,11 +48,15 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? `&createdFrom=${new Date(query.from.value.setUTCHours(0, 0, 0)).toISOString()}`
+        ? `&createdFrom=${new Date(
+            query.from.value.setUTCHours(0, 0, 0)
+          ).toISOString()}`
         : "";
     let to =
       query.to?.key && query.to?.value
-        ? `&createdTo=${new Date(query.to.value.setUTCHours(23, 59, 59)).toISOString()}`
+        ? `&createdTo=${new Date(
+            query.to.value.setUTCHours(23, 59, 59)
+          ).toISOString()}`
         : "";
     let concatedQuery = `${keyword}${manufacturer}${from}${to}`;
     if (isQueryValid(query)) {
@@ -88,6 +92,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged }) {
         items={config.keywordDropdown.items}
         placeholder={config.inputPlaceholder}
         onQueryChanged={(change) => handleFilterChange(change, "keyword")}
+        onKeyPress={(isEnter) => onKeyPress(isEnter)}
       ></QueryInput>
       <SimpleDropDown
         key={"manufacturer"}
