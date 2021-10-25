@@ -80,6 +80,7 @@
 			}
 			&__description {
 				padding: 0 rem(30px);
+				max-height: rem(144px);
 				word-wrap: break-word;
 				text-overflow: ellipsis;
 				display: -webkit-box;

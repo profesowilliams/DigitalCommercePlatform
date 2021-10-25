@@ -956,6 +956,7 @@ $teaser-headings-mobile: (
               .cmp-teaser__description {
                 //min-height: 17rem;
                 min-height: auto;
+                max-height: rem(144px);
                 text-overflow: ellipsis;
                 overflow: hidden;
                 display: -webkit-box;
