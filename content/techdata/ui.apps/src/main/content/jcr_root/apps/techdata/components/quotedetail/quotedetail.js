@@ -77,6 +77,10 @@ use(function() {
     if (this.uiServiceDomain !== null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.quoteDetailEndpoint;
     }
+
+    if (this.uiServiceDomain !== null) {
+        jsonObject["uiServiceEndPointExcel"] = this.uiServiceDomain + this.quoteDetailsXLSEndpoint;
+    }
     
     if (this.shopDomainPage !== null) {
         jsonObject["shopDomainPage"] = this.shopDomainPage;

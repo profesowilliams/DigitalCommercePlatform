@@ -103,4 +103,8 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Get Action Items Endpoint", description = "Get Action Items Endpoint")
     String actionItemsEndpoint();
+
+    @Property(label = "Get Quote Details XLS Endpoint", description = "Get Quote Details XLS Endpoint")
+    String quoteDetailsXLSEndpoint();
+
 }
