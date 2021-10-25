@@ -106,7 +106,8 @@ const SignIn = (props) => {
               logoutURL,
               pingLogoutURL,
               errorPageUrl,
-              redirectUrl
+              redirectUrl,
+              true /*ignore AEM round trip redirect*/
             );
           }
         }
