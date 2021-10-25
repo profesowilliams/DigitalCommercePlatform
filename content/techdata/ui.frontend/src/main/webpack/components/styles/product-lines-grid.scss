@@ -20,11 +20,24 @@
       }
     }
     &--notExpandable {
-      .ag-cell-expandable .ag-group-contracted {
+      .ag-cell-expandable .ag-group-contracted,
+      .ag-icon-tree-open {
         pointer-events: none;
         .ag-icon::before {
-          color: get-color(secondary-grey);
+          color: get-color(brand-blue);
           pointer-events: none;
+        }
+      }
+    }
+    .ag-cell .ag-cell-wrapper {
+      .ag-group-contracted {
+        .ag-icon-tree-closed {
+          color: get-color(brand-blue);
+        }
+      }
+      .ag-group-expanded {
+        .ag-icon-tree-open {
+          color: get-color(brand-blue);
         }
       }
     }
