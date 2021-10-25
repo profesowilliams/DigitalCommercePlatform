@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { get } from '../../../../utils/api';
 import { removeStringDecimals } from '../../helpers/formatting';
 
+const Pill = ({type, msg}) => {
+    return <span className={`pill ${type}`}>{msg}</span>
+}
+
+const NoData = ({type = "error", msg = 'N/A'}) => {
+    return <Pill type={type} msg={msg}/>;
+}
+
 const MyQuotes = ({ componentProp }) => {
     const [myQuotesDetails, setMyQuotes] = useState({});
     const {
@@ -50,7 +58,10 @@ const MyQuotes = ({ componentProp }) => {
             </div>
             <div className="cmp-quotes">
                 <div className="cmp-quotes__active-value">
-                    <div className="cmp-quotes__active-value--price">{`${currencySymbol}${removeStringDecimals(formattedAmount)}`}</div>
+                    <div className="cmp-quotes__active-value--price">
+                        {currencySymbol || <NoData msg={"not available"}/>}
+                        {removeStringDecimals(formattedAmount) || <NoData msg={"not available"}/>}
+                    </div>
                     <div className="cmp-quotes__active-value--title">{labelActiveQuoteValue}</div>
                 </div>
             </div>
