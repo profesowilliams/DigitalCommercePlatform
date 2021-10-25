@@ -145,6 +145,8 @@ public class CaConfigReader {
 
     private String actionItemsEndpoint;
 
+    private String shopDomainPage;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -215,6 +217,7 @@ public class CaConfigReader {
         quotePreviewPage = redirectConfiguration.quotePreviewPage();
         orderListingPage = redirectConfiguration.orderListingPage();
         orderDetailPage = redirectConfiguration.orderDetailPage();
+        shopDomainPage = redirectConfiguration.shopDomainPage();
         actionItemsEndpoint = serviceEndPointsConfiguration.actionItemsEndpoint();
     }
 
@@ -429,6 +432,8 @@ public class CaConfigReader {
     public String getOrderListingPage(){return orderListingPage;}
 
     public String getOrderDetailPage(){return orderDetailPage;}
+
+    public String getShopDomainPage() {return shopDomainPage;}    
 
     public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
 

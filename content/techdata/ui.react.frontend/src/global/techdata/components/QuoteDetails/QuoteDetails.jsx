@@ -29,6 +29,7 @@ const QuoteDetails = ({ componentProp }) => {
     downloadLinkText,
     quoteOptions,
     whiteLabel,
+    shopDomainPage
   } = JSON.parse(componentProp);
 
   const { id } = getUrlParams();
@@ -184,6 +185,7 @@ const QuoteDetails = ({ componentProp }) => {
         quoteOption={quoteOption}
         quoteDetailColumns={productLines?.columnList}
         whiteLabelColumns={whiteLabel?.columnList}
+        shopDomainPage={shopDomainPage}
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}

@@ -1,6 +1,7 @@
 import {format} from "date-fns"
 
 export function dateToString(date, body = "MMM do',' y") {
+    if (!date) return ''
     return format(new Date(date),body);
 }
 

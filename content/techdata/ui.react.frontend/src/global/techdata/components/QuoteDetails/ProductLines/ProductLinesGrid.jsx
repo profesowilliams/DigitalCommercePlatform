@@ -15,6 +15,7 @@ function ProductLinesGrid({
   quoteDetailColumns,
   whiteLabelColumns,
   onMarkupChanged,
+  shopDomainPage
 }) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items.map((el) => {
@@ -105,7 +106,7 @@ function ProductLinesGrid({
       width: "600px",
       cellHeight: () => 80,
       cellRenderer: (props) => {
-        return <ProductLinesItemInformation line={props.data} />;
+        return <ProductLinesItemInformation line={props.data} shopDomainPage={shopDomainPage} />;
       },
     },
     {

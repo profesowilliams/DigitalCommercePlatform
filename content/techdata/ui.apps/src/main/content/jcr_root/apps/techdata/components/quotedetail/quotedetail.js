@@ -77,6 +77,10 @@ use(function() {
     if (this.uiServiceDomain !== null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.quoteDetailEndpoint;
     }
+    
+    if (this.shopDomainPage !== null) {
+        jsonObject["shopDomainPage"] = this.shopDomainPage;
+    }
 
     if (properties && properties["yourCompanyHeaderLabel"]) {
         informationTab["yourCompanyHeaderLabel"] = properties["yourCompanyHeaderLabel"];
