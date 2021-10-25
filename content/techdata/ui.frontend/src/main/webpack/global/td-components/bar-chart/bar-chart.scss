@@ -30,7 +30,8 @@
 
 	&__chart {
 		& canvas {
-			padding-bottom: rem(5px);
+			padding-bottom: 0;
+			height: rem(95px) !important;
 			width: rem(154px) !important;
 		}
 	}
