@@ -38,6 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.Trackings, opt => opt.Ignore())
+                .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements));
 
             CreateMap<AddressModel, Address>();
@@ -135,6 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.Trackings, opt => opt.Ignore())
+                .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
                 ;
 
             CreateMap<SourceDto, VendorReferenceModel>()

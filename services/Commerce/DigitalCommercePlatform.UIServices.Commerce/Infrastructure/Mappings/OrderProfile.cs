@@ -40,12 +40,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
-                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>())
+                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>()) 
+                .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>()) 
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
                 .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
-                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)));               
+                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)));
 
 
             CreateMap<AddressDetails, Address>();
@@ -58,6 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
                 .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>())
+                .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>())
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom(src => src.Invoices))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
@@ -224,7 +226,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             var _objTrackingQuery = new TrackingQuery();
 
             var trackingDetails = source?.Shipments.Select(i => new TrackingDetails
-            {                
+            {
                 ID = i.ID,
                 Carrier = i.Carrier,
                 Date = i.Date,
@@ -242,6 +244,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         }
     }
 
+
+    [ExcludeFromCodeCoverage]
+    public class LineShippingDatesResolver : IValueResolver<Item, Line, List<DateTime?>>
+    {
+        public List<DateTime?> Resolve(Item source, Line destination, List<DateTime?> destMember, ResolutionContext context)
+        {
+            var shipmentDates = new List<DateTime?>();
+            if (source.Shipments != null)
+            {
+                foreach (var shipment in source?.Shipments)
+                {
+                    if (shipment.Date != null)
+                        shipmentDates.Add(shipment.Date);
+                }
+            }
+
+            return shipmentDates;
+        }
+    }
 
     [ExcludeFromCodeCoverage]
     public class OrderTrackingsResolver : IValueResolver<OrderModel, RecentOrdersModel, List<TrackingDetails>>

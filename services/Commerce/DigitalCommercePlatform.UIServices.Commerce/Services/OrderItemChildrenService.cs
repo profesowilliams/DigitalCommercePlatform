@@ -79,6 +79,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     ConfigID = item.ConfigID,
                     LocationID = item.LocationID,
                     Serials = item.Serials,
+                    ShipDates = item.ShipDates,
                     PAKs = item.PAKs,
                     Trackings = item.Trackings,
                     Children = subLines

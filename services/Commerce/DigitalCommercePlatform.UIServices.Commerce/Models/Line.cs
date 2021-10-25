@@ -26,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
+        public List<DateTime?> ShipDates { get; set; }
         public List<InvoiceModel> Invoices { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
         public Discount[] Discounts { get; set; }
