@@ -16,7 +16,7 @@
          data-category="${properties.analyticsCategory}"
          data-region="${properties.analyticsRegion}"
          data-title="${teaser.title}"
-         data-cmp-clickable="${properties.fileReference ? true : false}"
+         data-cmp-clickable="${properties.linkURL ? true : false}"
     >
         <sly data-sly-call="${pretitleTemplate.pretitle @ teaser=teaser}"></sly>
         <sly data-sly-call="${titleTemplate.title @ teaser=teaser}"></sly>

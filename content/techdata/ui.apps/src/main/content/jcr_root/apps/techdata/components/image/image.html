@@ -25,7 +25,8 @@
 		data-cmp-widths="${image.widths}"
 		data-asset="${image.fileReference}"
 		data-asset-id="${image.uuid}"
-		data-title="${image.title || image.alt}"
+		data-title="${image.analyticsTitle}"
+		data-teaser-title="${teaser.analyticsTitle}"
 		data-category="${properties.analyticsCategory}"
 		data-region="${properties.analyticsRegion}"
 		class="cmp-image ${!wcmmode.disabled ? ' cq-dd-image' : ''}"
@@ -34,6 +35,7 @@
 		id="${component.id}"
 		data-cmp-clickable="${image.link ? true : false}"
 >
+
 	<a
 			data-sly-test="${!image.isSVG}"
 			data-sly-unwrap="${!image.link}"

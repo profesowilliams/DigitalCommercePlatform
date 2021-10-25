@@ -6,6 +6,7 @@ import com.drew.lang.annotations.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -30,9 +31,56 @@ public class TDImage implements Image {
         return image.getSrc();
     }
 
+    /**
+     * If component is teaser then populate title from component dialog
+     * else
+     * populate from DAM else from component dialog
+     * @return
+     */
+    public String getAnalyticsTitle() {
+        String analyticsTitle = "undefined";
+        String resourceName = request.getResource().getName();
+        if(resourceName.startsWith("teaser")) {
+            analyticsTitle = getPropertyValue("jcr:title", analyticsTitle);
+        } else if(resourceName.startsWith("image")) {
+            analyticsTitle = getPropertyValue("alt", analyticsTitle);
+            String fileRef = image.getFileReference();
+            if(fileRef != null) {
+                Resource damImageResource = request.getResourceResolver().getResource(fileRef);
+                if(damImageResource != null) {
+                    Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
+                    if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
+                        analyticsTitle = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", analyticsTitle);
+                    }
+                }
+            }
+        }
+        return analyticsTitle;
+    }
+
+    public String getPropertyValue(String propName, String defaultValue) {
+        String value = defaultValue;
+        ValueMap props = request.getResource().adaptTo(ValueMap.class);
+        if(props != null) {
+            value = props.get(propName, defaultValue);
+        }
+        return value;
+    }
+
     @Override
     public String getAlt() {
-        return  image.getAlt() + "-TD";
+        String fileRef = image.getFileReference();
+        String altText = image.getAlt()==null ? "undefined" : image.getAlt();
+        if(fileRef != null) {
+            Resource damImageResource = request.getResourceResolver().getResource(fileRef);
+            if(damImageResource != null) {
+                Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
+                if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
+                    altText = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", altText);
+                }
+            }
+        }
+        return altText;
     }
     @Override
     public String getTitle() {

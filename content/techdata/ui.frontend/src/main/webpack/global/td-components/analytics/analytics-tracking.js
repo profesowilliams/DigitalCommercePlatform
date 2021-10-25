@@ -119,11 +119,15 @@
         pushToDataLayer(clickInfo);
     }
 
-    function imageClickEventHandler(componentId, elementClicked) {
+    function imageClickEventHandler(componentId, elementClicked, className) {
         let clickInfo = {};
         clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = elementClicked.getAttribute('data-category');
         clickInfo[ANALYTICS_EVENTINFO_REGION_PN] = elementClicked.getAttribute('data-region');
-        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = elementClicked.getAttribute('data-title');
+        let titleVal = elementClicked.getAttribute('data-title');
+        if(className && className.startsWith(TEASER_CONTENT_CSS_CLASSNAME)) {
+            titleVal = elementClicked.getAttribute('data-teaser-title');
+        }
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = titleVal;
         clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL;
         clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = '';
         clickInfo[ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN] = '';
