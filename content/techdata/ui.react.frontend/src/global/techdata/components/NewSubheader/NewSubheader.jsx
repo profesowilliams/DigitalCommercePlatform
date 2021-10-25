@@ -10,14 +10,11 @@ const NewSubheader = ({ componentProp }) => {
 	let tempToolsIndex = parseInt(toolsIndex);
 	// Tools Menu Index cannot be the first Menu Item. First Menu Item is Dashboard
 	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
-	const [userData, setUserData] = useState(null);
+	const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
+	const [userData, setUserData] = useState(getUserDataInitialState);
 	const menuItemRefs = useRef([]);
 
 	useEffect(() => {
-		let user = JSON.parse(localStorage.getItem("userData"));
-		if (user) {
-			setUserData(user);
-		}
 		hasDCPAccess();
 	}, []);
 
@@ -90,25 +87,39 @@ const NewSubheader = ({ componentProp }) => {
 		}
 	};
 
+	const hasDCPAccessRole = () => {		
+		const HAS_DCP_ACCESS = "hasDCPAccess";
+		const {roles = []} = userData;
+		return roles.includes(HAS_DCP_ACCESS.trim());
+	}
+
+
+	const getMenuLink = (item) => {
+		const link = item?.link || '#';
+		const legacyLink = item?.legacyLink || '#';
+		return hasDCPAccessRole(userData) ? link : legacyLink;
+	}
+
 	const getMenuItems = (menuItems, dashboardMenuItems) => {
 
 		if (!menuItems.length) return null;
 
 		if (menuItems && menuItems.length > 0)
 		{
-			return  menuItems.map((item, index) =>
+			return menuItems.map((item, index) =>
 				<li key={`tabs-${index}`}
 					ref={el => menuItemRefs.current[index] = el}
 					role="tab" id={`tabs-${index}`}
 					className={item.active ? "cmp-tabs__tab cmp-tabs__tab--active" : "cmp-tabs__tab"}
 					aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabIndex="0" data-cmp-hook-tabs="tab"
 					aria-selected="true" onClick={(e) => returnClickHandler(index)}>
-					<a href={item.link ? item.link : "#"}>
-						{item.title}
+					<a href={getMenuLink(item)}>
+						{item.title}						
 					</a>
 					{showDashboard && index == 0 ? dashboardMenu(dashboardMenuItems, hasDCPAccess(userData)) : null}
 				</li>
 			);
+			
 		}
 	}
 
@@ -189,6 +200,7 @@ const NewSubheader = ({ componentProp }) => {
 	return (
 		<>
 		<ol role="tablist" className="cmp-sub-header__wrapper__child--left" aria-multiselectable="false">
+
 			{getMenuItems(menuItems, dashboardMenuItems)}
 		</ol>
 			{userData ?

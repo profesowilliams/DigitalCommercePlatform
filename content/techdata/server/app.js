@@ -139,7 +139,7 @@ app.post("/login", function (req, res) {
                     { number: "0009000325", name: "Company 1" },
                     { number: "0038048612", name: "Company 2" },
                 ],
-                roles: [],
+                roles: ["hasDCPAccess"],
                 roleList: [{
                     entitlement: "CanPlaceOrder",
                     account: "0038055347"
@@ -4032,12 +4032,10 @@ app.post("/ui-config/v1/getPunchOutURL", function (req,res){
   console.log('test post punchout url ✌✌✌');
   if (!req.headers["sessionid"]) return res.status(401);
   res.json({
-    "content": {
-        "url": "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-9ff8842-179c840b9ad-53ce4dd807efb79ac258ea8d4ed4ce77&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome%3FpunchinEstimateID%3D&P4=edit&P5=ZU125923843DQ&P6=N"
-    },
+    "content":null,
     "error": {
         "code": 0,
-        "messages": [],
+        "messages": ["not bla blas"],
         "isError": false
     }
 }) })
