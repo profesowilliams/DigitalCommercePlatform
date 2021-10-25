@@ -18,6 +18,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Export\DigitalCommercePlatform.UIServices.Export.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
   </ItemGroup>
@@ -27,8 +31,5 @@
     <Folder Include="Infrastructure\Mappings\Export\Fixtures\" />
     <Folder Include="Infrastructure\Mappings\Export\Resolvers\" />
     <Folder Include="Models\Common\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Export\DigitalCommercePlatform.UIServices.Export.csproj" />
   </ItemGroup>
 </Project>

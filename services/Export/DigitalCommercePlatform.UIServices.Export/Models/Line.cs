@@ -2,6 +2,8 @@
 using DigitalCommercePlatform.UIServices.Export.Models.Common;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Export.Models.Order;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -41,9 +43,15 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public List<AttributeModel> Attributes { get; set; }
         public List<AgreementModel> Agreements { get; set; }
         public string AncillaryChargesWithTitles { get; set; }
-
+        public IList<string> Serials { get; set; }
+        public List<TrackingDetails> Trackings { get; set; }
         public Annuity Annuity { get; set; }
         public bool IsSubLine { get { return false; } }
         public string DisplayLineNumber { get { return Id; } }
+
+        public string License { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string Status { get; set; }
     }
 }

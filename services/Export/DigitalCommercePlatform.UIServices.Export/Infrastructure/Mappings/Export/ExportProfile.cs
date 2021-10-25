@@ -3,8 +3,16 @@ using DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Common;
 using DigitalCommercePlatform.UIServices.Export.Models;
 using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal;
+using Internal = DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
+using AutoMapper;
+using System.Collections.Generic;
+using DigitalCommercePlatform.UIServices.Export.Models.Order;
+using Techdata.Common.Utility.CarrierTracking;
+using Techdata.Common.Utility.CarrierTracking.Model;
 
 namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Configurations
 {
@@ -26,7 +34,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 ;
 
-            CreateMap<AddressModel, Address>();
+            CreateMap<AddressModel, Address>()
+                .ForPath(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Line1))
+                .ForPath(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
+                .ForPath(dest => dest.State, opt => opt.MapFrom(src => src.Address.State))
+                .ForPath(dest => dest.Zip, opt => opt.MapFrom(src => src.Address.Zip))
+                .ForPath(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
+                .ForPath(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Contact.Phone))
+                .ForPath(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Name));
 
             CreateMap<QuoteModel, QuoteDetails>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
@@ -60,77 +75,188 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
 
+            CreateMap<Item, Line>()
+                .ForMember(dest => dest.Description, opt => opt.MapFrom<TDPartNameResolver>())
+                .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<TDPartNameResolver>())
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<VendorPartResolver>())
+                .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
+                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<ShipmentsResolver>())
+                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
+                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)))
+                .ForPath(dest => dest.ExtendedPrice, opt => opt.MapFrom(src => src.TotalPurchaseCost))
+                .ForPath(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForPath(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
+                .ForPath(dest => dest.License, opt => opt.MapFrom(src => src.License))
+                .ForPath(dest => dest.StartDate, opt => opt.MapFrom(src => src.ContractStartDate))
+                .ForPath(dest => dest.EndDate, opt => opt.MapFrom(src => src.ContractEndDate))
+                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            //CreateMap<AccountAddress, ShipToModel>()
-            //  .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
-            //  .ForPath(dest => dest.Address, opt => opt.MapFrom(src => src))
-            //  ;
+            CreateMap<Internal.OrderModel, OrderDetailModel>()
+                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo))
+                 .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Items))
+                 .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Name))
+                 .ForPath(dest => dest.PaymentDetails.NetValue, opt => opt.MapFrom(src => src.Price))
+                 .ForPath(dest => dest.PaymentDetails.Reference, opt => opt.MapFrom(src => src.CustomerPO))
+                 .ForPath(dest => dest.PaymentDetails.Currency, opt => opt.MapFrom(src => src.Currency))
+                 .ForPath(dest => dest.PaymentDetails.CurrencySymbol, opt => opt.MapFrom(src => src.CurrencySymbol))
+                 .ForPath(dest => dest.PaymentDetails.PaymentTermText, opt => opt.MapFrom(src => src.PaymentTermText))
+                 .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.ShipTo.Name))
+                 .ForPath(dest => dest.BlindPackaging, opt => opt.MapFrom(src => src.BlindPackaging))
+                 .ForPath(dest => dest.PaymentDetails.Tax, opt => opt.MapFrom(src => src.Tax))
+                 .ForPath(dest => dest.PaymentDetails.Freight, opt => opt.MapFrom(src => src.Freight))
+                 .ForPath(dest => dest.PaymentDetails.Total, opt => opt.MapFrom(src => src.Total))
+                 .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.TotalCharge))
+                 .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
+                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
+                 .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
+                 .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                 .ForPath(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.Id))
+                 .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>());
+        }
+    }
+    [ExcludeFromCodeCoverage]
+    public class DateResolver : IValueResolver<Internal.OrderModel, OrderDetailModel, string>
+    {
+        public string Resolve(Internal.OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
+        {
+            var poDate = source.PoDate.GetHashCode() == 0 ? string.Empty : source.PoDate.ToString("MM/dd/yy");
+            return poDate;
+        }
+    }
 
-            //CreateMap<AccountAddress, AddressModel>()
-            // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressNumber))
-            // .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.AddressLine1))
-            // .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.AddressLine2))
-            // .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.AddressLine3))
-            // .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.Zip))
-            // .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
-            // .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City))
-            // ;
-            //CreateMap<DiscountDto, Discount>()
-            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));
+    [ExcludeFromCodeCoverage]
+    public class TDPartResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Id : "Unavailable";
+            return description;
+        }
+    }
 
-            //CreateMap<ItemDto, Line>()
-            //    .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Qty))
-            //    .ForMember(dest => dest.VendorPartNo, opt => opt.MapFrom(src => src.VendorPartNo))
-            //    .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.ListPrice))
-            //    .ForMember(dest => dest.UnitListPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.ListPrice)))
-            //    .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom(src => src.VendorPartNo))
-            //    .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom(src => src.Description))
-            //    .ForMember(dest => dest.ExtendedPrice, opt => opt.MapFrom(src => src.TotalPurchaseCost))
-            //    .ForMember(dest => dest.ExtendedPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPurchaseCost)))
-            //    .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.Parent))
-            //    .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom(src => src.Vendor))
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            //    .ForMember(dest => dest.Discounts, opt => opt.MapFrom(src => src.Discounts))
-            //    .ForMember(dest => dest.Contract, opt => opt.MapFrom(src => src.Contract))
-            //    ;
+    [ExcludeFromCodeCoverage]
+    public class ShipmentsResolver : IValueResolver<Item, Line, List<TrackingDetails>>
+    {
+        public List<TrackingDetails> Resolve(Item source, Line destination, List<TrackingDetails> destMember, ResolutionContext context)
+        {
+            if (source.Shipments?.Count == 0)
+                return new List<TrackingDetails>();
 
-            //CreateMap<SourceDto, VendorReferenceModel>()
-            //    .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
-            //    .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
-            //    ;
-            //CreateMap<EndUserDto, Address>()
-            //     .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))
-            //     .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Address2))
-            //     .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.Address.Address3))
-            //     .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
-            //     .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
-            //     .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.ParentCompany))
-            //     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Contact.EmailAddress))
-            //     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contact.FirstName + " " + src.Contact.LastName))
-            //     ;
+            return source.Shipments
+                         .Select(shipment => new TrackingDetails()
+                         {
+                             Carrier = shipment.Carrier,
+                             Description = shipment.Description,
+                             TrackingNumber = shipment.TrackingNumber,
+                             Date = shipment.Date
+                         })
+                         .ToList();
+        }
+    }
 
-            //CreateMap<ResellerDto, Address>()
-            //    .ForMember(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Address1))
-            //    .ForMember(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Address2))
-            //    .ForMember(dest => dest.Line3, opt => opt.MapFrom(src => src.Address.Address3))
-            //    .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
-            //    .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
-            //    .ForMember(dest => dest.Zip, opt => opt.MapFrom(src => src.Address.PostalCode))
-            //    ;
-            //CreateMap<DetailedDto, QuotePreview>()
-            //   .ForMember(dest => dest.ConfigurationId, opt => opt.MapFrom(src => src.Source.Id))
-            //   .ForMember(dest => dest.ShipTo, opt => opt.Ignore())
-            //   .ForMember(dest => dest.Reseller, opt => opt.Ignore())
-            //   .ForMember(dest => dest.EndUser, opt => opt.Ignore())
-            //   .ForPath(dest => dest.Source, opt => opt.MapFrom(src => src.Source))
-            //   .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.TotalCost))
-            //   .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            //   .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
-            //   .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
-            //   .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
-            //   //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
-            //   //.ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller))
-            //   ;
+    [ExcludeFromCodeCoverage]
+    public class LineTotalResolver : IValueResolver<Item, Line, decimal?>
+    {
+        public decimal? Resolve(Item source, Line destination, decimal? destMember, ResolutionContext context)
+        {
+            if (source.TotalPrice is null or (decimal?)0.0)
+                source.TotalPrice = source.UnitPrice * source.Quantity;
+
+            return source.TotalPrice;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class VendorPartResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).FirstOrDefault()?.Id : "Unavailable";
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class TDPartNameResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Name : "Unavailable";
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ManufacturerResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Manufacturer : "Unavailable";
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class LineTrackingsResolver : IValueResolver<Item, Line, List<TrackingDetails>>
+    {
+        public List<TrackingDetails> Resolve(Item source, Line destination, List<TrackingDetails> destMember, ResolutionContext context)
+        {
+            var _objShipment = new ShipmentUtility();
+            var _objTrackingQuery = new TrackingQuery();
+
+            var trackingDetails = source?.Shipments.Select(i => new TrackingDetails
+            {
+                ID = i.ID,
+                Carrier = i.Carrier,
+                Date = i.Date,
+                Description = i.Description,
+                DNote = i.DNote,
+                DNoteLineNumber = i.DNoteLineNumber,
+                GoodsReceiptNo = i.GoodsReceiptNo,
+                ServiceLevel = i.ServiceLevel,
+                TrackingNumber = i.TrackingNumber,
+                TrackingLink = _objShipment.GetSingleCarrierInformation(new TrackingQuery { TrackingId = i.TrackingNumber })?.CarrierURL,
+                Type = i.Type
+            }).ToList();
+
+            return trackingDetails;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class EndUserResolver : IValueResolver<Internal.OrderModel, OrderDetailModel, List<Address>>
+    {
+        public List<Address> Resolve(Internal.OrderModel source, OrderDetailModel destination, List<Address> destMember, ResolutionContext context)
+        {
+            var orderLines = source.Items.Where(x => x.EndUser != null).ToList();
+            var lstEndUsers = new List<Address>();
+
+            foreach (Item orderLine in orderLines)
+            {
+                if (!lstEndUsers.Where(a => a.CompanyName != null && a.CompanyName.ToUpper().Contains(orderLine.EndUser.Name?.ToUpper())).Any())
+                {
+                    var address = new Address
+                    {
+                        City = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.City) ? string.Empty : orderLine.EndUser.Address.City,
+                        State = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.State) ? string.Empty : orderLine.EndUser.Address.State,
+                        Line1 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line1) ? string.Empty : orderLine.EndUser.Address.Line1,
+                        Line2 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line2) ? string.Empty : orderLine.EndUser.Address.Line2,
+                        Line3 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line3) ? string.Empty : orderLine.EndUser.Address.Line3,
+                        Country = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Country) ? string.Empty : orderLine.EndUser.Address.Country,
+                        Zip = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
+                        PostalCode = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
+                        CompanyName = string.IsNullOrWhiteSpace(orderLine.EndUser.Name) ? string.Empty : orderLine.EndUser.Name,
+                        PhoneNumber = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Phone) ? string.Empty : orderLine.EndUser.Contact?.Phone,
+                        Name = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Name) ? string.Empty : orderLine.EndUser.Contact?.Name,
+                        ContactEmail = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Email) ? string.Empty : orderLine.EndUser.Contact?.Email,
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(address.CompanyName) || !string.IsNullOrWhiteSpace(address.Name))
+                        lstEndUsers.Add(address);
+                }
+            }
+            return lstEndUsers;
         }
     }
 }

@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Export.Actions.Order;
 using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Export.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
@@ -8,10 +9,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Export.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [SetContextFromHeader]
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
@@ -36,6 +39,16 @@ namespace DigitalCommercePlatform.UIServices.Export.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             if (response?.Content?.BinaryContent == null) 
                 return new NotFoundResult(); 
+            return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
+        }
+
+        [HttpPost]
+        [Route("downloadOrderDetails")]
+        public async Task<ActionResult> DownloadOrderDetails(DownloadOrderDetails.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+            if (response?.Content?.BinaryContent == null)
+                return new NotFoundResult();
             return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
         }
     }
