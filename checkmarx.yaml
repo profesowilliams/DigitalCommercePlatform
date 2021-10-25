@@ -1,0 +1,76 @@
+server:
+  port: ${PORT:9999}
+ 
+logging:
+  file: flow.log
+
+variables:
+- group: DF-Checkmarx
+    
+              
+cx-flow:
+  contact: admin@cx.com
+  bug-tracker: None
+  bug-tracker-impl:
+    - CxXml
+    - Csv
+    - Json
+    - GitLab
+    - GitHub
+    - JIRA
+    - Azure
+  branches:
+    - develop
+  #branch-script: D:\\tmp\Branch.groovy #default empty/not used
+  filter-severity:
+    - High
+  filter-category:
+    - Reflected_XSS_All_Clients
+    - SQL_Injection
+  filter-cwe:
+    #- 89
+    #- 79
+  filter-status:
+    #- New
+    #- Urgent
+    #- Confirmed
+    #- To Verify
+  mitre-url: $(checkmarx-mitre-url)
+  wiki-url: $(checkmarx-wiki-url) 
+  codebash-url: $(checkmarx-codebash-url)
+  track-application-only: false
+  web-hook-queue: 20
+  scan-result-queue: 8
+  break-build: true
+  http-connection-timeout: 30000
+  http-read-timeout: 120000
+  enabled-vulnerability-scanners:
+     - sast
+
+ 
+checkmarx:
+  version: 9.0
+  username: Cx_API_User
+  client-id: resource_owner_client
+  client-secret: 014DF517-39D1-4453-B7B3-9930C563627C
+  scope: access_control_api sast_rest_api
+  base-url: https://TechData.checkmarx.net/
+  multi-tenant: false
+  scan-preset: Checkmarx Default
+  configuration: Default Configuration
+  team: /CxServer
+  scan-timeout: 240 #Webhook and --scan command line only, number of minutes
+  jira-project-field: jira-project
+  jira-issuetype-field: jira-issuetype
+  jira-custom-field: jira-fields
+  jira-assignee-field: jira-assignee
+  preserve-xml: true
+  url: ${checkmarx.base-url}/cxrestapi
+#WSDL Config
+  portal-url: ${checkmarx.base-url}/cxwebinterface/Portal/CxWebService.asmx
+  sdk-url: ${checkmarx.base-url}/cxwebinterface/SDK/CxSDKWebService.asmx
+  portal-wsdl: ${checkmarx.base-url}/Portal/CxWebService.asmx?wsdl
+  sdk-wsdl: ${checkmarx.base-url}/SDK/CxSDKWebService.asmx?wsdl
+  #project-script: D:\\tmp\CxProject.groovy #default empty/not used
+  #team-script: D:\\tmp\CxTeam.groovy #default empty/not used
+ 
