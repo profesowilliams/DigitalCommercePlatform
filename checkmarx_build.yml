@@ -1,0 +1,18 @@
+variables:
+- group: DF-Checkmarx
+
+schedules:
+- cron: "0 1 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
+steps:
+- task: PowerShell@2
+  displayName: 'Checkmarx check'
+  continueOnError: true
+  inputs:
+    targetType: 'inline'
+    script: |
+       Invoke-WebRequest -OutFile cx-flow.jar -URI https://github.com/checkmarx-ltd/cx-flow/releases/download/1.6.22/cx-flow-1.6.22.jar
+        java -jar cx-flow.jar --spring.config.location=checkmarx.yaml --scan --checkmarx.password=$(checkmarx-CX_PASSWORD) --cx-project="DigitalCommercePlatform" --app="DigitalCommercePlatform" --repo-name="WW Digital Commerce/DigitalCommercePlatform" --namespace="WWDigitalCommerce"  --branch="develop" --f=.
