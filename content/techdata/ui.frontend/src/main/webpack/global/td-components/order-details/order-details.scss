@@ -155,12 +155,24 @@
     padding-left: rem(16px);
     padding-right: rem(16px);
 
+    
+
     &__details,
     &__status {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
+      &--icon {
+        background-color: transparent;
+        font-size: 20px;
+        margin-right: rem(-25px);
+        z-index: 1;
+
+        &:hover{
+          cursor: pointer;
+        }
+      }
 
       div {
         padding: 0 rem(25px);
@@ -171,14 +183,6 @@
         font-size: $font-size-custom-medium;
         font-weight: 700;
         position: relative;
-
-        &:before {
-          content: "\f053";
-          font-family: "Font Awesome 5 Free";
-          color: get-color(td-dark-blue);
-          position: absolute;
-          left: 0;
-        }
       }
 
       &__open, &__cancelled, &__in-review, &__open-in-process, &__shipped {
@@ -235,7 +239,4 @@
     }
 
   }
-
-
-
 }
