@@ -133,7 +133,7 @@ const QuoteDetails = ({ componentProp }) => {
     try {
       // API call and see loader.
       const result = await usPost(`${uiServiceEndPointExcel}`, postData, params);
-      return result.data.content.res;
+      return result.data;
     } catch( error ) {
       console.log('Error', error)
     }

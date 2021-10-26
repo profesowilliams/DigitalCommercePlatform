@@ -1189,16 +1189,7 @@ app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
    );
    
   const buffer = await workbook.xlsx.writeBuffer();
-  res.json({
-    "content": {
-        "res": buffer
-    },
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-  })
+  res.end(Buffer.from(buffer, 'binary'));
 
 });
 
