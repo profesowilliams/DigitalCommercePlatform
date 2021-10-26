@@ -18,5 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
         public List<ElasticItemDto> Products { get; set; }
         public List<RefinementGroupResponseDto> RefinementGroups { get; set; }
         public CategoryBreadcrumbDto CategoryBreadcrumb { get; set; }
+        public bool HasMoreRefinements { get; set; }
     }
 }

@@ -82,6 +82,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     };
                 }
 
+                appRequest.GetDetails = new Dictionary<Enums.Details, bool> { { Enums.Details.TopRefinementsAndResult, true }, { Enums.Details.Price, true }, { Enums.Details.Authorizations, true } };
+
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
                 if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)
                 {

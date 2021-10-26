@@ -1,8 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
-using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Client;
@@ -202,6 +201,188 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Products[0].Indicators.Find(e => e.Type == FreeShipping).Should().NotBeNull();
             result.Products[1].Indicators.Should().BeEmpty();
             result.Products[2].Indicators.Should().BeEmpty();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetAdvancedRefinements_MapResponseProperly(SearchRequestDto request)
+        {
+            //arrange
+            var appResponse = new SearchResponseDto
+            {
+                RefinementGroups = new List<Dto.FullSearch.Internal.RefinementGroupResponseDto>
+                {
+                    new Dto.FullSearch.Internal.RefinementGroupResponseDto
+                    {
+                        Group="InStock",
+                        Refinements = new List<Dto.FullSearch.Internal.RefinementDto>
+                        {
+                            new Dto.FullSearch.Internal.RefinementDto
+                            {
+                                Id="InStock",
+                                Name="InStock",
+                                Range = new Dto.FullSearch.Internal.RangeDto
+                                {
+                                    Min=0,
+                                    Max=100
+                                },
+                                Options = new List<Dto.FullSearch.Internal.RefinementOptionDto>
+                                {
+                                 new Dto.FullSearch.Internal.RefinementOptionDto
+                                 {
+                                     Id="y",
+                                     Text="yes",
+                                     Count=1
+                                 }
+                                }
+                            }
+                        }
+                    },
+                    new Dto.FullSearch.Internal.RefinementGroupResponseDto
+                    {
+                        Group="CNETAttributes",
+                        Refinements = new List<Dto.FullSearch.Internal.RefinementDto>
+                        {
+                            new Dto.FullSearch.Internal.RefinementDto
+                            {
+                                Id="a1",
+                                Name="Group / Subgroup1",
+                                Options= new List<Dto.FullSearch.Internal.RefinementOptionDto>
+                                {
+                                    new Dto.FullSearch.Internal.RefinementOptionDto
+                                    {
+                                        Id="a1o1",
+                                        Count=1,
+                                        Text="a1o1text"
+                                    }
+                                },
+                                 Range = new Dto.FullSearch.Internal.RangeDto
+                                 {
+                                     Max=5,
+                                     Min=1,
+                                 }
+                            },
+                            new Dto.FullSearch.Internal.RefinementDto
+                            {
+                                Id="a2",
+                                Name="Group / Subgroup2",
+                                Options= new List<Dto.FullSearch.Internal.RefinementOptionDto>
+                                {
+                                    new Dto.FullSearch.Internal.RefinementOptionDto
+                                    {
+                                        Id="a2o1",
+                                        Count=1,
+                                        Text="a2o1text"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var expectedReponse = new List<RefinementGroupResponseModel>()
+            {
+                new RefinementGroupResponseModel
+                {
+                    Group="InStock",
+                    Refinements= new List<RefinementModel>
+                    {
+                        new RefinementModel
+                        {
+                            Id="InStock",
+                            Name="InStock",
+                            Range = new RangeModel
+                            {
+                                Min=0,
+                                Max=100
+                            },
+                            Options = new List<RefinementOptionModel>
+                            {
+                                new RefinementOptionModel
+                                {
+                                    Id="y",
+                                    Text="yes",
+                                    Count=1
+                                }
+                            }
+                        }
+                    }
+                },
+                new RefinementGroupResponseModel
+                {
+                    Group="Group",
+                    Refinements = new List<RefinementModel>
+                    {
+                        new RefinementModel
+                        {
+                            Name="Subgroup1",
+                            Id="a1",
+                            OriginalGroupName="CNETAttributes",
+                            Options= new List<RefinementOptionModel>
+                            {
+                                new RefinementOptionModel
+                                {
+                                    Id="a1o1",
+                                    Count=1,
+                                    Text="a1o1text"
+                                }
+                            },
+                            Range = new RangeModel
+                            {
+                                Min=1,
+                                Max=5
+                            }
+                        },
+                        new RefinementModel
+                        {
+                            Name="Subgroup2",
+                            Id="a2",
+                            OriginalGroupName="CNETAttributes",
+                            Options= new List<RefinementOptionModel>
+                            {
+                                new RefinementOptionModel
+                                {
+                                    Id="a2o1",
+                                    Count=1,
+                                    Text="a2o1text"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .ReturnsAsync(appResponse)
+                .Verifiable()
+                ;
+
+            //act
+            var actual = await _searchService.GetAdvancedRefinements(request).ConfigureAwait(false);
+
+            //assert
+            actual.Should().BeEquivalentTo(expectedReponse);
+            _middleTierHttpClient.VerifyAll();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetAdvancedRefinements_ReturnNull(SearchRequestDto request)
+        {
+            //arrange
+
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .ReturnsAsync((SearchResponseDto)null)
+                .Verifiable()
+                ;
+
+            //act
+            var actual = await _searchService.GetAdvancedRefinements(request).ConfigureAwait(false);
+
+            //assert
+            actual.Should().BeEmpty();
+            _middleTierHttpClient.VerifyAll();
         }
     }
 }

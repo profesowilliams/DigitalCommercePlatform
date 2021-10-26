@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string OriginalGroupName { get; set; }
         public RefinementType Type { get; set; } = RefinementType.MultiSelect;
         public RangeDto Range { get; set; }
         public List<RefinementOptionDto> Options { get; set; }

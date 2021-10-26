@@ -16,6 +16,7 @@ using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static DigitalCommercePlatform.UIServices.Search.Helpers.IndicatorsConstants;
 
@@ -49,14 +50,104 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         {
             var appSearchResponse = await GetProductData(request);
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
+
             if (fullSearchResponse != null)
                 MapFields(appSearchResponse, ref fullSearchResponse);
             return fullSearchResponse;
         }
 
+        public async Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request)
+        {
+            var appSearchResponse = await GetProductData(request);
+
+            var results = new List<RefinementGroupResponseModel>();
+
+            if (appSearchResponse?.RefinementGroups == null)
+                return results;
+
+            foreach (var group in appSearchResponse.RefinementGroups)
+            {
+                ProcessRefinementGroup(results, group);
+            }
+
+            return results;
+        }
+
+        private static void ProcessRefinementGroup(List<RefinementGroupResponseModel> results, RefinementGroupResponseDto group)
+        {
+            var originalGroupName = group.Group;
+            if (originalGroupName.Equals("CNETAttributes", StringComparison.InvariantCultureIgnoreCase))
+            {
+                foreach (var refinement in group.Refinements)
+                {
+                    var splittedName = refinement.Name.Split("/");
+                    var alreadyAddedGroup = results.FirstOrDefault(x => x.Group.Equals(splittedName[0].Trim()));
+                    var refinementModel = new RefinementModel
+                    {
+                        Id = refinement.Id,
+                        OriginalGroupName = originalGroupName,
+                        Name = splittedName[1].Trim(),
+                        Type = refinement.Type,
+                        Range = refinement.Range is null ? null : new RangeModel
+                        {
+                            Max = refinement.Range.Max,
+                            Min = refinement.Range.Min
+                        },
+                        Options = refinement.Options.Select(o => new RefinementOptionModel
+                        {
+                            Count = o.Count,
+                            Id = o.Id,
+                            Text = o.Text,
+                            Selected = o.Selected
+                        }).ToList()
+                    };
+                    if (alreadyAddedGroup != null)
+                    {
+                        alreadyAddedGroup.Refinements.Add(refinementModel);
+                    }
+                    else
+                    {
+                        results.Add(new RefinementGroupResponseModel
+                        {
+                            Group = splittedName[0].Trim(),
+                            Refinements = new List<RefinementModel>
+                                {
+                                    refinementModel
+                                }
+                        });
+                    }
+                }
+            }
+            else
+            {
+                results.Add(new RefinementGroupResponseModel
+                {
+                    Group = group.Group,
+                    Refinements = group.Refinements.Select(x => new RefinementModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Type = x.Type,
+                        Range = x.Range is null ? null : new RangeModel
+                        {
+                            Max = x.Range.Max,
+                            Min = x.Range.Min
+                        },
+                        Options = x.Options.Select(o => new RefinementOptionModel
+                        {
+                            Count = o.Count,
+                            Id = o.Id,
+                            Text = o.Text,
+                            Selected = o.Selected
+                        }).ToList()
+                    }).ToList()
+                });
+            }
+        }
+
         private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
-            foreach (var product in fullSearchResponse?.Products)
+            foreach (var product in fullSearchResponse.Products)
             {
                 var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
                 if (product.Price?.BasePrice != null && product.Price?.BestPrice != null)
@@ -68,6 +159,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
                 AddIndicators(appSearchProduct, product);
             }
+
+            var topRefinementsDto = appSearchResponse.RefinementGroups?.FirstOrDefault(x => x.Group.Equals("TopRefinements", StringComparison.InvariantCultureIgnoreCase))?.Refinements;
+            fullSearchResponse.TopRefinements = _mapper.Map<List<RefinementModel>>(topRefinementsDto);
         }
 
         private void AddIndicators(ElasticItemDto productDto, ElasticItemModel productModel)

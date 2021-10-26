@@ -55,13 +55,14 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<CategoryBreadcrumbDto, CategoryBreadcrumbModel>();
             CreateMap<RefinementOptionDto, RefinementOptionModel>();
             CreateMap<RangeDto, RangeModel>();
-            CreateMap<Dto.FullSearch.Internal.RefinementDto, RefinementModel>()
-                .ForMember(dest => dest.Priority, opt => opt.Ignore());
+            CreateMap<Dto.FullSearch.Internal.RefinementDto, RefinementModel>();
             CreateMap<RefinementGroupResponseDto, RefinementGroupResponseModel>();
             CreateMap<AlternateSearchSuggestionDto, AlternateSearchSuggestionModel>();
             CreateMap<SearchReportDto, SearchReportModel>();
             CreateMap<SearchResponseDto, FullSearchResponseModel>()
-                .ForMember(dest => dest.RefinementsToDisplay, opt => opt.Ignore());
+                .ForMember(dest => dest.RefinementsToDisplay, opt => opt.Ignore())
+                .ForMember(dest => dest.TopRefinements, opt => opt.Ignore())
+                ;
 
             CreateMap<Dto.Content.ContentSearchResponseDto, Models.Content.FullSearchResponseModel>();
             CreateMap<Dto.Content.Internal.RefinementDto, Models.Content.Internal.RefinementModel>();

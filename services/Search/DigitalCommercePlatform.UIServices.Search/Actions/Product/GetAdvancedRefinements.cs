@@ -3,6 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Enums;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using FluentValidation;
 using MediatR;
@@ -13,25 +14,23 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 {
-    public sealed class FullSearch
+    public sealed class GetAdvancedRefinements
     {
         public class Request : IRequest<Response>
         {
-            public bool IsAnonymous { get; set; }
             public FullSearchRequestModel FullSearchRequestModel { get; set; }
 
-            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel)
+            public Request(FullSearchRequestModel fullSearchRequestModel)
             {
-                IsAnonymous = isAnonymous;
                 FullSearchRequestModel = fullSearchRequestModel;
             }
         }
 
         public class Response
         {
-            public FullSearchResponseModel Results { get; set; }
+            public List<RefinementGroupResponseModel> Results { get; set; }
 
-            public Response(FullSearchResponseModel results)
+            public Response(List<RefinementGroupResponseModel> results)
             {
                 Results = results;
             }
@@ -53,14 +52,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var appRequest = _mapper.Map<SearchRequestDto>(request.FullSearchRequestModel);
-                var detailsDict = new Dictionary<Details, bool>() { { Details.SearchWithoutRefinements, true } };
-                if (!request.IsAnonymous)
-                {
-                    appRequest.GetDetails ??= new Dictionary<Details, bool>() { { Details.Price, true }, { Details.Authorizations, true } };
-                }
+                var detailsDict = new Dictionary<Details, bool>() { { Details.Refinements, true } };
 
                 appRequest.GetDetails = detailsDict;
-                return new Response(await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous));
+
+                var response = await _searchService.GetAdvancedRefinements(appRequest);
+
+                return new Response(response);
             }
         }
 
@@ -68,8 +66,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
         {
             public Validator()
             {
-                RuleFor(c => c.FullSearchRequestModel).NotNull();
-                RuleFor(c => c.FullSearchRequestModel.SearchString).NotNull();
+                RuleFor(c => c.FullSearchRequestModel).NotEmpty();
+                When(x => x.FullSearchRequestModel != null, () =>
+                {
+                    RuleFor(c => c.FullSearchRequestModel.SearchString).NotEmpty();
+                });
             }
         }
     }

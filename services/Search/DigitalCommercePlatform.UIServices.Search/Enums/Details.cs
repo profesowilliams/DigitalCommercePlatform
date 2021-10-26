@@ -7,6 +7,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Enums
         All,
         Refinements,
         Price,
-        Authorizations
+        Authorizations,
+        Summary,
+        SearchWithoutRefinements,
+        TopRefinementsAndResult
     }
 }

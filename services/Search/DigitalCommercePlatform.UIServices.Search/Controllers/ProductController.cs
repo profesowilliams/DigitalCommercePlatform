@@ -53,6 +53,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
             return Ok(response.Results);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("GetAdvancedRefinements")]
+        public async Task<ActionResult> GetAdvancedRefinements(FullSearchRequestModel productSearch)
+        {
+            var response = await Mediator.Send(new GetAdvancedRefinements.Request(productSearch)).ConfigureAwait(false);
+            return Ok(response.Results);
+        }
+
         [HttpPost]
         [Route("Export")]
         public async Task<IActionResult> Export(ExportRequestModel request)
