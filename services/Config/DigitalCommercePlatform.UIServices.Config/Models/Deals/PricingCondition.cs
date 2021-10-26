@@ -14,4 +14,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         Medical = 8,
         SEWPContract = 11,
     }
+
+    public enum PricingOption
+    {
+        HigherEducation = 'H',
+        LowerEducation = 'L',
+        State = 'S',
+        Federal = 'F',
+        Medical = 'M'
+    }
 }

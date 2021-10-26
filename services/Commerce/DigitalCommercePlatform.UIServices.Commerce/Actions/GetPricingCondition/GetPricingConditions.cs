@@ -18,11 +18,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingConditio
         {
             public string Id { get; }
             public bool GetAll { get; } = true;
+            public bool IsSPAFind { get; set; } = false;
 
-            public Request(bool getAll, string id)
+            public Request(bool getAll, bool isSPAFind, string id)
             {
                 Id = id;
                 GetAll = getAll;
+                IsSPAFind = isSPAFind;
             }
         }
 

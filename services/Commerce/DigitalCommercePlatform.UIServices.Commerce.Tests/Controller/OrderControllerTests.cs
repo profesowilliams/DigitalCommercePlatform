@@ -184,7 +184,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetPricingConditions(true, "");
+            var result = await controller.GetPricingConditions(true, false, "");
 
             result.Should().NotBeNull();
         }
@@ -200,7 +200,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetPricingConditions(false, "XYZ") as ObjectResult;
+            var result = await controller.GetPricingConditions(false, true, "XYZ") as ObjectResult;
 
             var statusCode = (HttpStatusCode)result.StatusCode;
 

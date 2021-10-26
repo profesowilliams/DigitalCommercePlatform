@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
             public string[] MfrPartNumbers { get; set; }
             public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 25;
-            public string OrderLevel { get; set; }
+            public PricingOption PricingOption { get; set; }
             public string Vendor { get; set; }
 
             public Request()

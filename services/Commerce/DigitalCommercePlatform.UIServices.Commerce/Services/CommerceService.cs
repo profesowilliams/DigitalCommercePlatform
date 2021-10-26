@@ -297,18 +297,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request)
         {
             List<PricingCondition> lstPricingConditions = new List<PricingCondition>();
-
-            lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "Commercial"));
-            lstPricingConditions.Add(new PricingCondition("Education (Student, Staff)", "EduStudentStaff"));
-            lstPricingConditions.Add(new PricingCondition("Education (Higher)", "EduHigher"));
-            lstPricingConditions.Add(new PricingCondition("Education (K - 12)", "EduK12"));
-            lstPricingConditions.Add(new PricingCondition("Education E-Rate (K - 12)", "EduErate"));
-            lstPricingConditions.Add(new PricingCondition("Federal", "GovtFederal"));
-            lstPricingConditions.Add(new PricingCondition("Federal GSA", "GovtFederalGSA"));
-            lstPricingConditions.Add(new PricingCondition("Local", "GovtLocal"));
-            lstPricingConditions.Add(new PricingCondition("State", "GovtState"));
-            lstPricingConditions.Add(new PricingCondition("Medical", "Medical"));
-            lstPricingConditions.Add(new PricingCondition("SEWP Contract", "SEWPContract "));
+            if (!request.IsSPAFind)
+            {
+                lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "Commercial"));
+                lstPricingConditions.Add(new PricingCondition("Education (Student, Staff)", "EduStudentStaff"));
+                lstPricingConditions.Add(new PricingCondition("Education (Higher)", "EduHigher"));
+                lstPricingConditions.Add(new PricingCondition("Education (K - 12)", "EduK12"));
+                lstPricingConditions.Add(new PricingCondition("Education E-Rate (K - 12)", "EduErate"));
+                lstPricingConditions.Add(new PricingCondition("Federal", "GovtFederal"));
+                lstPricingConditions.Add(new PricingCondition("Federal GSA", "GovtFederalGSA"));
+                lstPricingConditions.Add(new PricingCondition("Local", "GovtLocal"));
+                lstPricingConditions.Add(new PricingCondition("State", "GovtState"));
+                lstPricingConditions.Add(new PricingCondition("Medical", "Medical"));
+                lstPricingConditions.Add(new PricingCondition("SEWP Contract", "SEWPContract "));
+            }
+            else
+            {
+                lstPricingConditions.Add(new PricingCondition("Higher Education", "HigherEducation"));
+                lstPricingConditions.Add(new PricingCondition("Lower Education", "LowerEducation"));
+                lstPricingConditions.Add(new PricingCondition("State", "State"));
+                lstPricingConditions.Add(new PricingCondition("Federal", "Federal"));
+                lstPricingConditions.Add(new PricingCondition("Medical", "Medical"));
+            }
 
             var response = new PricingConditionsModel
             {

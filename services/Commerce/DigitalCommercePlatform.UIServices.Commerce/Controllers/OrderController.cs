@@ -109,9 +109,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("orderLevel")]
-        public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, string Id)
+        public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, bool isSPAFind, string Id)
         {
-            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, Id)).ConfigureAwait(false);
+            var getPricingCondition = await Mediator.Send(new GetPricingConditions.Request(getAll, isSPAFind, Id)).ConfigureAwait(false);
             if (getPricingCondition.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, getPricingCondition);
