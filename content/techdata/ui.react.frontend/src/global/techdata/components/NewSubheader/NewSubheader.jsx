@@ -87,17 +87,10 @@ const NewSubheader = ({ componentProp }) => {
 		}
 	};
 
-	const hasDCPAccessRole = () => {		
-		const HAS_DCP_ACCESS = "hasDCPAccess";
-		const {roles = []} = userData;
-		return roles.includes(HAS_DCP_ACCESS.trim());
-	}
-
-
 	const getMenuLink = (item) => {
 		const link = item?.link || '#';
 		const legacyLink = item?.legacyLink || '#';
-		return hasDCPAccessRole(userData) ? link : legacyLink;
+		return hasDCPAccess(userData) ? link : legacyLink;
 	}
 
 	const getMenuItems = (menuItems, dashboardMenuItems) => {
