@@ -9,7 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         string GetParameterName(string parameter);
         bool GetOrderPricingConditions(string pricingConditionId, out TypeModel orderType, out LevelModel orderLevel);
-        Task<byte[]> GetQuoteDetailsAsXls(QuoteDetails quoteDetails);
         Task<string> GetOrderType(string poType, string docType);
     }
 }

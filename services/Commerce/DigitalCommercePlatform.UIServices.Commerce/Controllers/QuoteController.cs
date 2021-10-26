@@ -91,14 +91,5 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
         }
-
-        [HttpGet]
-        [Route("downloadQuoteDetails")]
-        public async Task<ActionResult> DownloadQuoteDetails([FromQuery] string quoteId)
-        {
-            var response = await Mediator.Send(new DownloadQuoteDetails.Request(quoteId)).ConfigureAwait(false);
-            if (response?.Content?.BinaryContent == null) { return new NotFoundResult(); }
-            return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
-        }
     }
 }
