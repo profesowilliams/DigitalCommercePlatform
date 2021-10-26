@@ -121,7 +121,6 @@ const QuoteDetails = ({ componentProp }) => {
       url: `${uiServiceEndPointExcel}`,
       headers: {
         'Accept': '*/*',
-        'Credentials': 'true',
         'Accept-Language': 'en-us',
         'Site': 'NA',
         'Consumer': 'NA',

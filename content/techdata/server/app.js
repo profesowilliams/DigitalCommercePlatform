@@ -9,6 +9,7 @@ var bodyParser = require("body-parser");
 var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
+// const excel = require("exceljs");
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -33,7 +34,7 @@ app.use(function (req, res, next) {
     );
     res.header(
         "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id"
+        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer"
     );
     res.header("Consumer", "*");
     res.header("SessionId", "*");
@@ -1110,6 +1111,95 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
   setTimeout(() => {
       res.json(response);
   }, 2000)
+});
+
+/////// EXCEL
+/////// EXCEL
+app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
+  const {
+    acceptLanguage,
+    site,
+    consumer,
+    traceId,
+    sessionid,
+    contentType,
+  } = req.headers;
+  
+  if (!req.headers["sessionid"] && !sessionid) {
+    return res.status(500).json({
+        error: {
+            code: 0,
+            message: ['SessionId Error'],
+            isError: true,
+        },
+    });
+  }
+
+  // try {
+  //   // let binaryData = xlsx.parse(fs.readFileSync('./quoteDetails.xlsx'));
+  //   // console.log('__dirname', `${__dirname}\\quoteDetails.xlsx`);
+  //   // let binaryData = xlsx.parse(`${__dirname}\\quoteDetails.xlsx`);
+  //   let binaryData = xlsx.parse('./quoteDetails.xlsx');
+    
+  //   // let binaryData = fs.readFileSync('./quoteDetails.xlsx', { encoding: "utf8", flag: "r" })
+  //   res.setHeader(
+  //     "Content-Type",
+  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  //   );
+  //   res.setHeader(
+  //     "Content-Disposition",
+  //     "attachment; filename=" + "export new file.xlsx"
+  //   );
+    
+  // // const buffer = await workbook.xlsx.writeBuffer();
+  // res.json({
+  //   "content": {
+  //       "res": binaryData
+  //   },
+  //   "error": {
+  //       "code": 0,
+  //       "messages": [],
+  //       "isError": false
+  //   }
+  // })
+
+  // } catch (error) { 
+  //   console.log('Error', error)
+  // }
+
+  const workbook = new excel.Workbook();
+  const worksheet = workbook.addWorksheet("My Sheet");
+
+  worksheet.columns = [
+    {header: 'Id', key: 'id', width: 10},
+    {header: 'Name', key: 'name', width: 32}, 
+    {header: 'D.O.B.', key: 'dob', width: 15,}
+  ];
+
+  worksheet.addRow({id: 1, name: 'Diego C', dob: new Date(1970, 1, 1)});
+  worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7)});
+  
+  res.setHeader(
+     "Content-Type",
+     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+   );
+   res.setHeader(
+     "Content-Disposition",
+     "attachment; filename=" + "export new file.xlsx"
+   );
+   
+  const buffer = await workbook.xlsx.writeBuffer();
+  res.json({
+    "content": {
+        "res": buffer
+    },
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+  })
+
 });
 
 app.get("/myorders", (req, res) => {
