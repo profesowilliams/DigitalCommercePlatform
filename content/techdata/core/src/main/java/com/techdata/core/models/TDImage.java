@@ -41,7 +41,9 @@ public class TDImage implements Image {
         String analyticsTitle = "undefined";
         String resourceName = request.getResource().getName();
         if(resourceName.startsWith("teaser")) {
-            analyticsTitle = getPropertyValue("jcr:title", analyticsTitle);
+            ValueMap baseProps =
+                    request.getResourceResolver().getResource(request.getResource().getPath()).adaptTo(ValueMap.class);
+            analyticsTitle = baseProps.get("jcr:title", analyticsTitle);
         } else if(resourceName.startsWith("image")) {
             analyticsTitle = getPropertyValue("alt", analyticsTitle);
             String fileRef = image.getFileReference();
