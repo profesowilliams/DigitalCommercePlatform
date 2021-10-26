@@ -5,10 +5,8 @@ import SubHeaderMenuContainer from '../ProfileMegaMenu/SubHeaderMenuContainer';
 import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
-	const [isActive, setDropdown] = useState(false);
-	const [showSecondary, setShowSecondary] = useState(false);
-    const [secondaryItems, setSecondaryItems] = useState(null);
-	const userDropDown = () => setDropdown(!isActive);
+	const [isActive, setDropdown] = useState(true);
+  const [secondaryItems, setSecondaryItems] = useState(null);
 	const { id: userId, firstName: userName } = userDataCheck;
 
     const handlePrimaryClick = (obj) => {
@@ -26,10 +24,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       <>
         <button
           data-component="DropdownMenu"
-          className={`cmp-sign-in-button ${userId ? "active" : ""} ${
-            isActive ? "clicked" : ""
-          }`}
-          onClick={userDropDown}
+          className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
         >
           <svg width="26px" height="26px" viewBox="0 0 23 28" version="1.1">
             <g

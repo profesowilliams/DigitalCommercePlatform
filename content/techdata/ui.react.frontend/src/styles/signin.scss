@@ -1,6 +1,11 @@
 .cmp-sign-in {
   display: flex;
   // justify-content: center;
+  &:hover{
+    .cmp-sign-in--container {
+      display: block;
+    }
+  }
 
   &-option {
     display: inline-block;
