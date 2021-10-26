@@ -7,6 +7,7 @@ public class EnhancedListItem implements ListItem {
     protected String title;
     protected String link;
 
+    @Override
     public String getTitle() {
         return title;
     }

@@ -71,7 +71,6 @@ public class TDListItem extends VendorListItem  {
     public static TDListItem getTDListItem(Resource pageContentResource, ListItem listItem){
         String title = pageContentResource.getValueMap().containsKey(JcrConstants.JCR_TITLE) ? pageContentResource.getValueMap().get(JcrConstants.JCR_TITLE, StringUtils.EMPTY) : StringUtils.EMPTY;
         String overview = StringUtils.EMPTY;
-        String awards = StringUtils.EMPTY;
         String vendorIcon = StringUtils.EMPTY;
         String pageLink = StringUtils.EMPTY;
         String vendorPageLabel = StringUtils.EMPTY;

@@ -118,6 +118,7 @@ public class TDImage implements Image {
     @Deprecated
     @JsonIgnore
     @Override
+    @SuppressWarnings("java:S1133")
     public String getJson() {
         return image.getJson();
     }

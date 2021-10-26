@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class TechDataHealthCheckServlet extends SlingSafeMethodsServlet {
 
     @Reference
-    protected HealthCheckExecutor healthCheckExecutor;
+    protected transient HealthCheckExecutor healthCheckExecutor;
 
     private static final Logger logger = LoggerFactory.getLogger(TechDataHealthCheckServlet.class);
 
@@ -111,7 +111,7 @@ public class TechDataHealthCheckServlet extends SlingSafeMethodsServlet {
             result.put("status", healthCheckResult.getHealthCheckResult().getStatus());
             result.put("timeMs", healthCheckResult.getElapsedTimeInMs());
             final JSONArray categories = new JSONArray();
-            healthCheckResult.getHealthCheckMetadata().getTags().stream().forEach(tag -> categories.put(tag));
+            healthCheckResult.getHealthCheckMetadata().getTags().forEach(categories::put);
             result.put("categories", categories);
             resultsJsonArr.put(result);
         }

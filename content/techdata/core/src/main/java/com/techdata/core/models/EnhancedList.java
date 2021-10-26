@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = EnhancedList.RESOURCE_TYPE)
@@ -45,7 +46,7 @@ public class EnhancedList implements List {
         Resource resource = request.getResource();
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Collection<ListItem> brandListItems = delegateList.getListItems();
-        ArrayList<String> brandTagsList = new ArrayList<>();
+        java.util.List<String> brandTagsList = new ArrayList<>();
         if(brandTags != null){
             brandTagsList = convertArrayToList(brandTags);
         }
@@ -55,7 +56,7 @@ public class EnhancedList implements List {
             ValueMap pageMap = page.getProperties();
             if(pageMap.containsKey(PAGE_PROPERTY_CQ_TAGS)){
                 String[] cqTags = pageMap.get(PAGE_PROPERTY_CQ_TAGS, String[].class);
-                ArrayList<String> cqTagsList = convertArrayToList(cqTags);
+                java.util.List<String> cqTagsList = convertArrayToList(cqTags);
                 EnhancedListItem item = new EnhancedListItem();
                 item.setTitle(page.getTitle());
                 if(brandTags != null && linkItems.equals("true")){
@@ -72,15 +73,11 @@ public class EnhancedList implements List {
         return listOfBrandItems;
     }
 
-    public boolean compareTagList(ArrayList<String> brandTagsList, ArrayList<String> cqTagsList){
-        return brandTagsList.stream().allMatch(element -> cqTagsList.contains(element));
+    public boolean compareTagList(java.util.List<String> brandTagsList, java.util.List<String> cqTagsList){
+        return cqTagsList.containsAll(brandTagsList);
     }
 
-    public ArrayList<String> convertArrayToList(String[] array){
-        ArrayList<String> convertedToList = new ArrayList<String>();
-        for(String element : array){
-            convertedToList.add(element);
-        }
-        return convertedToList;
+    public java.util.List<String> convertArrayToList(String[] array){
+        return Arrays.asList(array);
     }
 }

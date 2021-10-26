@@ -85,7 +85,7 @@ public class VendorListItem implements ListItem {
 
     public VendorListItem(){}
 
-    @SuppressWarnings("java:S107")
+    @SuppressWarnings({"java:S107", "java:S5361"})
     public VendorListItem(
         final String title,
         final String overview,
@@ -107,6 +107,7 @@ public class VendorListItem implements ListItem {
         this.vendorTitle = title;
     }
 
+    @SuppressWarnings("java:S5361")
     public static VendorListItem getVendorListItem(ContentFragment cf, Resource resource, ListItem cfListItem, String vendorDescriptionType){
 
         String title = StringUtils.EMPTY;
