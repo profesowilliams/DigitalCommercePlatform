@@ -6,6 +6,7 @@ import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
 	const [isActive, setDropdown] = useState(true);
+  const [showSecondary, setShowSecondary] = useState(false);
   const [secondaryItems, setSecondaryItems] = useState(null);
 	const { id: userId, firstName: userName } = userDataCheck;
 
