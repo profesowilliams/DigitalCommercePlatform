@@ -5,7 +5,6 @@ import SubHeaderMenuContainer from '../ProfileMegaMenu/SubHeaderMenuContainer';
 import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
-	const [isActive, setDropdown] = useState(true);
   const [showSecondary, setShowSecondary] = useState(false);
   const [secondaryItems, setSecondaryItems] = useState(null);
 	const { id: userId, firstName: userName } = userDataCheck;
@@ -68,8 +67,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
           </svg>
           {userName}
         </button>
-        {isActive ? (
-          <div className="cmp-sign-in-list cmp-sign-in--container">
+        <div className="cmp-sign-in-list cmp-sign-in--container">
             {!showSecondary ? (
               <>
                 <p className="user-greet">
@@ -122,7 +120,6 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               />
             )}
           </div>
-        ) : null}
       </>
     );
 };
