@@ -5,7 +5,7 @@ import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
-  const initialAddress = reseller[0];
+  const initialAddress = reseller != null ? reseller[0] : {};
   const [editView, setEditView] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState(0);
   const [savedAddressId, setSavedAddressId] = useState(0);
