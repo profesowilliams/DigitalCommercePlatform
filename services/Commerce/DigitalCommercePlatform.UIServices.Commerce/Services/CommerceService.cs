@@ -122,8 +122,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
             }
 
-            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().ToList().ToArray();
-            arrProductIds = arrProductIds.Where(c => c != null).Distinct().ToList().ToArray();
+            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
+            arrProductIds = arrProductIds.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
             // call product app service
             productUrl = _appProductServiceURL.AppendPathSegment("Find")
              .SetQueryParams(new
@@ -150,6 +150,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         line.Images = product.Images;                        
                         line.MSRP = product?.Price?.UnpromotedPrice;
                         line.MFRNumber = product?.ManufacturerPartNumber;
+                    }
+                    else
+                    {
+                        line.DisplayName = string.IsNullOrWhiteSpace(line?.Description) ? string.Empty : line?.Description;
+                        line.ShortDescription = line.DisplayName;
                     }
                 }
             }
