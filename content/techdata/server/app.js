@@ -582,11 +582,11 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     const pageNumber = req.query.PageNumber || 1;
     const items = [];
     const status = [
-        'onHold',
-        'inProcess',
-        'open',
-        'shipped',
-        'cancelled',
+        'OnHold',
+        'InProcess',
+        'Open',
+        'Shipped',
+        'Cancelled',
     ];
     const searchByStatus = [
       'contracts',

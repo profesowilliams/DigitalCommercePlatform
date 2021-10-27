@@ -62,8 +62,11 @@ function OrdersGrid(props) {
     }
 
     function applyStatusIcon(statusKey) {
-        let icon = componentProp.iconList?.find((icon) => icon.iconKey === statusKey);
-        if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
+        const compareStatusKey = (status) => status.iconKey.toLowerCase() === statusKey.toLowerCase();
+
+        let icon = componentProp.iconList?.find(compareStatusKey);
+        if (!icon) icon = defaultIcons.find(compareStatusKey);
+
         return icon;
     }
 
