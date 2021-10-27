@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.FirstOrDefault().Value))
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.Indicators, opt => opt.Ignore())
-                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(e => e.Name));
+                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.ShortDescription ?? src.Name));
             CreateMap<CategoryBreadcrumbDto, CategoryBreadcrumbModel>();
             CreateMap<RefinementOptionDto, RefinementOptionModel>();
             CreateMap<RangeDto, RangeModel>();

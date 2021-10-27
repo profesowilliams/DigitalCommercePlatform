@@ -80,6 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
             result.Should().NotBeNull();
             result.Results.Should().NotBeNull();
+            result.Results.Products.Should().BeNull();
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
 
@@ -99,6 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
             result.Should().NotBeNull();
             result.Results.Should().NotBeNull();
+            result.Results.Products.FirstOrDefault().DisplayName.Should().NotBeNull();
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
 
