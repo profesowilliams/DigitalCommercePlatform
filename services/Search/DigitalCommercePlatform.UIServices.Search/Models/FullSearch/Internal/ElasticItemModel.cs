@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
         public string Id { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public string Upc { get; set; }
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
         public bool IsSelectedForCompare { get; set; }
