@@ -104,13 +104,13 @@
 
   &__button {
     background-color: get-color(brand-white);
-    border-right: rem(1.5px) solid get-color(text-shadow) !important;
-    border-top: rem(1.5px) solid get-color(text-shadow) !important;
-    border-bottom: rem(1.5px) solid get-color(text-shadow) !important;
+    border-right: 0.08rem solid get-color(text-shadow) !important;
+    border-top: 0.08rem solid get-color(text-shadow) !important;
+    border-bottom: 0.08rem solid get-color(text-shadow) !important;
     border-left: 0 !important;
     border-radius: 0 rem(6px) rem(6px) 0;
     box-sizing: border-box;
-    padding: 5px 8px;
+    padding: 3.8px 8px;
     transition: all 200ms ease;
 
     &:hover {
@@ -136,11 +136,13 @@
 
     &--checked {
       background-color: get-color(td-dark-blue);
+      border-color: get-color(td-dark-blue) !important;
     }
   }
 
   &__icon {
     stroke: get-color(td-dark-blue);
+    margin-top: 0.2rem;
 
     @include mobile {
       stroke: get-color(brand-light-blue);
