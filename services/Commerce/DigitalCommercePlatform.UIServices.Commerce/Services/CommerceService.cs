@@ -147,7 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
                         line.TDNumber = product?.Source.ID;
                         line.URLProductImage = GetImageUrlForProduct(product);
-                        line.Images = product.Images;
+                        line.Images = product.Images;                        
                         line.MSRP = product?.Price?.UnpromotedPrice;
                         line.MFRNumber = product?.ManufacturerPartNumber;
                     }
@@ -172,6 +172,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 else
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
             }
+            else if (product.Logos != null) {
+                if (product?.Logos?.Count == 1)
+                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
+                else if (product.Logos.Where(a => a.Key == "75x75").Any())
+                    return product.Logos.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
+                else
+                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
+            }
+        
 
             return string.Empty;
         }

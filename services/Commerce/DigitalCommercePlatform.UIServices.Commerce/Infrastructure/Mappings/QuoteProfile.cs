@@ -49,27 +49,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForPath(dest => dest.ShipTo.Email, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Email : string.Empty))
             .ForPath(dest => dest.ShipTo.PhoneNumber, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Phone : string.Empty))
             .ForPath(dest => dest.ShipTo.Name, opt => opt.MapFrom(src => src.ShipTo.Contact != null ? src.ShipTo.Contact.FirstOrDefault().Name : string.Empty))
-
             .ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser.Address))
             .ForPath(dest => dest.EndUser.CompanyName, opt => opt.MapFrom(src => src.EndUser.Name))
             .ForPath(dest => dest.EndUser.Email, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Email : string.Empty))
             .ForPath(dest => dest.EndUser.PhoneNumber, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Phone : string.Empty))
             .ForPath(dest => dest.EndUser.Name, opt => opt.MapFrom(src => src.EndUser.Contact != null ? src.EndUser.Contact.FirstOrDefault().Name : string.Empty))
-
             .ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller.Address))
             .ForPath(dest => dest.Reseller.CompanyName, opt => opt.MapFrom(src => src.Reseller.Name))
             .ForPath(dest => dest.Reseller.PhoneNumber, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Phone : string.Empty))
             .ForPath(dest => dest.Reseller.Name, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Name : string.Empty))
             .ForPath(dest => dest.Reseller.Email, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Email : string.Empty))
-
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
             .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.EndUserPO, opt => opt.MapFrom(src => src.EndUserPO))
             .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
             .ForPath(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
-            .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.VendorReference != null ? src.VendorReference.FirstOrDefault().Type + ": " + src.VendorReference.FirstOrDefault().Value : string.Empty))
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))          
+            .ForMember(dest => dest.Source, opt => opt.MapFrom<VendorReferenceResolver>())
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
             .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
@@ -235,7 +232,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Manufacturer : string.Empty;
             return description;
         }
+    }    
+
+    [ExcludeFromCodeCoverage]
+    public class VendorReferenceResolver : IValueResolver<QuoteModel, QuoteDetails, List<VendorReferenceModel>>
+    {
+        public List<VendorReferenceModel> Resolve(QuoteModel source, QuoteDetails destination, List<VendorReferenceModel> destMember, ResolutionContext context)
+        {
+            List<VendorReferenceModel> lstVendorReference = new List<VendorReferenceModel>();
+            if (source.VendorReference != null)
+            {
+                foreach (var reference in source.VendorReference)
+                {                    
+                    string vendorIdType = reference.Type = string.IsNullOrWhiteSpace(reference.Type) ? "" : reference.Type.ToUpper();
+
+                    if (vendorIdType.Equals("VENDORQUOTEID"))
+                        reference.Type = "Vendor Quote";
+                    else if(vendorIdType.Equals("ORIGINALESTIMATEID"))
+                        reference.Type = "Estimate Id";
+                    else if (vendorIdType.Equals("DEALIDENTIFIER"))
+                        reference.Type = "Deal";
+                    else
+                        reference.Type = "";
+
+
+                    lstVendorReference.Add(reference);
+                }
+            }
+
+            return lstVendorReference;
+        }
     }
-    
+
 }
 

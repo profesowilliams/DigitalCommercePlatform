@@ -19,6 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string Description { get; set; }
         public string ShortDescription { get; set; }
         public IDictionary<string, IEnumerable<ImageModel>> Images { get; set; }
+        public IDictionary<string, IEnumerable<LogoModel>> Logos { get; set; }
         public string GlobalManufacturer { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public PriceModel Price { get; set; }
@@ -57,5 +58,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public decimal Price { get; set; }
         public int? MinQuantity { get; set; }
         public DateTime? ExpirationDate { get; set; }
+    }
+
+
+    [ExcludeFromCodeCoverage]
+    public class LogoModel
+    {
+        public string Id { get; set; }
+        public string Url { get; set; }
     }
 }
