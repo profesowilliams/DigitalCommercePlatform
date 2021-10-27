@@ -85,6 +85,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.vendorConnectionEndpoint()).thenReturn("vendorConnectionEndpoint");
         when(serviceEndPointsConfiguration.orderGridEndpoint()).thenReturn("orderGridEndpoint");
         when(serviceEndPointsConfiguration.quotesPreviewEndPoint()).thenReturn("quotesPreviewEndPoint");
+        when(serviceEndPointsConfiguration.quickQuoteEndpoint()).thenReturn("quickQuoteEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
         when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");

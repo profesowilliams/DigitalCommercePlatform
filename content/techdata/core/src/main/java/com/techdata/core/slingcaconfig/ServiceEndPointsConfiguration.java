@@ -80,6 +80,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ")
     String quotesPreviewEndPoint();
 
+    @Property(label = "Quick Quotes Endpoint", description = "Quick Quotes Endpoint ")
+    String quickQuoteEndpoint();
+
     @Property(label = "Quotes Preview Pricing Endpoint", description = "Quotes Preview Pricing Endpoint ")
     String quotesPreviewPricingEndPoint();
 

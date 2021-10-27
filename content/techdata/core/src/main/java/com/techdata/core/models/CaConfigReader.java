@@ -75,6 +75,8 @@ public class CaConfigReader {
 
     private String quotesPreviewEndPoint;
 
+    private String quickQuoteEndpoint;
+
     private String quotesPreviewPricingEndPoint;
 
     private String accountAdressEndPoint;
@@ -184,6 +186,7 @@ public class CaConfigReader {
         vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
+        quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
         accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();

@@ -28,6 +28,7 @@ use(['../common/utils.js'], function (utils) {
 
     if (this.uiServiceDomain != null) {
     	jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quotesPreviewEndPoint;
+    	jsonObject["quickQuoteEndPoint"] = this.uiServiceDomain+this.quickQuoteEndPoint;
         jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
         jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
         jsonObject["dealsForEndpoint"] = this.uiServiceDomain + this.serviceData.dealsForEndpoint;

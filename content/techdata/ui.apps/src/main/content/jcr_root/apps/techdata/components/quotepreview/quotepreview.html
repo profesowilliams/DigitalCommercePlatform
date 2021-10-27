@@ -2,7 +2,7 @@
     <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
         <div class="cq-placeholder" data-emptyText="${component.title}"></div>
     </sly>
-    <sly data-sly-use.listUse="${'quotepreview.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,quotesPreviewEndPoint=serviceData.quotesPreviewEndPoint,quotesPreviewPricingEndPoint=serviceData.quotesPreviewPricingEndPoint,accountAdressEndPoint=serviceData.accountAdressEndPoint,serviceData=serviceData}">
+    <sly data-sly-use.listUse="${'quotepreview.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,quickQuoteEndpoint=serviceData.quickQuoteEndpoint, quotesPreviewEndPoint=serviceData.quotesPreviewEndPoint,quotesPreviewPricingEndPoint=serviceData.quotesPreviewPricingEndPoint,accountAdressEndPoint=serviceData.accountAdressEndPoint,serviceData=serviceData}">
         <div 
         data-component="QuotePreview"
         data-cmp-type="react"
