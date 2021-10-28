@@ -44,7 +44,8 @@ const QuoteCreate = ({
       return { isError: true, message: 'Not a valid cart available' };
     }
   }
-  const goToPricing = (id,{redirectToPreview=false}) => {
+  const goToPricing = (id,config={}) => {
+    const redirectToPreview = config?.redirectToPreview || false;
     if( id ){ 
       setCartID(id);
       if (redirectToPreview){
