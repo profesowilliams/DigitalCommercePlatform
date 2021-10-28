@@ -3,14 +3,16 @@ import React,{useCallback} from "react";
 function ProductLinesItemInformation({ line, shopDomainPage="" }) {
 
   const formatShopDomainUrl = useCallback(() => {
-    if (shopDomainPage.length > 1 ){
+    if (shopDomainPage.length > 1 && line.tdNumber ){
       const hasHttp = /^(http|https):/gm.test(shopDomainPage); 
+      const tdNumber = line.tdNumber.replace(/^0+/gm,"");
       if (!hasHttp){
         const hasSlash = /^\//gm.test(shopDomainPage)
         const shopUrlFormatted = hasSlash ? shopDomainPage.replace('/','') : shopDomainPage;
-        return `https://${shopUrlFormatted}/${line.id}/?P=${line.id}`
+        
+        return `https://${shopUrlFormatted}/${tdNumber}/?P=${tdNumber}`
       }else{
-        return `${shopDomainPage}/${line.id}/?P=${line.id}` 
+        return `${shopDomainPage}/${tdNumber}/?P=${tdNumber}` 
       }      
     }
     return null
@@ -20,7 +22,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="" }) {
     <section>
       <div className="cmp-product-lines-grid__item-information">
         <a
-          href={formatShopDomainUrl(line)}
+          href={formatShopDomainUrl()}
           target="_blank"
           className="cmp-product-lines-grid__item-information__image-link"
         >
@@ -33,7 +35,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="" }) {
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-product-lines-grid__item-information__box-text__header">
             <a
-              href={formatShopDomainUrl(line)}
+              href={formatShopDomainUrl()}
               target="_blank"
               className="cmp-product-lines-grid__item-information__box-text__header__link"
             >
