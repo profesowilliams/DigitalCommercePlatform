@@ -42,7 +42,7 @@ function QuotePreview(props) {
   const createQuote = async (quoteDetails) => {
     try {
       setLoadingCreateQuote(true);
-      const result = await usPost(componentProp.quickQuoteEndpoint, quoteDetails);
+      const result = await usPost(componentProp.quickQuoteEndPoint, quoteDetails);
       if (result.data?.content) {
         /** TODO: next steps with quoteId & confirmationId
          * Next screens are not refined, will show confirmation via alert
