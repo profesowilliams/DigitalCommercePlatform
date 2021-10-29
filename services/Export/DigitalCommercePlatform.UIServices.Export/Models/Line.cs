@@ -24,8 +24,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public string TotalPriceFormatted { get { return string.Format(Constants.MoneyFormat, TotalPrice); } }
         public decimal? MSRP { get; set; }
         public string Invoice { get; set; }
-        public Discount[] Discounts { get; set; }
-        public ContractDto Contract { get; set; }
         //added details
         public string ShortDescription { get; set; }
         public string MFRNumber { get; set; }
@@ -42,10 +40,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public List<Line> Children { get; set; }
         public List<AttributeModel> Attributes { get; set; }
         public List<AgreementModel> Agreements { get; set; }
-        public string AncillaryChargesWithTitles { get; set; }
         public IList<string> Serials { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
-        public Annuity Annuity { get; set; }
         public bool IsSubLine { get { return false; } }
         public string DisplayLineNumber { get { return Id; } }
 

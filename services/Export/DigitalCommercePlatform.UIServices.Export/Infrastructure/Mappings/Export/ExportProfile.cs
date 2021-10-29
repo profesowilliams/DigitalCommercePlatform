@@ -4,7 +4,6 @@ using DigitalCommercePlatform.UIServices.Export.Models;
 using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal;
 using Internal = DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
@@ -14,7 +13,7 @@ using DigitalCommercePlatform.UIServices.Export.Models.Order;
 using Techdata.Common.Utility.CarrierTracking;
 using Techdata.Common.Utility.CarrierTracking.Model;
 
-namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Configurations
+namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export
 {
     [ExcludeFromCodeCoverage]
     public class ExportProfile : ProfileBase
@@ -32,16 +31,41 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                 .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)))
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                ;
 
+                .ForMember(d => d.VendorPartNo , o => o.Ignore())
+                .ForMember(d => d.Manufacturer, o => o.Ignore())
+                .ForMember(d => d.MSRP, o => o.Ignore())
+                .ForMember(d => d.Invoice, o => o.Ignore())
+                .ForMember(d => d.ShortDescription, o => o.Ignore())
+                .ForMember(d => d.MFRNumber, o => o.Ignore())
+                .ForMember(d => d.UPCNumber, o => o.Ignore())
+                .ForMember(d => d.ExtendedPrice, o => o.Ignore())
+                .ForMember(d => d.Availability, o => o.Ignore())
+                .ForMember(d => d.RebateValue, o => o.Ignore())
+                .ForMember(d => d.URLProductImage, o => o.Ignore())
+                .ForMember(d => d.URLProductSpecs, o => o.Ignore())
+                .ForMember(d => d.Children, o => o.Ignore())
+                .ForMember(d => d.Serials, o => o.Ignore())
+                .ForMember(d => d.Trackings, o => o.Ignore())
+                .ForMember(d => d.StartDate, o => o.Ignore())
+                .ForMember(d => d.EndDate, o => o.Ignore())
+                ;
+            
             CreateMap<AddressModel, Address>()
                 .ForPath(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Line1))
+                .ForPath(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Line2))
+                .ForPath(dest => dest.Line3, opt => opt.MapFrom(src => src.Address.Line3))
                 .ForPath(dest => dest.City, opt => opt.MapFrom(src => src.Address.City))
                 .ForPath(dest => dest.State, opt => opt.MapFrom(src => src.Address.State))
                 .ForPath(dest => dest.Zip, opt => opt.MapFrom(src => src.Address.Zip))
+                .ForPath(dest => dest.PostalCode, opt => opt.MapFrom(src => src.Address.Zip))
                 .ForPath(dest => dest.Country, opt => opt.MapFrom(src => src.Address.Country))
                 .ForPath(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Contact.Phone))
-                .ForPath(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Name));
+                .ForPath(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Name))
+                .ForPath(dest => dest.Email, opt => opt.MapFrom(src => src.Contact.Email))
+                .ForPath(dest => dest.Id, opt => opt.Ignore())
+                ;
+
 
             CreateMap<QuoteModel, QuoteDetails>()
                 .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo.Address))
@@ -68,12 +92,16 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                 .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
-                .ForMember(dest => dest.Source, opt => opt.MapFrom(src => src.VendorReference != null ? src.VendorReference.FirstOrDefault().Type + ": " + src.VendorReference.FirstOrDefault().Value : string.Empty))
+                .ForMember(dest => dest.VendorReference, opt => opt.MapFrom(src => src.VendorReference))
                 .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
                 .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
                 .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
-                .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
+                .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
+                
+                .ForMember(d => d.Notes, o => o.Ignore())
+                .ForMember(d => d.SPAId, o => o.Ignore())
+                ;
 
             CreateMap<Item, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom<TDPartNameResolver>())
@@ -90,7 +118,24 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                 .ForPath(dest => dest.License, opt => opt.MapFrom(src => src.License))
                 .ForPath(dest => dest.StartDate, opt => opt.MapFrom(src => src.ContractStartDate))
                 .ForPath(dest => dest.EndDate, opt => opt.MapFrom(src => src.ContractEndDate))
-                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+                .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+
+                .ForMember(d => d.VendorPartNo , o => o.Ignore())
+                .ForMember(d => d.MSRP, o => o.Ignore())
+                .ForMember(d => d.Invoice, o => o.Ignore())
+                //.ForMember(d => d.Contract, o => o.Ignore())
+                .ForMember(d => d.ShortDescription, o => o.Ignore())
+                .ForMember(d => d.UPCNumber, o => o.Ignore())
+                .ForMember(d => d.UnitListPrice, o => o.Ignore())
+                .ForMember(d => d.UnitListPriceFormatted, o => o.Ignore())
+                .ForMember(d => d.Availability, o => o.Ignore())
+                .ForMember(d => d.RebateValue, o => o.Ignore())
+                .ForMember(d => d.URLProductImage, o => o.Ignore())
+                .ForMember(d => d.URLProductSpecs, o => o.Ignore())
+                .ForMember(d => d.Children, o => o.Ignore())
+                .ForMember(d => d.Attributes, o => o.Ignore())
+                .ForMember(d => d.Agreements, o => o.Ignore())
+                ;
 
             CreateMap<Internal.OrderModel, OrderDetailModel>()
                  .ForMember(dest => dest.ShipTo, opt => opt.MapFrom(src => src.ShipTo))
@@ -112,7 +157,20 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Conf
                  .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
                  .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                  .ForPath(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.Id))
-                 .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>());
+                 .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
+
+                 .ForMember(d => d.CanBeExpedited , o => o.Ignore())
+                 .ForMember(d => d.EndUserNotifications, o => o.Ignore())
+                 .ForMember(d => d.ResellerNotifications, o => o.Ignore())
+                 .ForMember(d => d.Message, o => o.Ignore())
+                 .ForMember(d => d.QuoteNumber, o => o.Ignore())
+                 .ForMember(d => d.SiteID, o => o.Ignore())
+                 .ForMember(d => d.ShipComplete, o => o.Ignore())
+                 .ForMember(d => d.StandardOrderStatusCode, o => o.Ignore())
+                 .ForMember(d => d.StandardOrderStatus, o => o.Ignore())
+                 .ForMember(d => d.ConfigurationOrderStatus, o => o.Ignore())
+                 .ForMember(d => d.SiteURL, o => o.Ignore())
+                 ;
         }
     }
     [ExcludeFromCodeCoverage]

@@ -106,24 +106,19 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
         [SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public async Task<byte[]> GetQuoteDetailsAsXls(QuoteDetails quoteDetails, DownloadQuoteDetails.Request request)
         {
-            string estimateDealId = string.Empty;
-            bool isHPEQuote = true;
-
             int xlRow = 2;
             int xlCol = 2;
             decimal subTotal = quoteDetails.SubTotal;
-            string ancillaryChargesWithTitle = string.Empty;
-            decimal totalAmount = 987654;
-            string endUserPO = quoteDetails.EndUserPO;
-            string originalEstimateId = "Original Est. ID";
-            string checkpointQuoteId = "Mocked checkpoint Q ID";
+            decimal totalAmount = quoteDetails.SubTotal;
+            string originalEstimateId = string.Empty;
+            string estimateDealId = string.Empty;
             string quickQuoteDealId = quoteDetails.SPAId ?? string.Empty;
+            bool isHPEQuote = true;
             var hpeQuoteId = string.Empty;
             bool isAnnuityPresent = false;
             Regex rx = new("/[A-Za-z]{2}/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             using var pkg = new ExcelPackage();
-            var workBook = pkg.Workbook;
             ExcelWorksheet wsQuoteDetail = pkg.Workbook.Worksheets.Add("Quote Details");
             pkg.Workbook.Worksheets.MoveToStart("Quote Details");
 
@@ -134,9 +129,9 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             PullInDataForQuickQuote(quoteDetails, ref originalEstimateId, ref quickQuoteDealId);
 
-            if (!string.IsNullOrEmpty(estimateDealId) && estimateDealId.Length == 0 && quoteDetails.Source != null
-                && quoteDetails.Source.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
-                estimateDealId = quoteDetails.Source
+            if (!string.IsNullOrEmpty(estimateDealId) && estimateDealId.Length == 0 && quoteDetails.VendorReference != null
+                && quoteDetails.VendorReference.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
+                estimateDealId = quoteDetails.VendorReference
                     .Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
 
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 1].Value = $"Quote#: {quoteDetails.Id}";
@@ -145,7 +140,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             if (isHPEQuote)
             {
-                hpeQuoteId = quoteDetails.Source?
+                hpeQuoteId = quoteDetails.VendorReference?
                     .Where(s => s.Type.Equals("VENDORQUOTEID", StringComparison.InvariantCultureIgnoreCase))
                     .FirstOrDefault()?.Value;
 
@@ -154,14 +149,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "HPE Quote ID: " + hpeQuoteId;
                 }
             }
-            else if (quoteDetails.Source?.Count > 0 && quoteDetails.Source.Any(s => s.Type.Equals("supplierQuoteRef", StringComparison.InvariantCultureIgnoreCase)))
+            else if (quoteDetails.VendorReference?.Count > 0 && quoteDetails.VendorReference.Any(s => s.Type.Equals("supplierQuoteRef", StringComparison.InvariantCultureIgnoreCase)))
             {
-                checkpointQuoteId = FillCheckpointQuoteId(quoteDetails, xlRow, xlCol, wsQuoteDetail);
+                FillCheckpointQuoteId(quoteDetails, xlRow, xlCol, wsQuoteDetail);
             }
             else
             {
 
-                if (quoteDetails.Source?.Count > 0 && rx.Match(originalEstimateId).Length > 0 && Convert.ToBoolean(quoteDetails.Source.Where(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value))
+                if (quoteDetails.VendorReference?.Count > 0 && rx.Match(originalEstimateId).Length > 0 && Convert.ToBoolean(quoteDetails.VendorReference.Where(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value))
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Estimate Id:";
                 else
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Estimate/Deal ID:";
@@ -173,8 +168,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 11].Value = $"Notes: {quoteDetails.Notes}";
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 2].Value = quoteDetails.SPAId;
             if (quickQuoteDealId.Length > 0 && rx.Match(originalEstimateId).Length == 0
-                && quoteDetails.Source != null
-                && quoteDetails.Source.Any(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)))
+                && quoteDetails.VendorReference != null
+                && quoteDetails.VendorReference.Any(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)))
             {
                 wsQuoteDetail.Cells[xlRow + 4, xlCol + 6].Value = "Deal Id:";
                 wsQuoteDetail.Cells[xlRow + 4, xlCol + 7].Value = quickQuoteDealId;
@@ -210,17 +205,13 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             xlRow += 11;
             string[] colstoExport = Array.Empty<string>();
             GetLineHeader(ref wsQuoteDetail, ref xlRow, ref colstoExport);
-            applyMarkup(quoteDetails, request.LineMarkup);
+            ApplyMarkup(quoteDetails, request.LineMarkup);
             if (quoteDetails.Items?.Count > 0)
             {
-                ancillaryChargesWithTitle = quoteDetails.Items.First().AncillaryChargesWithTitles ?? string.Empty;
-
                 foreach (Line line in quoteDetails.Items.OrderBy(i => i.Id))
                 {
                     MapLineLevelData(ref wsQuoteDetail, line, xlRow, estimateDealId);
                     xlRow += 1;
-                    if (!line.IsSubLine && line.Annuity != null && !isAnnuityPresent && !string.IsNullOrEmpty(line.DisplayLineNumber))
-                        isAnnuityPresent = true;
                 }
             }
 
@@ -260,6 +251,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                     ? string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", Math.Round(ancillaryItem.Value, 2))
                     : "$0.00";
                 ancillaryLines++;
+                totalAmount += ancillaryItem.Value;
             }
 
             var shippingAndHandlingRow = xlRow + 4 + ancillaryLines;
@@ -381,7 +373,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             return await Task.FromResult(pkg.GetAsByteArray());
         }
 
-        private void applyMarkup(QuoteDetails quoteDetails, LineMarkup[] markupData)
+        private void ApplyMarkup(QuoteDetails quoteDetails, LineMarkup[] markupData)
         {
             foreach (var line in quoteDetails.Items)
             {
@@ -490,8 +482,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                 SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); // Vendor Order#
             if (exportedFields.Contains(nameof(ExportedFields.TDPurchaseOrderNo)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, model.PONumber); // TD PO#
-            if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.Contract?.Id); //Contract
+            //if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
+            //    SetCell(curXlRow, ++curCol, wsOrderDetail, line.Contract?.Id); //Contract
             if (exportedFields.Contains(nameof(ExportedFields.StartDate)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.StartDate == DateTime.MinValue ? notAvailable : line.StartDate.ToString()); // StartDate
             if (exportedFields.Contains(nameof(ExportedFields.EndDate)))
@@ -702,21 +694,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
             headerRange.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(197, 217, 241));
         }
-        private void ApplyMarkup(QuoteDetails quoteDetails, LineMarkup[] markupData)
-        {
-            foreach (var line in quoteDetails.Items)
-            {
-                foreach (var markupItem in markupData)
-                {
-                    if (markupItem.Id == line.Id && line.UnitPrice > 0 && markupItem.MarkupValue != 0)
-                    {
-                        line.UnitPrice += markupItem.MarkupValue;
-                        line.ExtendedPrice = (line.UnitPrice * line.Quantity).ToString();
-                    }
-                }
-            }
-        }
-
+        
         private static void InnerHeaderRange(int xlRow, int xlCol, ExcelWorksheet wsQuoteDetail)
         {
             using var innerHeaderRange = wsQuoteDetail.Cells[xlRow + 11, xlCol + 1, xlRow + 11, xlCol + 14];
@@ -851,7 +829,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
         private static string FillCheckpointQuoteId(QuoteDetails quoteDetails, int xlRow, int xlCol, ExcelWorksheet wsQuoteDetail)
         {
-            string checkpointQuoteId = quoteDetails.Source.Where(s => s.Type.Equals("supplierQuoteRef", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
+            string checkpointQuoteId = quoteDetails.VendorReference.Where(s => s.Type.Equals("supplierQuoteRef", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
             if (!string.IsNullOrWhiteSpace(checkpointQuoteId))
             {
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Checkpoint Quote ID:";
@@ -865,14 +843,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
         private static void PullInDataForQuickQuote(QuoteDetails quoteDetails, ref string originalEstimateId, ref string quickQuoteDealId)
         {
-            if (quoteDetails.Source == null || quoteDetails.Source.Count == 0)
+            if (quoteDetails.VendorReference == null || quoteDetails.VendorReference.Count == 0)
                 return;
 
-            if (quoteDetails.Source.Any(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)))
-                originalEstimateId = quoteDetails.Source.Where(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
+            if (quoteDetails.VendorReference.Any(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)))
+                originalEstimateId = quoteDetails.VendorReference.Where(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
 
-            if (quoteDetails.Source.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
-                quickQuoteDealId = quoteDetails.Source.Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
+            if (quoteDetails.VendorReference.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
+                quickQuoteDealId = quoteDetails.VendorReference.Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
 
         }
 
@@ -982,6 +960,25 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             StyleAndInsertRow(sheet, xlRow);
         }
 
+        private static string ConvertTDNumber(string tdNumber)
+        {
+            var result = "Not available";
+
+            if (!string.IsNullOrEmpty(tdNumber))
+            {
+                result = int.TryParse(tdNumber, out int tdNumberInt)
+                    ? tdNumberInt.ToString()
+                    : tdNumber;
+
+                //if (int.TryParse(tdNumber, out int tdNumberInt))
+                //    result = tdNumberInt.ToString();
+                //else
+                //    result = tdNumber;
+            }
+
+            return result;
+        }
+
         private static void FillSubLineData(ExcelWorksheet sheet, Line line, int xlRow)
         {
             string[] splitLineNumber = line.DisplayLineNumber.Split('.');
@@ -1000,7 +997,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             sheet.Cells[xlRow, 8].Value = "n/a";
             sheet.Cells[xlRow, 9].Value = "n/a";
 
-            sheet.Cells[xlRow, 10].Value = !string.IsNullOrEmpty(line.TDNumber) ? line.TDNumber : "Not available";
+            sheet.Cells[xlRow, 10].Value = ConvertTDNumber(line.TDNumber);
 
             sheet.Cells[xlRow, 11].Value = line.Quantity;
             sheet.Cells[xlRow, 11].Style.Numberformat.Format = "0";
@@ -1038,7 +1035,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             var billing = line.Attributes.FirstOrDefault(a => a.Name.Equals("BILLINGTERM"))?.Value;
             sheet.Cells[xlRow, 9].Value = billing != null ? billing.Replace(" Billing", "") : "n/a";
 
-            sheet.Cells[xlRow, 10].Value = !string.IsNullOrEmpty(line.TDNumber) ? line.TDNumber : "Not available";
+            sheet.Cells[xlRow, 10].Value = ConvertTDNumber(line.TDNumber);
             sheet.Cells[xlRow, 11].Value = line.Quantity;
             sheet.Cells[xlRow, 11].Style.Numberformat.Format = "0";
 
