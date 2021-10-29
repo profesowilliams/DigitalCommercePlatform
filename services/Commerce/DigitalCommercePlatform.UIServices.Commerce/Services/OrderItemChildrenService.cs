@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Quantity = item.Quantity,
                     RebateValue = item.RebateValue,
                     ShortDescription = item.ShortDescription,
-                    TDNumber = item.TDNumber,
+                    TDNumber = string.IsNullOrWhiteSpace(item.TDNumber) ? string.Empty : item.TDNumber.TrimStart('0'),
                     TotalPrice = item.TotalPrice,
                     UnitListPrice = item.UnitListPrice,
                     UnitListPriceFormatted = item.UnitListPriceFormatted,

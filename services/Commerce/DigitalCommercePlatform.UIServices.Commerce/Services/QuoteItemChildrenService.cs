@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
         public List<Line> GetQuoteLinesWithChildren(QuotePreviewModel quotePreviewModel)
         {
-            if(quotePreviewModel?.QuoteDetails?.Items == null)
+            if (quotePreviewModel?.QuoteDetails?.Items == null)
             {
                 return new List<Line>();
             }
@@ -57,7 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Quantity = item.Quantity,
                     RebateValue = item.RebateValue,
                     ShortDescription = item.ShortDescription,
-                    TDNumber = item.TDNumber,
+                    TDNumber = string.IsNullOrWhiteSpace(item.TDNumber)? string.Empty :item.TDNumber.TrimStart('0'),
                     TotalPrice = item.TotalPrice,
                     UnitListPrice = item.UnitListPrice,
                     UnitListPriceFormatted = item.UnitListPriceFormatted,
@@ -66,6 +66,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     URLProductImage = item.URLProductImage,
                     URLProductSpecs = item.URLProductSpecs,
                     VendorPartNo = item.VendorPartNo,
+                    Images = item.Images,
+                    Logos = item.Logos,
                     Children = subLines
                 });
 

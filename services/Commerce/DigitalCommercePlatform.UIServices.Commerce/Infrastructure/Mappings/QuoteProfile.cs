@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
             .ForPath(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))          
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.Source, opt => opt.MapFrom<VendorReferenceResolver>())
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
@@ -82,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<QuoteModel, QuotesForGridModel>()
              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
              .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
-             .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorReference.FirstOrDefault().Type))//Need to have reference
+             .ForMember(dest => dest.Vendor, opt => opt.MapFrom<VendorResolver>())
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
              .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUser.Name))
@@ -175,6 +175,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                ;
         }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class VendorResolver : IValueResolver<QuoteModel, QuotesForGridModel, string>
+    {
+        public string Resolve(QuoteModel source, QuotesForGridModel destination, string destMember, ResolutionContext context)
+        {
+            var vendor = string.Empty;
+
+            var lstVendor = source.Attributes.Any() ? source.Attributes.Where(d => d.Name.ToUpper().Equals("VENDOR")).ToList().Select(n => n.Value).ToList() : new List<string>();
+            if (lstVendor.Any())
+                vendor = lstVendor.Count > 1 ? "Multiple" : lstVendor.FirstOrDefault();
+
+            return vendor;
+        }
+    }
+
+
     [ExcludeFromCodeCoverage]
     public class DealResolver : IValueResolver<QuoteModel, QuotesForGridModel, List<string>>
     {
@@ -232,7 +249,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Manufacturer : string.Empty;
             return description;
         }
-    }    
+    }
 
     [ExcludeFromCodeCoverage]
     public class VendorReferenceResolver : IValueResolver<QuoteModel, QuoteDetails, List<VendorReferenceModel>>
@@ -243,12 +260,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             if (source.VendorReference != null)
             {
                 foreach (var reference in source.VendorReference)
-                {                    
+                {
                     string vendorIdType = reference.Type = string.IsNullOrWhiteSpace(reference.Type) ? "" : reference.Type.ToUpper();
 
                     if (vendorIdType.Equals("VENDORQUOTEID"))
                         reference.Type = "Vendor Quote";
-                    else if(vendorIdType.Equals("ORIGINALESTIMATEID"))
+                    else if (vendorIdType.Equals("ORIGINALESTIMATEID"))
                         reference.Type = "Estimate Id";
                     else if (vendorIdType.Equals("DEALIDENTIFIER"))
                         reference.Type = "Deal";
@@ -263,6 +280,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             return lstVendorReference;
         }
     }
+
 
 }
 

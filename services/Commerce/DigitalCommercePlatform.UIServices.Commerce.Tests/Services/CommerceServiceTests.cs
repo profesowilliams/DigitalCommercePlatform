@@ -2,9 +2,11 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Client;
@@ -157,8 +159,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Items = null
             };
 
-            QuotePreviewModel quotePreview = new QuotePreviewModel { 
-            QuoteDetails = new QuotePreview { Items = null},
+            QuotePreviewModel quotePreview = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview { Items = null },
             };
 
             Type type;
@@ -206,6 +209,128 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(testLine);
             Assert.NotNull(result);
 
+        }
+
+        [Fact]
+        public void GetImageUrlForProduct_Test()
+        {
+            //arrange
+            ProductsModel productModel = new ProductsModel
+            {
+                Images = null,
+                Logos = null
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "GetImageUrlForProduct" && x.IsPrivate)
+                .First();
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { productModel });
+            Assert.NotNull(result);
+
+        }
+
+        [Fact]
+        public void MapAddress_Test()
+        {
+            //arrange
+            List<Address> lstAddress = new List<Address>();
+            Address address = new Address()
+            {
+                Id = "123",
+                Line1 = "123",
+                Line2 = "123",
+                Line3 = "123",
+                Email = "abc@gmail.com"
+            };
+            lstAddress.Add(address);
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "MapAddress" && x.IsPrivate)
+                .First();
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { lstAddress });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetAddress_Test()
+        {
+            //arrange
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "GetAddress" && x.IsPrivate)
+                .First();
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { "123", true });
+            Assert.NotNull(result);
+
+        }
+
+        [Fact]
+        public void CreateResponseUsingEstimateId_Test()
+        {
+            //arrange
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco");
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate)
+                .First();
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { request });
+            Assert.NotNull(result);
+
+        }
+
+
+        [Fact]
+        public void PopulateOrderDetails_Test()
+        {
+            //arrange
+            var objSource = new Models.Order.Internal.Source { ID = "708546" };
+            List<Item> lstItems = new List<Item>();
+
+            var testLine = new Item
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Tax = (decimal?)12.08,
+                Freight = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+            };
+
+            lstItems.Add(testLine);
+
+            Models.Order.Internal.OrderModel request = new Models.Order.Internal.OrderModel
+            {
+                Source = objSource,
+                Items = lstItems
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Where(x => x.Name == "PopulateOrderDetails" && x.IsPrivate)
+                .First();
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { request });
+            Assert.NotNull(result);
         }
 
         private void InitiateCommerceService(out Type type, out object objType)

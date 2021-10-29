@@ -147,7 +147,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
                         line.TDNumber = product?.Source.ID;
                         line.URLProductImage = GetImageUrlForProduct(product);
-                        line.Images = product.Images;                        
+                        line.Images = product.Images;
+                        line.Logos = product.Logos;
                         line.MSRP = product?.Price?.UnpromotedPrice;
                         line.MFRNumber = product?.ManufacturerPartNumber;
                     }
@@ -166,9 +167,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return items;
         }
 
-        private static string GetImageUrlForProduct(ProductsModel product)
+        private string GetImageUrlForProduct(ProductsModel product)
         {
-            if (product.Images != null)
+            if (product.Images != null && product.Images.Count > 0)
             {
                 if (product?.Images?.Count == 1)
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
@@ -177,7 +178,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 else
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
             }
-            else if (product.Logos != null) {
+            else if (product.Logos != null && product.Logos.Count > 0) {
                 if (product?.Logos?.Count == 1)
                     return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
                 else if (product.Logos.Where(a => a.Key == "75x75").Any())
