@@ -50,11 +50,17 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Create Quote Endpoint", description = "Create Quote Endpoint")
     String createQuoteEndpoint();
 
+    @Property(label = "Replace Cart Endpoint", description = "Replace Cart Endpoint")
+    String replaceCartEndpoint();
+
     @Property(label = "Cart Details Endpoint", description = "Cart Details Endpoint")
     String cartDetailsEndpoint();
 
     @Property(label = "Pricing Conditions Endpoint", description = "Pricing Conditions Endpoint")
     String pricingConditionsEndPoint();
+
+    @Property(label = "Order Levels for Quote Details Endpoint", description = "Order Levels for Quote Details Endpoint")
+    String orderLevelsForQuotePreviewEndpoint();
 
     @Property(label = "Estimated Id List Endpoint", description = "Estimated Id List Endpoint")
     String estimatedIdListEndpoint();

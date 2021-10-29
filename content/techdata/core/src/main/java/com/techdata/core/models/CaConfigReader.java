@@ -57,9 +57,13 @@ public class CaConfigReader {
 
     private String createQuoteEndpoint;
 
+    private String replaceCartEndpoint;
+
     private String cartDetailsEndpoint;
 
     private String pricingConditionsEndPoint;
+
+    private String orderLevelsForQuotePreviewEndpoint;
 
     private String estimatedIdListEndpoint;
 
@@ -173,8 +177,10 @@ public class CaConfigReader {
         myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
         topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
         createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
+        replaceCartEndpoint = serviceEndPointsConfiguration.replaceCartEndpoint();
         cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
         pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();
+        orderLevelsForQuotePreviewEndpoint = serviceEndPointsConfiguration.orderLevelsForQuotePreviewEndpoint();
         estimatedIdListEndpoint = serviceEndPointsConfiguration.estimatedIdListEndpoint();
         estimatedIdDetailsEndpoint = serviceEndPointsConfiguration.estimatedIdDetailsEndpoint();
         savedCartsEndpoint = serviceEndPointsConfiguration.savedCartsEndpoint();
@@ -283,12 +289,20 @@ public class CaConfigReader {
         return createQuoteEndpoint;
     }
 
+    public String getReplaceCartEndpoint() {
+        return replaceCartEndpoint;
+    }
+
     public String getCartDetailsEndpoint() {
         return cartDetailsEndpoint;
     }
 
     public String getPricingConditionsEndPoint() {
         return pricingConditionsEndPoint;
+    }
+
+    public String getOrderLevelsForQuotePreviewEndpoint() {
+        return orderLevelsForQuotePreviewEndpoint;
     }
 
     public String getEstimatedIdListEndpoint() {

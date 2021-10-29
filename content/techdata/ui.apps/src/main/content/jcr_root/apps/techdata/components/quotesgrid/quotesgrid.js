@@ -164,10 +164,9 @@ if (properties && properties["keywordDropdownLabel"]) {
         if (searchCriteriaData != null) {
             jsonObject["searchCriteria"] = searchCriteriaData;
         }
-     if (this.createQuoteEndpoint != null) {
-
-                    checkoutData.uiServiceEndPoint = this.uiServiceDomain+this.createQuoteEndpoint;
-        }
+    if (this.serviceData.replaceCartEndpoint != null) {
+        checkoutData.uiServiceEndPoint = this.uiServiceDomain+this.serviceData.replaceCartEndpoint;
+    }
 
      if (this.shopDomain != null) {
                     checkoutData.redirectUrl = this.shopDomain+this.cartURL;
