@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
     public class RefinementRequestModel
     {
         public string Id { get; set; }
-        public string Value { get; set; }
+        public string ValueId { get; set; }
         public RangeModel Range { get; set; }
     }
 }

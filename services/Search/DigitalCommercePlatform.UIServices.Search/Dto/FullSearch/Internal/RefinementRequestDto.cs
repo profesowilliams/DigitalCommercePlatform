@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
     public class RefinementRequestDto
     {
         public string Id { get; set; }
-        public string Value { get; set; }
+        public string ValueId { get; set; }
         public RangeDto Range { get; set; }
     }
 }

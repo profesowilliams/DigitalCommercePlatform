@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                                 new RefinementRequestDto()
                                 {
                                     Id = _catalog,
-                                    Value = request.CategoryId
+                                    ValueId = request.CategoryId
                                 }
                             }
                         }
