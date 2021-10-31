@@ -64,27 +64,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
         [ExcludeFromCodeCoverage]
         public class GetOrderHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly ICommerceService _commerceQueryService;
+            private readonly IOrderService _orderQueryService;
+            private readonly IHelperService _helperQueryService;
             private readonly IMapper _mapper;
             private readonly IOrderItemChildrenService _orderItemChildrenService;
 
-            public GetOrderHandler(ICommerceService commerceQueryService,  IMapper mapper, IOrderItemChildrenService orderItemChildrenService)
+            public GetOrderHandler(
+                IOrderService orderQueryService,
+                IHelperService helperQueryService,
+                IMapper mapper, 
+                IOrderItemChildrenService orderItemChildrenService
+                )
             {
-                _commerceQueryService = commerceQueryService;
+                _orderQueryService = orderQueryService;
+                _helperQueryService = helperQueryService;
                 _mapper = mapper;
                 _orderItemChildrenService = orderItemChildrenService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
+                var order = await _orderQueryService.GetOrderByIdAsync(request.Id);
                 var orderResponse = _mapper.Map<OrderDetailModel>(order);
                 var response = new Response(orderResponse);
-                if (response.Items != null)
-                {
-                    response.Items = _orderItemChildrenService.GetOrderLinesWithChildren(response);
-                    response.Items = await _commerceQueryService.PopulateLinesFor(response.Items, string.Empty);
-                }
+
+                if (response.Items != null)                
+                    response.Items = _orderItemChildrenService.GetOrderLinesWithChildren(response);                    
+                
                 return new ResponseBase<Response> { Content = response };
             }
 

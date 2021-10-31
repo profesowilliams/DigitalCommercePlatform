@@ -1,11 +1,15 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Settings;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -15,23 +19,59 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
     {
         private readonly Mock<IUIContext> _context;
         private readonly Mock<ILogger<HelperService>> _logger;
-
+        private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
+        private readonly Mock<IAppSettings> _appSettings;
         public HelperServiceTests()
         {
             _context = new Mock<IUIContext>();
             _logger = new Mock<ILogger<HelperService>>();
+            _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
+            _appSettings = new Mock<IAppSettings>();
         }
 
         private HelperService GetHelperService()
         {
-            return new HelperService(_logger.Object, _context.Object);
+            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
         }
+
+        private void InitiateHelperService(out Type type, out object objType)
+        {
+            type = typeof(HelperService);
+            objType = Activator.CreateInstance(type,
+                _logger.Object, 
+                _context.Object, 
+                _middleTierHttpClient.Object, 
+                _appSettings.Object
+                );
+        }
+
+
+        [Fact]
+        public void PopulateLinesFor_Test()
+        {
+            //arrange 
+            Line testLine = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+
+            List<Line> lstItems = new() { testLine };
+            //Act
+            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco");
+            Assert.NotNull(result);
+        }
+
 
         [Fact]
         public void GetOrderPricingConditions()
         {
-            TypeModel orderType = new TypeModel();
-            LevelModel orderLevel = new LevelModel();
+            TypeModel orderType = new();
+            LevelModel orderLevel = new();
 
             var result = GetHelperService().GetOrderPricingConditions("2", out orderType, out orderLevel);
 
@@ -45,8 +85,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void GetOrderPricingConditionsNull()
         {
             // Arrange
-            TypeModel orderType = new TypeModel();
-            LevelModel orderLevel = new LevelModel();
+            TypeModel orderType = new();
+            LevelModel orderLevel = new();
             // Act
             var result = GetHelperService().GetOrderPricingConditions(null, out orderType, out orderLevel);
             // Assert
@@ -58,9 +98,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact]
         public void GetParameterName()
         {
-            TypeModel orderType = new TypeModel();
-            LevelModel orderLevel = new LevelModel();
-
             var result = GetHelperService().GetParameterName("id");
             Assert.NotNull(result);
         }
@@ -69,16 +106,247 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void TestPrivateMethods()
         {
             Type type = typeof(HelperService);
-            var objType = Activator.CreateInstance(type, _logger.Object, _context.Object);
+            var objType = Activator.CreateInstance(type, 
+                _logger.Object,
+                _context.Object,
+                _middleTierHttpClient.Object,
+                _appSettings.Object);
 
             var getOrderPricingConditionMappings = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "GetOrderPricingConditionMappings" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "GetOrderPricingConditionMappings" && x.IsPrivate);
+
             //Act
             var getOrderPricingMappings = (OrderPricingCondtionMapping)getOrderPricingConditionMappings.Invoke(objType, new object[] { "EduStudentStaff" });
             Assert.NotNull(getOrderPricingMappings);
 
         }
+
+        /// <summary>
+        ///  From here 
+        /// </summary>
+        [Fact]
+        public void BuildQueryForProductApiCall_Test()
+        {
+            //ist<Line> items, string vendorName
+            Line testLine = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+
+            List<Line> lstItems = new() { testLine };
+
+
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildQueryForProductApiCall" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { lstItems, "" });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void MapLines_Test()
+        {
+            //arrange
+            ProductsModel product = new()
+            {
+                Source = new Models.Quote.Quote.Internal.SourceModel { ID = "100023213" },
+                Price = new PriceModel { BestPrice = (decimal?)10.10, ListPrice = (decimal?)10.10, UnpromotedPrice = (decimal?)12.45 },
+                ManufacturerPartNumber = "C9200-NM-4X",
+                DisplayName = "C9200-NM-4X displayName",
+                Images = null,
+                Logos = null,
+                ShortDescription = "C9200-NM-4X Short Desc",
+                GlobalManufacturer = "CISCO",
+                Description = "C9200-NM-4X Description",
+                Name = "C9200-NM-4X Name"
+            };
+            Line line = new();
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapLines" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { product, line });
+            Assert.Null(result);
+
+        }
+
+        [Fact]
+        public void GetImageUrlForProduct_Test()
+        {
+            //arrange
+            ProductsModel product = new()
+            {
+                Source = new Models.Quote.Quote.Internal.SourceModel { ID = "100023213" },
+                Price = new PriceModel { BestPrice = (decimal?)10.10, ListPrice = (decimal?)10.10, UnpromotedPrice = (decimal?)12.45 },
+                ManufacturerPartNumber = "C9200-NM-4X",
+                DisplayName = "C9200-NM-4X displayName",
+                Images = null,
+                Logos = null,
+                ShortDescription = "C9200-NM-4X Short Desc",
+                GlobalManufacturer = "CISCO",
+                Description = "C9200-NM-4X Description",
+                Name = "C9200-NM-4X Name"
+            };
+            
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetImageUrlForProduct" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { product });
+            Assert.Equal(string.Empty,result);
+
+        }
+
+        [Fact]
+        public void ProducUrlUsingLogo_Test()
+        {
+            //arrange
+            ProductsModel product = new()
+            {
+                Source = new Models.Quote.Quote.Internal.SourceModel { ID = "100023213" },
+                Price = new PriceModel { BestPrice = (decimal?)10.10, ListPrice = (decimal?)10.10, UnpromotedPrice = (decimal?)12.45 },
+                ManufacturerPartNumber = "C9200-NM-4X",
+                DisplayName = "C9200-NM-4X displayName",
+                Images = null,
+                Logos = null,
+                ShortDescription = "C9200-NM-4X Short Desc",
+                GlobalManufacturer = "CISCO",
+                Description = "C9200-NM-4X Description",
+                Name = "C9200-NM-4X Name"
+            };
+
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "ProducUrlUsingLogo" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { product });
+            Assert.Equal(string.Empty, result);
+
+        }
+        [Fact]
+        public void ProductUrlUsingImages_Test()
+        {
+            //arrange
+            ProductsModel product = new()
+            {
+                Source = new Models.Quote.Quote.Internal.SourceModel { ID = "100023213" },
+                Price = new PriceModel { BestPrice = (decimal?)10.10, ListPrice = (decimal?)10.10, UnpromotedPrice = (decimal?)12.45 },
+                ManufacturerPartNumber = "C9200-NM-4X",
+                DisplayName = "C9200-NM-4X displayName",
+                Images = null,
+                Logos = null,
+                ShortDescription = "C9200-NM-4X Short Desc",
+                GlobalManufacturer = "CISCO",
+                Description = "C9200-NM-4X Description",
+                Name = "C9200-NM-4X Name"
+            };
+
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "ProductUrlUsingImages" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { product });
+            Assert.Equal(string.Empty, result);
+        }
+
+        /*
+         "images": {
+                        "75x75": [
+                            {
+                                "id": "f13c8e36-6944-4e6c-b0e2-173077576fd4",
+                                "url": "http://cdn.cnetcontent.com/f1/3c/f13c8e36-6944-4e6c-b0e2-173077576fd4.jpg",
+                                "type": "Product shot",
+                                "angle": "Right-angle"
+                            }
+                        ],
+                        "200x150": [
+                            {
+                                "id": "6f5b3854-0974-4e1b-8096-3999e751fbd0",
+                                "url": "http://cdn.cnetcontent.com/6f/5b/6f5b3854-0974-4e1b-8096-3999e751fbd0.jpg",
+                                "type": "Product shot",
+                                "angle": "Right-angle"
+                            }
+                        ],
+                        "400x300": [
+                            {
+                                "id": "a5fee24e-3593-4f19-ac40-f46aba66008f",
+                                "url": "http://cdn.cnetcontent.com/a5/fe/a5fee24e-3593-4f19-ac40-f46aba66008f.jpg",
+                                "type": "Product shot",
+                                "angle": "Right-angle"
+                            }
+                        ]
+                    },
+                    "logos": {
+                        "200x150": [
+                            {
+                                "id": "8a2f70e6-dd77-4f96-baf3-f15b81bd51be",
+                                "url": "http://cdn.cnetcontent.com/8a/2f/8a2f70e6-dd77-4f96-baf3-f15b81bd51be.jpg"
+                            }
+                        ],
+                        "400x300": [
+                            {
+                                "id": "cf622e18-7260-45dc-9bb4-619a2c6c7b56",
+                                "url": "http://cdn.cnetcontent.com/cf/62/cf622e18-7260-45dc-9bb4-619a2c6c7b56.jpg"
+                            }
+                        ],
+                        "75x75": [
+                            {
+                                "id": "46f9be56-2fce-4c1b-a86c-021c62f8bc3b",
+                                "url": "http://cdn.cnetcontent.com/46/f9/46f9be56-2fce-4c1b-a86c-021c62f8bc3b.jpg"
+                            }
+                        ]
+                    },
+         */
+        //[Fact]
+        //public void SetProductQuery_Test()
+        //{
+        //    string manufacturer = "";
+        //    string system = "CISCO";
+        //    string[] arrProductIds = new string[2];
+        //    string[] arrManufacturer = new string[2];
+        //    int i = 1;
+
+        //    Line line = new()
+        //    {
+        //        Quantity = 1,
+        //        UnitPrice = (decimal?)12.08,
+        //        Manufacturer = "CISCO",
+        //        MFRNumber = "C9200-NM-4X",
+        //        TDNumber = "13517170",
+        //        TotalPrice = (decimal?)12.08,
+        //    };
+
+        //    Type type;
+        //    object objType;
+        //    InitiateHelperService(out type, out objType);
+
+        //    var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+        //        .First(x => x.Name == "SetProductQuery" && x.IsPrivate);
+
+        //    var result = queryLine.Invoke(objType, new object[] { manufacturer, system, arrProductIds, arrManufacturer, i, line });
+        //    Assert.Null(result);
+        //}
 
         [Fact]
         public void TestOrderLevel()
@@ -86,5 +354,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var orderLevel = GetHelperService().GetOrderType("ZZED", "ZZED");
             Assert.NotNull(orderLevel);
         }
+        
     }
 }

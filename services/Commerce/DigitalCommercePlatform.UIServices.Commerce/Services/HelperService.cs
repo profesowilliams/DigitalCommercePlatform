@@ -1,18 +1,16 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Settings;
+using Flurl;
 using Microsoft.Extensions.Logging;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -22,13 +20,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         private readonly ILogger<HelperService> _logger;
         private readonly IUIContext _context;
-
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
+        private readonly IAppSettings _appSettings;
         public HelperService(ILogger<HelperService> logger,
-                             IUIContext context)
+                             IUIContext context,
+                             IMiddleTierHttpClient middleTierHttpClient,
+                             IAppSettings appSettings)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _context = context;
-
+            _middleTierHttpClient = middleTierHttpClient;
+            _appSettings = appSettings;
         }
 
         public string GetParameterName(string parameter)
@@ -156,5 +158,154 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             return Task.FromResult(response);
         }
+
+
+        /// <summary>
+        ///  Populate lines for order and Quotes
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="vendorName"></param>
+        /// <returns></returns>
+        public async Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName)
+        {
+            ProductData productDetails;
+            string productUrl = BuildQueryForProductApiCall(items, vendorName);
+
+            try
+            {
+                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
+                ProductsModel product;
+                foreach (var line in items)
+                {
+                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
+                    if (product != null && line != null)
+                    {
+                        MapLines(product, line);
+                    }
+                    else
+                    {
+                        line.DisplayName = string.IsNullOrWhiteSpace(line?.Description) ? string.Empty : line?.Description;
+                        line.ShortDescription = line.DisplayName;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting product details : " + nameof(CommerceService));
+            }
+
+            return items;
+        }
+
+
+        /// <summary>
+        /// returns Application product API call URL
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="vendorName"></param>
+        /// <returns></returns>
+        private string BuildQueryForProductApiCall(List<Line> items, string vendorName)
+        {
+            string _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
+            string productUrl = "";
+            string manufacturer = "";
+            string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
+            string[] arrProductIds = new string[items.Count];
+            string[] arrManufacturer = new string[items.Count];
+            string productId;
+
+            //convert for-each statment to linq statment after App-Service is ready.
+            int i = 0;
+            foreach (var item in items)
+            {
+                //SetProductQuery(ref manufacturer, system, arrProductIds, arrManufacturer, ref i, item);
+                
+                productId = item?.VendorPartNo ?? item?.MFRNumber ?? ""; // Fix this once app service is ready
+                if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
+                {
+
+                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
+                    item.Manufacturer = item.Manufacturer ?? system;
+                    manufacturer = item.Manufacturer ?? system;
+                    arrManufacturer[i] = manufacturer;
+                    arrProductIds[i] = productId;
+                    i++;
+                }
+            }
+
+            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
+            arrProductIds = arrProductIds.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
+            // call product app service
+            productUrl = _appProductServiceURL.AppendPathSegment("Find")
+             .SetQueryParams(new
+             {
+                 MfrPartNumber = arrProductIds,
+                 Details = true,
+                 SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg,//"0100"; Goran Needs to Fix this
+                 Manufacturer = arrManufacturer
+             });
+            return productUrl;
+        }
+
+        /// <summary>
+        /// Map Order / Quote Lines 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="line"></param>
+        private void MapLines(ProductsModel product, Line line)
+        {
+            line.ShortDescription = string.IsNullOrWhiteSpace(product.ShortDescription) ? line.ShortDescription : product.ShortDescription;
+            line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
+            line.TDNumber = product?.Source.ID;
+            line.URLProductImage = GetImageUrlForProduct(product);
+            line.Images = product.Images;
+            line.Logos = product.Logos;
+            line.MSRP = product?.Price?.UnpromotedPrice;
+            line.MFRNumber = product?.ManufacturerPartNumber;
+        }
+
+
+        /// <summary>
+        /// Returns Image URL
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        private string GetImageUrlForProduct(ProductsModel product)
+        {
+            string url = ProductUrlUsingImages(product);
+            url = !string.IsNullOrWhiteSpace(url) ? url : ProducUrlUsingLogo(product);
+            return url;
+        }
+
+        private string ProducUrlUsingLogo(ProductsModel product)
+        {
+            if (product.Images != null && product.Images.Count > 0)
+            {
+                if (product?.Logos?.Count == 1)
+                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
+                else if (product.Logos.Any(a => a.Key == "75x75"))
+                    return product.Logos.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
+                else
+                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
+            }
+            else 
+                return  string.Empty;
+        }
+
+        private string ProductUrlUsingImages(ProductsModel product)
+        {
+            if (product.Logos != null && product.Logos.Count > 0)
+            {
+                if (product?.Images?.Count == 1)
+                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
+                else if (product.Images.Any(a => a.Key == "75x75"))
+                    return product.Images.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
+                else
+                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
+            }
+            else
+                return string.Empty;
+        }
+
     }
 }

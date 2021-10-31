@@ -2,19 +2,36 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Settings;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System.Collections.Generic;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 {
-   public class OrderItemChildrenServiceTests
+    public class OrderItemChildrenServiceTests
     {
+        private readonly Mock<IUIContext> _context;
+        private readonly Mock<ILogger<HelperService>> _logger;
+        private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
+        private readonly Mock<IAppSettings> _appSettings;
+        public OrderItemChildrenServiceTests()
+        {
+            _context = new Mock<IUIContext>();
+            _logger = new Mock<ILogger<HelperService>>();
+            _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
+            _appSettings = new Mock<IAppSettings>();
+        }
 
         [Fact(DisplayName = "Lines are empty for invalid input")]
         public void LinesAreEmptyForInvalidInput()
         {
             var substringService = new SubstringService();
-            var sut = new OrderItemChildrenService(substringService);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            var sut = new OrderItemChildrenService(substringService, helperService);
             var result = sut.GetOrderLinesWithChildren(null);
 
             Assert.Empty(result);
@@ -24,7 +41,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void ChildrenLinesAreGenerated()
         {
             var substringService = new SubstringService();
-            var sut = new OrderItemChildrenService(substringService);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            var sut = new OrderItemChildrenService(substringService, helperService);
             var orderModel = new OrderDetailModel
             {
 
@@ -42,11 +60,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                     }
             };
             var orderPreviewModel = new GetOrder.Response(orderModel);
-            
+
 
             var result = sut.GetOrderLinesWithChildren(orderPreviewModel);
 
-            Assert.Equal(2, result.Count);            
+            Assert.Equal(2, result.Count);
         }
     }
 }

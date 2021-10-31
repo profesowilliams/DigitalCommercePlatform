@@ -6,7 +6,6 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Client;
@@ -48,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            CreateModelFrom request = new CreateModelFrom
+            CreateModelFrom request = new()
             {
                 TargetSystem = "R13",
                 CreateFromId = "96722368",
@@ -69,8 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 );
 
             var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "CreateQuoteRequest" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "CreateQuoteRequest" && x.IsPrivate);
             //Act
             requestToQuote.Invoke(objType, new object[] { request });
             Assert.Equal("R3", request.TargetSystem);
@@ -83,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("CON-SNT-CTSIX520", true, "cisco");
+            GetQuotePreviewDetails.Request request = new("CON-SNT-CTSIX520", true, "cisco");
 
 
             Type type = typeof(CommerceService);
@@ -98,8 +96,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 );
 
             var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate);
             //Act
             requestToQuote.Invoke(objType, new object[] { request });
             Assert.Equal("CON-SNT-CTSIX520", request.Id);
@@ -122,9 +119,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Reseller = null,
                 EndUser = null
             };
-            var details = new List<DetailedDto>();
             // Arrange
-            details.Add(detailedDto);
+            var details = new List<DetailedDto> { detailedDto };
+
             FindResponse<List<DetailedDto>> configurationFindResponse = new FindResponse<List<DetailedDto>>();
             configurationFindResponse.Data = details;
 
@@ -135,8 +132,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             InitiateCommerceService(out type, out objType);
 
             var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "MapEndUserAndResellerForQuotePreview" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "MapEndUserAndResellerForQuotePreview" && x.IsPrivate);
             //Act
             requestToQuote.Invoke(objType, new object[] { configurationFindResponse, quotePreview });
             Assert.NotNull(configurationFindResponse);
@@ -159,7 +155,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Items = null
             };
 
-            QuotePreviewModel quotePreview = new QuotePreviewModel
+            QuotePreviewModel quotePreview = new()
             {
                 QuoteDetails = new QuotePreview { Items = null },
             };
@@ -169,8 +165,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             InitiateCommerceService(out type, out objType);
 
             var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "MapQuoteLinesForCreatingQuote" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "MapQuoteLinesForCreatingQuote" && x.IsPrivate);
+
             //Act
             requestToQuote.Invoke(objType, new object[] { createQuoteModel, quotePreview });
             Assert.NotNull(createQuoteModel);
@@ -181,8 +177,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact]
         public void GetLinesforRequest()
         {
+
             //arrange
-            var testLine = new Line
+            Line testLine = new()
             {
                 TDNumber = "1231234444",
                 MFRNumber = "CISCO_35345",
@@ -192,18 +189,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 UnitPrice = (decimal?)12.08
             };
 
-            QuotePreviewModel quotePreview = new QuotePreviewModel
-            {
-                QuoteDetails = new QuotePreview { Items = null },
-            };
-
             Type type;
             object objType;
             InitiateCommerceService(out type, out objType);
 
             var requestItemModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "GetLinesforRequest" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
+
             //Act
             var result = requestItemModel.Invoke(objType, new object[] { testLine });
             Assert.NotNull(testLine);
@@ -211,34 +203,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         }
 
-        [Fact]
-        public void GetImageUrlForProduct_Test()
-        {
-            //arrange
-            ProductsModel productModel = new ProductsModel
-            {
-                Images = null,
-                Logos = null
-            };
-
-            Type type;
-            object objType;
-            InitiateCommerceService(out type, out objType);
-
-            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "GetImageUrlForProduct" && x.IsPrivate)
-                .First();
-            //Act
-            var result = imageProductModel.Invoke(objType, new object[] { productModel });
-            Assert.NotNull(result);
-
-        }
 
         [Fact]
         public void MapAddress_Test()
         {
             //arrange
-            List<Address> lstAddress = new List<Address>();
+            List<Address> lstAddress = new();
             Address address = new Address()
             {
                 Id = "123",
@@ -253,8 +223,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             InitiateCommerceService(out type, out objType);
 
             var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "MapAddress" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "MapAddress" && x.IsPrivate);
+
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { lstAddress });
             Assert.NotNull(result);
@@ -269,8 +239,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             InitiateCommerceService(out type, out objType);
 
             var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "GetAddress" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "GetAddress" && x.IsPrivate);
+
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { "123", true });
             Assert.NotNull(result);
@@ -288,51 +258,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             InitiateCommerceService(out type, out objType);
 
             var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate)
-                .First();
+                .First(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate);
+
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { request });
             Assert.NotNull(result);
 
         }
 
-
-        [Fact]
-        public void PopulateOrderDetails_Test()
-        {
-            //arrange
-            var objSource = new Models.Order.Internal.Source { ID = "708546" };
-            List<Item> lstItems = new List<Item>();
-
-            var testLine = new Item
-            {
-                Quantity = 1,
-                UnitPrice = (decimal?)12.08,
-                Tax = (decimal?)12.08,
-                Freight = (decimal?)12.08,
-                TotalPrice = (decimal?)12.08,
-            };
-
-            lstItems.Add(testLine);
-
-            Models.Order.Internal.OrderModel request = new Models.Order.Internal.OrderModel
-            {
-                Source = objSource,
-                Items = lstItems
-            };
-
-            Type type;
-            object objType;
-            InitiateCommerceService(out type, out objType);
-
-            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .Where(x => x.Name == "PopulateOrderDetails" && x.IsPrivate)
-                .First();
-            //Act
-            var result = imageProductModel.Invoke(objType, new object[] { request });
-            Assert.NotNull(result);
-        }
-
+   
         private void InitiateCommerceService(out Type type, out object objType)
         {
             type = typeof(CommerceService);

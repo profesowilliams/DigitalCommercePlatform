@@ -16,18 +16,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     public interface ICommerceService
     {
         Task<QuoteModel> GetQuote(GetQuote.Request request);
-        Task<string> GetQuotes(string Id);
-        Task<OrderModel> GetOrderByIdAsync(string id);
-        Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters);
+        Task<string> GetQuotes(string Id);        
         Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request);
         Task<FindResponse<IEnumerable<QuoteModel>>> FindQuotes(FindModel query);
         Task<PricingConditionsModel> GetPricingConditions(GetPricingConditions.Request request);
         Task<CreateModelResponse> CreateQuoteFrom(CreateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request);
-        Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);       
+        Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);
         Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request);
-        Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);
-
     }
 }

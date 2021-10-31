@@ -2,6 +2,8 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
@@ -21,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     [ExcludeFromCodeCoverage]
     public class OrderService : IOrderService
     {
+        private readonly IHelperService _helperService;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<OrderService> _logger;
@@ -33,7 +36,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             ILogger<OrderService> logger,
             IAppSettings appSettings,
             IUIContext uiContext,
-            IMapper mapper)
+            IMapper mapper,
+            IHelperService helperService
+            )
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
@@ -41,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             _uiContext = uiContext;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _appSettings = appSettings;
+            _helperService = helperService;
         }
 
         public async Task<byte[]> GetPdfInvoiceAsync(string invoiceId)
@@ -80,6 +86,134 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var url = _appOrderServiceUrl.AppendPathSegment("invoice/find").SetQueryParams(new { orderId });
             var listInvoices = await _middleTierHttpClient.GetAsync<InvoiceFindResponse>(url);
             return listInvoices?.Data?.ToList();
+        }
+
+        public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
+        {
+            string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
+            var url = _appOrderServiceUrl.SetQueryParams(new { id });
+            var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<OrderModel>>(url);
+
+            OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Move to order Service
+        /// </summary>
+        /// <param name="orderParameters"></param>
+        /// <returns></returns>
+        public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
+        {
+            OrdersContainer findOrdersDto = await FindOrder(orderParameters);
+
+            foreach (var item in findOrdersDto.Data)
+            {
+
+                item.OrderMethod = await _helperService.GetOrderType(string.IsNullOrWhiteSpace(item.PoType) ? "#" : item.PoType.ToUpper(), string.IsNullOrWhiteSpace(item.DocType) ? "#" : item.DocType.ToUpper());
+
+                var invoiceDetails = item.Items?.SelectMany(i => i.Invoices)
+               .Select(i => new InvoiceModel { ID = i.ID }).ToList();
+                await FindInvoices(item, invoiceDetails);
+            }
+            return findOrdersDto;
+        }
+
+        private async Task FindInvoices(OrderModel item, List<InvoiceModel> invoiceDetails)
+        {
+            var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
+
+            if (invoices.Any())
+            {
+                foreach (var invoice in invoices)
+                {
+                    var _appreturn = _appSettings.GetSetting("App.Return.Url");
+                    _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
+
+                    var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
+                    if (findReturnsDTO.Data.Any())
+                    {
+                        item.Return = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Move to order service
+        /// </summary>
+        /// <param name="orderParameters"></param>
+        /// <returns></returns>
+        private async Task<OrdersContainer> FindOrder(SearchCriteria orderParameters)
+        {
+            var origin = string.IsNullOrWhiteSpace(orderParameters.Origin) ? null : orderParameters.Origin.ToLower();
+
+            if (origin == "web")
+                orderParameters.Origin = "Web";
+            else if (origin == "b2b")
+                orderParameters.Origin = "B2B";
+            else if (origin == "pe")
+                orderParameters.Origin = "Manual";
+            else
+                orderParameters.Origin = null;
+
+            string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
+            var url = _appOrderServiceUrl.AppendPathSegment("Find")
+                        .SetQueryParams(new
+                        {
+                            orderParameters.Id,
+                            orderParameters.CustomerPO,
+                            orderParameters.Manufacturer,
+                            orderParameters.CreatedFrom,
+                            orderParameters.CreatedTo,
+                            orderParameters.Status,
+                            Sort = orderParameters.SortBy,
+                            SortAscending = orderParameters.SortAscending.ToString(),
+                            orderParameters.PageSize,
+                            Page = orderParameters.PageNumber,
+                            WithPaginationInfo = orderParameters.WithPaginationInfo,
+                            Details = true,
+                            orderParameters.Origin,
+                            orderParameters.ConfirmationNumber,
+                            orderParameters.InvoiceId
+                        });
+
+            var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
+            return findOrdersDto;
+        }
+
+        private Models.Order.Internal.OrderModel PopulateOrderDetails(OrderModel order)
+        {
+            if (order != null)
+            {
+                order.Tax = CalculateTax(order);
+                order.Freight = CalculateFreight(order);
+                order.OtherFees = CalculateOtherFees(order);
+                order.SubTotal = order.TotalCharge ?? 0;
+                decimal? subtotal = order.SubTotal ?? 0;
+
+                order.Total = subtotal + order.OtherFees + order.Freight + order.Tax;
+            }
+            return order;
+        }
+
+        private decimal? CalculateFreight(OrderModel order)
+        {
+            decimal? freight = order.Items.Where(t => t.Freight.HasValue).Sum(t => t.Freight.Value);  
+            return freight ?? 0;
+        }
+
+        private decimal? CalculateOtherFees(OrderModel order)
+        {
+            decimal? otherFees = order.Items.Where(t => t.OtherFees.HasValue).Sum(t => t.Freight.Value);
+            return otherFees ?? 0;
+        }
+        private decimal? CalculateTax(OrderModel order)
+        {
+            decimal? tax =  order.Items.Where(t => t.Tax.HasValue).Sum(t => t.Tax.Value);
+            return tax ?? 0;
         }
     }
 }

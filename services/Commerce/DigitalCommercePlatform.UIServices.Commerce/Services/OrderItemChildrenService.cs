@@ -10,10 +10,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     public class OrderItemChildrenService : IOrderItemChildrenService
     {
         private readonly ISubstringService _substringService;
-
-        public OrderItemChildrenService(ISubstringService substringService)
+        private readonly IHelperService _helperQueryService;
+        public OrderItemChildrenService(ISubstringService substringService, IHelperService helperQueryService)
         {
             _substringService = substringService ?? throw new ArgumentNullException(nameof(substringService));
+            _helperQueryService = helperQueryService ?? throw new ArgumentNullException(nameof(helperQueryService));
         }
         public List<Line> GetOrderLinesWithChildren(GetOrder.Response orderDetails)
         {
@@ -22,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return new List<Line>();
             }
 
-            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o=>o.Id);
+            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.Id);
 
             var lines = new List<Line>();
             double displayNumber = 0;
@@ -86,7 +87,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 });
 
             }
-
+            lines = _helperQueryService.PopulateLinesFor(lines, string.Empty).Result;
             return lines;
         }
     }

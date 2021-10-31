@@ -9,5 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     {
         Task<byte[]> GetPdfInvoiceAsync(string invoiceId);
         Task<List<InvoiceModel>> GetInvoicesFromOrderIdAsync(string orderId);
+        Task<OrderModel> GetOrderByIdAsync(string id);
+        Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters);
     }
 }

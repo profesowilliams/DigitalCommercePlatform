@@ -16,12 +16,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
     {
         private readonly Mock<ISortingService> _mockSortingService;
         private readonly Mock<IStatusMappingService> _mockStatusMappingService;
-        private readonly Mock<ICommerceService> _mockCommerceService;
+        private readonly Mock<IOrderService> _mockOrderService;
         private readonly Mock<IMapper> _mapper;
 
         public GetOrdersTest()
         {
-            _mockCommerceService = new();
+            _mockOrderService = new();
             _mockSortingService = new();
             _mockStatusMappingService = new();
             _mapper = new Mock<IMapper>();
@@ -30,12 +30,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
         [AutoDomainData]
         public async Task GetOrdersDetails(OrdersContainer expected)
         {
-            _mockCommerceService.Setup(x => x.GetOrdersAsync(
+            _mockOrderService.Setup(x => x.GetOrdersAsync(
                       It.IsAny<SearchCriteria>()
                       ))
                   .ReturnsAsync(expected);
 
-            var handler = new GetOrders.GetOrderHandler(_mockCommerceService.Object, _mockSortingService.Object, _mockStatusMappingService.Object, _mapper.Object);
+            var handler = new GetOrders.GetOrderHandler(_mockOrderService.Object, _mockSortingService.Object, _mockStatusMappingService.Object, _mapper.Object);
             var PagingDTO = new GetOrders.PagingDto("","",1,1,true);
             var FilteringDTO = new GetOrders.FilteringDto("","","",null,null,"","","","");
             var request = new GetOrders.Request(FilteringDTO,PagingDTO);

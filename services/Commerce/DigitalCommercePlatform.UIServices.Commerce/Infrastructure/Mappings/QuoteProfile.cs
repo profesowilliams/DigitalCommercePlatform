@@ -26,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Description, opt => opt.MapFrom<ItemDescriptionResolver>())
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ItemManufacturerResolver>())
                 .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<ItemTDPartNumberResolver>())
-                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<ItemMFRPartNumberResolver>())
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<ItemMfrPartNumberResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.UnitListPrice, opt => opt.MapFrom(src => src.UnitListPrice))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
@@ -212,7 +212,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     }
 
     [ExcludeFromCodeCoverage]
-    public class ItemMFRPartNumberResolver : IValueResolver<ItemModel, Line, string>
+    public class ItemMfrPartNumberResolver : IValueResolver<ItemModel, Line, string>
     {
         public string Resolve(ItemModel source, Line destination, string destMember, ResolutionContext context)
         {

@@ -43,12 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly ICartService _cartService;
         private readonly IUIContext _uiContext;
         private readonly IAppSettings _appSettings;
-        private string _appOrderServiceUrl;
-        private string _appQuoteServiceUrl;
-        private string _customerServiceURL;
-        private string _appConfigServiceURL;
-        private string _appProductServiceURL;
-        private static readonly Random getrandom = new Random();
+        private static readonly Random getrandom = new ();
         private readonly IMapper _mapper;
 
         public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
@@ -68,136 +63,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             _appSettings = appSettings;
         }
 
-        public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
-        {
-            _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
-            var url = _appOrderServiceUrl.SetQueryParams(new { id });
-            var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<Models.Order.Internal.OrderModel>>(url);
-
-            Models.Order.Internal.OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
-            return result;
-        }
-
-        private Models.Order.Internal.OrderModel PopulateOrderDetails(Models.Order.Internal.OrderModel order)
-        {
-            order.Tax = order.Items.Where(t => t.Tax.HasValue).Sum(t => t.Tax.Value);
-            order.Freight = order.Items.Where(t => t.Freight.HasValue).Sum(t => t.Freight.Value);
-            order.OtherFees = order.Items.Where(t => t.OtherFees.HasValue).Sum(t => t.OtherFees.Value);
-            order.SubTotal = order.TotalCharge == null ? 0 : order.TotalCharge;
-            decimal? subtotal = order.SubTotal == null ? 0 : order.SubTotal;
-            decimal? Other = order.OtherFees == null ? 0 : order.OtherFees;
-            decimal? Freight = order.Freight == null ? 0 : order.Freight;
-            decimal? Tax = +order.Tax == null ? 0 : order.Tax;
-
-            order.Total = subtotal + Other + Freight + Tax;
-
-            return order;
-        }
-
-        public async Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName)
-        {
-            _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
-            string productUrl = "";
-            string productId = "";
-            string manufacturer = "";
-            string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
-            string[] arrProductIds = new string[items.Count];
-            string[] arrManufacturer = new string[items.Count];
-            ProductData productDetails;
-
-            //convert for-each statment to linq statment after App-Service is ready.
-            int i = 0;
-            foreach (var item in items)
-            {
-                productId = item?.VendorPartNo ?? item?.MFRNumber?? ""; // Fix this once app service is ready
-                if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
-                {
-
-                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                    item.Manufacturer = item.Manufacturer ?? system;
-                    manufacturer = item.Manufacturer ?? system;
-                    arrManufacturer[i] = manufacturer;
-                    arrProductIds[i] = productId;
-                    i++;
-                }
-            }
-
-            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
-            arrProductIds = arrProductIds.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
-            // call product app service
-            productUrl = _appProductServiceURL.AppendPathSegment("Find")
-             .SetQueryParams(new
-             {
-                 MfrPartNumber = arrProductIds,
-                 Details = true,
-                 SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg,//"0100"; Goran Needs to Fix this
-                 Manufacturer = arrManufacturer
-             });
-            
-            try
-            {
-                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
-                ProductsModel product;
-                foreach (var line in items)
-                {
-                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
-                    if (product != null && line != null)
-                    {
-                        line.ShortDescription = string.IsNullOrWhiteSpace(product.ShortDescription) ? line.ShortDescription : product.ShortDescription;
-                        line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
-                        line.TDNumber = product?.Source.ID;
-                        line.URLProductImage = GetImageUrlForProduct(product);
-                        line.Images = product.Images;
-                        line.Logos = product.Logos;
-                        line.MSRP = product?.Price?.UnpromotedPrice;
-                        line.MFRNumber = product?.ManufacturerPartNumber;
-                    }
-                    else
-                    {
-                        line.DisplayName = string.IsNullOrWhiteSpace(line?.Description) ? string.Empty : line?.Description;
-                        line.ShortDescription = line.DisplayName;
-                    }
-                }
-            }
-            catch (Exception ex )
-            {
-                _logger.LogError(ex, "Exception at getting product details : " + nameof(CommerceService));
-            }            
-
-            return items;
-        }
-
-        private string GetImageUrlForProduct(ProductsModel product)
-        {
-            if (product.Images != null && product.Images.Count > 0)
-            {
-                if (product?.Images?.Count == 1)
-                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
-                else if (product.Images.Where(a => a.Key == "75x75").Any())
-                    return product.Images.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
-                else
-                    return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
-            }
-            else if (product.Logos != null && product.Logos.Count > 0) {
-                if (product?.Logos?.Count == 1)
-                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
-                else if (product.Logos.Where(a => a.Key == "75x75").Any())
-                    return product.Logos.Where(a => a.Key == "75x75").FirstOrDefault().Value.FirstOrDefault().Url;
-                else
-                    return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
-            }
-        
-
-            return string.Empty;
-        }
-
         public async Task<QuoteModel> GetQuote(GetQuote.Request request)
         {
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
 
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
 
-            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);            
+            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
             return getQuoteResponse?.FirstOrDefault();
         }
 
@@ -206,69 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             throw new NotImplementedException();
         }
 
-        public async Task<OrdersContainer> GetOrdersAsync(SearchCriteria orderParameters)
-        {
-            var origin = string.IsNullOrWhiteSpace(orderParameters.Origin) ? null : orderParameters.Origin.ToLower();
-
-            if (origin == "web")
-                orderParameters.Origin = "Web";
-            else if (origin == "b2b")
-                orderParameters.Origin = "B2B";
-            else if (origin == "pe")
-                orderParameters.Origin = "Manual";
-            else
-                orderParameters.Origin = null;
-
-            _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
-            var url = _appOrderServiceUrl.AppendPathSegment("Find")
-                        .SetQueryParams(new
-                        {
-                            orderParameters.Id,
-                            orderParameters.CustomerPO,
-                            orderParameters.Manufacturer,
-                            orderParameters.CreatedFrom,
-                            orderParameters.CreatedTo,
-                            orderParameters.Status,
-                            Sort = orderParameters.SortBy,
-                            SortAscending = orderParameters.SortAscending.ToString(),
-                            orderParameters.PageSize,
-                            Page = orderParameters.PageNumber,
-                            WithPaginationInfo = orderParameters.WithPaginationInfo,
-                            Details = true,
-                            orderParameters.Origin,
-                            orderParameters.ConfirmationNumber,
-                            orderParameters.InvoiceId
-                        });
-
-            var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
-
-            foreach (var item in findOrdersDto.Data)
-            {
-
-                item.OrderMethod = await _helperService.GetOrderType(string.IsNullOrWhiteSpace(item.PoType) ? "#" : item.PoType.ToUpper(), string.IsNullOrWhiteSpace(item.DocType) ? "#" : item.DocType.ToUpper());
-                var invoiceDetails = item.Items?.SelectMany(i => i.Invoices)
-               .Select(i => new InvoiceModel { ID = i.ID }).ToList();
-                var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
-
-                if (invoices.Any())
-                {
-                    foreach (var invoice in invoices)
-                    {
-                        var _appreturn = _appSettings.GetSetting("App.Return.Url");
-                        _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
-
-                        var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
-                        if (findReturnsDTO.Data.Any())
-                        {
-                            item.Return = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            return findOrdersDto;
-        }
-
+        
         public async Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request)
         {
             if (request.IsEstimateId)
@@ -289,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             try
             {
                 query.SortBy = _helperService.GetParameterName(query.SortBy);
-                _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+                string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
                 var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
                 //we need to fix this issue
                 quoteURL = quoteURL.ToString().Replace("=False", "=false");
@@ -349,8 +159,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
 
             //await CallCreateQuote(createQuoteRequest); // we need to call this method 
-           
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             CreateModelResponse response;
             try
@@ -397,7 +207,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 #if DEBUG
                 input.QuoteDetails.EndUser = input.QuoteDetails.EndUser != null ? input.QuoteDetails.EndUser : input.QuoteDetails.Reseller;
 #endif
-                if ( input.QuoteDetails.EndUser != null)
+                if (input.QuoteDetails.EndUser != null)
                 {
                     createModelFrom.EndUser = new EndUserModel
                     {
@@ -428,7 +238,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private void MapQuoteLinesForCreatingQuote(CreateQuoteModel createModelFrom, QuotePreviewModel input)
         {
-            if (input.QuoteDetails.Items == null) 
+            if (input.QuoteDetails.Items == null)
                 return;
 
             var lstItems = new List<ItemModel>();
@@ -436,18 +246,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 ItemModel requestItem = GetLinesforRequest(item);
                 lstItems.Add(requestItem);
-                
-                if (item.Children !=null)
+
+                if (item.Children != null)
                 {
                     foreach (var subline in item.Children)
                     {
                         ItemModel sublineItem = GetLinesforRequest(subline);
                         lstItems.Add(sublineItem);
-                    } 
+                    }
                 }
-                
+
             }
-            createModelFrom.Items = lstItems;            
+            createModelFrom.Items = lstItems;
         }
 
         private ItemModel GetLinesforRequest(Line item)
@@ -507,7 +317,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 request.CreateModelFrom.Items = new List<ItemModel>();
                 foreach (var cartLine in activeCart.Items)
                 {
-                    var item = new ItemModel();
+                    ItemModel item = new();
                     item.Id = cartLine.ItemId;
                     item.Product = new List<ProductModel> {
                         new ProductModel {
@@ -584,7 +394,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
         {
             // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var url = _appQuoteServiceUrl + "/Update";
             var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
             var response = new UpdateQuote.Response(result);
@@ -595,8 +405,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private async Task<QuotePreviewModel> CreateResponseUsingEstimateId(GetQuotePreviewDetails.Request request)
         {
-            _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
-            _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
+            string _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
+            string _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
 
             try
             {
@@ -612,13 +422,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<List<DetailedDto>>>(url);
-                var data = configurationFindResponse.Data;
 
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
 
-                MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview); 
-                quotePreview.Items = await PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
-                
+                MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
+                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
+
                 QuotePreviewModel response = new QuotePreviewModel
                 {
                     QuoteDetails = quotePreview
@@ -637,7 +446,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             if (configurationFindResponse.Data?.FirstOrDefault().EndUser != null)
             {
                 var objEndUser = configurationFindResponse.Data?.FirstOrDefault().EndUser;
-                Address endUser = new Address
+                Address endUser = new()
                 {
                     Line1 = objEndUser?.Address.Address1,
                     Line2 = objEndUser?.Address.Address2,
@@ -654,7 +463,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             if (configurationFindResponse.Data?.FirstOrDefault().Reseller != null)
             {
                 var objReseller = configurationFindResponse.Data?.FirstOrDefault().Reseller;
-                Address reseller = new Address
+                Address reseller = new()
                 {
                     Line1 = objReseller?.Address?.Address1,
                     Line2 = objReseller?.Address?.Address2,
@@ -715,7 +524,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
         {
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteFrom, Formatting.Indented));
             var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
@@ -725,7 +534,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private async Task<IEnumerable<AccountAddressDetails>> GetAddress(string criteria, bool ignoreSalesOrganization)
         {
             var customerId = _uiContext.User.Customers.FirstOrDefault();
-            _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
+            string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
             var response = await _middleTierHttpClient.GetAsync<IEnumerable<AccountAddressDetails>>(customerURL);
             if (response.Any())

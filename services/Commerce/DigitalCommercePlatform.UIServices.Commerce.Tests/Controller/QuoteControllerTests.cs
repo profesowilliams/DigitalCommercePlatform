@@ -55,10 +55,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
             var createModel = new QuotePreviewModel();
+           
             // Act
             var result = await controller.Create(createModel).ConfigureAwait(false);
+            
             // Assert
-            _mediator.Verify(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+             _mediator.Verify(x => x.Send(It.IsAny<CreateQuote.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Theory]
@@ -125,22 +127,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             Assert.False(validationResult.IsValid);
         }
 
-        //[Theory]
-        //[AutoDomainData]
-        //public async Task GetCartDetailsInQuote(ResponseBase<DetailsOfSavedCartsQuote.Response> expected)
-        //{
-        //    _mediator.Setup(x => x.Send(
-        //              It.IsAny<DetailsOfSavedCartsQuote.Request>(),
-        //              It.IsAny<CancellationToken>()))
-        //          .ReturnsAsync(expected);
-
-        //    var controller = GetController();
-
-        //    var result = await controller.GetCartDetailsInQuote("1234").ConfigureAwait(false);
-
-        //    result.Should().NotBeNull();
-        //}
-
         [Theory]
         [AutoDomainData]
         public async Task GetQuotePreview(ResponseBase<GetQuotePreviewDetails.Response> expected)
@@ -173,65 +159,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
-        //[Theory]
-        //[AutoDomainData]
-        //public async Task FindQuoteDetails(ResponseBase<GetQuotesForGrid.Response> expected)
-        //{
-        //    _mediator.Setup(x => x.Send(
-        //               It.IsAny<GetQuotesForGrid.Request>(),
-        //               It.IsAny<CancellationToken>()))
-        //           .ReturnsAsync(expected);
-
-        //    var detailsInput = new FindModel()
-        //    {
-        //     Id = "123",
-        //     CustomerName=  "123",
-        //     CustomerNumber="123",
-        //     Active = "123",
-        //     CreatedBy = "123",
-        //     SalesTeamId = "123",
-        //     SalesTeamName = "123",
-        //     SalesAreaName = "123",
-        //     SuperSalesAreaName = "123",
-        //     QuoteType = "123",
-        //     Manufacturer = "123",
-        //     OrderId = "123",
-        //     Material = "123",
-        //     ManufacturerPart = "123",
-        //     CustomerPart = "123",
-        //     ShipToName = "123",
-        //     EndUserName = "123",
-        //     CustomerPO = "123",
-        //     EndUserPO = "123",
-        //     RevenueMaxThreshold =101,
-        //     RevenueMinThreshold = 101,
-        //     TDUAN = "123",
-        //     VendorAgreement = "123",
-        //     WorkflowId = "123",
-        //     SalesOrg = "123",
-        //     AccountOwner = "123",
-        //     DirectorId = "123",
-        //     DirectorName = "123",
-        //     BusinessManagerId = "123",
-        //     BusinessManagerName = "123",
-        //     DivisionManagerId = "123",
-        //     DivisionManagerName = "123",
-        //     VendorSalesAssociate = "123",
-        //     VendorSalesRep = "123",
-        //     Description ="123",
-        //     SortBy ="123",
-        //     SortAscending =true,
-        //     Page  = 1,
-        //     PageSize  = 25,
-        //     WithPaginationInfo=true,
-        //     Details = true
-        //    };
-
-        //var controller = GetController();
-        //    var result = await controller.FindQuoteDetails(detailsInput).ConfigureAwait(false);
-
-        //    result.Should().NotBeNull();
-        //}
 
         [Theory]
         [AutoDomainData]

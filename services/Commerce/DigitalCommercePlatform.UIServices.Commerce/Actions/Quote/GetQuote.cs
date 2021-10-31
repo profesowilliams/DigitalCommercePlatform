@@ -37,18 +37,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly ICommerceService _commerceRepositoryServices;
+            private readonly IHelperService _helperQueryService;
+
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
             private readonly IQuoteItemChildrenService _quoteItemChildrenService;
             public Handler(ICommerceService commerceRepositoryServices, IMapper mapper,
                 ILogger<Handler> logger,
-                IQuoteItemChildrenService quoteItemChildrenService
+                IQuoteItemChildrenService quoteItemChildrenService,
+                IHelperService helperQueryService
                 )
             {
                 _commerceRepositoryServices = commerceRepositoryServices;
                 _mapper = mapper;
                 _logger = logger;
                 _quoteItemChildrenService = quoteItemChildrenService ?? throw new ArgumentNullException(nameof(quoteItemChildrenService));
+                _helperQueryService = helperQueryService ?? throw new ArgumentNullException(nameof(helperQueryService));
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -60,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     getQuoteResponse.Details = _mapper.Map<QuoteDetails>(productDetails);
                     if (getQuoteResponse.Details != null)
                     {
-                        getQuoteResponse.Details.Items = await _commerceRepositoryServices.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
+                        getQuoteResponse.Details.Items = await _helperQueryService.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
                         getQuoteResponse.Details.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(new QuotePreviewModel { QuoteDetails = new QuotePreview { Items = getQuoteResponse.Details.Items } });
                     }
                 }

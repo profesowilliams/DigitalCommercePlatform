@@ -112,15 +112,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
         {
             private readonly ISortingService _sortingService;
             private readonly IStatusMappingService _statusMappingService;
-            private readonly ICommerceService _commerceQueryService;
+            private readonly IOrderService _orderQueryService;
             private readonly IMapper _mapper;
 
-            public GetOrderHandler(ICommerceService commerceQueryService,
+            public GetOrderHandler(IOrderService orderQueryService,
                 ISortingService sortingService,
                 IStatusMappingService statusMappingService,
                 IMapper mapper)
             {
-                _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));
+                _orderQueryService = orderQueryService ?? throw new ArgumentNullException(nameof(orderQueryService));
                 _sortingService = sortingService ?? throw new ArgumentNullException(nameof(sortingService));
                 _statusMappingService = statusMappingService ?? throw new ArgumentNullException(nameof(statusMappingService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -150,7 +150,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     InvoiceId = request.InvoiceId,
                 };
 
-                var orders = await _commerceQueryService.GetOrdersAsync(orderParameters);
+                var orders = await _orderQueryService.GetOrdersAsync(orderParameters);
                 var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Data);
 
                 var orderResponse = new Response

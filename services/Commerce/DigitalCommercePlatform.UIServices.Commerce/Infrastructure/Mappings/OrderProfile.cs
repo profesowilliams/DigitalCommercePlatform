@@ -169,7 +169,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public List<Vendor> Resolve(OrderModel source, RecentOrdersModel destination, List<Vendor> destMember, ResolutionContext context)
         {
-            var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer != null);
+            //var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer != null);
             var vendorDetails = source.Items.SelectMany(i => i.Product).Where(i => i.Manufacturer != null).GroupBy(i => i.Manufacturer)
               .Select(i => new Vendor
               {
@@ -223,7 +223,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public List<TrackingDetails> Resolve(Item source, Line destination, List<TrackingDetails> destMember, ResolutionContext context)
         {
             var _objShipment = new ShipmentUtility();
-            var _objTrackingQuery = new TrackingQuery();
+            //var _objTrackingQuery = new TrackingQuery();
 
             var trackingDetails = source?.Shipments.Select(i => new TrackingDetails
             {
@@ -270,7 +270,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public List<TrackingDetails> Resolve(OrderModel source, RecentOrdersModel destination, List<TrackingDetails> destMember, ResolutionContext context)
         {
             var _objShipment = new ShipmentUtility();
-            var _objTrackingQuery = new TrackingQuery();
+            //var _objTrackingQuery = new TrackingQuery();
 
             var trackingDetails = source?.Items?.SelectMany(i => i.Shipments).Select(i => new TrackingDetails
             {

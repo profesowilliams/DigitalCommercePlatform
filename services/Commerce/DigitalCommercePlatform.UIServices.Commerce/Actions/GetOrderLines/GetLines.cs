@@ -33,19 +33,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderLines
 
         public class GetOrderLinesHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
-            private readonly ICommerceService _commerceQueryService;
+            private readonly IOrderService _orderQueryService;
             private readonly IMapper _mapper;
 
-            public GetOrderLinesHandler(ICommerceService commerceQueryService,
+            public GetOrderLinesHandler(IOrderService orderQueryService,
                 IMapper mapper)
             {
-                _commerceQueryService = commerceQueryService ?? throw new ArgumentNullException(nameof(commerceQueryService));
+                _orderQueryService = orderQueryService ?? throw new ArgumentNullException(nameof(orderQueryService));
                 _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var order = await _commerceQueryService.GetOrderByIdAsync(request.Id);
+                var order = await _orderQueryService.GetOrderByIdAsync(request.Id);
                 Response orderLinesResponse;
                 if (order == null)
                 {

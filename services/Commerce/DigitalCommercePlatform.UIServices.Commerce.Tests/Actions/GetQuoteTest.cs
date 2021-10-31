@@ -18,6 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
 {
     public class GetQuoteTest
     {
+        private readonly Mock<IHelperService> _mockHelperService;
         private readonly Mock<ICommerceService> _mockCommerceService;
         private readonly Mock<IMapper> _mapper;
         private readonly Mock<ILogger<GetQuote.Handler>> _logger;
@@ -29,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
             _mockquoteItemChildrenService = new();
             _mapper = new Mock<IMapper>();
             _logger = new Mock<ILogger<GetQuote.Handler>>();
+            _mockHelperService = new();
         }
 
         public IReadOnlyCollection<string> Id { get; private set; }
@@ -42,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
                       ))
                   .ReturnsAsync(expected);
 
-            var handler = new GetQuote.Handler(_mockCommerceService.Object, _mapper.Object,_logger.Object,_mockquoteItemChildrenService.Object);
+            var handler = new GetQuote.Handler(_mockCommerceService.Object, _mapper.Object,_logger.Object,_mockquoteItemChildrenService.Object, _mockHelperService.Object);
             var request = new GetQuote.Request(Id,Details);
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
             result.Should().NotBeNull();

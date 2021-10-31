@@ -216,8 +216,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
             var controller = GetController();
+            
             // Act
             var result = await controller.DownloadInvoice("123456", null, false).ConfigureAwait(false);
+            
             // Assert
             _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }

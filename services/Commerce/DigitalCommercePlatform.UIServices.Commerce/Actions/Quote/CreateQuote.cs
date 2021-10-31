@@ -1,13 +1,9 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.Services.UI.ExceptionHandling;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
