@@ -113,8 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             string originalEstimateId = string.Empty;
             string estimateDealId = string.Empty;
             string quickQuoteDealId = quoteDetails.SPAId ?? string.Empty;
-            bool isHPEQuote = true;
-            var hpeQuoteId = string.Empty;
+            
             bool isAnnuityPresent = false;
             Regex rx = new("/[A-Za-z]{2}/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -129,15 +128,24 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             PullInDataForQuickQuote(quoteDetails, ref originalEstimateId, ref quickQuoteDealId);
 
-            if (!string.IsNullOrEmpty(estimateDealId) && estimateDealId.Length == 0 && quoteDetails.VendorReference != null
-                && quoteDetails.VendorReference.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
+            if (!string.IsNullOrEmpty(estimateDealId)
+                && estimateDealId.Length == 0
+                && quoteDetails.VendorReference != null
+                && quoteDetails.VendorReference.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase))
+                )
+            {
                 estimateDealId = quoteDetails.VendorReference
-                    .Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
+                    .Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase))
+                    .FirstOrDefault().Value;
+            }
 
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 1].Value = $"Quote#: {quoteDetails.Id}";
             if (DateTime.TryParse(quoteDetails.Created, out DateTime created))
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 5].Value = $"Date: {created.ToShortDateString()}";
 
+            bool isHPEQuote = quoteDetails.Attributes != null 
+                && quoteDetails.Attributes.Any(a => a.Name.Equals("VENDOR") && a.Value.Equals("HP"));
+            var hpeQuoteId = string.Empty;
             if (isHPEQuote)
             {
                 hpeQuoteId = quoteDetails.VendorReference?
@@ -155,7 +163,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             }
             else
             {
-
                 if (quoteDetails.VendorReference?.Count > 0 && rx.Match(originalEstimateId).Length > 0 && Convert.ToBoolean(quoteDetails.VendorReference.Where(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value))
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Estimate Id:";
                 else
@@ -165,6 +172,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 7].Style.Font.Size = 11;
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 7].Style.Font.Name = Constants.DefaultXlsFontName;
             }
+
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 11].Value = $"Notes: {quoteDetails.Notes}";
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 2].Value = quoteDetails.SPAId;
             if (quickQuoteDealId.Length > 0 && rx.Match(originalEstimateId).Length == 0

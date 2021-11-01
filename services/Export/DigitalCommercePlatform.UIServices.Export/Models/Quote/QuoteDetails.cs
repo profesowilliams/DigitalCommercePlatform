@@ -12,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public Address EndUser { get; set; }
         public Address Reseller { get; set; }
         public List<VendorReferenceModel> VendorReference { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
         public string Notes { get; set; }
         public List<Line> Items { get; set; }
         public string Id { get; set; }
