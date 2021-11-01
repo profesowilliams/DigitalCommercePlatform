@@ -3,7 +3,7 @@ import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
-import TrackOrderModal from "../TrackOrderModal/TrackOrderModal";
+import TrackOrderModal from "../../OrdersGrid/TrackOrderModal/TrackOrderModal";
 import useGridFiltering from "../../../hooks/useGridFiltering";
 import OrderDetailsSearch from "../OrderDetailsGridSearch/OrderDetailsGridSearch";
 import GridSearchCriteria from "../../Grid/GridSearchCriteria";
@@ -89,8 +89,8 @@ function ProductLinesGrid({
   }
 
   function getDateTransformed(dateUTC) {
-    const formatedDate = new Date(dateUTC).toLocaleDateString();
-    return formatedDate;
+    const formattedDate = new Date(dateUTC).toLocaleDateString();
+    return formattedDate;
   }
 
   function getShipDateFromTracking(trackingObject)
@@ -289,10 +289,10 @@ function ProductLinesGrid({
               onClick={() => {
                 invokeModal({
                   content: (
-                      <TrackOrderModal data={data}></TrackOrderModal>
+                      <TrackOrderModal data={data} trackingConfig={gridProps.trackingConfig}></TrackOrderModal>
                   ),
                   properties: {
-                    title: `Track My Order `,
+                    title: gridProps.trackingConfig?.modalTitle,
                   }
                 });
               }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>

@@ -12,9 +12,37 @@ use(function () {
 	var vendorDropdownData = {};
 	var methodDropdownData = {};
     var resourceResolver = resource.getResourceResolver();
- var invoicesModalData = {};
+    var invoicesModalData = {};
+    var trackingConfig = {};
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
+    var trackingConfigTrackingLogos = resourceResolver.getResource(currentNode.getPath() + "/trackingIcons");
+
+    function populateTrackingConfigJson(trackingConfigTrackingLogos)
+    {
+        var trackingJson = {};
+        var trackingIconArray = [];
+
+        if (trackingConfigTrackingLogos !== null) {
+            var childrenList = trackingConfigTrackingLogos.getChildren();
+
+            for (var [key, res] in Iterator(childrenList)) {
+                var carrier = res.properties["carrier"];
+                var logoPath = res.properties["logoPath"];
+                var itemData = {};
+                itemData.carrier = carrier;
+                itemData.logoPath = logoPath;
+                trackingIconArray.push(itemData);
+            }
+        }
+
+        trackingJson.trackingIcons = trackingIconArray;
+        trackingJson.modalTitle = properties["modalTitle"];
+        trackingJson.multipleOrderInformation = properties["multipleOrderInformation"];
+
+        return trackingJson;
+
+    }
 
     if (node !== null) {
         var childrenList = node.getChildren();
@@ -241,12 +269,12 @@ use(function () {
     if (properties && properties["toLabel"]) {
                 searchCriteriaData.toLabel = properties["toLabel"];
     }
+
     if (properties && properties["datePlaceholder"]) {
                 searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
     }
 
-
-
+    jsonObject.trackingConfig = populateTrackingConfigJson(trackingConfigTrackingLogos);
 
     return {
         configJson: JSON.stringify(jsonObject)

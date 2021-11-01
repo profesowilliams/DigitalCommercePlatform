@@ -287,6 +287,64 @@
                                     </column>
                                 </items>
                             </labelList>
+                            <trackingInfo
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Tracking Info Configuration"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <carrierInfo
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldLabel="Click 'Add' to add Carrier key and logo paths"
+                                                    fieldDescription="Click 'Add' to add Carrier key and logo paths">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./trackingIcons">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <carrierKey
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldDescription="Carrier Logo Key"
+                                                                        fieldLabel="Carrier Key"
+                                                                        name="./carrier"/>
+                                                                <logoPath
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                        fieldDescription="Carrier Logo Path"
+                                                                        fieldLabel="Carrier Logo Path"
+                                                                        name="./logoPath"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </carrierInfo>
+                                            <modalTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Tracking Info Modal Title"
+                                                    fieldLabel="Tracking Info Modal Title"
+                                                    name="./modalTitle"/>
+                                            <multipleOrderInformation
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Description for Multiple Orders"
+                                                    fieldLabel="Description for Multiple Orders"
+                                                    name="./multipleOrderInformation"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </trackingInfo>
                             <searchCriteria
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Search Tab"

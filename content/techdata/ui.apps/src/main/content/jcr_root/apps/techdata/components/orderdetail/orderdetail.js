@@ -226,6 +226,36 @@ use(function () {
         productInfo["searchCriteria"] = searchCriteriaData;
     }
 
+    var trackingConfigTrackingLogos = resourceResolver.getResource(currentNode.getPath() + "/trackingIcons");
+
+    function populateTrackingConfigJson(trackingConfigTrackingLogos)
+    {
+        var trackingJson = {};
+        var trackingIconArray = [];
+
+        if (trackingConfigTrackingLogos !== null) {
+            var childrenList = trackingConfigTrackingLogos.getChildren();
+
+            for (var [key, res] in Iterator(childrenList)) {
+                var carrier = res.properties["carrier"];
+                var logoPath = res.properties["logoPath"];
+                var itemData = {};
+                itemData.carrier = carrier;
+                itemData.logoPath = logoPath;
+                trackingIconArray.push(itemData);
+            }
+        }
+
+        trackingJson.trackingIcons = trackingIconArray;
+        trackingJson.modalTitle = properties["modalTitle"];
+        trackingJson.multipleOrderInformation = properties["multipleOrderInformation"];
+
+        return trackingJson;
+
+    }
+
+    productInfo.trackingConfig = populateTrackingConfigJson(trackingConfigTrackingLogos);
+
     jsonObject["headerConfig"] = headerJsonObject;
     jsonObject["infoConfig"] = infoJsonObject;
     jsonObject["productLines"] = productInfo;

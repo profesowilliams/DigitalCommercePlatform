@@ -1,18 +1,19 @@
 
 ///track order details info modal content style///
 .cmp-track-my-order-modal {
-	max-width: rem(500px);
 	&__info {
 	  font-size: $font-size-small;
 	  margin-bottom: rem(20px);
 	  color: get-color("brand-text-gray");
 	}
 	&__line {
-	  display: grid;
+		min-width: rem(400px);
+	  display: flex;
+      align-items: center;
 	  grid-template-columns: 10% 25% 35% 30%;
 	  min-height: rem(53px);
 	  height: fit-content;
-	  align-items: flex-start;
+	  align-items: center;
 	  padding-top: rem(16px);
 	  border-top: 1px solid get-color("secondary-light-grey");
 	  text-align: left;
@@ -21,7 +22,7 @@
 	  & .value {
 		text-align: right;
 	  }
-	  & .ongoing {
+	  &__tracking-number {
 		text-decoration: underline;
 		color: get-color(brand-button-blue);
 		cursor: pointer;
@@ -34,33 +35,39 @@
 		//font-size: $font-size-custom-logo-large; // do not delete this size. it is for fontAwesome logo ones we get data
 		color: get-color(text-light-charcoal);
 		display: flex;
+		  padding: rem(10px);
+
+		  img {
+			  width: 100%;
+		  }
 	  }
 	  &__status {
 		text-align: right;
 	  }
-	}
-	& .cmp-show-more {
-	  &__label {
-		cursor: pointer;
-		& .icon {
-		  margin-left: rem(5px);
-		  color: get-color("td-primary-blue");
-		  & i:before {
-			display: inline-block;
-		  }
+		&__show-more {
+			&__label {
+				cursor: pointer;
+				&__icon {
+					margin-left: rem(5px);
+					color: get-color("td-primary-blue");
+					& i:before {
+						display: inline-block;
+					}
+				}
+				& .expanded {
+					& svg,
+					i:before {
+						transform: rotate(90deg);
+					}
+				}
+			}
+			&__content {
+				//margin-top: rem(10px);
+				//margin-bottom: rem(5px);
+				font-size: $font-size-xsmall;
+			}
 		}
-		& .expanded {
-		  & svg,
-		  i:before {
-			transform: rotate(90deg);
-		  }
-		}
-	  }
-	  &__content {
-		margin-top: rem(10px);
-		margin-bottom: rem(5px);
-		font-size: $font-size-xsmall;
-	  }
 	}
+
   }
   

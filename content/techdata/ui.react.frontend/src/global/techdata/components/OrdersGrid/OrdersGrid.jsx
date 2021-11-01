@@ -226,10 +226,10 @@ function OrdersGrid(props) {
                     onClick={() => {
                         invokeModal({
                             content: ( 
-                                <TrackOrderModal data={data}></TrackOrderModal>
+                                <TrackOrderModal data={data} trackingConfig={componentProp.trackingConfig}></TrackOrderModal>
                             ),
                             properties: {
-                                title: `Track My Order `,
+                                title: componentProp.trackingConfig?.modalTitle,
                             }
                         });
                     }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>

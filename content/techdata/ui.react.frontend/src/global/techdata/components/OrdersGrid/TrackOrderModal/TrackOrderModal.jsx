@@ -1,11 +1,14 @@
 import React from "react";
 import MyOrderTrackings from "./MyOrderTrackings";
 
-function TrackOrderModal({ data }) {
+function TrackOrderModal({ data, trackingConfig }) {
+  console.log("TrackOrderModal");
+  console.log(trackingConfig);
   return (
     <div>
       {data?.trackings?.map((tracking, index) => {
-        return <MyOrderTrackings key={index} tracking={tracking}></MyOrderTrackings>;
+        console.log(tracking);
+        return <MyOrderTrackings key={index} tracking={tracking} trackingIcons={trackingConfig.trackingIcons}></MyOrderTrackings>;
       })}
     </div>
   );

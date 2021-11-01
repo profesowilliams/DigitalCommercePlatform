@@ -2,14 +2,14 @@
     <div id=OrderDetails" data-observe-mutation>
         <div data-component="OrderDetails" data-cmp-type="react" className="cmp-td-order-details"
              data-config='{
-                "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order?details=true&id=I008137556",
-                "headerConfig":{
+              "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order?details=true&id=I008137556",
+              "headerConfig":{
                 "orderLabel":"Order Label",
                 "orderDateLabel":"Order Date Label",
                 "purchaseOrderLabel":"Purchase Order Label",
                 "exportCSVLabel":"Export to CSV Label",
                 "phoneNumberLabel":"(123)-456-7890"},
-                "infoConfig":{
+              "infoConfig":{
                 "orderStatusLabel":"Status Card Label",
                 "orderStatusItemsShipped":"All Items Shipped Message",
                 "orderStatusItemsOpen":"All Items Open Message",
@@ -28,59 +28,74 @@
                 "otherFeesLabel":"otherFeesLabel  Label","paymentTermsLabel":"paymentTermsLabel Label",
                 "paymentTotalLabel":"paymentTotalLabel Label","currencyLabel":"currencyLabel  Label"},
                 "productLines": {
-                    "noShipDateLabel": "No Ship Date",
-                    "searchCriteria": {
-                        "title" : "Filter Orders","searchButtonLabel": "Apply",
-                        "clearButtonLabel": "Clear All Filters",
-                        "inputPlaceholder": "Enter your search",
-                        "keywordDropdown" : {
-                            "label": "Keyword",
-                            "items": [
-                                {"key": "id", "value": "TD Order #"},
-                                {"key": "customerPO", "value": "Customer PO"}]
-                        },
-                    "searchbyDropdown": {
-                            "label": "SearchBy",
-                            "items": [
-                            { "key": "allLines", "value": "All Lines" },
-                            { "key": "contracts", "value": "Contracts" },
-                            { "key": "licenses", "value": "Licenses" }]
-                        }
+                    "trackingConfig" : {
+                        "trackingIcons" : [
+                            {
+                                "carrier": "FEDEX",
+                                "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/fedex.png/jcr:content/renditions/cq5dam.thumbnail.140.100.png"
+                            },
+                            {"carrier": "UPS", "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/ups.png"}
+                            ],
+                        "trackingStatus" : [
+                            {"key" : "pending", "value" : "Pending"},
+                            {"key" : "in transit", "value" : "In Transit"},
+                            {"key" : "completed", "value" : "Completed"}
+                            ],
+                        "modalTitle" : "Track My Order ...",
+                        "multipleOrderInformation" : "There are multiple shipments associated with this this Order."
                     },
-                    "label": "Line Item Details",
-                    "serialCellLabel":"view from config",
-                    "serialModal":"Serial Modal title from config",
-                    "serialCellNotFoundMessage":"n/a from config",
-                    "applyMarkupLabel": "Apply your markup to the line items below",
-                    "expandAllLabel": "Expand All","collapseAllLabel": "Collapse All",
-                    "startDateLabel": "Start Date",
-                    "autoRenewLabel": "Auto Renew",
-                    "durationLabel": "Duration",
-                    "billingLabel": "Billing",
-                    "yesLabel": "Yes",
-                    "noLabel": "No",
-                    "columnList": [
-                        {"columnLabel": "Line edited","columnKey": "displayLineNumber"},
-                        {"columnLabel": "Mfr No edit","columnKey": "mfrNumber"},
-                        {"columnLabel": "Ref No","columnKey": "tdNumber"},
-                        {"columnLabel": "Description","columnKey": "description"},
-                        {"columnLabel": "Display Name","columnKey": "displayName"},
-                        {"columnLabel": "Quantity","columnKey": "quantity"},
-                        {"columnLabel": "Unit Price","columnKey": "unitPrice"},
-                        {"columnLabel": "Total price (USD)","columnKey": "totalPrice"},
-                        {"columnLabel": "Status","columnKey": "status"},
-                        {"columnLabel": "Ship Date","columnKey": "shipDates"},
-                        {"columnLabel": "Serial No","columnKey": "serials"},
-                        {"columnLabel": "Invoice","columnKey": "invoice"},
-                        {"columnLabel": "Track","columnKey": "trackings"}
-                    ],
-                    "iconList": [
-                    {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
-                    {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
-                    {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
-                    {"iconKey":"Shipped", "iconValue": "fas fa-ban", "iconText": "Shipped" },
-                    {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}]
-                }
+                "noShipDateLabel": "No Ship Date",
+                "searchCriteria": {
+                  "title" : "Filter Orders","searchButtonLabel": "Apply",
+                  "clearButtonLabel": "Clear All Filters",
+                  "inputPlaceholder": "Enter your search",
+                  "keywordDropdown" : {
+                    "label": "Keyword",
+                    "items": [
+                      {"key": "id", "value": "TD Order #"},
+                      {"key": "customerPO", "value": "Customer PO"}]
+                  },
+                  "searchbyDropdown": {
+                    "label": "SearchBy",
+                    "items": [
+                      { "key": "allLines", "value": "All Lines++" },
+                      { "key": "contracts", "value": "Contracts" },
+                      { "key": "licenses", "value": "Licenses" }]
+                  }
+                },
+                "iconList": [
+                {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
+                {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
+                {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
+                {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
+                {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}],
+                "label": "Line Item Details",
+                "serialCellLabel":"view from config",
+                "serialModal":"Serial Modal title from config",
+                "serialCellNotFoundMessage":"n/a from config",
+                "applyMarkupLabel": "Apply your markup to the line items below",
+                "expandAllLabel": "Expand All","collapseAllLabel": "Collapse All",
+                "startDateLabel": "Start Date",
+                "autoRenewLabel": "Auto Renew",
+                "durationLabel": "Duration",
+                "billingLabel": "Billing",
+                "yesLabel": "Yes",
+                "noLabel": "No",
+                "columnList": [
+                  {"columnLabel": "Line edited","columnKey": "displayLineNumber"},
+                  {"columnLabel": "Mfr No edit","columnKey": "mfrNumber"},
+                  {"columnLabel": "Ref No","columnKey": "tdNumber"},
+                  {"columnLabel": "Description","columnKey": "displayName"},
+                  {"columnLabel": "Quantity","columnKey": "quantity"},
+                  {"columnLabel": "Unit Price","columnKey": "unitPrice"},
+                  {"columnLabel": "Total price (USD)","columnKey": "totalPrice"},
+                  {"columnLabel": "Status","columnKey": "status"},
+                  {"columnLabel": "Ship Date","columnKey": "trackings"},
+                  {"columnLabel": "Serial No","columnKey": "serials"},
+                  {"columnLabel": "Invoice","columnKey": "invoice"},
+                  {"columnLabel": "Track","columnKey": "trackings"}
+                ]
+              }
             }'></div>
     </div>
 </div>
