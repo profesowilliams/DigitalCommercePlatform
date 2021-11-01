@@ -14,14 +14,20 @@ const OrderDetails = ({ componentProp }) => {
       uiServiceEndPoint,
       productLines,
       whiteLabel,
-      iconList,
       searchCriteria,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
+  const [iconList, setIconList] = useState([]);
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?details=true&id=${id}`);
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
+  useEffect(() => {
+    if (iconList.length === 0) {
+      productLines?.iconList && setIconList(productLines.iconList);
+    }
+  }, [productLines, iconList]);
+
   useEffect(() => {
     response?.content && setOrderDetails(response.content);
     response?.content.componentPropGrid && setComponentPropGrid(response.content.componentPropGrid);
