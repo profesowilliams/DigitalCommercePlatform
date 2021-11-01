@@ -279,7 +279,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private string ProducUrlUsingLogo(ProductsModel product)
         {
-            if (product.Images != null && product.Images.Count > 0)
+            if (product.Logos != null && product.Logos.Count > 0)
             {
                 if (product?.Logos?.Count == 1)
                     return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
@@ -294,7 +294,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private string ProductUrlUsingImages(ProductsModel product)
         {
-            if (product.Logos != null && product.Logos.Count > 0)
+            if ( product.Images != null && product.Images.Count > 0)
             {
                 if (product?.Images?.Count == 1)
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;
