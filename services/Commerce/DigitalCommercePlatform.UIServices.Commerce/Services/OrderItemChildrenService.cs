@@ -33,12 +33,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 displayNumber = displayNumber + 1.0;
                 item.DisplayLineNumber = displayNumber.ToString();
                 var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                var sublineTracking = GetSubLineTracking(subLines ?? new List<Line>());
+                // If there are no tracking info at the parent but there are some on the children, create an empty list to add to
+                if (sublineTracking.Any() && item.Trackings == null)
+                {
+                    item.Trackings = new List<Models.Order.TrackingDetails>();
+                }
+                item.Trackings?.AddRange(sublineTracking);
+
                 foreach (var child in subLines)
                 {
                     displayChildNumber = displayChildNumber + 0.1;
                     child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
                 }
-
 
                 lines.Add(new Line
                 {
@@ -89,6 +96,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             lines = _helperQueryService.PopulateLinesFor(lines, string.Empty).Result;
             return lines;
+        }
+
+        private List<Models.Order.TrackingDetails> GetSubLineTracking(List<Line> subLines)
+        {
+            var trackingDetails = new List<Models.Order.TrackingDetails>();
+            subLines.ForEach(line => {
+                if (line.Trackings != null)
+                {
+                    trackingDetails.AddRange(line.Trackings);
+                }
+            });
+            return trackingDetails;
         }
     }
 }
