@@ -346,7 +346,27 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                             createdTo = createdTo.ToString("yyyy-MM-dd")
                         });
 
-            var orderStatsDto = await _middleTierHttpClient.GetAsync<OrderStatsDto>(url);
+            OrderStatsDto orderStatsDto = new();
+            try
+            {
+                orderStatsDto = await _middleTierHttpClient.GetAsync<OrderStatsDto>(url);
+            }
+            catch (Exception ex)
+            {
+                if (((HttpException)ex).Code == HttpStatusCode.NotFound)
+                {
+                    var myOrderData = new MyOrdersDashboard
+                    {
+                        CurrencyCode = "USD",
+                        CurrencySymbol = "$",
+                        IsMonthly = request.IsMonthly,
+                        Total = new OrderData { Amount = 0, FormattedAmount = string.Format("{0:N2}", 0), Percentage = "100%" },
+                        Processed = new OrderData { Amount = 0, FormattedAmount = string.Format("{0:N2}", 0), Percentage = string.Empty },
+                        Shipped = new OrderData { Amount = 0, FormattedAmount = string.Format("{0:N2}", 0), Percentage = string.Empty }
+                    };
+                    return myOrderData;
+                }
+            }
 
             if (orderStatsDto?.Data == null)
             {
