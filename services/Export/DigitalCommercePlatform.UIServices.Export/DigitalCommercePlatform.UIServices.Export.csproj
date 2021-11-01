@@ -51,9 +51,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.57" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.57" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.57" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.2.74" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.74" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.74" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />

@@ -33,9 +33,9 @@
 
   <ItemGroup>
     <PackageReference Include="DigitalCommercePlatform.UIServices.Common.Cart" Version="2021.8.27.1" />
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.57" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.57" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.57" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.2.74" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.74" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.74" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
