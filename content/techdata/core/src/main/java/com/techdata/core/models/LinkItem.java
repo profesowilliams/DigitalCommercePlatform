@@ -53,6 +53,9 @@ public class LinkItem {
     private String linkTarget;
 
     @Inject
+    private String displayLocationPopUp;
+
+    @Inject
     private String enableSecondaryIcon;
 
     @Inject
