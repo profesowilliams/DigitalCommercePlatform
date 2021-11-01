@@ -39,10 +39,11 @@
 
     &__active-value {
         justify-content: space-between;
-        align-items: center;
+        align-items: start;
         display: flex;
         flex-wrap: wrap;
         width: auto;
+        flex-direction: column;
         margin: rem(30px) auto 0;
         &--price {
             font-size: $font-size-custom-xxlarge;

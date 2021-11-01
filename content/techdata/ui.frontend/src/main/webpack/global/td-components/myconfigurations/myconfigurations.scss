@@ -29,7 +29,7 @@
     &__sub-title {
       font-size: $font-size-xxsmall;
       color: get-color(text-light-charcoal);
-      padding: rem(0px) rem(40px) rem(0px) rem(5px);
+      padding: rem(0px) rem(12px) rem(0px) rem(5px);
       &-wrapp{
         padding-bottom: 10px;
       }
@@ -77,6 +77,7 @@
   }
   .cmp-dcp-widget-chart__legend{
     margin-top: rem(20px);
+    margin-left: 1rem;
   }
   .cmp-dcp-widget-chart__chart{
     position: relative;

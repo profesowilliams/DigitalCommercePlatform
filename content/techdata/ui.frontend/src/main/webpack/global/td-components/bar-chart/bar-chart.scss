@@ -50,7 +50,6 @@
 		flex-direction: column;
 		height: rem(15px);
 		margin-bottom: rem(2px);
-
 		div {
 			display: flex;
 			justify-content: flex-start;
@@ -87,27 +86,32 @@
 
 		&-color-1 {
 			border-right: rem(6px) solid get-color(brand-primary-text);
-			padding-left: rem(32px);
+			// padding-left: rem(32px);
+			padding-left: rem(16px);
 		}
 
 		&-color-2 {
 			border-right: rem(6px) solid get-color(brand-blue);
-			padding-left: rem(32px);
+			// padding-left: rem(32px);
+			padding-left: rem(16px);
 		}
 
 		&-color-3 {
 			border-right: rem(6px) solid get-color(tertiary-dark-blue);
-			padding-left: rem(32px);
+			// padding-left: rem(32px);
+			padding-left: rem(16px);
 		}
 
 		&-color-4 {
 			border-right: rem(6px) solid get-color(td-primary-blue);
-			padding-left: rem(32px);
+			// padding-left: rem(32px);
+			padding-left: rem(16px);
 		}
 
 		&-color-5 {
 			border-right: rem(6px) solid get-color(td-lightblue);
-			padding-left: rem(32px);
+			// padding-left: rem(32px);
+			padding-left: rem(16px);
 		}
 	}
 }

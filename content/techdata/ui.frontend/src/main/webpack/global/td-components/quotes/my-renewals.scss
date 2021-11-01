@@ -2,19 +2,27 @@
 @import '../../../site/variables';
 
 .cmp-renewals {
+	display: grid;
+	grid-template-columns: 70% 30%;
+	width: rem(445px);
+	position: relative;
 	font-family: 'Open Sans', sans-serif;
 	justify-content: space-between;
-	display: flex;
-	width: rem(445px);
-	height: rem(54px);
 	align-items: center;
 	margin: 0 15px;
+	&-info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		height: 100%;
+	}
 	&__title {
 		font-size: $font-size-small;
 		text-transform: uppercase;
 		color: get-color(text-mid-gray);
 		width: rem(115px);
 		align-self: baseline;
+		margin-bottom: rem(48px);
 	}
 	&__sub-title {
 		font-size: $font-size-xsmall;
@@ -27,9 +35,12 @@
 	}
 	&__all-days {
 		display: flex;
-		justify-content: space-between;
+		justify-content: start;
 	}
 	&__today {
+		position: absolute;
+		right: 0;
+		padding-right: rem(48px);
 		display: flex;
 		width: auto;
 		margin: auto;
@@ -37,6 +48,16 @@
 		&--number {
 			font-size: $font-size-custom-large;
 		}
+	}
+	&__chart {
+		& .chart-container {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	&__error {
+		margin-top: rem(28px);
 	}
 	&-color-1 {
 		border-left: rem(6px) solid get-color(brand-primary-text);
