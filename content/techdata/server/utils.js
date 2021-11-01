@@ -740,6 +740,7 @@ module.exports = {
                   "totalPriceFormatted": "0.00",
                   "msrp": null,
                   "invoice": null,
+                  "shipDates": ['10-6-2021', '10-8-2021'],
                   "invoices": [],
                   "trackings": [
                     {
@@ -809,6 +810,7 @@ module.exports = {
                           "price": 51433.08,
                           "created": "07-16-2021"              }
                       ],
+                      "shipDates": ['10-6-2021', '11-9-2021', '02-22-2021'],
                       "trackings": [
                         {
                           "orderNumber": null,
@@ -853,7 +855,7 @@ module.exports = {
                       "contractNo": null,
                       "contractType": null,
                       "license": null,
-                      "status": "Shipped",
+                      "status": "shipped",
                       "vendorStatus": null,
                       "customerPOLine": "000100",
                       "supplierQuoteRef": null,
@@ -883,7 +885,7 @@ module.exports = {
                   "contractNo": null,
                   "contractType": null,
                   "license": randomStr(10, abc),
-                  "status": "Undefined",
+                  "status": "open",
                   "vendorStatus": null,
                   "customerPOLine": null,
                   "supplierQuoteRef": null,
@@ -1019,7 +1021,7 @@ module.exports = {
                       "contractNo": null,
                       "contractType": null,
                       "license": null,
-                      "status": "Shipped",
+                      "status": "shipped",
                       "vendorStatus": null,
                       "customerPOLine": "000100",
                       "supplierQuoteRef": null,
@@ -1049,7 +1051,7 @@ module.exports = {
                   "contractNo": null,
                   "contractType": null,
                   "license": null,
-                  "status": "Undefined",
+                  "status": "cancelled",
                   "vendorStatus": null,
                   "customerPOLine": null,
                   "supplierQuoteRef": null,
@@ -1170,7 +1172,7 @@ module.exports = {
                       "contractNo": null,
                       "contractType": null,
                       "license": null,
-                      "status": "Shipped",
+                      "status": "shipped",
                       "vendorStatus": null,
                       "customerPOLine": "000100",
                       "supplierQuoteRef": null,
@@ -1200,7 +1202,7 @@ module.exports = {
                   "contractNo": null,
                   "contractType": null,
                   "license": randomStr(10, abc),
-                  "status": "Undefined",
+                  "status": "inProcess",
                   "vendorStatus": null,
                   "customerPOLine": null,
                   "supplierQuoteRef": null,
@@ -1253,7 +1255,7 @@ module.exports = {
                   "contractNo": null,
                   "contractType": null,
                   "license": null,
-                  "status": "Undefined",
+                  "status": "inProcess",
                   "vendorStatus": null,
                   "customerPOLine": null,
                   "supplierQuoteRef": null,
@@ -1271,7 +1273,7 @@ module.exports = {
               "blindPackaging": false,
               "shipComplete": false,
               "canBeExpedited": false,
-              "status": "Undefined"
+              "status": "inProcess"
             },
             "error": { "code": 0, "messages": [], "isError": false }
           }

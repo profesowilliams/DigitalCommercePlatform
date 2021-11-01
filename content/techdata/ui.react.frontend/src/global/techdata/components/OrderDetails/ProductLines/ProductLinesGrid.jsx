@@ -35,7 +35,7 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
-  
+  const NO_SHIP_DATE_LABEL = gridConfig?.noShipDateLabel ? gridConfig.noShipDateLabel : 'No Ship Date'
   const filteringExtension = useGridFiltering();  
   const columnsList = gridConfig.columnList;
   const columnsArray = gridConfig.columnList;
@@ -49,12 +49,11 @@ function ProductLinesGrid({
   const defaultIcons = [
     { iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
     { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
-    { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Opeeeen' },
+    { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
     { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
   ];
   const [flagData, setFlagData] = useState(false);
-
   function invokeModal(modal) {
     setModal(modal);
   }
@@ -96,9 +95,8 @@ function ProductLinesGrid({
 
   function getShipDateFromTracking(trackingObject)
   {
-    console.log("inside getShipDateFromTracking");
-    console.log(trackingObject);
-    return getDateTransformed(trackingObject.date)
+    const firstShipDateValue = trackingObject.shipDates !== undefined && trackingObject.shipDates.length > 0 ? trackingObject.shipDates[0] : '*';
+    return getDateTransformed(firstShipDateValue)
   }
 
   function getTrackingStatus(trackingArray) {
@@ -108,8 +106,8 @@ function ProductLinesGrid({
   //default column defs
   const columnDefs = [
     {
-      headerName: "Line Item",
-      field: "displayLineNumber",
+      headerName:  "Line Item",
+      field:  "displayLineNumber",
       sortable: false,
       expandable: true,
       rowClass: ({ node, data }) => {
@@ -125,7 +123,7 @@ function ProductLinesGrid({
             <ProductLinesChildGrid
                 columnDefiniton={columnDefsChildren}
                 data={data.children}
-                columns={gridConfig.columnList}
+                columns={columnsList}
             ></ProductLinesChildGrid>
           </section>
       )},
@@ -189,43 +187,63 @@ function ProductLinesGrid({
       headerName: "Total price (USD)",
       field: "totalPrice",
       sortable: false,
-    },
-    {
-      headerName: "Status",
-      field: "status",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            <span className='status'>
-                <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
-                <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
-            </span>
-        );
+      valueFormatter: (props) => {
+        return props.value.toLocaleString();
       },
     },
-    {
-      headerName: "Invoice",
-      field: "invoice",
-      sortable: false,
-      cellRenderer: (props) => {
-        return (
-            <span className='status'>
-              <a
-                  className='cmp-grid-url-underlined'
-                  href={props.value ? props.value : '#'}
-                  target="_blank">
-                <i className="fas fa-external-link-alt"></i>
-              </a>
-            </span>
-        );
-      },
-    },
-
   ];
 
   //copying arrays
+  /**@type {any[]} */
   const columnDefsChildren = JSON.parse(JSON.stringify(columnDefs));
+  
+  columnDefsChildren.push({
+    headerName: "Status",
+    field: "status",
+    sortable: false,
+    cellRenderer: (props) => {
+      return (
+          <span className='status'>
+              <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
+              <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
+          </span>
+      );
+    },
+  })
 
+  columnDefsChildren.push({
+    headerName: "Invoice",
+    field: "invoice",
+    sortable: false,
+    cellRenderer: (props) => {
+      return (
+          <span className='status'>
+            <a
+                className='cmp-grid-url-underlined'
+                href={props.value ? props.value : '#'}
+                target="_blank">
+              <i className="fas fa-external-link-alt"></i>
+            </a>
+          </span>
+      );
+    },
+  })
+
+  // nedd come from data-config
+  columnDefsChildren.push({
+    headerName: 'Ship Date',
+    field: 'shipDates',
+    sortable: false,
+    cellRenderer: ({ data }) => {
+      let date = getShipDateFromTracking(data);
+      if (date ==='Invalid Date'){
+        date = NO_SHIP_DATE_LABEL;
+      }
+      return (
+          <div>{date}</div>
+      );
+    },
+  });
   //Serials behave differently in parent grid and child grid
   columnDefsChildren.push(
       {
@@ -259,9 +277,9 @@ function ProductLinesGrid({
         },
       }
   );
-
+  
   //Tracking behaves differently between parent and child
-  columnDefsChildren.push(    {
+  columnDefsChildren.push({
     headerName: 'Track',
     field: 'trackings',
     sortable: false,
@@ -283,25 +301,67 @@ function ProductLinesGrid({
     },
   });
 
-  columnDefsChildren.push({
-    headerName: 'Ship Date',
-    field: 'trackings',
+  
+  
+  //Serials behave differently in parent grid and child grid
+  columnDefs.push({
+    headerName: "Status",
+    field: "status",
     sortable: false,
-    cellRenderer: ({ data }) => {
+    cellRenderer: (props) => {
       return (
-          <div>{getShipDateFromTracking(data)}</div>
+          <span className='status'>
+              <i className={`icon ${applyStatusIcon(props.value)?.iconValue}`}></i>
+              <div className='text'>{applyStatusIcon(props.value)?.iconText}</div>
+          </span>
       );
     },
-  });
+  })
+  columnDefs.push({
+    headerName: "Invoice",
+    field: "invoice",
+    sortable: false,
+    cellRenderer: (props) => {
+      return (
+          <span className='status'>
+            <a
+                className='cmp-grid-url-underlined'
+                href={props.value ? props.value : '#'}
+                target="_blank">
+              <i className="fas fa-external-link-alt"></i>
+            </a>
+          </span>
+      );
+    },
+  })
 
-  //Serials behave differently in parent grid and child grid
   columnDefs.push({
     headerName: "Serial",
     field: "serials",
     sortable: false,
-    cellRenderer: () => {
+    cellRenderer: (props) => {
       return (
-              <div></div>
+          props.value && props.value.length ? (
+              <div
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+                  onClick={() => {
+                    invokeModal({
+                      content: (
+                          <OrderDetailsSerialNumbers data={props.value}></OrderDetailsSerialNumbers>
+                      ),
+                      properties: {
+                        title: gridProps.serialModal ? gridProps.serialModal : "Serial Numbers",
+                      }
+                    });
+                  }}
+              >
+                {gridProps.serialCellLabel ? gridProps.serialCellLabel : "view"}
+              </div>
+          ) : (
+              <div>{gridProps.serialCellNotFoundMessage ? gridProps.serialCellNotFoundMessage : "n/a"}</div>
+          )
       );
     },
   });
@@ -311,21 +371,35 @@ function ProductLinesGrid({
     headerName: 'Track',
     field: 'trackings',
     sortable: false,
-    cellRenderer: () => {
+    cellRenderer: ({ node, api, setValue, data, value }) => {
       return (
-          <div></div>
+          <div
+              onClick={() => {
+                invokeModal({
+                  content: (
+                      <TrackOrderModal data={data}></TrackOrderModal>
+                  ),
+                  properties: {
+                    title: `Track My Order `,
+                  }
+                });
+              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
       );
-    },
+    }
   });
 
-  //Shipped Date behaves differently between parent and child
+  //Ship Date behaves differently between parent and child
   columnDefs.push( {
     headerName: "Ship Date",
-    field: "trackings",
+    field: "shipDates",
     sortable: false,
-    cellRenderer: () => {
+    cellRenderer: ({ data }) => {
+      let date = getShipDateFromTracking(data);
+      if (date ==='Invalid Date'){
+        date = NO_SHIP_DATE_LABEL;
+      }
       return (
-          <div></div>
+          <div>{date}</div>
       );
     },
   });
