@@ -136,6 +136,12 @@
       width: 100%;
       justify-content: center;
       background-color: get-color(brand-blue);
+       svg, img {
+                width: 100%;
+              }
+              .cmp-tabs__tabpanel--text {
+                color: white;
+              }
       &--text {
         width: 100%;
       }
