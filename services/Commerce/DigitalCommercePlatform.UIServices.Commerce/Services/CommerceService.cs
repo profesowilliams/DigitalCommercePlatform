@@ -163,6 +163,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
             var createQuoteUrl = _appQuoteServiceUrl + "/Create";
             CreateModelResponse response;
+            _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteRequest, Formatting.Indented));
             try
             {
                 response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteRequest);

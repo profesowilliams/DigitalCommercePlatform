@@ -14,5 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Accounts
         public string CustomerName { get; set; }
         public string SalesOrg { get; set; }
         public string System { get; set; }
+        public bool DCPAccess { get; set; }
     }
 }

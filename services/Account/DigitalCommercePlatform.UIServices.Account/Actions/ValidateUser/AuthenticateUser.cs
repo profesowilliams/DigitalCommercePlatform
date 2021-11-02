@@ -117,13 +117,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 if (roleList == null)
                     roleList = new List<Role>();
 
-#if DEBUG
                 var isRolePresent = roleList.Where(p => String.Equals(p.Entitlement, "hasDCPAccess", StringComparison.CurrentCulture)).Any();
-                if (roleList.ToList().Count > 0 && userResponse.User.ID.Equals("516514")&& !isRolePresent)
+                if (roleList.ToList().Count > 0 && !isRolePresent && userResponse.User?.ActiveCustomer?.DCPAccess == true)
                 {
                     userResponse.User.RoleList.Add(new Role { AccountId = "", Entitlement = "hasDCPAccess" });
                 }
-#endif
 
                 userResponse.User.ActiveCustomer = userResponse.User?.ActiveCustomer;
 

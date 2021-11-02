@@ -105,6 +105,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         
         private OrderPricingCondtionMapping GetOrderPricingConditionMappings(string pricingConditionId)
         {
+            pricingConditionId = pricingConditionId ?? "Commercial";
             List<OrderPricingCondtionMapping> pricingDetails = new List<OrderPricingCondtionMapping>
                 {
                     new OrderPricingCondtionMapping {Id ="Commercial",  TypeId ="000", Type="Commercial", Level="", LevelId="", SalesOrganization = "0100", Site="US", Description="Commercial"},
