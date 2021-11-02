@@ -24,6 +24,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
     const [isTiersDropDownFocused, setIsTiersDropDownFocused] = useState(false);
     const [isLoadingDeals, setIsLoadingDeals] = useState(false);
     const [dealsFound, setDealsFound] = useState([]);
+    const [characterError, setCharacterError] = useState(false);
     const [noDealsFound, setNoDealsFound] = useState(false);
     const [errorGettingDeals, setErrorGettingDeals] = useState(false);
     const [selectedDeal, setSelectedDeal] = useState(-1);
@@ -54,6 +55,9 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
     }
     
     const handleModelChange = (e) => {
+        generalInfoState.quoteReference.length > 99 
+            ? setCharacterError(true) 
+            : setCharacterError(false) 
         setGeneralInfoState({
             ...generalInfoState,
             [e.target.name]: e.target.value,
@@ -341,7 +345,11 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                             id="quoteReference"
                             onChange={handleModelChange}
                             type="text"/>
+                            
                     </div>
+                    <span className={`characterError ${characterError && `showError` }`}>
+                        {info.referenceMaxCharacterError}
+                    </span>
                     {!hideDealSelector && (
                         <div className="form-check cmp-qp__edit-deal">
                             <label htmlFor="endUserName">{info.dealLabel}</label>
@@ -386,7 +394,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                         </div>
                     )}
                     <div className="form-group">
-                        <Button btnClass="cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
+                        <Button btnClass="cmp-qp--save-information" disabled={characterError} onClick={handleSaveChanges}>
                             {info.submitLabel}
                         </Button>
                         <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>

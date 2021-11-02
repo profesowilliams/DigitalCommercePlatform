@@ -104,6 +104,17 @@
     }
 }
 
+.characterError {
+    display: none;
+    font-size: 10px;
+    color: red;
+    text-transform: capitalize;
+}
+
+.showError {
+    display: block;
+}
+
 .cmp-qp__general-info,
 .cmp-qp__enduser-info {
     min-width: 335px;
