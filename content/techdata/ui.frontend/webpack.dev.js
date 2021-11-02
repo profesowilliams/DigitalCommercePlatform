@@ -1106,6 +1106,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "renewals-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/renewals-grid.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "quote-details-pdf-demo",
                 template: path.resolve(
                     __dirname,

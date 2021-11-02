@@ -2471,6 +2471,56 @@ app.get("/ui-config/v1/configurations", function (req, res) {
     }
   });
 });
+
+app.get("/ui-config/v1/renewals", function (req, res) {
+  res.json({
+    content: {
+      pageNumber: 1,
+      pageSize: 25,
+      totalItems: 25,
+      items: [
+        {
+          configId: "renewalVG116957111OI",
+          configurationType: "Estimate",
+          dueDate: utils.getRandomDate(),
+          expires: "n/a",
+          vendor: "Cisco",
+          configName: null,
+          resellerName: "A Reseller",
+          endUserName: "AVNET TS LTD",
+          agreementNumber: "234928433",
+          renewalPlan: "234928433",
+          price: "234928433",
+          vendorQuoteId: null,
+          action: "CreateQuote",
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  });
+});
+
+app.get("/ui-config/v1/estimations/validate/", function (req, res) {
+  const { id } = req.query;
+  if (!req.headers["sessionid"] || !id) {
+    return res.status(500).json({
+      error: {
+        code: 0,
+        message: [],
+        isError: true,
+      },
+    });
+  }
+  return res.status(200).json({
+    content: { isValid: true },
+    error: { code: 0, messages: [], isError: false },
+  });
+});
+
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     const { id, isEstimateId } = req.query;

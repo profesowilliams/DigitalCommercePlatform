@@ -1,0 +1,16 @@
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader">
+  <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+      <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+  </sly>
+
+  <sly data-sly-use.model="${'configurationgrid.js' @ multifieldName='columnList', serviceData=serviceData}">
+
+  <div data-observe-mutation>
+    <div
+        data-component="RenewalsGrid"
+        data-cmp-type="react"
+        className="cmp-renewals-grid"
+        data-config="${model.configJson}"
+    ></div>
+  </div>
+</sly>
