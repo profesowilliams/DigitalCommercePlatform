@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
+using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
 {
@@ -28,9 +30,28 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             IAppSettings appSettings,
             ISiteSettings siteSettings)
             : base(mediator, loggerFactory, context, appSettings, siteSettings)
-        {            
+        {
         }
 
+        [HttpGet]
+        [Route("Search")]
+        public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model)
+        {
+            if (model.Details)
+            {
+                var response = await Mediator.Send(new SearchRenewalDetailed.Request()).ConfigureAwait(false);
+                if (response == null)
+                    return NotFound();
+                return Ok(response);
+            }
+            else
+            {
+                var response = await Mediator.Send(new SearchRenewalSummary.Request()).ConfigureAwait(false);
+                if (response == null)
+                    return NotFound();
+                return Ok(response);
+            }
+        }
         [HttpGet]
         [Route("test")]
         public string Test(string request)

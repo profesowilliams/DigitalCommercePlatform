@@ -11,12 +11,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public sealed class GetRenewal
+    public sealed class SearchRenewalSummary
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -24,8 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public string EndUserEmail { get; set; }
             public string SortBy { get; set; }
             public bool SortAscending { get; set; }
-            public int Page { get; set; } = 1;
-            public int PageSize { get; set; } 
+            public int Page { get; set; }
+            public int PageSize { get; set; }
             public bool WithPaginationInfo { get; set; } = true;
             public List<string> VendorID { get; set; }
             public List<string> VendorName { get; set; }
@@ -37,11 +36,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public string ProgramName { get; set; }
             public string ResellerPO { get; set; }
             public string ContractID { get; set; }
-
-            public Request(int pageSize )
-            {
-                PageSize = pageSize;
-            }
         }
 
         public class Response
@@ -50,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public long? PageCount { get; set; }
             public int? PageNumber { get; set; }
             public int? PageSize { get; set; }
-            public List<RenewalsModel> Items { get; set; }
+            public List<SummaryModel> Items { get; set; }
         }
 
         [ExcludeFromCodeCoverage]
@@ -68,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                List<RenewalsModel> renewalsResponse = await _renewalsService.GetRenewalsFor(request);
+                List<SummaryModel> renewalsResponse = await _renewalsService.GetRenewalsSummaryFor(request);
 
                 var response = new Response
                 {
@@ -84,6 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             {
                 public Validator()
                 {
+                   
                 }
             }
         }
