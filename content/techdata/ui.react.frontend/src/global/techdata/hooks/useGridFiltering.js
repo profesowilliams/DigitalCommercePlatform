@@ -13,8 +13,6 @@ export default function useGridFiltering() {
   }
 
   function onQueryChanged(query) {
-    console.log('onQueryChanged(request)', query);
-    console.log('onQueryChanged filter', filter);
     query ? (filter.current = query.queryString) : (filter.current = null);
     if (resetCallback.current) {
       resetCallback.current();
@@ -22,22 +20,10 @@ export default function useGridFiltering() {
   }
 
   async function requestInterceptor(request) {
-    console.log('requestInterceptor(request)', request);
-    console.log('requestInterceptor filter', filter);
     const url = filter?.current ? request.url + filter.current : request.url;
-    console.log('URL', url);
     let response = await request.get(url);
-    console.log('Response', response);
     return response;
   }
 
-  async function requestLocalFilter(data) {
-    console.log('***************', data);
-    // const url = filter?.current ? request.url + filter.current : request.data;
-    const response = [];
-    response.push(data);
-    return response;
-  }
-
-  return { onAfterGridInit, onQueryChanged, requestInterceptor, requestLocalFilter };
+  return { onAfterGridInit, onQueryChanged, requestInterceptor };
 }

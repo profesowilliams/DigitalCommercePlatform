@@ -12,6 +12,9 @@ function OrdersGrid(props) {
     const componentProp = JSON.parse(props.componentProp);
     const filteringExtension = useGridFiltering();
 
+    const [expandedOpenOrderFilter, setExpandedOpenOrderFilter] = useState(true);
+    const [orderReportStatus, setOrderReportStatus] = useState(false);
+
     const [modal, setModal] = useState(null);
 
     const STATUS = {
@@ -247,11 +250,68 @@ function OrdersGrid(props) {
         },
     ];
 
+    /**
+	 * 
+	 * @param {boolean} status 
+	 */
+	const filterOpenOrderReportsAction = (status, handleChange, onSearch) => {
+		const query = '&showOpenButton='+status;
+		handleChange(query);
+		onSearch();
+	};
+
+
+    /**
+     * 
+     * @returns
+     */
+    const OptionButtons = () =>(
+		<div className='cmp-search-criteria__header__button'>
+			<div className='cmp-search-criteria__header__filter__title' 
+				onClick={() => setExpandedOpenOrderFilter(!expandedOpenOrderFilter)}
+			>
+				<i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`}></i>
+			</div>
+			<div className='cmp-search-criteria__header__filter__title'>
+				<i className={`cmp-search-criteria__icon-button fas fa-print`}></i>
+			</div>
+			
+		</div>
+	);
+
+	
+  /**
+   * @param {Object} props
+   * @param {boolean} props.expanded
+   * @param {({query}) => void} props.handleChange
+   * @param {() => void} props.onSearch
+   * @returns 
+   */
+	const ButtonOrderDetails = ({expanded, handleChange, onSearch}) => (
+        <div
+            className={` ${expandedOpenOrderFilter || expanded ? 'hidden' : ''}`}
+            onClick={() => {
+                const value = !orderReportStatus;
+                setOrderReportStatus(value);
+                filterOpenOrderReportsAction(value, handleChange, onSearch)
+            }}
+        >
+        <div className='cmp-search-criteria__header__filter'>
+            <div className='cmp-search-criteria__header__filter__title'>
+                Open Orders Report
+            </div>
+            <i className={`cmp-search-criteria__icon fas  ${!orderReportStatus ? 'fa-times-circle' : 'fa-check-circle'}`}></i>
+        </div>
+        </div>
+    );
+
     return (
         <section>
             <div className='cmp-orders-grid'>
                 <GridSearchCriteria
                     Filters={OrdersGridSearch}
+                    HeaderButtonOptions={OptionButtons}
+                    ButtonsComponentHeader={ButtonOrderDetails}
                     label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
                     componentProp={componentProp.searchCriteria}
                     onSearchRequest={filteringExtension.onQueryChanged}
