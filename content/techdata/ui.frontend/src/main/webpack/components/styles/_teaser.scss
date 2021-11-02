@@ -582,3 +582,15 @@
         }
     }
 }
+
+.teaser-max-width-1440 {
+    .cmp-teaser__content {
+        max-width: 1440px;
+    }
+}
+
+.teaser-max-height-500 {
+    .cmp-teaser {
+        max-height: 500px;
+    }
+}
