@@ -138,7 +138,7 @@ const QuoteCreate = ({
           createQuote={createQuote} 
           buttonTitle={buttonTitle}
           method={pricing}
-          setMethod={setPricing}
+          setMethod={(option)=>setPricing(option)}
           pricingConditions={pricingConditions}
           prev={prev}
         />

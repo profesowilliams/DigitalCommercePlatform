@@ -12,6 +12,10 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       if( isError ) alert('Error in pricing conditions');
       if( items ){
         const newItems = items.map(item => ({label: item.key, key: item.value}) );
+        const item = newItems.filter(item => item.label === 'Commercial(Non-Govt)');
+        if(item&&item.length>0){
+          setMethod(item[0]) 
+        }
         setItems(newItems);
       }
     }
@@ -26,7 +30,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       <WidgetTitle>
         <a onClick={prev}><i className="fas fa-chevron-left"></i> Create quote from</a>
       </WidgetTitle>
-      <Dropdown selected={method} setValue={setMethod} options={items} label="Select pricing" />
+      <Dropdown selected={method} setValue={setMethod} options={items} label="Commercial(Non-Govt)" />
       <Button disabled={!method} onClick={createQuote}>{buttonTitle}</Button>
     </>
   )
