@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Loader from "../../Widgets/Loader";
 import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
+import { If } from "../../../helpers/If";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -130,20 +131,22 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       <p onClick={handleTitleClick} className="cmp-qp__company-info--title">
         {info.yourCompanyHeaderLabel}
       </p>
-      <p className="cmp-qp__company-info--sub-title">
-        {initialAddress.companyName}
-      </p>
-      {editView ? (
-        <div className="cmp-qp__edit-mode">
-          {addresses && !loading ? (
-            <CompanyInfoEdit />
-          ) : (
-            <Loader visible={loading} />
+      <If condition={reseller}>
+        <p className="cmp-qp__company-info--sub-title">
+          {initialAddress.companyName}
+        </p>
+        {editView ? (
+          <div className="cmp-qp__edit-mode">
+            {addresses && !loading ? (
+              <CompanyInfoEdit />
+              ) : (
+                <Loader visible={loading} />
+                )}
+          </div>
+        ) : (
+          <CompanyInfo />
           )}
-        </div>
-      ) : (
-        <CompanyInfo />
-      )}
+      </If>
     </div>
   );
 }
