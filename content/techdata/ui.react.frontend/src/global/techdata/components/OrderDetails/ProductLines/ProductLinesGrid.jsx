@@ -371,21 +371,8 @@ function ProductLinesGrid({
     headerName: 'Track',
     field: 'trackings',
     sortable: false,
-    cellRenderer: ({ node, api, setValue, data, value }) => {
-      return (
-          <div
-              onClick={() => {
-                invokeModal({
-                  content: (
-                      <TrackOrderModal data={data}></TrackOrderModal>
-                  ),
-                  properties: {
-                    title: `Track My Order `,
-                  }
-                });
-              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
-      );
-    }
+    cellRenderer: () =>
+          <div></div>
   });
 
   //Ship Date behaves differently between parent and child
