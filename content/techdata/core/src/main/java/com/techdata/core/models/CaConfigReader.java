@@ -337,6 +337,10 @@ public class CaConfigReader {
         return quotesPreviewEndPoint;
     }
 
+    public String getQuickQuoteEndpoint() {
+        return quickQuoteEndpoint;
+    }
+
     public String getQuotesPreviewPricingEndPoint() {
         return quotesPreviewPricingEndPoint;
     }
