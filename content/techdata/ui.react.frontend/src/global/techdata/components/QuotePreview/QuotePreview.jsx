@@ -26,7 +26,7 @@ function QuotePreview(props) {
     }
   }, [apiResponse]);
 
-  const onGridUpdate = (data) => {
+  const onGridUpdate = (data, didQuantitiesChange) => {
     let subTotal = data.reduce((subTotal, {extendedPrice}) => subTotal + extendedPrice, 0);
     subTotal = Math.round((subTotal + Number.EPSILON) * 100) / 100
 
