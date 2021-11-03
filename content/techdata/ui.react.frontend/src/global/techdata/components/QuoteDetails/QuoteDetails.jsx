@@ -11,7 +11,6 @@ import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 import { usPost } from "../../../../utils/api";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
-import {Buffer} from 'buffer'
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo"
 
@@ -53,18 +52,51 @@ const QuoteDetails = ({ componentProp }) => {
 
   async function exportToCSV() {
     // call API to get CSV according to actual data
-    const bufferArrya = await getExcel();
-    const response_ = getExcelSource(bufferArrya);
-    downloadBase64File('.xls', response_, 'quotes.xls');
+    try {
+      const postData = {
+        "quoteId": id,
+        "lineMarkup": [
+            {
+                "id": "100",
+                "markupValue": 20.00
+            },
+            {
+                "id": "200",
+                "markupValue": 30.00
+            }
+        ],
+        "logo": "iVBORw0KGgoAAAANSUhEUgAAAPcAAABUBAMAAACsKrwgAAAAIVBMVEUAAABfXF3RGRndU1OQjo+zsrLoi4vLysr0xcXv6uokICFeYJN5AAAAAXRSTlMAQObYZgAAA2tJREFUeF7tl79r20AUx1+o41qeZGgx0RRkKMlmLCh0cyBdNDnQKVNJQbM6hWgKHUqzuS001JMENsb3V/beu59KbCnFqQX1fQb53fmcd3rfy/dJ8G9xOBwOh6Pz7QF3sDt+hA8YwO74mjxkujeSNyU6Sd6c6L+SZD9F91DkpkR/Ea5h0JTkxF5KTtw1JDnxBnZBO1kPSBzXnBsPr+h+LynAS8qH9+I7jQr5fOpdV1Q9rOcEszFOQdcxAMwwuMdL3we45J/zQ0bY4XfG8qxYbk5+VTpmicHMDgHggCGAFx8AYszRwtF5DhDwzyWtIBYqnPHFfXZRcdoji3eg8czsrbpVNsU0OYCHgxXluFhSchoRJiwyXqacHcC2BAyZxHiPAFRXn3LM5kD1yLsMscM5X52+7p1tK7nHiDGquwDoUhlmlLwQ58HPGGKHy4AxyHpHsIFOkow2iP5JzR0DQMv6s3NxwgrAQXHJxJfjmCF2uMJFcA0V/KwT/SNJbgpayBMGsSjthMqfCmHssE8b3Z7YPkqizjkEorRjEgHEnEAqAZV0wnrI5ZlgQRVOaQsTkKX1sSyFV0rXEisqaUeckuhvH4l+CgCHJfuYkAjgydKujMec9zipsgUMLOpFH1qiG8mpsMbiAswmdvSKlyPWNbnAC6gfwPNA5zrQFkf1FqU949swHkMCAIeCZ5I8YHiD2uKEvJQu40mMscj/ROn2NcmjBCmJPogMpa6SZ9riAtyGKO2BbSyF8CBOLIN6voQWx3Zh7K4yybTFxVRTStcyxqIEAI4OtmdG/THQFndJBk/pPNtYTPOkUkEVXljPgO6DMhqLw1YpDwIwwTT4S4/pRJKS6JFhZHWVlWVxXTIQGivvozVFD+lLXxjD34s+LO1uqOyqb1ncZ8bklnLIlAFoVspjnlFyy+I+sIUubVfMt5jGl8mhkvAJACcmna07fM9WIBsp5aGHKI2vPKZeciLcJLruKsuzXk83ryM21qU9VL1WMwGQZrOd6G3dVXzchLG4qXqaIemps2lS4zHb01XtMdAW11N+T7PCfDRP8phRWM8U8JWAo94bpji6+W1N38tpjVyZQhWRRdjk6+JVuJZT+D+pf36/hV3gbeoqzYl+AntAO1rDLeyGTlOSE6N9lJxoV0jehOhTeITD4XA4HA7HHzVqrIoKbpd4AAAAAElFTkSuQmCC"
+      };
+      const sessionId = localStorage.getItem("sessionId");
+      const params = {
+        method: 'POST',
+        url: `${uiServiceEndPointExcel}`,
+        headers: {
+          'Accept': '*/*',
+          'Accept-Language': 'en-us',
+          'Site': 'NA',
+          'Consumer': 'NA',
+          'TraceId': '35345345-Browse',
+          'SessionId': sessionId,
+          'Content-Type': 'application/json',
+        },
+        body: postData,
+        responseType: 'blob',
+      };
+      // API call and see loader.
+      const response = await usPost(`${uiServiceEndPointExcel}`, postData, params);
+      const link = document.createElement('a');
+
+      link.href = window.URL.createObjectURL(response.data);
+      link.download = `quotes.xlsx`;
+
+      link.click();
+      link.remove();
+    } catch (error) {
+        console.error("error", error);
+    }
   }
 
-  const downloadBase64File = (contentType, base64Data, fileName) => {
-    const linkSource = `data:${contentType};base64,${base64Data}`;
-    const downloadLink = document.createElement("a");
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-}
   const handleUploadFileSelected = (whiteLabelLogo) => {
     downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText, whiteLabelLogo);
   }
@@ -90,54 +122,10 @@ const QuoteDetails = ({ componentProp }) => {
     }
   }
 
-  const getExcelSource = (param) => {
-    const buff = Buffer.from(param, "base64");
-    return buff.toString('base64');
-  };
-
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
     
   }, [response]);
-
-  const getExcel = async () => {
-    const postData = {
-      "quoteId": id,
-      "lineMarkup": [
-          {
-              "id": "100",
-              "markupValue": 20.00
-          },
-          {
-              "id": "200",
-              "markupValue": 30.00
-          }
-      ],
-      "logo": "iVBORw0KGgoAAAANSUhEUgAAAPcAAABUBAMAAACsKrwgAAAAIVBMVEUAAABfXF3RGRndU1OQjo+zsrLoi4vLysr0xcXv6uokICFeYJN5AAAAAXRSTlMAQObYZgAAA2tJREFUeF7tl79r20AUx1+o41qeZGgx0RRkKMlmLCh0cyBdNDnQKVNJQbM6hWgKHUqzuS001JMENsb3V/beu59KbCnFqQX1fQb53fmcd3rfy/dJ8G9xOBwOh6Pz7QF3sDt+hA8YwO74mjxkujeSNyU6Sd6c6L+SZD9F91DkpkR/Ea5h0JTkxF5KTtw1JDnxBnZBO1kPSBzXnBsPr+h+LynAS8qH9+I7jQr5fOpdV1Q9rOcEszFOQdcxAMwwuMdL3we45J/zQ0bY4XfG8qxYbk5+VTpmicHMDgHggCGAFx8AYszRwtF5DhDwzyWtIBYqnPHFfXZRcdoji3eg8czsrbpVNsU0OYCHgxXluFhSchoRJiwyXqacHcC2BAyZxHiPAFRXn3LM5kD1yLsMscM5X52+7p1tK7nHiDGquwDoUhlmlLwQ58HPGGKHy4AxyHpHsIFOkow2iP5JzR0DQMv6s3NxwgrAQXHJxJfjmCF2uMJFcA0V/KwT/SNJbgpayBMGsSjthMqfCmHssE8b3Z7YPkqizjkEorRjEgHEnEAqAZV0wnrI5ZlgQRVOaQsTkKX1sSyFV0rXEisqaUeckuhvH4l+CgCHJfuYkAjgydKujMec9zipsgUMLOpFH1qiG8mpsMbiAswmdvSKlyPWNbnAC6gfwPNA5zrQFkf1FqU949swHkMCAIeCZ5I8YHiD2uKEvJQu40mMscj/ROn2NcmjBCmJPogMpa6SZ9riAtyGKO2BbSyF8CBOLIN6voQWx3Zh7K4yybTFxVRTStcyxqIEAI4OtmdG/THQFndJBk/pPNtYTPOkUkEVXljPgO6DMhqLw1YpDwIwwTT4S4/pRJKS6JFhZHWVlWVxXTIQGivvozVFD+lLXxjD34s+LO1uqOyqb1ncZ8bklnLIlAFoVspjnlFyy+I+sIUubVfMt5jGl8mhkvAJACcmna07fM9WIBsp5aGHKI2vPKZeciLcJLruKsuzXk83ryM21qU9VL1WMwGQZrOd6G3dVXzchLG4qXqaIemps2lS4zHb01XtMdAW11N+T7PCfDRP8phRWM8U8JWAo94bpji6+W1N38tpjVyZQhWRRdjk6+JVuJZT+D+pf36/hV3gbeoqzYl+AntAO1rDLeyGTlOSE6N9lJxoV0jehOhTeITD4XA4HA7HHzVqrIoKbpd4AAAAAElFTkSuQmCC"
-    };
-    const sessionId = localStorage.getItem("sessionId");
-    const params = {
-      method: 'POST',
-      url: `${uiServiceEndPointExcel}`,
-      headers: {
-        'Accept': '*/*',
-        'Accept-Language': 'en-us',
-        'Site': 'NA',
-        'Consumer': 'NA',
-        'TraceId': '35345345-Browse',
-        'SessionId': sessionId,
-        'Content-Type': 'application/json',
-      },
-      body: postData,
-    };
-    try {
-      // API call and see loader.
-      const result = await usPost(`${uiServiceEndPointExcel}`, postData, params);
-      return result.data;
-    } catch( error ) {
-      console.log('Error', error)
-    }
-  } 
 
   useEffect(() => {
     quoteOption &&

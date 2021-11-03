@@ -9,7 +9,6 @@ var bodyParser = require("body-parser");
 var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -1424,6 +1423,33 @@ app.get("/ui-commerce/v1/pricingConditions", function (req, res) {
   });
 });
 
+app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
+  const {
+    acceptLanguage,
+    site,
+    consumer,
+    traceId,
+    sessionid,
+    contentType,
+  } = req.headers;
+  
+  if (!req.headers["sessionid"] && !sessionid) {
+    return res.status(500).json({
+        error: {
+            code: 0,
+            message: ['SessionId Error'],
+            isError: true,
+        },
+    });
+  }
+
+  try {
+    res.download(`response.xlsx`);
+  } catch (error) {
+    console.log('Error', error)
+  }
+});
+
 app.get("/typeahead", function (req, res) {
   const { keyword } = req.query;
 
@@ -1595,6 +1621,483 @@ app.get("/ui-config/v1/configurations", function (req, res) {
               "created": "2021-07-29T13:30:00.7123414Z"
             }
           ]
+        },
+        {
+          "configId": "FZ91408441LN",
+          "configurationType": "Estimate",
+          "created": utils.getRandomDate(),
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "EUMETSAT",
+          "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__1",
+                "line": "Line_863",
+                "quantity": 6,
+                "price": 54.0,
+                "created": "8/8/2021",
+                "status": "Created"
+            },
+          ],
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_FZ91408441LN_1",
+              "line": "Line_360",
+              "quantity": 5,
+              "price": 41,
+              "created": "2021-07-31T13:30:00.7123421Z"
+            },
+            {
+              "id": "CD_ID_FZ91408441LN_2",
+              "line": "Line_807",
+              "quantity": 6,
+              "price": 68,
+              "created": "2021-08-04T13:30:00.7123427Z"
+            },
+            {
+              "id": "CD_ID_FZ91408441LN_3",
+              "line": "Line_711",
+              "quantity": 9,
+              "price": 54,
+              "created": "2021-07-28T13:30:00.7123432Z"
+            }
+          ]
+        },
+        {
+          "configId": "RX119069703KD",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": null,
+          "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__1",
+                "line": "Line_863",
+                "quantity": 6,
+                "price": 54.0,
+                "created": "8/8/2021",
+                "status": "Pending"
+            },
+          ],
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_RX119069703KD_1",
+              "line": "Line_686",
+              "quantity": 1,
+              "price": 87,
+              "created": "2021-08-05T13:30:00.7123437Z"
+            },
+            {
+              "id": "CD_ID_RX119069703KD_2",
+              "line": "Line_343",
+              "quantity": 2,
+              "price": 65,
+              "created": "2021-08-03T13:30:00.7123444Z"
+            },
+            {
+              "id": "CD_ID_RX119069703KD_3",
+              "line": "Line_252",
+              "quantity": 7,
+              "price": 23,
+              "created": "2021-08-02T13:30:00.7123449Z"
+            },
+            {
+              "id": "CD_ID_RX119069703KD_4",
+              "line": "Line_211",
+              "quantity": 3,
+              "price": 18,
+              "created": "2021-07-28T13:30:00.7123453Z"
+            }
+          ]
+        },
+        {
+          "configId": "GV77554631XP",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "AXCIOM UK LTD",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_GV77554631XP_1",
+              "line": "Line_508",
+              "quantity": 7,
+              "price": 4,
+              "created": "2021-08-02T13:30:00.7123459Z"
+            },
+            {
+              "id": "CD_ID_GV77554631XP_2",
+              "line": "Line_549",
+              "quantity": 7,
+              "price": 65,
+              "created": "2021-07-31T13:30:00.7123465Z"
+            },
+            {
+              "id": "CD_ID_GV77554631XP_3",
+              "line": "Line_160",
+              "quantity": 4,
+              "price": 30,
+              "created": "2021-07-31T13:30:00.7123469Z"
+            }
+          ]
+        },
+        {
+          "configId": "VI112127534ZT",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "VITALITY CORPORATE SERVICES LTD",
+          "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__3",
+                "line": "",
+                "quantity": 0,
+                "price": 0.0,
+                "created": "",
+                "status": "Expired"
+            }
+          ],
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_VI112127534ZT_1",
+              "line": "Line_422",
+              "quantity": 1,
+              "price": 40,
+              "created": "2021-08-03T13:30:00.7123475Z"
+            },
+            {
+              "id": "CD_ID_VI112127534ZT_2",
+              "line": "Line_852",
+              "quantity": 6,
+              "price": 79,
+              "created": "2021-08-02T13:30:00.712348Z"
+            },
+            {
+              "id": "CD_ID_VI112127534ZT_3",
+              "line": "Line_13",
+              "quantity": 5,
+              "price": 5,
+              "created": "2021-07-29T13:30:00.7123486Z"
+            }
+          ]
+        },
+        {
+          "configId": "SN120740841PY",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "quotes": [
+            {
+                "id": "CD_ID__2",
+                "line": "Line_104",
+                "quantity": 9,
+                "price": "54,048.50",
+                "priceFormatted": "54,048.50",
+                "currency": "USD",
+                "currencySymbol": "$",
+                "created": "8/6/2021",
+                "status": "Failed"
+            },
+          ],
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_SN120740841PY_1",
+              "line": "Line_932",
+              "quantity": 2,
+              "price": 60,
+              "created": "2021-07-28T13:30:00.7123492Z"
+            },
+            {
+              "id": "CD_ID_SN120740841PY_2",
+              "line": "Line_625",
+              "quantity": 8,
+              "price": 63,
+              "created": "2021-08-02T13:30:00.7123497Z"
+            }
+          ]
+        },
+        {
+          "configId": "BB119209153JS",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_BB119209153JS_1",
+              "line": "Line_749",
+              "quantity": 9,
+              "price": 11,
+              "created": "2021-08-02T13:30:00.7123503Z"
+            },
+            {
+              "id": "CD_ID_BB119209153JS_2",
+              "line": "Line_830",
+              "quantity": 7,
+              "price": 91,
+              "created": "2021-08-02T13:30:00.7123509Z"
+            },
+            {
+              "id": "CD_ID_BB119209153JS_3",
+              "line": "Line_868",
+              "quantity": 6,
+              "price": 3,
+              "created": "2021-08-02T13:30:00.7123514Z"
+            }
+          ]
+        },
+        {
+          "configId": "AH119209147IG",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_AH119209147IG_1",
+              "line": "Line_780",
+              "quantity": 6,
+              "price": 54,
+              "created": "2021-08-01T13:30:00.712352Z"
+            },
+            {
+              "id": "CD_ID_AH119209147IG_2",
+              "line": "Line_15",
+              "quantity": 4,
+              "price": 18,
+              "created": "2021-07-28T13:30:00.7123525Z"
+            },
+            {
+              "id": "CD_ID_AH119209147IG_3",
+              "line": "Line_231",
+              "quantity": 8,
+              "price": 95,
+              "created": "2021-08-05T13:30:00.712353Z"
+            },
+            {
+              "id": "CD_ID_AH119209147IG_4",
+              "line": "Line_745",
+              "quantity": 4,
+              "price": 5,
+              "created": "2021-08-03T13:30:00.7123535Z"
+            }
+          ]
+        },
+        {
+          "configId": "YR116957121WZ",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_YR116957121WZ_1",
+              "line": "Line_466",
+              "quantity": 2,
+              "price": 59,
+              "created": "2021-08-01T13:30:00.7123541Z"
+            },
+            {
+              "id": "CD_ID_YR116957121WZ_2",
+              "line": "Line_715",
+              "quantity": 1,
+              "price": 59,
+              "created": "2021-07-31T13:30:00.7123546Z"
+            },
+            {
+              "id": "CD_ID_YR116957121WZ_3",
+              "line": "Line_610",
+              "quantity": 2,
+              "price": 16,
+              "created": "2021-08-01T13:30:00.7123551Z"
+            },
+            {
+              "id": "CD_ID_YR116957121WZ_4",
+              "line": "Line_397",
+              "quantity": 5,
+              "price": 11,
+              "created": "2021-08-03T13:30:00.7123556Z"
+            }
+          ]
+        },
+        {
+          "configId": "WC121011624NR",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_WC121011624NR_1",
+              "line": "Line_559",
+              "quantity": 6,
+              "price": 32,
+              "created": "2021-07-31T13:30:00.7123562Z"
+            },
+            {
+              "id": "CD_ID_WC121011624NR_2",
+              "line": "Line_144",
+              "quantity": 2,
+              "price": 19,
+              "created": "2021-07-28T13:30:00.7123567Z"
+            },
+            {
+              "id": "CD_ID_WC121011624NR_3",
+              "line": "Line_197",
+              "quantity": 9,
+              "price": 73,
+              "created": "2021-08-04T13:30:00.7123572Z"
+            }
+          ]
+        },
+        {
+          "configId": "LL116577524NC",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "NIKE",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_LL116577524NC_1",
+              "line": "Line_686",
+              "quantity": 3,
+              "price": 31,
+              "created": "2021-08-02T13:30:00.7123577Z"
+            },
+            {
+              "id": "CD_ID_LL116577524NC_2",
+              "line": "Line_220",
+              "quantity": 6,
+              "price": 59,
+              "created": "2021-08-03T13:30:00.7123582Z"
+            },
+            {
+              "id": "CD_ID_LL116577524NC_3",
+              "line": "Line_924",
+              "quantity": 4,
+              "price": 96,
+              "created": "2021-07-31T13:30:00.7123594Z"
+            },
+            {
+              "id": "CD_ID_LL116577524NC_4",
+              "line": "Line_306",
+              "quantity": 9,
+              "price": 55,
+              "created": "2021-07-28T13:30:00.71236Z"
+            },
+            {
+              "id": "CD_ID_LL116577524NC_5",
+              "line": "Line_603",
+              "quantity": 6,
+              "price": 63,
+              "created": "2021-08-03T13:30:00.7123605Z"
+            }
+          ]
+        },
+        {
+          "configId": "RZ93817768PM",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "WTS GLOBAL",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_RZ93817768PM_1",
+              "line": "Line_598",
+              "quantity": 4,
+              "price": 32,
+              "created": "2021-07-28T13:30:00.7123611Z"
+            },
+            {
+              "id": "CD_ID_RZ93817768PM_2",
+              "line": "Line_530",
+              "quantity": 9,
+              "price": 32,
+              "created": "2021-08-03T13:30:00.7123616Z"
+            },
+            {
+              "id": "CD_ID_RZ93817768PM_3",
+              "line": "Line_436",
+              "quantity": 3,
+              "price": 34,
+              "created": "2021-08-04T13:30:00.7123621Z"
+            }
+          ]
+        },
+        {
+          "configId": "DI114806079WY",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
+          "vendor": "Cisco",
+          "configName": null,
+          "endUserName": "AVNET TS LTD",
+          "tdQuoteId": null,
+          "vendorQuoteId": null,
+          "action": "CreateQuote",
+          "details": [
+            {
+              "id": "CD_ID_DI114806079WY_1",
+              "line": "Line_165",
+              "quantity": 2,
+              "price": 34,
+              "created": "2021-07-28T13:30:00.7123627Z"
+            },
+            {
+              "id": "CD_ID_DI114806079WY_2",
+              "line": "Line_38",
+              "quantity": 9,
+              "price": 27,
+              "created": "2021-07-30T13:30:00.7123632Z"
+            }
+          ]
+        },
+        {
+          "configId": "IZ118585707YL",
+          "configurationType": "Estimate",
+          "created": "0001-01-01T00:00:00",
         },
         {
           "configId": "FZ91408441LN",
@@ -2501,26 +3004,13 @@ app.get("/ui-config/v1/renewals", function (req, res) {
       messages: [],
       isError: false,
     },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
   });
 });
-
-app.get("/ui-config/v1/estimations/validate/", function (req, res) {
-  const { id } = req.query;
-  if (!req.headers["sessionid"] || !id) {
-    return res.status(500).json({
-      error: {
-        code: 0,
-        message: [],
-        isError: true,
-      },
-    });
-  }
-  return res.status(200).json({
-    content: { isValid: true },
-    error: { code: 0, messages: [], isError: false },
-  });
-});
-
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     const { id, isEstimateId } = req.query;
