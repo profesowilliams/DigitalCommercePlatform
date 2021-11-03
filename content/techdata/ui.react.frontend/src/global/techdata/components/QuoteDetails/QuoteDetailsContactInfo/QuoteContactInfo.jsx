@@ -20,31 +20,32 @@ const QuoteContactInfo = ({ label, contact }) => {
         line3 ? line3 : ""
     }`;
     return (
-        <section className='cmp-quote-address-info'>
-            <div className='cmp-quote-address-info__title'>{label}</div>
-            <If condition={contact}>           
+            <section className='cmp-quote-address-info'>
+                <div className='cmp-quote-address-info__title'>{label}</div>
                 <div className='cmp-quote-address-info__company-name'>
                     {companyName}
                 </div>
                 <div className='cmp-quote-address-info__company-info'>
-                    <div className='cmp-quote-address-info__company-info--name'>
-                        {name}
-                    </div>
-                    <div className='cmp-quote-address-info__company-info--street'>
-                        {street}
-                    </div>
-                    <div className='cmp-quote-address-info__company-info--city-state-zip'>
-                        {city}, {state} {postalCode}
-                    </div>
-                    <div className='cmp-quote-address-info__company-info--state'>
-                        {country}
-                    </div>
+                    <If condition={contact}>
+                        <div className='cmp-quote-address-info__company-info--name'>
+                            {name}
+                        </div>
+                        <div className='cmp-quote-address-info__company-info--street'>
+                            {street}
+                        </div>
+                        <div className='cmp-quote-address-info__company-info--city-state-zip'>
+                            {city}, {state} {postalCode}
+                        </div>
+                        <div className='cmp-quote-address-info__company-info--state'>
+                            {country}
+                        </div>
 
-                    <div>Email: {email}</div>
-                    <div>Phone: {phoneNumber}</div>
+                        <div>Email: {email}</div>
+                        <div>Phone: {phoneNumber}</div>
+                    </If>
                 </div>
-            </If>
-        </section>
+            </section>
+       
     );
 };
 
