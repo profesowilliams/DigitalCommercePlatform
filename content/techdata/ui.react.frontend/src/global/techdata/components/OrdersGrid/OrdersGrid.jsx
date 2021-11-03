@@ -60,7 +60,23 @@ function OrdersGrid(props) {
             componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
     };
 
-    function invokeModal(modal) {
+    function invokeModal(line) {
+        const modal = {
+            content: (
+                <DetailsInfo
+                    info={invoicesModal.content}
+                    line={line}
+                    pendingInfo={invoicesModal.pendingInfo}
+                    pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
+                ></DetailsInfo>
+            ),
+            properties: {
+                title: `${invoicesModal.title}: ${line.id} `,
+                buttonIcon: invoicesModal.buttonIcon,
+                buttonLabel: invoicesModal.buttonLabel,
+            },
+            modalAction: downloadInvoice(line.id)
+        }
         setModal(modal);
     }
 
@@ -112,32 +128,16 @@ function OrdersGrid(props) {
     function getInvoices(line) {
         if (line.invoices.length && line.invoices.length > 1) {
             return (
-                <div
-                    onClick={() => {
-                        invokeModal({
-                            content: (
-                                <DetailsInfo
-                                    info={invoicesModal.content}
-                                    line={line}
-                                    pendingInfo={invoicesModal.pendingInfo}
-                                    pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
-                                ></DetailsInfo>
-                            ),
-                            properties: {
-                                title: `${invoicesModal.title}: ${line.id} `,
-                                buttonIcon: invoicesModal.buttonIcon,
-                                buttonLabel: invoicesModal.buttonLabel,
-                            },
-                            modalAction: downloadInvoice(line.id)
-                        });
-                    }}
-                >
-                    {labelList.find((label) => label.labelKey === 'multiple').labelValue}
+                <div onClick={() => invokeModal(line)}>
+                    <div className='cmp-grid-url-underlined'>
+                        {labelList.find((label) => label.labelKey === 'multiple').labelValue}
+                    </div>
                 </div>
             );
         } else {
             if (line.invoices[0]?.id === 'Pending') {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
+              
             } else {
                 return line.invoices[0]?.id ?? null;
             }
@@ -204,9 +204,7 @@ function OrdersGrid(props) {
             headerName: 'Invoice #',
             field: 'invoices',
             sortable: true,
-            cellRenderer: (props) => {
-                return <div className='cmp-grid-url-underlined'>{getInvoices(props.data)}</div>;
-            },
+            cellRenderer: (props) => getInvoices(props.data),
         },
         {
             headerName: 'Status',
