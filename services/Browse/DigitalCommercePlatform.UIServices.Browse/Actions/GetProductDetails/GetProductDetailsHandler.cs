@@ -174,7 +174,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     VendorShipped = dropShip && !x.Stock.VendorDesignated.HasValue,
                     Plants = x.Plants?.Select(p => new PlantModel
                     {
-                        Name = p.Id,
+                        Name = p.Stock?.LocationName,
                         Quantity = p.Stock?.AvailableToPromise
                     })
                 };

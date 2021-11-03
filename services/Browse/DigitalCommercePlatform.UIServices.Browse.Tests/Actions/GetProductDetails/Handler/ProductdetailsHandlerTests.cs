@@ -150,6 +150,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Id="Plant",
                                     Stock = new LocationStockDto
                                     {
+                                        LocationName = "Warehouse 123",
                                         AvailableToPromise=1
                                     }
                                 }
@@ -291,7 +292,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 new PlantModel
                                 {
-                                    Name="Plant",
+                                    Name="Warehouse 123",
                                     Quantity=1
                                 }
                             }
@@ -458,7 +459,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Id="Plant",
                                     Stock = new LocationStockDto
                                     {
-                                        AvailableToPromise=1
+                                        AvailableToPromise=1,
+                                        LocationName = "Warehouse 123",
                                     }
                                 }
                             },
@@ -540,7 +542,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 new PlantModel
                                 {
-                                    Name="Plant",
+                                    Name="Warehouse 123",
                                     Quantity=1
                                 }
                             }
@@ -682,7 +684,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Id="Plant",
                                     Stock = new LocationStockDto
                                     {
-                                        AvailableToPromise=1
+                                        AvailableToPromise=1,
+                                        LocationName = "Warehouse 123",
                                     }
                                 }
                             },
@@ -795,7 +798,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 new PlantModel
                                 {
-                                    Name="Plant",
+                                    Name="Warehouse 123",
                                     Quantity=1
                                 }
                             }

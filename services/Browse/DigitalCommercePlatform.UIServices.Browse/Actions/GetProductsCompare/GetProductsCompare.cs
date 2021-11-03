@@ -115,7 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             {
                 if (x.Plants != null)
                 {
-                    product.Stock.Plants = x.Plants.Select(p => new PlantModel { Name = p.Id, Quantity = p.Stock?.AvailableToPromise ?? 0 });
+                    product.Stock.Plants = x.Plants.Select(p => new PlantModel { Name = p.Stock?.LocationName, Quantity = p.Stock?.AvailableToPromise ?? 0 });
                 }
             }
 
