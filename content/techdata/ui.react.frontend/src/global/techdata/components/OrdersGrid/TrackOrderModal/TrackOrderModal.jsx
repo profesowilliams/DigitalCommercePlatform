@@ -1,13 +1,18 @@
 import React from "react";
 import MyOrderTrackings from "./MyOrderTrackings";
 
+export function getTrackingModalTitle(modalTitle, value) {
+  let orderNumber = (value.length > 0 ? value[0].orderNumber : "");
+
+  return `${modalTitle} : ${orderNumber}`;
+}
+
 function TrackOrderModal({ data, trackingConfig }) {
-  console.log("TrackOrderModal");
-  console.log(trackingConfig);
+
   return (
     <div>
+      <div>{data?.trackings?.length > 1 ? trackingConfig.multipleOrderInformation : ""}</div>
       {data?.trackings?.map((tracking, index) => {
-        console.log(tracking);
         return <MyOrderTrackings key={index} tracking={tracking} trackingIcons={trackingConfig.trackingIcons}></MyOrderTrackings>;
       })}
     </div>

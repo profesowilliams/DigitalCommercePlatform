@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
-import TrackOrderModal from './TrackOrderModal/TrackOrderModal';
+import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 
 function OrdersGrid(props) {
     const componentProp = JSON.parse(props.componentProp);
@@ -144,6 +144,8 @@ function OrdersGrid(props) {
         }
     }
 
+
+
     const columnDefs = [
         {
             headerName: 'Order #',
@@ -232,7 +234,7 @@ function OrdersGrid(props) {
                                 <TrackOrderModal data={data} trackingConfig={componentProp.trackingConfig}></TrackOrderModal>
                             ),
                             properties: {
-                                title: componentProp.trackingConfig?.modalTitle,
+                                title: getTrackingModalTitle(componentProp.trackingConfig?.modalTitle, value),
                             }
                         });
                     }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>

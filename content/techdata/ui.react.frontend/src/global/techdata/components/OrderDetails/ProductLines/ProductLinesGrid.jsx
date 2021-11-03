@@ -3,7 +3,7 @@ import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
-import TrackOrderModal from "../../OrdersGrid/TrackOrderModal/TrackOrderModal";
+import TrackOrderModal, {getTrackingModalTitle} from "../../OrdersGrid/TrackOrderModal/TrackOrderModal";
 import useGridFiltering from "../../../hooks/useGridFiltering";
 import OrderDetailsSearch from "../OrderDetailsGridSearch/OrderDetailsGridSearch";
 import GridSearchCriteria from "../../Grid/GridSearchCriteria";
@@ -292,7 +292,7 @@ function ProductLinesGrid({
                       <TrackOrderModal data={data} trackingConfig={gridProps.trackingConfig}></TrackOrderModal>
                   ),
                   properties: {
-                    title: gridProps.trackingConfig?.modalTitle,
+                    title: getTrackingModalTitle(componentProp.trackingConfig?.modalTitle, value),
                   }
                 });
               }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
