@@ -35,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog.All.DefaultCatalog")).Returns("FCS");
+            _siteSettingsMock.Setup(s => s.TryGetSetting("Search.UI.DefaultIndicators")).Returns("[{ \"Group\":\"AvailabilityType\", \"Refinements\":[{ \"Id\":\"DropShip\", \"ValueId\":\"Y\" },{ \"Id\": \"Warehouse\", \"ValueId\": \"Y\" }, { \"Id\":\"Virtual\", \"ValueId\":\"Y\" }]},{ \"Group\":\"ProductStatus\", \"Refinements\":[{\"Id\":\"DisplayStatus\",\"ValueId\":\"Allocated\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"PhasedOut\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"Active\"}]},{\"Group\":\"RANGE\",\"Refinements\":[{\"Id\":\"inStock\",\"RANGE\":{\"MIN\": 1}}]}]");
         }
 
         [Theory]
