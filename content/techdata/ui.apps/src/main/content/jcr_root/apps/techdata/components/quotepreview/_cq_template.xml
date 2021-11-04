@@ -7,6 +7,7 @@
     dealsFoundLabel="Deal(s) Found"
     bidLabel="Bid:"
     versionLabel="Version:"
+    referenceMaxCharacterError="Maximum amount of characters exceeded"
     spaIdLabel="Deal ID:"
     endUserNameLabel="End User:"
     errorGettingDealsLabel="There was an error trying to get the Deals, please try again."

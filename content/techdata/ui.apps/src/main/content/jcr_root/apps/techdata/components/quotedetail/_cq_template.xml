@@ -53,7 +53,6 @@
     sourceLabel="Source"
     tierLabel="Tier"
     referenceLabel="Reference"
-    referenceMaxCharacterError="Maximum amount of characters exceeded"
     dealLabel="Deal"
     resellerContactLabel="Your Company Information"
     endUserContactLabel="End User Information"

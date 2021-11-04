@@ -347,7 +347,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                             type="text"/>
                             
                     </div>
-                    <span className={`characterError ${characterError && `showError` }`}>
+                    <span className={`characterError ${characterError ? `characterError--show` : `characterError--hide`}`}>
                         {info.referenceMaxCharacterError}
                     </span>
                     {!hideDealSelector && (

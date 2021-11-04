@@ -143,9 +143,6 @@ use(function() {
         informationTab["referenceLabel"] = properties["referenceLabel"];
     }
 
-    if (properties && properties["referenceMaxCharacterError"]) {
-        informationTab["referenceMaxCharacterError"] = properties["referenceMaxCharacterError"];
-    }
     if (properties && properties["dealLabel"]) {
         informationTab["dealLabel"] = properties["dealLabel"];
     }

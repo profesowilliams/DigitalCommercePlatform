@@ -105,10 +105,15 @@
 }
 
 .characterError {
-    display: none;
     font-size: 10px;
     color: red;
     text-transform: capitalize;
+    &--hide{
+        display: none;
+    }
+    &--show{
+        display: block;
+    }
 }
 
 .showError {

@@ -83,6 +83,10 @@ use(['../common/utils.js'], function (utils) {
         informationTab["referenceLabel"]  = properties["referenceLabel"];
     }
 
+    if (properties && properties["referenceMaxCharacterError"]) {
+        informationTab["referenceMaxCharacterError"] = properties["referenceMaxCharacterError"];
+    }
+
     if (properties && properties["searchDealsPlaceholder"]) {
         informationTab["searchDealsPlaceholder"]  = properties["searchDealsPlaceholder"];
     }

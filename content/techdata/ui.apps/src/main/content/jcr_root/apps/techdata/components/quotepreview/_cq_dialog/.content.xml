@@ -210,6 +210,12 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldLabel="Reference Label"
                                                         name="./referenceLabel"/>
+                                                    <referenceMaxCharacterError
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldDescription="Maximum amount of characters exceeded"
+                                                        fieldLabel="Maximum amount of characters exceeded"
+                                                        name="./referenceMaxCharacterError"/>  
                                                     <dealLabel
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
