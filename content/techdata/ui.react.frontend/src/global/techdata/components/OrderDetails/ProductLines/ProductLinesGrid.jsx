@@ -292,7 +292,7 @@ function ProductLinesGrid({
                       <TrackOrderModal data={data} trackingConfig={gridProps.trackingConfig}></TrackOrderModal>
                   ),
                   properties: {
-                    title: getTrackingModalTitle(componentProp.trackingConfig?.modalTitle, value),
+                    title: getTrackingModalTitle(gridProps.trackingConfig?.modalTitle, value),
                   }
                 });
               }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
