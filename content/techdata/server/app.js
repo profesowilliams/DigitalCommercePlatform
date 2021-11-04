@@ -957,7 +957,47 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "email": "accounts.payable@telos.com",
           "phoneNumber": "7037243800"
         },
-        "source": [],
+        "source": [{
+          "type": "Vendor Quote",
+          "value": "4734509146"
+        }, {
+          "type": "Deal",
+          "value": "686450750"
+        }, {
+          "type": "Estimate Id",
+          "value": "NH114095623CY"
+        }],
+        "attributes": [{
+          "name": "VENDORQUOTEID",
+          "value": "4734509146"
+        }, {
+          "name": "DF_CONFIRMATION_NO",
+          "value": "1320795298"
+        }, {
+          "name": "PRICELISTID",
+          "value": "1109"
+        }, {
+          "name": "CustomerPoNumber",
+          "value": "JoseDemoOctober_Deal-B-again"
+        }, {
+          "name": "VENDOR",
+          "value": "CISCO"
+        }, {
+          "name": "DEALIDENTIFIER",
+          "value": "686450750"
+        }, {
+          "name": "VENDORQUOTETYPE",
+          "value": "CCW"
+        }, {
+          "name": "INTERNAL_COMMENT",
+          "value": "Can't check UAN with no renewalQuoteId."
+        }, {
+          "name": "ShipCompleteType",
+          "value": "NA"
+        }, {
+          "name": "TAKEOVER",
+          "value": "true"
+        }],
         "notes": null,
         "items": getItems(4),
         "id": "4009611164",

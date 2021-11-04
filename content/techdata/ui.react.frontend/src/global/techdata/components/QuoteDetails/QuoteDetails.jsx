@@ -156,33 +156,61 @@ const QuoteDetails = ({ componentProp }) => {
     exportOption?.key === "exportToPDF" && exportToPDF(data);
   }, [exportOption, quoteDetails, actualQuoteLinesData]);
 
-  const getAttributeInformation = (attributes, name) => 
+  const getSourceInformation = (attributes, type) =>
+    attributes?.find((attribute) => attribute.type.toLowerCase() === type.toLowerCase());
+
+  const getAttributeInformation = (attributes, name) =>
     attributes?.find((attribute) => attribute.name.toUpperCase() === name);
 
-  const getGeneralInformationData = (quoteDetails) => {
-    const dealIdAttribute = getAttributeInformation(quoteDetails.attributes, 'DEALIDENTIFIER');
-    const sourceAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDORQUOTEID');
+  const getSource = (quoteDetails) => {
+    const vendorQuoteSource = getSourceInformation(quoteDetails.source, 'Vendor Quote');
+    const estimateIdSource = getSourceInformation(quoteDetails.source, 'Estimate Id');
+
+    let source = vendorQuoteSource?.value || estimateIdSource?.value
+                ? []
+                : null;
+      
+    if (vendorQuoteSource?.value) {
+      source.push({
+        type: vendorQuoteSource?.type,
+        value: vendorQuoteSource?.value
+      });
+    }
+
+    if (estimateIdSource?.value) {
+      source.push({
+        type: estimateIdSource?.type,
+        value: estimateIdSource?.value
+      });
+    }
+
+    return source;
+  }
+
+  const getDeal = (quoteDetails) => {
+    const dealSource = getSourceInformation(quoteDetails.source, 'Deal');
     const vendorAttribute = getAttributeInformation(quoteDetails.attributes, 'VENDOR');
+
+    let deal = null;
+
+    if (dealSource?.value || vendorAttribute?.value) {
+      deal = {
+        spaId: dealSource?.value,
+        vendor: vendorAttribute?.value,
+      } 
+    }
+
+    return deal;
+  }
+
+  const getGeneralInformationData = (quoteDetails) => {
 
     let generalInformationData = {
       ...quoteDetails
     }
 
-    if (sourceAttribute?.value) {
-      generalInformationData.source = {
-        value: sourceAttribute?.value
-      }
-    }
-    else {
-      generalInformationData.source = null;
-    }
-
-    if (dealIdAttribute?.value || vendorAttribute?.value) {
-      generalInformationData.deal = {
-        spaId: dealIdAttribute?.value,
-        vendor: vendorAttribute?.value,
-      } 
-    }
+    generalInformationData.deal = getDeal(quoteDetails);
+    generalInformationData.source = getSource(quoteDetails);
 
     return generalInformationData;
   }

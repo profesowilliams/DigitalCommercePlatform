@@ -253,6 +253,25 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
             });
     };
 
+    const showSourceInformation = () => {
+        if (source.length) {
+            return (
+                <div>
+                    {source.map((option, index) =>
+                        <div key={index}>
+                            {option.type} {option.value}
+                        </div>
+                    )}
+                </div>
+            )
+        }
+        return (
+            <div>
+                {source.type} {source.value}
+            </div>
+        )
+    };
+
     return (
         <div className="cmp-qp__general-info">
             <p onClick={!readOnly ? handleEditModeChange : undefined} className="cmp-qp__general-info--title">{info.generalHeaderLabel}</p>
@@ -262,9 +281,7 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                         <div>
                             {info.sourceLabel}
                         </div>
-                        <div>
-                            {source.type} {source.value}
-                        </div>
+                        {showSourceInformation()}
                     </div>
                 }
                 {!editMode && (

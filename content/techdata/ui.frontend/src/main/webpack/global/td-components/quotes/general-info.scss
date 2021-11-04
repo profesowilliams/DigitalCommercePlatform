@@ -14,6 +14,10 @@
     }
     &--address-group {
         margin-left: 0.9375rem;
+        .cmp-qp__information-row--readonly {
+          height: unset;
+          padding-bottom: rem(2px);
+        }
     }
   }
 }
