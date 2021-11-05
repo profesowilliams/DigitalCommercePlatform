@@ -203,13 +203,10 @@ const SearchBar = ({ data, componentProp }) => {
   const renderContextMenu = () => {
     if (!searchInputFocused) {
       return null;
-    } else if (searchTermText === ""){
-      return null
     }
     return (
       <div
         className="cmp-searchbar__context-menu"
-        onFocus={() => setFocus(true)}
       >
         <SearchAreas
           areaList={areaList}
@@ -245,7 +242,6 @@ const SearchBar = ({ data, componentProp }) => {
             onChange={onSearchTermTextChange}
             onKeyPress={onSearchTermTextKeyPress}
             onFocus={toggleFocusSearchStyles}
-            onBlur={() => setFocus(false)}
             value={searchTermText}
             placeholder={placeholder}
           />
@@ -352,6 +348,8 @@ const SearchBar = ({ data, componentProp }) => {
   };
   return (
     <div
+      onMouseEnter={mobileState ? '' : gotFocus}
+      onMouseLeave={lostFocus}
       id={id}
       className={`cmp-searchbar ${ isChecked === true ? "cmp-searchbar--checked" : " " }`}>
       <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
