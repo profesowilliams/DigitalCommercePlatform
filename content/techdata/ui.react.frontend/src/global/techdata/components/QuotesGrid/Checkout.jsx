@@ -14,8 +14,27 @@ function Checkout({ line, checkoutConfig }) {
 
   async function redirectToCart(quoteId) {
     try {
-      await usPut(config.uiServiceEndPoint + `?QuoteId=${quoteId}&type=quote`);
-      window.location.replace(config.redirectUrl);
+      const response = await usPut(
+        config.uiServiceEndPoint + `?Id=${quoteId}&type=quote`
+      );
+      const statusCode = response.status;
+      const statusText = response.statusText;
+      if (statusCode === 200 && statusText === "OK") {
+        const isSuccess = response.data.content.isSuccess;
+        if (isSuccess) {
+          window.location.replace(config.redirectUrl);
+        } else {
+          console.error(`Quote ${quoteId} checkout isSuccess failed:`);
+        }
+      } else {
+        const error = response.data.error;
+        const isError = error.isError;
+        if (isError) {
+          console.error(`Quote ${quoteId} checkout failed:`);
+        } else {
+          console.error(`Quote ${quoteId} checkout failed:`);
+        }
+      }
     } catch (e) {
       console.error(`Quote ${quoteId} checkout failed:`);
       console.error(e);
