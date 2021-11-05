@@ -25,17 +25,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
         public class Response
         {
-            public List<DetailedModel> Items { get; set; }
+            public List<DetailedModel> Details { get; set; }
         }
 
         [ExcludeFromCodeCoverage]
-        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class GetRenewalQuoteDetailedHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IRenewalService _renewalsService;
             private readonly IMapper _mapper;
-            private readonly ILogger<GetRenewalsHandler> _logger;
+            private readonly ILogger<GetRenewalQuoteDetailedHandler> _logger;
 
-            public GetRenewalsHandler(IRenewalService renewalsService, IMapper mapper, ILogger<GetRenewalsHandler> logger)
+            public GetRenewalQuoteDetailedHandler(IRenewalService renewalsService, IMapper mapper, ILogger<GetRenewalQuoteDetailedHandler> logger)
             {
                 _renewalsService = renewalsService;
                 _mapper = mapper;
@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
                 var response = new Response
                 {
-                    Items = renewalsResponse
+                    Details = renewalsResponse
                 };
                 return new ResponseBase<Response> { Content = response };
             }
@@ -57,6 +57,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             {
                 public Validator()
                 {
+                    RuleFor(c => c.Id).NotNull().NotEmpty();
+                    RuleFor(c => c.Type).NotNull().NotEmpty();
                 }
             }
         }
