@@ -480,28 +480,72 @@ function ProductLinesGrid({
     });
   };
 
+  /**
+   * Funtion that get the values to filter
+   * @param {string} query 
+   */
+  const filterByProps = (query) => {
+    const items = query.split('&');
+    const filters = [];
+    items.shift();
+    items.forEach(i => {
+      const r = i.split('=');
+      const filterObject = { key: r[0], value: r[1]};
+      filters.push(filterObject)
+    });
+
+    return filters;
+  };
+
   useEffect(() => {
     quoteOption &&
       setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
   }, [quoteOption]);
 
+  /**
+   * function that filter the values specifically for the SerachBy values
+   * @param {any} object 
+   * @param {string} value 
+   * @returns
+   */
+  const filterBySearchDropDown = (value, object) => {
+    if (value === 'allLines') {
+      return object
+    }
+    if (object[value]) {
+      return object
+    }
+  }
+
+  /**
+   * Filters an array of objects using custom predicates.
+   *
+   * @param  {Array}  array: the array to filter
+   * @param  {any[]} filters: an object with the filter criteria
+   * @return {Array}
+   */
+  function filterArray(array, filters) {
+    const result = [];
+    array.forEach(item => {
+      filters.forEach(f => {
+        if (f.key === 'searchBy') {
+          const x = filterBySearchDropDown(f.value, item);
+          if (x)
+            result.push(x)
+        }
+      })
+    });
+    return result;
+  }
+
   useEffect(() => {
     if (queryChange !== '') {
-      const queryString = queryChange.queryString; 
-      const resul = queryString.split('=')[1];
-      if (resul === 'allLines') {
-        onClearSearchRequest();
-        return;
-      }
-      let _filterData = [];
-      if (resul === 'licenses') {
-        _filterData = mutableGridData.filter(m => m.license !== null)
-      } else {
-        _filterData = mutableGridData.filter(m => m.contract !== null)
-      }
+      const filters = filterByProps(queryChange.queryString); // Get filters queryString
+      const _filterData = filterArray(mutableGridData, filters); // Get filter data
+      
       setfilterGridData(_filterData)
       setFlagData(true);
-      setQuerychange('');
+      setQuerychange(''); 
     }
   },[mutableGridData, queryChange]);
 

@@ -34,7 +34,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
     label: "SearchBy",
     items: [
       { key: "allLines", value: "All Lines" },
-      { key: "contracts", value: "Contracts" },
+      { key: "contractNo", value: "Contracts" },
       { key: "licenses", value: "Licenses" },
     ],
   };
@@ -57,7 +57,6 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
     toLabel: componentProp?.toLabel ?? "To",
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
   };
-
   const _query = useRef({});
 
   function dispatchQueryChange(query) {
@@ -101,7 +100,15 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
       onQueryChanged("");
     }
   }
+  
 
+  function handleFilterChange(change, filterName) {
+    if (change) {
+      _query.current[filterName] = change;
+      dispatchQueryChange(_query.current);
+    }
+  }
+  
   function isQueryValid(query) {
     if (
       query.from?.value &&
@@ -111,13 +118,6 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
       return false;
     } else {
       return true;
-    }
-  }
-
-  function handleFilterChange(change, filterName) {
-    if (change) {
-      _query.current[filterName] = change;
-      dispatchQueryChange(_query.current);
     }
   }
 

@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
     );
     res.header(
         "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site"
+        "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer"
     );
     res.header("Consumer", "*");
     res.header("SessionId", "*");
@@ -138,7 +138,44 @@ app.post("/login", function (req, res) {
                     { number: "0009000325", name: "Company 1" },
                     { number: "0038048612", name: "Company 2" },
                 ],
-                roles: [],
+                roles: ["hasDCPAccess"],
+                roleList: [{
+                    entitlement: "CanPlaceOrder",
+                    account: "0038055347"
+                },
+                    {
+                        entitlement: " hasDCPAccess",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanViewInvoices",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanDownloadPriceFiles",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanViewCreditStatement",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CreditCardUser",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "AdminUser",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanAccessAccount",
+                        account: "0038055347"
+                    },
+                    {
+                        entitlement: "CanManageOwnProfile",
+                        account: ""
+                    }
+                ],
             },
         },
         error: { code: 0, messages: [], isError: false },
@@ -510,7 +547,7 @@ app.get("/ui-commerce/v1/quotedetails", function (req, res) {
 app.get("/ui-commerce/v1/orderdetails", function (req, res) {
   console.log(req.url)
   const id = req.query.id;
-  const response = {};
+  const response = utils.getOrderDetailsResponse();;
   res.json(response);
 }); 
 
@@ -519,6 +556,15 @@ app.get("/ui-commerce/v1/order/details", function (req, res) {
     const id = req.query.id;
     const response = utils.getOrderDetailsResponse();
     res.json(response);
+});
+
+app.get("/ui-commerce/v1/order/", function (req, res) {
+  const id = req.query.id || 0;
+  const details = req.query.details || true;
+  const pageSize = req.query.PageSize || 25;
+  const pageNumber = req.query.PageNumber || 1;
+  const response = utils.getOrderDetailsResponse();
+  res.json(response);
 });
 
 //---ORDERS GRID MOCK API---//
@@ -559,6 +605,9 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         return invoices;
     }
     for (let i = 0; i < pageSize; i++) {
+        const totalPrice = 73002.31 + getRandom(1000);
+        const statusID = getRandom(5);
+        const manufacturerExample = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 6);
         items.push({
             id: Number(`${pageNumber}${4009754974 + i}`),
             created: new Date().toISOString(),
@@ -617,6 +666,14 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
             isReturn: i % 2 ? true : false,
             currency: "USD",
             currencySymbol: "$",
+            line: Number(`${pageNumber}${4009754974 + i}`),
+            manufacturer: manufacturerExample.toUpperCase(),
+            description: "PLTNM TAB PRTNR STOCK $5+ MRC ACTIVATION",
+            quantity: getRandom(10),
+            serial: i % 2 ? 'View' : 'n/a',
+            unitPrice: totalPrice,
+            totalPrice: totalPrice,
+            shipDate: i % 2 ? new Date().toISOString() : 'Emailed',
         })
     }
 
@@ -760,10 +817,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
       items.push(
         {
           "id": i,
+          "displayLineNumber": i,
           "parent": null,
           "vendorPartNo": null,
           "manufacturer": null,
           "description": "MS321DN LASERPR 38PPM USB TAA LV",
+          "displayName": "MS321DN LASERPR 38PPM USB TAA LV",
           "quantity": 30+i,
           "unitPrice": i,
           "unitPriceFormatted": "0.00",
@@ -788,10 +847,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "children": [
             {
               "id": i+".1",
+              "displayLineNumber":  i+".1",
               "parent": i,
               "vendorPartNo": "DUO-MFA-FED",
               "manufacturer": "CISCO",
               "description": "Cisco Duo MFA edition for Federal customers",
+              "displayName": "Cisco Duo MFA edition for Federal customers",
               "quantity": 20+i,
               "unitPrice": 36,
               "unitPriceFormatted": "36.00",
@@ -836,11 +897,13 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
               "displayLineNumber": "100.1"
             },
             {
-              "id": i+".1",
+              "id": i+".2",
+              "displayLineNumber":  i+".2",
               "parent": i,
               "vendorPartNo": "SVS-DUO-FED-SUP-B",
               "manufacturer": "CISCO",
               "description": "Cisco Duo Basic Support - Federal",
+              "displayName": "Cisco Duo MFA edition for Federal customers",
               "quantity": 1,
               "unitPrice": 0,
               "unitPriceFormatted": "0.00",
@@ -902,7 +965,38 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "ancillaryChargesWithTitles": null,
           "annuity": null,
           "isSubLine": false,
-          "displayLineNumber": i
+          "displayLineNumber": i,
+          "attributes": [{
+            "name": "VENDORQUOTEID",
+            "value": "4734509146"
+          }, {
+            "name": "DF_CONFIRMATION_NO",
+            "value": "1320795298"
+          }, {
+            "name": "PRICELISTID",
+            "value": "1109"
+          }, {
+            "name": "CustomerPoNumber",
+            "value": "JoseDemoOctober_Deal-B-again"
+          }, {
+            "name": "VENDOR",
+            "value": "CISCO"
+          }, {
+            "name": "DEALIDENTIFIER",
+            "value": "686450750"
+          }, {
+            "name": "VENDORQUOTETYPE",
+            "value": "CCW"
+          }, {
+            "name": "INTERNAL_COMMENT",
+            "value": "Can't check UAN with no renewalQuoteId."
+          }, {
+            "name": "ShipCompleteType",
+            "value": "NA"
+          }, {
+            "name": "TAKEOVER",
+            "value": "true"
+          }]
         }
       )
     }
@@ -929,18 +1023,18 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         },
         "endUser": {
           "id": null,
-          "companyName": null,
-          "name": null,
-          "line1": null,
-          "line2": null,
-          "line3": null,
-          "city": null,
-          "state": null,
-          "zip": null,
-          "postalCode": null,
-          "country": null,
-          "email": null,
-          "phoneNumber": null
+          "companyName": "CLEVER CORP",
+          "name": "CLEVER CORP",
+          "line1": "68819 Miami Beach",
+          "line2": " ",
+          "line3": " ",
+          "city": "Miami",
+          "state": "Florida",
+          "zip": "56783",
+          "postalCode": "31258-3469",
+          "country": "US",
+          "email": "accounts.payable@clever.com",
+          "phoneNumber": "8148354911"
         },
         "reseller": {
           "id": null,
@@ -966,37 +1060,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         }, {
           "type": "Estimate Id",
           "value": "NH114095623CY"
-        }],
-        "attributes": [{
-          "name": "VENDORQUOTEID",
-          "value": "4734509146"
-        }, {
-          "name": "DF_CONFIRMATION_NO",
-          "value": "1320795298"
-        }, {
-          "name": "PRICELISTID",
-          "value": "1109"
-        }, {
-          "name": "CustomerPoNumber",
-          "value": "JoseDemoOctober_Deal-B-again"
-        }, {
-          "name": "VENDOR",
-          "value": "CISCO"
-        }, {
-          "name": "DEALIDENTIFIER",
-          "value": "686450750"
-        }, {
-          "name": "VENDORQUOTETYPE",
-          "value": "CCW"
-        }, {
-          "name": "INTERNAL_COMMENT",
-          "value": "Can't check UAN with no renewalQuoteId."
-        }, {
-          "name": "ShipCompleteType",
-          "value": "NA"
-        }, {
-          "name": "TAKEOVER",
-          "value": "true"
         }],
         "notes": null,
         "items": getItems(4),
@@ -1024,7 +1087,38 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         "subTotalFormatted": "5,422.30",
         "tier": "Government",
         "created": "07/14/20",
-        "expires": "12/31/21"
+        "expires": "12/31/21",
+        "attributes": [{
+            "name": "VENDORQUOTEID",
+            "value": "4734509146"
+          }, {
+            "name": "DF_CONFIRMATION_NO",
+            "value": "1320795298"
+          }, {
+            "name": "PRICELISTID",
+            "value": "1109"
+          }, {
+            "name": "CustomerPoNumber",
+            "value": "JoseDemoOctober_Deal-B-again"
+          }, {
+            "name": "VENDOR",
+            "value": "CISCO"
+          }, {
+            "name": "DEALIDENTIFIER",
+            "value": "686450750"
+          }, {
+            "name": "VENDORQUOTETYPE",
+            "value": "CCW"
+          }, {
+            "name": "INTERNAL_COMMENT",
+            "value": "Can't check UAN with no renewalQuoteId."
+          }, {
+            "name": "ShipCompleteType",
+            "value": "NA"
+          }, {
+            "name": "TAKEOVER",
+            "value": "true"
+        }]
       }
     },
     "error": {
@@ -1033,6 +1127,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
       "isError": false
     }
   }
+
   setTimeout(() => {
       res.json(response);
   }, 2000)
@@ -1244,7 +1339,35 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
                             "addressType": "CUS",
                             "phone": "8005276389",
                             "salesOrganization": "0100"
-                        }
+                        },
+                        {
+                          "addressNumber": "0001369841",
+                          "addressLine1": "4111 Northside Parkway",
+                          "addressLine2": " ",
+                          "addressLine3": " ",
+                          "city": "ATLANTA",
+                          "state": "GA",
+                          "country": "US",
+                          "zip": "30327",
+                          "email": null,
+                          "addressType": "PAY",
+                          "phone": "8005276389",
+                          "salesOrganization": "0100",
+                      },
+                      {
+                        "addressNumber": "0001369845",
+                        "addressLine1": "116 Inverness Dr E",
+                        "addressLine2": "Ste 375",
+                        "addressLine3": " ",
+                        "city": "Englewood",
+                        "state": "CO",
+                        "country": "US",
+                        "zip": "80112-5149",
+                        "email": null,
+                        "addressType": "PAY",
+                        "phone": " ",
+                        "salesOrganization": "0100",
+                      },
                     ]
                 }
             ]
@@ -1405,8 +1528,9 @@ app.get("/ui-account/v1/getVendorConnections", function (req, res) {
 });
 
 app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
+  const { orderId } = req.query;
 
-  if (!req.headers["sessionid"]) {
+  if (!req.headers["sessionid"] || orderId === '14009754975') {
     return res.status(500).json({
       error: {
         code: 0,
@@ -1419,34 +1543,60 @@ app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
 });
 
 app.get("/ui-config/v1/getdealsFor", function (req, res) {
-  const { endUserName } = req.query;
-
-  res.json({
-
-    "content": {
-      "items": [
-        {
-          "bid": "3443554545",
-          "version": "001",
-          "spaId": "0012",
-          "endUserName": endUserName,
+    const { endUserName, mfrPartNumbers, orderLevel } = req.query;
+  
+    console.log("/ui-config/v1/getdealsFor", endUserName, mfrPartNumbers, orderLevel);
+  
+    if (endUserName == 'error') {
+      res.status(500).json({
+        error: {
+          code: 0,
+          message: [],
+          isError: true,
         },
-        {
-          "bid": "212121323",
-          "version": "002",
-          "spaId": "0013",
-          "endUserName": endUserName,
-        },
-        {
-          "bid": "76676767",
-          "version": "004",
-          "spaId": "0014",
-          "endUserName": endUserName,
-        },
-      ]
+      });
+    }
+    else if (endUserName == 'empty') {
+      res.json({
+        "content": {
+          "items": [
+          ]
+        }
+      });
+    }
+    else {
+      res.json({
+        "content": {
+          "items": [
+            {
+              "bid": "3443554545",
+              "version": "001",
+              "dealId": "0012",
+              "endUserName": endUserName,
+              "vendor": "Red Hat Inc",
+              "expiryDate": "12/31/2025",
+            },
+            {
+              "bid": "212121323",
+              "version": "002",
+              "dealId": "0013",
+              "endUserName": endUserName,
+              "vendor": "Cisco",
+              "expiryDate": "12/31/2025",
+            },
+            {
+              "bid": "76676767",
+              "version": "004",
+              "dealId": "0014",
+              "endUserName": endUserName,
+              "vendor": "AMD",
+              "expiryDate": "12/31/2025",
+            },
+          ]
+        }
+      });
     }
   });
-});
 
 app.get("/ui-commerce/v1/pricingConditions", function (req, res) {
   res.json({
@@ -1715,14 +1865,30 @@ app.get("/ui-config/v1/configurations", function (req, res) {
           "configName": null,
           "endUserName": "EUMETSAT",
           "tdQuoteId": null,
-          "quotes": [
+          "quotes":[
             {
-                "id": "CD_ID__1",
-                "line": "Line_863",
-                "quantity": 6,
-                "price": 54.0,
-                "created": "8/8/2021",
-                "status": "Created"
+              "id": "CD_ID_4735099626_1",
+              "line": "513",
+              "quantity": 8,
+              "price": 49.0,
+              "created": "9/29/2021",
+              "status": "Created",
+            },
+            {
+              "id:": "CD_ID_4735099626_2",
+              "line": "901",
+              "quantity": 2,
+              "price": 62.0,
+              "created": "9/24/2021",
+              "status": "Created",
+            },
+            {
+              "id": "",
+              "line": "",
+              "quantity": 0,
+              "price": 0.0,
+              "created": "",
+              "status": "Expired",
             },
           ],
           "vendorQuoteId": null,
@@ -3060,6 +3226,23 @@ app.get("/ui-config/v1/configurations", function (req, res) {
   });
 });
 
+app.get("/ui-config/v1/estimations/validate/", function (req, res) {
+  const { id } = req.query;
+  if (!req.headers["sessionid"] || !id) {
+    return res.status(500).json({
+      error: {
+        code: 0,
+        message: [],
+        isError: true,
+      },
+    });
+  }
+  return res.status(200).json({
+    content: { isValid: true },
+    error: { code: 0, messages: [], isError: false },
+  });
+});
+
 app.get("/ui-config/v1/renewals", function (req, res) {
   res.json({
     content: {
@@ -3098,7 +3281,7 @@ app.get("/ui-config/v1/renewals", function (req, res) {
 });
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
-    const { id, isEstimateId } = req.query;
+    const { id, isEstimateId, vendor } = req.query;
 
     if (!req.headers["sessionid"] || !id || !isEstimateId) {
         return res.status(500).json({
@@ -3131,23 +3314,23 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             },
             "reseller": [
               {
-                "id": null,
-                "companyName": null,
-                "name": " ",
-                "line1": null,
-                "line2": null,
-                "line3": null,
-                "city": null,
-                "state": null,
-                "zip": null,
-                "postalCode": null,
-                "country": null,
+                "companyName": "Some Company",
+                "name": "thomas",
+                "addressNumber": "0001369841",
+                "line1": "4111 Northside Parkway",
+                "line2": " ",
+                "line3": " ",
+                "city": "ATLANTA",
+                "state": "GA",
+                "country": "US",
+                "postalCode": "30327",
                 "email": null,
-                "phoneNumber": null
+                "phoneNumber": "8005276389",
+                "salesOrganization": "0100",
               }
             ],
             "source": {
-              "type": "Estimate",
+              "type": isEstimateId=== 'true' ? "Estimate": "VendorQuote",
               "value": "QJ128146301OP"
             },
             "notes": null,
@@ -4367,10 +4550,10 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             "currencySymbol": "$",
             "subTotal": 96957.48,
             "subTotalFormatted": "96,957.48",
-            "tier": null,
+            "tier": "EduErate",
             "configurationId": "QJ128146301OP",
             "description": "Deal ID 52296358",
-            "vendor": "CISCO"
+            "vendor": vendor || "CISCO"
           }
         }
       },
@@ -4385,19 +4568,71 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     }, 2000)
 });
 
+// Punchout to vendor - CREATE CONFIG //
 app.post("/ui-config/v1/getPunchOutURL", function (req,res){
   console.log('test post punchout url ✌✌✌');
   if (!req.headers["sessionid"]) return res.status(401);
   res.json({
-    "content": {
-        "url": "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-9ff8842-179c840b9ad-53ce4dd807efb79ac258ea8d4ed4ce77&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome%3FpunchinEstimateID%3D&P4=edit&P5=ZU125923843DQ&P6=N"
-    },
+    "content":null,
     "error": {
         "code": 0,
-        "messages": [],
+        "messages": ["not bla blas"],
         "isError": false
     }
 }) })
+//Replace cart id//
+app.put("/ui-content/v1/replaceCart", function (req, res) {
+  console.log("test post punchout url ✌✌✌");
+  if (!req.headers["sessionid"]) return res.status(401);
+  res.json({
+    "content": {
+    "isSuccess": false
+    },
+    "error": {
+    "code": 0,
+    "messages": [],
+    "isError": false
+    }
+    });
+});
+
+//---QUICK QUOTE CONTINUE BTN---//
+app.post("/ui-commerce/v1/quote/create", function (req, res) {
+  if (!req.headers["sessionid"]) return res.status(401);
+
+  res.json({
+    content: {
+      quoteId: "121772374",
+      confirmationId: "1734535579",
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  });
+});
+
+// Punchout to vendor - CREATE CONFIG //
+app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
+  console.log(req.body);
+
+  if (!req.headers["sessionid"]) return res.status(401);
+
+  res.json({
+      content: {
+           url: "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-4009d55f-17ba623a67f-c99417e13b6c4681f7d4d16d678eaa5e&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome&P4=CREATE&P6=N"
+      },
+      error: {
+          code: 0,
+          messages: [],
+          isError: false
+      }
+  });
+});
+
+
+
 
 //---QUICK QUOTE CONTINUE BTN---//
 app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
@@ -4409,31 +4644,47 @@ app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
 
     res.json({
         content: {
-            // some data from respone
+          quoteId: "121772374",
+          confirmationId: "1734535579",
         },
         error: {
-            code: "",
-            message: "",
-            isError: false,
+          code: 0,
+          messages: [],
+          isError: false,
         },
     });
 });
 
-// Punchout to vendor - CREATE CONFIG //
-app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
-    console.log(req.body);
 
-    if (!req.headers["sessionid"]) return res.status(401);
-
-    res.json({
+//---TOP n OPEN CONFIG MOCK API---//
+app.get("/ui-account/v1/topActions", function (req, res) {
+  // try {
+    function getRandom(maxValue) {
+      return Math.floor(Math.random() * maxValue);
+  }
+    if (!req.headers["sessionid"]) {
+      return res.status(500).json({
+          error: {
+              code: 0,
+              message: ['No SessionId'],
+              isError: true,
+          },
+      });
+    }
+    const response = {
         content: {
-             url: "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-4009d55f-17ba623a67f-c99417e13b6c4681f7d4d16d678eaa5e&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome&P4=CREATE&P6=N"
+            summary: {
+              newOpportunities: getRandom(20),
+              ordersBlocked: getRandom(20),
+              expiringDeals: getRandom(20)
+            },
         },
         error: {
             code: 0,
-            messages: [],
-            isError: false
-        }
-    });
-});
+            message: [],
+            isError: false,
+        },
+    };
 
+    res.json(response);
+});
