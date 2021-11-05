@@ -35,13 +35,6 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "teaser.html",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/teaser.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
                 filename: "teaser-demo.html",
                 template: path.resolve(
                     __dirname,
@@ -53,13 +46,6 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/link-list.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
-                filename: "teaser-comp",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/partials/teaser/teaser.html"
                 ),
             }),
             new HtmlWebpackPlugin({
@@ -468,13 +454,6 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "teaser-hero.html",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/teaser-hero.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
                 filename: "teaser-alert.html",
                 template: path.resolve(
                     __dirname,
@@ -679,13 +658,6 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/partials/teaser/triptych-teaser.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
-                filename: "quadriptych-teasers",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/partials/teaser/quadriptych-teasers.html"
                 ),
             }),
             new HtmlWebpackPlugin({

@@ -1,29 +1,20 @@
-.cmp-teaser {
-}
+.cmp-teaser {}
 
-.cmp-teaser__image {
-}
+.cmp-teaser__image {}
 
-.cmp-teaser__content {
-}
+.cmp-teaser__content {}
 
-.cmp-teaser__pretitle {
-}
+.cmp-teaser__pretitle {}
 
-.cmp-teaser__title {
-}
+.cmp-teaser__title {}
 
-.cmp-teaser__title-link {
-}
+.cmp-teaser__title-link {}
 
-.cmp-teaser__description {
-}
+.cmp-teaser__description {}
 
-.cmp-teaser__action-container {
-}
+.cmp-teaser__action-container {}
 
-.cmp-teaser__action-link {
-}
+.cmp-teaser__action-link {}
 
 @mixin teaser-default {
     .cmp-teaser {
@@ -31,9 +22,11 @@
         display: block;
         width: 100%;
         overflow: hidden;
+
         &__pretitle {
             color: get-color(brand-white);
         }
+
         &__content {
             position: absolute;
             top: 0;
@@ -45,11 +38,13 @@
             justify-content: flex-start;
             padding: rem(20px);
             padding-top: rem(70px);
+
             @include desktop {
                 padding-left: rem(60px);
                 padding-top: rem(78px);
             }
         }
+
         &__title {
             margin: 0;
             font-size: rem(24px);
@@ -58,6 +53,7 @@
             line-height: rem(30px);
             text-shadow: 0 2px 4px get-color(brand-black);
             margin-bottom: rem(30px);
+
             &:after {
                 font-weight: 600;
                 padding: rem(0px 6px);
@@ -67,20 +63,24 @@
                 font-size: 15px;
                 letter-spacing: 0;
             }
+
             @include desktop {
                 font-size: rem(40px);
                 line-height: rem(60px);
+
                 &:after {
                     padding: rem(1px 9px);
                     font-size: 20px;
                     top: -27px;
                 }
             }
+
             &-link {
                 color: get-color(brand-white);
                 text-decoration: none;
             }
         }
+
         &__description {
             color: get-color(brand-white);
             font-size: 16px;
@@ -88,20 +88,24 @@
             line-height: 20px;
             margin-bottom: rem(30px);
             text-shadow: 0 2px 4px #000000;
+
             @include desktop {
                 font-size: rem(22px);
                 line-height: rem(33px);
                 max-width: 400px;
             }
+
             p {
                 margin: 0;
             }
         }
+
         &__image {
             .cmp-image {
                 &__image {
                     width: 100%;
                     height: auto;
+
                     @include tablet {
                         min-height: 450px;
                         object-fit: cover;
@@ -114,11 +118,13 @@
 
 .hero-style-1 {
     @include teaser-default();
+
     @include desktop {
         .cmp-teaser {
             &__pretitle {
                 font-size: rem(45px);
             }
+
             &__title {
                 font-size: rem(70px);
                 font-weight: 600;
@@ -127,6 +133,7 @@
                 order: 1;
                 margin: 0;
             }
+
             &__description {
                 font-size: 30px;
                 line-height: 41px;
@@ -135,6 +142,7 @@
             }
         }
     }
+
     @include tablet {
         .cmp-teaser {
             &__pretitle {
@@ -143,12 +151,14 @@
                 letter-spacing: 0;
                 line-height: 30px;
             }
+
             &__title {
                 font-size: rem(24px);
                 font-weight: bold;
                 line-height: 30px;
                 order: 1;
             }
+
             &__description {
                 margin: 0;
                 font-size: rem(24px);
@@ -161,16 +171,20 @@
 
 .hero-style-2 {
     @include teaser-default();
+
     .cmp-teaser {
         &__pretitle {
             color: get-color(text-light-gray);
         }
+
         &__title {
             text-shadow: none;
+
             &-link {
                 color: get-color(text-light-gray);
             }
         }
+
         &__description {
             color: get-color(text-light-gray);
             text-shadow: none;
@@ -184,8 +198,9 @@
 
 .hero-style-4 {
     position: relative;
-    &__image {
-    }
+
+    &__image {}
+
     .cmp-teaser__content {
         display: flex;
         position: absolute;
@@ -198,9 +213,11 @@
         //color: get-color(brand-white);
         padding: 3.438rem;
     }
+
     .cmp-teaser__pretitle {
         display: none;
     }
+
     .cmp-teaser__title {
         //width: 3rem(50px
         float: left;
@@ -216,6 +233,7 @@
         border-right: 0.063rem solid #979797;
         box-sizing: border-box;
         font-weight: 400;
+
         &:after {
             font-weight: 600;
             padding: rem(0px 6px);
@@ -225,6 +243,7 @@
             font-size: 15px;
             letter-spacing: 0;
         }
+
         @include desktop {
             &:after {
                 padding: rem(1px 9px);
@@ -233,12 +252,96 @@
             }
         }
     }
-    &__title-link {
-    }
+
+    &__title-link {}
+
     .cmp-teaser__description {
         //width: 38.rem(80px);
         float: left;
         width: 50%;
+        text-shadow: 0 0 0.063rem #919599;
+        font-family: "Open Sans", sans-serif;
+        font-weight: normal;
+        font-size: 1rem;
+        letter-spacing: 0rem;
+        line-height: 1.375rem;
+        padding-left: 3.438rem;
+        padding-right: 0;
+        padding-bottom: 0;
+        margin: 0rem;
+        max-width: rem(550px);
+    }
+}
+
+.hero-style-5 {
+    position: relative;
+
+    .cmp-teaser__image {
+        img {
+            width: 100%;
+            overflow: hidden;
+        }
+    }
+
+    .cmp-teaser__content {
+        display: flex;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
+        //color: get-color(brand-white);
+        padding: 3.438rem;
+    }
+
+    svg {
+       // width: rem(200px);
+      }
+
+    .cmp-teaser__pretitle {
+        display: none;
+    }
+
+    .cmp-teaser__title {
+        float: left;
+        max-width: rem(530px);
+        font-family: "Open Sans", sans-serif;
+        text-shadow: 0 0 0.063rem #919599;
+        font-size: 2rem;
+        letter-spacing: 0rem;
+        line-height: 2.688rem;
+        text-align: right;
+        padding-right: 4.438rem;
+        border-right: 0.063rem solid #979797;
+        box-sizing: border-box;
+        font-weight: 400;
+
+        &:after {
+            font-weight: 600;
+            padding: rem(0px 6px);
+            position: relative;
+            top: -8px;
+            text-shadow: none;
+            font-size: 15px;
+            letter-spacing: 0;
+        }
+
+        @include desktop {
+            &:after {
+                padding: rem(1px 9px);
+                font-size: 20px;
+                top: -10px;
+            }
+        }
+    }
+
+    &__title-link {}
+
+    .cmp-teaser__description {
+        //width: 38.rem(80px);
+        float: left;
         text-shadow: 0 0 0.063rem #919599;
         font-family: "Open Sans", sans-serif;
         font-weight: normal;
@@ -269,6 +372,7 @@
             }
         }
     }
+
     &-blue {
         .cmp-teaser__title {
             &:after {
@@ -284,13 +388,32 @@
     &--onDark-theme {
         color: get-color(brand-white) !important;
     }
+
     &--onLight-theme {
         color: get-color(text-light-gray) !important;
     }
 }
 
+.cmp-svg-color {
+    &__forDark-background {
+        svg {
+            path {
+                fill: get-color(brand-white);
+            }
+        }
+    }
+    &__forLight-background {
+        svg {
+            path {
+                fill: get-color(brand-black);
+            }
+        }
+    }
+}
+
 // Triptych Teaser
 .cmp-light-theme {
+
     // width: 100%; this is a temporary line for  testing in AEM
     .cmp-teaser {
         display: flex;
@@ -298,6 +421,7 @@
         margin: rem(35px) rem(10px);
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
         width: min-content;
+
         &:hover {
             .cmp-teaser__title {
                 background-color: get-color(brand-light-blue);
@@ -305,21 +429,26 @@
                 height: rem(70px);
             }
         }
+
         &__description {
             display: none;
         }
+
         &__content {
             width: rem(460px);
             height: rem(70px);
             position: relative;
         }
+
         &__image {
             width: fit-content;
+
             img {
                 object-fit: cover;
                 width: rem(460px);
             }
         }
+
         &__title {
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
@@ -335,6 +464,7 @@
             padding: 0;
             margin: 0;
         }
+
         &__title-link {
             color: get-color(brand-white);
             text-decoration: none;
@@ -349,6 +479,7 @@
         margin: rem(35px) rem(10px);
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
         width: min-content;
+
         &:hover {
             .cmp-teaser__title {
                 background-color: get-color(brand-light-blue);
@@ -356,21 +487,26 @@
                 height: rem(70px);
             }
         }
+
         &__description {
             display: none;
         }
+
         &__content {
             width: rem(460px);
             height: rem(70px);
             position: relative;
         }
+
         &__image {
             width: fit-content;
+
             img {
                 object-fit: fill;
                 width: rem(460px);
             }
         }
+
         &__title {
             background-color: get-color(light-see-through-background);
             color: get-color(brand-blue);
@@ -394,6 +530,7 @@
     justify-content: space-between;
     flex-direction: row;
     padding: rem(32px);
+
     .cmp-teaser {
         box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
         background-color: get-color(brand-white);
@@ -401,22 +538,27 @@
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
+
         &:hover {
             outline: rem(2px) solid get-color(brand-blue) !important;
             box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
             .cmp-teaser__title {
                 background-color: get-color(brand-white) !important;
                 color: get-color(brand-light-blue) !important;
+
                 .cmp-teaser__title-link {
                     color: get-color(brand-light-blue) !important;
                 }
             }
         }
+
         img {
             width: 100%;
             height: auto;
             object-fit: fill;
         }
+
         .cmp-teaser__title {
             width: 100%;
             min-height: rem(45px);
@@ -426,25 +568,30 @@
             font-size: $font-size-custom-medium;
             font-weight: $font-weight-bold;
             padding-top: rem(5px);
+
             .cmp-teaser__title-link {
                 text-decoration: none;
                 color: get-color(brand-white);
             }
         }
+
         .cmp-teaser__content {
             font-size: $font-size-custom-xxsmall;
             color: get-color(brand-text-gray);
             //   min-height: rem(390px);
             min-height: auto;
+
             &-title {
                 font-size: $font-size-medium;
                 font-weight: bold;
             }
+
             .cmp-teaser__description {
                 padding: rem(25px);
                 line-height: rem(16px);
             }
         }
+
         &__image {
             width: 100%;
         }
@@ -453,6 +600,7 @@
 
 .cmp-six-teasers {
     position: relative;
+
     .cmp-teaser {
         display: flex;
         flex-direction: column;
@@ -460,16 +608,19 @@
         box-shadow: 0 0 rem(4px) rem(1px) get-color(brand-box-shadow);
         width: rem(215px);
         height: rem(353px);
+
         &:hover {
             box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
             outline: solid #000c21 !important;
             box-sizing: content-box;
         }
+
         &__content {
             height: 100%;
             line-height: rem(14px);
             position: relative;
         }
+
         &__title,
         h2 {
             color: get-color(brand-blue);
@@ -478,23 +629,27 @@
             padding: rem(14px) rem(18px);
             font-weight: 600 !important;
             margin: 0 !important;
+
             a {
                 font-size: $font-size-small !important;
                 color: get-color(brand-blue);
                 text-decoration: none;
             }
         }
+
         &__description {
             color: get-color(text-light-charcoal);
             font-size: $font-size-xsmall;
             font-weight: normal;
             padding: 0 rem(18px);
         }
+
         &__action-link,
         &__title-link {
             text-decoration: none !important;
             color: get-color(brand-white);
         }
+
         &__image {
             img {
                 object-fit: fill;
@@ -502,6 +657,7 @@
                 height: rem(134px);
             }
         }
+
         &__action-container {
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
@@ -517,6 +673,7 @@
             padding: 0;
             margin: 0;
             cursor: pointer;
+
             &:hover {
                 background-color: get-color(brand-light-blue);
                 width: rem(215px);
@@ -541,19 +698,24 @@
             flex-direction: column;
             justify-content: space-between;
             height: rem(380px);
+
             &:hover {
                 box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+
                 .cmp-teaser__title {
                     background-color: get-color(brand-blue) !important;
                     color: get-color(brand-white) !important;
+
                     &-link {
                         color: get-color(brand-white) !important;
                     }
                 }
             }
+
             &__content {
                 min-height: auto;
                 width: 100%;
+
                 .cmp-teaser__description {
                     //min-height: 17rem;
                     min-height: auto;
@@ -567,14 +729,16 @@
                     margin-bottom: rem(14px);
                 }
             }
+
             &__title {
                 font-size: rem(22px);
                 line-height: rem(45px);
                 font-weight: normal;
                 padding: 0;
             }
+
             &__image {
-                order: 2; 
+                order: 2;
                 width: 100%;
                 overflow: hidden;
                 height: rem(155px);

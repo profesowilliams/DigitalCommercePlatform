@@ -6,9 +6,11 @@
     display: block;
     width: 100%;
     overflow: hidden;
+
     &__pretitle {
       color: get-color(brand-white);
     }
+
     &__content {
       position: absolute;
       top: 0;
@@ -20,11 +22,13 @@
       justify-content: flex-start;
       padding: rem(20px);
       padding-top: rem(70px);
+
       @include desktop {
         padding-left: rem(60px);
         padding-top: rem(78px);
       }
     }
+
     &__title {
       margin: 0;
       font-size: rem(24px);
@@ -33,6 +37,7 @@
       line-height: rem(30px);
       text-shadow: 0 2px 4px get-color(brand-black);
       margin-bottom: rem(30px);
+
       &:after {
         font-weight: 600;
         padding: rem(0px 6px);
@@ -42,20 +47,24 @@
         font-size: 15px;
         letter-spacing: 0;
       }
+
       @include desktop {
         font-size: rem(40px);
         line-height: rem(60px);
+
         &:after {
           padding: rem(1px 9px);
           font-size: 20px;
           top: -27px;
         }
       }
+
       &-link {
         color: get-color(brand-white);
         text-decoration: none;
       }
     }
+
     &__description {
       color: get-color(brand-white);
       font-size: 16px;
@@ -63,20 +72,24 @@
       line-height: 20px;
       margin-bottom: rem(30px);
       text-shadow: 0 2px 4px #000000;
+
       @include desktop {
         font-size: rem(22px);
         line-height: rem(33px);
         max-width: 400px;
       }
+
       p {
         margin: 0;
       }
     }
+
     &__image {
       .cmp-image {
         &__image {
           width: 100%;
           height: auto;
+
           @include tablet {
             min-height: 450px;
             object-fit: cover;
@@ -88,6 +101,7 @@
 }
 
 .cmp-teaser {
+
   // Add "cmp-teaser--feature-callout" class for Feature Callout Variation
   &--feature-callout {
     margin-bottom: rem(100px);
@@ -95,12 +109,14 @@
     @include media("<lg") {
       margin-bottom: rem(60px);
     }
+
     .cmp-teaser__image {
       position: relative;
       width: 100%;
       padding-top: 56.25%;
       z-index: 1;
       background-size: cover;
+
       .cmp-image__image {
         width: 100%;
         height: 100%;
@@ -109,6 +125,7 @@
         top: rem(0);
       }
     }
+
     .cmp-teaser__content {
       padding: 0 rem(54px) rem(45px) rem(50px);
       border: rem(1px) solid get-color(secondary-light-grey);
@@ -117,12 +134,14 @@
         padding: 0 rem(12px) rem(10px) rem(12px);
       }
     }
+
     .cmp-teaser__disclaimer {
       color: get-color(brand-black);
       font-size: rem(11px);
       line-height: 1.45;
       font-weight: 300;
     }
+
     .cmp-teaser__action-link {
       line-height: rem(24px);
       background-color: get-color(brand-gold);
@@ -136,6 +155,7 @@
       text-decoration: none;
     }
   }
+
   // Add "cmp-teaser--carousel-item" class for carousel Variation
   &--carousel-item {
     margin-left: auto;
@@ -169,6 +189,7 @@
           display: block;
           position: static;
         }
+
         .cmp-image__image {
           object-fit: cover;
           height: auto;
@@ -180,22 +201,27 @@
           height: rem(500px);
         }
       }
+
       &__title {
-        > * {
+        >* {
           margin: rem(0);
         }
+
         @include media(">=lg") {
           padding: rem(0 29px 6px 0);
         }
       }
+
       &__description {
         p {
           margin: rem(0);
         }
+
         @include media(">=lg") {
           padding: rem(0 29px 26px 0);
         }
       }
+
       &__action-container {
         @include media(">=lg") {
           margin-bottom: rem(20px);
@@ -209,6 +235,7 @@
         padding: 0;
         box-sizing: border-box;
         box-sizing: content-box;
+
         // Gaurav's conflict styles TBD
         //padding-bottom: rem(48px);
         //width: rem(392px);
@@ -257,6 +284,7 @@
               top: rem(0);
             }
           }
+
           &__content {
             font-family: "Open Sans", sans-serif;
             padding-top: rem(50px);
@@ -295,9 +323,11 @@
               font-size: rem(32px);
               margin: rem(12px) 0 0 rem(12px);
               position: relative;
+
               &.blue {
                 background-color: get-color(td-lightblue);
                 color: get-color(brand-white);
+
                 &:before {
                   content: "+";
                   position: absolute;
@@ -306,9 +336,11 @@
                   line-height: rem(0);
                 }
               }
+
               &.white {
                 background-color: get-color(brand-white);
                 color: get-color(td-lightblue);
+
                 &:before {
                   content: "+";
                   position: absolute;
@@ -319,6 +351,7 @@
               }
             }
           }
+
           &__description {
             font-family: "Open Sans", sans-serif;
             font-size: rem(30px);
@@ -326,13 +359,16 @@
             position: relative;
             top: rem(-145px);
           }
+
           &__action-container {
             font-family: "Open Sans", sans-serif;
           }
+
           &__action-link {
             font-family: "Open Sans", sans-serif;
           }
         }
+
         /* end hero 1 */
         /* hero 2 */
         &--hero-style-2 {
@@ -341,6 +377,7 @@
             display: block;
             width: 100%;
             overflow: hidden;
+
             &__content {
               position: absolute;
               top: 0;
@@ -352,11 +389,13 @@
               justify-content: flex-start;
               padding: rem(20px);
               padding-top: rem(70px);
+
               @include desktop {
                 padding-left: rem(60px);
                 padding-top: rem(78px);
               }
             }
+
             &__title {
               margin: 0;
               font-size: rem(24px);
@@ -365,6 +404,7 @@
               line-height: rem(30px);
               text-shadow: 0 2px 4px get-color(brand-black);
               margin-bottom: rem(30px);
+
               &:after {
                 content: "+";
                 color: get-color(brand-white);
@@ -377,20 +417,24 @@
                 font-size: 15px;
                 letter-spacing: 0;
               }
+
               @include desktop {
                 font-size: rem(40px);
                 line-height: rem(60px);
+
                 &:after {
                   padding: rem(1px 9px);
                   font-size: 20px;
                   top: -27px;
                 }
               }
+
               &-link {
                 color: get-color(brand-white);
                 text-decoration: none;
               }
             }
+
             &__description {
               color: get-color(brand-white);
               font-size: 16px;
@@ -398,15 +442,18 @@
               line-height: 20px;
               margin-bottom: rem(30px);
               text-shadow: 0 2px 4px #000000;
+
               @include desktop {
                 font-size: rem(22px);
                 line-height: rem(33px);
                 max-width: 400px;
               }
+
               p {
                 margin: 0;
               }
             }
+
             &__image {
               .cmp-image {
                 &__image {
@@ -417,6 +464,7 @@
             }
           }
         }
+
         /* end hero 2 */
 
         /* hero 3 */
@@ -427,6 +475,7 @@
           box-sizing: border-box;
           background-size: cover;
           overflow: hidden;
+
           &__content {
             font-family: "Open Sans", sans-serif;
             padding-top: rem(78px);
@@ -441,34 +490,40 @@
             width: 100%;
             top: rem(0);
           }
+
           &__title {
             display: flex;
             font-family: "Open Sans", sans-serif;
             font-size: rem(40px);
           }
+
           &__title-link {
             font-family: "Open Sans", sans-serif;
           }
+
           &__description {
             font-family: "Open Sans", sans-serif;
             font-size: rem(22px);
             width: 42%;
           }
+
           &__action-container {
             font-family: "Open Sans", sans-serif;
             width: rem(226px);
           }
         }
+
         /* end hero 3 */
         /* hero 4 */
         &--hero-style-4 {
-          &__image {
-          }
+          &__image {}
+
           &__content {
             padding-top: rem(137px);
             padding-bottom: rem(80px);
             display: flex;
           }
+
           &__title {
             //width: 3rem(50px);
             width: 50%;
@@ -484,8 +539,9 @@
             box-sizing: border-box;
             font-weight: 400;
           }
-          &__title-link {
-          }
+
+          &__title-link {}
+
           &__description {
             //width: 38.rem(80px);
             width: 50%;
@@ -501,7 +557,94 @@
             margin: rem(0);
           }
         }
+
         /* end hero 4 */
+        /* hero 5 */
+
+        .hero-style-5 {
+          position: relative;
+
+          .cmp-teaser__image {
+            img {
+              width: 100%;
+              overflow: hidden;
+            }
+          }
+
+          .cmp-teaser__content {
+            display: flex;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            //color: get-color(brand-white);
+            padding: 3.438rem;
+          }
+
+          svg {
+            //width: rem(120px);
+          }
+
+          .cmp-teaser__pretitle {
+            display: none;
+          }
+
+          .cmp-teaser__title {
+            float: left;
+            max-width: rem(530px);
+            font-family: "Open Sans", sans-serif;
+            text-shadow: 0 0 0.063rem #919599;
+            font-size: 2rem;
+            letter-spacing: 0rem;
+            line-height: 2.688rem;
+            text-align: right;
+            padding-right: 4.438rem;
+            border-right: 0.063rem solid #979797;
+            box-sizing: border-box;
+            font-weight: 400;
+
+            &:after {
+              font-weight: 600;
+              padding: rem(0px 6px);
+              position: relative;
+              top: -8px;
+              text-shadow: none;
+              font-size: 15px;
+              letter-spacing: 0;
+            }
+
+            @include desktop {
+              &:after {
+                padding: rem(1px 9px);
+                font-size: 20px;
+                top: -10px;
+              }
+            }
+          }
+
+          &__title-link {}
+
+          .cmp-teaser__description {
+            //width: 38.rem(80px);
+            float: left;
+            text-shadow: 0 0 0.063rem #919599;
+            font-family: "Open Sans", sans-serif;
+            font-weight: normal;
+            font-size: 1rem;
+            letter-spacing: 0rem;
+            line-height: 1.375rem;
+            padding-left: 3.438rem;
+            padding-right: 0;
+            padding-bottom: 0;
+            margin: 0rem;
+            max-width: rem(550px);
+          }
+        }
+
+        /* end hero 5 */
       }
 
       .cmp-teaser__disclaimer {
@@ -510,6 +653,7 @@
         line-height: 1.45;
         font-weight: 300;
       }
+
       .cmp-teaser__action-link {
         line-height: rem(24px);
         background-color: get-color(brand-gold);
@@ -526,37 +670,41 @@
   }
 }
 
-$teaser-headings: (
-  //  tag  size      weight line-height
-  "h1" rem(54px) bold rem(56px),
-  "h2" rem(36px) bold rem(40px),
-  "h3" rem(36px) normal rem(40px),
-  "h4" rem(24px) bold rem(32px),
-  "h5" rem(24px) normal rem(28px),
-  "h6" rem(16px) bold rem(24px)
-);
+$teaser-headings: ( //  tag  size      weight line-height
+  "h1"rem(54px) bold rem(56px),
+  "h2"rem(36px) bold rem(40px),
+  "h3"rem(36px) normal rem(40px),
+  "h4"rem(24px) bold rem(32px),
+  "h5"rem(24px) normal rem(28px),
+  "h6"rem(16px) bold rem(24px));
 
-$teaser-headings-mobile: (
-  "h1" rem(36px) bold rem(40px),
-  "h2" rem(28px) bold rem(32px),
-  "h3" rem(28px) normal rem(32px),
-  "h4" rem(20px) bold rem(24px),
-  "h5" rem(20px) normal rem(24px),
-  "h6" rem(16px) bold rem(24px)
-);
+$teaser-headings-mobile: ("h1"rem(36px) bold rem(40px),
+  "h2"rem(28px) bold rem(32px),
+  "h3"rem(28px) normal rem(32px),
+  "h4"rem(20px) bold rem(24px),
+  "h5"rem(20px) normal rem(24px),
+  "h6"rem(16px) bold rem(24px));
 
 .cmp-teaser__content {
   text-align: left;
 
-  @each $heading, $fontSize, $weight, $lineHeight in $teaser-headings-mobile {
+  @each $heading,
+  $fontSize,
+  $weight,
+  $lineHeight in $teaser-headings-mobile {
     #{$heading} {
       font-size: $fontSize;
       font-weight: $weight;
       line-height: $lineHeight;
     }
   }
+
   @include media(">=lg") {
-    @each $heading, $fontSize, $weight, $lineHeight in $teaser-headings {
+
+    @each $heading,
+    $fontSize,
+    $weight,
+    $lineHeight in $teaser-headings {
       #{$heading} {
         font-size: $fontSize;
         font-weight: $weight;
@@ -564,9 +712,11 @@ $teaser-headings-mobile: (
       }
     }
   }
+
   &__text {
     margin: 0 0 rem(40px) 0;
     letter-spacing: rem(-0.15px);
+
     @include media(">=lg") {
       margin: 0 0 rem(50px) 0;
     }
@@ -586,11 +736,13 @@ $teaser-headings-mobile: (
 // teaser style system classes should be outside - TS
 .hero-style-1 {
   @include teaser-default();
+
   @include desktop {
     .cmp-teaser {
       &__pretitle {
         font-size: rem(45px);
       }
+
       &__title {
         font-size: rem(70px);
         font-weight: 600;
@@ -599,6 +751,7 @@ $teaser-headings-mobile: (
         order: 1;
         margin: 0;
       }
+
       &__description {
         font-size: 30px;
         line-height: 41px;
@@ -607,6 +760,7 @@ $teaser-headings-mobile: (
       }
     }
   }
+
   @include tablet {
     .cmp-teaser {
       &__pretitle {
@@ -615,12 +769,14 @@ $teaser-headings-mobile: (
         letter-spacing: 0;
         line-height: 30px;
       }
+
       &__title {
         font-size: rem(24px);
         font-weight: bold;
         line-height: 30px;
         order: 1;
       }
+
       &__description {
         margin: 0;
         font-size: rem(24px);
@@ -633,16 +789,20 @@ $teaser-headings-mobile: (
 
 .hero-style-2 {
   @include teaser-default();
+
   .cmp-teaser {
     &__pretitle {
       color: get-color(text-light-gray);
     }
+
     &__title {
       text-shadow: none;
+
       &-link {
         color: get-color(text-light-gray);
       }
     }
+
     &__description {
       color: get-color(text-light-gray);
       text-shadow: none;
@@ -678,6 +838,7 @@ $teaser-headings-mobile: (
 
 // Triptych Teaser
 .cmp-light-theme {
+
   // width: 100%; this is a temporary line for  testing in AEM
   .cmp-teaser {
     display: flex;
@@ -706,6 +867,7 @@ $teaser-headings-mobile: (
 
     &__image {
       width: fit-content;
+
       img {
         object-fit: fill;
         width: rem(460px);
@@ -763,6 +925,7 @@ $teaser-headings-mobile: (
 
     &__image {
       width: fit-content;
+
       img {
         object-fit: fill;
         width: rem(460px);
@@ -793,6 +956,7 @@ $teaser-headings-mobile: (
   justify-content: space-between;
   flex-direction: row;
   padding: rem(32px);
+
   &__card {
     box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
     background-color: get-color(brand-white);
@@ -804,6 +968,7 @@ $teaser-headings-mobile: (
     &:hover {
       outline: rem(2px) solid get-color(brand-blue) !important;
       box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
       .cmp-quadriptych-teaser__card--title {
         background-color: get-color(brand-white) !important;
         color: get-color(brand-light-blue) !important;
@@ -832,12 +997,14 @@ $teaser-headings-mobile: (
       font-size: $font-size-custom-xxsmall;
       color: get-color(brand-text-gray);
       min-height: rem(390px);
+
       &-title {
         font-size: $font-size-medium;
         font-weight: bold;
       }
     }
   }
+
   .cmp-teaser {
     &__image {
       width: 100%;
@@ -847,6 +1014,7 @@ $teaser-headings-mobile: (
 
 .cmp-six-teasers {
   position: relative;
+
   .cmp-teaser {
     display: flex;
     flex-direction: column;
@@ -854,6 +1022,7 @@ $teaser-headings-mobile: (
     box-shadow: 0 0 rem(4px) rem(1px) get-color(brand-box-shadow);
     width: rem(215px);
     height: rem(353px);
+
     &:hover {
       box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
       outline: solid #000c21 !important;
@@ -865,6 +1034,7 @@ $teaser-headings-mobile: (
       line-height: rem(14px);
       position: relative;
     }
+
     &__title,
     h2 {
       color: get-color(brand-blue);
@@ -880,12 +1050,14 @@ $teaser-headings-mobile: (
         text-decoration: none;
       }
     }
+
     &__description {
       color: get-color(text-light-charcoal);
       font-size: $font-size-xsmall;
       font-weight: normal;
       padding: 0 rem(18px);
     }
+
     &__action-link,
     &__title-link {
       text-decoration: none !important;
@@ -926,59 +1098,66 @@ $teaser-headings-mobile: (
 }
 
 .cmp-teaser__desc-link {
-    text-decoration: none;
-    color: #555;
+  text-decoration: none;
+  color: #555;
 }
 
 // Teaser reverse
 .cmp-quadriptych-teaser-reverse {
   &.cmp-quadriptych-teaser {
-      .cmp-teaser {
-          box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
-          border: none;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: rem(380px);
-          &:hover {
-              box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
-              .cmp-teaser__title {
-                  background-color: get-color(brand-blue) !important;
-                  color: get-color(brand-white) !important;
-                  &-link {
-                      color: get-color(brand-white) !important;
-                  }
-              }
+    .cmp-teaser {
+      box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: rem(380px);
+
+      &:hover {
+        box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+
+        .cmp-teaser__title {
+          background-color: get-color(brand-blue) !important;
+          color: get-color(brand-white) !important;
+
+          &-link {
+            color: get-color(brand-white) !important;
           }
-          &__content {
-              min-height: auto;
-              width: 100%;
-              .cmp-teaser__description {
-                //min-height: 17rem;
-                min-height: auto;
-                max-height: rem(144px);
-                text-overflow: ellipsis;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 8;
-                -webkit-box-orient: vertical;
-                padding-bottom: 0;
-                margin-bottom: rem(14px);
-              }
-          }
-          &__title {
-              font-size: rem(22px);
-              line-height: rem(45px);
-              font-weight: normal;
-              padding: 0;
-          }
-          &__image {
-              order: 2;
-              width: 100%;
-              overflow: hidden;
-              height: rem(155px);
-          }
+        }
       }
+
+      &__content {
+        min-height: auto;
+        width: 100%;
+
+        .cmp-teaser__description {
+          //min-height: 17rem;
+          min-height: auto;
+          max-height: rem(144px);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 8;
+          -webkit-box-orient: vertical;
+          padding-bottom: 0;
+          margin-bottom: rem(14px);
+        }
+      }
+
+      &__title {
+        font-size: rem(22px);
+        line-height: rem(45px);
+        font-weight: normal;
+        padding: 0;
+      }
+
+      &__image {
+        order: 2;
+        width: 100%;
+        overflow: hidden;
+        height: rem(155px);
+      }
+    }
   }
 }
 
