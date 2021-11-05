@@ -117,7 +117,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                .Select(i => new InvoiceModel { ID = i.ID }).ToList();
                 await FindInvoices(item, invoiceDetails);
             }
-            return findOrdersDto;
+            return findOrdersDto;        
         }
 
         private async Task FindInvoices(OrderModel item, List<InvoiceModel> invoiceDetails)

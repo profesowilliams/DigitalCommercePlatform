@@ -9,6 +9,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -153,6 +154,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 var orders = await _orderQueryService.GetOrdersAsync(orderParameters);
                 var ordersDto = _mapper.Map<IEnumerable<RecentOrdersModel>>(orders?.Data);
 
+                foreach (var order in ordersDto)
+                {
+                    order.Invoices = AggregateInvoiceData(order.Invoices);
+                }
+
                 var orderResponse = new Response
                 {
                     Items = ordersDto,
@@ -162,6 +168,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     PageCount = request.WithPaginationInfo ? (orders?.Count + request.PageSize - 1) / request.PageSize : 0
                 };
                 return new ResponseBase<Response> { Content = orderResponse };
+            }
+
+            private List<InvoiceDetails> AggregateInvoiceData(List<InvoiceDetails> invoiceInput)
+            {
+                var aggregatedInvoices = new List<InvoiceDetails>();
+
+                invoiceInput.ForEach(invoice =>
+                {
+                    var currentInvoice = aggregatedInvoices.FirstOrDefault(i => i.ID == invoice.ID);
+                    if (currentInvoice != null)
+                    {
+                        currentInvoice.Price = currentInvoice.Price ?? 0;
+                        currentInvoice.Price += invoice.Price;
+                    }
+                    else
+                    {
+                        invoice.Line = string.Empty;
+                        invoice.Quantity = 0;
+                        aggregatedInvoices.Add(invoice);
+                    }
+                });
+
+                return aggregatedInvoices;
             }
         }
 

@@ -196,7 +196,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                     Quantity = i.Quantity
                 }).ToList();
 
-
             var pendingInvoiceDetails = (from item in source.Items.Where(i => i.Invoices == null || i.Invoices.Count == 0)
                                          group item by 1 into g
                                          select new InvoiceDetails
