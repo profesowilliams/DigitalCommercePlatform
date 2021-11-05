@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from "axios";
 import Grid from '../Grid/Grid';
 import GridSearchCriteria from '../Grid/GridSearchCriteria';
@@ -262,22 +262,45 @@ function OrdersGrid(props) {
 
 
     /**
-     * 
-     * @returns
+     * @param {Object} props
+     * @param {boolean} props.expanded
+     * @param {({query}) => void} props.handleChange
+     * @param {() => void} props.onSearch
+     * @returns 
      */
-    const OptionButtons = () =>(
-		<div className='cmp-search-criteria__header__button'>
-			<div className='cmp-search-criteria__header__filter__title' 
-				onClick={() => setExpandedOpenOrderFilter(!expandedOpenOrderFilter)}
-			>
-				<i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`}></i>
-			</div>
-			<div className='cmp-search-criteria__header__filter__title'>
-				<i className={`cmp-search-criteria__icon-button fas fa-print`}></i>
-			</div>
-			
-		</div>
-	);
+    const OptionButtons = ({expanded, handleChange, onSearch}) =>{
+        
+        return (
+            <div className='cmp-search-criteria__header__button'>
+                <div className='cmp-search-criteria__header__filter__title' 
+                    onClick={() => {
+                        if (expandedOpenOrderFilter) {
+                            handleClickOptionsButton(false, handleChange, onSearch)    
+                        }
+                    }}
+                >
+                    <i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`}></i>
+                </div>
+                <div className='cmp-search-criteria__header__filter__title'>
+                    <i className={`cmp-search-criteria__icon-button fas fa-print`}></i>
+                </div>
+                
+            </div>
+        )
+    };
+
+    const handleClickOptionsButton = (expanded, handleChange, onSearch) => {
+        
+        setExpandedOpenOrderFilter(!expandedOpenOrderFilter);
+        let value;
+        if (expanded) {
+            value = !orderReportStatus;
+        } else {
+            value = !orderReportStatus;
+        }
+        setOrderReportStatus(value);
+        filterOpenOrderReportsAction(value, handleChange, onSearch)
+    }
 
 	
   /**
@@ -287,23 +310,30 @@ function OrdersGrid(props) {
    * @param {() => void} props.onSearch
    * @returns 
    */
-	const ButtonOrderDetails = ({expanded, handleChange, onSearch}) => (
-        <div
-            className={` ${expandedOpenOrderFilter || expanded ? 'hidden' : ''}`}
-            onClick={() => {
-                const value = !orderReportStatus;
-                setOrderReportStatus(value);
-                filterOpenOrderReportsAction(value, handleChange, onSearch)
-            }}
-        >
-        <div className='cmp-search-criteria__header__filter'>
-            <div className='cmp-search-criteria__header__filter__title'>
-                Open Orders Report
+	const ButtonOrderDetails = ({expanded, handleChange, onSearch}) => {
+        if (expanded && !expandedOpenOrderFilter) {
+            handleClickOptionsButton(true, handleChange, onSearch)
+        }
+        return (
+            <div
+                className={` ${expandedOpenOrderFilter || expanded ? 'hidden' : ''}`}
+                onClick={() => {
+                    handleClickOptionsButton(expanded, handleChange, onSearch)
+                }}
+            >
+                <div className='cmp-search-criteria__header__filter'>
+                    <div className='cmp-search-criteria__header__filter__title'>
+                        Open Orders Report
+                    </div>
+                    <i className={`cmp-search-criteria__icon fas fa-times-circle`}></i>
+                </div>
             </div>
-            <i className={`cmp-search-criteria__icon fas  ${!orderReportStatus ? 'fa-times-circle' : 'fa-check-circle'}`}></i>
-        </div>
-        </div>
-    );
+        );
+    };
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <section>

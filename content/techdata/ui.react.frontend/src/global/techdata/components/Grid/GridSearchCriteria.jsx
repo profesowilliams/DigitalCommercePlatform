@@ -26,7 +26,7 @@ function GridSearchCriteria({
 	let [filterActive, setFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
 	const [expanded, setExpanded] = useState(false);
-	const flagOpenButton = componentProp?.showOpenOrdersButton ? true : false; // Prop from config data 
+	const flagOpenButton = HeaderButtonOptions !== null ? true : false; // Prop from config data 
 	function isEmptyOrSpaces(str) {
 		return str === null || str.match(/^ *$/) !== null;
 	}
@@ -66,14 +66,18 @@ function GridSearchCriteria({
 					<i className='fas fa-sliders-h'></i>
 					<div className='cmp-search-criteria__header__title'>{label ?? 'Filter'}</div>
 				</div>
-        {
-          ButtonsComponentHeader ? (<ButtonsComponentHeader handleChange={handleChange} onSearch={onSearch} expanded={false} />) : null  
-        }
+        
+			<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
+				{
+				ButtonsComponentHeader ? (<ButtonsComponentHeader handleChange={handleChange} onSearch={onSearch} expanded={expanded} />) : null  
+				}
+			</div>
+        
 			
       </div>
       
 			<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
-        {HeaderButtonOptions ? (<HeaderButtonOptions />) : null} 
+        		{HeaderButtonOptions ? (<HeaderButtonOptions handleChange={handleChange} onSearch={onSearch} expanded={false} />) : null} 
 			</div>
 			
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
