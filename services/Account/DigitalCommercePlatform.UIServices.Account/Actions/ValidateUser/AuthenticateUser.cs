@@ -112,10 +112,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
                 
+                var roleList = new List<Role>();
 
-                var roleList = userResponse.User.RoleList.ToList();
-                if (roleList == null)
-                    roleList = new List<Role>();
+                if (userResponse.User?.RoleList != null)
+                {
+                    roleList = userResponse.User.RoleList.ToList();
+                }
+                
 
                 var isRolePresent = roleList.Where(p => String.Equals(p.Entitlement, "hasDCPAccess", StringComparison.CurrentCulture)).Any();
                 if (roleList.ToList().Count > 0 && !isRolePresent && userResponse.User?.ActiveCustomer?.DCPAccess == true)
