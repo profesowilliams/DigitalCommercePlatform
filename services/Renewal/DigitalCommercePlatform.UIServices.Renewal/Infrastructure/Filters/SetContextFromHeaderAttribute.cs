@@ -50,7 +50,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Infrastructure.Filters
                 validationErrors.Add("TraceId", new string[] { "The TraceId field is required." });
             }
 
-
             if (validationErrors.Any())
             {
                 var validationProblemDetails = new ValidationProblemDetails(validationErrors);

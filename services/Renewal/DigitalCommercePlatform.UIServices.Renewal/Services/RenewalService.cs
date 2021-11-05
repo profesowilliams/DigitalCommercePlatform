@@ -36,7 +36,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             _appRenewalServiceUrl = appSettings.GetSetting("App.Renewal.Url");
             _appQuoteServiceUrl = appSettings.GetSetting("App.Quote.Url");
         }
-        
 
         public async Task<List<DetailedModel>> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
@@ -48,8 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
-
-            var  coreResult = await
+            var coreResult = await
                 _middleTierHttpClient.GetAsync<IEnumerable<SummaryDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
             var modelList = _mapper.Map<List<SummaryModel>>(coreResult);
             return modelList;
@@ -58,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         public async Task<List<RenewalsModel>> GetRenewalsFor(GetRenewal.Request request)
         {
             // write Mapper
-            //return dummy data 
+            //return dummy data
             var lstRenewals = new List<RenewalsModel>();
 
             for (int i = 0; i < 5; i++)
@@ -71,6 +69,14 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             }
 
             return await Task.FromResult(lstRenewals);
+        }
+
+        public async Task<List<DetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
+        {
+            var coreResult = await
+               _middleTierHttpClient.GetAsync<IEnumerable<DetailedDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
+            var modelList = _mapper.Map<List<DetailedModel>>(coreResult);
+            return modelList;
         }
     }
 }
