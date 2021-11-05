@@ -669,19 +669,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             rng.Style.VerticalAlignment = ExcelVerticalAlignment.Bottom;
             wsOrderDetail.Row(xlRow).Height = 66;
             wsOrderDetail.Cells[xlRow, xlCol].Style.WrapText = false;
-
-            var filename = "td-synnex-logo.png";
-            string fileloc = "Content";
-            string path = Path.Combine(Directory.GetCurrentDirectory(), fileloc, filename);
-            var logo = Image.FromFile(path);
-
-            OfficeOpenXml.Drawing.ExcelPicture pic = wsOrderDetail.Drawings.AddPicture("td-synnex", logo);
-            pic.SetSize(100);
-            pic.From.Column = xlCol + 12;
-            pic.From.Row = xlRow;
-            pic.To.Column = xlCol + 19;
-            pic.SetPosition(xlRow - 1, 10, xlCol + 11, 60);
-            rng.Worksheet.Row(xlRow).Height = logo.PhysicalDimension.Height + 2;
         }
         private void GenerateOrderDetailHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
         {
