@@ -33,6 +33,28 @@
         }
     }
 
+    &__legend-row {
+		display: flex;
+		flex-direction: row;
+		overflow: hidden;
+		white-space: nowrap;
+		height: rem(15px);
+		margin-bottom: rem(2px);
+	}
+
+	&__legend {
+		display: flex;
+		flex-direction: column;
+		height: rem(15px);
+		margin-bottom: rem(2px);
+		div {
+			display: flex;
+			justify-content: flex-start;
+			flex-direction: row;
+			margin-bottom: rem(6px);
+		}
+	}
+
     &__sub-title {
         font-size: 11px;
         color: #555555;
@@ -43,6 +65,11 @@
             color: #555555;
             text-align: right;
             padding-left: 0.5rem;
+            width: rem(105px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-transform: capitalize;
         }
 
         &-currency {
@@ -54,27 +81,27 @@
 
         &-color-1 {
             border-right: 0.375rem solid #ffbc0d;
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
 
         &-color-2 {
             border-right: 0.375rem(6px) solid #000c21;
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
 
         &-color-3 {
             border-right: 0.375rem solid #103c82;
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
 
         &-color-4 {
             border-right: 0.375rem solid #048fc8;
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
 
         &-color-5 {
             border-right: 0.375rem solid #00b1e2;
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
     }
 }
