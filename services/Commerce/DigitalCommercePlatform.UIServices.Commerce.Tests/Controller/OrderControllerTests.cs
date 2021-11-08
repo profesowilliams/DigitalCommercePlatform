@@ -42,10 +42,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _siteSettings = new Mock<ISiteSettings>();
         }
 
-        private OrderController GetController()
-        {
-            return new OrderController(_mediator.Object, _logger.Object, _context.Object, _appSettingsMock.Object, _siteSettings.Object);
-        }
+        private OrderController GetController() => new (_mediator.Object,
+                                                        _logger.Object,
+                                                        _context.Object,
+                                                        _appSettingsMock.Object,
+                                                        _siteSettings.Object);
 
         [Theory]
         [AutoMoqData]
@@ -212,7 +213,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
         public async Task DownloadInvoiceTest(ResponseBase<DownloadInvoice.Response> expected)
         {
             // Arrange
-            expected.Content.MimeType = "application/pdf";
+            expected.Content.MimeType = DownloadInvoice.PdfMimeType;
             _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
             var controller = GetController();
@@ -224,28 +225,45 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             _mediator.Verify(x => x.Send(It.IsAny<DownloadInvoice.Request>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
+
         [Fact]
-        public async Task DownloadInvoiceTestValidation()
+        public async Task DownloadInvoiceShouldReturnNotFoundResult()
         {
-            // Arrange
-            var validator = new DownloadInvoice.Validator();
-            var cmd = new DownloadInvoice.Request("123456", null, false);
-            // Act
-            var validationResult = await validator.ValidateAsync(cmd);
-            // Assert
-            Assert.True(validationResult.IsValid);
+            ResponseBase<DownloadInvoice.Response> expected = new()
+            {
+                Content = new DownloadInvoice.Response()
+            };
+
+            _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(),
+                                        It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.DownloadInvoice("orderId", null, false).ConfigureAwait(false);
+
+            result.Should().BeOfType<NotFoundResult>();
         }
 
         [Fact]
-        public async Task DownloadInvoiceTestMissingOrderId()
+        public async Task DownloadInvoiceShouldReturnFileContentResult()
         {
-            // Arrange
-            var validator = new DownloadInvoice.Validator();
-            var cmd = new DownloadInvoice.Request(null, null, false);
-            // Act
-            var validationResult = await validator.ValidateAsync(cmd);
-            // Assert
-            Assert.False(validationResult.IsValid);
+            ResponseBase<DownloadInvoice.Response> expected = new()
+            {
+                Content = new DownloadInvoice.Response() 
+                {
+                    BinaryContent = new byte[128],
+                    MimeType = DownloadInvoice.PdfMimeType
+                }
+            };
+
+            _mediator.Setup(x => x.Send(It.IsAny<DownloadInvoice.Request>(),
+                                        It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.DownloadInvoice("orderId", null, false).ConfigureAwait(false);
+
+            result.Should().BeOfType<FileContentResult>();
         }
     }
 }

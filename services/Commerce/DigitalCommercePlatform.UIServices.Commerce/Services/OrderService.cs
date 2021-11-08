@@ -88,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return listInvoices?.Data?.ToList();
         }
 
-        public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)
+        public async Task<OrderModel> GetOrderByIdAsync(string id)
         {
             string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
