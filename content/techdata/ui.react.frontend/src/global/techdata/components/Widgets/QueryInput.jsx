@@ -5,6 +5,7 @@ import SimpleDropDown from "./SimpleDropDown";
 function QueryInput({ items, placeholder, onQueryChanged, onKeyPress }) {
   const [filterKey, setFilterKey] = useState(null);
   const [filterValue, setFilterValue] = useState(null);
+  const [maxLength, setMaxLength] = useState(524288);
 
   function textInputChanged(value) {
     setFilterValue(value);
@@ -12,6 +13,7 @@ function QueryInput({ items, placeholder, onQueryChanged, onKeyPress }) {
 
   function dropDownValueChanged(item) {
     setFilterKey(item.key);
+    (item.key === 'id') ? setMaxLength(15) : setMaxLength(524288)
   }
 
   useEffect(() => {
@@ -29,6 +31,7 @@ function QueryInput({ items, placeholder, onQueryChanged, onKeyPress }) {
       <input
         className="cmp-query-input__input"
         type="text"
+        maxLength={maxLength}
         placeholder={placeholder}
         onChange={(event) => textInputChanged(event.target.value)}
         onKeyPress={(event) => onKeyPress(isEnterKey(event))}
