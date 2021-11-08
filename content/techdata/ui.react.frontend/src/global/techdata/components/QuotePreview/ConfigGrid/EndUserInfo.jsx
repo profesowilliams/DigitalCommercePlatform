@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { If } from '../../../helpers/If';
+import Info from '../../common/quotes/DisplayItemInfo';
 import Button from '../../Widgets/Button';
+
 
 function EndUserInfo({endUser, info, onValueChange}) {
     const initialState = {
@@ -10,7 +12,7 @@ function EndUserInfo({endUser, info, onValueChange}) {
         line2: endUser?.line2 || '',
         city: endUser?.city || '',
         state: endUser?.state || '',
-        zip: endUser?.postalCode | '',
+        zip: endUser?.postalCode || '',
         country: endUser?.country || '',
         email: endUser?.email || '',
         phone: endUser?.phoneNumber || ''
@@ -48,14 +50,14 @@ function EndUserInfo({endUser, info, onValueChange}) {
                     <>
                         <p className="cmp-qp__enduser-info--sub-title">{infoState.companyName}</p>
                         <div className="cmp-qp__enduser-info--address-group">
-                            <span>{infoState.name}</span>
-                            <span>{infoState.line1}</span>
-                            <span>{infoState.line2}</span>
-                            <span>{infoState.city}, {infoState.state} {infoState.zip}</span>
-                            <span>{infoState.country}</span>
+                            <Info>{infoState.name}</Info>
+                            <Info>{infoState.line1}</Info>
+                            <Info>{infoState.line2}</Info>
+                            <Info >{infoState.city}, {infoState.state} {infoState.zip}</Info>
+                            <Info>{infoState.country}</Info>
                             <p>
-                                <span>{info.emailLabel}: {infoState.email || 'NA'}</span>
-                                <span>{info.phoneLabel}: {infoState.phone || 'NA'}</span>
+                                <Info label={info.emailLabel}>{infoState.email}</Info>
+                                <Info label={info.phoneLabel}>{infoState.phone}</Info>
                             </p>
                         </div>
                     </>

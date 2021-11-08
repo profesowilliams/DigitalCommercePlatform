@@ -4,6 +4,7 @@ import Loader from "../../Widgets/Loader";
 import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
 import { If } from "../../../helpers/If";
+import Info from "../../common/quotes/DisplayItemInfo";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -59,17 +60,14 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     return (
       <div className="cmp-qp__company-info--address-group">
         <p>
-          <span>{initialAddress.name}</span>
-          <span>{initialAddress.line1}</span>
-          <span>
-            {initialAddress.city}, {initialAddress.state}{" "}
-            {initialAddress.zip}
-          </span>
-          <span>{initialAddress.country}</span>
+          <Info>{initialAddress.name}</Info>
+          <Info>{initialAddress.line1}</Info>          
+          <Info>{initialAddress.city}, {initialAddress.state} {initialAddress.zip}</Info>
+          <Info>{initialAddress.country}</Info>
         </p>
         <p>
-          <span>Email: {initialAddress.email || "NA"}</span>
-          <span>Phone: {initialAddress.phoneNumber}</span>
+          <Info label="Email">{initialAddress.email}</Info>
+          <Info label="Phone">{initialAddress.phoneNumber}</Info>
         </p>
       </div>
     );

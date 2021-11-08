@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { If } from "../../../helpers/If";
+import Info from "../../common/quotes/DisplayItemInfo";
 
 const QuoteContactInfo = ({ label, contact }) => {
     const {
@@ -28,20 +29,23 @@ const QuoteContactInfo = ({ label, contact }) => {
                 <div className='cmp-quote-address-info__company-info'>
                     <If condition={contact}>
                         <div className='cmp-quote-address-info__company-info--name'>
-                            {name}
+                            <Info>{name}</Info>
                         </div>
                         <div className='cmp-quote-address-info__company-info--street'>
-                            {street}
+                            <Info>{street}</Info>
                         </div>
                         <div className='cmp-quote-address-info__company-info--city-state-zip'>
-                            {city}, {state} {postalCode}
+                            <Info>{city}, {state} {postalCode}</Info>
                         </div>
                         <div className='cmp-quote-address-info__company-info--state'>
-                            {country}
+                            <Info>{country}</Info>
                         </div>
-
-                        <div>Email: {email}</div>
-                        <div>Phone: {phoneNumber}</div>
+                        <div>
+                            <Info label='Email'>{email}</Info>
+                        </div>
+                        <div>
+                            <Info label='Phone'>{phoneNumber}</Info>
+                        </div>
                     </If>
                 </div>
             </section>
