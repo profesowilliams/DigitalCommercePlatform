@@ -56,9 +56,12 @@ export const getImageBuffer =  async imgPath => {
 */
 window.onload = function() {
     var form = document.getElementsByClassName('cmp-form');
-    if(form) {
-        document.getElementsByClassName("cmp-form-button")[0].insertAdjacentHTML("beforeBegin","<p id='cmp-form-error-block' style='color: red;padding-bottom: 10px;font-size: 11px;font-weight: 700;'></p>");
-        form[0].addEventListener("submit", processForm);
+    if(form && form[0]) {
+        var buttonEle = document.getElementsByClassName("cmp-form-button");
+        if(buttonEle && buttonEle[0]) {
+            buttonEle[0].insertAdjacentHTML("beforeBegin","<p id='cmp-form-error-block' style='color: red;padding-bottom: 10px;font-size: 11px;font-weight: 700;'></p>");
+            form[0].addEventListener("submit", processForm);
+        }
     }
 }
 /**
