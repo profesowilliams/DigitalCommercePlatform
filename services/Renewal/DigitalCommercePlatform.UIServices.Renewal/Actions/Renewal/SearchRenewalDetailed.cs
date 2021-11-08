@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -18,12 +19,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-
             public string EndUserEmail { get; set; }
             public string SortBy { get; set; }
             public bool SortAscending { get; set; }
-            public int Page { get; set; }
-            public int PageSize { get; set; }
+            public int Page { get; set; } = 1;
+            public int PageSize { get; set; } = 25;
             public bool WithPaginationInfo { get; set; } = true;
             public List<string> VendorID { get; set; }
             public List<string> VendorName { get; set; }
@@ -35,15 +35,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public string ProgramName { get; set; }
             public string ResellerPO { get; set; }
             public string ContractID { get; set; }
+            public bool Details { get; set; }
         }
 
         public class Response
         {
-            public long? TotalItems { get; set; }
-            public long? PageCount { get; set; }
-            public int? PageNumber { get; set; }
-            public int? PageSize { get; set; }
             public List<DetailedModel> Items { get; set; }
+            public List<RefinementGroupsModel> RefinementGroups { get; set; }
         }
 
         [ExcludeFromCodeCoverage]
@@ -65,9 +63,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
                 var response = new Response
                 {
-                    TotalItems = renewalsResponse?.Count,
-                    PageSize = 25,
-                    PageCount = request.WithPaginationInfo ? (renewalsResponse?.Count + request.PageSize - 1) / request.PageSize : 0,
                     Items = renewalsResponse
                 };
                 return new ResponseBase<Response> { Content = response };

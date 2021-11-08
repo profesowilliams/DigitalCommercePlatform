@@ -1,16 +1,20 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Settings;
+using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
-using DigitalFoundation.Common.Extensions;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Services
 {
@@ -37,26 +41,27 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             _appQuoteServiceUrl = appSettings.GetSetting("App.Quote.Url");
         }
 
+
         public async Task<List<DetailedModel>> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
             var coreResult = await
-                _middleTierHttpClient.GetAsync<IEnumerable<DetailedDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
-            var modelList = _mapper.Map<List<DetailedModel>>(coreResult);
+                _middleTierHttpClient.GetAsync<ResponseDetailedDto>(_appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request)).ConfigureAwait(false);
+            var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
             return modelList;
         }
 
         public async Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
             var coreResult = await
-                _middleTierHttpClient.GetAsync<IEnumerable<SummaryDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
-            var modelList = _mapper.Map<List<SummaryModel>>(coreResult);
+                _middleTierHttpClient.GetAsync<ResponseSummaryDto>(_appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request)).ConfigureAwait(false);
+            var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
             return modelList;
         }
 
         public async Task<List<RenewalsModel>> GetRenewalsFor(GetRenewal.Request request)
         {
             // write Mapper
-            //return dummy data
+            //return dummy data 
             var lstRenewals = new List<RenewalsModel>();
 
             for (int i = 0; i < 5; i++)
@@ -71,6 +76,20 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             return await Task.FromResult(lstRenewals);
         }
 
+        public async Task<RefinementGroupsModel> GetRefainmentGroup(SearchRefainmentGroup.Request request)
+        {
+            var coreResult = await
+               _middleTierHttpClient.GetAsync<IEnumerable<SummaryDto>>(_appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request)).ConfigureAwait(false);
+            _ = coreResult.Select(x => x.VendorReference);
+            var rgroupModel = new RefinementGroupsModel()
+            {
+                Group = "RenewalAttributes",
+                //Refinements = modelList.ToList()
+            };
+
+
+            return rgroupModel;
+        }
         public async Task<List<DetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
         {
             var coreResult = await

@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal
         public string Id { get; set; }
         public string Name { get; set; }
         public string NameUpper { get; set; }
-        public IEnumerable<ContactDto> Contact { get; set; }
+        public ContactDto Contact { get; set; }
         public AddressDto Address { get; set; }
     }
 }

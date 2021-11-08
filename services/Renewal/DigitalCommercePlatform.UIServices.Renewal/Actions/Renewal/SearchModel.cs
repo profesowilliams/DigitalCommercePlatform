@@ -1,10 +1,14 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
 {
+    [ExcludeFromCodeCoverage]
     public class SearchModel
     {
+        public string Id { get; set; }
         public bool Details { get; set; }
         public string[] Type { get; set; }
         public string ResellerName { get; set; }
@@ -15,14 +19,14 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public string EndUserEmail { get; set; }
         public string SortBy { get; set; }
         public bool SortAscending { get; set; }
-        public string Page { get; set; }
-        public string PageSize { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
-        public string[] VendorName { get; set; }
-        public string[] EndUserType { get; set; }
-        public string[] ProgramName { get; set; }
+        public List<string> VendorName { get; set; }
+        public string EndUserType { get; set; }
+        public List<string> ProgramName { get; set; }
         public string VendorQuoteID { get; set; }
-        public string[] ContractId { get; set; }
+        public List<string> ContractId { get; set; }
 
     }
 }

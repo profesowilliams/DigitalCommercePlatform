@@ -1,14 +1,13 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-
+using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public class DetailedModel:SummaryModel
+    public class DetailedModel : BaseResponseModel
     {
         public DateTime Published { get; set; }
         public QuoteTypeValueModel AlternateIdentifier { get; set; }

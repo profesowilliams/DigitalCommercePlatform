@@ -1,10 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
-using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -13,12 +10,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
+namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public sealed class SearchRenewalSummary
+    public sealed class SearchRefainmentGroup
     {
-        public class Request : IRequest<ResponseBase<Response>>
+        public class Request : IRequest<Response>
         {
             public string EndUserEmail { get; set; }
             public string SortBy { get; set; }
@@ -41,12 +38,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
 
         public class Response
         {
-            public List<SummaryModel> Items { get; set; }
-            public List<RefinementGroupsModel> RefinementGroups { get; set; }
+            public RefinementGroupsModel RefinementGroups { get; set; }
         }
 
         [ExcludeFromCodeCoverage]
-        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class GetRenewalsHandler : IRequestHandler<Request, Response>
         {
             private readonly IRenewalService _renewalsService;
             private readonly IMapper _mapper;
@@ -58,22 +54,20 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                List<SummaryModel> renewalsResponse = await _renewalsService.GetRenewalsSummaryFor(request);
+                RefinementGroupsModel renewalsResponse = await _renewalsService.GetRefainmentGroup(request);
 
                 var response = new Response
                 {
-                    Items = renewalsResponse
+                    RefinementGroups = renewalsResponse
                 };
-                return new ResponseBase<Response> { Content = response };
+                return response;
             }
-
             public class Validator : AbstractValidator<Request>
             {
                 public Validator()
                 {
-
                 }
             }
         }
