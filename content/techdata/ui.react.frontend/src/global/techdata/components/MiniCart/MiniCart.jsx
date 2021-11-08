@@ -128,7 +128,7 @@ const MiniCart = ({ componentProp }) => {
           </g>
         </svg>
         ) : (
-          <svg width="26px" height="26px" viewBox="0 0 30 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <svg width="26px" height="26px" viewBox="0 0 30 27" version="1.1">
               <title>Icon_Cart_Line</title>
               <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Artboard" transform="translate(0.000000, 1.000000)" stroke="#000C21" stroke-width="2.63414634">
