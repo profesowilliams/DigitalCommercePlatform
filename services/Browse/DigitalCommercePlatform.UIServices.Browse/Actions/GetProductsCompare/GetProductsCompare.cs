@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
 using DigitalFoundation.Common.Client;
@@ -38,11 +39,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             private const string ProductShot = "Product shot";
             private readonly IMiddleTierHttpClient _httpClient;
             private readonly string _productAppUrl;
+            private readonly string _onOrderArrivalDateFormat;
 
-            public Handler(IMiddleTierHttpClient httpClient, IAppSettings appSettings)
+            public Handler(IMiddleTierHttpClient httpClient, IAppSettings appSettings, ISiteSettings siteSettings)
             {
                 _httpClient = httpClient;
                 _productAppUrl = appSettings.GetSetting("Product.App.Url");
+                _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)
@@ -68,7 +71,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 throw new NotImplementedException();
             }
 
-            private static IEnumerable<ProductModel> MapProducts(Request request, IEnumerable<ProductDto> productsDto, IEnumerable<ValidateDto> validateDto)
+            private IEnumerable<ProductModel> MapProducts(Request request, IEnumerable<ProductDto> productsDto, IEnumerable<ValidateDto> validateDto)
             {
                 return productsDto.Select(x =>
                 {
@@ -111,14 +114,30 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 };
             }
 
-            private static void MapPlants(ProductDto x, ProductModel product)
+            private void MapPlants(ProductDto x, ProductModel product)
             {
                 if (x.Plants != null)
                 {
-                    product.Stock.Plants = x.Plants.Select(p => new PlantModel { Name = p.Stock?.LocationName, Quantity = p.Stock?.AvailableToPromise ?? 0 });
+                    product.Stock.Plants = x.Plants.Select(p =>
+                    new PlantModel
+                    {
+                        Name = p.Stock?.LocationName,
+                        Quantity = p.Stock?.AvailableToPromise ?? 0,
+                        OnOrder = MapOnOrder(p.Stock?.OnOrder)
+                    });
                 }
             }
 
+            private OnOrderModel MapOnOrder(Dto.Product.Internal.OnOrderDto onOrder)
+            {
+                return onOrder == null
+                    ? null
+                    : new OnOrderModel
+                    {
+                        Stock = onOrder.Stock,
+                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
+                    };
+            }
             private static void MapAuthorizations(ProductModel product, bool isValid, bool orderable, bool authrequiredprice)
             {
                 product.Authorization = new AuthorizationModel();

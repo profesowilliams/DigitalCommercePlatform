@@ -68,11 +68,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly IBrowseService _productRepositoryServices;
             private readonly string _imageSize;
             private readonly IMapper _mapper;
+            private readonly string _onOrderArrivalDateFormat;
 
             public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
+                _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
                 _mapper = mapper;
             }
 
@@ -175,9 +177,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     Plants = x.Plants?.Select(p => new PlantModel
                     {
                         Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise
+                        Quantity = p.Stock?.AvailableToPromise,
+                        OnOrder = MapOnOrder(p.Stock?.OnOrder),
                     })
                 };
+            }
+
+            private OnOrderModel MapOnOrder(OnOrderDto onOrder)
+            {
+                return onOrder == null
+                    ? null
+                    : new OnOrderModel
+                    {
+                        Stock = onOrder.Stock,
+                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
+                    };
             }
 
             private void MapSpecifications(ProductDto x, ProductModel product)

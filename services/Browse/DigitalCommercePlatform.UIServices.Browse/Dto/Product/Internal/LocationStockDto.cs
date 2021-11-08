@@ -11,5 +11,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal
         public int? AvailableToPromise { get; set; }
         public int? Ordered { get; set; }
         public string LocationName { get; set; }
+        public OnOrderDto OnOrder { get; set; }
     }
 }

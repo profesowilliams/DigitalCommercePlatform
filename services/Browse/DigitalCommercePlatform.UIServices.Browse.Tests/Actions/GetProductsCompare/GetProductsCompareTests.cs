@@ -3,6 +3,7 @@
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
+using DigitalCommercePlatform.UIServices.Browse.Models.Product.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Settings;
@@ -22,15 +23,18 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
     {
         private readonly Mock<IMiddleTierHttpClient> _httpClientMock;
         private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
 
         public GetProductsCompareTests()
         {
             _httpClientMock = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
+            _siteSettingsMock = new Mock<ISiteSettings>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy/MM/dd");
 
-            _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object);
+            _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
         }
 
         [Theory]
@@ -152,6 +156,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                     {
                                         AvailableToPromise=1,
                                         LocationName = "Warehouse 123",
+                                        OnOrder = new OnOrderDto
+                                        {
+                                            Stock = 44,
+                                            ArrivalDate = new DateTime(2044, 12, 31),
+                                        }
                                     }
                                 }
                             },
@@ -197,7 +206,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1
+                                    Quantity=1,
+                                    OnOrder = new OnOrderModel
+                                    {
+                                        Stock = 44,
+                                        ArrivalDate = "2044/12/31",
+                                    }
                                 }
                             }
                         },

@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageSize")).Returns("400x300");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy/MM/dd");
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
@@ -50,6 +51,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         [AutoDomainData]
         public async Task GetProductDetails(IEnumerable<ProductDto> expected)
         {
+            expected.First().Plants.First().Stock.OnOrder = new OnOrderDto
+            {
+                Stock = 44,
+                ArrivalDate = new DateTime(2044, 12, 31)
+            };
             _mockBrowseService.Setup(x => x.GetProductDetails(
                        It.IsAny<GetProductDetailsHandler.Request>()
                        ))
@@ -60,6 +66,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
 
             result.Should().NotBeNull();
+            result.Content.First().Stock.Plants.First().OnOrder.Should().NotBeNull();
+            result.Content.First().Stock.Plants.First().OnOrder.Stock.Should().Be(44);
+            result.Content.First().Stock.Plants.First().OnOrder.ArrivalDate.Should().Be("2044/12/31");
         }
 
         [Theory]
