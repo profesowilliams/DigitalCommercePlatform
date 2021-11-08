@@ -1,21 +1,16 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
-using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
-using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -73,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(new FullSearchResponseModel()));
 
             var sut = GetHandler();
-            
+
             //act
             var result = await sut.Handle(request, default).ConfigureAwait(false);
 
@@ -147,6 +142,44 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             result.Results.Should().NotBeNull();
 
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task Handle_CallServiceWithoutRefinements_WhenGetRefinementsIsFalse(FullSearch.Request request, FullSearchResponseModel appSearchResponse)
+        {
+            //arrange
+            request.IsAnonymous = false;
+            request.FullSearchRequestModel.GetRefinements = false;
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appSearchResponse));
+
+            var sut = GetHandler();
+
+            //act
+            _ = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.Is<SearchRequestDto>(r => r.GetDetails.ContainsKey(Enums.Details.SearchWithoutRefinements) && r.GetDetails[Enums.Details.SearchWithoutRefinements]), It.IsAny<bool>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task Handle_CallServiceWithoutTopRefinements_WhenGetRefinementsIsTrue(FullSearch.Request request, FullSearchResponseModel appSearchResponse)
+        {
+            //arrange
+            request.IsAnonymous = false;
+            request.FullSearchRequestModel.GetRefinements = true;
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appSearchResponse));
+
+            var sut = GetHandler();
+
+            //act
+            _ = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+
+            _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.Is<SearchRequestDto>(r => r.GetDetails.ContainsKey(Enums.Details.TopRefinementsAndResult) && r.GetDetails[Enums.Details.TopRefinementsAndResult]), It.IsAny<bool>()), Times.Once);
         }
 
         private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper);

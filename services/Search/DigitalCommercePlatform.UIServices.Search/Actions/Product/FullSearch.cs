@@ -53,13 +53,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var appRequest = _mapper.Map<SearchRequestDto>(request.FullSearchRequestModel);
-                var detailsDict = new Dictionary<Details, bool>() { { Details.SearchWithoutRefinements, true } };
+                appRequest.GetDetails ??= new Dictionary<Details, bool>();
                 if (!request.IsAnonymous)
                 {
-                    appRequest.GetDetails ??= new Dictionary<Details, bool>() { { Details.Price, true }, { Details.Authorizations, true } };
+                    appRequest.GetDetails.Add(Details.Price, true);
+                    appRequest.GetDetails.Add(Details.Authorizations, true);
                 }
 
-                appRequest.GetDetails = detailsDict;
+                if (request.FullSearchRequestModel.GetRefinements)
+                {
+                    appRequest.GetDetails.Add(Details.TopRefinementsAndResult, true);
+                }
+                else
+                {
+                    appRequest.GetDetails.Add(Details.SearchWithoutRefinements, true);
+                }
+
                 return new Response(await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous));
             }
         }

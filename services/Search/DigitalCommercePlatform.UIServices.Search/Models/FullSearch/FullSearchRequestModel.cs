@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public SortRequestModel Sort { get; set; }
         public string[] Territories { get; set; }
         public string[] Countries { get; set; }
+        public bool GetRefinements { get; set; }
     }
 }
