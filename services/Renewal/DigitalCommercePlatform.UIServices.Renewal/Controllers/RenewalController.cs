@@ -2,6 +2,8 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Enum;
+using DigitalCommercePlatform.UIServices.Renewal.Helpers;
 using DigitalCommercePlatform.UIServices.Renewal.Infrastructure.Filters;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
@@ -53,11 +55,19 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
                 return Ok(response);
             }
         }
-        [HttpGet]
-        [Route("test")]
-        public string Test(string request)
+
+        public async Task<IActionResult> Get([FromQuery] string[] id, [FromQuery] string type = "renewal")
         {
-            return "your reqset : " + request;
+            if (ConfigurationType.Renewal.IsEqualTo(type) || ConfigurationType.Opportinity.IsEqualTo(type))
+            {
+                var detailedResponse = await Mediator.Send(new GetRenewalQuoteDetailed.Request { Id = id, Type = type });
+
+                if (detailedResponse == null)
+                    return NotFound();
+                return Ok(detailedResponse);
+            }
+            else
+                return NotFound();
         }
 
         [HttpGet]
