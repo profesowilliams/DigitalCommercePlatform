@@ -157,17 +157,17 @@
 }
 .language-modal {
     font-family: $font-family;
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: rem(50px); /* Location of the box */
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: rem(50px); 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: get-color(td-dark-blue-shade); /* Black w/ opacity *///  
-  z-index: 99;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: get-color(td-dark-blue-shade); 
+  z-index: 9999;
 
   /* Modal Content */
 
@@ -179,6 +179,9 @@
     box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
     border-top: rem(2px) solid get-color(td-dark-blue);
     box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
+    @include mobile {
+        width: rem(320px);
+    }
 
     /* The Close Button */
     &__close {
@@ -207,7 +210,15 @@
       float: left;
       width: 50%;
       padding: 20px;
-      
+      @include mobile {
+          float: none;
+          width: unset;
+          padding: unset;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+      }
+
       &__seperator {
         border-right: 0px solid get-color(brand-text-lightgray);
         //height: 300px; this is causing an issue in UAT bug 199700
@@ -229,6 +240,10 @@
       &:last-child {
         width: 25%;
         padding: 20px 35px;
+        @include mobile {
+            width: unset;
+            padding: unset;
+        }
       }
 
       &:last-child > &__seperator{

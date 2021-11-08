@@ -123,17 +123,17 @@
 
 .language-modal {
   font-family: $font-family;
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: rem(50px); /* Location of the box */
+  display: none; 
+  position: fixed; 
+  z-index: 1;
+  padding-top: rem(50px); 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: get-color(td-dark-blue-shade); /* Black w/ opacity */ //
-  z-index: 99;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: get-color(td-dark-blue-shade); 
+  z-index: 9999;
 
   /* Modal Content */
   &__content {
@@ -143,6 +143,9 @@
     width: rem(1040px);
     border-top: rem(2px) solid get-color(td-dark-blue);
     box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
+    @include mobile {
+        width: rem(320px);
+    }
 
     /* The Close Button */
     &__close {
@@ -172,10 +175,21 @@
       width: 50%;
       padding: rem(20px);
       //column-width: rem(250px);
+      @include mobile {
+          float: none;
+          width: unset;
+          padding: unset;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+      }
 
       &:nth-of-type(2) {
         border-left: rem(1px) solid get-color(v-divider-darkgray);
         border-right: rem(1px) solid get-color(v-divider-darkgray);
+        @include mobile {
+            border: none;
+        }
       }
 
       &__seperator-l {
@@ -203,6 +217,10 @@
       &:last-child {
         width: 25%;
         padding: rem(20px) rem(35px);
+        @include mobile {
+            width: unset;
+            padding: unset;
+        }
       }
 
       &:last-child > &__seperator {
