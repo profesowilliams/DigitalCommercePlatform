@@ -375,19 +375,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             new DocumentModel
                             {
                                 Title = "Quick Start Guide",
-                                Type = "Quick Start Guide",
+                                Type = "PDF",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             },
                             new DocumentModel
                             {
                                 Title = "Product Data Sheet / Brochure",
-                                Type = "Product Data Sheet / Brochure",
+                                Type = "PDF",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             },
                             new DocumentModel
                             {
                                 Title = "User Manual",
-                                Type = "User Manual",
+                                Type = "PDF",
                                 Url = "http://cdn.cnetcontent.com/99/20/99200010-0ea4-4549-872f-f27874bf5d99.pdf"
                             }
                         }

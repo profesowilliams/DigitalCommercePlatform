@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
             CreateMap<MarketingDto, DocumentModel>()
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Url))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Format))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name));
         }
     }
