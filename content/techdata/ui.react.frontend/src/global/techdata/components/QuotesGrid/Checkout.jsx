@@ -18,8 +18,8 @@ function Checkout({ line, checkoutConfig }) {
         config.uiServiceEndPoint + `?Id=${quoteId}&type=quote`
       );
       const statusCode = response.status;
-      const statusText = response.statusText;
-      if (statusCode === 200 && statusText === "OK") {
+      
+      if (statusCode === 200) {
         const isSuccess = response.data.content.isSuccess;
         if (isSuccess) {
           window.location.replace(config.redirectUrl);

@@ -4584,9 +4584,9 @@ app.post("/ui-config/v1/getPunchOutURL", function (req,res){
 app.put("/ui-content/v1/replaceCart", function (req, res) {
   console.log("test post punchout url ✌✌✌");
   if (!req.headers["sessionid"]) return res.status(401);
-  res.json({
+  return res.json({
     "content": {
-    "isSuccess": false
+    "isSuccess": true
     },
     "error": {
     "code": 0,
@@ -4595,6 +4595,7 @@ app.put("/ui-content/v1/replaceCart", function (req, res) {
     }
     });
 });
+
 
 //---QUICK QUOTE CONTINUE BTN---//
 app.post("/ui-commerce/v1/quote/create", function (req, res) {
