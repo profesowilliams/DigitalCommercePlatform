@@ -217,7 +217,7 @@ use(function() {
     }
 
     if (properties && properties["exportToCSV"]) {
-        quoteOptionsTab["aexportToCSVbc"] = properties["exportToCSV"];
+        quoteOptionsTab["exportToCSV"] = properties["exportToCSV"];
     }
 
     if (properties && properties["exportToPDF"]) {
