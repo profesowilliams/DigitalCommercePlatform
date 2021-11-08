@@ -1,12 +1,18 @@
 package com.techdata.core.models;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.wcm.core.components.models.ListItem;
+import com.day.cq.dam.api.Asset;
+import com.day.cq.dam.api.Rendition;
 import com.day.cq.tagging.TagManager;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.slf4j.Logger;
@@ -17,6 +23,7 @@ import static com.techdata.core.util.Constants.*;
 public class VendorListItem implements ListItem {
 
     private static final Logger log = LoggerFactory.getLogger(VendorListItem.class);
+    private static final String ASSET_RENDITION_TYPE = "original";
 
     private String overview;
     private String vendorIcon;
@@ -87,15 +94,15 @@ public class VendorListItem implements ListItem {
 
     @SuppressWarnings({"java:S107", "java:S5361"})
     public VendorListItem(
-        final String title,
-        final String overview,
-        final String vendorIcon,
-        final String pageLink,
-        final String vendorPageLabel,
-        final String vendorProductLabel,
-        final String vendorProductLink,
-        final List<String> tags,
-        final ListItem listItem) {
+            final String title,
+            final String overview,
+            final String vendorIcon,
+            final String pageLink,
+            final String vendorPageLabel,
+            final String vendorProductLabel,
+            final String vendorProductLink,
+            final List<String> tags,
+            final ListItem listItem) {
         this.overview = overview;
         this.vendorIcon = vendorIcon.replaceAll("ZZ", "\"");
         this.pageLink = pageLink;
@@ -154,6 +161,7 @@ public class VendorListItem implements ListItem {
         }
 
         overview = getVendorDescriptionType(vendorDescriptionType, cf, overview);
+        vendorIcon = getSvgToPlainText(vendorIcon, resource);
 
         VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
@@ -188,5 +196,29 @@ public class VendorListItem implements ListItem {
             }
         }
         return tags;
+    }
+
+    private static String getSvgToPlainText(String svgPath, Resource resource){
+        String plainText = StringUtils.EMPTY;
+        if(!svgPath.isEmpty() && resource != null){
+            Resource svgResource = resource.getResourceResolver().getResource(svgPath);
+            Asset asset = svgResource.adaptTo(Asset.class);
+            if(null == asset){
+                return StringUtils.EMPTY;
+            }
+            Rendition rendition = (asset.getRendition(ASSET_RENDITION_TYPE) != null) ?
+                    asset.getRendition(ASSET_RENDITION_TYPE) :
+                    asset.getOriginal();
+
+            StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(rendition.getStream(), writer, StandardCharsets.UTF_8);
+                plainText = writer.toString();
+                log.debug("SVG Plain Text: {}", plainText);
+            } catch (IOException e) {
+                log.error("Error reading rendition: {}", rendition.getPath(), e);
+            }
+        }
+        return  plainText;
     }
 }
