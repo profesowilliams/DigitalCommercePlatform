@@ -18,12 +18,14 @@
       data-sly-use.pwa="com.adobe.cq.wcm.core.components.models.PWA"
       data-sly-use.head="head.html"
       data-sly-use.footer="footer.html"
+      data-sly-use.props="${'check_private_page.js'}"
       data-sly-use.redirect="redirect.html">
 <head data-sly-call="${head.head @ page = page, pwa = pwa}"></head>
 <body class="${page.cssClassNames}"
       id="${page.id}"
+      style="${(props.privatePage) ? 'transform: scale(0);' : '' @ context='styleString'}"
       data-cmp-data-layer-enabled="${page.data ? true : false}">
-    <div id="top"></div>
+<div id="top"></div>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
           adobeDataLayer.push({

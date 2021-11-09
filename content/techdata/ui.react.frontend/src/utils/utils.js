@@ -92,3 +92,12 @@ function processForm (e) {
         }
     return true;
 };
+
+/**
+* Remove the style attribute on body tag if sessionId is present
+*/
+window.onload = function() {
+    if(localStorage.getItem('sessionId') !== null) {
+        document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
+    }
+}
