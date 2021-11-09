@@ -1048,7 +1048,7 @@ module.exports = {
                   "contractStartDate": null,
                   "contractEndDate": null,
                   "serviceContractDetails": null,
-                  "contracNo1": 'QEY-V8E-PP',
+                  "contractNo": 'QEY-V8E-PP',
                   "contractType": null,
                   "license": null,
                   "status": "cancelled",

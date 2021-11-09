@@ -1,3 +1,4 @@
+import axios from "axios";
 import {nanoid} from "nanoid";
 
 export function getQueryStringValue (key) {
@@ -51,6 +52,16 @@ export const getImageBuffer =  async imgPath => {
     return buffer.constructor.name === 'Buffer' ? buffer : Buffer.from(buffer);
 }
 
+export const downloadFileBlob = async (url, name) => {
+    const response = await axios.get(url, { responseType: 'blob' });
+    const type = response.headers['content-type'];
+    const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = name;
+    link.click();
+    link.remove();
+}
 /**
 * Add onload event for form submit to handle input text XSS validations.
 */

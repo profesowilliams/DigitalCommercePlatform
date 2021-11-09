@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import Grid from '../Grid/Grid';
 import GridSearchCriteria from '../Grid/GridSearchCriteria';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
+import { downloadFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 
 function OrdersGrid(props) {
@@ -49,6 +49,8 @@ function OrdersGrid(props) {
         },
     ];
 
+    const pendingValue = componentProp.pendingValue ? componentProp.pendingValue : 'Pending' ;
+
     const invoicesModal = {
         title: componentProp.invoicesModal?.title ?? 'Order',
         buttonLabel: componentProp.invoicesModal?.buttonLabel ?? 'Download All Related Invoices',
@@ -68,6 +70,8 @@ function OrdersGrid(props) {
                     line={line}
                     pendingInfo={invoicesModal.pendingInfo}
                     pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
+                    pendingValue={pendingValue}
+                    downloadInvoiceFunction={async (id)=> downloadSingleInvoice(id)}
                 ></DetailsInfo>
             ),
             properties: {
@@ -75,7 +79,7 @@ function OrdersGrid(props) {
                 buttonIcon: invoicesModal.buttonIcon,
                 buttonLabel: invoicesModal.buttonLabel,
             },
-            modalAction: downloadInvoice(line.id)
+            modalAction: downloadAllInvoice(line.id)
         }
         setModal(modal);
     }
@@ -98,30 +102,29 @@ function OrdersGrid(props) {
         return trackingArray.length ? trackingArray.length > 0 : false;
     }
 
-    function downloadInvoice(orderId) {
+    const downloadInvoice = async (orderId) => {
+        try {
+            const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
+            const name =  `order-${orderId}-invoices.zip`;
+            await downloadFileBlob(downloadOrderInvoicesUrl, name);
+        } catch (error) {
+            console.error('Error', error);
+            setModal((previousInfo) => (
+                {
+                    ...previousInfo,
+                    errorMessage: componentProp.invoicesModal?.errorMessage
+                }
+            ));
+        }
+    }
+
+    const downloadSingleInvoice = async (orderId) => {
+        downloadInvoice(orderId);
+    }
+
+    function downloadAllInvoice(orderId) {
         return async () => {
-            try {
-                const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
-                const response = await axios.get(downloadOrderInvoicesUrl, { responseType: 'blob' });
-
-                const type = response.headers['content-type'];
-                const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
-                const link = document.createElement('a');
-
-                link.href = window.URL.createObjectURL(blob);
-                link.download = `order-${orderId}-invoices.zip`;
-                link.click();
-                link.remove();
-
-                setModal(null);
-            } catch (error) {
-                setModal((previousInfo) => (
-                    {
-                        ...previousInfo,
-                        errorMessage: componentProp.invoicesModal?.errorMessage
-                    }
-                ));
-            }
+            downloadInvoice(orderId);
         }
     }
 
@@ -139,7 +142,9 @@ function OrdersGrid(props) {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
               
             } else {
-                return line.invoices[0]?.id ?? null;
+                return (<div onClick={() => downloadSingleInvoice(line.invoices[0]?.id)}>
+                    {line.invoices[0]?.id}
+                </div>) ?? null;
             }
         }
     }

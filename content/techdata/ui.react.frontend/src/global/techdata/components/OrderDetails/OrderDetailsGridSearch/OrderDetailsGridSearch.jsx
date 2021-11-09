@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 import SimpleDropDown from "../../Widgets/SimpleDropDown";
 
-function OrdersGridSearch({ componentProp, onQueryChanged }) {
+function OrdersDetailsGridSearch({ componentProp, onQueryChanged }) {
   const [flag, setFlag] = useState(false);
   const defaultKeywordDropdown = {
     label: "Keyword",
@@ -138,4 +138,4 @@ function OrdersGridSearch({ componentProp, onQueryChanged }) {
   );
 }
 
-export default OrdersGridSearch;
+export default OrdersDetailsGridSearch;
