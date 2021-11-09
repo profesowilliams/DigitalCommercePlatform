@@ -161,7 +161,9 @@ public class VendorListItem implements ListItem {
         }
 
         overview = getVendorDescriptionType(vendorDescriptionType, cf, overview);
-        vendorIcon = getSvgToPlainText(vendorIcon, resource);
+        if(vendorIcon.startsWith("/content")){
+            vendorIcon = getSvgToPlainText(vendorIcon, resource);
+        }
 
         VendorListItem v1 = new VendorListItem(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, cfListItem);
         log.debug(" CF Data From Vendor List Item class = {} {}", title, overview);
