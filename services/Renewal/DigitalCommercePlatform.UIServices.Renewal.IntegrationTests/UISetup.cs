@@ -10,26 +10,41 @@ using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
-namespace DigitalCommercePlatform.UIServices.Config.IntegrationTests
+namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 {
     public class UISetup : Setup
     {
+        private readonly HttpClient coreClient;
+
+        public UISetup()
+        {
+            this.coreClient = null;
+        }
+
+        public UISetup(HttpClient coreClient)
+        {
+            this.coreClient = coreClient;
+        }
+
         public override void AddClients(ITestHttpClientFactory factory, string serviceName)
                => factory
-                   .AddClient<ISimpleHttpClient>()
+                   .AddClient<ISimpleHttpClient>(coreClient)
                        .MatchContains($"AppSetting/{serviceName}")
                            .Returns(Defaults.GetAppSettings()
                                 .Extend("UI.Security.CorsAllowedOrigin", "true")
                                 .Extend("UI.Security.CorsAllowedHeaders", "true")
                                 .Extend("UI.Security.CorsAllowedMethods", "true")
-                                .Extend("MaxPageSize", "100"))
+                                .Extend("MaxPageSize", "100")
+                                .Extend("App.Renewal.Url", "v1")
+                                .Extend("App.Quote.Url", "v1")
+                   )
                        .MatchContains($"SiteSetting/{serviceName}")
                            .Returns(Defaults.GetSiteSettings())
                        .Build()
-                   .AddClient<IMiddleTierHttpClient>()
+                   .AddClient<IMiddleTierHttpClient>(coreClient)
                        .Build();
-
 
         public override void PostStartupConfigureServices(IServiceCollection serviceDescriptors)
             => serviceDescriptors

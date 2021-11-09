@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Enum;
 using DigitalCommercePlatform.UIServices.Renewal.Helpers;
 using DigitalCommercePlatform.UIServices.Renewal.Infrastructure.Filters;
+using DigitalFoundation.Common.Attributes;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
 using DigitalFoundation.Common.Settings;
@@ -38,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
         }
 
         private readonly IMapper _mapper;
+
         [HttpGet]
         [Route("Search")]
         public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model)
@@ -56,6 +58,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             }
         }
 
+        [LogQuery]
+        [HttpGet]
+        [Route("Details")]
         public async Task<IActionResult> Get([FromQuery] string[] id, [FromQuery] string type = "renewal")
         {
             if (ConfigurationType.Renewal.IsEqualTo(type) || ConfigurationType.Opportinity.IsEqualTo(type))
@@ -72,7 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
 
         [HttpGet]
         [Route("renewals")]
-        public async Task<IActionResult> FindRenewals([FromQuery] int pageSize) // Fix this 
+        public async Task<IActionResult> FindRenewals([FromQuery] int pageSize) // Fix this
         {
             var response = await Mediator.Send(new GetRenewal.Request(pageSize)).ConfigureAwait(false); // Fix This
             return Ok(response);
