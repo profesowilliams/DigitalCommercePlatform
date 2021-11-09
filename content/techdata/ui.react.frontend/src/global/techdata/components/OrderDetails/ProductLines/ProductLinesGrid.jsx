@@ -180,7 +180,7 @@ function ProductLinesGrid({
       field: "unitPrice",
       sortable: false,
       valueFormatter: (props) => {
-        return props.value.toLocaleString();
+        return props.value ? props.value.toLocaleString() : '';
       },
     },
     {
@@ -188,7 +188,7 @@ function ProductLinesGrid({
       field: "totalPrice",
       sortable: false,
       valueFormatter: (props) => {
-        return props.value.toLocaleString();
+        return props.value ? props.value.toLocaleString() : '';
       },
     },
   ];
