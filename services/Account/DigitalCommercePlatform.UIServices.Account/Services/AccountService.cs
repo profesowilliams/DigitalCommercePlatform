@@ -111,11 +111,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var dealsSummary = await _middleTierHttpClient.GetAsync<DigitalFoundation.Common.Models.FindResponse<DealsBase>>(url);
 
             var response = new List<DealsSummaryModel>();
-            var objDeal = new DealsSummaryModel();
+            
 
             for (int i = 1; i < 4; i++)
             {
-                objDeal = new DealsSummaryModel
+                DealsSummaryModel objDeal = new DealsSummaryModel
                 {
 
                     Value = i == 1 ? dealsSummary?.Data?.Where(t => t.ExpirationDate <= DateTime.Now.AddDays(2)).Count() :
@@ -140,7 +140,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 deal.Amount = (randomNumber * 100);
                 deal.CurrencyCode = "USD";
                 deal.CurrencySymbol = "$";
-                deal.FormattedAmount = string.Format(deal.Amount % 1 == 0 ? "{0:N2}" : "{0:N2}", deal.Amount);
+                deal.FormattedAmount = String.Format(deal.Amount % 1 == 0 ? "{0:0}" : "{0:0.00}", deal.Amount);
                 deals.Add(deal);
             }
 

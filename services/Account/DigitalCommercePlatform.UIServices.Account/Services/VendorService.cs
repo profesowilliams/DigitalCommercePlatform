@@ -16,7 +16,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -25,26 +27,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public class VendorService : IVendorService
     {
         private readonly string _coreSecurityUrl;
-        private readonly string _VendorAutorizationURL;
+        private readonly string _vendorAutorizationURL;
         private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly ILogger<AccountService> _logger;
-
-        private static readonly string[] _allowedVendorValues = { "cisco", "hp", "apple", "dell", "vendor.test" };
+        private readonly ILogger<VendorService> _logger;
+        private readonly IAppSettings _appSettings;
+        private static List<string> _validVendors;
 
         public VendorService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
-            ILogger<AccountService> logger, IUIContext uiContext)
+            ILogger<VendorService> logger, IUIContext uiContext)
         {
             _uiContext = uiContext;
             _middleTierHttpClient = middleTierHttpClient;
             _logger = logger;
             _coreSecurityUrl = appSettings.GetSetting(Globals.CoreSecurityUrl);
-            _VendorAutorizationURL = appSettings.GetSetting("Vendor.Login.Cisco.Url");
+            _vendorAutorizationURL = appSettings.GetSetting("Vendor.Login.Cisco.Url");
+            _appSettings = appSettings;
         }
+
 
         public static string[] GetAllowedVendorValues()
         {
-            return _allowedVendorValues;
+            return new string[] { "CISCO" }; // fix this in next push         
         }
 
         public async Task<SetVendorConnection.Response> SetVendorConnection(SetVendorConnection.Request request)
@@ -93,15 +97,49 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             try
             {
+                var validVendors = VendorList();
                 var url = _coreSecurityUrl.AppendPathSegment("/GetVendorConnections");
                 var vendorResponse = await _middleTierHttpClient.GetAsync<List<VendorConnection>>(url).ConfigureAwait(false);
-                return vendorResponse;
+                if (vendorResponse.Any())
+                {
+                    var response = (from v in vendorResponse
+                                    where validVendors.Contains(v.Vendor?.ToLower())
+                                    select v).ToList();
+                    if (!response.Any() || response == null)
+                        response = BuildVendorListResponse(validVendors);
+                    else
+                        return response;
+
+                    return response;
+                }
+                return BuildVendorListResponse(validVendors);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                // never throw exception 
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
-                throw ex;
-            }            
+                var validVendors = VendorList();
+                return BuildVendorListResponse(validVendors);
+               
+                //throw ex;
+            }
+        }
+
+        private List<VendorConnection> BuildVendorListResponse(List<string> validVendors)
+        {
+            List<VendorConnection> response = new List<VendorConnection>();
+            foreach (var vendor in validVendors)
+            {
+                response.Add(new VendorConnection
+                {
+                    Vendor = vendor,
+                    ConnectionDate = null,
+                    IsConnected = false,
+                    IsValidRefreshToken = false
+                });
+            }
+
+            return response;
         }
 
         public async Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request)
@@ -140,7 +178,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
-            }            
+            }
         }
 
         public async Task<GetVendorDisconnect.Response> VendorDisconnect(GetVendorDisconnect.Request request)
@@ -190,7 +228,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 request.Vendor = string.IsNullOrEmpty(request.Vendor) ? "Cisco" : request.Vendor;
                 if (request.Vendor.ToLower() == "cisco")
-                    url = _VendorAutorizationURL;
+                    url = _vendorAutorizationURL;
             }
             catch (Exception ex)
             {
@@ -198,6 +236,25 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 throw ex;
             }
             return Task.FromResult(url);
+        }
+
+        private List<string> VendorList()
+        {
+            try
+            {
+                var vendors = _appSettings.GetSetting("Feature.UI.VendorName");
+
+                if (!string.IsNullOrWhiteSpace(vendors))
+                    _validVendors = vendors.Split(',').ToList().ConvertAll(d => d.ToLower());
+                else
+                    _validVendors = new List<string> { "cisco" };
+            }
+            catch (Exception)
+            {
+                _validVendors = new List<string> { "cisco" }; // never throw exception
+            }            
+
+            return _validVendors;
         }
     }
 }
