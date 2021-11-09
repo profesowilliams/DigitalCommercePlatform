@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
 {
-    public class DetailedDto : SummaryDto
+    public class QuoteDetailedDto : SummaryDto
     {
         public DateTime Published { get; set; }
-        public PartyDto Reseller { get; set; }
-        public PartyDto EndUser { get; set; }
-        public PartyDto ShipTo { get; set; }
+        public PartyDetailedDto Reseller { get; set; }
+        public PartyDetailedDto EndUser { get; set; }
+        public PartyDetailedDto ShipTo { get; set; }
         public TypeValueDto AlternateIdentifier { get; set; }
         public NameDto VendorSalesRep { get; set; }
         public NameDto VendorSalesAssociate { get; set; }

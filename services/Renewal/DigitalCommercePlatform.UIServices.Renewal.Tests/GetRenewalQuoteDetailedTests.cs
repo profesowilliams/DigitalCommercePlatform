@@ -2,20 +2,18 @@
 
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.AutoMapper;
-using System.Threading.Tasks;
-using Moq;
-using Microsoft.Extensions.Logging;
-using static DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals.GetRenewalQuoteDetailed;
-using Xunit;
-using DigitalFoundation.Common.TestUtilities;
-using DigitalCommercePlatform.UIServices.Renewal.Services;
-using System.Threading;
-using FluentAssertions;
-using FluentAssertions.Collections;
-using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
-using System.Collections.Generic;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Services;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
+using static DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals.GetRenewalQuoteDetailed;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 {
@@ -41,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         [Theory]
         [AutoDomainData]
-        public async Task OnHandle_ReturnsData_ExpectedCountAndData(Request request, List<DetailedModel> returnedData)
+        public async Task OnHandle_ReturnsData_ExpectedCountAndData(Request request, List<QuoteDetailedModel> returnedData)
         {
             // arrange
             var coreQuoteClient = new Mock<IRenewalService>();
@@ -61,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         [Theory]
         [AutoDomainData]
-        public void GetRenewalQuoteDetailed_NullRequest_ThrowsNullReferenceException(List<DetailedModel> returnedData)
+        public void GetRenewalQuoteDetailed_NullRequest_ThrowsNullReferenceException(List<QuoteDetailedModel> returnedData)
         {
             // arrange
             var coreQuoteClient = new Mock<IRenewalService>();

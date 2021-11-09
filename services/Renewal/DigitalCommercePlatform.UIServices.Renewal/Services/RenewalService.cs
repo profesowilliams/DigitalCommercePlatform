@@ -90,11 +90,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
             return rgroupModel;
         }
-        public async Task<List<DetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
+        public async Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
         {
             var coreResult = await
-               _middleTierHttpClient.GetAsync<IEnumerable<DetailedDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
-            var modelList = _mapper.Map<List<DetailedModel>>(coreResult);
+               _middleTierHttpClient.GetAsync<IEnumerable<QuoteDetailedDto>>(_appRenewalServiceUrl.BuildQuery(request)).ConfigureAwait(false);
+            var modelList = _mapper.Map<List<QuoteDetailedModel>>(coreResult);
             return modelList;
         }
     }

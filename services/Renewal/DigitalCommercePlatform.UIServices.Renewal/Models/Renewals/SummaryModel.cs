@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public class SummaryModel : BaseResponseModel
+    public class SummaryModel : DetailedModel
     {
 
     }

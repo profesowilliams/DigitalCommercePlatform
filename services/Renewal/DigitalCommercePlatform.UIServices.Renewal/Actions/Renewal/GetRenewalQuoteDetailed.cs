@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
         public class Response
         {
-            public List<DetailedModel> Details { get; set; }
+            public List<QuoteDetailedModel> Details { get; set; }
         }
 
         [ExcludeFromCodeCoverage]
@@ -44,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                List<DetailedModel> renewalsResponse = await _renewalsService.GetRenewalsQuoteDetailedFor(request);
+                List<QuoteDetailedModel> renewalsResponse = await _renewalsService.GetRenewalsQuoteDetailedFor(request);
 
                 var response = new Response
                 {

@@ -30,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 
         [Theory]
         [InlineDomainData("/v1/details?id=4009724298&type=renewal")]
-        public async Task App_Get_ReturnsQuoteDetailed(string input, IEnumerable<DetailedDto> model)
+        public async Task App_Get_ReturnsQuoteDetailed(string input, IEnumerable<QuoteDetailedDto> model)
         {
             using var scope = PrepareGetScope(model);
 
@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             response.Value.Content.Details.Should().NotBeEmpty();
         }
 
-        private IScope PrepareGetScope(IEnumerable<DetailedDto> model)
+        private IScope PrepareGetScope(IEnumerable<QuoteDetailedDto> model)
         {
             var scope = _fixture.CreateChildScope();
             scope.OverrideClient<IMiddleTierHttpClient>()

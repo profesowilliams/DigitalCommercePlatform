@@ -41,7 +41,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public RefinementGroupsModel RefinementGroups { get; set; }
         }
 
-        [ExcludeFromCodeCoverage]
         public class GetRenewalsHandler : IRequestHandler<Request, Response>
         {
             private readonly IRenewalService _renewalsService;

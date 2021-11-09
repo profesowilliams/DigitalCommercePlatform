@@ -31,6 +31,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
             CreateMap<TypeValueDto, QuoteTypeValueModel>();
             CreateMap<DetailedDto, DetailedModel>();
             CreateMap<SummaryDto, SummaryModel>();
+            CreateMap<PartyDetailedDto, PartyDetailedModel>();
+            CreateMap<ContactDetailedDto, ContactDetailedModel>();
+            CreateMap<QuoteDetailedDto, QuoteDetailedModel>();
         }
     }
 }

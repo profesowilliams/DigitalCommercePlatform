@@ -16,6 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request);
         Task<List<RenewalsModel>> GetRenewalsFor(GetRenewal.Request request);
         Task<RefinementGroupsModel> GetRefainmentGroup(SearchRefainmentGroup.Request request);
-        Task<List<DetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request);
+        Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request);
     }
 }

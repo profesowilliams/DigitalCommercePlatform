@@ -1,22 +1,23 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal;
-using DigitalFoundation.App.Services.Renewal.Dto.CoreQuote.Internal;
+using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
+namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
-    public class DetailedDto : SummaryDto
+    [ExcludeFromCodeCoverage]
+    public class QuoteDetailedModel : BaseResponseModel
     {
         public DateTime Published { get; set; }
-        public PartyDto Reseller { get; set; }
-        public PartyDto EndUser { get; set; }
-        public PartyDto ShipTo { get; set; }
-        public TypeValueDto AlternateIdentifier { get; set; }
-        public NameDto VendorSalesRep { get; set; }
-        public NameDto VendorSalesAssociate { get; set; }
-        public List<ItemDto> Items { get; set; }
-        public List<AttributeDto> Attributes { get; set; }
+        public PartyDetailedModel Reseller { get; set; }
+        public PartyDetailedModel EndUser { get; set; }
+        public PartyDetailedModel ShipTo { get; set; }
+        public QuoteTypeValueModel AlternateIdentifier { get; set; }
+        public NameModel VendorSalesRep { get; set; }
+        public NameModel VendorSalesAssociate { get; set; }
+        public List<ItemModel> Items { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
         public string ProgramName { get; set; }
         public bool? QuoteCurrent { get; set; }
         public DateTime FirstAvailableOrderDate { get; set; }
