@@ -84,6 +84,19 @@ function ConfigurationGrid(props) {
     }
   }
 
+  const getQuotePreviewUrl = (props) => {
+    return componentProp.createQuoteUrl
+      ?.replace("{id}", props.data.configId)
+      .replace(
+        "{is-estimated-id}",
+        String(props.data.configurationType === "Estimate")
+      )
+      .replace("{vendor}", props.data.vendor);
+  }
+
+  const getConfigurationDetailsUrl = (props) => {
+    return componentProp.configDetailUrl?.replace("{id}", props.value);
+  }
   const columnDefs = [
     {
       headerName: "Config ID",
@@ -93,7 +106,7 @@ function ConfigurationGrid(props) {
         return (
           <a
             className="cmp-grid-url-underlined"
-            href={componentProp.configDetailUrl?.replace("{id}", props.value)}
+            href={getQuotePreviewUrl(props)}
           >
             {props.value}
           </a>
@@ -161,16 +174,9 @@ function ConfigurationGrid(props) {
       field: "action",
       sortable: true,
       cellRenderer: (props) => {
-        const createQuoteUrl = componentProp.createQuoteUrl
-          ?.replace("{id}", props.data.configId)
-          .replace(
-            "{is-estimated-id}",
-            String(props.data.configurationType === "Estimate")
-          )
-          .replace("{vendor}", props.data.vendor);
         return (
           <div>
-            <a className="cmp-grid-url-not-underlined" href={createQuoteUrl}>
+            <a className="cmp-grid-url-not-underlined" href={getQuotePreviewUrl(props)}>
               {componentProp.actionColumnLabel}
             </a>
           </div>
