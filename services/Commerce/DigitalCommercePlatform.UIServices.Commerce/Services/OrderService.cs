@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
@@ -115,27 +116,35 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 var invoiceDetails = item.Items?.SelectMany(i => i.Invoices)
                .Select(i => new InvoiceModel { ID = i.ID }).ToList();
-                await FindInvoices(item, invoiceDetails);
+
+                if (invoiceDetails != null)
+                {
+                    await FindInvoices(item, invoiceDetails);
+                }
+
             }
             return findOrdersDto;        
         }
 
         private async Task FindInvoices(OrderModel item, List<InvoiceModel> invoiceDetails)
         {
-            var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
-
-            if (invoices.Any())
+            if (invoiceDetails.Any())
             {
-                foreach (var invoice in invoices)
-                {
-                    var _appreturn = _appSettings.GetSetting("App.Return.Url");
-                    _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
+                var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
 
-                    var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
-                    if (findReturnsDTO.Data.Any())
+                if (invoices.Any())
+                {
+                    foreach (var invoice in invoices)
                     {
-                        item.Return = true;
-                        break;
+                        var _appreturn = _appSettings.GetSetting("App.Return.Url");
+                        _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
+
+                        var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
+                        if (findReturnsDTO.Data.Any())
+                        {
+                            item.Return = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -160,7 +169,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 orderParameters.Origin = null;
 
             string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
-            var url = _appOrderServiceUrl.AppendPathSegment("Find")
+            var url = "";
+            if (orderParameters.IdType == 0)
+            {
+                url = _appOrderServiceUrl.AppendPathSegment("Find")
                         .SetQueryParams(new
                         {
                             orderParameters.Id,
@@ -179,6 +191,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             orderParameters.ConfirmationNumber,
                             orderParameters.InvoiceId
                         });
+            }
+            else
+            {
+                url = _appOrderServiceUrl.AppendPathSegment("Find")
+                    .SetQueryParams(new
+                    {
+                        orderParameters.Id,
+                        Sort = orderParameters.SortBy,
+                        SortAscending = orderParameters.SortAscending.ToString(),
+                        Details = true,
+                        orderParameters.IdType,
+                        orderParameters.PageSize,
+                        Page = orderParameters.PageNumber,
+                        WithPaginationInfo = orderParameters.WithPaginationInfo,
+
+                    });
+            }
 
             var findOrdersDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
             return findOrdersDto;
@@ -201,7 +230,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private decimal? CalculateFreight(OrderModel order)
         {
-            decimal? freight = order.Items.Where(t => t.Freight.HasValue).Sum(t => t.Freight.Value);  
+            decimal? freight = order.Items.Where(t => t.Freight.HasValue).Sum(t => t.Freight.Value);
             return freight ?? 0;
         }
 
@@ -212,7 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
         private decimal? CalculateTax(OrderModel order)
         {
-            decimal? tax =  order.Items.Where(t => t.Tax.HasValue).Sum(t => t.Tax.Value);
+            decimal? tax = order.Items.Where(t => t.Tax.HasValue).Sum(t => t.Tax.Value);
             return tax ?? 0;
         }
     }

@@ -14,12 +14,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public DateTime? CreatedTo { get; set; }
         public string Status { get; set; }
         public string SortBy { get; set; }
-        public string SortDirection { get; set; } 
+        public string SortDirection { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
         public string OrderMethod { get; set; }
         public string ConfirmationNumber { get; set; }
         public string InvoiceId { get; set; }
+        public SearchIdType IdType { get; set; }
+    }
+    public enum SearchIdType
+    {
+        None = 0,
+        General = 7,
+        CustomerPO = 2,
+        TDOrderNumber = 1
     }
 }

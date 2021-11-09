@@ -40,8 +40,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
-                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>()) 
-                .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>()) 
+                .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>())
+                .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>())
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
@@ -170,12 +170,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public List<Vendor> Resolve(OrderModel source, RecentOrdersModel destination, List<Vendor> destMember, ResolutionContext context)
         {
             //var Vendor = source.Items.Where(x => x.Product.FirstOrDefault().Manufacturer != null);
+            if (source.Items == null) return new List<Vendor>();
+
             var vendorDetails = source.Items.SelectMany(i => i.Product).Where(i => i.Manufacturer != null).GroupBy(i => i.Manufacturer)
               .Select(i => new Vendor
               {
                   VendorName = i.Key
               }).ToList();
             return vendorDetails;
+
+
         }
     }
 
@@ -186,7 +190,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         {
             if (source?.Items == null) { return new List<InvoiceDetails>(); }
 
-            var invoiceDetails = source.Items.SelectMany(i => i.Invoices).Where(i => i.Price.HasValue && i.Price > 0)
+            var invoiceDetails = source.Items.SelectMany(i => i?.Invoices).Where(i => i.Price.HasValue && i.Price > 0)
                 .Select(i => new InvoiceDetails
                 {
                     Created = i.Created,

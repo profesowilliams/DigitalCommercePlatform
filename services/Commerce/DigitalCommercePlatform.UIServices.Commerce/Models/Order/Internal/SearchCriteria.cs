@@ -21,5 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public string Origin { get; set; }
         public string ConfirmationNumber { get; set; }
         public string InvoiceId { get; set; }
+        public int? IdType { get; set; }
     }
 }

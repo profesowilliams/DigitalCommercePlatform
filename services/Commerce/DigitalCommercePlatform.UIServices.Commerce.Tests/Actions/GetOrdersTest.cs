@@ -40,11 +40,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
 
             var handler = new GetOrders.GetOrderHandler(_mockOrderService.Object, _mockSortingService.Object, _mockStatusMappingService.Object, _mapper.Object);
             var PagingDTO = new GetOrders.PagingDto("","",1,1,true);
-            var FilteringDTO = new GetOrders.FilteringDto("","","",null,null,"","","","");
+            var FilteringDTO = new GetOrders.FilteringDto("","","",null,null,"","","","", Models.Order.SearchIdType.None);
             var request = new GetOrders.Request(FilteringDTO,PagingDTO);
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
             result.Should().NotBeNull();
         }
 
+        [Fact]
+        public async Task GetOrdersValidator()
+        {
+            // Arrange
+            var validator = new GetOrders.GetOrdersValidator(_mockSortingService.Object, _mockStatusMappingService.Object);
+            var PagingDTO = new GetOrders.PagingDto("", "", 1, 1, true);
+            var FilteringDTO = new GetOrders.FilteringDto("", "", "", null, null, "", "", "", "", Models.Order.SearchIdType.None);
+            var cmd = new GetOrders.Request(FilteringDTO, PagingDTO);
+            // Act
+            var validationResult = await validator.ValidateAsync(cmd);
+            // Assert
+            Assert.False(validationResult.IsValid);
+        }
     }
 }

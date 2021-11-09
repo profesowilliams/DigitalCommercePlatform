@@ -34,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string OrderMethod { get; set; }
             public string ConfirmationNumber { get; set; }
             public string InvoiceId { get; set; }
+            public SearchIdType IdType { get; set; }
 
             public Request(FilteringDto filtering, PagingDto paging)
             {
@@ -51,6 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 OrderMethod = filtering.OrderMethod;
                 ConfirmationNumber = filtering.ConfirmationNumber;
                 InvoiceId = filtering.InvoiceId;
+                IdType = filtering.IdType;
             }
         }
 
@@ -76,7 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
         {
             public FilteringDto(
                 string id, string customerPO, string manufacturer, DateTime? createdFrom, DateTime? createdTo,
-                string status, string orderMethod, string confirmationNumber, string invoiceId)
+                string status, string orderMethod, string confirmationNumber, string invoiceId, SearchIdType idType)
             {
                 Id = id;
                 CustomerPO = customerPO;
@@ -87,6 +89,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                 OrderMethod = orderMethod;
                 ConfirmationNumber = confirmationNumber;
                 InvoiceId = invoiceId;
+                IdType = idType;
             }
 
             public string Id { get; }
@@ -98,6 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
             public string OrderMethod { get; }
             public string ConfirmationNumber { get; }
             public string InvoiceId { get; }
+            public SearchIdType IdType { get; }
         }
 
         public class Response
@@ -149,6 +153,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders
                     Origin = request.OrderMethod,
                     ConfirmationNumber = request.ConfirmationNumber,
                     InvoiceId = request.InvoiceId,
+                    IdType = (int)request.IdType,
                 };
 
                 var orders = await _orderQueryService.GetOrdersAsync(orderParameters);
