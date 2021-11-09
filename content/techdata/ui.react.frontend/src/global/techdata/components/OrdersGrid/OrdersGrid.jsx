@@ -62,25 +62,8 @@ function OrdersGrid(props) {
             componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
     };
 
-    function invokeModal(line) {
-        const modal = {
-            content: (
-                <DetailsInfo
-                    info={invoicesModal.content}
-                    line={line}
-                    pendingInfo={invoicesModal.pendingInfo}
-                    pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
-                    pendingValue={pendingValue}
-                    downloadInvoiceFunction={async (id)=> downloadSingleInvoice(id)}
-                ></DetailsInfo>
-            ),
-            properties: {
-                title: `${invoicesModal.title}: ${line.id} `,
-                buttonIcon: invoicesModal.buttonIcon,
-                buttonLabel: invoicesModal.buttonLabel,
-            },
-            modalAction: downloadAllInvoice(line.id)
-        }
+    //Please do not change the below method without consulting your Dev Lead
+    function invokeModal(modal) {
         setModal(modal);
     }
 
@@ -131,7 +114,7 @@ function OrdersGrid(props) {
     function getInvoices(line) {
         if (line.invoices.length && line.invoices.length > 1) {
             return (
-                <div onClick={() => invokeModal(line)}>
+                <div>
                     <div className='cmp-grid-url-underlined'>
                         {labelList.find((label) => label.labelKey === 'multiple').labelValue}
                     </div>
