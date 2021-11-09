@@ -32,3 +32,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1056:URI-like properties should not be strings")]
 [assembly: SuppressMessage("Naming", "CA1724:Type names should not match namespaces")]
 [assembly: SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high")]
+[assembly: SuppressMessage("Major Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:DigitalCommercePlatform.UIServices.Export.Services.ExportService.SetLineData(System.Int32,OfficeOpenXml.ExcelWorksheet,System.Int32,System.Int32,System.String,DigitalCommercePlatform.UIServices.Export.Models.Line,DigitalCommercePlatform.UIServices.Export.Models.OrderDetailModel,System.Collections.Generic.List{System.String})")]

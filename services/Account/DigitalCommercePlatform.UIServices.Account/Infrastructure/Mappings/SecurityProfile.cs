@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
 
             CreateMap<DigitalFoundation.Common.Models.User, User>()
                 .ForMember(dest => dest.CustomersV2, opt => opt.MapFrom(src => src.CustomerList))
+                .ForMember(dest => dest.Roles, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleList, opt => opt.MapFrom(src => src.RoleList));
 
 

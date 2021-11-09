@@ -53,13 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Config.IntegrationTests
                             "customer1",
                             "customer2",
                             "customer3",
-                        },
-                        Roles = new List<string>()
-                        {
-                            "role1",
-                            "role2",
-                            "role3"
-                        },
+                        },                        
                         AccessToken = "AccessToken",
                         RefreshToken = "RefreshToken",
                         ExpiresInSeconds = 32,
