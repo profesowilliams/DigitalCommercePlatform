@@ -1173,11 +1173,15 @@ $teaser-headings-mobile: ("h1"rem(36px) bold rem(40px),
 .teaser-max-width-1440 {
   .cmp-teaser__content {
     max-width: 1440px;
+    margin: 0 auto;
   }
 }
 
 .teaser-max-height-500 {
-  .cmp-teaser {
+  .cmp-teaser .cmp-image__image {
     max-height: 500px;
+    object-fit: cover;
+    object-position: top;
+    object-position: center;
   }
 }
