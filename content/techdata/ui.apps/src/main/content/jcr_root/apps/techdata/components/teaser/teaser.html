@@ -1,5 +1,6 @@
 <div data-sly-use.teaser="com.adobe.cq.wcm.core.components.models.Teaser"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     data-sly-use.overlaySVGModel="com.techdata.core.models.ExtractSVGModel"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
      data-sly-use.imageTemplate="image.html"
      data-sly-use.pretitleTemplate="pretitle.html"
@@ -18,6 +19,11 @@
          data-title="${teaser.title}"
          data-cmp-clickable="${properties.linkURL ? true : false}"
     >
+        <!-- Render if overlay SVG is configured -->
+        <sly data-sly-test="${properties.overlaySVGImage}">
+            ${overlaySVGModel.getOverlaySVGBinary @ context='unsafe'}
+        </sly>
+        
         <sly data-sly-call="${pretitleTemplate.pretitle @ teaser=teaser}"></sly>
         <sly data-sly-call="${titleTemplate.title @ teaser=teaser}"></sly>
         <a class="cmp-teaser__desc-link" href="${teaser.linkURL}">

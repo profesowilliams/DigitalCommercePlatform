@@ -29,6 +29,7 @@ public class ExtractSVGModel {
   private static final Logger log = LoggerFactory.getLogger(ExtractSVGModel.class);
 
 
+  private static final String OVERLAY_SVG_FILE_REFERENCE_PN = "overlaySVGImage";
   private static final String FILE_REFERENCE_PN = "fileReference";
   private static final String SVG_EXTENSION = ".svg";
 
@@ -36,6 +37,7 @@ public class ExtractSVGModel {
   private Resource resource;
 
   private Asset asset;
+  private Asset overlayAsset;
 
   @PostConstruct
   protected void init() {
@@ -43,6 +45,12 @@ public class ExtractSVGModel {
 
     this.asset = Optional.ofNullable(this.resource)
             .map(imageResource -> imageResource.getValueMap().get(FILE_REFERENCE_PN, String.class))
+            .map(fileReference -> this.resource.getResourceResolver().getResource(fileReference))
+            .map(fileResource -> fileResource.adaptTo(Asset.class))
+            .orElse(null);
+
+    this.overlayAsset = Optional.ofNullable(this.resource)
+            .map(imageResource -> imageResource.getValueMap().get(OVERLAY_SVG_FILE_REFERENCE_PN, String.class))
             .map(fileReference -> this.resource.getResourceResolver().getResource(fileReference))
             .map(fileResource -> fileResource.adaptTo(Asset.class))
             .orElse(null);
@@ -64,6 +72,15 @@ public class ExtractSVGModel {
   public String getBinary() {
     if (Objects.nonNull(asset)) {
       final Rendition rendition = asset.getOriginal();
+      final InputStream stream = rendition.getStream();
+      return readXml(stream);
+    }
+    return StringUtils.EMPTY;
+  }
+
+  public String getOverlaySVGBinary() {
+    if (Objects.nonNull(overlayAsset)) {
+      final Rendition rendition = overlayAsset.getOriginal();
       final InputStream stream = rendition.getStream();
       return readXml(stream);
     }
