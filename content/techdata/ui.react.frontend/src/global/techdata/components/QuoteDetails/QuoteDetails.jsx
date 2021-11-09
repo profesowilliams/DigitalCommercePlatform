@@ -102,13 +102,6 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   function exportToPDF(data) {
-    downloadClicked(
-      data.quoteDetails,
-      true,
-      logoURL,
-      fileName,
-      downloadLinkText
-    );
     let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
     let downloadLinkATagCollection =
       downloadLinkDivTag.getElementsByTagName("a");
@@ -124,7 +117,7 @@ const QuoteDetails = ({ componentProp }) => {
 
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
-    
+
   }, [response]);
 
   useEffect(() => {
@@ -154,6 +147,13 @@ const QuoteDetails = ({ componentProp }) => {
     };
     exportOption?.key === "exportToCSV" && exportToCSV();
     exportOption?.key === "exportToPDF" && exportToPDF(data);
+    downloadClicked(
+        quoteDetails,
+        true,
+        logoURL,
+        fileName,
+        downloadLinkText
+    );
   }, [exportOption, quoteDetails, actualQuoteLinesData]);
 
   const getSourceInformation = (attributes, type) =>
