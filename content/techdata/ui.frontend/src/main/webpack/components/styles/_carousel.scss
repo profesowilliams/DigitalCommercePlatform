@@ -1,5 +1,9 @@
 .cmp-carousel {}
-.cmp-carousel__content {}
+.cmp-carousel__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 .cmp-carousel__item {}
 .cmp-carousel__actions {}
 .cmp-carousel__action {}
@@ -182,8 +186,8 @@
   }
 }
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav{
-  position: absolute;
-  bottom: 10px;
+  display: flex;
+  padding-bottom: 10px;
   
   .dp-carousel__nav-label{
     &::before{
@@ -248,19 +252,19 @@
 
 // New nav dots styling
 .cmp-carousel__indicators {
+  align-self: center;
   width: 50%;
   
   //New classes for position of carousel dots
   &--left {
     .cmp-carousel__indicators{
-      left: 0;
+      align-self: flex-start;
     }
   }
 
-
   &--right {
     .cmp-carousel__indicators{
-      left: 50%;
+      align-self: flex-end;
     }
   }
 }

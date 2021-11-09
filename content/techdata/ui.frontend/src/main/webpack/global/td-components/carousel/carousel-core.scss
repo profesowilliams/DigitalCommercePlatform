@@ -50,5 +50,19 @@
 
 
 .cmp-carousel__indicators {
-    width: 100%;
+    align-self: center;
+    width: 50%;
+    
+    //New classes for position of carousel dots
+    &--left {
+      .cmp-carousel__indicators{
+        align-self: flex-start;
+      }
+    }
+  
+    &--right {
+      .cmp-carousel__indicators{
+        align-self: flex-end;
+      }
+    }
 }
