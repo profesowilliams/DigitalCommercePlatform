@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _appSettingsMock = new Mock<IAppSettings>();
             _siteSettingsMock = new Mock<ISiteSettings>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
-            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy/MM/dd");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
             _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
         }

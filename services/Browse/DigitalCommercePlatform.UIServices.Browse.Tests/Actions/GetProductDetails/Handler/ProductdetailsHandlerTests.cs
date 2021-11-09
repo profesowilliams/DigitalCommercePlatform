@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageSize")).Returns("400x300");
-            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy/MM/dd");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
@@ -94,7 +94,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             actual.Should().NotBeNull();
             actual.Content.First().Should().BeEquivalentTo(expectedProduct);
         }
-
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
         {
@@ -218,7 +217,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                 }
                             },
                             Marketing = new List<MarketingDto>
-                            { 
+                            {
                                 new MarketingDto
                                 {
                                     Id = "b9a1f953-2ac4-4e92-9101-5210b76b2b1c",
@@ -380,7 +379,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         ProductFeatures = new string[] { ". Maximum performance and reliability", ". Eco-friendly" },
                         WhatsInTheBox = new string[] { "Maximum performance and reliability", "Eco-friendly" },
                         Documents = new List<DocumentModel>
-                        { 
+                        {
                             new DocumentModel
                             {
                                 Title = "Quick Start Guide",
@@ -889,6 +888,5 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 }
             };
         }
-
     }
 }
