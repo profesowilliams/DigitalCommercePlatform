@@ -122,6 +122,9 @@ use(function () {
     if (properties.get("myEcIdlabel") != null) {
         jsonObject.put("myEcIdlabel", properties.get("myEcIdlabel"));
     }
+    if (properties.get("welcomeLabel") != null) {
+        jsonObject.put("welcomeLabel", properties.get("welcomeLabel"));
+    }
     if (properties.get("myEcId") != null) {
         jsonObject.put("myEcId", properties.get("myEcId"));
     }

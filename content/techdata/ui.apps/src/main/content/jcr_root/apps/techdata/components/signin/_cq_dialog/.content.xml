@@ -76,6 +76,11 @@
 													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 													fieldLabel="App ID"
 													name="./clientId"/>
+											<welcomeLabel
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Welcome Label"
+													name="./welcomeLabel"/>
 										</items>
 									</column>
 								</items>

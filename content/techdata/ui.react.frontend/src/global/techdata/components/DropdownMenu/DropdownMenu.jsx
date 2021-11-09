@@ -71,7 +71,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
             {!showSecondary ? (
               <>
                 <p className="user-greet">
-                  <span>Welcome {userName}!</span>
+                  <span>{config?.welcomeLabel} {userName}!</span>
                 </p>
                 <p className="ec-id">
                   <span>EC ID: {userId}</span>
