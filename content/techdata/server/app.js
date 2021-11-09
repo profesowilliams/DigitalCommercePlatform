@@ -580,12 +580,11 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         'shipped',
         'cancelled',
     ];
-    const orderReportFlag = req.query.showOpenButton 
+    const orderReportFlag = req.query.status 
                               ? 
-                              req.query.showOpenButton 
-                                == 'true' ? true : false
+                              req.query.status 
+                                === 'OPEN' ? true : false
                               : false ;
-    console.log('orderReportFlag', orderReportFlag);
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }

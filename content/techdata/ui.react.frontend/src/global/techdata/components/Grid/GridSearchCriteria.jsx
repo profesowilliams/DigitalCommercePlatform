@@ -69,7 +69,12 @@ function GridSearchCriteria({
         
 			<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
 				{
-				ButtonsComponentHeader ? (<ButtonsComponentHeader handleChange={handleChange} onSearch={onSearch} expanded={expanded} />) : null  
+				ButtonsComponentHeader ? (<ButtonsComponentHeader 
+											handleChange={handleChange}
+											onSearch={onSearch}
+											expanded={expanded}
+											onClear={onClear} 
+										 />) : null  
 				}
 			</div>
         

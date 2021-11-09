@@ -242,10 +242,20 @@ function OrdersGrid(props) {
 	 * 
 	 * @param {boolean} status 
 	 */
-	const filterOpenOrderReportsAction = (status, handleChange, onSearch) => {
-		const query = '&showOpenButton='+status;
-		handleChange(query);
-		onSearch();
+	const filterOpenOrderReportsAction = (status, handleChange, onSearch, onClear) => {
+		let query = '';
+        if (status) { 
+            query = '&status=OPEN';
+        } else {
+            query = '';
+            
+        }
+        if (query==='') {
+            onClear()
+        } else {
+            handleChange(query);
+		    onSearch();
+        }
 	};
 
 
@@ -277,17 +287,17 @@ function OrdersGrid(props) {
         )
     };
 
-    const handleClickOptionsButton = (expanded, handleChange, onSearch) => {
+    const handleClickOptionsButton = (expanded, handleChange, onSearch, onClear) => {
         
         setExpandedOpenOrderFilter(!expandedOpenOrderFilter);
         let value;
         if (expanded) {
-            value = !orderReportStatus;
+            value = '';
         } else {
             value = !orderReportStatus;
         }
         setOrderReportStatus(value);
-        filterOpenOrderReportsAction(value, handleChange, onSearch)
+        filterOpenOrderReportsAction(value, handleChange, onSearch, onClear)
     }
 
 	
@@ -298,15 +308,15 @@ function OrdersGrid(props) {
    * @param {() => void} props.onSearch
    * @returns 
    */
-	const ButtonOrderDetails = ({expanded, handleChange, onSearch}) => {
+	const ButtonOrderDetails = ({expanded, handleChange, onSearch, onClear}) => {
         if (expanded && !expandedOpenOrderFilter) {
-            handleClickOptionsButton(true, handleChange, onSearch)
+            handleClickOptionsButton(true, handleChange, onSearch, onClear)
         }
         return (
             <div
                 className={` ${expandedOpenOrderFilter || expanded ? 'hidden' : ''}`}
                 onClick={() => {
-                    handleClickOptionsButton(expanded, handleChange, onSearch)
+                    handleClickOptionsButton(expanded, handleChange, onSearch, onClear)
                 }}
             >
                 <div className='cmp-search-criteria__header__filter'>
