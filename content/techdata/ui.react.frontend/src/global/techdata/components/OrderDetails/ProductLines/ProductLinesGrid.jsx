@@ -147,6 +147,7 @@ function ProductLinesGrid({
     {
       headerName: "Description",
       field: "description",
+      width: "600px",
       sortable: false,
       cellRenderer: (props) => {
         console.log(gridProps);
@@ -165,6 +166,7 @@ function ProductLinesGrid({
     {
       headerName: "Description",
       field: "displayName",
+      width: "600px",
       sortable: false,
       cellRenderer: (props) => {
         return (gridProps.shopDomainPage ?
