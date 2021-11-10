@@ -241,7 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
              .SetQueryParams(new
              {
                  MfrPartNumber = arrProductIds,
-                 Details = true,
+                 Details = false,
                  SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg,//"0100"; Goran Needs to Fix this
                  Manufacturer = arrManufacturer
              });
