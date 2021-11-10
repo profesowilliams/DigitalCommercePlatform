@@ -5,10 +5,13 @@ import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
-import { downloadFileBlob } from '../../../../utils/utils';
+import { requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 
+
+
 function OrdersGrid(props) {
+    
     const componentProp = JSON.parse(props.componentProp);
     const filteringExtension = useGridFiltering();
 
@@ -85,11 +88,11 @@ function OrdersGrid(props) {
         return trackingArray.length ? trackingArray.length > 0 : false;
     }
 
-    const downloadInvoice = async (orderId) => {
+    const downloadFileBlob = async (orderId) => {
         try {
             const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
             const name =  `order-${orderId}-invoices.zip`;
-            await downloadFileBlob(downloadOrderInvoicesUrl, name);
+            await requestFileBlob(downloadOrderInvoicesUrl, name);
         } catch (error) {
             console.error('Error', error);
             setModal((previousInfo) => (
@@ -101,17 +104,19 @@ function OrdersGrid(props) {
         }
     }
 
-    const downloadSingleInvoice = async (orderId) => {
-        downloadInvoice(orderId);
-    }
 
     function downloadAllInvoice(orderId) {
         return async () => {
-            downloadInvoice(orderId);
+            downloadFileBlob(orderId);
         }
+    }
+    function openInvoicePdf(orderId,url) {
+        const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
+        requestFileBlob(singleDownloadUrl,'',{redirect:true});
     }
 
     function getInvoices(line) {
+        const url = componentProp.downloadAllInvoicesEndpoint;
         if (line.invoices.length && line.invoices.length > 1) {
             return (
                 <div onClick={() => invokeModal({
@@ -122,7 +127,7 @@ function OrdersGrid(props) {
                             pendingInfo={invoicesModal.pendingInfo}
                             pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
                             pendingValue={pendingValue}
-                            downloadInvoiceFunction={async (id)=> downloadSingleInvoice(id)}
+                            downloadInvoiceFunction={async (id)=> openInvoicePdf(id,url)}
                         ></DetailsInfo>
                     ),
                     properties: {
@@ -142,13 +147,13 @@ function OrdersGrid(props) {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
               
             } else {
-                return (<div onClick={() => downloadSingleInvoice(line.invoices[0]?.id)}>
+                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(line.invoices[0]?.id,url)}>
                     {line.invoices[0]?.id}
                 </div>) ?? null;
             }
         }
     }
-
+    
 
 
     const columnDefs = [
