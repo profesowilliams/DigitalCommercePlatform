@@ -39,3 +39,19 @@
     }
   }
 }
+
+.customErrorNoRows {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: $white;
+  padding: rem(8px);
+  box-shadow: 0px 8px 12px 0px rgba(0, 0, 0, 0.1);
+}
+
+.errorIcon {
+  color: $pink;
+  font-size: $font-size-medium;
+  font-weight: bold;
+  margin-left: rem(4px);
+}

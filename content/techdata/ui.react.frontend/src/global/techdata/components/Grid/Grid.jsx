@@ -24,7 +24,6 @@ function Grid(props) {
     to: null,
     total: null,
   });
-
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== "none" &&
@@ -47,6 +46,19 @@ function Grid(props) {
     return "autoHeight";
   };
 
+  const CustomNoRowsOverlay = (props) => {
+    return (
+      <div className=" customErrorNoRows">
+        {props.noRowsMessageFunc()}
+        <i className="far info-circle errorIcon"></i>
+      </div>
+    );
+  };
+
+  const noRowMsg = {
+    noRowsMessageFunc: () => 'Sorry - no rows to display!'
+  }
+
   /*
 	function that returns AG grid vnode outside main return function to keep that
 	node on useState hook and set it once per component lifecycle or on demand
@@ -55,6 +67,8 @@ function Grid(props) {
     <AgGridReact
       key={Math.floor(1000 * Math.random()).toString()}
       frameworkComponents={renderers}
+      noRowsOverlayComponent={'CustomNoRowsOverlay'}
+      noRowsOverlayComponentParams={noRowMsg}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
       cacheBlockSize={config.itemsPerPage}
@@ -104,9 +118,11 @@ function Grid(props) {
     </AgGridReact>
   );
 
-  const renderers = {};
+  const renderers = {
+    CustomNoRowsOverlay: CustomNoRowsOverlay
+  };
+  
   let filteredColumns = [];
-
   // disable default behaviour of column being movable
   columnDefinition.forEach((column) => {
     if (column.movable !== true || column.suppressMovable === false)
@@ -161,19 +177,27 @@ function Grid(props) {
         const pageNo = params.request.endRow / config.itemsPerPage;
         const sortKey = params.request.sortModel?.[0]?.colId;
         const sortDir = params.request.sortModel?.[0]?.sort;
-        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then(
+
+        const handleNoRowMsg = (response) => {
+          if(response?.items.length === 0 ) {
+            gridApi.current.showNoRowsOverlay();
+          }
+        }
+
+        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir, handleNoRowMsg).then(
           (response) => {
             params.success({
               rowData: response?.items ?? 0,
               lastRow: response?.totalItems ?? 0,
               rowCount: response?.totalItems ?? 0,
             });
+            handleNoRowMsg(response)
           }
         );
       },
     };
   }
-
+  
   async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
