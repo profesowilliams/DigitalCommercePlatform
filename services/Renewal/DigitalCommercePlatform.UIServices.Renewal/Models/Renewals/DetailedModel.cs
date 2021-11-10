@@ -9,6 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     [ExcludeFromCodeCoverage]
     public class DetailedModel : BaseResponseModel
     {
+        public SourceModel Source { get; set; }
         public PartyModel Reseller { get; set; }
         public PartyModel EndUser { get; set; }
         public PartyModel ShipTo { get; set; }

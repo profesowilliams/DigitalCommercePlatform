@@ -5,10 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SourceDto
+    public class QuoteSourceDto:SourceDto
     {
-        public string System { get; set; }
-        public string Type { get; set; }
-        public string Id { get; set; }
+        public string SalesOrg { get; set; }
+        public string TargetSystem { get; set; }
+        public string Key { get; set; }
     }
 }

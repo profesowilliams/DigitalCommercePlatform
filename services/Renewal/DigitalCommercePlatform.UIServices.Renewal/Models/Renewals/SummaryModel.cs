@@ -7,6 +7,5 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     [ExcludeFromCodeCoverage]
     public class SummaryModel : DetailedModel
     {
-
     }
 }

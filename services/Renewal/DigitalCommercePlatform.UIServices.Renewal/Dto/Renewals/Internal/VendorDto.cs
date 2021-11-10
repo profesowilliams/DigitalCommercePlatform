@@ -1,14 +1,14 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class SourceDto
+    public class VendorDto
     {
-        public string System { get; set; }
-        public string Type { get; set; }
         public string Id { get; set; }
+        public string Name { get; set; }
+        public string VendorsTDName { get; set; }
+        public string VendorsTDNumber { get; set; }
     }
 }

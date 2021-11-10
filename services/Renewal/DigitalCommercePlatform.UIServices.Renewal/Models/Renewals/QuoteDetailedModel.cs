@@ -9,6 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     [ExcludeFromCodeCoverage]
     public class QuoteDetailedModel : BaseResponseModel
     {
+        public QuoteSourceModel Source { get; set; }
         public DateTime Published { get; set; }
         public PartyDetailedModel Reseller { get; set; }
         public PartyDetailedModel EndUser { get; set; }

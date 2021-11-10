@@ -36,14 +36,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
             _mapper = mapper;
+            _context = context;
         }
 
         private readonly IMapper _mapper;
+        private readonly IUIContext _context;
 
         [HttpGet]
         [Route("Search")]
         public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model)
         {
+            
             if (model.Details)
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
@@ -73,14 +76,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             }
             else
                 return NotFound();
-        }
-
-        [HttpGet]
-        [Route("renewals")]
-        public async Task<IActionResult> FindRenewals([FromQuery] int pageSize) // Fix this
-        {
-            var response = await Mediator.Send(new GetRenewal.Request(pageSize)).ConfigureAwait(false); // Fix This
-            return Ok(response);
         }
     }
 }

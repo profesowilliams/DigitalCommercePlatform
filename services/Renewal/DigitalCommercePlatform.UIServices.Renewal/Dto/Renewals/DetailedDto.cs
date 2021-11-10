@@ -9,15 +9,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
     public class DetailedDto : SummaryDto
     {
         public DateTime Published { get; set; }
-        public PartyDto Reseller { get; set; }
-        public PartyDto EndUser { get; set; }
-        public PartyDto ShipTo { get; set; }
         public TypeValueDto AlternateIdentifier { get; set; }
         public NameDto VendorSalesRep { get; set; }
         public NameDto VendorSalesAssociate { get; set; }
         public List<ItemDto> Items { get; set; }
         public List<AttributeDto> Attributes { get; set; }
-        public string ProgramName { get; set; }
         public bool? QuoteCurrent { get; set; }
         public DateTime FirstAvailableOrderDate { get; set; }
         public DateTime LastOrderDate { get; set; }

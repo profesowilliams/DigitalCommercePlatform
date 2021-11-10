@@ -6,8 +6,9 @@ using System.Collections.Generic;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
 {
-    public class QuoteDetailedDto : SummaryDto
+    public class QuoteDetailedDto : BaseDto
     {
+        public QuoteSourceDto Source { get; set; }
         public DateTime Published { get; set; }
         public PartyDetailedDto Reseller { get; set; }
         public PartyDetailedDto EndUser { get; set; }
@@ -17,7 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public NameDto VendorSalesAssociate { get; set; }
         public List<ItemDto> Items { get; set; }
         public List<AttributeDto> Attributes { get; set; }
-        public string ProgramName { get; set; }
         public bool? QuoteCurrent { get; set; }
         public DateTime FirstAvailableOrderDate { get; set; }
         public DateTime LastOrderDate { get; set; }

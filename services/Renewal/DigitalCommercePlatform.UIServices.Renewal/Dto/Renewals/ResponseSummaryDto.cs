@@ -9,5 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
     public class ResponseSummaryDto
     {
         public List<SummaryDto> Data { get; set; }
+        public int Count { get; set; }
     }
 }

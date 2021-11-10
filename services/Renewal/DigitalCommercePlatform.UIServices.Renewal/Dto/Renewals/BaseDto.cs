@@ -10,7 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
     [ExcludeFromCodeCoverage]
     public class BaseDto
     {
-        public SourceDto Source { get; set; }
         public decimal Revision { get; set; }
         public decimal SubRevision { get; set; }
         public string Description { get; set; }
@@ -45,5 +44,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public decimal POMPercentage { get; set; }
         public decimal SAMPercentage { get; set; }
         public decimal NSMPercentage { get; set; }
+        public string EndUserType { get; internal set; }
+        public VendorDto Vendor { get; set; }
+        public string ProgramName { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
@@ -52,6 +53,30 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             .Returns(model).Build();
 
             return scope;
+        }
+
+        private IScope PrepareGetScope(IEnumerable<SummaryDto> model)
+        {
+            var scope = _fixture.CreateChildScope();
+            scope.OverrideClient<IMiddleTierHttpClient>()
+            .ForHttpMethod(HttpMethod.Get)
+            .MatchContains("v1/Search?Page=1&PageSize=100&details=false&withpaginationinfo=false&Details=false")
+            .Returns(model).Build();
+
+            return scope;
+        }
+
+        [Theory]
+        [InlineDomainData("/v1/Search?Page=1&PageSize=100&details=false&withpaginationinfo=false&Details=false")]
+        public async Task App_Get_ReturnsSearchDetailed(string input, IEnumerable<SummaryDto> model)
+        {
+            using var scope = PrepareGetScope(model);
+
+            var client = _fixture.CreateClient().SetDefaultHeaders();
+            client.DefaultRequestHeaders.Add("TraceId", "35345345-Browse");
+            var response = await client.GetResult<ResponseBase<SearchRenewalSummary.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
+
+            response.Response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

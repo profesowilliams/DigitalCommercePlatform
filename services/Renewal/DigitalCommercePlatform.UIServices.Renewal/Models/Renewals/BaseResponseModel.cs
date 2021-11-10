@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     [ExcludeFromCodeCoverage]
     public class BaseResponseModel
     {
-        public SourceModel Source { get; set; }
+        
         public decimal Revision { get; set; }
         public decimal SubRevision { get; set; }
         public string Description { get; set; }
@@ -32,6 +32,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public NameModel AccountOwner { get; set; }
         public List<OrderModel> Orders { get; set; }
         public List<ValueModel> VendorReference { get; set; }
+        public SalesTeamModel SalesTeam { get; set; }
+        public SalesTeamModel SalesArea { get; set; }
+        public SalesTeamModel SuperSalesArea { get; set; }
         public NameModel LastUpdatedBy { get; set; }
         public decimal FEMAmount { get; set; }
         public decimal POMAmount { get; set; }
@@ -41,8 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public decimal POMPercentage { get; set; }
         public decimal SAMPercentage { get; set; }
         public decimal NSMPercentage { get; set; }
-        public SalesTeamModel SalesTeam { get; set; }
-        public SalesTeamModel SalesArea { get; set; }
-        public SalesTeamModel SuperSalesArea { get; set; }
+        public VendorModel Vendor { get; set; }
+        public string EndUserType { get; set; }
     }
 }
