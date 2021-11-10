@@ -135,6 +135,11 @@ function ProductLinesGrid({
       sortable: false,
     },
     {
+      headerName: "Vendor No",
+      field: "vendorPartNo",
+      sortable: false,
+    },
+    {
       headerName: "Ref No",
       field: "tdNumber",
       sortable: false,
@@ -512,13 +517,21 @@ function ProductLinesGrid({
    * @param {string} value 
    * @returns
    */
-  const filterBySearchDropDown = (value, object) => {
+   const filterBySearchDropDown = (value, object) => {
     if (value === 'allLines') {
-      return object
+      return true
     }
     if (object[value]) {
-      return object
+      return true
     }
+
+    return false
+  }
+
+  const filterByQueryInput = (value, object) => {
+    const descriptionVal = object.description?.includes(value) ? true : false
+    const vendorPartNoVal = object.vendorPartNo?.includes(value) ? true : false
+    return descriptionVal || vendorPartNoVal ? true : false
   }
 
   /**
@@ -529,24 +542,32 @@ function ProductLinesGrid({
    * @return {Array}
    */
   function filterArray(array, filters) {
-    const result = [];
-    array.forEach(item => {
-      filters.forEach(f => {
-        if (f.key === 'searchBy') {
-          const x = filterBySearchDropDown(f.value, item);
-          if (x)
-            result.push(x)
-        }
-      })
-    });
+    let searchByValue = '';
+    let descriptionValue = '';
+    filters.forEach(f => {
+      if (f.key === 'searchBy') {
+        searchByValue = f.value
+      }
+    
+      if (f.key === 'description') {
+        descriptionValue = f.value
+        
+      }
+    })
+    const result = array.filter(f => {
+      const searchByDropDownValue = searchByValue !== '' ? filterBySearchDropDown(searchByValue, f) : true
+      const _descriptionValue =  filterByQueryInput(descriptionValue, f);
+      return _descriptionValue && searchByDropDownValue
+    })
+
     return result;
   }
 
   useEffect(() => {
     if (queryChange !== '') {
       const filters = filterByProps(queryChange.queryString); // Get filters queryString
-      const _filterData = filterArray(mutableGridData, filters); // Get filter data
       
+      const _filterData = filterArray(mutableGridData, filters); // Get filter data
       setfilterGridData(_filterData)
       setFlagData(true);
       setQuerychange(''); 

@@ -24,6 +24,7 @@ function GridSearchCriteria({
 }) {
 	const filter = useRef(null);
 	let [filterActive, setFilterActive] = useState(false);
+	const [externalFilterActive, setExternalFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
 	const [expanded, setExpanded] = useState(false);
 	const flagOpenButton = HeaderButtonOptions !== null ? true : false; // Prop from config data 
@@ -52,6 +53,7 @@ function GridSearchCriteria({
 		}
 		setReset(!reset);
 		setFilterActive(false);
+		setExternalFilterActive(false)
 	}
 
 	return (
@@ -67,13 +69,13 @@ function GridSearchCriteria({
 					<div className='cmp-search-criteria__header__title'>{label ?? 'Filter'}</div>
 				</div>
         
-			<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
+			<div className={` ${!flagOpenButton && expanded ? 'hidden' : ''}`}>
 				{
 				ButtonsComponentHeader ? (<ButtonsComponentHeader 
 											handleChange={handleChange}
 											onSearch={onSearch}
 											expanded={expanded}
-											onClear={onClear} 
+											onClear={onClear}
 										 />) : null  
 				}
 			</div>
@@ -87,10 +89,17 @@ function GridSearchCriteria({
 			
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
-					<Filters key={reset} componentProp={componentProp} onQueryChanged={(query) => handleChange(query)}></Filters>
+					<Filters
+						key={reset}
+						componentProp={componentProp}
+						onSearch={onSearch}
+						onQueryChanged={(query) => handleChange(query)}
+						setFilterActive={setFilterActive}
+						setExternalFilterActive={setExternalFilterActive}
+					></Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>
-					<Button disabled={!filterActive} onClick={() => onSearch()}>
+					<Button disabled={!filterActive && !externalFilterActive} onClick={() => onSearch()}>
 						{componentProp?.searchButtonLabel ?? 'Apply'}
 					</Button>
 					<div className='cmp-search-criteria__content__query-input__search__clear' onClick={() => onClear()}>

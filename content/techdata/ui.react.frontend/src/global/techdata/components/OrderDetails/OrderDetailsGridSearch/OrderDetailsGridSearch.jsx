@@ -1,9 +1,12 @@
 import React, { useRef, useState } from "react";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
+import SimpleQueryInput from "../../Widgets/SimpleQueryInput";
 import SimpleDropDown from "../../Widgets/SimpleDropDown";
 
-function OrdersDetailsGridSearch({ componentProp, onQueryChanged }) {
+function OrdersDetailsGridSearch({ componentProp, onQueryChanged, onSearch, setFilterActive, setExternalFilterActive }) {
   const [flag, setFlag] = useState(false);
+  const [queryState, setQueryState] = useState('');
+  const [flagDescription, setFlagDescription] = useState(false);
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -88,13 +91,18 @@ function OrdersDetailsGridSearch({ componentProp, onQueryChanged }) {
       query.searchby?.key && query.searchby?.key !== "allLines"
         ? `&searchBy=${query.searchby.key}`
         : "";
+    let description =
+      query.description?.key && query.description?.value.length >= 3
+        ? `&description=${query.description.value}`
+        : "";
     // If the value match with the default value, prepare a query value to filter and keep the flow
     if (query.searchby?.key === 'allLines') {
       searchby = `&searchBy=${query.searchby.key}`;
     }
-
-    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${searchby}`;
+    
+    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${searchby}${description}`;
     if (isQueryValid(query)) {
+      setQueryState(query)
       onQueryChanged(concatedQuery);
     } else {
       onQueryChanged("");
@@ -121,6 +129,12 @@ function OrdersDetailsGridSearch({ componentProp, onQueryChanged }) {
     }
   }
 
+  const onKeyPress = (event) => {
+    if (event && queryState.description.value?.length >= 3) {
+        onSearch(); 
+    }
+  };
+
   return (
     <div className="cmp-orders-grid__search">
       <SimpleDropDown
@@ -134,6 +148,28 @@ function OrdersDetailsGridSearch({ componentProp, onQueryChanged }) {
           setFlag(true);
         }}
       ></SimpleDropDown>
+      <SimpleQueryInput
+        key={"keyword"}
+        filterKey={'description'}        
+        items={config.keywordDropdown.items}
+        placeholder={config.inputPlaceholder}
+        onQueryChanged={(change) => {
+          if (flagDescription) {
+            if (change.value.length >= 3) {
+              setFilterActive(true)
+              setExternalFilterActive(true)
+              
+            } else {
+              setFilterActive(false)
+              setExternalFilterActive(false)
+            }
+            handleFilterChange(change, "description")
+          }
+          setFlagDescription(true);
+          
+        }}
+        onKeyPress={(isEnter) => onKeyPress(isEnter)}
+      ></SimpleQueryInput>
     </div>
   );
 }
