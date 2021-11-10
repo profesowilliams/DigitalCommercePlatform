@@ -1,11 +1,16 @@
 @import '../../variables';
 @import '../../../site/variables';
 
+.mydeals {
+    position: relative;
+    left: rem(-10px);
+}
+
 .cmp-deals {
     font-family: 'Open Sans', sans-serif;
     justify-content: space-between;
     display: flex;
-    width: rem(460px);
+    width: rem(464px);
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 0px;
@@ -28,7 +33,7 @@
         }
 
         tbody{
-            margin-left: rem(20px);
+            margin-left: rem(16px);
         }
     }
     &__sub-title {
