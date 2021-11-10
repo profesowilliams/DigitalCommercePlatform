@@ -52,6 +52,10 @@ use(function () {
 
     }
 
+    if (this.shopDomainPage !== null) {
+        productInfo["shopDomainPage"] = this.shopDomainPage;
+    }
+
     if (listValues != null) {
         productInfo["columnList"] = listValues;
     }

@@ -10,6 +10,7 @@ import GridSearchCriteria from "../../Grid/GridSearchCriteria";
 import { thousandSeparator } from "../../../helpers/formatting";
 import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
+import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 
 function ProductLinesGrid({
   gridProps,
@@ -143,14 +144,16 @@ function ProductLinesGrid({
       field: "description",
       sortable: false,
       cellRenderer: (props) => {
-        return (
-            <a
-                className="cmp-grid-url-underlined"
-                href={props.value}
-                target="_blank"
-            >
-              {props.value}
-            </a>
+        console.log(gridProps);
+        return (gridProps.shopDomainPage ?
+                <ProductLinesItemInformation line={props.data} shopDomainPage={gridProps.shopDomainPage} /> :
+                <a
+                    className="cmp-grid-url-underlined"
+                    href="#"
+                    target="_blank"
+                >
+                  {props.value}
+                </a>
         );
       },
     },
@@ -159,14 +162,15 @@ function ProductLinesGrid({
       field: "displayName",
       sortable: false,
       cellRenderer: (props) => {
-        return (
-            <a
-                className="cmp-grid-url-underlined"
-                href={props.value}
-                target="_blank"
-            >
-              {props.value}
-            </a>
+        return (gridProps.shopDomainPage ?
+                <ProductLinesItemInformation line={props.data} shopDomainPage={gridProps.shopDomainPage} /> :
+                <a
+                    className="cmp-grid-url-underlined"
+                    href="#"
+                    target="_blank"
+                >
+                  {props.value}
+                </a>
         );
       },
     },
