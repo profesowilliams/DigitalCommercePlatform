@@ -70,12 +70,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
                             "customer2",
                             "customer3",
                         },
-                        Roles = new List<string>()
-                        {
-                            "role1",
-                            "role2",
-                            "role3"
-                        },
                         AccessToken = "AccessToken",
                         RefreshToken = "RefreshToken",
                         ExpiresInSeconds = 32,
