@@ -21,6 +21,7 @@ using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
@@ -86,14 +87,51 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request)
         {
-            var response = new ConfigurationsSummaryModel
+            ConfigurationsSummaryModel response = new();
+            try
             {
-                Quoted = 14,
-                UnQuoted = 30,
-                OldConfigurations = 25,
-                CurrencyCode = "USD"
-            };
-            return await Task.FromResult(response);
+                var url = _configurationsServiceUrl.AppendPathSegment("GetConfigurationQuotes");
+
+                var quotesSummary = await _middleTierHttpClient.GetAsync<Response>(url);
+
+
+                response = new ConfigurationsSummaryModel
+                {
+                    Quoted = quotesSummary.Quoted,
+                    UnQuoted = quotesSummary.Unquoted,
+                    OldConfigurations = quotesSummary.Inactive,
+                    CurrencyCode = "USD"
+                };
+                return response;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+
+                if (ex.Code == HttpStatusCode.BadRequest && ex.InnerException is RemoteServerHttpException innerException)
+                {
+                    object exceptionDetails = innerException?.Details;
+                    object body = exceptionDetails?.GetType().GetProperty("Body")?.GetValue(exceptionDetails, null);
+                    throw new UIServiceException("Bad Request GetConfigurationsSummary for user id : " + _uiContext.User.ID, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                else if(ex.Code == HttpStatusCode.NotFound)
+                {
+                    _logger.LogError(ex, "No records Found GetConfigurationsSummaryAsync : " + nameof(AccountService));
+                    return new ConfigurationsSummaryModel
+                    {
+                        Quoted = 0,
+                        UnQuoted = 0,
+                        OldConfigurations = 0,
+                        CurrencyCode = "USD"
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "error while calling GetConfigurationsSummaryAsync : " + nameof(AccountService));
+                throw new UIServiceException("error while calling GetConfigurationsSummaryAsync for user id : " + _uiContext.User.ID, (int)UIServiceExceptionCode.GenericBadRequestError);
+
+            }
+            return response;
         }
 
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
