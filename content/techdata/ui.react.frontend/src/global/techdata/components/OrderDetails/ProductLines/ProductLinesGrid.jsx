@@ -145,12 +145,12 @@ function ProductLinesGrid({
       sortable: false,
     },
     {
-      headerName: "Description",
-      field: "description",
+      headerName: "Item Information",
+      field: "displayName",
       width: "600px",
+      cellHeight: () => 80,
       sortable: false,
       cellRenderer: (props) => {
-        console.log(gridProps);
         return (gridProps.shopDomainPage ?
                 <ProductLinesItemInformation line={props.data} shopDomainPage={gridProps.shopDomainPage} /> :
                 <a
@@ -165,8 +165,9 @@ function ProductLinesGrid({
     },
     {
       headerName: "Description",
-      field: "displayName",
+      field: "description",
       width: "600px",
+      cellHeight: () => 80,
       sortable: false,
       cellRenderer: (props) => {
         return (gridProps.shopDomainPage ?
