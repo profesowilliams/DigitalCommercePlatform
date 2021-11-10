@@ -408,6 +408,9 @@ app.get("/activeCart", function (req, res) {
 });
 
 app.get("/configurationsSummary/get", function (req, res) {
+  function random(min, max) {
+    return Math.trunc(min + Math.random() * (max - min));
+  }
     if (!req.headers["sessionid"])
         return res.status(401).json({
             error: {
@@ -420,10 +423,10 @@ app.get("/configurationsSummary/get", function (req, res) {
     res.json({
         content: {
             summary: {
-                quoted: 14,
-                unQuoted: 30,
-                oldConfigurations: 25,
-                currencyCode: null,
+                quoted: random(100,9999),
+                unQuoted: random(100,9999),
+                oldConfigurations: random(100,9999),
+                currencyCode: 'USD',
             },
         },
         error: {

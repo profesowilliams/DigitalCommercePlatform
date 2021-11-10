@@ -19,7 +19,7 @@ const MyConfigurations = ({componentProp}) => {
   }
   const getTotal = () => {
     return Object.keys(summary).reduce((result, s) =>{
-      if( summary[s] )
+      if( !isNaN(summary[s]) && summary[s] )
         result += summary[s];
       return result
     }, 0)
@@ -30,7 +30,7 @@ const MyConfigurations = ({componentProp}) => {
     return [ s, total - s ]
   }
   const createChart = (node, i, key, chartLabel) => {
-		return new Chart(node, {
+    return new Chart(node, {
 			type: 'doughnut',
 			options: {
 				legend: {
@@ -46,8 +46,8 @@ const MyConfigurations = ({componentProp}) => {
 				datasets: [
 					{
 						label: '',
-						data: getSummaryValues(key),
-						backgroundColor: getColors(i),
+            data: getSummaryValues(key),
+            backgroundColor: getColors(i),
 					},
 				],
 			},
