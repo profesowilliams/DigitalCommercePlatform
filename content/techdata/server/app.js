@@ -493,10 +493,21 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
     function getRandom(maxValue) {
         return Math.floor(Math.random() * maxValue);
     }
+    const examplesQuoteReference = [
+      'CCW QuoteId:4734474647',
+      'CCW webapi',
+      'Tech Data webapi',
+      'ESTIMATE QuoteId:UQ123422927SN'
+    ]; 
+    let count = 0;
     for (let i = 0; i < pageSize; i++) {
+        if (count === 3) {
+          count = 0;
+        }
+
         items.push({
             id: Number(`${pageNumber}${4009754974 + i}`),
-            quoteReference: null,
+            quoteReference: examplesQuoteReference[count],
             vendor: null,
             created: utils.getRandomDate(),
             expires: utils.getRandomDate(),
@@ -509,6 +520,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
             canUpdate: i % 2 ? true : false,
             canCheckOut: i % 2 ? true : false,
         });
+        count++;
     }
     const response = {
         content: {
