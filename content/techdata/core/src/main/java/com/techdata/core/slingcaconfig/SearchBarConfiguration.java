@@ -26,7 +26,7 @@ public @interface SearchBarConfiguration {
     @Property(label = "Content Suggestion Url", description = "Content Suggestion Url")
     String contentSuggestionUrl();
 
-    @Property(label = "Orders Search", description = "Orders Search")
+    @Property(label = "Orders Search Endpoint", description = "Orders Search Endpoint")
     String orderSearchEndpoint();
 
     @Property(label = "Quote Search Endpoint", description = "Quote Search Endpoint")

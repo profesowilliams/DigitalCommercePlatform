@@ -51,14 +51,14 @@ use(function () {
           areaconfig.put("detailsPage", this.serviceData['quoteDetailPage'] || '');
           areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
           areaconfig.put("dcpSearchPage", res.properties['dcpSearchFailedPage'] || '');
-      } else if (area === 'order') {
+          } else if (area === 'order') {
         /**
          * orderDetailPage:         Page to redirect DCP User for successful order entered
          * dcpOrdersLookupEndpoint: Endpoint for checking if order ID entered exists, for DCP User
          * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
          */
         areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
-        areaconfig.put("dcpLookupEndpoint", this.serviceData['orderGridEndpoint'] || '');
+        areaconfig.put("dcpLookupEndpoint", this.serviceData['orderSearchEndpoint'] || '');
         areaconfig.put("dcpSearchPage", res.properties['ordersGridPage'] || '');
       }
 

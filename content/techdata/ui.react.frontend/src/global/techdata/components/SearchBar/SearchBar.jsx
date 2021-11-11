@@ -92,11 +92,9 @@ const SearchBar = ({ data, componentProp }) => {
     if (selectedArea.area === "quote" || selectedArea.area === "order") {
       try {
         const response = await axios.get(
-          uiServiceDomain + selectedArea.dcpLookupEndpoint
+          uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-order}', searchTerm)
         );
-        const idFound = response.data.content.items.find(
-          (order) => order.id == searchTerm
-        );
+        const idFound = response.data.content.items.length == 1;
         if (idFound) {
           return (
             window.location.origin +
