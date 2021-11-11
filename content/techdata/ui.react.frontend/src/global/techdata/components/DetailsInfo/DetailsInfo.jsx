@@ -57,7 +57,7 @@ const InvoiceRowComponent = ({invoice, index, label, pendingInfo, line, invokeAc
 			<div className='date'>{invoice.created ? new Date(invoice.created).toLocaleDateString() : 'N/A'}</div>
 			<div className={`id ${invoice.id !== pendingValue ? 'ongoing' : 'pending'}`}>
 				{invoice.id !== pendingValue ? (
-					<div onClick={async() => await invokeAction(invoice.id)}>
+					<div onClick={async() => await invokeAction(invoice.id, line.id)}>
 							{invoice.id}
 					</div>
 				) : (
@@ -79,9 +79,9 @@ const InvoiceRowComponent = ({invoice, index, label, pendingInfo, line, invokeAc
  */
 function DetailsInfo({ line, info, pendingInfo, pendingLabel, downloadInvoiceFunction, pendingValue }) {
 
-	const invokeAction = async (id) => {
+	const invokeAction = async (id, orderId) => {
 		if (typeof downloadInvoiceFunction === "function") {
-			await downloadInvoiceFunction(id);
+			await downloadInvoiceFunction(id, orderId);
 		}
 	};
 

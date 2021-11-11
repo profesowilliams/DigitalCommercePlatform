@@ -110,13 +110,14 @@ function OrdersGrid(props) {
             downloadFileBlob(orderId);
         }
     }
-    function openInvoicePdf(orderId,url) {
+    function openInvoicePdf(invoiceId,orderId) {
+        const url = componentProp.downloadAllInvoicesEndpoint || 'nourl';
         const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
-        requestFileBlob(singleDownloadUrl,'',{redirect:true});
+        const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
+        requestFileBlob(invoiceUrl,'',{redirect:true});
     }
 
     function getInvoices(line) {
-        const url = componentProp.downloadAllInvoicesEndpoint;
         if (line.invoices.length && line.invoices.length > 1) {
             return (
                 <div onClick={() => invokeModal({
@@ -127,7 +128,7 @@ function OrdersGrid(props) {
                             pendingInfo={invoicesModal.pendingInfo}
                             pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
                             pendingValue={pendingValue}
-                            downloadInvoiceFunction={async (id)=> openInvoicePdf(id,url)}
+                            downloadInvoiceFunction={async (id, orderId)=> openInvoicePdf(id,orderId)}
                         ></DetailsInfo>
                     ),
                     properties: {
@@ -147,7 +148,7 @@ function OrdersGrid(props) {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
               
             } else {
-                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(line.invoices[0]?.id,url)}>
+                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(line.invoices[0]?.id, line.id)}>
                     {line.invoices[0]?.id}
                 </div>) ?? null;
             }
