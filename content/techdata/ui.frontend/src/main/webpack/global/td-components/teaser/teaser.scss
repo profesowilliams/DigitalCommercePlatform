@@ -559,7 +559,12 @@
         }
 
         /* end hero 4 */
+
         /* hero 5 */
+
+        .hero-style-5 {
+          @include teaser-default();
+        }
 
         .hero-style-5 {
           position: relative;
@@ -576,6 +581,7 @@
             -ms-flex-direction: row;
             flex-direction: row;
             flex-wrap: wrap;
+            align-content: flex-start;
             position: absolute;
             top: 0;
             width: 100%;
@@ -590,11 +596,9 @@
               -ms-flex-direction: row;
               flex-direction: row;
               flex-wrap: wrap;
+              align-items: center;
+              align-content: flex-start;
             }
-          }
-
-          svg {
-            //width: rem(120px);
           }
 
           .cmp-teaser__pretitle {
@@ -639,7 +643,7 @@
           .cmp-teaser__description {
             //width: 38.rem(80px);
             float: left;
-            text-shadow: 0 0 0.063rem #919599;
+            text-shadow: 0 0 0 #919599;
             font-family: "Open Sans", sans-serif;
             font-weight: normal;
             font-size: 1rem;
@@ -651,9 +655,16 @@
             margin: 0rem;
             max-width: rem(550px);
           }
+
+          .cmp-teaser__desc-link {
+            text-decoration: none;
+            color: unset;
+          }
         }
 
         /* end hero 5 */
+
+        
       }
 
       .cmp-teaser__disclaimer {
