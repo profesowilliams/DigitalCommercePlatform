@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -102,7 +103,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             return true;
         }
-        
+
         private OrderPricingCondtionMapping GetOrderPricingConditionMappings(string pricingConditionId)
         {
             pricingConditionId = pricingConditionId ?? "Commercial";
@@ -135,19 +136,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public Task<string> GetOrderType(string poType, string docType)
         {
             string orderType = poType + ":" + docType;
-            if(string.IsNullOrWhiteSpace(orderType)) return Task.FromResult("Manual");            
-            
+            if (string.IsNullOrWhiteSpace(orderType)) return Task.FromResult("Manual");
+
             string response = "Manual";
-            
+
             switch (orderType.ToUpper())
             {
-                case var ot when new[] { "#:ZZOR", "ZZED:ZZED", "ZZEK:ZZED", "ZZED:ZZKE", "ZZOR", "ZZED","ZZKE", "ZZEK" }.Contains(ot):
-                    response ="B2B";
+                case var ot when new[] { "#:ZZOR", "ZZED:ZZED", "ZZEK:ZZED", "ZZED:ZZKE", "ZZOR", "ZZED", "ZZKE", "ZZEK" }.Contains(ot):
+                    response = "B2B";
                     break;
                 case var ot when new[] { "#:ZZSB", "ZQ2O:ZZOR", "#:ZZDR", "ZZUP:ZZSB", "ZQ2O:ZZSB", "YIPO:ZZDR", "ZZSB", "ZQ2O", "ZZOR", "ZZDR", "ZZUP", "YIPO" }.Contains(ot):
                     response = "Manual";
                     break;
-                case  var ot when new[] { "ZZWE:ZZIT", "ZZIT:ZZIT", "ZZLS:ZZIT", "DFUE:ZZST", "ZZYP:ZZIT", "ZZ1S:ZZIT", "ZZTB:ZZIT", "ZZST", "ZZWE", "ZZIT", "ZZLS", "DFUE", "ZZYP", "ZZ1S", "ZZTB" }.Contains(ot):
+                case var ot when new[] { "ZZWE:ZZIT", "ZZIT:ZZIT", "ZZLS:ZZIT", "DFUE:ZZST", "ZZYP:ZZIT", "ZZ1S:ZZIT", "ZZTB:ZZIT", "ZZST", "ZZWE", "ZZIT", "ZZLS", "DFUE", "ZZYP", "ZZ1S", "ZZTB" }.Contains(ot):
                     response = "Web";
                     break;
                 case var ot when new[] { "ZZXL:ZZED", "ZZAP:ZZIT" }.Contains(ot):
@@ -178,7 +179,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 ProductsModel product;
                 foreach (var line in items)
                 {
-                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.VendorPartNo).FirstOrDefault();
+                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.MFRNumber).FirstOrDefault();
                     if (product != null && line != null)
                     {
                         MapLines(product, line);
@@ -208,44 +209,58 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private string BuildQueryForProductApiCall(List<Line> items, string vendorName)
         {
             string _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
-            string productUrl = "";
+            //string productUrl = "";
             string manufacturer = "";
-            string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;
-            string[] arrProductIds = new string[items.Count];
-            string[] arrManufacturer = new string[items.Count];
+            string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;            
             string productId;
 
-            //convert for-each statment to linq statment after App-Service is ready.
+            // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
+            StringBuilder sbManufacturer = new();
+            StringBuilder sbVendorPart = new();
+
+
             int i = 0;
             foreach (var item in items)
             {
-                //SetProductQuery(ref manufacturer, system, arrProductIds, arrManufacturer, ref i, item);
-                
-                productId = item?.VendorPartNo ?? item?.MFRNumber ?? ""; // Fix this once app service is ready
-                if (!string.IsNullOrWhiteSpace(productId) && !arrProductIds.Contains(productId))
+                if (!string.IsNullOrWhiteSpace(item?.MFRNumber))
                 {
-
-                    item.VendorPartNo = productId; // this is temp solution till APP service start returning real data Fix this once app service is ready
-                    item.Manufacturer = item.Manufacturer ?? system;
-                    manufacturer = item.Manufacturer ?? system;
-                    arrManufacturer[i] = manufacturer;
-                    arrProductIds[i] = productId;
-                    i++;
+                    productId = item.MFRNumber;
                 }
-            }
+                else if (!string.IsNullOrWhiteSpace(item?.VendorPartNo))
+                {
+                    productId = item.VendorPartNo;
+                }
+                else
+                {
+                    productId = "";
+                }
+                item.VendorPartNo = productId;
+                item.Manufacturer = item.Manufacturer ?? system;
+                manufacturer = item.Manufacturer ?? system;
+                i++;
 
-            arrManufacturer = arrManufacturer.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
-            arrProductIds = arrProductIds.Where(c => c != null).Distinct().Where(x => !string.IsNullOrEmpty(x)).ToList().ToArray();
-            // call product app service
-            productUrl = _appProductServiceURL.AppendPathSegment("Find")
-             .SetQueryParams(new
-             {
-                 MfrPartNumber = arrProductIds,
-                 Details = false,
-                 SalesOrganization = "0100",//_uiContext.User.ActiveCustomer.SalesDivision.FirstOrDefault().SalesOrg,//"0100"; Goran Needs to Fix this
-                 Manufacturer = arrManufacturer
-             });
-            return productUrl;
+                BuildQueryString(productId, ref sbManufacturer, ref sbVendorPart, item);
+            }
+            // Pass Details=True as paramere next push
+            var url = _appProductServiceURL.AppendPathSegment("Find") + "?&Details=False&SalesOrganization=0100" + sbVendorPart.ToString() + "&" + sbManufacturer.ToString();
+            return url;
+        }
+
+        private void BuildQueryString(string productId, ref StringBuilder sbManufacturer, ref StringBuilder sbVendorPart, Line item)
+        {
+            if (!string.IsNullOrWhiteSpace(productId))
+            {
+                if (sbManufacturer.ToString().Contains(item.Manufacturer) == false)
+                {
+                    sbManufacturer = sbManufacturer.Append("&Manufacturer=" + item.Manufacturer);
+                }
+                if (sbVendorPart.ToString().Contains(productId) == false)
+                {
+                    sbVendorPart = sbVendorPart.Append("&MfrPartNumber=" + productId);
+                }
+
+                
+            }
         }
 
         /// <summary>
@@ -289,13 +304,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 else
                     return product?.Logos.FirstOrDefault().Value?.FirstOrDefault().Url;
             }
-            else 
-                return  string.Empty;
+            else
+                return string.Empty;
         }
 
         private string ProductUrlUsingImages(ProductsModel product)
         {
-            if ( product.Images != null && product.Images.Count > 0)
+            if (product.Images != null && product.Images.Count > 0)
             {
                 if (product?.Images?.Count == 1)
                     return product?.Images.FirstOrDefault().Value?.FirstOrDefault().Url;

@@ -11,6 +11,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
@@ -150,6 +151,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             var result = apiQuery.Invoke(objType, new object[] { lstItems, "" });
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void BuildQueryString()
+        {
+            Line testLine = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "SVS-UMB-SUP-E",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+            
+            string productId = "SVS-UMB-SUP-E";
+            int i = 0;
+            // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
+            StringBuilder sbManufacturer = new();
+            StringBuilder sbVendorPart = new();
+
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildQueryString" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { productId, sbManufacturer, sbVendorPart, testLine });
+            Assert.NotNull(sbManufacturer?.ToString());
         }
 
         [Fact]
