@@ -242,7 +242,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 BuildQueryString(productId, ref sbManufacturer, ref sbVendorPart, item);
             }
             // Pass Details=True as paramere next push
-            var url = _appProductServiceURL.AppendPathSegment("Find") + "?&Details=False&SalesOrganization=0100" + sbVendorPart.ToString() + "&" + sbManufacturer.ToString();
+            var url = _appProductServiceURL.AppendPathSegment("Find") + "?&Details=False&SalesOrganization=0100&PageSize=" + i + sbVendorPart.ToString() + sbManufacturer.ToString();
             return url;
         }
 
@@ -258,8 +258,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     sbVendorPart = sbVendorPart.Append("&MfrPartNumber=" + productId);
                 }
-
-                
             }
         }
 
