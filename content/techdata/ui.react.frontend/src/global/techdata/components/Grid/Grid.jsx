@@ -179,7 +179,7 @@ function Grid(props) {
         const sortDir = params.request.sortModel?.[0]?.sort;
 
         const handleNoRowMsg = (response) => {
-          if(response?.items.length === 0 ) {
+          if(!response?.items || response?.items.length === 0) {
             gridApi.current.showNoRowsOverlay();
           }
         }
