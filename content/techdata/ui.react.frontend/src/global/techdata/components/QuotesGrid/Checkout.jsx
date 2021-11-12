@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { usPut } from "../../../../utils/api";
 import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 
-function Checkout({ line, checkoutConfig }) {
+function Checkout({ line, checkoutConfig, onErrorHandler }) {
   const config = {
     uiServiceEndPoint: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.uiServiceEndPoint
@@ -24,6 +24,7 @@ function Checkout({ line, checkoutConfig }) {
         if (isSuccess) {
           window.location.replace(config.redirectUrl);
         } else {
+          onErrorHandler(response);
           console.error(`Quote ${quoteId} checkout isSuccess failed:`);
         }
       } else {
@@ -31,11 +32,13 @@ function Checkout({ line, checkoutConfig }) {
         const isError = error.isError;
         if (isError) {
           console.error(`Quote ${quoteId} checkout failed:`);
+          onErrorHandler(response);
         } else {
           console.error(`Quote ${quoteId} checkout failed:`);
         }
       }
     } catch (e) {
+      onErrorHandler(e);
       console.error(`Quote ${quoteId} checkout failed:`);
       console.error(e);
     }

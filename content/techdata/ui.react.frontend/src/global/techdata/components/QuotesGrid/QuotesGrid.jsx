@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
+import Modal from '../Modal/Modal';
 
 function QuotesGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
+
+  const [modal, setModal] = useState(null);
 
   const { spaDealsIdLabel } = componentProp;
 
@@ -27,6 +30,23 @@ function QuotesGrid(props) {
     defaultSortingColumnKey: "id",
     defaultSortingDirection: "asc",
   };
+  function invokeModal(modal) {
+      setModal(modal);
+  }
+
+  const onErrorHandler = (error) => {
+    setModal((previousInfo) => (
+        {
+          content: (
+            <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+          ),
+          properties: {
+              title: `Error`,
+          },
+            ...previousInfo,
+        }
+    ));
+  }
 
   const columnDefs = [
     {
@@ -113,6 +133,7 @@ function QuotesGrid(props) {
               <Checkout
                 line={props.data}
                 checkoutConfig={componentProp.checkout}
+                onErrorHandler={onErrorHandler}
               ></Checkout>
             )}
           </div>
@@ -143,6 +164,14 @@ function QuotesGrid(props) {
           }
         ></Grid>
       </div>
+            {modal && <Modal
+                modalAction={modal.action}
+                modalContent={modal.content}
+                modalProperties={modal.properties}
+                modalAction={modal.modalAction}
+                actionErrorMessage={modal.errorMessage}
+                onModalClosed={() => setModal(null)}
+            ></Modal>}
     </section>
   );
 }
