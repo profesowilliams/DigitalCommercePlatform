@@ -1,6 +1,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.CommonConfigurations;
 import com.techdata.core.slingcaconfig.SearchBarConfiguration;
 import com.techdata.core.slingcaconfig.RedirectConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
@@ -45,6 +46,9 @@ class CaConfigReaderTest {
     @Mock
     private RedirectConfiguration redirectConfiguration;
 
+    @Mock
+    private CommonConfigurations commonConfigurations;
+
     @BeforeEach
     void setUp() {
         underTest = new CaConfigReader();
@@ -66,6 +70,7 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(MiniCartConfiguration.class)).thenReturn(mcConfiguration);
         when(configurationBuilder.as(SearchBarConfiguration.class)).thenReturn(searchBarConfiguration);
         when(configurationBuilder.as(RedirectConfiguration.class)).thenReturn(redirectConfiguration);
+        when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
 
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");
@@ -119,6 +124,8 @@ class CaConfigReaderTest {
         when(redirectConfiguration.orderListingPage()).thenReturn("orderListingPage");
         when(redirectConfiguration.orderDetailPage()).thenReturn("orderDetailPage");
 
+        when(commonConfigurations.productEmptyImageUrl()).thenReturn("productEmptyImageUrl");
+
 
 
 
@@ -171,5 +178,7 @@ class CaConfigReaderTest {
         assertEquals("quotePreviewPage", underTest.getQuotePreviewPage());
         assertEquals("orderListingPage", underTest.getOrderListingPage());
         assertEquals("orderDetailPage", underTest.getOrderDetailPage());
+
+        assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
     }
 }

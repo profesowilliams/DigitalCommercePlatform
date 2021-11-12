@@ -16,7 +16,13 @@ use(function () {
 
         return columnListValues;
     }
+    function populateCommonConfigurations (targetObject, serviceData) {
+        if (serviceData["productEmptyImageUrl"]) {
+            targetObject["productEmptyImageUrl"] = serviceData["productEmptyImageUrl"];
+        }
+    }
     return {
-        getDataFromMultifield: getDataFromMultifield
+        getDataFromMultifield: getDataFromMultifield,
+        populateCommonConfigurations: populateCommonConfigurations
     }
 });

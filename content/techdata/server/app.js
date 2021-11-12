@@ -856,7 +856,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "extendedPriceFormatted": "",
           "availability": null,
           "rebateValue": null,
-          "urlProductImage": null,
+          "urlProductImage": i%2 ? null : "/non-existing-image.png",
           "urlProductSpecs": null,
           "children": [
             {
@@ -901,7 +901,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
               "extendedPriceFormatted": "720.0",
               "availability": null,
               "rebateValue": null,
-              "urlProductImage": null,
+              "urlProductImage": i%2 ? null : "/non-existing-image.png",
               "urlProductSpecs": null,
               "children": null,
               "agreements": null,
@@ -4612,7 +4612,6 @@ app.put("/ui-content/v1/replaceCart", function (req, res) {
     }
     });
 });
-
 
 //---QUICK QUOTE CONTINUE BTN---//
 app.post("/ui-commerce/v1/quote/create", function (req, res) {

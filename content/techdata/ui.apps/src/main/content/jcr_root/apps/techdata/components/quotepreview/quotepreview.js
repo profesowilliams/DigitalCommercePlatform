@@ -216,6 +216,9 @@ use(['../common/utils.js'], function (utils) {
         productLinesGrid["noLabel"]  = properties["noLabel"];
     }
 
+    if (this.productEmptyImageUrl) {
+        productLinesGrid["productEmptyImageUrl"] = this.productEmptyImageUrl;
+    }
 
     if (properties && properties["subtotalLabel"]) {
         jsonObject["subtotalLabel"]  = properties["subtotalLabel"];

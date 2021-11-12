@@ -1,5 +1,5 @@
 "use strict";
-use(function() {
+use(['../common/utils.js'], function (utils) {
 
     var jsonObject = {};
     var informationTab = {};
@@ -190,6 +190,9 @@ use(function() {
         productLinesTab["noLabel"] = properties["noLabel"];
     }
 
+    if (this.productEmptyImageUrl) {
+        productLinesTab["productEmptyImageUrl"] = this.productEmptyImageUrl;
+    }
 
     if (node !== null) {
         var childrenList = node.getChildren();

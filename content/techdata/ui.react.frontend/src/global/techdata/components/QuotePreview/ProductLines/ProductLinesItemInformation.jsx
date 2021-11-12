@@ -1,6 +1,6 @@
 import React,{useCallback} from "react";
 
-function ProductLinesItemInformation({ line, shopDomainPage="" }) {
+function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
 
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.tdNumber ){
@@ -18,6 +18,27 @@ function ProductLinesItemInformation({ line, shopDomainPage="" }) {
     return null
   },[])
   
+  const ProductImage = () => {
+    let imageElement;
+
+    if (line.urlProductImage) {
+      imageElement = (
+        <img
+          src={line.urlProductImage}
+        />
+      );
+    }
+    else {
+      imageElement = (
+        <img
+              alt=""
+              src={emptyImageUrl}
+            />
+      );
+    }
+    return imageElement;
+  }
+ 
   return (
     <section>
       <div className="cmp-product-lines-grid__item-information">
@@ -26,10 +47,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="" }) {
           target="_blank"
           className="cmp-product-lines-grid__item-information__image-link"
         >
-          <img
-            alt={line.urlProductImage ? "" : "No Image"}
-            src={line.urlProductImage}
-          />
+          <ProductImage/>
         </a>
 
         <div className="cmp-product-lines-grid__item-information__box-text">

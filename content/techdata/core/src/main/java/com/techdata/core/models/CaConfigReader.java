@@ -4,6 +4,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.CommonConfigurations;
 import com.techdata.core.slingcaconfig.SearchBarConfiguration;
 import com.techdata.core.slingcaconfig.RedirectConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
@@ -155,6 +156,8 @@ public class CaConfigReader {
 
     private String quoteDetailsXLSEndpoint;
 
+    private String productEmptyImageUrl;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -163,6 +166,7 @@ public class CaConfigReader {
         AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
         SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
         RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
+
         uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
         catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
         authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
@@ -231,6 +235,14 @@ public class CaConfigReader {
         shopDomainPage = redirectConfiguration.shopDomainPage();
         actionItemsEndpoint = serviceEndPointsConfiguration.actionItemsEndpoint();
         quoteDetailsXLSEndpoint = serviceEndPointsConfiguration.quoteDetailsXLSEndpoint();
+
+        buildComonConfigurationsConfigs();
+    }
+
+    private void buildComonConfigurationsConfigs() {
+        CommonConfigurations commonConfigurations = page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
+
+        productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
     }
 
     public String getUiServiceDomain() {
@@ -475,5 +487,9 @@ public class CaConfigReader {
 
     public String getQuoteDetailsXLSEndpoint() {
         return quoteDetailsXLSEndpoint;
+    }
+
+    public String getProductEmptyImageUrl() {
+        return productEmptyImageUrl;
     }
 }
