@@ -278,9 +278,9 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
             <div className="cmp-qp__general-info--address-group">
                 {source &&
                     <div className="cmp-qp__information-row--readonly">
-                        <div>
-                            {info.sourceLabel}
-                        </div>
+                        <span>
+                            {info.sourceLabel}:
+                        </span>
                         {showSourceInformation()}
                     </div>
                 }
@@ -288,9 +288,9 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                     <>
                         {generalInfoState.tier &&
                             <div className="cmp-qp__information-row--readonly">
-                                <div>
-                                    {info.tierLabel}
-                                </div>
+                                <span>
+                                    {info.tierLabel}:
+                                </span>
                                 <div>
                                     {generalInfoState.tierUserFriendlyLabel ? generalInfoState.tierUserFriendlyLabel : generalInfoState.tier }
                                 </div>
@@ -298,9 +298,9 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                         }
                         {generalInfoState.quoteReference &&
                             <div className="cmp-qp__information-row--readonly">
-                                <div>
-                                    {info.referenceLabel}
-                                    </div>
+                                <span>
+                                    {info.referenceLabel}:
+                                </span>
                                 <div>
                                     {generalInfoState.quoteReference}
                                 </div>
@@ -308,9 +308,9 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                         }
                         {generalInfoState.deal.spaId &&
                             <div className="cmp-qp__information-row--readonly">
-                                <div>
-                                    {info.dealLabel}
-                                </div>
+                                <span>
+                                    {info.dealLabel}:
+                                </span>
                                 <div>
                                     <div>
                                         {generalInfoState.deal.spaId}

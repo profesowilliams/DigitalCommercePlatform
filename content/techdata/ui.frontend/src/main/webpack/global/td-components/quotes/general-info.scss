@@ -6,6 +6,7 @@
     padding-left: rem(65px);
     box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
     &--title {
+        margin-bottom: 0.75rem;
         cursor: auto;
         position: unset;
         &::before {
@@ -13,10 +14,13 @@
         }
     }
     &--address-group {
-        margin-left: 0.9375rem;
         .cmp-qp__information-row--readonly {
           height: unset;
           padding-bottom: rem(2px);
+          
+          & > span {
+            font-weight: 600;
+          }
         }
     }
   }
