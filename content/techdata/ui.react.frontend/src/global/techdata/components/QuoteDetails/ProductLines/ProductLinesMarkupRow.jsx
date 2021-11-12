@@ -54,6 +54,26 @@ const ProductLinesMarkupRow = (props) => {
     }
   }, [externalMarkup]);
 
+  function getSeparatorGivenLocale(separatorType='decimal') {
+    const numberWithGroupAndDecimalSeparator = 1000.1;
+    return Intl.NumberFormat()
+        .formatToParts(numberWithGroupAndDecimalSeparator)
+        .find(part => part.type === separatorType)
+        .value;
+  }
+  const getValidNumber = (numberValue) => {
+    const decimalSeparator = getSeparatorGivenLocale();
+    let validNumber = numberValue;
+
+    if(numberValue.includes(decimalSeparator)) {
+      const numberPieces = numberValue.split(decimalSeparator);
+
+      validNumber = `${numberPieces[0]}${decimalSeparator}${numberPieces[1].substring(0, 2)}`;
+    }
+
+    return validNumber;
+  }
+
   return (
     <section className="cmp-product-lines-grid__markup">
       <div className="cmp-product-lines-grid__markup__currency">
@@ -62,10 +82,11 @@ const ProductLinesMarkupRow = (props) => {
       <input
         className="cmp-product-lines-grid__markup__input"
         type="number"
-        value={markupValue.toFixed(2)}
+        value={markupValue}
         onChange={(e) => {
           isExternal.current = false;
-          setMarkupValue(Number(e.target.value));
+
+          setMarkupValue(Number(getValidNumber(e.target.value)));
         }}
       />
     </section>

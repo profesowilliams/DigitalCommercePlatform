@@ -147,6 +147,16 @@
     }
     &__input {
       width: 100%;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
     }
     &__button {
       padding-top: rem(3px);

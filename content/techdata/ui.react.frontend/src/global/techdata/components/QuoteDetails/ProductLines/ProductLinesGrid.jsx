@@ -179,6 +179,10 @@ function ProductLinesGrid({
     {
       headerName: "Markup",
       field: "appliedMarkup",
+      suppressKeyboardEvent: function (params) {
+        var key = params.event.key;
+        return key === 'ArrowLeft' || key === 'ArrowRight';
+      },
       onDetailsShown: (row) => {},
       onDetailsHidden: (row) => {},
       cellClass: ({ node, data }) => {
