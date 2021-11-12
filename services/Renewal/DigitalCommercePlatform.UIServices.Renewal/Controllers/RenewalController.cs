@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
-    [Route("/v{api0Version}")]
+    [Route("v{version:apiVersion}")]
     public class RenewalController : BaseUIServiceController
     {
         public RenewalController(
@@ -46,7 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
         [Route("Search")]
         public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model)
         {
-            
             if (model.Details)
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);

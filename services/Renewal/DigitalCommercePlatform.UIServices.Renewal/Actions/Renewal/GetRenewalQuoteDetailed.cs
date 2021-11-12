@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
         {
             public string[] Id { get; set; }
             public string Type { get; set; }
+            public bool Details { get; set; } = true;
         }
 
         public class Response
