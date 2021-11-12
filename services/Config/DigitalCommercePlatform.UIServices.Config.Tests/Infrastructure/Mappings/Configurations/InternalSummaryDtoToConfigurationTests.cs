@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             result.Vendor.Should().Be(dto.Vendor.Name);
             result.ConfigName.Should().Be(dto.Name);
             result.EndUserName.Should().Be(dto.EndUser.Name);
+            result.Quotes.Should().BeEquivalentTo(dto.Quotes);
         }
 
         [Fact]

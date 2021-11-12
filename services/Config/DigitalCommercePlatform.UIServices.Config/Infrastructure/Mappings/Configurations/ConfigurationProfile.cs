@@ -55,11 +55,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.Vendor, o => o.MapFrom(s => s.Vendor.Name))
                 .ForMember(d => d.EndUserName, o => o.MapFrom(s => s.EndUser.Name))
                 .ForMember(d => d.ConfigName , o => o.MapFrom(s => s.Name))
-                .ForMember(d => d.VendorQuoteId , o => o.Ignore())
                 .ForMember(d => d.Expires , o => o.MapFrom(s => s.ExpiryDate))
+                .ForMember(d => d.Quotes , o => o.MapFrom(s => s.Quotes))
+                .ForMember(d => d.VendorQuoteId , o => o.Ignore())
                 .ForMember(d => d.Action , o => o.Ignore())
-                .ForMember(d => d.Quotes , o => o.Ignore())
                 ;
+
+            CreateMap<QuoteDto, TdQuoteIdDetails>();
+
             CreateMap<DetailedDto, Configuration>()
                 .ForMember(d => d.ConfigId, o => o.MapFrom(s => s.Source.Id))
                 .ForMember(d => d.ConfigurationType, o => o.MapFrom(s => s.Source.Type))

@@ -27,5 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public VendorDto Vendor { get; set; }
         public CreatedByDto CreatedBy { get; set; }
         public OwnerDto Owner { get; set; }
+        public List<QuoteDto> Quotes { get; set; }
     }
 }

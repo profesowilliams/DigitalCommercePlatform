@@ -1,11 +1,10 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using System;
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
+namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class TdQuoteIdDetails
+    public class QuoteDto
     {
         public string Id { get; set; }
         public string SalesOrg { get; set; }
