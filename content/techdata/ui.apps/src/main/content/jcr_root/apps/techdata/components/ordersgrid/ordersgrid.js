@@ -236,6 +236,10 @@ use(function () {
         searchCriteriaData.title = properties["searchTitle"];
     }
 
+    if (properties && properties["labelButtonFilter"]) {
+        searchCriteriaData.labelButtonFilter = properties["labelButtonFilter"];
+    }
+
     if (properties && properties["searchButtonLabel"]) {
         searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
     }
