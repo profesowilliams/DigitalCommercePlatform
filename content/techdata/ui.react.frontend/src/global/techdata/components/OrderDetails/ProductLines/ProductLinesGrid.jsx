@@ -534,7 +534,8 @@ function ProductLinesGrid({
   const filterByQueryInput = (value, object) => {
     const descriptionVal = object.description?.includes(value) ? true : false
     const vendorPartNoVal = object.vendorPartNo?.includes(value) ? true : false
-    return descriptionVal || vendorPartNoVal ? true : false
+    const displayName = object.displayName?.includes(value) ? true : false;
+    return descriptionVal || vendorPartNoVal || displayName ? true : false
   }
 
   /**
