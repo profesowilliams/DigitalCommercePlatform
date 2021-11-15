@@ -18,26 +18,13 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
     return null
   },[])
   
-  const ProductImage = () => {
-    let imageElement;
-
-    if (line.urlProductImage) {
-      imageElement = (
-        <img
-          src={line.urlProductImage}
+  const ProductImage = () =>
+  (
+    <img
+          alt=""
+          src={line.urlProductImage ? line.urlProductImage : emptyImageUrl}
         />
-      );
-    }
-    else {
-      imageElement = (
-        <img
-              alt=""
-              src={emptyImageUrl}
-            />
-      );
-    }
-    return imageElement;
-  }
+  );
  
   return (
     <section>

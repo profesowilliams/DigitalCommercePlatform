@@ -74,6 +74,8 @@ const ProductLinesMarkupRow = (props) => {
     return validNumber;
   }
 
+  const handleFocus = (event) => event.target.select();
+
   return (
     <section className="cmp-product-lines-grid__markup">
       <div className="cmp-product-lines-grid__markup__currency">
@@ -83,6 +85,7 @@ const ProductLinesMarkupRow = (props) => {
         className="cmp-product-lines-grid__markup__input"
         type="number"
         value={markupValue}
+        onFocus={handleFocus}
         onChange={(e) => {
           isExternal.current = false;
 
