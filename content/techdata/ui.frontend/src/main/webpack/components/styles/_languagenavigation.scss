@@ -36,6 +36,9 @@
   line-height: rem(45px);
   margin: 0 !important;
 }
+#regionSelectDropdown .languageselection-button{
+  display: flex !important;
+}
 
 .cmp-form-options--radio {
   padding: rem(22px) 0 0 rem(15px);
