@@ -89,7 +89,13 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const getSearchUrl = async (searchTerm) => {
-    if (data?.auth?.userData?.roles?.indexOf('hasDCPAccess') > -1 && (selectedArea.area === "quote" || selectedArea.area === "order")) {
+    let hasDCPAccess = false;
+    data?.auth?.userData?.roleList?.forEach((val) => {
+      if (val?.entitlement?.trim() === 'hasDCPAccess') {
+        hasDCPAccess = true;
+      }
+    })
+    if (hasDCPAccess && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       try {
         const response = await axios.get(
           uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-order}', searchTerm)
