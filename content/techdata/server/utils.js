@@ -786,7 +786,7 @@ module.exports = {
                   "extendedPriceFormatted": "",
                   "availability": null,
                   "rebateValue": null,
-                  "urlProductImage": "",
+                  "urlProductImage": "/non-existing-image.png",
                   "urlProductSpecs": null,
                   "children": [
                     {
@@ -839,7 +839,7 @@ module.exports = {
                       "extendedPriceFormatted": "",
                       "availability": null,
                       "rebateValue": null,
-                      "urlProductImage": null,
+                      "urlProductImage": "/non-existing-image.png",
                       "urlProductSpecs": null,
                       "children": null,
                       "agreements": null,
@@ -953,7 +953,7 @@ module.exports = {
                   "extendedPriceFormatted": "",
                   "availability": null,
                   "rebateValue": null,
-                  "urlProductImage": "",
+                  "urlProductImage": null,
                   "urlProductSpecs": null,
                   "children": [
                     {
@@ -1005,7 +1005,7 @@ module.exports = {
                       "extendedPriceFormatted": "",
                       "availability": null,
                       "rebateValue": null,
-                      "urlProductImage": null,
+                      "urlProductImage": "/non-existing-image.png",
                       "urlProductSpecs": null,
                       "children": null,
                       "agreements": null,
@@ -1239,7 +1239,7 @@ module.exports = {
                   "extendedPriceFormatted": "",
                   "availability": null,
                   "rebateValue": null,
-                  "urlProductImage": "",
+                  "urlProductImage": "/non-existing-image.png",
                   "urlProductSpecs": null,
                   "children": [],
                   "agreements": null,

@@ -145,44 +145,6 @@ function ProductLinesGrid({
       sortable: false,
     },
     {
-      headerName: "Item Information",
-      field: "displayName",
-      width: "600px",
-      cellHeight: () => 80,
-      sortable: false,
-      cellRenderer: (props) => {
-        return (gridProps.shopDomainPage ?
-                <ProductLinesItemInformation line={props.data} shopDomainPage={gridProps.shopDomainPage} /> :
-                <a
-                    className="cmp-grid-url-underlined"
-                    href="#"
-                    target="_blank"
-                >
-                  {props.value}
-                </a>
-        );
-      },
-    },
-    {
-      headerName: "Description",
-      field: "description",
-      width: "600px",
-      cellHeight: () => 80,
-      sortable: false,
-      cellRenderer: (props) => {
-        return (gridProps.shopDomainPage ?
-                <ProductLinesItemInformation line={props.data} shopDomainPage={gridProps.shopDomainPage} /> :
-                <a
-                    className="cmp-grid-url-underlined"
-                    href="#"
-                    target="_blank"
-                >
-                  {props.value}
-                </a>
-        );
-      },
-    },
-    {
       headerName: "Quantity",
       field: "quantity",
       sortable: false,
@@ -209,6 +171,54 @@ function ProductLinesGrid({
   /**@type {any[]} */
   const columnDefsChildren = JSON.parse(JSON.stringify(columnDefs));
   
+  columnDefsChildren.push({
+    headerName: "Description",
+    field: "displayName",
+    width: "600px",
+    cellHeight: () => 80,
+    sortable: false,
+    cellRenderer: (props) => {
+      return (gridProps.shopDomainPage ?
+              <ProductLinesItemInformation 
+                line={props.data}
+                shopDomainPage={gridProps.shopDomainPage} 
+                emptyImageUrl={gridProps.productEmptyImageUrl}  
+              /> :
+              <a
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+              >
+                {props.value}
+              </a>
+      );
+    },
+  })
+  
+  columnDefsChildren.push({
+    headerName: "Description",
+    field: "description",
+    width: "600px",
+    cellHeight: () => 80,
+    sortable: false,
+    cellRenderer: (props) => {
+      return (gridProps.shopDomainPage ?
+              <ProductLinesItemInformation 
+              line={props.data} 
+              shopDomainPage={gridProps.shopDomainPage}
+              emptyImageUrl={gridProps.productEmptyImageUrl}
+            /> :
+              <a
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+              >
+                {props.value}
+              </a>
+      );
+    },
+  })
+
   columnDefsChildren.push({
     headerName: "Status",
     field: "status",
@@ -313,9 +323,57 @@ function ProductLinesGrid({
     },
   });
 
+  //Display Name behave differently in parent grid and child grid
+  columnDefs.push({
+    headerName: "Description",
+    field: "displayName",
+    width: "600px",
+    cellHeight: () => 80,
+    sortable: false,
+    cellRenderer: (props) => {
+      return (gridProps.shopDomainPage ?
+              <ProductLinesItemInformation 
+                line={props.data} 
+                shopDomainPage={gridProps.shopDomainPage} 
+                emptyImageUrl={gridProps.productEmptyImageUrl}
+              /> :
+              <a
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+              >
+                {props.value}
+              </a>
+      );
+    },
+  })
+  
+  //Drescription behave differently in parent grid and child grid
+  columnDefs.push({
+    headerName: "Description",
+    field: "description",
+    width: "600px",
+    cellHeight: () => 80,
+    sortable: false,
+    cellRenderer: (props) => {
+      return (gridProps.shopDomainPage ?
+                <ProductLinesItemInformation 
+                  line={props.data}
+                  shopDomainPage={gridProps.shopDomainPage} 
+                  emptyImageUrl={gridProps.productEmptyImageUrl}
+                /> :
+              <a
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+              >
+                {props.value}
+              </a>
+      );
+    },
+  })
   
   
-  //Serials behave differently in parent grid and child grid
   columnDefs.push({
     headerName: "Status",
     field: "status",
