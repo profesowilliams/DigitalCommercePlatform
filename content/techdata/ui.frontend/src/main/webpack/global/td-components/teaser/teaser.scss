@@ -641,19 +641,27 @@
 
           .cmp-teaser__description {
             //width: 38.rem(80px);
+            max-width: rem(550px);
             float: left;
             text-shadow: 0 0 0 #919599;
             font-family: "Open Sans", sans-serif;
             font-weight: normal;
-            font-size: 1rem;
+            font-size: rem(35px);
             letter-spacing: 0rem;
-            line-height: 1.375rem;
-            padding-left: 3.438rem;
-            padding-right: 0;
-            padding-bottom: 0;
-            margin: 0rem;
-            max-width: rem(550px);
-          }
+            line-height: normal;
+            padding: 0 0 0 rem(55px);
+    
+            @include desktop {
+                margin: 0 0 0 rem(55px);
+                border-left: rem(5px) solid get-color(brand-white);
+            }
+    
+            @include mobile {
+                margin: 0;
+                max-width: rem(550px);
+                border-left: 0 solid get-color(brand-white);
+            }
+        }
 
           .cmp-teaser__desc-link {
             text-decoration: none;
