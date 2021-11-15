@@ -5,9 +5,9 @@ import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
 
 const CreateConfig = ({ componentProp }) => {
-  const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl }  = JSON.parse(componentProp);
+  const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText }  = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
-  const [redirectUrl, setRedirectUrl] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState(false);s
   const [loading, setLoading] = useState(false);
   const POST_BACK_URL = "https://shop.techdata.com";
 
@@ -77,7 +77,8 @@ const CreateConfig = ({ componentProp }) => {
         selected={methodSelected} 
         setValue={(v)=>{changeMethod(v)}} 
         options={optionsList}
-        label={dropdownLabel} />
+        label={dropdownLabel}
+        placeholderText={placeholderText}/>
       { methodSelected ? getOptions() : null }
       <button disabled={!redirectUrl || loading} className="cmp-quote-button" onClick={createConfig}>
         { redirectUrl ? (loading ? 'creating config...' : 'Next') : buttonTitle }

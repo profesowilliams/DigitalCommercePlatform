@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 
-const Dropdown = ({ selected, setValue, options, label = "Create from" }) => {
+const Dropdown = ({ selected, setValue, options, label = "Create from", placeholderText }) => {
   const [open, setOpen] = useState(false)
   const toggleOpen = () =>{
     const newOpen = open ? false : true;
@@ -15,7 +15,7 @@ const Dropdown = ({ selected, setValue, options, label = "Create from" }) => {
       <div className={`cmp-dropdown-custom ${open?'cmp-dropdown-custom--open':''}`}>
         <a className="cmp-dropdown-custom__input" onClick={toggleOpen}>
           <span>
-            {selected ? selected.label : label}
+            {selected ? selected.label : placeholderText}
           </span>
           <span>
             <i className="fas fa-chevron-right"></i>

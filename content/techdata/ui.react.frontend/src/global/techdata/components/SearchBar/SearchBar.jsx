@@ -89,34 +89,33 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const getSearchUrl = async (searchTerm) => {
-    if (selectedArea.area === "quote" || selectedArea.area === "order") {
+    if (data?.auth?.userData?.roles?.indexOf('hasDCPAccess') > -1 && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       try {
         const response = await axios.get(
           uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-order}', searchTerm)
         );
-        const idFound = response.data.content.items.length == 1;
-        if (idFound) {
+        if (response?.data?.content?.items?.length === 1) {
           return (
-            window.location.origin +
-            `${selectedArea.detailsPage}?id=${searchTerm}`
+              window.location.origin +
+              `${selectedArea.detailsPage}?id=${searchTerm}`
           );
         }
-        return window.location.origin + selectedArea.dcpSearchPage;
       } catch (err) {
         console.error(
-          `Error calling UI Serivce Endpoint (${
-            uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint
-          }): ${err}`
+            `Error calling UI Serivce Endpoint (${
+                uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint
+            }): ${err}`
         );
       }
+      return window.location.origin + selectedArea.dcpSearchPage;
+    } else {
+      let searchTargetUrl =
+          searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
+      if (getShopLoginUrlPrefix() !== "") {
+        searchTargetUrl = encodeURIComponent(searchTargetUrl);
+      }
+      return getShopLoginUrlPrefix() + searchTargetUrl;
     }
-
-    let searchTargetUrl =
-      searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
-    if (getShopLoginUrlPrefix() !== "") {
-      searchTargetUrl = encodeURIComponent(searchTargetUrl);
-    }
-    return getShopLoginUrlPrefix() + searchTargetUrl;
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
@@ -155,7 +154,7 @@ const SearchBar = ({ data, componentProp }) => {
     if (searchTermText === "") {
       return null;
     } else {
-      window.location.href = await getSearchUrl(searchTermText);
+      window.location.href = getSearchUrl(searchTermText);
     }
   };
 
