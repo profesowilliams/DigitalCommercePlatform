@@ -14,7 +14,7 @@ function OrdersGrid(props) {
     
     const componentProp = JSON.parse(props.componentProp);
     const filteringExtension = useGridFiltering();
-
+    const labelFilterGrid = componentProp.searchCriteria?.labelButtonFilter ? componentProp.searchCriteria.labelButtonFilter : "Open Orders Report"
     const [expandedOpenOrderFilter, setExpandedOpenOrderFilter] = useState(true);
     const [orderReportStatus, setOrderReportStatus] = useState(false);
 
@@ -344,7 +344,7 @@ function OrdersGrid(props) {
             >
                 <div className='cmp-search-criteria__header__filter'>
                     <div className='cmp-search-criteria__header__filter__title'>
-                        Open Orders Report
+                        {labelFilterGrid}
                     </div>
                     <i className={`cmp-search-criteria__icon fas fa-times-circle`}></i>
                 </div>
