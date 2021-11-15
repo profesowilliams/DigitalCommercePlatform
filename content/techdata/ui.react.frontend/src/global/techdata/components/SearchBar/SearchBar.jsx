@@ -154,7 +154,7 @@ const SearchBar = ({ data, componentProp }) => {
     if (searchTermText === "") {
       return null;
     } else {
-      window.location.href = getSearchUrl(searchTermText);
+      window.location.href = await getSearchUrl(searchTermText);
     }
   };
 
