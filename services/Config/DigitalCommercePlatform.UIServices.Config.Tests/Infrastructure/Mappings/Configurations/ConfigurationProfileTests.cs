@@ -69,7 +69,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
                     SortBy = "any",
                     SortDirection = SortDirection.asc,
                     Type = type,
-                    ConfigName = "test"
+                    ConfigName = "test",
+                    ConfigurationType = DCPC.ConfigType.All
+                   
                 });
             }
         }

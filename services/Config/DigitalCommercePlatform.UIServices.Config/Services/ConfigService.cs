@@ -149,10 +149,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
 
                 var type = GetConfigurationType(request);
-                    
 
-                type = type.Replace("/", "");
-                request.Criteria.Type = null;
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
@@ -294,56 +291,47 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private string GetConfigurationType(GetConfigurations.Request request)
         {
+            var ConfigurationType = "";
 
-            var type = new List<string> { };
+            if (request.Criteria.ConfigurationType == null)
+            {
+                request.Criteria.ConfigurationType = ConfigType.EstimateAndVendor;
+            };
+
 
             if (request.Criteria.ConfigurationType == ConfigType.Estimate)
             {
-                type.Add("Estimate");
+                return ConfigurationType.AppendPathSegment("&type=Estimate");
             }
             else if (request.Criteria.ConfigurationType == ConfigType.Renewal)
             {
-                type.Add("Renewal");
+                return ConfigurationType.AppendPathSegment("&type=Renewal");
             }
             else if (request.Criteria.ConfigurationType == ConfigType.RenewalQuote)
             {
-                type.Add("RenewalQuote");
+                return ConfigurationType.AppendPathSegment("&type=RenewalQuote");
             }
             else if (request.Criteria.ConfigurationType == ConfigType.VendorQuote)
             {
-                type.Add("VendorQuote");
+                return ConfigurationType.AppendPathSegment("&type=VendorQuote");
             }
-            else if(request.Criteria.ConfigurationType == ConfigType.EstimateAndVendor)
+            else if (request.Criteria.ConfigurationType == ConfigType.EstimateAndVendor)
             {
-                type.Add("Estimate");
-                type.Add("VendorQuote");
+                return ConfigurationType.AppendPathSegment("&type=VendorQuote&type=Estimate");
             }
             else if (request.Criteria.ConfigurationType == ConfigType.EstimateAndRenewal)
             {
-                type.Add("Estimate");
-                type.Add("Renewal");
+                return ConfigurationType.AppendPathSegment("&type=Renewal&type=Estimate");
             }
             else if (request.Criteria.ConfigurationType == ConfigType.VendorAndRenewal)
             {
-                type.Add("VendorQuote");
-                type.Add("Renewal");
+                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote");
             }
-            else 
+            else
             {
-                type.Add("Estimate");
-                type.Add("Renewal");
-                type.Add("VendorQuote");
-                type.Add("RenewalQuote");
+                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate");
             }
 
-            var ConfigurationType = "";
-            for (int i = 0; i < type.Count; i++)
-            {
-
-                ConfigurationType = ConfigurationType.AppendPathSegment("&type=" + type[i]);
-            }
-
-            return ConfigurationType;
         }
     }
 }

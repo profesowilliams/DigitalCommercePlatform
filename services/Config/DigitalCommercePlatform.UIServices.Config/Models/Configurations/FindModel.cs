@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
     {
         public string Id { get; set; }
         public bool Details { get; set; }
-        public ConfigType ConfigurationType { get; set; }
+        public ConfigType? ConfigurationType { get; set; }
         public IList<string> Type { get; set; }
         public string Manufacturer { get; set; }
         public string ResellerName { get; set; }
