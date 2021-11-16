@@ -125,57 +125,79 @@ app.post("/login", function (req, res) {
     let resJsonSuccess = {
         content: {
             user: {
-                id: "516514",
-                firstName: "DAYNA Local Server",
-                lastName: "KARAPHILLIS",
-                name: "DAYNA KARAPHILLIS",
-                email: "SHI@cstenet.com",
-                phone: "9999999971",
-                companyName: "SHI International",
-                customers: ["0038048612", "0009000325"],
-                customersV2: [
-                    { number: "0038048612", name: "Company 0" },
-                    { number: "0009000325", name: "Company 1" },
-                    { number: "0038048612", name: "Company 2" },
-                ],
-                roles: ["hasDCPAccess"],
-                roleList: [{
-                    entitlement: "CanPlaceOrder",
-                    account: "0038055347"
-                },
-                    {
-                        entitlement: " hasDCPAccess",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CanViewInvoices",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CanDownloadPriceFiles",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CanViewCreditStatement",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CreditCardUser",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "AdminUser",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CanAccessAccount",
-                        account: "0038055347"
-                    },
-                    {
-                        entitlement: "CanManageOwnProfile",
-                        account: ""
-                    }
-                ],
+              "id": "516514",
+              "firstName": "DAYNA",
+              "lastName": "KARAPHILLIS",
+              "name": "516514",
+              "email": "daniel.vogt@techdata.com",
+              "phone": null,
+              "customers": ["0038048612", "0009000325", "0009000325"],
+              "roles": null,
+              "roleList": [{
+                "entitlement": "CanManageOwnProfile",
+                "accountId": ""
+              }, {
+                "entitlement": "CanAccessAccount",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanAccessDeveloperCenter",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanViewCreditStatement",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanDownloadPriceFiles",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanViewInvoices",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanPlaceOrder",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "AdminUser",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "CanViewOrders",
+                "accountId": "0038048612"
+              }, {
+                "entitlement": "hasDCPAccess",
+                "accountId": ""
+              }],
+              "customersV2": [{
+                "number": "0038048612",
+                "name": "SHI INTERNATIONAL CORP",
+                "customerNumber": "0038048612",
+                "customerName": "SHI INTERNATIONAL CORP",
+                "salesOrg": "0101",
+                "system": "2",
+                "dcpAccess": true
+              }, {
+                "number": "0009000325",
+                "name": "SHI INTERNATIONAL CORP.",
+                "customerNumber": "0009000325",
+                "customerName": "SHI INTERNATIONAL CORP.",
+                "salesOrg": "1001",
+                "system": "3",
+                "dcpAccess": false
+              }, {
+                "number": "0009000325",
+                "name": null,
+                "customerNumber": "0009000325",
+                "customerName": null,
+                "salesOrg": null,
+                "system": null,
+                "dcpAccess": false
+              }],
+              "activeCustomer": {
+                "number": "0038048612",
+                "name": "SHI INTERNATIONAL CORP",
+                "customerNumber": "0038048612",
+                "customerName": "SHI INTERNATIONAL CORP",
+                "salesOrg": "0101",
+                "system": "2",
+                "dcpAccess": true
+              }
             },
         },
         error: { code: 0, messages: [], isError: false },
@@ -1728,6 +1750,107 @@ app.post("/ui-commerce/v1/downloadOrderDetails", async function (req, res) {
     console.log('Error', error)
   }
 });
+
+app.get("/searchbar/orders", function (req, res) {
+  const { keyword } = req.query;
+
+  res.json({
+    "content": {
+      "items": [{
+        "id": 24009754974,
+        "created": "2021-11-16T20:51:54.646Z",
+        "reseller": 2111048,
+        "shipTo": "UPS",
+        "type": "Manual",
+        "priceFormatted": 73398.31,
+        "invoices": [{
+          "id": "Pending",
+          "line": "",
+          "quantity": 94,
+          "price": 5646.7,
+          "created": null
+        }, {
+          "id": 24009754978,
+          "line": 7,
+          "quantity": 38,
+          "price": 4841.7,
+          "created": "2021-11-16T20:51:54.646Z"
+        }, {
+          "id": "Pending",
+          "line": "",
+          "quantity": 96,
+          "price": 4752.7,
+          "created": null
+        }, {
+          "id": 24009754979,
+          "line": 2,
+          "quantity": 8,
+          "price": 4940.7,
+          "created": "2021-11-16T20:51:54.646Z"
+        }, {
+          "id": "Pending",
+          "line": "",
+          "quantity": 64,
+          "price": 5332.7,
+          "created": null
+        }, {
+          "id": 24009754984,
+          "line": 6,
+          "quantity": 19,
+          "price": 5317.7,
+          "created": "2021-11-16T20:51:54.646Z"
+        }, {
+          "id": "Pending",
+          "line": "",
+          "quantity": 90,
+          "price": 5203.7,
+          "created": null
+        }, {
+          "id": 24009754983,
+          "line": 5,
+          "quantity": 40,
+          "price": 4887.7,
+          "created": "2021-11-16T20:51:54.646Z"
+        }],
+        "status": "inProcess",
+        "trackings": [{
+          "orderNumber": "6030684674",
+          "invoiceNumber": null,
+          "id": null,
+          "carrier": "FEDEX",
+          "serviceLevel": "FEDEX GROUND",
+          "trackingNumber": "486197188378",
+          "trackingLink": "http://www.fedex.com/Tracking?&cntry_code=us&language=english&tracknumbers=486197188378",
+          "type": "W0",
+          "description": "FEDX GRND",
+          "date": "07-13-2021",
+          "dNote": "7038811481",
+          "dNoteLineNumber": "30",
+          "goodsReceiptNo": null
+        }],
+        "isReturn": false,
+        "currency": "USD",
+        "currencySymbol": "$",
+        "line": 24009754974,
+        "manufacturer": "2752GIQ",
+        "description": "PLTNM TAB PRTNR STOCK $5+ MRC ACTIVATION",
+        "quantity": 9,
+        "serial": "n/a",
+        "unitPrice": 73718.31,
+        "totalPrice": 73718.31,
+        "shipDate": "Emailed"
+      }],
+      "totalItems": 2500,
+      "pageCount": 25,
+      "pageSize": "25"
+    },
+    "error": {
+      "code": 0,
+      "message": [],
+      "isError": false
+    }
+  })
+})
 
 app.get("/typeahead", function (req, res) {
   const { keyword } = req.query;

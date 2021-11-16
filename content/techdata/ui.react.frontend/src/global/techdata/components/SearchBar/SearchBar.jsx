@@ -3,6 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
+import {getUserDataInitialState, hasDCPAccess} from "../../../../utils/user-utils";
 
 function getShopLoginUrlPrefix() {
   let prefixShopAuthUrl = "";
@@ -52,6 +53,7 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
   } = JSON.parse(componentProp);
 
+  const [userData, setUserData] = useState(getUserDataInitialState);
   
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
@@ -89,13 +91,7 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const getSearchUrl = async (searchTerm) => {
-    let hasDCPAccess = false;
-    data?.auth?.userData?.roleList?.forEach((val) => {
-      if (val?.entitlement?.trim() === 'hasDCPAccess') {
-        hasDCPAccess = true;
-      }
-    })
-    if (hasDCPAccess && (selectedArea.area === "quote" || selectedArea.area === "order")) {
+    if (hasDCPAccess(userData) && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       try {
         const response = await axios.get(
           uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm)
@@ -351,7 +347,7 @@ const SearchBar = ({ data, componentProp }) => {
   };
   return (
     <div
-      onMouseEnter={mobileState ? '' : gotFocus}
+      onMouseEnter={mobileState ? null : gotFocus}
       onMouseLeave={lostFocus}
       id={id}
       className={`cmp-searchbar ${ isChecked === true ? "cmp-searchbar--checked" : " " }`}>
