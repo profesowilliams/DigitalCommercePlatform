@@ -61,7 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<AlternateSearchSuggestionDto, AlternateSearchSuggestionModel>();
             CreateMap<SearchReportDto, SearchReportModel>();
             CreateMap<SearchResponseDto, FullSearchResponseModel>()
-                .ForMember(dest => dest.RefinementsToDisplay, opt => opt.Ignore())
                 .ForMember(dest => dest.TopRefinements, opt => opt.Ignore())
                 ;
 

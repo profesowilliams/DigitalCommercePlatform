@@ -14,7 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public long TotalResults { get; set; }
         public SearchReportModel SearchReport { get; set; }
         public List<ElasticItemModel> Products { get; set; }
-        public int? RefinementsToDisplay { get; set; }
         public List<RefinementModel> TopRefinements { get; set; }
         public CategoryBreadcrumbModel CategoryBreadcrumb { get; set; }
         public bool HasMoreRefinements { get; set; }
