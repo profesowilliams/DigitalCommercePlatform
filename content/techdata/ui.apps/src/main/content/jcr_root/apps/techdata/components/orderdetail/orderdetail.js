@@ -218,6 +218,14 @@ use(function () {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
     }
 
+    if (this.uiServiceDomain != null) {
+        jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
+    }
+
+    if (this.uiServiceDomain != null) {
+        jsonObject["downloadOrderDetailsEndpoint"] = this.uiServiceDomain+this.downloadOrderDetailsEndpoint;
+    }
+
     if (searchByDropDown != null) {
         keywordDropdownData["searchbyDropdown"] = searchByDropDown;
     }

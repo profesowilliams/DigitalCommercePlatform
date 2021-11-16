@@ -1,12 +1,41 @@
-import React from "react";
+import React, {useState, useRef} from "react";
+import { postFileBlob } from "../../../../../utils/utils";
+import Modal from "../../Modal/Modal";
+import LineItemsExportXls from "../OrderDetailItemExport/LineItemsExportXls";
 import  { orderStatusValues } from "../orderStatus";
 
 const OrderSubHeader = ({
-        headerConfig,
+      headerConfig,
       orderDetails,
-      id
+      id,
+      columnList,
+      exportUrl
 }) => {
+const [modal, setModal] = useState(null);
+const downloadXls = () => (fieldsList) => {
+    try {
+        const params = {
+            orderId:id,
+            ExportedFields:fieldsList
+        }
+        const name = `order-${id}.xls`;
+        postFileBlob(exportUrl,name,params);
+        return result.data;
+      } catch( error ) {
+        return error;
+      }
 
+}
+const handleClickCSV = () => {
+    const modal = {
+        properties:{
+            title: 'Export XLS',
+            buttonLabel: 'Export'
+        },       
+        modalAction: downloadXls()
+    }
+    setModal(modal)
+}
 const {status} = orderDetails;
 
 const orderButton = (status) => {
@@ -59,11 +88,20 @@ const orderButton = (status) => {
           <div>{headerConfig.purchaseOrderLabel} {orderDetails?.purchaseOrder ? orderDetails?.purchaseOrder : "Purchase Order Not Found"}</div>
         </div>
 
-        <div className="cmp-td-order-details__header__status">
+        <div className="cmp-td-order-details__header__status" onClick={handleClickCSV}>
           <a href="#">{headerConfig.exportCSVLabel}</a>
           <div>{headerConfig.phoneNumberLabel}</div>
             {orderButton(status)}
         </div>
+          {modal &&
+              <Modal
+                modalExportChild={{Child:LineItemsExportXls, columnList}}
+                modalProperties={modal.properties}
+                onModalClosed={() => setModal(null)}
+                modalAction={modal.modalAction}
+              />
+          }
+            
       </div>
   );
 };

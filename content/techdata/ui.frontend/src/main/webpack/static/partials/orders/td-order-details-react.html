@@ -3,6 +3,7 @@
         <div data-component="OrderDetails" data-cmp-type="react" className="cmp-td-order-details"
              data-config='{
               "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order/details",
+              "downloadOrderDetailsEndpoint":"http://localhost:3000/ui-commerce/v1/downloadOrderDetails",
               "headerConfig":{
                 "orderLabel":"Order Label",
                 "orderDateLabel":"Order Date Label",
@@ -84,19 +85,15 @@
                 "yesLabel": "Yes",
                 "noLabel": "No",
                 "columnList": [
-                  {"columnLabel": "Line edited","columnKey": "displayLineNumber"},
-                  {"columnLabel": "Mfr No edit","columnKey": "mfrNumber"},
-                  {"columnLabel": "Ref No","columnKey": "tdNumber"},
-                  {"columnLabel": "Description","columnKey": "displayName"},
-                  {"columnLabel": "Quantity","columnKey": "quantity"},
-                  {"columnLabel": "Unit Price","columnKey": "unitPrice"},
-                  {"columnLabel": "Total price (USD)","columnKey": "totalPrice"},
-                  {"columnLabel": "Status","columnKey": "status"},
-                  {"columnLabel": "Ship Date","columnKey": "trackings"},
-                  {"columnLabel": "Serial No","columnKey": "serials"},
-                  {"columnLabel": "Invoice","columnKey": "invoice"},
-                  {"columnLabel": "Track","columnKey": "trackings"},
-                  {"columnLabel": "Vendor No","columnKey": "vendorPartNo"}
+                  { "columnLabel": "Description", "columnKey": "description", "sortable": false },
+                  { "columnLabel": "Quantity", "columnKey": "quantity", "sortable": false },
+                  { "columnLabel": "Unit Price", "columnKey": "unitPrice", "sortable": false },
+                  { "columnLabel": "Total Price", "columnKey": "totalPrice", "sortable": false },
+                  { "columnLabel": "status", "columnKey": "status", "sortable": false },
+                  { "columnLabel": "Track", "columnKey": "trackings", "sortable": false },
+                  { "columnLabel": "Ser", "columnKey": "serials", "sortable": false },
+                  { "columnLabel": "inv", "columnKey": "invoice", "sortable": false },
+                  { "columnLabel": "ship date", "columnKey": "shipDates", "sortable": false }
                 ]
               }
             }'></div>

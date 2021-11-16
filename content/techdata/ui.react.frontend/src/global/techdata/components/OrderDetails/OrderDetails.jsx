@@ -15,6 +15,7 @@ const OrderDetails = ({ componentProp }) => {
       productLines,
       whiteLabel,
       searchCriteria,
+      downloadOrderDetailsEndpoint
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [iconList, setIconList] = useState([]);
@@ -26,7 +27,7 @@ const OrderDetails = ({ componentProp }) => {
     if (iconList.length === 0) {
       productLines?.iconList && setIconList(productLines.iconList);
     }
-  }, [productLines, iconList]);
+  }, []);
 
   useEffect(() => {
     response?.content && setOrderDetails(response.content);
@@ -38,6 +39,8 @@ const OrderDetails = ({ componentProp }) => {
       <OrderSubHeader
         headerConfig={headerConfig}
         orderDetails={orderDetails}
+        columnList={productLines.columnList}
+        exportUrl={downloadOrderDetailsEndpoint}
         id={id}
       />
       <OrderDetailsInfo

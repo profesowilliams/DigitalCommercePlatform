@@ -162,6 +162,8 @@ public class CaConfigReader {
 
     private String productEmptyImageUrl;
 
+    private String downloadOrderDetailsEndpoint;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -205,6 +207,7 @@ public class CaConfigReader {
         accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
         puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
+        downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
         cartURL = mcConfiguration.cartURL();
         tdPartSmart = mcConfiguration.tdPartSmart();
@@ -505,5 +508,9 @@ public class CaConfigReader {
 
     public String getProductEmptyImageUrl() {
         return productEmptyImageUrl;
+    }
+
+    public String getDownloadOrderDetailsEndpoint() {
+        return downloadOrderDetailsEndpoint;
     }
 }

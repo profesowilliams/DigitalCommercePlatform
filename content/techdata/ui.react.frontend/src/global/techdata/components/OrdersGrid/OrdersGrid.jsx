@@ -9,7 +9,6 @@ import { requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 
 
-
 function OrdersGrid(props) {
     
     const componentProp = JSON.parse(props.componentProp);
@@ -118,6 +117,7 @@ function OrdersGrid(props) {
     }
 
     function getInvoices(line) {
+        const url = componentProp.downloadAllInvoicesEndpoint;
         if (line.invoices.length && line.invoices.length > 1) {
             return (
                 <div onClick={() => invokeModal({

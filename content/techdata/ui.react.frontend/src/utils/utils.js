@@ -1,5 +1,6 @@
 import axios from "axios";
 import {nanoid} from "nanoid";
+import { usPost } from "./api";
 
 export function getQueryStringValue (key) {
     return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
@@ -52,19 +53,28 @@ export const getImageBuffer =  async imgPath => {
     return buffer.constructor.name === 'Buffer' ? buffer : Buffer.from(buffer);
 }
 
-export const requestFileBlob = async (url, name = '', options = {redirect : false}) => {
-    const response = await axios.get(url, { responseType: 'blob' });
+const generateFile = (response, name, options) => {
     const type = response.headers['content-type'];
     const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    if (options.redirect){
-        link.setAttribute("target","_blank");
+    if (options.redirect) {
+        link.setAttribute("target", "_blank");
     } else {
         link.download = name;
     }
     link.click();
     link.remove();
+}
+
+export const postFileBlob = async (url, name = '', params, options = { redirect: false }) => {
+    const response = await usPost(url, params);
+    generateFile(response, name, options);
+}
+
+export const requestFileBlob = async (url, name = '', options = { redirect: false }) => {
+    const response = await axios.get(url, { responseType: 'blob' });
+    generateFile(response, name, options);
 }
 /**
 * Add onload event for form submit to handle input text XSS validations.
