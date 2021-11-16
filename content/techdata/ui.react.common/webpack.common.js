@@ -3,15 +3,14 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const SRC_DIR = __dirname + '/src';
-const DIST_DIR = __dirname + '/dist';
+const COMMON_SRC_DIR = __dirname + '/common.src';
 
 module.exports = {
     resolve: {
         extensions: ['.js', '.jsx']
     },
     entry: {
-        bundle: SRC_DIR + '/index.js',
+        common: COMMON_SRC_DIR + '/index.js',
     },
     output: {
         filename: '[name].js',
@@ -91,6 +90,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
+        /**
+         * uncomment below code, if you want to see a visual representation 
+         * of which package is using how much disk space. */ 
         // new BundleAnalyzerPlugin(),
     ],
     stats: {

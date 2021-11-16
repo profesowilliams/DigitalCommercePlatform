@@ -55,12 +55,19 @@ class AppInitializer {
 
             if ('react' === (componentProps.cmpType && componentProps.cmpType.toLowerCase())) {
                 // Initialize React Component
-                new AppConnector(componentProps, element);
+                if (window.techDataUi?.CommonAppConnector) {
+                    new window.techDataUi.CommonAppConnector(componentProps, element);
+                }
+
+                if (window.techDataUi?.AppConnector) {
+                    new window.techDataUi.AppConnector(componentProps, element);
+                }
             }
         });
     }
 }
 
-waitForGlobal("AppConnector", function() {
+const bundles = ['CommonAppConnector', 'AppConnector']
+waitForGlobal(bundles, function() {
     new AppInitializer();
 }, 50);

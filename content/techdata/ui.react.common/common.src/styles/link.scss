@@ -1,0 +1,14 @@
+.tdr-link {
+    &.always {
+        text-decoration: underline;
+    }
+    &.none {
+        text-decoration: none;
+    }
+    &.hover {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

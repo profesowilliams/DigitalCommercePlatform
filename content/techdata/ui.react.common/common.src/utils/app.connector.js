@@ -3,7 +3,7 @@ import ReactContentRenderer from "react-dom";
 import { nanoid } from "nanoid";
 import store from "../store/store";
 import { Provider } from "react-redux";
-import excludedComponents from "../../app.config";
+import includedComponents from "../../app.config";
 
 function writeLog(logs, message, data) {
 	logs.push({
@@ -26,7 +26,7 @@ const getComponentPath = (component, isPromise=true) => {
 			: `../global/techdata/components/${component}/${component}`;
 }
 
-class AppConnector {
+class CommonAppConnector {
 	constructor(componentProps, element) {
 		this.logs = [];
 		var _self = this;
@@ -38,7 +38,7 @@ class AppConnector {
 			{ path: getComponentPath(this.componentProps.component, false) }
 		);
 
-		if (excludedComponents.indexOf(this.componentProps.component) === -1) {
+		if (includedComponents.indexOf(this.componentProps.component) !== -1) {
 			getComponentPath(this.componentProps.component)
 				.then((component) => {
 					writeLog(_self.logs, "component imported", { component: component });
@@ -91,4 +91,4 @@ window.initConfiguration = async () => {
 }
 
 window.techDataUi ? window.techDataUi : (window.techDataUi = {});
-window.techDataUi.AppConnector = AppConnector;
+window.techDataUi.CommonAppConnector = CommonAppConnector;

@@ -4,8 +4,7 @@ const common = require('./webpack.common.js');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const SRC_DIR = __dirname + '/src/';
-// const COMMON_SRC_DIR = __dirname + '/common.src';
+const COMMON_SRC_DIR = __dirname + '/common.src';
 const DIST_DIR = __dirname + '/dist';
 
 module.exports = merge(common, {
@@ -19,13 +18,13 @@ module.exports = merge(common, {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.resolve(__dirname, SRC_DIR + '/index.html')
+            template: path.resolve(__dirname, COMMON_SRC_DIR + '/index.html')
         }),
     ],
     devServer: {
         contentBase: DIST_DIR,
         hot: true,
-        port: 9000,
+        port: 9001,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
