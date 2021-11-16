@@ -10,7 +10,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
     items: [
       { key: "quoteIdFilter", value: "TD Quote ID" },
       { key: "endUserName", value: "End User Name" },
-      { key: "configIdFilter", value: "Deal ID" },
+      { key: "vendorReference", value: "Deal ID" },
     ],
   };
 
