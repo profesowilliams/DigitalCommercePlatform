@@ -96,6 +96,7 @@ function GridSearchCriteria({
 						onQueryChanged={(query) => handleChange(query)}
 						setFilterActive={setFilterActive}
 						setExternalFilterActive={setExternalFilterActive}
+						onKeyPress={(isEnter) => isEnter && onSearch()}
 					></Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>
