@@ -35,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string ConfigurationId { get; set; }
         public string Description { get; set; }
         public string Vendor { get; set; }
+        public string BuyMethod { get; set; }
 
     }
 }

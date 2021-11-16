@@ -66,6 +66,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     {
                         getQuoteResponse.Details.Items = await _helperQueryService.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty);
                         getQuoteResponse.Details.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(new QuotePreviewModel { QuoteDetails = new QuotePreview { Items = getQuoteResponse.Details.Items } });
+                        var accountDetail = await _helperQueryService.GetCustomerAccountDetails();
+                        getQuoteResponse.Details.BuyMethod = accountDetail?.BuyMethod ?? "TDShop46";
                     }
                 }
                 else

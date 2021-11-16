@@ -25,5 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
         public List<ItemModel> Items { get; set; }
         public List<AgreementModel> Agreements { get; set; }
         public string PricingCondition { get; set; }
+        public string BuyMethod { get; set; }
     }
 }

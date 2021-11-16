@@ -1,6 +1,9 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System.Diagnostics.CodeAnalysis;
+
 namespace DigitalCommercePlatform.UIServices.Commerce.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Address
     {
         public string Id { get; set; }

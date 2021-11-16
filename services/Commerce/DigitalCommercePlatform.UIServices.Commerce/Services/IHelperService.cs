@@ -12,5 +12,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         bool GetOrderPricingConditions(string pricingConditionId, out TypeModel orderType, out LevelModel orderLevel);
         Task<string> GetOrderType(string poType, string docType);
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);
+        Task<AccountDetails> GetCustomerAccountDetails();
     }
 }

@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
     {
         public string SalesOrg { get; set; }
         public string TargetSystem { get; set; }
+        public string System { get; set; }
         public string EndUserPo { get; set; }
         public string CustomerPo { get; set; }
         public TypeModel Type { get; set; }

@@ -10,6 +10,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
@@ -20,19 +21,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         private readonly Mock<ILogger<HelperService>> _logger;
         private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
         private readonly Mock<IAppSettings> _appSettings;
+        private readonly Mock<IHttpClientFactory> _httpClientFactory;
         public OrderItemChildrenServiceTests()
         {
             _context = new Mock<IUIContext>();
             _logger = new Mock<ILogger<HelperService>>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettings = new Mock<IAppSettings>();
+            _httpClientFactory = new Mock<IHttpClientFactory>();
         }
 
         [Fact(DisplayName = "Lines are empty for invalid input")]
         public void LinesAreEmptyForInvalidInput()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var result = sut.GetOrderLinesWithChildren(null);
 
@@ -43,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void ChildrenLinesAreGenerated()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var orderModel = new OrderDetailModel
             {
@@ -73,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void GetSubLineTracking_Test()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             Type type;
             object objType;
@@ -140,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             type = typeof(OrderItemChildrenService);
             objType = Activator.CreateInstance(type,
                 new SubstringService(),
-                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object)
+                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object)
             );
         }
 

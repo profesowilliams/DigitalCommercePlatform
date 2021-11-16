@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 displayNumber = displayNumber + 1.0;
                 item.DisplayLineNumber = displayNumber.ToString();
-                var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id))?.ToList();
                 var sublineTracking = GetSubLineTracking(subLines ?? new List<Line>());
                 // If there are no tracking info at the parent but there are some on the children, create an empty list to add to
                 if (sublineTracking.Any() && item.Trackings == null)

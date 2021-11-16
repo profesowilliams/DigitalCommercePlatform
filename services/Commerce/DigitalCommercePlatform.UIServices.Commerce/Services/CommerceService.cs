@@ -190,6 +190,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (_uiContext.User != null)
             {
+                input.QuoteDetails.BuyMethod = input.QuoteDetails.BuyMethod ?? "TDShop46";
+                if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdshop46") )
+                {
+                    createModelFrom.System = "2";
+                }
+                else
+                {
+                    createModelFrom.System = "3";
+                }
+
                 input.QuoteDetails.Tier = string.IsNullOrWhiteSpace(input.QuoteDetails.Tier) ? "Commercial" : input.QuoteDetails.Tier;
                 _helperService.GetOrderPricingConditions(input.QuoteDetails.Tier, out TypeModel orderType, out LevelModel orderLevel);
                 createModelFrom.Type = orderType;

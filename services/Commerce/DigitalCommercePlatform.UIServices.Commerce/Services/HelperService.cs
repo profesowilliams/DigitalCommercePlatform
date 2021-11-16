@@ -7,11 +7,14 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -23,15 +26,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly IUIContext _context;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly IAppSettings _appSettings;
+        private readonly IHttpClientFactory _httpClientFactory;
         public HelperService(ILogger<HelperService> logger,
                              IUIContext context,
                              IMiddleTierHttpClient middleTierHttpClient,
-                             IAppSettings appSettings)
+                             IAppSettings appSettings,
+                             IHttpClientFactory httpClientFactory)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _context = context;
             _middleTierHttpClient = middleTierHttpClient;
             _appSettings = appSettings;
+            _httpClientFactory = httpClientFactory;
         }
 
         public string GetParameterName(string parameter)
@@ -198,7 +204,49 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             return items;
         }
+        /// <summary>
+        /// Return Buy Type of customre 
+        /// Possible values 
+        /// Both 
+        ///TDShop46
+        ///TDAvnet67
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AccountDetails> GetCustomerAccountDetails()
+        {
+            try
+            {
+                var requestUrl = _appSettings.TryGetSetting("External.US.Customer.Url")
+                  ?? throw new InvalidOperationException($"External.US.Customer.Url is missing from AppSettings");
 
+            _logger.LogInformation($"GetCustomerAccountDetails Requested url is: {requestUrl}");
+
+            requestUrl = requestUrl + "customerService/getAccountDetails";
+
+            var request = JsonConvert.SerializeObject(
+                new AccountDetailsFindModel
+                {
+                    Value = _context?.User?.ID,
+                    Type = "USERID"
+                }
+                );
+            var httpClient = _httpClientFactory.CreateClient("CustomerAPIClient");
+            
+            var httpResponse = await httpClient.PostAsync(requestUrl, new StringContent(request, Encoding.UTF8, "application/json"));
+
+            httpResponse.EnsureSuccessStatusCode();
+
+            var response = JsonConvert.DeserializeObject<AccountDetails>(httpResponse.Content.ReadAsStringAsync().Result);
+            
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error getting Order Level & Type {nameof(HelperService.GetCustomerAccountDetails)}");
+                // always return response 
+                return new AccountDetails { BuyMethod = "TDShop46" };
+            }
+        }
 
         /// <summary>
         /// returns Application product API call URL

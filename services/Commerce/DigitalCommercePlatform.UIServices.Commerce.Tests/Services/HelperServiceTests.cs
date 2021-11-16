@@ -11,6 +11,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using Xunit;
 
@@ -22,17 +23,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         private readonly Mock<ILogger<HelperService>> _logger;
         private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
         private readonly Mock<IAppSettings> _appSettings;
+        private readonly Mock<IHttpClientFactory> _httpClientFactory;
         public HelperServiceTests()
         {
             _context = new Mock<IUIContext>();
             _logger = new Mock<ILogger<HelperService>>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettings = new Mock<IAppSettings>();
+            _httpClientFactory = new Mock<IHttpClientFactory>();
         }
 
         private HelperService GetHelperService()
         {
-            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object);
+            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
         }
 
         private void InitiateHelperService(out Type type, out object objType)
@@ -42,7 +45,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 _logger.Object, 
                 _context.Object, 
                 _middleTierHttpClient.Object, 
-                _appSettings.Object
+                _appSettings.Object,
+                _httpClientFactory.Object
                 );
         }
 
@@ -67,6 +71,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void GetAccountDetails()
+        {         
+            var result = GetHelperService().GetCustomerAccountDetails();
+            Assert.NotNull(result);
+        }
 
         [Fact]
         public void GetOrderPricingConditions()
@@ -111,7 +121,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 _logger.Object,
                 _context.Object,
                 _middleTierHttpClient.Object,
-                _appSettings.Object);
+                _appSettings.Object, _httpClientFactory.Object);
 
             var getOrderPricingConditionMappings = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "GetOrderPricingConditionMappings" && x.IsPrivate);
@@ -167,7 +177,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             };
             
             string productId = "SVS-UMB-SUP-E";
-            int i = 0;
             // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
             StringBuilder sbManufacturer = new();
             StringBuilder sbVendorPart = new();
