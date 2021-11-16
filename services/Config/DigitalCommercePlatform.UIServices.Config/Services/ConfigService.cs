@@ -140,19 +140,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 if (request.Criteria?.SortBy?.ToLower() == "configid")
                     request.Criteria.SortBy = "Id";
-               else if (request.Criteria?.SortBy?.ToLower() == "endusername")
+                else if (request.Criteria?.SortBy?.ToLower() == "endusername")
                     request.Criteria.SortBy = "EndUser";
                 else if (request.Criteria?.SortBy?.ToLower() == "expires")
                     request.Criteria.SortBy = "Expirydate";
                 else
                     request.Criteria.SortBy = "Created";
 
+
+                var type = GetConfigurationType(request);
+                    
+
+                type = type.Replace("/", "");
+                request.Criteria.Type = null;
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
+                configurationFindUrl = configurationFindUrl + type;
                 var stringUrl = configurationFindUrl.ToString();
-                
+
                 if (appServiceRequest.Details)
                 {
                     var configurationFindResponse = await _middleTierHttpClient
@@ -168,7 +175,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
             catch (RemoteServerHttpException ex)
             {
-                if(ex.Message.Contains("Reported an error: NotFound"))
+                if (ex.Message.Contains("Reported an error: NotFound"))
                 {
                     return result;
                 }
@@ -188,7 +195,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
         {
-            var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);           
+            var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
             result.Count = configurationFindResponse.Count;
             result.Data = mappingResult;
         }
@@ -211,7 +218,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
 
                 _logger.LogError(ex, "Exception at getting Estimation Validate: " + nameof(ConfigService));
-                _logger.LogInformation("$Record's not found for " + request.Criteria.Id + " and " + request.Criteria.Type);
+                _logger.LogInformation("$Record's not found for " + request.Criteria.Id + " and " + request.Criteria.ConfigurationType);
                 if (ex.Message.ToLower().Contains("reported an error: notfound"))//need to fix this
                 {
                     return false;
@@ -229,11 +236,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     var estimateRequest = new Models.Configurations.FindModel();
                     estimateRequest.Id = request.IdValue;
-                    estimateRequest.Type = "Estimate";
+                    estimateRequest.ConfigurationType = ConfigType.All;
 
                     var result = await FindConfigurations(new GetConfigurations.Request { Criteria = estimateRequest });
-                    
-                    if (result.Count < 1 || result.Count== null)
+
+                    if (result.Count < 1 || result.Count == null)
                         return $"This Config ID is not recognized";
                 }
 
@@ -262,13 +269,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 }
 
                 return url;
-        }
+            }
             catch (Exception ex)
             {
                 _logger.LogInformation($"Exception while calling Punchout url : {ex.Message + " inner Exception is " + ex.InnerException}");
                 throw ex;
             }
-}
+        }
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
         {
@@ -283,6 +290,60 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
             var getSpaResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
             return getSpaResponse;
+        }
+
+        private string GetConfigurationType(GetConfigurations.Request request)
+        {
+
+            var type = new List<string> { };
+
+            if (request.Criteria.ConfigurationType == ConfigType.Estimate)
+            {
+                type.Add("Estimate");
+            }
+            else if (request.Criteria.ConfigurationType == ConfigType.Renewal)
+            {
+                type.Add("Renewal");
+            }
+            else if (request.Criteria.ConfigurationType == ConfigType.RenewalQuote)
+            {
+                type.Add("RenewalQuote");
+            }
+            else if (request.Criteria.ConfigurationType == ConfigType.VendorQuote)
+            {
+                type.Add("VendorQuote");
+            }
+            else if(request.Criteria.ConfigurationType == ConfigType.EstimateAndVendor)
+            {
+                type.Add("Estimate");
+                type.Add("VendorQuote");
+            }
+            else if (request.Criteria.ConfigurationType == ConfigType.EstimateAndRenewal)
+            {
+                type.Add("Estimate");
+                type.Add("Renewal");
+            }
+            else if (request.Criteria.ConfigurationType == ConfigType.VendorAndRenewal)
+            {
+                type.Add("VendorQuote");
+                type.Add("Renewal");
+            }
+            else 
+            {
+                type.Add("Estimate");
+                type.Add("Renewal");
+                type.Add("VendorQuote");
+                type.Add("RenewalQuote");
+            }
+
+            var ConfigurationType = "";
+            for (int i = 0; i < type.Count; i++)
+            {
+
+                ConfigurationType = ConfigurationType.AppendPathSegment("&type=" + type[i]);
+            }
+
+            return ConfigurationType;
         }
     }
 }

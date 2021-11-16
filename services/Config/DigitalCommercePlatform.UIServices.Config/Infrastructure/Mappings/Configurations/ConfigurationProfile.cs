@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
             CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.Details, o => o.MapFrom(s => s.Details))
-                .ForMember(d => d.Type, o => o.MapFrom(s => s.Type))
+                .ForMember(d => d.Type, o => o.MapFrom(s => s.ConfigurationType))
                 .ForMember(d => d.Manufacturer, o => o.MapFrom(s => s.Manufacturer))
                 .ForMember(d => d.ResellerName, o => o.MapFrom(s => s.ResellerName))
                 .ForMember(d => d.ResellerId, o => o.MapFrom(s => s.ResellerId))

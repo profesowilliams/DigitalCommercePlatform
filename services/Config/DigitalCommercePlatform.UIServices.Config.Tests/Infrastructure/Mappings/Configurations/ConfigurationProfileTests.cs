@@ -5,6 +5,8 @@ using DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Co
 using FluentAssertions;
 using System;
 using Xunit;
+using System.Collections.Generic;
+
 
 using DCPC = DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 
@@ -50,6 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
         {
             public MappingFindModelToInternalFindModelData()
             {
+                string[] type = new string[] { "Estimate", "Renewal", "RenewalQuote", "VendorQuote" };
                 AddRow(new DCPC.FindModel
                 {
                     CreatedFrom = DateTime.UtcNow,
@@ -65,8 +68,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
                     ResellerName = "resellerName1",
                     SortBy = "any",
                     SortDirection = SortDirection.asc,
-                    Type = "type1",
-                    ConfigName="test"
+                    Type = type,
+                    ConfigName = "test"
                 });
             }
         }
@@ -90,7 +93,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mapping
             result.ResellerName.Should().Be(model.ResellerName);
             result.SortBy.Should().Be(model.SortBy);
             result.SortByAscending.Should().BeTrue();
-            result.Type.Should().Be(model.Type);
+            result.Type.Should().Be(model.ConfigurationType.ToString());
         }
 
     }

@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
@@ -10,7 +11,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
     {
         public string Id { get; set; }
         public bool Details { get; set; }
-        public string Type { get; set; }
+        public ConfigType ConfigurationType { get; set; }
+        public IList<string> Type { get; set; }
         public string Manufacturer { get; set; }
         public string ResellerName { get; set; }
         public string ResellerId { get; set; }
@@ -21,5 +23,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public SortDirection SortDirection { get; set; }
         public string ConfigName { get; set; }
         public string ConfigId { get; set; }
+    }
+
+    public enum ConfigType
+    {
+        All = 0,
+        Estimate = 1,
+        Renewal = 2,
+        RenewalQuote = 3,
+        VendorQuote = 4,
+        EstimateAndVendor=5,
+        EstimateAndRenewal=6,
+        VendorAndRenewal=7
     }
 }
