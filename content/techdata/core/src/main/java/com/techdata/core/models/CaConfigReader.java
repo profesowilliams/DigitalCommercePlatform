@@ -114,6 +114,10 @@ public class CaConfigReader {
 
     private String orderSearchEndpoint;
 
+    private String quoteDcpLookupEndpoint;
+
+    private String orderDcpLookupEndpoint;
+
     private String spaSearchEndpoint;
 
     private String typeAheadDomain;
@@ -213,6 +217,8 @@ public class CaConfigReader {
         contentSuggestionUrl = searchBarConfiguration.contentSuggestionUrl();
         orderSearchEndpoint = searchBarConfiguration.orderSearchEndpoint();
         quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
+        orderDcpLookupEndpoint = searchBarConfiguration.orderDcpLookupEndpoint();
+        quoteDcpLookupEndpoint = searchBarConfiguration.quoteDcpLookupEndpoint();
 
         spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
         typeAheadDomain = searchBarConfiguration.typeAheadDomain();
@@ -415,6 +421,14 @@ public class CaConfigReader {
 
     public String getQuoteSearchEndpoint() {
         return quoteSearchEndpoint;
+    }
+
+    public String getOrderDcpLookupEndpoint() {
+        return orderDcpLookupEndpoint;
+    }
+
+    public String getQuoteDcpLookupEndpoint() {
+        return quoteDcpLookupEndpoint;
     }
 
     public String getSpaSearchEndpoint() {

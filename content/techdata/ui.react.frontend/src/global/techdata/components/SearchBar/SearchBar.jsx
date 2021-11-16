@@ -98,7 +98,7 @@ const SearchBar = ({ data, componentProp }) => {
     if (hasDCPAccess && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       try {
         const response = await axios.get(
-          uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-order}', searchTerm)
+          uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm)
         );
         if (response?.data?.content?.items?.length === 1) {
           return (
@@ -109,7 +109,7 @@ const SearchBar = ({ data, componentProp }) => {
       } catch (err) {
         console.error(
             `Error calling UI Serivce Endpoint (${
-                uiServiceDomain + selectedArea.dcpQuotesLookupEndpoint
+                uiServiceDomain + selectedArea.dcpLookupEndpoint
             }): ${err}`
         );
       }

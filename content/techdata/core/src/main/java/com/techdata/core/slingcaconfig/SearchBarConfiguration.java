@@ -32,6 +32,12 @@ public @interface SearchBarConfiguration {
     @Property(label = "Quote Search Endpoint", description = "Quote Search Endpoint")
     String quoteSearchEndpoint();
 
+    @Property(label = "Orders DCP Lookup Endpoint", description = "Orders DCP Lookup Endpoint")
+    String orderDcpLookupEndpoint();
+
+    @Property(label = "Quote DCP Lookup Endpoint", description = "Quote DCP Lookup Endpoint")
+    String quoteDcpLookupEndpoint();
+
     @Property(label = "SPA Search", description = "SPA Search")
     String spaSearchEndpoint();
 

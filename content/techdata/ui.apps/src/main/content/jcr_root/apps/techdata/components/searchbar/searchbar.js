@@ -24,11 +24,16 @@ use(function () {
       var areaLabel = res.properties["areaLabel"];
 
       var areaconfig = new Packages.org.json.JSONObject();
-      var areaEndpoint, areaSuggestionUrl;
+      var areaEndpoint, areaSuggestionUrl, dcpLookupEndpoint;
       if (res.properties["areaEndpoint"] != null) {
         areaEndpoint = res.properties["areaEndpoint"];
       } else {
         areaEndpoint = this.serviceData[area + "SearchEndpoint"];
+      }
+      if (res.properties["dcpLookupEndpoint"] != null) {
+        dcpLookupEndpoint = res.properties["dcpLookupEndpoint"];
+      } else {
+        dcpLookupEndpoint = this.serviceData[area + "DcpLookupEndpoint"];
       }
       if (res.properties["areaSuggestionEndPoint"] != null) {
         areaSuggestionUrl = res.properties["areaSuggestionEndPoint"];
@@ -39,6 +44,7 @@ use(function () {
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);
       areaconfig.put("endpoint", areaEndpoint || '');
+      areaconfig.put("dcpLookupEndpoint", dcpLookupEndpoint || '');
       areaconfig.put("areaSuggestionUrl", areaSuggestionUrl || '');
 
       // quote specific vars
@@ -49,7 +55,9 @@ use(function () {
          * dcpSearchFailedPage:     Page to redirect DCP User for failed quote entered
          */
           areaconfig.put("detailsPage", this.serviceData['quoteDetailPage'] || '');
-          areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteGridEndpoint'] || '');
+          if(dcpLookupEndpoint == null) {
+            areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteDcpLookupEndpoint'] || '');
+          }
           areaconfig.put("dcpSearchPage", res.properties['dcpSearchFailedPage'] || '');
           } else if (area === 'order') {
         /**
@@ -58,7 +66,9 @@ use(function () {
          * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
          */
         areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
-        areaconfig.put("dcpLookupEndpoint", this.serviceData['orderSearchEndpoint'] || '');
+        if(dcpLookupEndpoint == null){
+          areaconfig.put("dcpLookupEndpoint", this.serviceData['orderDcpLookupEndpoint'] || '');
+        }
         areaconfig.put("dcpSearchPage", res.properties['ordersGridPage'] || '');
       }
 
