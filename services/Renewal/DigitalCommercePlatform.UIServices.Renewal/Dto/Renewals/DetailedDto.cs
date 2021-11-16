@@ -3,9 +3,11 @@ using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal;
 using DigitalFoundation.App.Services.Renewal.Dto.CoreQuote.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
 {
+    [ExcludeFromCodeCoverage]
     public class DetailedDto : SummaryDto
     {
         public DateTime Published { get; set; }
@@ -22,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public List<string> LinkedRenewals { get; set; }
         public string RenewalGroupId { get; set; }
         public DateTime DueDate { get; set; }
+        public string DueDays { get; set; }
         public bool? Incumbent { get; set; }
         public decimal? TotalReinstatementFeeCost { get; set; }
         public decimal? TotalReinstatementFeeSell { get; set; }
