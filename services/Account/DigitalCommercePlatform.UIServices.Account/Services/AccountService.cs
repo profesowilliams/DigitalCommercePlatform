@@ -366,15 +366,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request)
         {
-            var createdFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var createdTo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-            if (!request.IsMonthly)
-            {
-                var (createdFromItem, createdToItem) = GetQuarterDates();
-                createdFrom = createdFromItem;
-                createdTo = createdToItem;
-            }
+            var (createdFrom, createdTo) = GetDateRanges(request.IsMonthly);
 
             var url = _ordersServiceUrl.AppendPathSegment("stats")
                         .SetQueryParams(new
@@ -441,39 +433,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return myOrders;
         }
 
-        private (DateTime createdFrom, DateTime createdTo) GetQuarterDates()
+        private (DateTime createdFrom, DateTime createdTo) GetDateRanges(bool isMonthly)
         {
             var currentDate = DateTime.Now.Date;
+            var beginDate = isMonthly ? currentDate.AddDays(-30) : currentDate.AddDays(-90);
 
-            var startOfQuarter01 = new DateTime(currentDate.Year, 1, 1);
-            var endOfQuarter01 = new DateTime(currentDate.Year, 3, 31);
-
-            var startOfQuarter02 = new DateTime(currentDate.Year, 4, 1);
-            var endOfQuarter02 = new DateTime(currentDate.Year, 6, 30);
-
-            var startOfQuarter03 = new DateTime(currentDate.Year, 7, 1);
-            var endOfQuarter03 = new DateTime(currentDate.Year, 9, 30);
-
-            var startOfQuarter04 = new DateTime(currentDate.Year, 10, 1);
-
-
-
-            if (currentDate >= startOfQuarter01 && currentDate <= endOfQuarter01)
-            {
-                return (startOfQuarter01, currentDate);
-            }
-
-            if (currentDate >= startOfQuarter02 && currentDate <= endOfQuarter02)
-            {
-                return (startOfQuarter02, currentDate);
-            }
-
-            if (currentDate >= startOfQuarter03 && currentDate <= endOfQuarter03)
-            {
-                return (startOfQuarter03, currentDate);
-            }
-
-            return (startOfQuarter04, currentDate);
+            currentDate = currentDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            return (beginDate, currentDate);
         }
 
         private decimal GetAmmountFor(List<OrderStatsDataDto> orderStatsDataDtos, string orderStatus)
