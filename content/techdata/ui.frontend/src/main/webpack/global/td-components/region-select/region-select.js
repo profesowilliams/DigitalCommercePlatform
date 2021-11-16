@@ -49,9 +49,15 @@
      * has data-displayLocation attribute set to true.
      */
      const isInsideLinkList = event.target.closest(".cmp-link-list__item a");
+
+     /**
+      * Turns out AEM changes camel-cased data attributes to lowercase when 
+      * rendered as HTML. Hence, data-displaylocation is all lowercase.
+      */
      const hasDisplayLocationEnabled =
        isInsideLinkList &&
-       isInsideLinkList.hasAttribute("data-displayLocation") === true;
+       (isInsideLinkList.hasAttribute("data-displaylocation") === true ||
+         isInsideLinkList.hasAttribute("data-displayLocation") === true);
  
      if (isInsideLinkList && hasDisplayLocationEnabled) {
        countriesListPopup();
