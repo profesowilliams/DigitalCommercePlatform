@@ -10,7 +10,30 @@ const NewSubheader = ({ componentProp }) => {
 	let tempToolsIndex = parseInt(toolsIndex);
 	// Tools Menu Index cannot be the first Menu Item. First Menu Item is Dashboard
 	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
-	const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
+
+	// populate userData based on TD(localStorage + UI service) and shop(datalayer)
+	const getUserDataInitialState = () => {
+	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
+	    if(SHOP && SHOP.authentication && SHOP.authentication.isAuthenticated()) {
+	        if(!localStorage.getItem("userData")) {
+                // fetch user entitlement data from datalayer and populate localStorage
+                var custNo = SHOP.dataLayer.User.custNo;
+                var entitlements = SHOP.dataLayer.User.entitlements;
+                var roleList = [];
+                for (var i = 0; i < entitlements.length; i++) {
+                    roleList.push({
+                        entitlement: entitlements[i],
+                        accountId: custNo
+                    });
+                }
+                var userData={roleList};
+                userDataJsonStr = JSON.stringify(userData);
+                localStorage.setItem("userData", userDataJsonStr);
+            }
+	    }
+	    return userDataJsonStr;
+	};
+	
 	const [userData, setUserData] = useState(getUserDataInitialState);
 	const menuItemRefs = useRef([]);
 
