@@ -10,12 +10,13 @@ const NewSubheader = ({ componentProp }) => {
 	let tempToolsIndex = parseInt(toolsIndex);
 	// Tools Menu Index cannot be the first Menu Item. First Menu Item is Dashboard
 	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
+	const [userData, setUserData] = useState(null);
+	const menuItemRefs = useRef([]);
 
-	// populate userData based on TD(localStorage + UI service) and shop(datalayer)
-	const getUserDataInitialState = () => {
+	useEffect(() => {
 	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
-	    if(SHOP && SHOP.authentication && SHOP.authentication.isAuthenticated()) {
-	        if(!localStorage.getItem("userData")) {
+        if(window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()) {
+            if(!localStorage.getItem("userData")) {
                 // fetch user entitlement data from datalayer and populate localStorage
                 var custNo = SHOP.dataLayer.User.custNo;
                 var entitlements = SHOP.dataLayer.User.entitlements;
@@ -30,14 +31,10 @@ const NewSubheader = ({ componentProp }) => {
                 userDataJsonStr = JSON.stringify(userData);
                 localStorage.setItem("userData", userDataJsonStr);
             }
-	    }
-	    return userDataJsonStr;
-	};
-	
-	const [userData, setUserData] = useState(getUserDataInitialState);
-	const menuItemRefs = useRef([]);
-
-	useEffect(() => {
+        }
+        if (userDataJsonStr) {
+            setUserData(userDataJsonStr);
+        }
 		hasDCPAccess();
 	}, []);
 
@@ -122,7 +119,7 @@ const NewSubheader = ({ componentProp }) => {
 
 		if (menuItems && menuItems.length > 0)
 		{
-			return menuItems.map((item, index) =>
+			return  menuItems.map((item, index) =>
 				<li key={`tabs-${index}`}
 					ref={el => menuItemRefs.current[index] = el}
 					role="tab" id={`tabs-${index}`}
@@ -130,12 +127,11 @@ const NewSubheader = ({ componentProp }) => {
 					aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabIndex="0" data-cmp-hook-tabs="tab"
 					aria-selected="true" onClick={(e) => returnClickHandler(index)}>
 					<a href={getMenuLink(item)}>
-						{item.title}						
+						{item.title}
 					</a>
 					{showDashboard && index == 0 ? dashboardMenu(dashboardMenuItems, hasDCPAccess(userData)) : null}
 				</li>
 			);
-			
 		}
 	}
 
@@ -216,7 +212,6 @@ const NewSubheader = ({ componentProp }) => {
 	return (
 		<>
 		<ol role="tablist" className="cmp-sub-header__wrapper__child--left" aria-multiselectable="false">
-
 			{getMenuItems(menuItems, dashboardMenuItems)}
 		</ol>
 			{userData ?
