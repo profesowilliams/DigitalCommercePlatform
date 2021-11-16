@@ -44,8 +44,5 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public decimal POMPercentage { get; set; }
         public decimal SAMPercentage { get; set; }
         public decimal NSMPercentage { get; set; }
-        public string EndUserType { get; internal set; }
-        public VendorDto Vendor { get; set; }
-        public string ProgramName { get; set; }
     }
 }

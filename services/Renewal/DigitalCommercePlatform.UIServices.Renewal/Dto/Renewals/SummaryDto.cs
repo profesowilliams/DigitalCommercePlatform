@@ -11,5 +11,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
     public class SummaryDto : BaseDto
     {
         public SourceDto Source { get; set; }
+        public string EndUserType { get; internal set; }
+        public VendorDto Vendor { get; set; }
+        public string ProgramName { get; set; }
     }
 }
