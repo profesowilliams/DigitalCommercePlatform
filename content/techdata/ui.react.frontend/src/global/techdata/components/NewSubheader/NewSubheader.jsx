@@ -60,7 +60,7 @@ const NewSubheader = ({ componentProp }) => {
 		if (roleList && roleList.length) {
 			for (let eachItem of roleList)
 			{
-				if (eachItem?.entitlement.trim() === HAS_DCP_ACCESS)
+				if (eachItem?.entitlement.trim().toLowerCase() === HAS_DCP_ACCESS.toLowerCase())
 				{
 					return true;
 				}
