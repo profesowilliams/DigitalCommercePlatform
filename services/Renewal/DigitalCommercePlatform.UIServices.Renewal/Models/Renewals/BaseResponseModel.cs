@@ -9,7 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     [ExcludeFromCodeCoverage]
     public class BaseResponseModel
     {
-        
         public decimal Revision { get; set; }
         public decimal SubRevision { get; set; }
         public string Description { get; set; }
@@ -44,7 +43,5 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public decimal POMPercentage { get; set; }
         public decimal SAMPercentage { get; set; }
         public decimal NSMPercentage { get; set; }
-        public VendorModel Vendor { get; set; }
-        public string EndUserType { get; set; }
     }
 }

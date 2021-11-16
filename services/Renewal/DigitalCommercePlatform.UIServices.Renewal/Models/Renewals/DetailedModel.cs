@@ -31,5 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public bool? Incumbent { get; set; }
         public decimal? TotalReinstatementFeeCost { get; set; }
         public decimal? TotalReinstatementFeeSell { get; set; }
+        public VendorModel Vendor { get; set; }
+        public string EndUserType { get; set; }
     }
 }
