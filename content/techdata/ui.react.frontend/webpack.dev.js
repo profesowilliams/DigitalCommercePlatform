@@ -5,12 +5,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const SRC_DIR = __dirname + '/src/';
-// const COMMON_SRC_DIR = __dirname + '/common.src';
 const DIST_DIR = __dirname + '/dist';
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'eval',
+    devtool: 'inline-source-map',
     performance: {hints: "warning"},
     plugins: [
         new webpack.EnvironmentPlugin({

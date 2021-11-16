@@ -3,7 +3,6 @@ import ReactContentRenderer from "react-dom";
 import { nanoid } from "nanoid";
 import store from "../store/store";
 import { Provider } from "react-redux";
-import excludedComponents from "../../app.config";
 
 function writeLog(logs, message, data) {
 	logs.push({
@@ -20,12 +19,6 @@ function parseJSON(json) {
 	}
 }
 
-const getComponentPath = (component, isPromise=true) => {
-	return isPromise ?
-			import(`../global/techdata/components/${component}/${component}`)
-			: `../global/techdata/components/${component}/${component}`;
-}
-
 class AppConnector {
 	constructor(componentProps, element) {
 		this.logs = [];
@@ -35,23 +28,22 @@ class AppConnector {
 		writeLog(
 			this.logs,
 			"attempting to import",
-			{ path: getComponentPath(this.componentProps.component, false) }
+			{ path: `../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}` }
 		);
-
-		if (excludedComponents.indexOf(this.componentProps.component) === -1) {
-			getComponentPath(this.componentProps.component)
-				.then((component) => {
-					writeLog(_self.logs, "component imported", { component: component });
-					_self.loadComponent(component.default, element);
-				})
-				.catch((error) => {
-					writeLog(_self.logs, "error occured", { error: error });
-					console.error(
-						`${_self.componentProps.component} not initialized succesfully. Check logs below:`
-					);
-					console.error(_self.logs);
-				});
-		}
+		import(
+			`../global/techdata/components/${this.componentProps.component}/${this.componentProps.component}`
+		)
+			.then((component) => {
+				writeLog(_self.logs, "component imported", { component: component });
+				_self.loadComponent(component.default, element);
+			})
+			.catch((error) => {
+				writeLog(_self.logs, "error occured", { error: error });
+				console.error(
+					`${_self.componentProps.component} not initialized succesfully. Check logs below:`
+				);
+				console.error(_self.logs);
+			});
 	}
 
 	loadComponent(componentRef, element) {
@@ -90,5 +82,4 @@ window.initConfiguration = async () => {
 	// return await initAuth();
 }
 
-window.techDataUi ? window.techDataUi : (window.techDataUi = {});
-window.techDataUi.AppConnector = AppConnector;
+window.AppConnector = AppConnector;

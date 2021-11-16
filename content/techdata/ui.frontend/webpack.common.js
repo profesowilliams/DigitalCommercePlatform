@@ -114,7 +114,6 @@ module.exports = {
             jQuery: "jquery"
         }),
         new CleanWebpackPlugin(),
-        /** @deprecated use config.optimization.noEmitOnErrors */
         new webpack.NoEmitOnErrorsPlugin(),
         new MiniCssExtractPlugin({
             filename: 'clientlib-site-[name]/css/[name].css'
@@ -129,7 +128,7 @@ module.exports = {
         children: false,
         chunkGroups: true,
         chunkOrigins: true,
-        colors: true,
+        colors: false,
         errors: true,
         errorDetails: true,
         env: true,

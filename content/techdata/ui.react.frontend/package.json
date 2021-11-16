@@ -4,8 +4,7 @@
     "description": "TechData React application",
     "main": "index.js",
     "scripts": {
-        "dev": "webpack --config ./webpack.dev.js && clientlib --verbose",
-        "develop": "webpack --config ./webpack.dev.js",
+        "dev": "webpack -d --env dev --config ./webpack.dev.js && clientlib --verbose",
         "prod": "webpack -p --config ./webpack.prod.js && clientlib --verbose",
         "start": "webpack-dev-server --open --config ./webpack.dev.js"
     },
@@ -25,6 +24,7 @@
         "@babel/preset-typescript": "^7.10.1",
         "aem-clientlib-generator": "^1.7.1",
         "autoprefixer": "^9.7.6",
+        "babel-eslint": "^10.0.1",
         "babel-jest": "^23.6.0",
         "babel-loader": "^8.1.0",
         "babel-preset-env": "^1.7.0",
@@ -41,7 +41,6 @@
         "sass-loader": "^7.0.3",
         "unfetch": "^4.1.0",
         "webpack": "^4.42.1",
-        "webpack-bundle-analyzer": "^4.4.2",
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.10.3",
         "webpack-import-glob-loader": "^1.6.3",

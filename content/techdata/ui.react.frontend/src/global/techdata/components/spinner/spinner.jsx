@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../../../../styles/spinner.scss'
+import '../../../../styles/spinner.scss'
 
 const SpinnerCode = () => {
 	return(

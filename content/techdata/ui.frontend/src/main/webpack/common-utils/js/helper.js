@@ -10,20 +10,15 @@ export default function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
-// QUICK FIX TO MAKE IT WORK ON LOCAL. NEED IMPROVEMENT
-export function waitForGlobal(arr, callback, maxIterations) {
-    const iterationsLeft = maxIterations - 1 || null;
-    if (
-        window.techDataUi &&
-        (window?.techDataUi[arr[0]] || window?.techDataUi[arr[1]])
-    ) {
+export function waitForGlobal (key, callback, maxIterations) {
+    const iterationsLeft = maxIterations -1 || null;
+    if (window[key]) {
         callback();
     } else {
         if (iterationsLeft) {
             setTimeout(function () {
-                waitForGlobal(arr, callback, iterationsLeft);
+                waitForGlobal(key, callback, iterationsLeft);
             }, 100);
         }
     }
 }
-  

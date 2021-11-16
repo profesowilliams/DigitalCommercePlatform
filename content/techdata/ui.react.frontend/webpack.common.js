@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SRC_DIR = __dirname + '/src';
 const DIST_DIR = __dirname + '/dist';
@@ -11,7 +10,7 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     entry: {
-        bundle: SRC_DIR + '/index.js',
+        bundle: SRC_DIR + '/index.js'
     },
     output: {
         filename: '[name].js',
@@ -31,8 +30,8 @@ module.exports = {
                             "@babel/plugin-proposal-class-properties",
                             "@babel/plugin-proposal-object-rest-spread"
                           ]
-                    },
-                },
+                    }
+                }
             },
             {
                 test: /\.(scss|sass|css)$/,
@@ -90,8 +89,7 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
-        }),
-        // new BundleAnalyzerPlugin(),
+        })
     ],
     stats: {
         assetsSort: "chunks",
