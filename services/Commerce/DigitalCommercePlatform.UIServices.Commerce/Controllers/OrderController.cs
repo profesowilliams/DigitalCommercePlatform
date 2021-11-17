@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Security.PolicyAuthorization.Attributes;
 using DigitalFoundation.Common.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <param name="id">orer id</param>
         /// <returns></returns>
         [HttpGet]
+        [RoleAuthorize(Roles = "CanViewOrders")]
         [Route("order")]
         public async Task<ActionResult> GetOrderDetailsAsync([FromQuery] string id)
         {
@@ -59,7 +61,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// </summary>
         /// <param name="getOrdersRequest"></param>
         /// <returns></returns>
-        [HttpGet] 
+        [HttpGet]
+        [RoleAuthorize(Roles = "CanViewOrders")]
         [Route("orders")]
         public async Task<ActionResult> GetRecentOrdersAsync([FromQuery] GetOrdersDto getOrdersRequest)
         {
@@ -87,6 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <param name="id">order id</param>
         /// <returns></returns>
         [HttpGet]
+        [RoleAuthorize(Roles = "CanViewOrders")]
         [Route("orderLines")]
         public async Task<ActionResult> GetOrderLinesAsync([FromQuery] string id)
         {
@@ -108,6 +112,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
+        [RoleAuthorize(Roles = "CanViewOrders")]
         [Route("orderLevel")]
         public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, bool isSPAFind, string Id)
         {
@@ -130,6 +135,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <param name="downloadAll"></param>
         /// <returns></returns>
         [HttpGet]
+        [RoleAuthorize(Roles = "CanViewInvoices")]
         [Route("downloadInvoice")]        
         public async Task<ActionResult> DownloadInvoice([FromQuery] string orderId, string invoiceId, bool downloadAll)
         {
