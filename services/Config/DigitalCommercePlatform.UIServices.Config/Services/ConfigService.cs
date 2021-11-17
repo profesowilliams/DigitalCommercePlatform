@@ -147,8 +147,17 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 else
                     request.Criteria.SortBy = "Created";
 
+                if (request.Criteria.ConfigName != null)
+                {
+                    request.Criteria.ConfigName = request.Criteria.ConfigName + "*";
+                }
+                else if (request.Criteria.EndUser != null)
+                {
+                    request.Criteria.EndUser = request.Criteria.EndUser + "*";
+                }
 
                 var type = GetConfigurationType(request);
+                request.Criteria.ConfigurationType = null;
 
                 var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
                 var configurationFindUrl = _appConfigurationUrl
