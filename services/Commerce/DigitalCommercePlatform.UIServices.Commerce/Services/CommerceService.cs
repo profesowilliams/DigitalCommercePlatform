@@ -4,15 +4,12 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Client;
@@ -43,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private readonly ICartService _cartService;
         private readonly IUIContext _uiContext;
         private readonly IAppSettings _appSettings;
-        private static readonly Random getrandom = new ();
+        private static readonly Random getrandom = new();
         private readonly IMapper _mapper;
 
         public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
@@ -78,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             throw new NotImplementedException();
         }
 
-        
+
         public async Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request)
         {
             if (request.IsEstimateId)
@@ -190,8 +187,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (_uiContext.User != null)
             {
-                input.QuoteDetails.BuyMethod = input.QuoteDetails.BuyMethod ?? "TDShop46";
-                if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdshop46") )
+                input.QuoteDetails.BuyMethod = input.QuoteDetails?.BuyMethod ?? "tdavnet67";
+                if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdavnet67"))
                 {
                     createModelFrom.System = "2";
                 }
@@ -215,9 +212,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Id = input.QuoteDetails.Reseller.FirstOrDefault().Id,
                     Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.Reseller.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.Reseller.FirstOrDefault().Name, Phone = input.QuoteDetails.Reseller.FirstOrDefault().PhoneNumber } },
                 };
-#if DEBUG
-                input.QuoteDetails.EndUser = input.QuoteDetails.EndUser != null ? input.QuoteDetails.EndUser : input.QuoteDetails.Reseller;
-#endif
+
                 if (input.QuoteDetails.EndUser != null)
                 {
                     createModelFrom.EndUser = new EndUserModel
@@ -253,16 +248,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return;
 
             var lstItems = new List<ItemModel>();
+            string configId = string.Empty;
+            if (!string.IsNullOrWhiteSpace(input.QuoteDetails.ConfigurationId))
+            {
+                configId = input.QuoteDetails.ConfigurationId;
+            }
             foreach (var item in input.QuoteDetails.Items)
             {
-                ItemModel requestItem = GetLinesforRequest(item);
+                ItemModel requestItem = GetLinesforRequest(item, configId);
                 lstItems.Add(requestItem);
 
                 if (item.Children != null)
                 {
                     foreach (var subline in item.Children)
                     {
-                        ItemModel sublineItem = GetLinesforRequest(subline);
+                        ItemModel sublineItem = GetLinesforRequest(subline, configId);
                         lstItems.Add(sublineItem);
                     }
                 }
@@ -271,7 +271,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             createModelFrom.Items = lstItems;
         }
 
-        private ItemModel GetLinesforRequest(Line item)
+        private ItemModel GetLinesforRequest(Line item, string id)
         {
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
@@ -281,7 +281,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         Name = item.ShortDescription
                     }
                 };
-
+            //vendorquoteid
             var requestItem = new ItemModel
             {
                 Id = item.Id,
@@ -292,9 +292,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 ExtendedListPrice = (decimal)item.UnitPrice * item.Quantity,
                 TotalPrice = (decimal)item.UnitPrice * item.Quantity,
                 UnitCost = (decimal)item.UnitPrice,
-                Product = lstProduct
+                Product = lstProduct,
+                Attributes = BuildAttribute(id)
+
+
             };
             return requestItem;
+        }
+
+        private List<AttributeDto> BuildAttribute(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return new List<AttributeDto>();
+
+            List<AttributeDto> lstAttributes = new List<AttributeDto>
+            {
+                new AttributeDto {Name= "vendorquoteid", Value=id }
+            };
+
+            return lstAttributes;
+
         }
 
         private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList)

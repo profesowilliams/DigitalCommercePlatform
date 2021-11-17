@@ -189,6 +189,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 UnitPrice = (decimal?)12.08
             };
 
+            string id = "4735561697";
             Type type;
             object objType;
             InitiateCommerceService(out type, out objType);
@@ -197,7 +198,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
             Assert.NotNull(testLine);
             Assert.NotNull(result);
 
@@ -266,7 +267,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         }
 
-   
+
         private void InitiateCommerceService(out Type type, out object objType)
         {
             type = typeof(CommerceService);

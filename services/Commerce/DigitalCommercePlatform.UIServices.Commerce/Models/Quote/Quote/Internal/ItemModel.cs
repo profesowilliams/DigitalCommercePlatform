@@ -22,5 +22,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public DivisionManagerModel DivisionManager { get; set; }
         public BusinessManagerModel BusinessManager { get; set; }
         public List<AgreementModel> Agreements { get; set; }
+        public List<AttributeDto> Attributes { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class AttributeDto
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }
+
