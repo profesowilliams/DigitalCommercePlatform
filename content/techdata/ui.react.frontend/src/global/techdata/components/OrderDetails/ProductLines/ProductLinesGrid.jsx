@@ -40,6 +40,7 @@ function ProductLinesGrid({
   const filteringExtension = useGridFiltering();  
   const columnsList = gridConfig.columnList;
   const columnsArray = gridConfig.columnList;
+  const showMoreFlag = gridProps.showMoreFlag ? gridProps.showMoreFlag : false;
   const STATUS = {
     onHold: 'onHold',
     inProcess: 'inProcess',
@@ -55,6 +56,15 @@ function ProductLinesGrid({
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
   ];
   const [flagData, setFlagData] = useState(false);
+
+  const trackingModal = {
+    title: gridConfig.trackingsModal?.title ?? 'Order',
+    buttonIcon: gridConfig.trackingsModal?.buttonIcon ?? 'fas fa-download',
+    content: gridConfig.trackingsModal?.content ??
+        'There are multiple Trackings associated with this Order. Click an tracking number to preview with the option to print',
+    pendingInfo: gridConfig.trackingsModal?.pendingInfo ?? 'Tracking is pending and will appear here after shipment is processed',
+  };
+
   function invokeModal(modal) {
     setModal(modal);
   }
@@ -311,7 +321,13 @@ function ProductLinesGrid({
               onClick={() => {
                 invokeModal({
                   content: (
-                      <TrackOrderModal data={data} trackingConfig={gridProps.trackingConfig}></TrackOrderModal>
+                    <TrackOrderModal
+                      data={data}
+                      info={trackingModal.content}
+                      trackingConfig={gridConfig.trackingConfig}
+                      pendingInfo={trackingModal.pendingInfo}
+                      showMoreFlag={showMoreFlag}
+                    ></TrackOrderModal>
                   ),
                   properties: {
                     title: getTrackingModalTitle(gridProps.trackingConfig?.modalTitle, value),

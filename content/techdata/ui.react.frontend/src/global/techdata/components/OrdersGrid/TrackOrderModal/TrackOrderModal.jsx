@@ -7,13 +7,28 @@ export function getTrackingModalTitle(modalTitle, value) {
   return `${modalTitle} : ${orderNumber}`;
 }
 
-function TrackOrderModal({ data, trackingConfig }) {
-
-  return (
+const TrackOrderHeader = ({data, trackingConfig}) => {
+  return(
     <div>
-      <div>{data?.trackings?.length > 1 ? trackingConfig.multipleOrderInformation : ""}</div>
+      {data?.trackings?.length > 1 ? trackingConfig.multipleOrderInformation : ""}
+    </div>
+  );
+}
+
+function TrackOrderModal({ data, trackingConfig, pendingInfo, info, showMoreFlag }) {
+  return (
+    <div style={{maxWidth: '31.25rem'}} >
+      <TrackOrderHeader data={data} trackingConfig={trackingConfig} />
+      <div className='cmp-details-info__info'>{info}</div>
       {data?.trackings?.map((tracking, index) => {
-        return <MyOrderTrackings key={index} tracking={tracking} trackingIcons={trackingConfig.trackingIcons}></MyOrderTrackings>;
+        return (<MyOrderTrackings 
+            key={index}
+            tracking={tracking}
+            trackingIcons={trackingConfig.trackingIcons}
+            pendingInfo={pendingInfo}
+            info={info}
+            showMoreFlag={showMoreFlag}
+          ></MyOrderTrackings>);
       })}
     </div>
   );

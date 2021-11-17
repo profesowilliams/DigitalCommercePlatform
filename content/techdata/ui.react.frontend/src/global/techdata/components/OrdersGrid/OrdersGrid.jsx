@@ -16,7 +16,7 @@ function OrdersGrid(props) {
     const labelFilterGrid = componentProp.searchCriteria?.labelButtonFilter ? componentProp.searchCriteria.labelButtonFilter : "Open Orders Report"
     const [expandedOpenOrderFilter, setExpandedOpenOrderFilter] = useState(true);
     const [orderReportStatus, setOrderReportStatus] = useState(false);
-
+    const showMoreFlag = componentProp.showMoreFlag ? componentProp.showMoreFlag : false;
     const [modal, setModal] = useState(null);
 
     const STATUS = {
@@ -64,6 +64,18 @@ function OrdersGrid(props) {
             componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
     };
 
+    const trackingModal = {
+        title: componentProp.trackingsModal?.title ?? 'Order',
+        // buttonLabel: componentProp.trackingsModal?.buttonLabel ?? 'Download All Related Trackings',
+        buttonIcon: componentProp.trackingsModal?.buttonIcon ?? 'fas fa-download',
+        content:
+            componentProp.trackingsModal?.content ??
+            'There are multiple Trackings associated with this Order. Click an tracking number to preview with the option to print',
+        pendingInfo:
+            componentProp.trackingsModal?.pendingInfo ?? 'Tracking is pending and will appear here after shipment is processed',
+    };
+
+    
     //Please do not change the below method without consulting your Dev Lead
     function invokeModal(modal) {
         setModal(modal);
@@ -234,13 +246,19 @@ function OrdersGrid(props) {
             headerName: 'Track',
             field: 'trackings',
             sortable: false,
-            cellRenderer: ({ node, api, setValue, data, value }) => {                
+            cellRenderer: ({ node, api, setValue, data, value }) => {
                 return (
                     <div 
                     onClick={() => {
                         invokeModal({
                             content: ( 
-                                <TrackOrderModal data={data} trackingConfig={componentProp.trackingConfig}></TrackOrderModal>
+                                <TrackOrderModal 
+                                    data={data}
+                                    info={trackingModal.content}
+                                    trackingConfig={componentProp.trackingConfig}
+                                    pendingInfo={trackingModal.pendingInfo}
+                                    showMoreFlag={showMoreFlag}
+                                ></TrackOrderModal>
                             ),
                             properties: {
                                 title: getTrackingModalTitle(componentProp.trackingConfig?.modalTitle, value),
