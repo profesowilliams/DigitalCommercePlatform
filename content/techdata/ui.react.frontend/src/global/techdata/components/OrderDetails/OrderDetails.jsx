@@ -29,9 +29,30 @@ const OrderDetails = ({ componentProp }) => {
     }
   }, []);
 
+  const defaultContentObject = {
+    shipTo: '',
+    endUser: '',
+    paymentDetails: '',
+    customer: '',
+    items: '',
+    orderNumber: '',
+    poNumber: '',
+    endUserPO: '',
+    poDate: '',
+    blindPackaging: '',
+    shipComplete: '',
+    canBeExpedited: '',
+    status: '',    
+  };
+
   useEffect(() => {
-    response?.content && setOrderDetails(response.content);
-    response?.content.componentPropGrid && setComponentPropGrid(response.content.componentPropGrid);
+    if (response !== null && response.content !== null) {
+      response?.content && setOrderDetails(response.content);
+    } else {
+      if (response && response.error.code != 0) {
+        setOrderDetails(defaultContentObject);
+      }
+    }
   }, [response]);
 
   return orderDetails ? (

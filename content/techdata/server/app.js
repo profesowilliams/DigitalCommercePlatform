@@ -591,7 +591,17 @@ app.get("/ui-commerce/v1/orderdetails", function (req, res) {
 app.get("/ui-commerce/v1/order/details", function (req, res) {
     console.log(req.url)
     const id = req.query.id;
-    const response = utils.getOrderDetailsResponse();
+    const errorObject = {
+      "content": null,
+      "error": {
+        "code": 404,
+        "messages": [
+          "UserId : 702318 for TraceId : NA Error connecting to http://app-order/v1. Reported an error: NotFound. http://app-order/v1?id=603068538"
+        ],
+        "isError": true
+      }
+    };
+    const response = id != 603068538 ? utils.getOrderDetailsResponse() : errorObject;
     res.json(response);
 });
 
