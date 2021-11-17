@@ -52,8 +52,6 @@ import React, { useState } from "react";
 		})
 		return iconFound ? (iconFound.logoPath ? iconFound.logoPath : "") : "" ;
 	}
-
-	const trackingStatus = tracking.trackingNumber ? "In Transit" : "Pending"; // dev validation need to resolve when the data are available
 	
 	return(
 		<div className="cmp-track-my-order-modal">
@@ -73,9 +71,7 @@ import React, { useState } from "react";
 				<div className="cmp-track-my-order-modal__line__tracking-number">
 					<a href={tracking.trackingLink}>{tracking.trackingNumber ?? "Pending"}</a>
 				</div>
-				<div className="cmp-track-my-order-modal__line__status">
-					{trackingStatus}
-				</div>
+				<div className="cmp-track-my-order-modal__line__status"></div>
 			</div>
 
 			<ShowMore expanded={expanded} onExpandCollapse={onExpandCollapse} content={pendingInfo}></ShowMore>
