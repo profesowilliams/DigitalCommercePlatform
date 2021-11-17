@@ -14,5 +14,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public string EndUserType { get; internal set; }
         public VendorDto Vendor { get; set; }
         public string ProgramName { get; set; }
+        public PartyDto Reseller { get; set; }
+        public PartyDto EndUser { get; set; }
+        public PartyDto ShipTo { get; set; }
     }
 }
