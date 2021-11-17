@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public bool Details { get; set; }
         public string[] Type { get; set; }
         public string ResellerName { get; set; }
-        public string ResellerId { get; set; }
+        public List<string> ResellerId { get; set; }
         public DateTime? DueDateFrom { get; set; }
         public DateTime? DueDateTo { get; set; }
         public string EndUser { get; set; }
@@ -24,9 +24,20 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public bool WithPaginationInfo { get; set; } = false;
         public List<string> VendorName { get; set; }
         public string EndUserType { get; set; }
-        public List<string> ProgramName { get; set; }
+        public string ProgramName { get; set; }
         public string VendorQuoteID { get; set; }
         public List<string> ContractId { get; set; }
-
+        public string ContractID { get; set; }
+        public string SessionId { get; set; }
+        public List<string> DUNS { get; set; }
+        public List<string> VendorID { get; set; }
+        public List<string> VATNumber { get; set; }
+        public List<string> VendorAccountName { get; internal set; }
+        public List<string> VendorAccountNumber { get; set; }
+        public DateTime? CreatedFrom { get; set; }
+        public DateTime? CreatedTo { get; set; }
+        public DateTime? ExpiresFrom { get; set; }
+        public DateTime? ExpiresTo { get; set; }
+        public DateTime? DueDate { get; set; }
     }
 }

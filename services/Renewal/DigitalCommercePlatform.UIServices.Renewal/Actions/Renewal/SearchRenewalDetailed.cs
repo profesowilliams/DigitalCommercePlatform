@@ -7,9 +7,11 @@ using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Settings;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -39,6 +41,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public string ResellerPO { get; set; }
             public string ContractID { get; set; }
             public bool Details { get; set; }
+            public string SessionId { get; set; }
+            public string ResellerName { get; set; }
+            public List<string> Type { get; set; }
+            public List<string> ResellerId { get; set; }
+            public DateTime? CreatedFrom { get; set; }
+            public DateTime? CreatedTo { get; set; }
+            public DateTime? ExpiresFrom { get; set; }
+            public DateTime? ExpiresTo { get; set; }
+            public DateTime? DueDate { get; set; }
         }
 
         public class Response
@@ -55,31 +66,37 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             private readonly ILogger<GetRenewalsHandler> _logger;
             private readonly IUIContext _context;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
+            private readonly string _homeAccount;
 
             public GetRenewalsHandler(IRenewalService renewalsService, IMapper mapper, ILogger<GetRenewalsHandler> logger, IUIContext context,
-                ISessionIdBasedCacheProvider sessionIdBasedCacheProvider)
+                ISessionIdBasedCacheProvider sessionIdBasedCacheProvider,
+                IAppSettings appSettings)
             {
                 _renewalsService = renewalsService;
                 _mapper = mapper;
                 _logger = logger;
                 _context = context;
+                _homeAccount = appSettings.GetSetting("UI.Renewal.HouseAccount");
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 List<DetailedModel> renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
-                var refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(_context.ImpersonatedAccount);
-                if (refainmentGroup == null)
+                RefinementGroupsModel refainmentGroup = new RefinementGroupsModel();
+                if (_homeAccount != _context.ImpersonatedAccount)
                 {
-                    refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { SourceType = "Renewals" }).ConfigureAwait(false);
-                    _sessionIdBasedCacheProvider.Put(_context.ImpersonatedAccount, refainmentGroup);
+                    refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
+                    if (refainmentGroup == null)
+                    {
+                        refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { SourceType = "Renewals", ResellerName = request.ResellerName }).ConfigureAwait(false);
+                        _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup);
+                    }
                 }
                 var response = new Response
                 {
                     Items = renewalsResponse,
                     RefinementGroups = refainmentGroup
-                    
                 };
                 return new ResponseBase<Response> { Content = response };
             }

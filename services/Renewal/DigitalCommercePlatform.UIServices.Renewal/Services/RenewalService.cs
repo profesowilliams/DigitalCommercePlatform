@@ -46,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         public async Task<List<DetailedModel>> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+            _logger.LogInformation($"GetRenewalsDetailedFor {req.ToString()}");
             var coreResult = await
                 _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
@@ -55,6 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         public async Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+            _logger.LogInformation($"GetRenewalsSummaryFor {req.ToString()}");
             var coreResult = await
                 _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
@@ -63,15 +65,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         public async Task<int> GetRenewalsSummaryCountFor(RefinementRequest request)
         {
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
+            _logger.LogInformation($"GetRenewalsSummaryCountFor {req.ToString()}");
             var coreResult = await
                 _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
-
             return coreResult.Count;
         }
 
         public async Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
         {
             var req = _appRenewalServiceUrl.BuildQuery(request);
+            _logger.LogInformation($"GetRenewalsSummaryCountFor {req.ToString()}");
             var coreResult = await
                _middleTierHttpClient.GetAsync<IEnumerable<QuoteDetailedDto>>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<QuoteDetailedModel>>(coreResult);
@@ -80,7 +83,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<RefinementGroupsModel> GetRefainmentGroup(RefinementRequest request)
         {
-            request.PageSize = 1;
             var count = await GetRenewalsSummaryCountFor(request);
             request.Details = false;
             var coreResult = await GetSummary(count, request);

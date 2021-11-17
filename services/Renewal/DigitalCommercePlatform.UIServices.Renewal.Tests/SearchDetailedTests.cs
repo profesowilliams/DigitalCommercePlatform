@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Cache.UI;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,19 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         private static Mock<ILogger<SearchRenewalDetailed.GetRenewalsHandler>> Logger => new();
         private static Mock<IUIContext> Context => new();
         private static Mock<ISessionIdBasedCacheProvider> Provider => new();
+        private static Mock<IAppSettings> AppSettings
+        {
+            get
+            {
+                var moq = new Mock<IAppSettings>();
+
+                moq.Setup(x => x.GetSetting("RenewalsUI.HouseAccount"))
+                    .Returns("http://appConfigUrl/v1/");
+                ;
+
+                return moq;
+            }
+        }
 
         [Theory]
         [AutoDomainData]
@@ -33,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var _service = new Mock<IRenewalService>();
             _service.Setup(x => x.GetRenewalsDetailedFor(It.IsAny<SearchRenewalDetailed.Request>())).ReturnsAsync(dtos);
 
-            var handler = new SearchRenewalDetailed.GetRenewalsHandler(_service.Object, Mapper, Logger.Object, Context.Object, Provider.Object);
+            var handler = new SearchRenewalDetailed.GetRenewalsHandler(_service.Object, Mapper, Logger.Object, Context.Object, Provider.Object, AppSettings.Object);
             // act
             var result = await handler.Handle(request, new CancellationToken());
 

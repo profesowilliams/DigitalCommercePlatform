@@ -44,8 +44,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model)
+        public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model, [FromHeader] string sessionId)
         {
+            model.SessionId = sessionId;
             if (model.Details)
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
