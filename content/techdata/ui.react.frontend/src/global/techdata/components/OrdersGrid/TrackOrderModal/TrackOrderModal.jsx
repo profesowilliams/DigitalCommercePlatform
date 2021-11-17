@@ -15,18 +15,16 @@ const TrackOrderHeader = ({data, trackingConfig}) => {
   );
 }
 
-function TrackOrderModal({ data, trackingConfig, pendingInfo, info, showMoreFlag }) {
+function TrackOrderModal({ data, trackingConfig, pendingInfo, showMoreFlag }) {
   return (
     <div style={{maxWidth: '31.25rem'}} >
       <TrackOrderHeader data={data} trackingConfig={trackingConfig} />
-      <div className='cmp-details-info__info'>{info}</div>
       {data?.trackings?.map((tracking, index) => {
         return (<MyOrderTrackings 
             key={index}
             tracking={tracking}
             trackingIcons={trackingConfig.trackingIcons}
             pendingInfo={pendingInfo}
-            info={info}
             showMoreFlag={showMoreFlag}
           ></MyOrderTrackings>);
       })}

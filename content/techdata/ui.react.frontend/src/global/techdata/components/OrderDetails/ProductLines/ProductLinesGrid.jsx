@@ -60,8 +60,6 @@ function ProductLinesGrid({
   const trackingModal = {
     title: gridConfig.trackingsModal?.title ?? 'Order',
     buttonIcon: gridConfig.trackingsModal?.buttonIcon ?? 'fas fa-download',
-    content: gridConfig.trackingsModal?.content ??
-        'There are multiple Trackings associated with this Order. Click an tracking number to preview with the option to print',
     pendingInfo: gridConfig.trackingsModal?.pendingInfo ?? 'Tracking is pending and will appear here after shipment is processed',
   };
 
@@ -323,7 +321,6 @@ function ProductLinesGrid({
                   content: (
                     <TrackOrderModal
                       data={data}
-                      info={trackingModal.content}
                       trackingConfig={gridConfig.trackingConfig}
                       pendingInfo={trackingModal.pendingInfo}
                       showMoreFlag={showMoreFlag}

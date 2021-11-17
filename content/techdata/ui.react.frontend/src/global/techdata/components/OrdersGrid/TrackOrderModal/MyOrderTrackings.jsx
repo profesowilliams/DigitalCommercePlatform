@@ -3,13 +3,12 @@ import React, { useState } from "react";
 /**
  * 
  * @param {Object} props
- * @param {string} props.label
  * @param {any} props.content
  * @param {() => void} props.onExpandCollapse
  * @param {boolean} props.expanded 
  * @returns 
  */
- function ShowMore({ label, content, onExpandCollapse, expanded }) {
+ function ShowMore({ content, onExpandCollapse, expanded }) {
 	return (
 		<div>
 			<div>
@@ -32,16 +31,13 @@ import React, { useState } from "react";
 /**
  * 
  * @param {Object} props 
- * @param {any} props.invoice
- * @param {string} props.label
- * @param {string} props.pendingLabel
- * @param {number} props.index
- * @param {any} props.pendingInfo
- * @param {any} props.line
- * @param {any} props.invokeAction
+ * @param {any} props.tracking
+ * @param {string} props.pendingInfo
+ * @param {any[]} props.trackingIcons
+ * @param {boolean} props.showMoreFlag
  * @returns 
  */
- const InvoiceRowComponent = ({tracking, label, pendingInfo, trackingIcons, pendingValue, showMoreFlag = false}) => {
+ const InvoiceRowComponent = ({tracking, pendingInfo, trackingIcons, showMoreFlag = false}) => {
 	const [expanded, setExpanded] = useState(false);
 	function onExpandCollapse() {
 		if (showMoreFlag) {
@@ -82,21 +78,18 @@ import React, { useState } from "react";
 				</div>
 			</div>
 
-			<ShowMore expanded={expanded} label={label} onExpandCollapse={onExpandCollapse} content={pendingInfo}></ShowMore>
+			<ShowMore expanded={expanded} onExpandCollapse={onExpandCollapse} content={pendingInfo}></ShowMore>
 		</div>
 		
 	);
 };
 
 
-function MyOrderTrackings({ tracking, trackingIcons, pendingInfo, info, showMoreFlag }) {
+function MyOrderTrackings({ tracking, trackingIcons, pendingInfo, showMoreFlag }) {
 	return(
 		<div>
-			
 			<InvoiceRowComponent 
 				tracking={tracking}
-				index={0}
-				label={'pendingLabel'}
 				trackingIcons={trackingIcons}
 				pendingInfo={pendingInfo}
 				showMoreFlag={showMoreFlag}
