@@ -33,6 +33,7 @@
 
   window.addEventListener("click", function (event) {
     if (event.target.matches('.cmp-button__region-select')) {
+      regionSelectDropdown(); // unhiding this coz popup is inside this parent
       countriesListPopup();
     } if (!event.target.matches('.cmp-button__region-select')) {
       hideCountriesModal();
