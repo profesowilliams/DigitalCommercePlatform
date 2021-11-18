@@ -147,9 +147,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 else
                     request.Criteria.SortBy = "Created";
 
-                if (request.Criteria.ConfigId != null)
+                if (request.Criteria.Id != null)
                 {
-                    request.Criteria.ConfigId = request.Criteria.ConfigId + "*";
+                    request.Criteria.Id = request.Criteria.Id + "*";
                 }
                 else if (request.Criteria.ConfigName != null)
                 {
