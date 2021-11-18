@@ -206,12 +206,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 var customerAddress = GetAddress("CUS", false).Result;
                 // map customer address
                 createModelFrom.ShipTo = _mapper.Map<ShipToModel>(customerAddress.ToList().FirstOrDefault().addresses.ToList().FirstOrDefault());
+                string contactName = string.Empty;
+
+                if (string.IsNullOrWhiteSpace(input.QuoteDetails?.Reseller.FirstOrDefault().Name))
+                {
+                    contactName = _uiContext.User?.FirstName + " " + _uiContext.User?.LastName;
+                }
+                else
+                {
+                    contactName = input.QuoteDetails?.Reseller.FirstOrDefault().Name;
+                }
+
+
                 createModelFrom.Reseller = new ResellerModel
                 {
                     Address = MapAddress(input.QuoteDetails.Reseller),
-                    Name = input.QuoteDetails.Reseller.FirstOrDefault().CompanyName,
-                    Id = input.QuoteDetails.Reseller.FirstOrDefault().Id,
-                    Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.Reseller.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.Reseller.FirstOrDefault().Name, Phone = input.QuoteDetails.Reseller.FirstOrDefault().PhoneNumber } },
+                    Name = input.QuoteDetails.Reseller.FirstOrDefault().CompanyName ?? _uiContext.User.ActiveCustomer.CustomerName,
+                    Id = input.QuoteDetails.Reseller.FirstOrDefault().Id ?? _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Contact = new List<ContactModel> { new ContactModel {
+                        Email = input.QuoteDetails.Reseller.FirstOrDefault().ContactEmail ?? _uiContext.User?.Email,
+                        Name = contactName ,
+                        Phone = input.QuoteDetails.Reseller.FirstOrDefault().PhoneNumber ??  _uiContext.User?.Phone} },
                 };
 
                 if (input.QuoteDetails.EndUser != null)
@@ -239,7 +254,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Value = input.QuoteDetails.Source.Value ?? string.Empty // 
                 };
             }
-           
+
             return createModelFrom;
         }
 
