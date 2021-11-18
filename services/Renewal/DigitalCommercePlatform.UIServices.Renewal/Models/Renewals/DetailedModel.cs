@@ -34,5 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public VendorModel Vendor { get; set; }
         public string EndUserType { get; set; }
         public string RenewedDuration { get; set; }
+        public string AgreementNumber { get; set; }
+        public string Support { get; set; }
     }
 }

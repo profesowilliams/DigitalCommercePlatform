@@ -28,5 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public bool? Incumbent { get; set; }
         public decimal? TotalReinstatementFeeCost { get; set; }
         public decimal? TotalReinstatementFeeSell { get; set; }
+        public string AgreementNumber { get; set; }
+        public string Support { get; set; }
     }
 }
