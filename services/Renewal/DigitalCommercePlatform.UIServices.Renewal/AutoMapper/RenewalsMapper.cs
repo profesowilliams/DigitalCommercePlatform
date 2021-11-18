@@ -14,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
         public RenewalsMapper()
         {
             var culture = CultureInfo.InvariantCulture.Clone() as CultureInfo;
+
             culture.NumberFormat.NumberDecimalSeparator = ".";
             CreateMap<AddressDto, AddressModel>();
             CreateMap<VendorDto, VendorModel>();

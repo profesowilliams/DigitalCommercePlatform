@@ -6,7 +6,6 @@ using DigitalCommercePlatform.UIServices.Renewal.AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -29,31 +28,31 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             {
                 var moq = new Mock<IAppSettings>();
 
-                moq.Setup(x => x.GetSetting("App.Renewal.Url"))
-                    .Returns("http://appConfigUrl/v1/");
-                moq.Setup(x => x.GetSetting("App.Quote.Url"))
-                   .Returns("http://appquoteUrl/v1/");
+                moq.Setup(x => x.GetSetting("App.Renewal.Url")).Returns("http://appConfigUrl/v1/");
+                moq.Setup(x => x.GetSetting("App.Quote.Url")).Returns("http://appquoteUrl/v1/");
 
                 return moq;
             }
         }
-        private static Mock<IUIContext> Context => new();
 
         public ServiceTests()
         {
 
         }
+
         [Theory]
         [AutoDomainData]
         public void ServicesGetCountTests(RefinementRequest request)
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(returnedData);
+            
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedData);
+           
             var refinementRequest = new Mock<RefinementRequest>();
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsSummaryCountFor(request).Result;
+            
             result.Should().Be(2);
-
         }
 
         [Theory]
@@ -61,9 +60,12 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         public void ServicesGetDetailedReturnNotNullTests(SearchRenewalDetailed.Request request)
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
-            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null)).ReturnsAsync(returnedDetailedData);
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
+            
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedDetailedData);
+            
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsDetailedFor(request).Result;
+            
             result.Should().NotBeNull();
         }
 
@@ -72,24 +74,26 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         public void ServicesGetSummaryReturnNotNullTests(SearchRenewalSummary.Request request)
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(returnedSummaryData);
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
-            var result = service.GetRenewalsSummaryFor(request).Result;
-            result.Should().NotBeNull();
             
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedSummaryData);
+            
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+            
+            result.Should().NotBeNull();            
         }
 
         [Theory]
         [AutoDomainData]
         public void ThrowsExceptionOtherThanRemoteServerHttpException(SearchRenewalSummary.Request request)
         {
-            //arrange
-            
+            //arrange            
             var httpClient = new Mock<IMiddleTierHttpClient>();
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
-                .ThrowsAsync(new Exception("test 123"));
+            
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>())).ThrowsAsync(new Exception("test 123"));
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            
             //act
             Func<Task> act = async () => await service.GetRenewalsSummaryFor(request);
 
@@ -98,19 +102,23 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             httpClient.Verify(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
         }
 
-        private ResponseSummaryDto returnedSummaryData()
+        private ResponseSummaryDto ReturnedSummaryData()
         {
             return new ResponseSummaryDto
             {
                 Count = 5,
-                Data = new List<SummaryDto>() { new SummaryDto
-            {
-                EndUserPO = "Test 2222"
-            } }
+                Data = new List<SummaryDto>() 
+                { 
+                    new SummaryDto
+                    {                
+                        EndUserPO = "Test 2222"
+            
+                    } 
+                }
             };
         }
 
-        private ResponseDetailedDto returnedDetailedData()
+        private ResponseDetailedDto ReturnedDetailedData()
         {
             return new ResponseDetailedDto { Count = 2, Data = new List<DetailedDto>() };
         }
@@ -120,10 +128,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         public void ServicesGetRefainmentGroupTests(RefinementRequest request)
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(returnedData);
+            
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedData);
+            
             var refinementRequest = new Mock<RefinementRequest>();
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRefainmentGroup(request).Result;
+            
             result.Should().NotBeNull();
             result.Group.Should().Be("RenewalAttributes");
             result.Refinements.Should().NotBeEmpty();
@@ -131,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
            
         }
 
-        private ResponseSummaryDto returnedData()
+        private ResponseSummaryDto ReturnedData()
         {
             return new ResponseSummaryDto() { Count = 2, Data = new List<SummaryDto>() };
         }

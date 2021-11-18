@@ -36,27 +36,28 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
             _mapper = mapper;
-            _context = context;
         }
 
         private readonly IMapper _mapper;
-        private readonly IUIContext _context;
 
         [HttpGet]
         [Route("Search")]
         public async Task<IActionResult> SearchRenewals([FromQuery] SearchModel model, [FromHeader] string sessionId)
         {
             model.SessionId = sessionId;
+
             if (model.Details)
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
+
                 return Ok(response);
             }
             else
             {
                 var request = _mapper.Map<SearchRenewalSummary.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
+
                 return Ok(response);
             }
         }
@@ -71,11 +72,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
                 var detailedResponse = await Mediator.Send(new GetRenewalQuoteDetailed.Request { Id = id, Type = type });
 
                 if (detailedResponse == null)
+                {
                     return NotFound();
+                }
+
                 return Ok(detailedResponse);
             }
             else
+            {
                 return NotFound();
+            }
         }
     }
 }

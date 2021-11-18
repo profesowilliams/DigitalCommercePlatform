@@ -24,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
+            public string Id { get; set; }
             public string EndUserEmail { get; set; }
             public string EndUser { get; set; }
             public string SortBy { get; set; }
@@ -64,23 +65,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IRenewalService _renewalsService;
-            private readonly IMapper _mapper;
-            private readonly ILogger<GetRenewalsHandler> _logger;
             private readonly IUIContext _context;
             private readonly string _homeAccount;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
             private readonly int _cacheExpiration;
 
             public GetRenewalsHandler(IRenewalService renewalsService,
-                IMapper mapper,
-                ILogger<GetRenewalsHandler> logger,
                 IUIContext context, ISessionIdBasedCacheProvider sessionIdBasedCacheProvider,
                 IAppSettings appSettings
                 )
             {
                 _renewalsService = renewalsService;
-                _mapper = mapper;
-                _logger = logger;
                 _context = context;
                 _homeAccount = appSettings.GetSetting("UI.Renewal.HouseAccount");
                 _cacheExpiration = int.Parse(appSettings.GetSetting("Cache.DefaultExpirationTimeInSec"));
@@ -90,21 +85,25 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 List<SummaryModel> renewalsResponse = await _renewalsService.GetRenewalsSummaryFor(request);
-                RefinementGroupsModel refainmentGroup = new RefinementGroupsModel();
+                RefinementGroupsModel refainmentGroup = new();
+                
                 if(_homeAccount != _context.ImpersonatedAccount)
                 {
                     refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
+                    
                     if (refainmentGroup == null)
                     {
                         refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { Type = "Renewal" }).ConfigureAwait(false);
                         _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup, _cacheExpiration);
                     }
                 }
+
                 var response = new Response
                 {
                     Items = renewalsResponse,
                     RefinementGroups = refainmentGroup
                 };
+
                 return new ResponseBase<Response> { Content = response };
             }
 

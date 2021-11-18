@@ -9,7 +9,6 @@ using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -20,8 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 {
     public class SearchSummaryTests
     {
-        private static IMapper Mapper => new MapperConfiguration(config => config.AddProfile(new RenewalsRequestMapper())).CreateMapper();
-        private static Mock<ILogger<SearchRenewalSummary.GetRenewalsHandler>> Logger => new();
         private static Mock<IUIContext> Context => new();
         private static Mock<ISessionIdBasedCacheProvider> Provider => new();
         private static Mock<IAppSettings> AppSettings
@@ -30,10 +27,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             {
                 var moq = new Mock<IAppSettings>();
 
-                moq.Setup(x => x.GetSetting("RenewalsUI.HouseAccount"))
-                    .Returns("http://appConfigUrl/v1/");
-                moq.Setup(x => x.GetSetting("Cache.DefaultExpirationTimeInSec"))
-                     .Returns("120");
+                moq.Setup(x => x.GetSetting("RenewalsUI.HouseAccount")).Returns("http://appConfigUrl/v1/");
+                moq.Setup(x => x.GetSetting("Cache.DefaultExpirationTimeInSec")).Returns("120");
 
                 return moq;
             }
@@ -45,10 +40,12 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             // arrange
             request.WithPaginationInfo = true;
+
             var _service = new Mock<IRenewalService>();
+
             _service.Setup(x => x.GetRenewalsSummaryFor(It.IsAny<SearchRenewalSummary.Request>())).ReturnsAsync(dtos);
 
-            var handler = new SearchRenewalSummary.GetRenewalsHandler(_service.Object, Mapper, Logger.Object, Context.Object, Provider.Object, AppSettings.Object);
+            var handler = new SearchRenewalSummary.GetRenewalsHandler(_service.Object, Context.Object, Provider.Object, AppSettings.Object);
             // act
             var result = await handler.Handle(request, new CancellationToken());
 
