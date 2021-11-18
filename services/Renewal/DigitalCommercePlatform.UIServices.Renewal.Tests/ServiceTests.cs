@@ -125,7 +125,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Context.Object, Mapper);
             var result = service.GetRefainmentGroup(request).Result;
             result.Should().NotBeNull();
-
+            result.Group.Should().Be("RenewalAttributes");
+            result.Refinements.Should().NotBeEmpty();
+            result.Refinements.Count.Should().Be(3);
+           
         }
 
         private ResponseSummaryDto returnedData()

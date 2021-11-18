@@ -144,7 +144,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             RefinementsModel result = new RefinementsModel
             {
                 Name = "Renewal Type",
-                Options = list?.Select(x => x.RenewedDuration)
+                Options = list?.Select(x => x.Source.Type)
                 ?.Distinct()?.Where(x => x != null)
                 ?.Select(w => new OptionsModel() { Text = w }).ToList()
             };
