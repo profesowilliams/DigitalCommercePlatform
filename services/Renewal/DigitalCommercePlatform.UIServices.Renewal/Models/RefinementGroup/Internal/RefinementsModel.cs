@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,5 +11,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.Inte
         public string Id { get; set; }
         public string Name { get; set; }
         public List<OptionsModel> Options { get; set; }
+
     }
 }

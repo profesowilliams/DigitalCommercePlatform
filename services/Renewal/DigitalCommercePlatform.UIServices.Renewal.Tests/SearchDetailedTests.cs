@@ -32,8 +32,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
                 moq.Setup(x => x.GetSetting("RenewalsUI.HouseAccount"))
                     .Returns("http://appConfigUrl/v1/");
-                ;
-
+                moq.Setup(x => x.GetSetting("Cache.DefaultExpirationTimeInSec"))
+                    .Returns("120");
                 return moq;
             }
         }

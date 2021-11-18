@@ -101,8 +101,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         private async Task<List<SummaryDto>> GetSummary(int TotalCount, RefinementRequest request)
         {
             var list = new List<SummaryDto>();
-            int length = (TotalCount / 200) + 1;
-            for (int i = 0; i < length; i++)
+            int length = (TotalCount / request.PageSize) + 2;
+            for (int i = 1; i < length; i++)
             {
                 request.Page = i;
                 var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
@@ -119,9 +119,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             List<OptionsModel> options = new List<OptionsModel>();
             foreach (var vendor in vendors)
             {
-                var subModel = list.Where(x => x.Vendor.Name == vendor).Select(x => x.ProgramName).Distinct().Select(x => new OptionsBaseModel { Text = x }).ToList();
+                var subModel = list?.Where(x => x.Vendor.Name == vendor)?.Select(x => x.ProgramName)?.Distinct()?.Select(x => new OptionsBaseModel { Text = x }).ToList();
 
-                var element = new OptionsModel() { Text = vendor, SubModels = subModel };
+                var element = new OptionsModel() { Text = vendor, SubOptions = subModel };
                 options.Add(element);
             }
             RefinementsModel result = new RefinementsModel { Name = "Vendors and Programs", Options = options };
@@ -131,26 +131,23 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         private RefinementsModel GetEndUserType(IEnumerable<SummaryDto> list)
         {
-            var endUsers = list.Select(x => x.EndUserType).Distinct();
-            RefinementsModel result = new RefinementsModel { Name = "End user type", };
-            List<OptionsModel> options = new List<OptionsModel>();
-            foreach (var endUser in endUsers)
-            {
-                var element = new OptionsModel() { Text = endUser };
-                options.Add(element);
-            }
+            RefinementsModel result = new RefinementsModel { 
+                Name = "End user type",
+                Options = list?.Select(x => x.EndUserType)?
+                .Distinct()?.Where(x => x != null)
+                ?.Select(w => new OptionsModel() { Text = w }).ToList()
+            };
             return result;
         }
         private RefinementsModel GetRenewalType(IEnumerable<SummaryDto> list)
         {
-            var renewalTypes = list.Select(x => x.Source.Type).Distinct();
-            RefinementsModel result = new RefinementsModel { Name = "Renewal Type", };
-            List<OptionsModel> options = new List<OptionsModel>();
-            foreach (var renewalType in renewalTypes)
+            RefinementsModel result = new RefinementsModel
             {
-                var element = new OptionsModel() { Text = renewalType };
-                options.Add(element);
-            }
+                Name = "Renewal Type",
+                Options = list?.Select(x => x.RenewedDuration)
+                ?.Distinct()?.Where(x => x != null)
+                ?.Select(w => new OptionsModel() { Text = w }).ToList()
+            };
             return result;
         }
     }

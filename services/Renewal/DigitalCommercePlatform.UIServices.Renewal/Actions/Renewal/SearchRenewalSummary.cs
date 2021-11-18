@@ -68,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
             private readonly IUIContext _context;
             private readonly string _homeAccount;
             private readonly ISessionIdBasedCacheProvider _sessionIdBasedCacheProvider;
+            private readonly int _cacheExpiration;
 
             public GetRenewalsHandler(IRenewalService renewalsService,
                 IMapper mapper,
@@ -81,6 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                 _logger = logger;
                 _context = context;
                 _homeAccount = appSettings.GetSetting("UI.Renewal.HouseAccount");
+                _cacheExpiration = int.Parse(appSettings.GetSetting("Cache.DefaultExpirationTimeInSec"));
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
             }
 
@@ -93,8 +95,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                     refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
                     if (refainmentGroup == null)
                     {
-                        refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { SourceType = "Renewals", ResellerName =request.ResellerName }).ConfigureAwait(false);
-                        _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup);
+                        refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { Type = "Renewal" }).ConfigureAwait(false);
+                        _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup, _cacheExpiration);
                     }
                 }
                 var response = new Response
