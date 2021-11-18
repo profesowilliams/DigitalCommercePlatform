@@ -72,6 +72,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     ConfirmationId = createModelResponse.Confirmation,
                 };
                 var response = new ResponseBase<Response> { Content = content };
+
+                if (!string.IsNullOrWhiteSpace(createModelResponse.Id) || !string.IsNullOrWhiteSpace(createModelResponse.Confirmation))
+                {
+                    return response;
+                }
+
                 if (createModelResponse.Messages != null)
                 {
                     foreach (var message in createModelResponse.Messages)

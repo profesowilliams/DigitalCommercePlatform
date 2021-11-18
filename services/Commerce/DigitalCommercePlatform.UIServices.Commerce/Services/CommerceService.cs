@@ -187,14 +187,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (_uiContext.User != null)
             {
+                createModelFrom.System = "Q";
                 input.QuoteDetails.BuyMethod = input.QuoteDetails?.BuyMethod ?? "tdavnet67";
                 if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdavnet67"))
                 {
-                    createModelFrom.System = "2";
+                    createModelFrom.TargetSystem = "ECC"; // verify logic for this
                 }
                 else
                 {
-                    createModelFrom.System = "3";
+                    createModelFrom.TargetSystem = "R3"; // verify logic for this
                 }
 
                 input.QuoteDetails.Tier = string.IsNullOrWhiteSpace(input.QuoteDetails.Tier) ? "Commercial" : input.QuoteDetails.Tier;
@@ -238,7 +239,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Value = input.QuoteDetails.Source.Value ?? string.Empty // 
                 };
             }
-            createModelFrom.TargetSystem = "R3"; // verify logic for this
+           
             return createModelFrom;
         }
 
@@ -363,6 +364,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     request.CreateModelFrom.Items.Add(item);
                 }
             }
+            request.CreateModelFrom.TargetSystem = "R3";
+            request.CreateModelFrom.System = "Q";
             var response = await CallCreateQuote(request.CreateModelFrom);
             return response;
         }
@@ -398,7 +401,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
             }
             //get order LEVEL and Type
-
+            createQuoteFrom.TargetSystem = "R3";
+            createQuoteFrom.System = "Q";
             var response = await CallCreateQuote(createQuoteFrom);
             return response;
         }
