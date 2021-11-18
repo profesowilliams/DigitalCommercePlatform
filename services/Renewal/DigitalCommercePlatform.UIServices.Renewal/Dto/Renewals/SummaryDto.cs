@@ -8,14 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public class SummaryDto : BaseDto
+    public class SummaryDto : DetailedDto
     {
-        public SourceDto Source { get; set; }
-        public string EndUserType { get; set; }
-        public VendorDto Vendor { get; set; }
-        public PartyDto Reseller { get; set; }
-        public PartyDto EndUser { get; set; }
-        public PartyDto ShipTo { get; set; }
-        public string RenewedDuration { get; set; }
+        
     }
 }
