@@ -19,18 +19,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string[] ProductIds { get; set; }
+            public string ProductIds { get; set; }
             public string EndUserName { get; set; }
             public bool Details { get; set; }
-            public string[] MfrPartNumbers { get; set; }
             public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 25;
-            public PricingOption PricingOption { get; set; }
+            public PricingOption? PricingOption { get; set; }
             public string Vendor { get; set; }
 
             public Request()
             {
             }
+
         }
 
         public class Response

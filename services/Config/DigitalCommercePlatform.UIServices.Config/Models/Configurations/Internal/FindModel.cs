@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -24,4 +25,23 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public string Name { get; set; }
 
     }
+
+    [ExcludeFromCodeCoverage]
+    public class FindSpaCriteriaModel
+    {
+        public string[] MfrPartNumbers { get; set; }
+        public string[] ProductIds { get; set; }
+        public string VendorBidNumber { get; set; }
+        public string VendorName { get; set; }
+        public PricingOption? PricingLevel { get; set; }
+        public string EndUserName { get; set; }
+        public DateTime? ValidFrom { get; set; }
+        public DateTime? ValidTo { get; set; }
+        public bool Details { get; set; }
+        public bool SortAscending { get; set; }
+        public bool TotalCount { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
+
 }

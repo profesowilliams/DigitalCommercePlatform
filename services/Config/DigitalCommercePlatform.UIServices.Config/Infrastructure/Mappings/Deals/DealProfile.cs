@@ -77,6 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUserName))
                 .ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => src.ExpirationDate))
                 .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorName))
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products))
                 ;
 
             CreateMap<FindResponse<DealsBase>, GetDealsFor.Response>()

@@ -289,9 +289,18 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
         {
-            request.MfrPartNumbers = null;
-            request.ProductIds = null;
-            var getDealsForGrid = GetDealsDetails(request);
+            string[] MfrPartNumbers = request.ProductIds?.Split(",").ToArray();
+
+            Models.Configurations.Internal.FindSpaCriteriaModel spaRequest = new Models.Configurations.Internal.FindSpaCriteriaModel
+            {
+                MfrPartNumbers = MfrPartNumbers,
+                EndUserName = request.EndUserName,
+                PageSize = 25,
+                Page = 1,
+
+            };
+
+            var getDealsForGrid = GetDealsDetails(spaRequest);
             return getDealsForGrid;
         }
 
