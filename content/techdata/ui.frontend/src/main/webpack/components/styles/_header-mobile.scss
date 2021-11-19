@@ -36,6 +36,12 @@ $header-height: 47px;
                 display: block;
                 margin: unset;
                 margin-left: auto;
+
+                @include mobile {
+                    margin: 0;
+                    margin-left: 0;                    
+                }
+                
                 &.active {
                     .cmp-search {
                         &__input {
