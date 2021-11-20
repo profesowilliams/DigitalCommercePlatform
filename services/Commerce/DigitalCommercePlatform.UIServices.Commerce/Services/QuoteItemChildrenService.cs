@@ -22,6 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return new List<Line>();
             }
 
+            ApplyIdToItems(quotePreviewModel);
+
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
 
             var lines = new List<Line>();
@@ -57,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Quantity = item.Quantity,
                     RebateValue = item.RebateValue,
                     ShortDescription = item.ShortDescription,
-                    TDNumber = string.IsNullOrWhiteSpace(item.TDNumber)? string.Empty :item.TDNumber.TrimStart('0'),
+                    TDNumber = string.IsNullOrWhiteSpace(item.TDNumber) ? string.Empty : item.TDNumber.TrimStart('0'),
                     TotalPrice = item.TotalPrice,
                     UnitListPrice = item.UnitListPrice,
                     UnitListPriceFormatted = item.UnitListPriceFormatted,
@@ -74,6 +76,43 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
 
             return lines;
+        }
+
+        private void ApplyIdToItems(QuotePreviewModel quotePreviewModel)
+        {
+            var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();           
+
+            if (linesWithoutId.Any())
+            {
+                var maxLineNumber = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList().OrderByDescending(i => NullableTryParseDouble(i.Id)).FirstOrDefault().Id;
+
+                double parentNumber = 0;
+                double n;
+                bool isNumeric = double.TryParse(maxLineNumber, out n);
+                if (isNumeric)
+                {
+                    parentNumber = n + 1.0;
+                }
+
+                foreach (var item in linesWithoutId)
+                {
+                    parentNumber = parentNumber + 1.0;
+                    item.DisplayLineNumber = parentNumber.ToString();
+                    item.Id = parentNumber.ToString();
+                }
+            }
+        }
+
+        private double? NullableTryParseDouble(string request)
+        {
+            if (string.IsNullOrWhiteSpace(request)) return 0.00;
+
+            int index = request.IndexOf('.');
+            if(index >0)
+                request = request.Substring(0, index);
+
+            double value;
+            return double.TryParse(request, out value) ? (double?)value : 0.00;
         }
     }
 }

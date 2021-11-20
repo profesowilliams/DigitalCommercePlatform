@@ -291,10 +291,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
-                        Id = item.TDNumber?? item.MFRNumber,
+                        Id = !string.IsNullOrWhiteSpace(item.TDNumber) ?  item.TDNumber : item.MFRNumber,
                         Type = !string.IsNullOrWhiteSpace(item.TDNumber) ? "TECHDATA" : "MANUFACTURER",
                         Manufacturer = item.Manufacturer,
-                        Name = item.ShortDescription
+                        Name = !string.IsNullOrWhiteSpace(item.ShortDescription) ?  item.ShortDescription : item.MFRNumber, 
                     }
                 };
             //vendorquoteid
