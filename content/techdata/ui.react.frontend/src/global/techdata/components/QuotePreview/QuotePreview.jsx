@@ -39,9 +39,15 @@ function QuotePreview(props) {
     setDidQuantitiesChange(didQuantitiesChange);
   };
 
-  const createQuote = async (quoteDetails) => {
+  const createQuote = async (quoteDetailsResponse) => {
     try {
       setLoadingCreateQuote(true);
+      let { activeCustomer = false } = JSON.parse(localStorage.getItem("userData"));
+      const { name, number } = activeCustomer;
+      const quoteDetails = { ...quoteDetailsResponse };
+      if (quoteDetails.reseller && quoteDetails.reseller.length > 0 && activeCustomer) {
+        quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
+      }    
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
       if (result.data?.content) {
         /** TODO: next steps with quoteId & confirmationId
@@ -169,3 +175,5 @@ function QuotePreview(props) {
 }
 
 export default QuotePreview;
+
+
