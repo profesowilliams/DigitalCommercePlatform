@@ -124,13 +124,28 @@
                                                                     fieldDescription="Enter Column key for the column"
                                                                     fieldLabel="Column Key"
                                                                     name="./columnKey"
-                                                                    required="{Boolean}true"/>
+                                                                    required="{Boolean}true"/>                                                           
                                                                 <columnType
                                                                     jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                     fieldLabel="Column Type"
-                                                                    name="./columnKey"
-                                                                    required="{Boolean}true"/>
+                                                                    name="./columnType">
+                                                                    <items
+                                                                        jcr:primaryType="nt:unstructured">
+                                                                        <plainText
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Plain Text"
+                                                                            value="plainText"/>
+                                                                        <date
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Date"
+                                                                            value="date"/>
+                                                                        <buttonList
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Buttons List"
+                                                                            value="buttonList"/>
+                                                                        </items>
+                                                                </columnType>
                                                                 <sortable
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
