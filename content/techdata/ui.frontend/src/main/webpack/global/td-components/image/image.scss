@@ -13,16 +13,18 @@
 }
 
 .cmp-td-logo{
-    // restricting these styles to desktop only
-    // as they are adding unnecessary padding below TD logo
-    @include desktop {
-        &--header{
-            width: rem(196px) !important;
-            padding: rem(21px) rem(26px) rem(21px) rem(10px);
-        }
-        &--footer{
-            width: rem(128px) !important;
-            padding: rem(0px) rem(0px) rem(8px);
-        }
+    &--header{
+      width: rem(196px) !important;
+      padding: rem(21px) rem(26px) rem(21px) rem(10px);
+  
+      @include mobile {
+        width: rem(164px) !important;
+        padding: rem(8px)
+      }
     }
-}
+    &--footer{
+      width: rem(128px) !important;
+      padding: rem(0px) rem(0px) rem(8px);
+    }
+  }
+  
