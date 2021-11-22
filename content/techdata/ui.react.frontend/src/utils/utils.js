@@ -76,10 +76,18 @@ export const requestFileBlob = async (url, name = '', options = { redirect: fals
     const response = await axios.get(url, { responseType: 'blob' });
     generateFile(response, name, options);
 }
+
 /**
 * Add onload event for form submit to handle input text XSS validations.
 */
-window.onload = function() {
+
+if (document.readyState !== "loading") {
+    onDocumentReadyForForm();
+} else {
+    document.addEventListener("DOMContentLoaded", onDocumentReadyForForm);
+}
+
+function onDocumentReadyForForm() {
     var form = document.getElementsByClassName('cmp-form');
     if(form && form[0]) {
         var buttonEle = document.getElementsByClassName("cmp-form-button");
