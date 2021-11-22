@@ -8,8 +8,35 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
 {
     [ExcludeFromCodeCoverage]
-    public class SummaryDto : DetailedDto
+    public class SummaryDto : BaseDto
     {
-        
+        public DateTime Published { get; set; }
+        public TypeValueDto AlternateIdentifier { get; set; }
+        public NameDto VendorSalesRep { get; set; }
+        public NameDto VendorSalesAssociate { get; set; }
+        public List<AttributeDto> Attributes { get; set; }
+        public bool? QuoteCurrent { get; set; }
+        public DateTime FirstAvailableOrderDate { get; set; }
+        public DateTime LastOrderDate { get; set; }
+        public string StatusText { get; set; }
+        public decimal? AmountSaved { get; set; }
+        public List<string> LinkedRenewals { get; set; }
+        public string RenewalGroupId { get; set; }
+        public DateTime DueDate { get; set; }
+        public string DueDays { get; set; }
+        public bool? Incumbent { get; set; }
+        public decimal? TotalReinstatementFeeCost { get; set; }
+        public decimal? TotalReinstatementFeeSell { get; set; }
+        public string AgreementNumber { get; set; }
+        public string Support { get; set; }
+        public SourceDto Source { get; set; }
+        public string EndUserType { get; set; }
+        public VendorDto Vendor { get; set; }
+        public PartyDto Reseller { get; set; }
+        public PartyDto EndUser { get; set; }
+        public PartyDto ShipTo { get; set; }
+        public string RenewedDuration { get; set; }
+        public List<OptionsDto> Options { get; set; }
+        public RenewalInRuleDto Renewal { get; set; }
     }
 }
