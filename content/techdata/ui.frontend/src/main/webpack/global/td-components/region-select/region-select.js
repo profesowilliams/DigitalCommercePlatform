@@ -70,7 +70,8 @@
      */
     const hasDisplayLocationEnabled =
       isInsideLinkList &&
-      isInsideLinkList.hasAttribute("data-displaylocation") === true;
+      isInsideLinkList.hasAttribute("data-displaylocation") === true &&
+      isInsideLinkList.dataset.displaylocation === "true";
 
     if (isInsideLinkList && hasDisplayLocationEnabled) {
       showCountriesListPopup();
