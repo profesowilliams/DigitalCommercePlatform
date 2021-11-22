@@ -196,7 +196,7 @@ import bp from '../../../common-utils/js/media-match';
                 let prefixURLEle = document.querySelector('#ssoLoginRedirectUrl');
                 for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {
                     let incomingHref = megamenuAnchorsLinks[i].href;
-                    if(incomingHref && (incomingHref.indexOf('shop.cstenet.com') != -1 || incomingHref.indexOf('shop.techdata.com') != -1 || incomingHref.indexOf('pilot.techdata.com') != -1)) {
+                    if(incomingHref && (incomingHref.indexOf('shop-rc.cstenet.com') != -1 || incomingHref.indexOf('shop.cstenet.com') != -1 || incomingHref.indexOf('shop.techdata.com') != -1 || incomingHref.indexOf('pilot.techdata.com') != -1)) {
                         if(prefixURLEle) {
                             prefixShopAuthUrl = document.querySelector('#ssoLoginRedirectUrl').getAttribute('data-ssoLoginRedirectUrl');
                             if(incomingHref.indexOf(prefixShopAuthUrl) == -1) {
