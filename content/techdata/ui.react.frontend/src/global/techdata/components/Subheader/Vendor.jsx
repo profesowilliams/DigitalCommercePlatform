@@ -3,13 +3,13 @@ import SlideToggle from '../Widgets/SlideToggle';
 import { get } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
-function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
+function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, disconnectedLabel }) {
 	let { vendor, isConnected, connectionDate, isValidRefreshToken } = fetchedVendor;
 	const [vendorToggled, setVendorToggled] = useState(isConnected);
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
 	const mounted = useMounted();
-	const config = vendorsConfig?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
+	const config = vendorConfig?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
 
 	// API calls
 	async function vendorDisconnect(vendor) {

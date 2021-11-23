@@ -62,7 +62,7 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, act
 							</div>
 							<button className='cmp-modal_btn' onClick={invokeModalAction}>
 								<span className='cmp-modal_btn_text'>
-									<i className={`cmp-modal_btn-icon ${buttonIcon}`}></i>
+									{buttonIcon ? <i className={`cmp-modal_btn-icon ${buttonIcon}`}></i> : null}
 									{buttonLabel}
 								</span>
 							</button>

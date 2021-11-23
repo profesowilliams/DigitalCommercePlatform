@@ -29,9 +29,26 @@ use(function() {
         jsonObject["toolsIndex"] = "2";
     }
 
-    if (this.uiServiceDomain != null) {
-        vendorConnectionsModalObject["uiServiceEndPoint"] = this.uiServiceDomain + this.vendorConnectionEndpoint;
+    if (this.uiServiceDomain != null && this.vendorConnectionEndpoint != null) {
+        vendorConnectionsModalObject["getConnectionsEndPoint"] = this.uiServiceDomain + this.vendorConnectionEndpoint;
     }
+
+    if (this.vendorConnectionEndpoint != null && this.setVendorConnectionEndpoint != null) {
+        vendorConnectionsModalObject["setConnectionsEndPoint"] = this.uiServiceDomain + this.setVendorConnectionEndpoint;
+    }
+
+    if (properties && properties["loginPageCommonName"]) {
+        vendorConnectionsModalObject["loginPageCommonName"] = properties["loginPageCommonName"] || 'vendorlogin';
+    } else {
+        vendorConnectionsModalObject["loginPageCommonName"] = "vendorlogin";
+    }
+
+    if (properties && properties["vendorSignInCodeParameter"]) {
+        vendorConnectionsModalObject["vendorSignInCodeParameter"] = properties["vendorSignInCodeParameter"] || 'code';
+    } else {
+        vendorConnectionsModalObject["vendorSignInCodeParameter"] = "code";
+    }
+
     if (properties && properties["title"]) {
         vendorConnectionsModalObject["title"] = properties["title"];
     }
@@ -66,12 +83,13 @@ use(function() {
             var key = res.properties["key"];
             var iconPath = res.properties["iconPath"];
             var logInUrl = res.properties["logInUrl"];
+            var connectLandingPage = res.properties["connectLandingPage"];
             var itemData = {};
             itemData.key = key;
             itemData.value = iconPath;
             itemData.logInUrl = logInUrl;
+            itemData.connectLandingPage = connectLandingPage;
             iconValues.push(itemData);
-
         }
     }
 

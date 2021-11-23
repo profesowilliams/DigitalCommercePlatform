@@ -152,6 +152,18 @@
                                                     fieldDescription="Enter Disconnected Label"
                                                     fieldLabel="Disconnected Label"
                                                     name="./disconnectedLabel"/>
+                                            <loginPageCommonName
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Vendor Login Landing Page Common Name"
+                                                    fieldLabel="Vendor Login Landing Page Common Name"
+                                                    name="./loginPageCommonName"/>
+                                            <vendorSignInCodeParameter
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Vendor Login Landing Page Code Parameter Name"
+                                                    fieldLabel="Vendor Login Landing Page Code Parameter Name"
+                                                    name="./vendorSignInCodeParameter"/>
                                             <icons
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -183,9 +195,15 @@
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                         fieldDescription="Enter login URL"
-                                                                        rootPath="/content/dam/techdata"
                                                                         fieldLabel="login URL"
                                                                         name="./logInUrl"/>
+                                                                <connectLandingPage
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                        fieldDescription="Landing Page after Successful Connection"
+                                                                        rootPath="/content/techdata"
+                                                                        fieldLabel="Landing Page after Successful Connection"
+                                                                        name="./connectLandingPage"/>
                                                             </items>
                                                         </column>
                                                     </items>

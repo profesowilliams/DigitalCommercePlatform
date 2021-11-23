@@ -66,14 +66,37 @@
     }
   ],
   "vendorConnectionsModal": {
-    "uiServiceEndPoint": "http://localhost:3000/ui-account/v1",
+    "getConnectionsEndPoint": "http://localhost:3000/getVendorConnections",
+    "setConnectionsEndPoint": "http://localhost:3000/vendorConnect",
+    "disconnectEndPoint": "http://localhost:3000",
     "title": "Vendor Connections",
     "buttonLabel": "Connect All",
     "buttonIcon": "fas fa server",
     "content": "Content to display on modal window",
     "connectedLabel": "Connect",
     "disconnectedLabel": "Disconnect",
-    "vendors": []
+    "loginPageCommonName" : "vendorlogin",
+    "vendorSignInCodeParameter" : "code",
+    "vendors": [
+      {
+        "key": "Cisco",
+        "logInUrl": "http://localhost:3000/vendor.html?q=CISCO&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-cisco.html",
+        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Cisco_logo.svg",
+        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-cisco.html"
+      },
+      {
+        "key": "HP",
+        "logInUrl": "http://localhost:3000/vendor.html?q=HP&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-hp.html",
+        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Hewlett_Packard_Enterprise_logo.svg",
+        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-hp.html"
+      },
+      {
+        "key": "Dell",
+        "logInUrl": "http://localhost:3000/vendor.html?q=DELL&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-dell.html",
+        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Dell_Logo.svg",
+        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-dell.html"
+      }
+    ]
   }
 }'
       ></div>

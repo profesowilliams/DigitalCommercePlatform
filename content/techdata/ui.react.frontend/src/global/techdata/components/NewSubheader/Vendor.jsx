@@ -3,31 +3,27 @@ import SlideToggle from '../Widgets/SlideToggle';
 import { get } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
-function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disconnectedLabel }) {
+function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, disconnectedLabel }) {
 	let { vendor, isConnected, connectionDate, isValidRefreshToken } = fetchedVendor;
 	const [vendorToggled, setVendorToggled] = useState(isConnected);
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
 	const mounted = useMounted();
-	const config = vendorsConfig?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
+	const config = vendorConfig?.vendors?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
 
 	// API calls
 	async function vendorDisconnect(vendor) {
-		//V1/VendorDisconnect?Vendor={Vendor}
-		const url = endpoints.VendorDisconnect;
-		try {
-			await get(url + `?vendor=${vendor}`);
-			return true;
-		} catch (e) {
-			console.error(`${vendor} disconnect failed:`);
-			console.error(e);
-			return false;
-		}
+		console.error("Vendor Disconnect not implemented");
+		return false;
 	}
 
 	function redirectToVendorPortal(href) {
-		window.location.replace(href);
-		return true;
+		if (href) {
+			window.location.replace(href);
+		}else {
+			console.error("Connection URL not found")
+			return false;
+		}
 	}
 
 	// Component specific functions
@@ -62,11 +58,11 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 		}
 	}, [error]);
 
-	return (
+	return ( config ? (
 		<div className='cmp-vendor-connection__vendors__vendor'>
 			<div className='cmp-vendor-connection__vendors__vendor__logo'>
-				{config ? (
-					<img className={'cmp-vendor-connection__vendors__vendor__logo__img'} src={config.value}></img>
+				{config && config.iconPath ? (
+					<img className={'cmp-vendor-connection__vendors__vendor__logo__img'} src={config.iconPath}></img>
 				) : (
 					<div className={'cmp-vendor-connection__vendors__vendor__logo__text'}>{vendor}</div>
 				)}
@@ -85,7 +81,7 @@ function Vendor({ endpoints, fetchedVendor, vendorsConfig, connectedLabel, disco
 					}}
 				></SlideToggle>
 			</div>
-		</div>
+		</div>) : null
 	);
 }
 export default Vendor;

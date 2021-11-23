@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=1600, initial-scale=1.0" />
-		<title>Login Mock Page</title>
+		<title>Vendor Login Mock Page</title>
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
-		<form name="passForm" id="passForm" method="post" action="/auth?redirect=http://localhost:3000/success">
+		<form name="passForm" id="passForm" method="get" >
 			<div class="imgcontainer">
 				<img
 					src="http://allvectorlogo.com/img/2017/09/tech-data-logo.png"
@@ -18,15 +18,15 @@
 				/>
 			</div>
 			<div class="container">
-				<label for="userid">User Id</label>
-				<input type="text" name="userid" id="userid" value="bru" required />
+				<label for="vendor">User Id</label>
+				<input type="text" name="vendor" id="vendor" value="Cisco" required />
 
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" value="pass" required />
+				<label for="code">Password</label>
+				<input type="text" name="code" id="code" value="1234" required />
 
 				<button type="submit">Login</button>
 			</div>
 		</form>
-		<script src="js/main.js"></script>
+		<script src="js/vendor.js"></script>
 	</body>
 </html>

@@ -1119,6 +1119,27 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/todays-action-items-react.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "vendor-pages/vendorlogin-cisco.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/order-details.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "vendor-pages/vendorlogin-dell.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/order-details.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "vendor-pages/vendorlogin-hp.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/order-details.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

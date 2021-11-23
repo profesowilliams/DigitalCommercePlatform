@@ -12,6 +12,8 @@ var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+var vendorConnections = {"cisco" : false, "hp" : false, "dell" : false};
+
 
 var utils = require('./utils');
 var mockResponses = require('./responses');
@@ -1526,37 +1528,59 @@ app.get("/estimations/validate/:id", function (req, res) {
     });
 });
 app.get("/catalog", (req, res) => {
-    console.log(req);
+
     res.json(mockResponses.catalogResponse());
-    // res.json(mockResponses.shortResponse());
 
 })
 
-app.get("/vendors", (req, res) => {
+app.get(["/vendors", "/vendor/connect"], (req, res) => {
     console.log(req);
     res.json(mockVendors.vendorsJsonData());
 })
 
+app.get("/vendorConnect", (req, res) => {
+
+    let {code, vendor} = req.query;
+
+    vendor = vendor.toLowerCase();
+    console.log("vendorConnect");
+    console.log(vendor);
+
+
+    if (vendor in vendorConnections) {
+        vendorConnections[vendor] = true;
+    }
+
+    console.log(vendorConnections);
+    res.json(mockVendors.vendorsJsonData());
+})
+
+app.get("/ui-account/v1/vendorDisconnect", function(req, res) {
+    const {vendor} = req.query;
+    vendorConnections[vendor] = false;
+    res.json({"isError" : false});
+})
+
 //---VENDOR CONNECTIONS MOCK API---//
-app.get("/ui-account/v1/getVendorConnections", function (req, res) {
+app.get(["/ui-account/v1/getVendorConnections", "/getVendorConnections"], function (req, res) {
     const response = {
         content: {
             items: [
                 {
-                    vendor: "Cisco",
-                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    vendor: "cisco",
+                    isConnected: vendorConnections["cisco"],
                     connectionDate: utils.getRandomDate(),
                     isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
                 },
                 {
-                    vendor: "HP",
-                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    vendor: "hp",
+                    isConnected: vendorConnections["hp"],
                     connectionDate: utils.getRandomDate(),
                     isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
                 },
                 {
-                    vendor: "Dell",
-                    isConnected: utils.getRandomNumber(10) % 2 ? true : false,
+                    vendor: "dell",
+                    isConnected: vendorConnections["dell"],
                     connectionDate: utils.getRandomDate(),
                     isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
                 }

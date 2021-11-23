@@ -3,6 +3,7 @@ import Modal from '../Modal/Modal';
 import VendorConnection from './VendorConnection';
 import {dashboardMenu} from "./dashboardMenu";
 import {getAbsolutePosition} from "../../helpers/absolutePosition";
+import {getQueryStringValue} from "../../../../utils/utils";
 
 const NewSubheader = ({ componentProp }) => {
 	const dashboardMenuIndex = 0;
@@ -12,6 +13,7 @@ const NewSubheader = ({ componentProp }) => {
 	const toolsIndexInt = tempToolsIndex > 1 && tempToolsIndex <= menuItems.length ? tempToolsIndex - 1 : menuItems.length - 1;
 	const [userData, setUserData] = useState(null);
 	const menuItemRefs = useRef([]);
+	const loginPageCommonName = vendorConnectionsModal.loginPageCommonName;
 
 	useEffect(() => {
 	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
@@ -36,6 +38,7 @@ const NewSubheader = ({ componentProp }) => {
             setUserData(userDataJsonStr);
         }
 		hasDCPAccess();
+		checkIfVendorSignedIn();
 	}, []);
 
 	const hideOtherMenus = (sourceIndex) => {
@@ -137,10 +140,16 @@ const NewSubheader = ({ componentProp }) => {
 
 	const [modal, setModal] = useState(null);
 	const [showDashboard, setShowDashboard] = useState(false);
-
+	const vendorModalAction = ()=> {
+		setModal(null);
+	};
 	const vendorModal = {
-		uiServiceEndPoint:
-			vendorConnectionsModal?.uiServiceEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
+		getConnectionsEndPoint:
+			vendorConnectionsModal?.getConnectionsEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
+		setConnectionsEndPoint:
+			vendorConnectionsModal?.setConnectionsEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
+		disconnectEndPoint:
+			vendorConnectionsModal?.disconnectEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
 		title: vendorConnectionsModal?.title ?? 'Vendor Connections',
 		buttonLabel: vendorConnectionsModal?.buttonLabel ?? 'Connect All',
 		buttonIcon: vendorConnectionsModal?.buttonIcon ?? null,
@@ -153,23 +162,45 @@ const NewSubheader = ({ componentProp }) => {
 					'https://cloudsso.cisco.com/as/authorization.oauth2?response_type=code&client_id=mjxxm7tfx422u6gf4rausym9&state=&redirect_uri=https%3a%2f%2fdit.dc.tdebusiness.cloud%2fcontent%2ftechdata%2fus%2fvendorlogin.html',
 			},
 		],
+		action: vendorModalAction
 	};
+
+	function isPageVendorLogin(url) {
+		const regexVendor = vendorModal.vendors.map(v => v.key).join("|").toLowerCase();
+		const regexCheckForVendorLoginPage = new RegExp(`${vendorConnectionsModal.loginPageCommonName}-(${regexVendor}).html`);
+		return !(url.pathname.match(regexCheckForVendorLoginPage) == null) && url.searchParams.has(vendorConnectionsModal.vendorSignInCodeParameter);
+	}
+
+	function getVendorFromURL(url)
+	{
+
+		let str = url.pathname.split("/").pop();
+		const regex = /.*-(.*).html/gm;
+		let m;
+
+		m = regex.exec(str);
+
+		if (m == null || m.length <= 1)
+		{
+			return false;
+		}
+
+
+
+		return m[1];
+	}
 
 	function checkIfVendorSignedIn() {
 		const url = new URL(window.location.href);
-		if (String(url.pathname).includes('vendorlogin.html') && url.searchParams.has('code')) {
+		if (isPageVendorLogin(url)) {
 			invokeModal({
 				content: (
 					<VendorConnection
-						vendors={vendorModal.vendors}
-						apiUrl={vendorModal.uiServiceEndPoint}
-						connectedLabel={vendorModal.connectedLabel}
-						disconnectedLabel={vendorModal.disconnectedLabel}
-						header={vendorModal.content}
-						signInRequest={{ code: url.searchParams.get('code'), vendor: 'Cisco' }}
+						vendorConfig={vendorConnectionsModal}
+						signInRequest={{ code: url.searchParams.get('code'), vendor: getVendorFromURL(url) }}
 					></VendorConnection>
 				),
-				properties: vendorModal,
+				properties: vendorModal
 			});
 		}
 	}
@@ -188,7 +219,7 @@ const NewSubheader = ({ componentProp }) => {
 	function invokeModal(modal) {
 		setModal(
 			<Modal
-				modalAction={modal.action}
+				modalAction={modal.properties.action}
 				modalContent={modal.content}
 				modalProperties={modal.properties}
 				onModalClosed={() => setModal(null)}
@@ -228,19 +259,17 @@ const NewSubheader = ({ componentProp }) => {
 						</a>
 					</li>
 					<li
-						onClick={() =>
+						onClick={() => {
+
 							invokeModal({
 								content: (
 									<VendorConnection
-										vendors={vendorModal.vendors}
-										apiUrl={vendorModal.uiServiceEndPoint}
-										connectedLabel={vendorModal.connectedLabel}
-										disconnectedLabel={vendorModal.disconnectedLabel}
-										header={vendorModal.content}
+										vendorConfig={vendorConnectionsModal}
 									></VendorConnection>
 								),
 								properties: vendorModal,
 							})
+						}
 						}
 					>
 						<a href='#'>

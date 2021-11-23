@@ -56,7 +56,7 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 								key={index}
 								endpoints={ENDPOINTS}
 								fetchedVendor={vendor}
-								vendorsConfig={vendors}
+								vendorConfig={vendors}
 								connectedLabel={connectedLabel}
 								disconnectedLabel={disconnectedLabel}
 							></Vendor>

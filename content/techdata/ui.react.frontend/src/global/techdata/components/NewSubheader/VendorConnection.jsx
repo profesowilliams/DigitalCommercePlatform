@@ -3,22 +3,18 @@ import Loader from '../Widgets/Loader';
 import Vendor from './Vendor';
 import { get } from '../../../../utils/api';
 
-function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnectedLabel, signInRequest }) {
+function VendorConnection({ vendorConfig, signInRequest }) {
 	const [fetchedVendors, setFetchedVendors] = useState(null);
 	const [error, setError] = useState(null);
 	const ENDPOINTS = {
-		VendorConnect: apiUrl + '/vendor/connect',
-		VendorDisconnect: apiUrl + '/vendorDisconnect',
-		VendorRefreshToken: apiUrl + '/vendorRefreshToken',
-		GetValidAccessToken: apiUrl + '/getValidAccessToken',
-		GetVendorConnections: apiUrl + '/getVendorConnections',
+		getConnectionsEndPoint: vendorConfig.getConnectionsEndPoint,
+		setConnectionsEndPoint: vendorConfig.setConnectionsEndPoint
 	};
 
 	async function vendorLogin(code, vendorName) {
-		const url = ENDPOINTS.VendorConnect;
+		const url = ENDPOINTS.setConnectionsEndPoint;
 		try {
-			await get(url + `?code=${code}&vendor=${vendorName}&redirectUri=${window.location.href}`);
-			const response = await get(ENDPOINTS.GetVendorConnections);
+			const response = await get(url + `?code=${code}&vendor=${vendorName}`);
 			return response;
 		} catch (e) {
 			setError(`${vendorName} connect failed.`);
@@ -33,9 +29,15 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 		async function _() {
 			let response = null;
 			if (signInRequest) {
-				response = await vendorLogin(signInRequest.code, signInRequest.vendor);
+				let vendorLoginResponse = await vendorLogin(signInRequest.code, signInRequest.vendor);
+				if (!vendorLoginResponse) {
+					console.error("vendor connection for vendor " + signInRequest.vendor + ", failed");
+				}else{
+					response = await get(ENDPOINTS.getConnectionsEndPoint);
+				}
+
 			} else {
-				response = await get(ENDPOINTS.GetVendorConnections);
+				response = await get(ENDPOINTS.getConnectionsEndPoint);
 			}
 			isMounted && setFetchedVendors(response.data?.content?.items);
 		}
@@ -48,17 +50,15 @@ function VendorConnection({ header, vendors, apiUrl, connectedLabel, disconnecte
 	return (
 		<section>
 			<div className='cmp-vendor-connection'>
-				<div className='cmp-vendor-connection__header'>{header}</div>
+				<div className='cmp-vendor-connection__header'>{vendorConfig.title}</div>
 				{fetchedVendors ? (
 					<div className='cmp-vendor-connection__vendors'>
 						{fetchedVendors.map((vendor, index) => (
 							<Vendor
+								vendorConfig={vendorConfig}
 								key={index}
 								endpoints={ENDPOINTS}
 								fetchedVendor={vendor}
-								vendorsConfig={vendors}
-								connectedLabel={connectedLabel}
-								disconnectedLabel={disconnectedLabel}
 							></Vendor>
 						))}
 					</div>
