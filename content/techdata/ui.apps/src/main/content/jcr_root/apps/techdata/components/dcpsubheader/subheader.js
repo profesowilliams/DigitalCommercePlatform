@@ -86,7 +86,7 @@ use(function() {
             var connectLandingPage = res.properties["connectLandingPage"];
             var itemData = {};
             itemData.key = key;
-            itemData.value = iconPath;
+            itemData.iconPath = iconPath;
             itemData.logInUrl = logInUrl;
             itemData.connectLandingPage = connectLandingPage;
             iconValues.push(itemData);
