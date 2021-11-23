@@ -1,4 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+
+using System;
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal;
@@ -6,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalFoundation.App.Services.Renewal.Dto.CoreQuote.Internal;
 using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
 {
@@ -31,8 +34,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
             CreateMap<SalesTeamDto, SalesTeamModel>();
             CreateMap<SourceDto, SourceModel>();
             CreateMap<TypeValueDto, QuoteTypeValueModel>();
-            CreateMap<DetailedDto, DetailedModel>();
-            CreateMap<SummaryDto, SummaryModel>();
+            CreateMap<DetailedDto, DetailedModel>()
+                .ForMember(x=>x.DueDays, y => y.MapFrom(s=> (s.DueDate - DateTime.Now).Days));
+            CreateMap<SummaryDto, SummaryModel>()
+                .ForMember(x => x.DueDays, y => y.MapFrom(s => (s.DueDate - DateTime.Now).Days));
             CreateMap<PartyDetailedDto, PartyDetailedModel>();
             CreateMap<ContactDetailedDto, ContactDetailedModel>();
             CreateMap<QuoteDetailedDto, QuoteDetailedModel>();
