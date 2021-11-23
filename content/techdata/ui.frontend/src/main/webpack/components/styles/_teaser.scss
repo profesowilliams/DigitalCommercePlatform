@@ -774,6 +774,7 @@
     .cmp-teaser__content {
         max-width: 1440px;
         margin: 0 auto;
+        left: 10%;
     }
 }
 
@@ -789,15 +790,17 @@
  .cmp-text-color--onDark-theme {
     color: get-color(brand-white) !important;
 
-    .cmp-teaser__desc-link {
+    .cmp-teaser__desc-link, .cmp-teaser__title-link {
         color: get-color(brand-white) !important;
+        text-decoration: none;
     }
 }
 
 .cmp-text-color--onLight-theme {
     color: get-color(text-light-gray) !important;
 
-    .cmp-teaser__desc-link {
+    .cmp-teaser__desc-link, .cmp-teaser__title-link {
         color: get-color(text-light-gray) !important;
+        text-decoration: none;
     }
 }
