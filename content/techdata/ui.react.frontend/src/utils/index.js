@@ -17,7 +17,7 @@ export const setSessionId = (sessionId) =>
 
 export const getSessionId = () => localStorage.getItem('sessionId')
 
-export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
+export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage) => {
     /**
      * 2 step logout process:
      *  - initiate UI service logout
@@ -32,7 +32,7 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
         } else {
             const response = await usPost(redirectURL, { });
             if( response.status == 200 || response.status == 401 ) {
-                handleLogout(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip);
+                handleLogout(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage);
             }
         }
       } catch(e){
@@ -41,9 +41,13 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
       }
 }
 
-export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
+export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage) => {
     if(!ignoreAEMRoundTrip) {
-        shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(window.location.href);
+        var logoutReturnUrl = window.location.href;
+        if(isPrivatePage) {
+            logoutRedirectUrl = window.location.origin;
+        }
+        shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
     }
     pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
     cleanupLocalStorage(pingLogoutUrl);
@@ -69,7 +73,7 @@ export const signOutForExpiredSession = () => {
     cleanupLocalStorage(window.location.href);
 }
 
-export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl) => {
+export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage) => {
   const { protocol, hostname, port, pathname } = window.location;
   let sessionId = localStorage.getItem('sessionId');
 
@@ -77,7 +81,7 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
     let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
     window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/);
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage) ;
   }
 }
 

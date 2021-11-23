@@ -106,7 +106,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                       config?.pingLogoutURL ?? null,
                       config?.errorPageUrl ?? null,
                       config?.shopLogoutRedirectUrl ?? null,
-                      config?.aemAuthUrl ?? null
+                      config?.aemAuthUrl ?? null,
+                      config?.isPrivatePage ?? null
                     );
                   }}
                 >
