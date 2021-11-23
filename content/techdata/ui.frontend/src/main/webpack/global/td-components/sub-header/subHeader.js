@@ -9,8 +9,18 @@ export const subHeader = () => {
         if (isntMenu) {
             // Search tag menu that does have class active and removed it to close the menu 
             // when clicking outside the menu and subheader
-            const menu = document.getElementsByClassName('cmp-tabs__tabpanel--active cmp-tabs__tabpanel--custom-active')[0];
-            menu.classList.remove("cmp-tabs__tabpanel--active", "cmp-tabs__tabpanel--custom-active");
+            
+            // For OLD Subheader
+            const oldMenu = document.getElementsByClassName('cmp-tabs__tabpanel--active cmp-tabs__tabpanel--custom-active')[0];
+            if (oldMenu) {
+                oldMenu?.classList.remove("cmp-tabs__tabpanel--active", "cmp-tabs__tabpanel--custom-active");
+            }
+
+            // For New Subheader
+            const newMenu = document.getElementsByClassName('menucategorieslist')[0];
+            if (newMenu) {
+                newMenu.style.display = "none";
+            }
         }
 
         const toolsTab = document.querySelector(`[aria-labelledby='${uniqueId}']`);
