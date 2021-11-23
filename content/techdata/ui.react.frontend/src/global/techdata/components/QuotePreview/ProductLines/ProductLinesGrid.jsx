@@ -55,6 +55,11 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       },
     },
     {
+      headerName: "Line Number",
+      field: "configID",
+      sortable: false,
+    },
+    {
       headerName: "Item Information",
       field: "shortDescription",
       sortable: false,

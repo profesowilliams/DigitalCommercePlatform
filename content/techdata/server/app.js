@@ -3513,23 +3513,8 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
               "email": "email",
               "phoneNumber": "phoneNumber"
             },
-            "reseller": [
-              {
-                "companyName": "Some Company",
-                "name": "thomas",
-                "addressNumber": "0001369841",
-                "line1": "4111 Northside Parkway",
-                "line2": " ",
-                "line3": " ",
-                "city": "ATLANTA",
-                "state": "GA",
-                "country": "US",
-                "postalCode": "30327",
-                "email": null,
-                "phoneNumber": "8005276389",
-                "salesOrganization": "0100",
-              }
-            ],
+            "reseller": null,
+            "configID": 'WC121011624NR',
             "source": {
               "type": isEstimateId=== 'true' ? "Estimate": "VendorQuote",
               "value": "QJ128146301OP"
@@ -3563,6 +3548,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                 "rebateValue": null,
                 "urlProductImage": null,
                 "urlProductSpecs": null,
+                "configID": 'WC121011624NR',
                 "children": [
                   {
                     "id": "1.1",
@@ -3578,6 +3564,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                     "msrp": null,
                     "invoice": null,
                     "discounts": [],
+                    "configID": 'WC121011624NR',
                     "contract": {
                       "id": null,
                       "status": null,
@@ -4137,6 +4124,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                 "rebateValue": null,
                 "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
                 "urlProductSpecs": null,
+                "configID": 'WC121011624NR',
                 "children": [
                   {
                     "id": "2.1",
@@ -4152,6 +4140,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                     "msrp": null,
                     "invoice": null,
                     "discounts": [],
+                    "configID": 'WC121011624NR',
                     "contract": {
                       "id": null,
                       "status": null,
@@ -4368,6 +4357,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                 "rebateValue": null,
                 "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
                 "urlProductSpecs": null,
+                "configID": 'WC121011624NR',
                 "children": [
                   {
                     "id": "3.1",
@@ -4383,6 +4373,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                     "msrp": null,
                     "invoice": null,
                     "discounts": [],
+                    "configID": 'WC121011624NR',
                     "contract": {
                       "id": null,
                       "status": null,
@@ -4586,6 +4577,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                 "msrp": null,
                 "invoice": null,
                 "discounts": [],
+                "configID": 'WC121011624NR',
                 "contract": null,
                 "shortDescription": "10GBASE-SR SFP Module, Enterprise-Class",
                 "mfrNumber": "SFP-10G-SR-S=",
@@ -4620,6 +4612,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
                 "msrp": null,
                 "invoice": null,
                 "discounts": [],
+                "configID": 'WC121011624NR',
                 "contract": null,
                 "shortDescription": "Cisco Duo Federal subscription",
                 "mfrNumber": "DUO-FED-SUB",

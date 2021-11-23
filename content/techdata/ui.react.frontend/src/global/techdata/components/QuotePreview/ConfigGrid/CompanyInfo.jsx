@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Loader from "../../Widgets/Loader";
 import Button from "../../Widgets/Button";
@@ -13,6 +13,32 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const [savedAddressId, setSavedAddressId] = useState(0);
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [localReseller, setLocalReseller] = useState(null);
+  const defaultReseller = {
+    "companyName": "default",
+    "name": "default",
+    "addressNumber": "default",
+    "line1": "",
+    "line2": "",
+    "line3": "",
+    "city": "",
+    "state": "",
+    "country": "",
+    "postalCode": "",
+    "email": '',
+    "phoneNumber": "",
+    "salesOrganization": "",
+  };
+
+  useEffect(() => {
+    if (localReseller === null) {
+      if (reseller){
+        setLocalReseller(reseller)
+      } else {
+        setLocalReseller(defaultReseller)
+      }
+    }
+  }, [localReseller, reseller]);
 
   const handleOptionChange = (e) => {
     setSelectedAddressId(+e.target.value);
@@ -129,7 +155,7 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       <p onClick={handleTitleClick} className="cmp-qp__company-info--title">
         {info.yourCompanyHeaderLabel}
       </p>
-      <If condition={reseller}>
+      <If condition={localReseller}>
         <p className="cmp-qp__company-info--sub-title">
           {initialAddress.companyName}
         </p>
