@@ -16,7 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
         public List<RangeFilterDto> RangeFilters { get; set; }
         public SortRequestDto Sort { get; set; }
         public string[] Territories { get; set; }
-        public string[] Countries { get; set; }
         public Dictionary<Details, bool> GetDetails { get; set; }
     }
 }

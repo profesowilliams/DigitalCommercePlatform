@@ -82,7 +82,6 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.SearchString, opt => opt.MapFrom(src => src.SearchString))
                 .ForMember(dest => dest.Sort, opt => opt.MapFrom(src => src.Sort))
                 .ForMember(dest => dest.Territories, opt => opt.MapFrom(src => src.Territories))
-                .ForMember(dest => dest.Countries, opt => opt.MapFrom(src => src.Countries))
             ;
 
             CreateMap<IndicatorDto, IndicatorModel>();

@@ -19,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
         public List<RefinementGroupResponseDto> RefinementGroups { get; set; }
         public CategoryBreadcrumbDto CategoryBreadcrumb { get; set; }
         public bool HasMoreRefinements { get; set; }
+        public IEnumerable<string> Territories { get; set; }
     }
 }
