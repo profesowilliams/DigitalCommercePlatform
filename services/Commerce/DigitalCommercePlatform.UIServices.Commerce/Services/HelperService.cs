@@ -256,8 +256,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         /// <returns></returns>
         private string BuildQueryForProductApiCall(List<Line> items, string vendorName)
         {
-            string _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
-            //string productUrl = "";
+            string _appProductServiceURL = string.Empty;
+            try
+            {
+                _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
+            }
+            catch(Exception)
+            {
+                _appProductServiceURL = _appSettings.GetSetting("Product.App.Url");
+            }
+
             string manufacturer = "";
             string system = vendorName;//configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name;            
             string productId;
