@@ -1,6 +1,7 @@
 import React from 'react';
+import { hasDCPAccess } from "../../../../utils/user-utils";
 
-function TertiaryMenu({tertiaryData}) {
+function TertiaryMenu({tertiaryData, userData}) {
     const handleTertiaryClick = (e) => {
         e.stopPropagation();
     }
@@ -10,7 +11,7 @@ function TertiaryMenu({tertiaryData}) {
             {tertiaryData.items.map(item => {
                 return (
                     <li key={Symbol(item.tertiaryLabel).toString()} onClick={(e) => handleTertiaryClick(e)} className={`cmp-sign-in--item ${item.tertiaryMenus ? 'has-child' : ''}`}>
-                        <a href={item.tertiaryLink}>
+                        <a href={hasDCPAccess(userData) ? item.tertiaryDcpLink : item.tertiaryLink}>
                             {item.tertiaryLabel}
                         </a>
                     </li>

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import TertiaryMenu from '../ProfileMegaMenu/TertiaryMenu';
 import FontIcon from '../Widgets/FontIcon';
+import { hasDCPAccess } from "../../../../utils/user-utils";
 
-function SecondaryMenu({secondaryData, handleBackBtnClick}) {
+function SecondaryMenu({secondaryData, userData, handleBackBtnClick}) {
     const [isOpen, setIsOpen] = useState(null);
 
     const handleSecondaryClick = (event, index, hasChild) => {
@@ -26,12 +27,14 @@ function SecondaryMenu({secondaryData, handleBackBtnClick}) {
                 {secondaryData.secondaryMenus.items.map((item, index) => {
                     return (
                         <li onClick={() => handleSecondaryClick(event, index, item.tertiaryMenus)} key={Symbol(item.secondaryLabel).toString()} className={`cmp-sign-in__item cmp-sign-in__level-1 ${item.tertiaryMenus ? 'has-child' : ''} ${(isOpen === index) ? 'active' : ''}`}>
-                            <a href={item.secondaryLink}>
+                            <a href={hasDCPAccess(userData) ? item.secondaryDcpLink : item.secondaryLink}>
                                 {item.secondaryLabel}
                             </a>
                             {
                                 item.tertiaryMenus ? (
-                                    <TertiaryMenu tertiaryData={item.tertiaryMenus}/>
+                                    <TertiaryMenu
+                                        userData={userData}
+                                        tertiaryData={item.tertiaryMenus}/>
                                 ) : null
                             }
                         </li>

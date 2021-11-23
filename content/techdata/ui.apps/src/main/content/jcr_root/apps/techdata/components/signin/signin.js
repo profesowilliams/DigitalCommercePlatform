@@ -29,10 +29,12 @@ use(function () {
         for (var [key, res] in Iterator(childrenList)) {
             var linkTitle = res.properties["linkText"];
             var linkUrl = parseLinkURL(JSON.stringify(res.properties["linkUrl"]));
+            var dcpLink = parseLinkURL(JSON.stringify(res.properties["dcpLink"]));
             var iconUrl = res.properties["iconUrl"];
             var itemData = {};
             itemData.linkTitle = linkTitle;
             itemData.linkUrl = linkUrl;
+            itemData.dcpLink = dcpLink;
             itemData.iconUrl = iconUrl;
             listValues.push(itemData);
 

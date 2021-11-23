@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { signOut } from '../../../../utils';
 import SubHeaderMenuContainer from '../ProfileMegaMenu/SubHeaderMenuContainer';
 import SecondaryMenu from '../ProfileMegaMenu/SecondaryMenu';
+import { hasDCPAccess } from "../../../../utils/user-utils";
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const [showSecondary, setShowSecondary] = useState(false);
@@ -77,13 +78,13 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                   <span>EC ID: {userId}</span>
                 </p>
                 <ul className="cmp-sign-in-list-content">
-                  {items.map(({ linkTitle, linkUrl, iconUrl }) => (
+                  {items.map(({ linkTitle, dcpLink, linkUrl, iconUrl }) => (
                     <li
                       key={Symbol(linkTitle).toString()}
                       className="cmp-sign-in-list-content--item"
                     >
                       <a
-                        href={linkUrl}
+                        href={hasDCPAccess(userDataCheck) ? dcpLink : linkUrl}
                         className="cmp-sign-in-list-content--item-link"
                       >
                         <i
@@ -116,6 +117,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               </>
             ) : (
               <SecondaryMenu
+                  userData={userDataCheck}
                 secondaryData={secondaryItems}
                 handleBackBtnClick={handleBackBtnClick}
               />
@@ -132,6 +134,7 @@ DropdownMenu.propTypes = {
 		PropTypes.shape({
 			linkTitle: PropTypes.string,
 			LinkUrl: PropTypes.string,
+            dcpLink: PropTypes.string,
 			iconUrl: PropTypes.string,
 		})
 	).isRequired,
