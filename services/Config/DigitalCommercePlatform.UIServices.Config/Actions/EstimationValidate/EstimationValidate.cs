@@ -63,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate
         {
             public static readonly int MinIdLength = 2;
             public static readonly int MaxIdLength = 255;
-            public static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            public static readonly string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
 
             public Validator()
             {

@@ -54,6 +54,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
         }
 
+        /// <summary>
+        /// This method is not being called by Deal,Deals(SPA) . Which is not being called from AEM
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<FindResponse<Deal>> GetDeals(GetDeals.Request request)
         {
             var findResponse = await GetDealsDetails(request);
@@ -95,6 +100,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return result;
         }
 
+        /// <summary>
+        /// This method is not being called by Deal,Deals(SPA) . Which is not being called from AEM
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
         {
             var lstMaterials = new List<MaterialInformation>();
@@ -229,11 +239,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
                 _logger.LogError(ex, "Exception at getting Estimation Validate: " + nameof(ConfigService));
                 _logger.LogInformation("$Record's not found for " + request.Criteria.Id + " and " + request.Criteria.ConfigurationType);
-                if (ex.Message.ToLower().Contains("reported an error: notfound"))//need to fix this
-                {
-                    return false;
-                }
-                throw;
+                return false;
             }
         }
 
