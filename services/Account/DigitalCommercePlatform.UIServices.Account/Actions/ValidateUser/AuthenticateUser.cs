@@ -9,6 +9,7 @@ using DigitalFoundation.Common.Services.Actions.Abstract;
 using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,15 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 _context.SetAccessToken(tokenResponse.AccessToken);
 
                 var userResponse = await _securityService.GetUser(request.ApplicationName);
+                //try
+                //{
+                //    var user = ValidateUser(userResponse.User);
+                //}
+                //catch (Exception ex)
+                //{
+                //    _logger.LogError(ex, "General purpose exception");
+                //    return RenderResponse();
+                //}
 
                 if (userResponse.User == null)
                 {
@@ -110,6 +120,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                     };
                 }
 
+                if (!userResponse.User.CustomerList.Any())
+                {
+                    _logger.LogWarning($"Forbidden user has no enabled Accounts");
+                    return new ResponseBase<Response>
+                    {
+                        Error = new ErrorInformation
+                        {
+                            IsError = true,
+                            Messages = new List<string> { "Access is forbidden." },
+                            Code = StatusCodes.Status403Forbidden
+                            // we should agree about code and message
+                        }
+                    };
+                }
+
                 userResponse.User.RefreshToken = tokenResponse.RefreshToken;
                 
                 var roleList = new List<Role>();
@@ -118,7 +143,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
                 {
                     roleList = userResponse.User.RoleList.ToList();
                 }
-                
 
                 var isRolePresent = roleList.Where(p => String.Equals(p.Entitlement, "hasDCPAccess", StringComparison.CurrentCulture)).Any();
                 if (roleList.ToList().Count > 0 && !isRolePresent && userResponse.User?.ActiveCustomer?.DCPAccess == true)
@@ -128,7 +152,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser
 
                 userResponse.User.ActiveCustomer = userResponse.User?.ActiveCustomer;
 
-                _sessionIdBasedCacheProvider.Put("User", userResponse.User, 86400);
+                _sessionIdBasedCacheProvider.Put("User", userResponse.User, userResponse.User.ExpiresInSeconds);
 
                 var userDto = _mapper.Map<Account.Models.Accounts.User>(userResponse.User);
 
