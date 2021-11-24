@@ -71,6 +71,16 @@
   .cmp-dcp-widget-chart__title{
     margin: 0;
     padding-bottom: rem(15px);
+    display: flex;    
+    -ms-flex-direction: row;
+    flex-direction: row;
+    justify-content: space-between;
+    @include mobile {
+      padding: 0px rem(15px);
+     }
+    span {
+      text-transform: none;
+    }
   }
   .cmp-dcp-widget-chart__body{
       display: flex;
