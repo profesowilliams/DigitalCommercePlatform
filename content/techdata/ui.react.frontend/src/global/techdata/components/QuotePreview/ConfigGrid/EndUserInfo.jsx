@@ -5,6 +5,7 @@ import Button from '../../Widgets/Button';
 
 
 function EndUserInfo({endUser, info, onValueChange}) {
+    endUser = endUser && endUser[0];
     const initialState = {
         companyName: endUser?.companyName || '',
         name: endUser?.name || '',
