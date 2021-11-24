@@ -39,7 +39,7 @@ const EditConfig = ({ componentProp }) => {
     };
     const getRedirectUrl = async (e) => {
         const body = { 
-            "PostBackURL": "postbackurl",  
+            "PostBackURL": window.location.href,  
             "Vendor": "Cisco",  
             "ConfigurationId": configurationId,  
             "Function": "CCW_ESTIMATE",  
