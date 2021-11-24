@@ -452,7 +452,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private async Task<QuotePreviewModel> CreateResponseUsingEstimateId(GetQuotePreviewDetails.Request request)
         {
             string _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
-            string _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
 
             try
             {
