@@ -45,7 +45,7 @@ export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogou
     if(!ignoreAEMRoundTrip) {
         var logoutReturnUrl = window.location.href;
         if(isPrivatePage) {
-            logoutRedirectUrl = window.location.origin;
+            logoutReturnUrl = window.location.origin;
         }
         shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
     }
