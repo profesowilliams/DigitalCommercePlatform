@@ -19,17 +19,7 @@ const NewSubheader = ({ componentProp }) => {
 	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
         if(window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()) {
             if(!localStorage.getItem("userData")) {
-                // fetch user entitlement data from datalayer and populate localStorage
-                var custNo = SHOP.dataLayer.User.custNo;
-                var entitlements = SHOP.dataLayer.User.entitlements;
-                var roleList = [];
-                for (var i = 0; i < entitlements.length; i++) {
-                    roleList.push({
-                        entitlement: entitlements[i],
-                        accountId: custNo
-                    });
-                }
-                var userData={roleList};
+                var userData = prepareUserData();
                 userDataJsonStr = JSON.stringify(userData);
                 localStorage.setItem("userData", userDataJsonStr);
             }
@@ -41,6 +31,26 @@ const NewSubheader = ({ componentProp }) => {
 		checkIfVendorSignedIn();
 	}, []);
 
+    const prepareUserData = () => {
+        // fetch user entitlement data from datalayer and populate localStorage
+        var custNo = SHOP.dataLayer.User.custNo;
+        var entitlements = SHOP.dataLayer.User.entitlements;
+        var roleList = [];
+        var dcpAccess = false;
+        for (var i = 0; i < entitlements.length; i++) {
+            var dataVal = entitlements[i];
+            if(dataVal.indexOf('HasDCPAccess')) {
+                dcpAccess = true;
+            }
+            roleList.push({
+                entitlement: dataVal,
+                accountId: custNo
+            });
+        }
+        var userData={prepareCustomersV2(dcpAccess),roleList};
+        return userData;
+    }
+
 	const hideOtherMenus = (sourceIndex) => {
 
 		if (sourceIndex==dashboardMenuIndex)
@@ -50,6 +60,21 @@ const NewSubheader = ({ componentProp }) => {
 			setShowDashboard(false);
 		}
 	}
+
+	function prepareCustomersV2(dcpAccess) {
+	    var customersV2 = [];
+        customersV2.push({
+            customerName: SHOP.dataLayer.User.customers[0].CustomerName,
+            customerNumber: SHOP.dataLayer.User.customers[0].CustomerNumber,
+            dcpAccess: dcpAccess,
+            name: SHOP.dataLayer.User.customers[0].CustomerName,
+            number: SHOP.dataLayer.User.customers[0].CustomerNumber,
+            salesOrg: SHOP.dataLayer.User.customers[0].SalesOrg,
+            system: ""
+        });
+	    return customersV2;
+	}
+
 	function showHideDashboard() {
 		hideOtherMenus(dashboardMenuIndex);
 		setShowDashboard(!showDashboard);
