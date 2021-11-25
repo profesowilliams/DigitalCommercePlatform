@@ -18,5 +18,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Intern
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<MainSpecificationModel> MainSpecifications { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string ServicePriority { get; set; }
     }
 }

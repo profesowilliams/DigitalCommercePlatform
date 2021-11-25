@@ -14,5 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
         public string ThumbnailImage { get; set; }
         public PriceDto Pricing { get; set; }
         public IEnumerable<MainSpecificationDto> MainSpecifications { get; set; }
+        public string ServicePriority { get; set; }
     }
 }
