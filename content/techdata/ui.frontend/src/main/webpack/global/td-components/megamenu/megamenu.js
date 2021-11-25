@@ -2,14 +2,12 @@ import bp from '../../../common-utils/js/media-match';
 
 (function(bp) {
   "use strict";
-  function hideIfPrivate(navPrimaryItems=[]){
+  function enableIfNotPrivate(navPrimaryItems=[]){
    let sessionId = localStorage.getItem('sessionId');
-   if (sessionId) return;
+   if (!sessionId) return;
     for (const navItem of navPrimaryItems){
       if (navItem.dataset.cmpIsprivate === "true"){
-        navItem.href = "";
-        navItem.style.pointerEvents = "none";
-        navItem.style.display = "none";
+        navItem.style.display = "";
       }
     }
   }
@@ -30,7 +28,7 @@ import bp from '../../../common-utils/js/media-match';
 
     function init(){
       var navPrimaryItems = navigation.querySelectorAll(MenuPrimary + ' li a');
-      hideIfPrivate(navPrimaryItems);
+      enableIfNotPrivate(navPrimaryItems);
       navPrimaryItems.forEach(function(item){
         item.addEventListener('mouseover',selectPrimaryItem)
         item.addEventListener('click',selectPrimaryItem)
