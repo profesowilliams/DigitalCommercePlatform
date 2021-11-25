@@ -21,7 +21,7 @@ pool:
 extends:
   template: pullrequest-template-v2.yml@DCP
   parameters:
-          projectSources: 'services/Renewal/DigitalCommercePlatform.UIServices.Renewal.sln'
-          unitTestSources: 'services/Renewal/DigitalCommercePlatform.UIServices.Renewal.*/*Tests.csproj'
-          projectKey: 'DC-DF-Renewal-UI'
-          projectName: 'DC-DF-Renewal-UI'          
+          projectSources: 'services/Orders/DigitalCommercePlatform.UIServices.Order.sln'
+          unitTestSources: 'services/Orders/DigitalCommercePlatform.UIServices.Order.*/*Tests.csproj'
+          projectKey: 'DC-DF-Order-UI'
+          projectName: 'DC-DF-Order-UI'          
