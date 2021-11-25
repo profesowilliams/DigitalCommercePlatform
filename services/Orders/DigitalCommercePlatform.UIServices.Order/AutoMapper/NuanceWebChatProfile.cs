@@ -8,7 +8,6 @@ using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Internal;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
-using DigitalCommercePlatform.UIServices.Order.Dto.Order.Internal;
 using DigitalCommercePlatform.UIServices.Order.Enum;
 using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalCommercePlatform.UIServices.Order.Models.Internal;
