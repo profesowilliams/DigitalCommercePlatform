@@ -30,7 +30,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly string _appCartURL;
         private readonly string _appCustomerURL;
-        private readonly string _appCatalogURL;
         private readonly string _typeSearchUrl;
         private readonly string _appCartUrl;
         private readonly ILogger<ContentService> _logger;
@@ -44,8 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             _middleTierHttpClient = middleTierHttpClient;
             _appCartURL = appSettings.GetSetting("App.Cart.Url");
             _appCustomerURL = appSettings.GetSetting("App.Customer.Url");
-            _appCatalogURL = appSettings.GetSetting("App.Catalog.Url");
-            _typeSearchUrl = appSettings.GetSetting("App.Search.Url");
+            _typeSearchUrl = appSettings.GetSetting("Search.App.Url");
             _appCartUrl = appSettings.GetSetting("App.Cart.Url");
         }
 
