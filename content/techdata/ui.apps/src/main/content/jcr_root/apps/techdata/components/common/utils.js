@@ -21,8 +21,22 @@ use(function () {
             targetObject["productEmptyImageUrl"] = serviceData["productEmptyImageUrl"];
         }
     }
+    function getCheckoutConfigurations (serviceData) {
+        var checkoutConfigurations = {};
+
+        if (serviceData.replaceCartEndpoint != null) {
+            checkoutConfigurations.uiServiceEndPoint = serviceData.uiServiceDomain+serviceData.replaceCartEndpoint;
+        }
+    
+        if (serviceData.shopDomain != null) {
+            checkoutConfigurations.redirectUrl = serviceData.shopDomain+serviceData.cartURL;
+        }
+
+        return checkoutConfigurations;
+    }
     return {
         getDataFromMultifield: getDataFromMultifield,
-        populateCommonConfigurations: populateCommonConfigurations
+        populateCommonConfigurations: populateCommonConfigurations,
+        getCheckoutConfigurations: getCheckoutConfigurations
     }
 });

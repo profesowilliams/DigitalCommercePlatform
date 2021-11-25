@@ -12,7 +12,9 @@ import useGet from "../../hooks/useGet";
 import { usPost } from "../../../../utils/api";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import GeneralInfo from "../common/quotes/GeneralInfo"
+import GeneralInfo from "../common/quotes/GeneralInfo";
+import { redirectToCart } from "../QuotesGrid/Checkout";
+import Modal from '../Modal/Modal';
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -30,6 +32,7 @@ const QuoteDetails = ({ componentProp }) => {
     fileName,
     downloadLinkText,
     quoteOptions,
+    checkout,
     whiteLabel,
     shopDomainPage
   } = JSON.parse(componentProp);
@@ -42,7 +45,25 @@ const QuoteDetails = ({ componentProp }) => {
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const [actualQuoteLinesData, setActualQuoteLinesData] = useState(null);
 
-  function onQuoteCheckout() {}
+  const [modal, setModal] = useState(null);
+
+  function onQuoteCheckout() {
+    redirectToCart(id, checkout, onErrorHandler);
+  }
+
+  const onErrorHandler = (error) => {
+    setModal((previousInfo) => (
+        {
+          content: (
+            <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+          ),
+          properties: {
+              title: `Error`,
+          },
+            ...previousInfo,
+        }
+    ));
+  }
 
   function onOptionChanged(option) {
     option?.key !== "whiteLabelQuote"
@@ -280,6 +301,14 @@ const QuoteDetails = ({ componentProp }) => {
         quoteDetails={quoteDetails}
 
       />
+      {modal && <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={() => setModal(null)}
+      ></Modal>}
     </div>
   ) : error ?
     <ErrorMessage
