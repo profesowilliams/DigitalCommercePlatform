@@ -13,6 +13,7 @@ import { isQuickQuoteButtonDisabled, isDealSelectorHidden } from "./QuoteTools";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
+  const URL_QUOTES_GRID = componentProp.successRedirectPage ? componentProp.successRedirectPage : '#';
   const { id, isEstimateId = true, vendor = 'cisco' } = getUrlParams();
   const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId}&vendor=${vendor}`);
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
@@ -76,7 +77,7 @@ function QuotePreview(props) {
     if (quoteDetailsCopy.hasOwnProperty("deal")) {
       delete quoteDetailsCopy.deal;
     }
-    createQuote(quoteDetailsCopy);
+    createQuote(quoteDetailsCopy).then(res => window.location.href = URL_QUOTES_GRID);
   };
 
   const generalInfoChange = (generalInformation) =>{

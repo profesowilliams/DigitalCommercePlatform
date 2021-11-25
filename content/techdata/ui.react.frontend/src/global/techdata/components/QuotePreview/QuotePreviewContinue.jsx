@@ -33,7 +33,6 @@ function QuotePreviewContinue({
         <label htmlFor="make-default">{gridProps.defaultChoiceLabel}</label>
       </div>
       <Link
-        href="#"
         callback={handleQuickQuoteWithoutDeals}
         variant={"cmp-qp-continue__link"}
         underline={"always"}
