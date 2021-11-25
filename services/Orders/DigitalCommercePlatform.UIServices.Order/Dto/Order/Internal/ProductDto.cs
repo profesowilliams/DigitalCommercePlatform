@@ -1,0 +1,18 @@
+//2021 (c) Tech Data Corporation -. All Rights Reserved.
+
+using DigitalCommercePlatform.UIServices.Order.Enum;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace DigitalCommercePlatform.UIServices.Order.Dto.Order.Internal
+{
+    public class ProductDto
+    {
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ProductType Type { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public string Manufacturer { get; set; }
+        public string LocalManufacturer { get; set; }
+    }
+}

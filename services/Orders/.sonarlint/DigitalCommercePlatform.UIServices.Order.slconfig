@@ -1,0 +1,12 @@
+{
+  "ServerUri": "https://sonar.tddevops.com/",
+  "Organization": null,
+  "ProjectKey": "DC-DF-Order-UI",
+  "ProjectName": "DC-DF-Order-UI",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWuuOnS1dcRKQNJK_NPt",
+      "ProfileTimestamp": "2021-08-10T23:44:19Z"
+    }
+  }
+}

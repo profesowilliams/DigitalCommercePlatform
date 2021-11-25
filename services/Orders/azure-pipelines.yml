@@ -1,0 +1,27 @@
+resources:
+  repositories:
+    - repository: DCP
+      type: git
+      name: 'WW Digital Commerce/DigitalCommercePlatform'
+      
+trigger: none
+
+schedules:
+- cron: "20 0 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
+
+pool:
+  name: 'DC-Buildpool-Windows'
+  workspace:
+    clean: all
+
+extends:
+  template: pullrequest-template-v2.yml@DCP
+  parameters:
+          projectSources: 'services/Renewal/DigitalCommercePlatform.UIServices.Renewal.sln'
+          unitTestSources: 'services/Renewal/DigitalCommercePlatform.UIServices.Renewal.*/*Tests.csproj'
+          projectKey: 'DC-DF-Renewal-UI'
+          projectName: 'DC-DF-Renewal-UI'          
