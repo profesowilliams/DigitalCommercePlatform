@@ -35,7 +35,7 @@ const ManuallyTyped = ({
   const goToNext = async () => {
     try{
       if( estimatedIdListEndpoint ){
-        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint, { });
+        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint.replace('{selected-id}', inputValue), { });
         if( items ){
           const filtered = items.filter((item) => item.configId === inputValue )
           if( filtered[0] ){
