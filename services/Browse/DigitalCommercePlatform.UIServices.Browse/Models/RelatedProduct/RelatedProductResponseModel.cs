@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct
     [ExcludeFromCodeCoverage]
     public class RelatedProductResponseModel
     {
+        public bool SameManufacturerOnly { get; set; }
         public Dictionary<string, List<TypeModel>> ProductTypes { get; set; }
     }
 }

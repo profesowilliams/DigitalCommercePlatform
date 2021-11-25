@@ -69,9 +69,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("Detail/RelatedProducts")]
-        public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids)
+        public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids, bool sameManufacturerOnly)
         {
-            var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids }).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids, SameManufacturerOnly = sameManufacturerOnly }).ConfigureAwait(false);
             return Ok(response);
         }
     }

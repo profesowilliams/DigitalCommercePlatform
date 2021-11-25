@@ -1,10 +1,9 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.Actions.Abstract;
@@ -83,6 +82,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var controller = GetController();
             var result = await controller.GetProduct(data).ConfigureAwait(false);
 
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetRelatedProducts(ResponseBase<GetRelatedProductsHandler.Response> expected)
+        {
+            var ids = new string[] { "123" };
+            var sameManufacturerOnly = false;
+
+            mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetRelatedProductsHandler.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.RelatedProducts(ids, sameManufacturerOnly).ConfigureAwait(false);
             result.Should().NotBeNull();
         }
 

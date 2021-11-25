@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct
     [ExcludeFromCodeCoverage]
     public class RelatedProductResponseDto
     {
+        public bool SameManufacturerOnly { get; set; }
         public Dictionary<string, List<TypeDto>> Product { get; set; }
         public string[] ProductsNotFound { get; set; }
     }

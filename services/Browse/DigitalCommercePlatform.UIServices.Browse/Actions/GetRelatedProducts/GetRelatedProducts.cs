@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string[] ProductId { get; set; }
+            public bool SameManufacturerOnly { get; set; }
         }
 
         public class Response
@@ -53,6 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
                 {
                     ProductId = request.ProductId,
                     Type = relatedProductsTypesConfig.Types.Select(x => x.Type).ToArray(),
+                    SameManufacturerOnly = request.SameManufacturerOnly
                 };
                 var result = await _productRepositoryServices.GetRelatedProducts(requestModel).ConfigureAwait(false);
                 var resultModel = _mapper.Map<RelatedProductResponseModel>(result);
