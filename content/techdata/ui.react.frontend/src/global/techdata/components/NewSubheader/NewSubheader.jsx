@@ -36,18 +36,22 @@ const NewSubheader = ({ componentProp }) => {
         var custNo = SHOP.dataLayer.User.custNo;
         var entitlements = SHOP.dataLayer.User.entitlements;
         var roleList = [];
-        var dcpAccess = false;
-        for (var i = 0; i < entitlements.length; i++) {
-            var dataVal = entitlements[i];
-            if(dataVal.indexOf('HasDCPAccess')) {
-                dcpAccess = true;
+        if(SHOP.dataLayer.User.entitlements) {
+            var dcpAccess = false;
+            for (var i = 0; i < entitlements.length; i++) {
+                var dataVal = entitlements[i];
+                if(dataVal.indexOf('HasDCPAccess')) {
+                    dcpAccess = true;
+                }
+                roleList.push({
+                    entitlement: dataVal,
+                    accountId: custNo
+                });
             }
-            roleList.push({
-                entitlement: dataVal,
-                accountId: custNo
-            });
         }
-        var userData={prepareCustomersV2(dcpAccess),roleList};
+        var userData = [];
+        userData.push(prepareCustomersV2(dcpAccess));
+        userData.push(roleList);
         return userData;
     }
 
@@ -61,17 +65,19 @@ const NewSubheader = ({ componentProp }) => {
 		}
 	}
 
-	function prepareCustomersV2(dcpAccess) {
+	const prepareCustomersV2 = (dcpAccess) => {
 	    var customersV2 = [];
-        customersV2.push({
-            customerName: SHOP.dataLayer.User.customers[0].CustomerName,
-            customerNumber: SHOP.dataLayer.User.customers[0].CustomerNumber,
-            dcpAccess: dcpAccess,
-            name: SHOP.dataLayer.User.customers[0].CustomerName,
-            number: SHOP.dataLayer.User.customers[0].CustomerNumber,
-            salesOrg: SHOP.dataLayer.User.customers[0].SalesOrg,
-            system: ""
-        });
+	    if(SHOP.dataLayer.User.customers) {
+            customersV2.push({
+                customerName: SHOP.dataLayer.User.customers[0].CustomerName,
+                customerNumber: SHOP.dataLayer.User.customers[0].CustomerNumber,
+                dcpAccess: dcpAccess,
+                name: SHOP.dataLayer.User.customers[0].CustomerName,
+                number: SHOP.dataLayer.User.customers[0].CustomerNumber,
+                salesOrg: SHOP.dataLayer.User.customers[0].SalesOrg,
+                system: ""
+            });
+        }
 	    return customersV2;
 	}
 
