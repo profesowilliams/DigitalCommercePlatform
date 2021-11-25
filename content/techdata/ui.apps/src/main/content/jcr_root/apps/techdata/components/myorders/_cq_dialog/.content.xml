@@ -16,6 +16,16 @@
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Label"
                         name="./label"/>
+                    <days30
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Days 30 Label"
+                        name="./days30Label"/>
+                    <days90
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Days 90 Label"
+                        name="./days90Label"/>
 				</items>
             </column>
         </items>

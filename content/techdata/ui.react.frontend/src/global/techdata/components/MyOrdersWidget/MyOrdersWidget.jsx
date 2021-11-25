@@ -111,14 +111,14 @@ const MyOrdersWidget = ({ componentProp }) => {
                     </div>
                     <div className='cmp-gauge-chart-period'>
                         <div>
-                            <div>MTD</div>
+                            <div>{days30Label}</div>
                             <div className='cmp-gauge-chart-period--toggle'>
                                 <label className='switch'>
                                     <input type='checkbox' checked={toggle} onChange={toDateToggle}/>
                                     <span className='dot round' />
                                 </label>
                             </div>
-                            <div>QTD</div>
+                            <div>{days90Label}</div>
                         </div>
                     </div>
                 </div>
