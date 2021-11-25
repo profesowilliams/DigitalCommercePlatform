@@ -21,6 +21,9 @@
                 text-decoration: none;
                 color: #fff;
                 cursor: pointer;
+                &.nolink {
+                    cursor: default;
+                }
 
                 article {
                     display: flex;

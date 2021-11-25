@@ -18,6 +18,9 @@
                 text-decoration: none;
                 color: get-color(brand-white);
                 cursor: pointer;
+                &.nolink {
+                    cursor: default;
+                }
 
                 article {
                     display: flex;
