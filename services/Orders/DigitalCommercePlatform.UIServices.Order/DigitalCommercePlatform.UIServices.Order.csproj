@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Techdata.Common.Utility" Version="2021.11.5.2" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-Order-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />

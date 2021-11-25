@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Dto
         public string Status { get; set; }
         public string BlockReason { get; set; }
         public ResellerDto Reseller { get; set; }
-        public StatusCountDto StatusCount { get; set; }
+        public List<StatusCountDto> StatusCount { get; set; }
         public string OrderDetailsLink { get; set; }
         public List<ItemDto> Items { get; set; }
         public bool IsDropShip { get; set; }

@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Models
         public string Status { get; set; }
         public string BlockReason { get; set; }
         public ResellerModel Reseller { get; set; }
-        public StatusCountModel StatusCount { get; set; }
+        public List<StatusCountModel> StatusCount { get; set; }
         public string OrderDetailsLink { get; set; }
         public List<ItemModel> Items { get; set; }
         public bool IsDropShip { get; set; }

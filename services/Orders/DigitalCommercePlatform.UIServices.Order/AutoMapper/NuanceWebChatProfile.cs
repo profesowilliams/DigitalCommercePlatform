@@ -1,5 +1,4 @@
 ﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +12,9 @@ using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalCommercePlatform.UIServices.Order.Models.Internal;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Models.Order.Internal;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Techdata.Common.Utility.CarrierTracking;
+using Techdata.Common.Utility.CarrierTracking.Model;
 using AddressDto = DigitalCommercePlatform.UIServices.Order.Dto.Internal.AddressDto;
 using AddressModel = DigitalCommercePlatform.UIServices.Order.Models.Internal.AddressModel;
 using ItemDto = DigitalCommercePlatform.UIServices.Order.Dto.Internal.ItemDto;
@@ -35,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.TrackingNumber, y => y.MapFrom(s => s.TrackingNumber))
                 .ForMember(x => x.Description, y => y.MapFrom(s => s.Description))
                 .ForMember(x => x.Date, y => y.MapFrom(s => s.Date))
-                .ForMember(x=>x.TrackingLink, y=> y.Ignore())
+                .ForMember(x=>x.TrackingLink, y=> y.MapFrom((src, dest, context) => GetTrackingLink(src)))
                 ;
             CreateMap<StatusCountDto, StatusCountModel>();
             CreateMap<NuanceChatBotResponseDto, NuanceChatBotResponseModel>();
@@ -49,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             CreateMap<OrderModel, NuanceChatBotResponseModel>()
                 .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src.Status)))
                 .ForMember(x => x.OrderId, y => y.MapFrom(s => s.Source.Id))
-                .ForMember(x => x.StatusCount, y => y.Ignore())
+                .ForMember(x => x.StatusCount, y => y.MapFrom((src, dest, context) => GetStatusCount(src.Items)))
                 .ForMember(x => x.OrderDetailsLink, y => y.MapFrom((src, dest, context) => GetLink(src.Source.Id)))
                 .ForMember(x => x.Reseller, y => y.MapFrom((src, dest, context) => GetReseller(src.Reseller)))
                 .ForMember(x => x.IsDropShip, y => y.Ignore())
@@ -84,6 +86,24 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForPath(x => x.Address.Line3, y => y.MapFrom(s => s.Address.Line3))
 
                 ;
+        }
+        
+
+        private List<StatusCountModel> GetStatusCount(List<Models.Order.Internal.ItemModel> model)
+        {
+            var statusList = model.GroupBy(n => n.Status)
+                .Select(x => new StatusCountModel() { Status = GetStatus(x.Key), Count = x.Count() }).ToList();
+            return statusList;
+        }
+
+
+        private string GetTrackingLink(ShipmentModel src)
+        {
+            var shipmentUtility = new ShipmentUtility();
+            return shipmentUtility.GetSingleCarrierInformation(new TrackingQuery()
+            {
+                TrackingId = src.TrackingNumber
+            })?.CarrierImageURL;
         }
 
         private string GetLink(string sourceId)
@@ -126,7 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 case Status.CANCELLED:
                     return "CANCELLED";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status));
+                    return "WRONG STATUS";
             }
         }
     }

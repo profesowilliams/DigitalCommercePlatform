@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
+using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Models;
-using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Services;
+using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
 {
@@ -25,11 +25,13 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
         {
             private readonly IOrderService _orderService;
             private readonly IMapper _mapper;
+            private readonly ILogger<GetOrder> _logger;
 
-            public Handler(IOrderService orderService, IMapper mapper)
+            public Handler(IOrderService orderService, IMapper mapper, ILogger<GetOrder> logger)
             {
                 _orderService = orderService;
                 _mapper = mapper;
+                _logger = logger;
             }
             public async Task<NuanceChatBotResponseModel> Handle(Request request, CancellationToken cancellationToken)
             {
@@ -41,10 +43,16 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    _logger.LogError($"Error while send request {e.Message}");
                     throw;
                 }
                
+            }
+        }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
             }
         }
     }

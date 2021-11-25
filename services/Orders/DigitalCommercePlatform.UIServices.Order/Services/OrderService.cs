@@ -1,4 +1,5 @@
-﻿using System;
+﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Services
 
         public OrderService(IMiddleTierHttpClient middleTierHttpClient,
             ILogger<OrderService> logger, IAppSettings appSettings,
-            IUIContext uiContext,
             IMapper mapper)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
