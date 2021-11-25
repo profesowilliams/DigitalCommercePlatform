@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
@@ -309,6 +310,32 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             var getDealsForGrid = GetDealsDetails(spaRequest);
             return getDealsForGrid;
+        }
+
+        public async Task Refresh(Refresh.Request request)
+        {
+            try
+            {
+                var configurationRefreshUrl = _appConfigurationUrl.AppendPathSegments("Refresh", request.ProviderName, request.ConfigurationType);
+
+                if (!string.IsNullOrWhiteSpace(request.Version))
+                {
+                    configurationRefreshUrl = configurationRefreshUrl.AppendPathSegment(request.Version);
+                }
+                
+                if (request.QueryParams != null)
+                {
+                    configurationRefreshUrl = configurationRefreshUrl.SetQueryParams(request.QueryParams);
+                }
+                
+                await _middleTierHttpClient.GetAsync<Task>(configurationRefreshUrl);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception in refresh configurations : " + nameof(ConfigService));
+                throw;
+            }
+
         }
 
         private async Task<FindResponse<DealsBase>> GetDealsDetails<T>(T request)

@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -15,8 +16,11 @@ using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -200,10 +204,33 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().Equals(HttpStatusCode.OK);
         }
 
+        [Fact]
+        public async Task Get_Refresh_WithStatusOk()
+        {
+            _mockMediator.Setup(x => x.Publish(It.IsAny<Refresh.Request>(), It.IsAny<CancellationToken>()));
+
+            using var sut = GetController();
+
+            await sut.Refresh("Cisco", "Estimate", "1", "3", null, default).ConfigureAwait(false);
+
+            _mockMediator.Verify(x => x.Publish(It.IsAny<Refresh.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
         private ConfigController GetController()
         {
-            return new ConfigController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
-                _appSettingsMock.Object, _mockSiteSettings.Object);
+            var httpRequestMock = new Mock<HttpRequest>();
+
+            httpRequestMock.Setup(x => x.Scheme).Returns("http");
+            httpRequestMock.Setup(x => x.Host).Returns(HostString.FromUriComponent(new Uri("http://localhost:8080")));
+
+
+            return new ConfigController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object, _appSettingsMock.Object, _mockSiteSettings.Object)
+            {
+                ControllerContext = new ControllerContext()
+                {
+                    HttpContext = Mock.Of<HttpContext>(_ => _.Request == httpRequestMock.Object)
+                }
+            };
         }
     }
 }

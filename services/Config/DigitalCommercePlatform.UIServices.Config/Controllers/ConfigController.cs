@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
@@ -14,6 +15,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Controllers
@@ -109,6 +111,25 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);
+        }
+
+        /// <summary>
+        /// This request will create/edit the PunchoutUrl with ConfigId's (Only applicable to CISCO)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("Refresh/{VendorName}/{Type}/{VersionNo?}")]
+        public async Task Refresh(string vendorName, string type, [FromQuery] string userId, [FromQuery] string customerNumber, string versionNo = null, CancellationToken cancellationToken = default)
+        {
+            await Mediator.Publish(new Refresh.Request
+            {
+                ProviderName = vendorName,
+                ConfigurationType = type,
+                Version = versionNo,
+                UserId = userId,
+                CustomerNumber = customerNumber,
+                QueryParams = Request?.Query
+            }, cancellationToken).ConfigureAwait(false);
         }
     }
 }
