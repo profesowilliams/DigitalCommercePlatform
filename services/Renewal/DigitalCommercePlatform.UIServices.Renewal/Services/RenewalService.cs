@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             _appRenewalServiceUrl = appSettings.GetSetting("App.Renewal.Url");
         }
 
-        public async Task<List<DetailedModel>> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
+        public async Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -44,11 +44,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
             var coreResult = await _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
+            var count = coreResult.Count;
             
-            return modelList;
+            return new DetailedResponseModel()
+            {
+                Count = count,
+                Response = modelList
+            };
         }
 
-        public async Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
+        public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -56,8 +61,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
             var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
-            
-            return modelList;
+            var count = coreResult.Count;
+            return new SummaryResponseModel(){Count = count, Response = modelList};
         }
 
         public async Task<int> GetRenewalsSummaryCountFor(RefinementRequest request)

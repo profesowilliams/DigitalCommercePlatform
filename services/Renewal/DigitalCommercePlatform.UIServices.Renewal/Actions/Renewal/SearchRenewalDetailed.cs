@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
         public class Response
         {
-            public List<DetailedModel> Items { get; set; }
+            public DetailedResponseModel Items { get; set; }
             public RefinementGroupsModel RefinementGroups { get; set; }
         }
 
@@ -83,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                List<DetailedModel> renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
+                DetailedResponseModel renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
                 RefinementGroupsModel refainmentGroup = new();
                 
                 if (_homeAccount != _context.ImpersonatedAccount)

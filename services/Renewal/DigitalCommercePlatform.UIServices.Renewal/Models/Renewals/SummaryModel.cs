@@ -3,9 +3,17 @@ using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
+    [ExcludeFromCodeCoverage]
+    public class SummaryResponseModel
+    {
+        public List<SummaryModel> Response { get; set; }
+        public int Count { get; set; }
+    }
+
     [ExcludeFromCodeCoverage]
     public class SummaryModel : BaseResponseModel
     {

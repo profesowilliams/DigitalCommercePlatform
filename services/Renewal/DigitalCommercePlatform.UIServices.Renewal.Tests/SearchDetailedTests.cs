@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         [Theory]
         [AutoDomainData]
-        public async Task SearchDetailedHandler_Handle_ReturnDataAndPaginationInfo(SearchRenewalDetailed.Request request, List<DetailedModel> dtos)
+        public async Task SearchDetailedHandler_Handle_ReturnDataAndPaginationInfo(SearchRenewalDetailed.Request request, DetailedResponseModel dtos)
         {
             // arrange
             request.WithPaginationInfo = true;

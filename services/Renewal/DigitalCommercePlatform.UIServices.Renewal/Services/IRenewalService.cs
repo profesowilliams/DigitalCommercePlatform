@@ -10,8 +10,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 {
     public interface IRenewalService
     {
-        Task<List<DetailedModel>> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request);
-        Task<List<SummaryModel>> GetRenewalsSummaryFor(SearchRenewalSummary.Request request);
+        Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request);
+        Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request);
         Task<RefinementGroupsModel> GetRefainmentGroup(RefinementRequest request);
         Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request);
     }

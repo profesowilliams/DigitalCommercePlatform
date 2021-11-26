@@ -5,6 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
+    public class DetailedResponseModel
+    {
+        public List<DetailedModel> Response { get; set; }
+        public int Count { get; set; }
+    }
     [ExcludeFromCodeCoverage]
     public class DetailedModel : SummaryModel
     {
