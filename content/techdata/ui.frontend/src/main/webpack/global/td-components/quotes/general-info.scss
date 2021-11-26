@@ -25,3 +25,19 @@
     }
   }
 }
+
+div .errorDeal {
+  width: 60%;
+}
+
+.errorDeal {
+  color: get-color(brand-secondary-text);
+  text-decoration: underline;
+  animation: error 1s ease-in-out both;
+  transition: all;
+}
+
+@keyframes error {
+  0% {background-color: get-color(brand-secondary-text); color: get-color(brand-white);}
+  100% {background-color: transparent; color: get-color(brand-secondary-text)}
+}

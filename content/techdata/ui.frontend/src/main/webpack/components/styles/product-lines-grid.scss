@@ -186,6 +186,7 @@
         border-radius: unset;
         &--disabled {
           background-color: get-color(secondary-grey);
+          color: get-color(brand-white);
         }
       }
       .cmp-grid .ag-cell button {

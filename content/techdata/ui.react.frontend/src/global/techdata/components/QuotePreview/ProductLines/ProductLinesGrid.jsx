@@ -5,7 +5,7 @@ import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
-function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
+function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuantityIncrease }) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items ?? [];
   /*
@@ -88,6 +88,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated }) {
       cellRenderer: ({ node, api, setValue, data }) => {
         return (
           <ProductLinesQuantityWidget
+            isAllowedQuantityIncrease={isAllowedQuantityIncrease}
             initialValue={gridData.find((row) => row.id === data.id)?.quantity}
             selectedValue={data.quantity}
             onValueChanged={(_val) => {

@@ -6,4 +6,11 @@ export const isQuickQuoteButtonDisabled = (quoteDetails, didQuantitiesChange) =>
 }
 
 export const isVendorQuote = (source) => source.type === 'VendorQuote'
+
 export const isEstimate = (source) => source.type === 'Estimate'
+
+export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetails.source)
+
+export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails.source)
+
+export const isDealRequired = (quoteDetails, quoteWithoutDeal) => quoteWithoutDeal && isEstimate(quoteDetails.source) && !quoteDetails.spaId

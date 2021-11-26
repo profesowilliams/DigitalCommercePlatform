@@ -9,7 +9,7 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isQuickQuoteButtonDisabled, isDealSelectorHidden } from "./QuoteTools";
+import { isAllowedQuantityIncrease, isDealRequired } from "./QuoteTools";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -20,6 +20,7 @@ function QuotePreview(props) {
   const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
   const [didQuantitiesChange, setDidQuantitiesChange] = useState(false);
+  const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
 
   useEffect(() => {
     if(apiResponse?.content?.quotePreview?.quoteDetails) {
@@ -67,10 +68,26 @@ function QuotePreview(props) {
     }
   };
 
-  const handleQuickQuote = useCallback(() => createQuote(quoteDetails), [quoteDetails]);
+  const scrollToTopError = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+  
+  const handleQuickQuote = useCallback((e) => {
+    if(isDealRequired(quoteDetails, true)){
+      e.preventDefault();
+      setQuoteWithoutDeal(true)
+      scrollToTopError()
+    } else {
+      createQuote(quoteDetails)
+    }
+  }, [quoteDetails]);
 
   const handleQuickQuoteWithoutDeals = (e) => {
     e.preventDefault();
+    setQuoteWithoutDeal(false);
     const quoteDetailsCopy = { ...quoteDetails };
 
     // remove deal if present
@@ -141,18 +158,19 @@ function QuotePreview(props) {
       {apiResponse && !isLoading && (
         <section>
           <ConfigGrid
+            isDealRequired={isDealRequired(quoteDetails, quoteWithoutDeal)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
             generalInfoChange={generalInfoChange}
             companyInfoChange={companyInfoChange}
-            hideDealSelector={isDealSelectorHidden(quoteDetails)}
           />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />
           </div>
           <div className="cmp-quote-preview__lines">
             <QuotePreviewGrid
+              isAllowedQuantityIncrease={isAllowedQuantityIncrease(quoteDetails)}
               gridProps={componentProp.productLines}
               data={quoteDetails}
               onQuoteLinesUpdated={onGridUpdate}
@@ -164,9 +182,10 @@ function QuotePreview(props) {
             />
           </div>
           <QuotePreviewContinue
+            isDealRequired={isDealRequired(quoteDetails)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
-            disableQuickQuoteButton={isQuickQuoteButtonDisabled(quoteDetails, didQuantitiesChange)}
+            disableQuickQuoteButton={false}
             handleQuickQuote={handleQuickQuote}
             handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}/>
         </section>

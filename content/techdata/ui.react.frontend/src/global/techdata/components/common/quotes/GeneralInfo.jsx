@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 
-function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueChange, readOnly}) {
+function GeneralInfo({quoteDetails, gridProps, isDealRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
 
     const source = quoteDetails.source;
@@ -306,13 +306,16 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                                 </div>
                             </div>
                         }
-                        {generalInfoState.deal.spaId &&
+                        {(isDealRequired || generalInfoState.deal.spaId) &&
                             <div className="cmp-qp__information-row--readonly">
                                 <span>
                                     {info.dealLabel}:
                                 </span>
                                 <div>
                                     <div>
+                                        <span className={isDealRequired ? 'errorDeal' : ''}>
+                                            {isDealRequired ? 'Please select a Deal' : null}
+                                        </span>
                                         {generalInfoState.deal.spaId}
                                     </div>
                                     <div>
@@ -367,7 +370,6 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                     <span className={`characterError ${characterError ? `characterError--show` : `characterError--hide`}`}>
                         {info.referenceMaxCharacterError}
                     </span>
-                    {!hideDealSelector && (
                         <div className="form-check cmp-qp__edit-deal">
                             <label htmlFor="endUserName">{info.dealLabel}</label>
                             <div>
@@ -409,7 +411,6 @@ function GeneralInfo({quoteDetails, gridProps, info, hideDealSelector, onValueCh
                                 {displayDealsFound()}
                             </div>
                         </div>
-                    )}
                     <div className="form-group">
                         <Button btnClass="cmp-qp--save-information" disabled={characterError} onClick={handleSaveChanges}>
                             {info.submitLabel}

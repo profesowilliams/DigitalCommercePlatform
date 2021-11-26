@@ -4,6 +4,7 @@ function ProductLinesQuantityWidget({
   initialValue,
   selectedValue,
   onValueChanged,
+  isAllowedQuantityIncrease
 }) {
   const [value, setValue] = useState(selectedValue);
   const [shouldUpdate, setShouldUpdate] = useState(false);
@@ -18,21 +19,24 @@ function ProductLinesQuantityWidget({
   return (
     <section>
       <div className="cmp-product-lines-grid__quantity-widget">
-        <div className={`cmp-product-lines-grid__quantity-widget__buttons
-        `}> 
-          <button className={`cmp-product-lines-grid__quantity-widget__buttons__button
-           ${value === initialValue && "cmp-product-lines-grid__quantity-widget__buttons__button--disabled"}
-          `}
+        <div className={`cmp-product-lines-grid__quantity-widget__buttons`}> 
+          <button className={
+            !isAllowedQuantityIncrease 
+              ? "cmp-product-lines-grid__quantity-widget__buttons__button--disabled" 
+              : "cmp-product-lines-grid__quantity-widget__buttons__button"
+            }
             onClick={() => {
-              setValue(value < initialValue ? value + 1 : value);
+              setValue(isAllowedQuantityIncrease || value < initialValue ? value + 1 : value);
               setShouldUpdate(true);
             }}
           >
             +
           </button>
-          <button className={`cmp-product-lines-grid__quantity-widget__buttons__button
-           ${value <= 1 && "cmp-product-lines-grid__quantity-widget__buttons__button--disabled"}
-          `}
+          <button className={
+            value <= 1
+              ? "cmp-product-lines-grid__quantity-widget__buttons__button--disabled"
+              : "cmp-product-lines-grid__quantity-widget__buttons__button"
+            }
             onClick={() => {
               setValue(value > 1 ? value - 1 : value);
               setShouldUpdate(true);
