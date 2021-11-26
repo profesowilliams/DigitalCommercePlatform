@@ -92,8 +92,8 @@ function ProductLinesGrid({
   }
 
   function applyStatusIcon(statusKey) {
-    let icon = iconList?.find((icon) => icon.iconKey === statusKey);
-    if (!icon) icon = defaultIcons.find((icon) => icon.iconKey === statusKey);
+    let icon = iconList?.find((icon) => icon.iconKey.toLowerCase() === statusKey.toLowerCase());
+    if (!icon) icon = defaultIcons.find((icon) => icon.iconKey.toLowerCase() === statusKey.toLowerCase());
     return icon;
   }
 

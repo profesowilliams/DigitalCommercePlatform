@@ -4,106 +4,151 @@
              data-config='{
               "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order/details",
               "downloadOrderDetailsEndpoint":"http://localhost:3000/ui-commerce/v1/downloadOrderDetails",
-              "headerConfig":{
-                "orderLabel":"Order Label",
-                "orderDateLabel":"Order Date Label",
-                "purchaseOrderLabel":"Purchase Order Label",
-                "exportCSVLabel":"Export to CSV Label",
-                "phoneNumberLabel":"(123)-456-7890"},
-              "infoConfig":{
-                "orderStatusLabel":"Status Card Label",
-                "orderStatusItemsShipped":"All Items Shipped Message",
-                "orderStatusItemsOpen":"All Items Open Message",
-                "orderStatusItemsCancelled":"Order Cancelled Message",
-                "orderStatusItemsInProcess":"Items are being Processed message",
-                "orderStatusItemsInReview":"Order in Review Message",
-                "orderStatusItemsShippedDescription":"All Items Shipped Very Very long Message, very very very looong",
-                "orderStatusItemsCancelledDescription":"All Items Cancelled Very Very long Message, very very very looong",
-                "orderStatusItemsInProcessDescription":"Items are being Processed Very Very long Message, very very very looong",
-                "orderStatusItemsOpenDescription":"Items are Open Very Very long Message, very very very looong",
-                "orderStatusItemsInReviewDescription":"Order in Review Descriptive Message","endUserLabel":"End-user Card Label",
-                "shipToLabel":"Ship-To Card Label","blindPackagingUsed":"Blind packaging used Label",
-                "blindPackagingNotUsed":"Blind packaging not used Label",
-                "paymentLabel":"Payment Card Label","subTotalLabel":"subTotalLabel Label",
-                "freightLabel":"freightLabel Label","taxLabel":"taxLabel  Label",
-                "otherFeesLabel":"otherFeesLabel  Label","paymentTermsLabel":"paymentTermsLabel Label",
-                "paymentTotalLabel":"paymentTotalLabel Label","currencyLabel":"currencyLabel  Label"},
-                "productLines": {
-                  "productEmptyImageUrl": "/content/dam/techdata/tech-data-dot-com/global/site/about-us/Icon_AboutUs_IRandNews_InvestorRelations_COIN.png",
-                  "shopDomainPage":"http://localhost:8080/shop",
-                  "showMoreFlag": false,
-                  "trackingsModal": {
-                    "title": "Order",
-                    "buttonLabel": "Download All Related Trackings",
-                    "buttonIcon": "fas fa-download",
-                    "content": "There are multiple Trackings associated with this Order. Click an tracking number to preview with the option to print",
-                    "errorMessage": "This data is currently unavailable. Please try again later or contact your sales representative.",
-                    "pendingInfo": "Tracking is pending and will appear here after shipment is processed"
+              "headerConfig": {
+                "orderLabel": "Order",
+                "orderDateLabel": "Placed on",
+                "purchaseOrderLabel": "Purchase Order:",
+                "exportCSVLabel": "Export CSV"
+              },
+              "infoConfig": {
+                "orderStatusLabel": "Status",
+                "orderStatusItemsShipped": "All items have been shipped.",
+                "orderStatusItemsInProcess": "Your order is open and in process.",
+                "orderStatusItemsInReview": "The order is in sales review. ",
+                "orderStatusItemsShippedDescription": "For more information, call your sales representative at 800-555-1212",
+                "orderStatusItemsInProcessDescription": "For more information, call your sales representative at 800-555-1212",
+                "orderStatusItemsInReviewDescription": "For more information, call your sales representative at 800-555-1212",
+                "endUserLabel": "End user",
+                "shipToLabel": "Ship to",
+                "blindPackagingUsed": "Blind Packaging Used",
+                "blindPackagingNotUsed": "Blind Packaging Not Used",
+                "paymentLabel": "Payment",
+                "subTotalLabel": "Subtotal",
+                "freightLabel": "Freight",
+                "taxLabel": "Tax",
+                "otherFeesLabel": "Other Fees",
+                "paymentTermsLabel": "Terms",
+                "paymentTotalLabel": "Total",
+                "currencyLabel": "Prices displayed are in "
+              },
+              "productLines": {
+                "productEmptyImageUrl": "/content/dam/techdata/tech-data-dot-com/global/site/about-us/Icon_AboutUs_IRandNews_InvestorRelations_COIN.png",
+                "shopDomainPage":"http://localhost:8080/shop",
+                "columnList": [
+                  {
+                    "columnLabel": "Line",
+                    "columnKey": "displayLineNumber",
+                    "sortable": false
                   },
-                  "trackingConfig" : {
-                    "trackingIcons" : [
-                      {
-                          "carrier": "FEDEX",
-                          "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/fedex.png/jcr:content/renditions/cq5dam.thumbnail.140.100.png"
-                      },
-                      {"carrier": "UPS", "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/ups.png"}
-                    ],
-                    "trackingStatus" : [
-                      {"key" : "pending", "value" : "Pending"},
-                      {"key" : "in transit", "value" : "In Transit"},
-                      {"key" : "completed", "value" : "Completed"}
-                    ],
-                    "modalTitle" : "Track My Order ...",
-                    "multipleOrderInformation" : "There are multiple shipments associated with this this Order."
+                  {
+                    "columnLabel": "Mfr №",
+                    "columnKey": "mfrNumber",
+                    "sortable": false
                   },
-                "noShipDateLabel": "No Ship Date",
+                  {
+                    "columnLabel": "Description",
+                    "columnKey": "displayName",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Qty",
+                    "columnKey": "quantity",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Unit Price (USD)",
+                    "columnKey": "unitPrice",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Total Price (USD)",
+                    "columnKey": "totalPrice",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Status",
+                    "columnKey": "status",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Track",
+                    "columnKey": "trackings",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Serial №/License Key",
+                    "columnKey": "serials",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Invoice",
+                    "columnKey": "invoice",
+                    "sortable": false
+                  }
+                ],
+                "iconList": [
+                  {
+                    "iconKey": "shipped",
+                    "iconValue": "fas fa-check",
+                    "iconText": "Shipped"
+                  },
+                  {
+                    "iconKey": "open",
+                    "iconValue": "fas fa-box-open",
+                    "iconText": "Open"
+                  },
+                  {
+                    "iconKey": "inProcess",
+                    "iconValue": "fas fa-dolly",
+                    "iconText": "In Process"
+                  },
+                  {
+                    "iconKey": "onHold",
+                    "iconValue": "fas fa-hand-paper",
+                    "iconText": "On Hold"
+                  },
+                  {
+                    "iconKey": "cancelled",
+                    "iconValue": "fas fa-ban",
+                    "iconText": "Cancelled"
+                  }
+                ],
+                "serialCellLabel": "Serial №",
+                "serialModal": "Serial numbers",
+                "serialCellNotFoundMessage": "Not found",
                 "searchCriteria": {
-                  "title" : "Filter Orders","searchButtonLabel": "Apply",
-                  "clearButtonLabel": "Clear All Filters",
-                  "inputPlaceholder": "Enter your search",
-                  "keywordDropdown" : {
-                    "label": "Keyword",
-                    "items": [
-                      {"key": "id", "value": "TD Order #"},
-                      {"key": "customerPO", "value": "Customer PO"}]
-                  },
+                  "searchButtonLabel": "Apply",
+                  "clearButtonLabel": "Clear all filters",
+                  "title": "FILTER ORDERS",
                   "searchbyDropdown": {
-                    "label": "SearchBy",
                     "items": [
-                      { "key": "allLines", "value": "All Lines" },
-                      { "key": "contractNo", "value": "Contracts" },
-                      { "key": "license", "value": "Licenses" }]
+                      {
+                        "key": "allLines",
+                        "value": "All Lines"
+                      },
+                      {
+                        "key": "contractNo",
+                        "value": "Contracts"
+                      },
+                      {
+                        "key": "license",
+                        "value": "Licenses"
+                      }
+                    ]
                   }
                 },
-                "iconList": [
-                {"iconKey":"onHold","iconValue":"fa fa-pause","iconText":"On Hold"},
-                {"iconKey":"inProcess","iconValue":"fas fa-dolly","iconText":"In Process"},
-                {"iconKey":"open","iconValue":"fas fa-box-open","iconText":"Open"},
-                {"iconKey":"shipped","iconValue":"fas fa-check","iconText":"Shipped"},
-                {"iconKey":"cancelled","iconValue":"fas fa-ban","iconText":"Cancelled"}],
-                "label": "Line Item Details",
-                "serialCellLabel":"view from config",
-                "serialModal":"Serial Modal title from config",
-                "serialCellNotFoundMessage":"n/a from config",
-                "applyMarkupLabel": "Apply your markup to the line items below",
-                "expandAllLabel": "Expand All","collapseAllLabel": "Collapse All",
-                "startDateLabel": "Start Date",
-                "autoRenewLabel": "Auto Renew",
-                "durationLabel": "Duration",
-                "billingLabel": "Billing",
-                "yesLabel": "Yes",
-                "noLabel": "No",
-                "columnList": [
-                  { "columnLabel": "Description", "columnKey": "description", "sortable": false },
-                  { "columnLabel": "Quantity", "columnKey": "quantity", "sortable": false },
-                  { "columnLabel": "Unit Price", "columnKey": "unitPrice", "sortable": false },
-                  { "columnLabel": "Total Price", "columnKey": "totalPrice", "sortable": false },
-                  { "columnLabel": "status", "columnKey": "status", "sortable": false },
-                  { "columnLabel": "Track", "columnKey": "trackings", "sortable": false },
-                  { "columnLabel": "Ser", "columnKey": "serials", "sortable": false },
-                  { "columnLabel": "inv", "columnKey": "invoice", "sortable": false },
-                  { "columnLabel": "ship date", "columnKey": "shipDates", "sortable": false }
-                ]
+                "trackingConfig": {
+                  "trackingIcons": [
+                    {
+                      "carrier": "FEDEX",
+                      "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/fedex.png"
+                    },
+                    {
+                      "carrier": "UPS",
+                      "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/ups.png"
+                    }
+                  ]
+                }
               }
             }'></div>
     </div>
