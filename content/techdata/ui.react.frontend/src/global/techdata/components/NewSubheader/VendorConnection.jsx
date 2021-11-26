@@ -11,10 +11,10 @@ function VendorConnection({ vendorConfig, signInRequest }) {
 		setConnectionsEndPoint: vendorConfig.setConnectionsEndPoint
 	};
 
-	async function vendorLogin(code, vendorName) {
+	async function vendorLogin(code, vendorName, redirectURL) {
 		const url = ENDPOINTS.setConnectionsEndPoint;
 		try {
-			const response = await get(url + `?code=${code}&vendor=${vendorName}`);
+			const response = await get(url + `?code=${code}&vendor=${vendorName}&redirectURL=${redirectURL}`);
 			return response;
 		} catch (e) {
 			setError(`${vendorName} connect failed.`);
@@ -24,12 +24,18 @@ function VendorConnection({ vendorConfig, signInRequest }) {
 		}
 	}
 
+	function getSignInURL(vendorFromRequest)
+	{
+		let vendorKey = vendorConfig?.vendors?.find( vendor => vendor.key == vendorFromRequest);
+		return vendorKey?.connectLandingPage;
+	}
+
 	useEffect(() => {
 		let isMounted = true;
 		async function _() {
 			let response = null;
 			if (signInRequest) {
-				let vendorLoginResponse = await vendorLogin(signInRequest.code, signInRequest.vendor);
+				let vendorLoginResponse = await vendorLogin(signInRequest.code, signInRequest.vendor, getSignInURL(signInRequest.vendor));
 				if (!vendorLoginResponse) {
 					console.error("vendor connection for vendor " + signInRequest.vendor + ", failed");
 				}else{

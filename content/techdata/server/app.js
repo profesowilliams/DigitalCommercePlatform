@@ -1540,7 +1540,8 @@ app.get(["/vendors", "/vendor/connect"], (req, res) => {
 
 app.get("/vendorConnect", (req, res) => {
 
-    let {code, vendor} = req.query;
+    let {code, vendor, redirectURL} = req.query;
+    console.log(req.query)
 
     vendor = vendor.toLowerCase();
     console.log("vendorConnect");
@@ -1552,7 +1553,14 @@ app.get("/vendorConnect", (req, res) => {
     }
 
     console.log(vendorConnections);
-    res.json(mockVendors.vendorsJsonData());
+
+    if (redirectURL)
+    {
+        res.json(mockVendors.vendorsJsonData());
+    }else{
+        res.status(400);
+    }
+    res.json({"error" : true})
 })
 
 app.get("/ui-account/v1/vendorDisconnect", function(req, res) {
