@@ -205,6 +205,71 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData]
+        public void GetProductSearchPreviewDataThrowsExceptionOtherThanRemoteServerHttpException(SearchRequestDto request)
+        {
+            //arrange
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .ThrowsAsync(new Exception("test"));
+
+            //act
+            Func<Task> act = async () => await _searchService.GetProductSearchPreviewData(request);
+
+            //assert
+            act.Should().ThrowAsync<Exception>();
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductSearchPreviewDataThrowsWhenNotFoundReturned(SearchRequestDto request)
+        {
+            //arrange
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.NotFound, details: null));
+
+            //act
+            var result = await _searchService.GetProductSearchPreviewData(request);
+
+            //assert
+            result.Should().BeEmpty();
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void GetProductSearchPreviewDataThrowsOtherThanNotFound(SearchRequestDto request)
+        {
+            //arrange
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.InternalServerError, details: null));
+
+            //act
+            Func<Task> act = async () => await _searchService.GetProductSearchPreviewData(request);
+
+            //assert
+            act.Should().ThrowAsync<Exception>();
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductSearchPreviewDataReturnsCorrectResult(SearchRequestDto request, SearchResponseDto appResponse)
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()))
+                .Returns(Task.FromResult(appResponse));
+
+            //Act
+            var result = await _searchService.GetProductSearchPreviewData(request);
+
+            //Assert
+            result.Should().NotBeNull();
+
+            _middleTierHttpClient.Verify(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>()), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task GetAdvancedRefinements_MapResponseProperly(SearchRequestDto request)
         {
             //arrange

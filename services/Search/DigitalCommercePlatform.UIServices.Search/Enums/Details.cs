@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Enums
         Authorizations,
         Summary,
         SearchWithoutRefinements,
-        TopRefinementsAndResult
+        TopRefinementsAndResult,
+        PreviewOnly
     }
 }

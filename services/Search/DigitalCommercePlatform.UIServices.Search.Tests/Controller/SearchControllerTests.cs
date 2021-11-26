@@ -57,5 +57,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Controller
 
             result.Should().NotBeNull();
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task TypeAheadProductSearchPreview(ProductSearchPreview.Response expected)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<ProductSearchPreview.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+
+            var result = await controller.TypeAheadProductSearchPreview("Test", "1").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
     }
 }

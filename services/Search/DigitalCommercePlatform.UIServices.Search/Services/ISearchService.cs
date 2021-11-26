@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         public Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous);
 
         public Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request);
+        public Task<List<ProductSearchPreviewModel>> GetProductSearchPreviewData(SearchRequestDto request);
     }
 }

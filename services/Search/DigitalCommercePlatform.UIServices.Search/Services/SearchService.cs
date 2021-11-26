@@ -73,6 +73,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             return results;
         }
 
+        public async Task<List<ProductSearchPreviewModel>> GetProductSearchPreviewData(SearchRequestDto request)
+        {
+            var results = await GetProductData(request);
+            return _mapper.Map<List<ProductSearchPreviewModel>>(results?.Products);
+        }
+
         private static void ProcessRefinementGroup(List<RefinementGroupResponseModel> results, RefinementGroupResponseDto group)
         {
             var originalGroupName = group.Group;

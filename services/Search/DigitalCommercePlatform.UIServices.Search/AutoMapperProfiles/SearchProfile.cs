@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Enums;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,9 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.Indicators, opt => opt.Ignore())
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.ShortDescription ?? src.Name));
+            CreateMap<ElasticItemDto, ProductSearchPreviewModel>()
+                .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.ShortDescription ?? src.Name))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ProductImages.FirstOrDefault().Value.FirstOrDefault().Url));
             CreateMap<CategoryBreadcrumbDto, CategoryBreadcrumbModel>();
             CreateMap<RefinementOptionDto, RefinementOptionModel>();
             CreateMap<RangeDto, RangeModel>();

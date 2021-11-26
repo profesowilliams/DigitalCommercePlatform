@@ -36,5 +36,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
             var response = await Mediator.Send(new TypeAhead.Request(keyword)).ConfigureAwait(false);
             return Ok(response.Results);
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ProductSearchPreview")]
+        public async Task<ActionResult> TypeAheadProductSearchPreview(string keyword, string categoryId)
+        {
+            var response = await Mediator.Send(new ProductSearchPreview.Request(keyword, categoryId)).ConfigureAwait(false);
+            return Ok(response.Results);
+        }
     }
 }
