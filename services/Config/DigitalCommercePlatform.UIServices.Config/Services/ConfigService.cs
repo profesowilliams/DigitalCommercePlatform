@@ -328,7 +328,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     configurationRefreshUrl = configurationRefreshUrl.SetQueryParams(request.QueryParams);
                 }
                 
-                await _middleTierHttpClient.GetAsync<Task>(configurationRefreshUrl);
+                _ = await _middleTierHttpClient.PostAsync<Task>(configurationRefreshUrl, null, null);
             }
             catch (Exception ex)
             {
