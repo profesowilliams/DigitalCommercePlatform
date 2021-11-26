@@ -60,6 +60,7 @@ import java.util.List;
 public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
+    private String fontAwesomeScriptLink = "https://kit.fontawesome.com/e1e12a4c06.js";
     private String[] htmlClientLibCategories = null;
 
     @Reference
@@ -105,7 +106,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         LOG.debug("JsonObject created...");
 
         if(isHeader(request)) {
-            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}).getAsString());
+            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery, fontAwesomeScriptLink}).getAsString());
             xfJson.add("shopJson", buildShopJSON());
             // get page clientlibs
             xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories));

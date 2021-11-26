@@ -11,7 +11,7 @@ const MyOrdersWidget = ({ componentProp }) => {
     const chartRef = createRef();
     const [myOrders, setMyOrders] = useState(false);
     const [toggle, setToggle] = useState(false);
-    const { label, endpoint } = JSON.parse(componentProp);
+    const { label, endpoint, days30Label, days90Label } = JSON.parse(componentProp);
 
     async function  toDateToggle() {
         let updatedEndPoint = endpoint;
