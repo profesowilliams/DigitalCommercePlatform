@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.Infrastructure.Filters;
@@ -36,6 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
         public async Task<IActionResult> GetOrder([FromBody] NuanceWebChatRequest request)
         {
             var response = await Mediator.Send(new GetOrder.Request{WbChatRequest = request}).ConfigureAwait(false);
+            if (response == null)
+                return NotFound();
             return Ok(response);
         }
     }

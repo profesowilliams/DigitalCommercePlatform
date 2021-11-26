@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
                 catch (Exception e)
                 {
                     _logger.LogError($"Error while send request {e.Message}");
-                    throw;
+                    return null;
                 }
                
             }
