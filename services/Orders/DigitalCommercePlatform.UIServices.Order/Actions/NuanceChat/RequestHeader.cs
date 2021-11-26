@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
     {
         public string ResellerId { get; set; }
         public string Name { get; set; }
+        public string LastName { get; set; }
         public string EcId { get; set; }
         public string Hmac { get; set; }
     }
