@@ -7,6 +7,7 @@ import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
 import { requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
+import { usePreservedStore } from '../../hooks/usePreservedStore';
 
 
 function OrdersGrid(props) {
@@ -370,10 +371,17 @@ function OrdersGrid(props) {
         );
     };
 
-    useEffect(() => {
-
-    }, []);
-
+	function handleAfterGridInit(config) {
+		columnApiRef.current = config.columnApi;
+		filteringExtension.onAfterGridInit(config);
+	}
+	const columnApiRef = React.useRef();
+	const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
+	async function handleRequestInterceptor (request){
+		const response = await filteringExtension.requestInterceptor(request)
+		sortPreservedState();
+		return response;
+	}
     return (
         <section>
             <div className='cmp-orders-grid'>
@@ -383,15 +391,16 @@ function OrdersGrid(props) {
                     ButtonsComponentHeader={ButtonOrderDetails}
                     label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
                     componentProp={componentProp.searchCriteria}
-                    onSearchRequest={filteringExtension.onQueryChanged}
+                    onSearchRequest={(query) =>filteringExtension.onQueryChanged(query)}
                     onClearRequest={filteringExtension.onQueryChanged}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}
                     options={options}
                     config={componentProp}
-                    onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
-                    requestInterceptor={(request) => filteringExtension.requestInterceptor(request)}
+                    onAfterGridInit={handleAfterGridInit}
+					onSortChanged={onSortChanged}
+                    requestInterceptor={handleRequestInterceptor}
                 ></Grid>
             </div>
             {modal && <Modal

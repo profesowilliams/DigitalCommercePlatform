@@ -15,6 +15,7 @@ function Grid(props) {
     getRowIdCallback,
     onModelUpdateFinished,
     requestInterceptor,
+    onSortChanged
   } = Object.assign({}, props);
   const componentVersion = "1.2.0";
   const gridData = data;
@@ -100,6 +101,7 @@ function Grid(props) {
       suppressPropertyNamesCheck={true}
       onCellValueChanged={onModelUpdated}
       onModelUpdated={onModelUpdated}
+      onSortChanged={onSortChanged}
     >
       {filteredColumns.map((column) => {
         return (
@@ -276,6 +278,7 @@ function Grid(props) {
       onAfterGridInit({
         node: gridNodeRef.current,
         api: _.api,
+        columnApi:_.columnApi,
         gridResetRequest: () => resetGrid(),
       });
     }
