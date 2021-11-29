@@ -45,23 +45,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _appSettings = appSettings;
         }
 
-
         public static string[] GetAllowedVendorValues()
         {
-            return new string[] { "CISCO" }; // fix this in next push         
+            return new string[] { "CISCO" }; // fix this in next push
         }
 
         public async Task<SetVendorConnection.Response> SetVendorConnection(SetVendorConnection.Request request)
         {
             try
             {
-                var url = _coreSecurityUrl.AppendPathSegment("/VendorPortalLogin")
-                      .SetQueryParams(new
-                      {
-                          Code = request.Code,
-                          Vendor = request.Vendor,
-                          RedirectUri = request.RedirectURL,
-                      });
+                var url = _coreSecurityUrl
+                    .AppendPathSegment("/VendorPortalLogin")
+                    .SetQueryParams("Code", request.Code)
+                    .SetQueryParams("Vendor", request.Vendor)
+                    .SetQueryParam("RedirectUri", request.RedirectURL, true);
 
                 var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url).ConfigureAwait(false);
 
@@ -116,11 +113,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             catch (Exception ex)
             {
-                // never throw exception 
+                // never throw exception
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 var validVendors = VendorList();
                 return BuildVendorListResponse(validVendors);
-               
+
                 //throw ex;
             }
         }
@@ -218,7 +215,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
             }
-            // return await Task.FromResult(false); // if no error and status != 200 
+            // return await Task.FromResult(false); // if no error and status != 200
         }
 
         public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request)
@@ -252,7 +249,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             catch (Exception)
             {
                 _validVendors = new List<string> { "cisco" }; // never throw exception
-            }            
+            }
 
             return _validVendors;
         }
