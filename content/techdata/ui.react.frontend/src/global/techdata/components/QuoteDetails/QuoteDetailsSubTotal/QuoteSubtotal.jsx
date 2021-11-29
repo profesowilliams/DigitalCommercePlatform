@@ -88,6 +88,7 @@ const QuoteSubtotal = ({
           ...summary,
           ancillaryItems: { ...markups.ancillaryItems },
         },
+        ancillaryItems: markups.ancillaryItems ? markups.ancillaryItems : null,
       });
     }
   }, [markups]);

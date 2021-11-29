@@ -5,9 +5,7 @@ const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxIte
       const wexcTitle = titleLabel ? titleLabel : ''
       const wexcSubitle = subtitleLabel ? subtitleLabel : ''
       const [selectedFile, setFile] = useState('')
-      let filterOptions = [...optionItems]
-      const index = filterOptions.indexOf("Part number- Tech data");
-      filterOptions.splice(index,1)
+      let filterOptions = []
       const [options, setOptions] = useState([...filterOptions])
       const onChangeLogoHandler = (event) => {
 

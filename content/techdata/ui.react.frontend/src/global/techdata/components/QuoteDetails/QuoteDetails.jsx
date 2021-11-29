@@ -44,7 +44,9 @@ const QuoteDetails = ({ componentProp }) => {
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const [actualQuoteLinesData, setActualQuoteLinesData] = useState(null);
-
+  const [whiteLabelOptions, setWhiteLabelOptions] = useState(null);
+  const [whiteLabelLogoUpload, setWhiteLabelLogoUpload] = useState(null);
+  const [ancillaryItems, setAncillaryItems] = useState(null);
   const [modal, setModal] = useState(null);
 
   function onQuoteCheckout() {
@@ -65,14 +67,52 @@ const QuoteDetails = ({ componentProp }) => {
     ));
   }
 
+  const downloadClickedEvent = (whiteLabelLogo = null, ancillaryItemsProps = null) => {
+    downloadClicked(quoteDetails,
+      true,
+      logoURL,
+      fileName,
+      downloadLinkText,
+      whiteLabelLogo ? whiteLabelLogo : whiteLabelLogoUpload,
+      whiteLabelOptions,
+      ancillaryItemsProps ? ancillaryItemsProps : ancillaryItems
+    );
+  }
+
   function onOptionChanged(option) {
-    option?.key !== "whiteLabelQuote"
-      ? setExportOption(option)
-      : setQuoteOption(option);
+      if (option?.key !== "whiteLabelQuote") {
+        setExportOption(option);
+        downloadClickedEvent()
+      } else {
+        downloadClickedEvent()
+        setQuoteOption(option);
+      }
   }
 
   async function exportToCSV() {
     // call API to get CSV according to actual data
+    let extraOptions = {
+      resellerLogo: false,
+      manufacturer: false,
+      vendorPartNo: false,
+      msrp: false
+    };
+    whiteLabelOptions !== null && whiteLabelOptions.forEach(e => {
+      if (e === 'Part number- Tech data') {
+        extraOptions.manufacturer = true;
+      } 
+      
+      if (e === 'MSRP/List price ') {
+          extraOptions.vendorPartNo = true;
+      } 
+
+      if (e === 'Part number- manufacturer') {
+          extraOptions.msrp = true;
+      } 
+      if (e === "The reseller logo") {
+        extraOptions.resellerLogo = true;
+    }
+    })
     try {
       const postData = {
         "quoteId": id,
@@ -86,7 +126,8 @@ const QuoteDetails = ({ componentProp }) => {
                 "markupValue": 30.00
             }
         ],
-        "logo": "iVBORw0KGgoAAAANSUhEUgAAAPcAAABUBAMAAACsKrwgAAAAIVBMVEUAAABfXF3RGRndU1OQjo+zsrLoi4vLysr0xcXv6uokICFeYJN5AAAAAXRSTlMAQObYZgAAA2tJREFUeF7tl79r20AUx1+o41qeZGgx0RRkKMlmLCh0cyBdNDnQKVNJQbM6hWgKHUqzuS001JMENsb3V/beu59KbCnFqQX1fQb53fmcd3rfy/dJ8G9xOBwOh6Pz7QF3sDt+hA8YwO74mjxkujeSNyU6Sd6c6L+SZD9F91DkpkR/Ea5h0JTkxF5KTtw1JDnxBnZBO1kPSBzXnBsPr+h+LynAS8qH9+I7jQr5fOpdV1Q9rOcEszFOQdcxAMwwuMdL3we45J/zQ0bY4XfG8qxYbk5+VTpmicHMDgHggCGAFx8AYszRwtF5DhDwzyWtIBYqnPHFfXZRcdoji3eg8czsrbpVNsU0OYCHgxXluFhSchoRJiwyXqacHcC2BAyZxHiPAFRXn3LM5kD1yLsMscM5X52+7p1tK7nHiDGquwDoUhlmlLwQ58HPGGKHy4AxyHpHsIFOkow2iP5JzR0DQMv6s3NxwgrAQXHJxJfjmCF2uMJFcA0V/KwT/SNJbgpayBMGsSjthMqfCmHssE8b3Z7YPkqizjkEorRjEgHEnEAqAZV0wnrI5ZlgQRVOaQsTkKX1sSyFV0rXEisqaUeckuhvH4l+CgCHJfuYkAjgydKujMec9zipsgUMLOpFH1qiG8mpsMbiAswmdvSKlyPWNbnAC6gfwPNA5zrQFkf1FqU949swHkMCAIeCZ5I8YHiD2uKEvJQu40mMscj/ROn2NcmjBCmJPogMpa6SZ9riAtyGKO2BbSyF8CBOLIN6voQWx3Zh7K4yybTFxVRTStcyxqIEAI4OtmdG/THQFndJBk/pPNtYTPOkUkEVXljPgO6DMhqLw1YpDwIwwTT4S4/pRJKS6JFhZHWVlWVxXTIQGivvozVFD+lLXxjD34s+LO1uqOyqb1ncZ8bklnLIlAFoVspjnlFyy+I+sIUubVfMt5jGl8mhkvAJACcmna07fM9WIBsp5aGHKI2vPKZeciLcJLruKsuzXk83ryM21qU9VL1WMwGQZrOd6G3dVXzchLG4qXqaIemps2lS4zHb01XtMdAW11N+T7PCfDRP8phRWM8U8JWAo94bpji6+W1N38tpjVyZQhWRRdjk6+JVuJZT+D+pf36/hV3gbeoqzYl+AntAO1rDLeyGTlOSE6N9lJxoV0jehOhTeITD4XA4HA7HHzVqrIoKbpd4AAAAAElFTkSuQmCC"
+        ...extraOptions,
+        "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : logoURL
       };
       const sessionId = localStorage.getItem("sessionId");
       const params = {
@@ -119,22 +160,29 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   const handleUploadFileSelected = (whiteLabelLogo) => {
-    downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText, whiteLabelLogo);
+    setWhiteLabelLogoUpload(whiteLabelLogo)
+    downloadClickedEvent(whiteLabelLogo)
   }
 
-  function exportToPDF(data) {
-    let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
-    let downloadLinkATagCollection =
-      downloadLinkDivTag.getElementsByTagName("a");
-    let downloadLinkATag =
-      downloadLinkATagCollection.length > 0
-        ? downloadLinkATagCollection[0]
-        : undefined;
+  function exportToPDF() {
+    downloadClickedEvent()
+      let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
+      let downloadLinkATagCollection =
+        downloadLinkDivTag.getElementsByTagName("a");
+      let downloadLinkATag =
+        downloadLinkATagCollection.length > 0
+          ? downloadLinkATagCollection[0]
+          : undefined;
+      if (downloadLinkATag) {
+        downloadLinkATag.click();
+      }
+  }
 
-    if (downloadLinkATag) {
-      downloadLinkATag.click();
+  useEffect(() => {
+    if (whiteLabelOptions) {
+      downloadClickedEvent();
     }
-  }
+  },[whiteLabelOptions]);
 
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
@@ -166,16 +214,16 @@ const QuoteDetails = ({ componentProp }) => {
       quoteDetails: quoteDetails,
       actualQuoteLinesData: actualQuoteLinesData,
     };
-    exportOption?.key === "exportToCSV" && exportToCSV();
-    exportOption?.key === "exportToPDF" && exportToPDF(data);
-    downloadClicked(
-        quoteDetails,
-        true,
-        logoURL,
-        fileName,
-        downloadLinkText
-    );
+      data?.actualQuoteLinesData?.ancillaryItems?.items && setAncillaryItems(data.actualQuoteLinesData.ancillaryItems.items)
+      exportOption?.key === "exportToCSV" && exportToCSV();
+      exportOption?.key === "exportToPDF" && exportToPDF();
+      setExportOption(null)
   }, [exportOption, quoteDetails, actualQuoteLinesData]);
+
+  useEffect(() => {
+    actualQuoteLinesData?.ancillaryItems?.items && setAncillaryItems(actualQuoteLinesData.ancillaryItems.items)
+    actualQuoteLinesData?.ancillaryItems?.items && downloadClickedEvent(null, actualQuoteLinesData?.ancillaryItems?.items);
+  }, [actualQuoteLinesData]);
 
   const getSourceInformation = (attributes, type) =>
     attributes?.find((attribute) => attribute.type.toLowerCase() === type.toLowerCase());
@@ -246,7 +294,7 @@ const QuoteDetails = ({ componentProp }) => {
       />
       {
         whiteLabelMode 
-          ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} /> )
+          ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} setWhiteLabelOptions={setWhiteLabelOptions} /> )
           : (
             <>
               <QuoteContactInfo
@@ -299,7 +347,6 @@ const QuoteDetails = ({ componentProp }) => {
         onQuoteCheckout={onQuoteCheckout}
         onQuoteOptionChanged={onOptionChanged}
         quoteDetails={quoteDetails}
-
       />
       {modal && <Modal
           modalAction={modal.action}

@@ -4,14 +4,49 @@ import PDFStyles from "../PDFWindow/PDFStyles";
 import { View } from '@react-pdf/renderer';
 
 const styles = PDFStyles;
-
 const idStyle = {...styles.tableCell, width:'5%', textAlign:'center'};
 const unitPriceStyle = {...styles.tableCell, width:'10%', textAlign:'right'};
 const totalPriceStyle = {...styles.tableCell, width:'10%', textAlign:'right'};
-const descriptionStyle = {...styles.tableCell, width:'65%'};
+const descriptionStyle = {...styles.tableCell, width:'60%'};
 const quantityStyle = {...styles.tableCell, width:'10%', textAlign:'center'};
+const manufacturerStyle = {...styles.tableCell,width:'10%',textAlign:'center'}; 
+const vendorPartNoStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
+const msrpStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
 
-const PDFTableRow = ({quoteItem, header, currencySymbol}) => {
+const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
+
+    const CheckBoxFields = () => {
+        return <>
+            {flags && Object.keys(flags).length > 0 ? (
+                <>
+                    {flags.manufacturer === true ? (
+                        <PDFTableCell 
+                            cellItem={quoteItem.manufacturer}
+                            cellWidth="15%" type={"currency"}
+                            cellStyle={manufacturerStyle}
+                        />
+                    ) : null}
+                    
+                    {flags.vendorPartNo === true ? (
+                        <PDFTableCell 
+                            cellItem={quoteItem.vendorPartNo}
+                            cellWidth="15%" type={"currency"}
+                            cellStyle={vendorPartNoStyle}
+                        />
+                    ) : null}
+                    
+                    {flags.msrp === true ? (
+                        <PDFTableCell 
+                            cellItem={quoteItem.msrp} cellWidth="15%"
+                            type={"currency"}  cellStyle={msrpStyle}
+                        />
+                    ) : null}
+                </>
+                
+            ) : null}
+        </>
+    }
+
     return (
         <View style={header ? styles.tableHeader : styles.tableRow}>
             <PDFTableCell cellItem={quoteItem.id} cellWidth="5%" type={"string"} cellStyle={idStyle} />
@@ -19,6 +54,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol}) => {
             <PDFTableCell cellItem={currencySymbol + quoteItem.unitListPriceFormatted} type={"currency"} cellWidth="15%"  cellStyle={unitPriceStyle}/>
             <PDFTableCell cellItem={quoteItem.quantity} type={"int"} cellWidth="10%"  cellStyle={quantityStyle} />
             <PDFTableCell cellItem={currencySymbol + quoteItem.totalPriceFormatted} cellWidth="15%" type={"currency"}  cellStyle={totalPriceStyle}/>
+            <CheckBoxFields />
         </View>
     )
 }

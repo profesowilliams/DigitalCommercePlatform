@@ -21,15 +21,56 @@ const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
     );
 }
 
-export const downloadClicked = async (details, isDownloadLink, logoURL, fileName, downloadLinkText, whiteLabelLogo) => {
+/**
+ * 
+ * @param {any} details 
+ * @param {boolean} isDownloadLink 
+ * @param {string} logoURL 
+ * @param {string} fileName 
+ * @param {string} downloadLinkText 
+ * @param {string} whiteLabelLogo
+ * @param {string[]} options
+ * @param {any[]} ancillaryItems
+ */
+export const downloadClicked = (
+    details,
+    isDownloadLink,
+    logoURL,
+    fileName,
+    downloadLinkText,
+    whiteLabelLogo,
+    options,
+    ancillaryItems,
+) => {
     const imagePath = logoURL;
+    let whiteLabelLogoFlag = false;
+    let extraOptions = [];
+    if (options) {
+        options.forEach(o => {
+            if (o === 'Part number- Tech data') {
+                extraOptions['manufacturer'] = 'Manufacturer'
+            }
+    
+            if (o === 'MSRP/List price ') {
+                extraOptions['vendorPartNo'] = 'Part Number'
+            }
+    
+            if (o === 'Part number- manufacturer') {
+                extraOptions['msrp'] = 'MSRP'
+            }
+            if (o === "The reseller logo") {
+                whiteLabelLogoFlag = true;
+            }
+        })
+    }
+
     const PDFDocument = () => {
         return (
                 <Document>
                     <Page size="A4" orientation="landscape" style={styles.page}>
                         <View style={styles.pageWidthSection}>
                             <View style={{width: '100', margin:'0'}}>
-                                { whiteLabelLogo ? <Image src={whiteLabelLogo}/> : <ReactPDFImageWrapper path={imagePath}/>}
+                                { whiteLabelLogoFlag ? whiteLabelLogo ? <Image src={whiteLabelLogo}/> : <ReactPDFImageWrapper path={imagePath}/> : null} 
                             </View>
                             <View style={styles.headerSection}>
                                 <View style={styles.addressSectionYourCompany}>
@@ -55,7 +96,12 @@ export const downloadClicked = async (details, isDownloadLink, logoURL, fileName
                                 </View>
                             </View>
                             <View  style={styles.tableSection}>
-                                <PDFTable quoteItems={details.items} currencySymbol={details.currencySymbol}/>
+                                <PDFTable 
+                                    quoteItems={details.items}
+                                    currencySymbol={details.currencySymbol}
+                                    extraOptions={extraOptions}
+                                    ancillaryItems={ancillaryItems}
+                                />
                             </View>
                             <View  style={styles.footerSection}>
                                 <View style={styles.subTotalSection}>
@@ -73,7 +119,6 @@ export const downloadClicked = async (details, isDownloadLink, logoURL, fileName
     }
 
     const DownLoadLink = () => {
-
         return (
             <PDFDownloadLink document={<PDFDocument />} fileName={fileName}>
                 {({ blob, url, loading, error }) =>
