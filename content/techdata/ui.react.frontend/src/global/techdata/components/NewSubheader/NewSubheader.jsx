@@ -22,6 +22,7 @@ const NewSubheader = ({ componentProp }) => {
                 var userData = prepareUserData();
                 userDataJsonStr = JSON.stringify(userData);
                 localStorage.setItem("userData", userDataJsonStr);
+                window.location.reload();
             }
         }
         if (userDataJsonStr) {

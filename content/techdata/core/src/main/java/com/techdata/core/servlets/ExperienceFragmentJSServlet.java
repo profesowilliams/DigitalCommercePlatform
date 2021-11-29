@@ -106,7 +106,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         LOG.debug("JsonObject created...");
 
         if(isHeader(request)) {
-            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery, fontAwesomeScriptLink}).getAsString());
+            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}).getAsString());
             xfJson.add("shopJson", buildShopJSON());
             // get page clientlibs
             xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories));
@@ -627,6 +627,9 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(categories, libraryType, Boolean.TRUE, Boolean.TRUE);
         for (ClientLibrary library : libraries) {
             clientLibs.add(new JsonPrimitive(getLink(request, sanitizeClientLibraryPath(library.getPath() + libraryType.extension))));
+        }
+        if(!Arrays.asList(categories).contains("jquery") && libraryType.contentType.equals(LibraryType.JS.contentType)) {
+            clientLibs.add(new JsonPrimitive(fontAwesomeScriptLink));
         }
         return clientLibs;
     }
