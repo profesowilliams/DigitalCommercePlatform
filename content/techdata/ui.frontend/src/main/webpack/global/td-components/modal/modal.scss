@@ -79,8 +79,8 @@
 		color: get-color(brand-white);
 		background: get-color(brand-blue);
 		width: 100%;
-		height: 100%;
 		cursor: pointer;
+		height: rem(50px);
 		&_text {
 			margin: 1rem;
 			font-size: $font-size-small;
@@ -97,9 +97,7 @@
 		margin: rem(2px);
 		cursor: pointer;
 	}
-	&_footer {
-		height: rem(50px);
-	}
+	
 	.cmp-modal_error-message {
 		margin: 2rem;
 		text-align: left;
