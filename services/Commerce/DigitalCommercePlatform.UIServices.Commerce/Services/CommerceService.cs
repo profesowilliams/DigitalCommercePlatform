@@ -158,7 +158,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             //await CallCreateQuote(createQuoteRequest); // we need to call this method 
 
             string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            var createQuoteUrl = _appQuoteServiceUrl + "/CreateAsync";
             CreateModelResponse response;
             _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteRequest, Formatting.Indented));
             try
@@ -570,7 +570,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
         {
             string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var createQuoteUrl = _appQuoteServiceUrl + "/Create";
+            var createQuoteUrl = _appQuoteServiceUrl + "/CreateAsync";
             _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteFrom, Formatting.Indented));
             var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
             return response;
