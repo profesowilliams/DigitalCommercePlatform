@@ -8,7 +8,10 @@ import OrdersGridSearch from './OrdersGridSearch';
 import { requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 import { usePreservedStore } from '../../hooks/usePreservedStore';
+import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
 
+
+const USER_DATA = JSON.parse(localStorage.getItem("userData"));
 
 function OrdersGrid(props) {
     
@@ -19,6 +22,8 @@ function OrdersGrid(props) {
     const [orderReportStatus, setOrderReportStatus] = useState(false);
     const showMoreFlag = componentProp.showMoreFlag ? componentProp.showMoreFlag : false;
     const [modal, setModal] = useState(null);
+
+    const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessT: ACCESS_TYPES.CAN_VIEW_ORDERS})
 
     const STATUS = {
         onHold: 'onHold',
@@ -382,6 +387,8 @@ function OrdersGrid(props) {
 		sortPreservedState();
 		return response;
 	}
+
+  if(HAS_ORDER_ACCESS) {
     return (
         <section>
             <div className='cmp-orders-grid'>
@@ -413,6 +420,15 @@ function OrdersGrid(props) {
             ></Modal>}
         </section>
     );
+  } else {
+    return (
+      <div className="cmp-error">
+        <div className="cmp-error__header">
+          You do not have the required entitlement to access this information
+        </div>
+      </div>
+    )
+  }
 }
 
 export default OrdersGrid;

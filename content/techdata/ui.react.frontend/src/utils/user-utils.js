@@ -1,13 +1,35 @@
+export const ACCESS_TYPES = {
+    DCP_ACCESS: "hasDCPAccess",
+    CAN_VIEW_ORDERS: 'CanViewOrders'
+}
+
 export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
 
 export const hasDCPAccess = (user) => {
-    const HAS_DCP_ACCESS = "hasDCPAccess";
+    const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
     const {roleList} = user ? user : {undefined};
 
     if (roleList && roleList.length) {
         for (let eachItem of roleList)
         {
             if (eachItem?.entitlement.toLowerCase().trim() === HAS_DCP_ACCESS.toLowerCase())
+            {
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
+export const hasAccess = ({user, accessType})=> {
+    if(!accessType) accessType = ACCESS_TYPES.CAN_VIEW_ORDERS;
+    const { roleList } = user ? user : { undefined };
+
+    if (roleList && roleList.length) {
+        for (let eachItem of roleList)
+        {
+            if (eachItem?.entitlement.toLowerCase().trim() === accessType.toLowerCase())
             {
                 return true;
             }
