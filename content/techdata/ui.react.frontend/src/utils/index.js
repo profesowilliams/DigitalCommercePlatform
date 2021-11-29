@@ -78,6 +78,10 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
   let sessionId = localStorage.getItem('sessionId');
 
   if(window.SHOP && window.SHOP.authentication) {
+    /**cleaning up localstorage for logout*/
+    localStorage.removeItem('userData');
+    localStorage.removeItem('ActiveCart');
+    localStorage.removeItem('signin');
     let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
     window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {

@@ -49,9 +49,7 @@ const NewSubheader = ({ componentProp }) => {
                 });
             }
         }
-        var userData = [];
-        userData.push(prepareCustomersV2(dcpAccess));
-        userData.push(roleList);
+        var userData = {'customersV2': prepareCustomersV2(dcpAccess), 'roleList': roleList};
         return userData;
     }
 
