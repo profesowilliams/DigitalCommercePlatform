@@ -125,6 +125,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         { "Virtual", new IndicatorValueDto{ Value="Y"} },
                                         { "Warehouse", new IndicatorValueDto{ Value="Y"} },
                                         { "DisplayStatus", new IndicatorValueDto{ Value="Active"} },
+                                        { "FreightPolicyException", new IndicatorValueDto{Value = "X"} }
                                     }
                                 },
                                 new IndicatorDto
@@ -338,7 +339,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
-                            Warehouse=true
+                            Warehouse=true,
+                            FreeShipping=true
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
@@ -434,6 +436,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         { "Virtual", new IndicatorValueDto{ Value="Y"} },
                                         { "Warehouse", new IndicatorValueDto{ Value="Y"} },
                                         { "DisplayStatus", new IndicatorValueDto{ Value="Active"} },
+                                        { "FreightPolicyException", new IndicatorValueDto{Value = "Y"} }
                                     }
                                 },
                                 new IndicatorDto
@@ -588,7 +591,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
-                            Warehouse=true
+                            Warehouse=true,
+                            FreeShipping=false
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel

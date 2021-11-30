@@ -19,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public bool Warehouse { get; set; }
 
         public bool Virtual { get; set; }
+        public bool FreeShipping { get; set; }
     }
 }

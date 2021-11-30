@@ -65,6 +65,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string Virtual = "Virtual";
             private const string Logo = "Logo";
             private const string PromoText = "PromoText";
+            private const string FreightPolicyException = "FreightPolicyException";            
+            private const string FreightPolicyExceptionValue = "X";
+            private const string SalesOrg0100 = "0100";
             private readonly IBrowseService _productRepositoryServices;
             private readonly string _imageSize;
             private readonly IMapper _mapper;
@@ -233,7 +236,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     Refurbished = flags.Refurbished,
                     Returnable = flags.Returnable,
                     Virtual = flags.VirtualProduct,
-                    Warehouse = flags.Warehouse
+                    Warehouse = flags.Warehouse,
+                    FreeShipping = flags.FreeShipping
                 };
             }
 
@@ -338,6 +342,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 flags.DisplayStatus = indicators.ContainsKey(DisplayStatus) ? indicators[DisplayStatus].Value : null;
 
+                flags.FreeShipping = salesOrg == SalesOrg0100 && indicators.ContainsKey(FreightPolicyException) && string.Equals(indicators[FreightPolicyException].Value, FreightPolicyExceptionValue, System.StringComparison.InvariantCultureIgnoreCase);
+
                 return flags;
             }
 
@@ -386,6 +392,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 public bool Warehouse { get; set; }
                 public bool VirtualProduct { get; set; }
                 public string DisplayStatus { get; set; }
+                public bool FreeShipping { get; set; }
             }
         }
 
