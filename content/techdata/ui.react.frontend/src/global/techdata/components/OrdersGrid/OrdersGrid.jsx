@@ -23,7 +23,7 @@ function OrdersGrid(props) {
     const showMoreFlag = componentProp.showMoreFlag ? componentProp.showMoreFlag : false;
     const [modal, setModal] = useState(null);
 
-    const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessT: ACCESS_TYPES.CAN_VIEW_ORDERS})
+    const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
 
     const STATUS = {
         onHold: 'onHold',

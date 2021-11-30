@@ -23,13 +23,13 @@ export const hasDCPAccess = (user) => {
 }
 
 export const hasAccess = ({user, accessType})=> {
-    if(!accessType) accessType = ACCESS_TYPES.CAN_VIEW_ORDERS;
+    const _accessType = accessType ? accessType : ACCESS_TYPES.CAN_VIEW_ORDERS
     const { roleList } = user ? user : { undefined };
 
     if (roleList && roleList.length) {
         for (let eachItem of roleList)
         {
-            if (eachItem?.entitlement.toLowerCase().trim() === accessType.toLowerCase())
+            if (eachItem?.entitlement.toLowerCase().trim() === _accessType.toLowerCase())
             {
                 return true;
             }
