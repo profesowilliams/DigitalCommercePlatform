@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react";
-import { postFileBlob } from "../../../../../utils/utils";
+import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Modal from "../../Modal/Modal";
 import LineItemsExportXls from "../OrderDetailItemExport/LineItemsExportXls";
 import  { orderStatusValues } from "../orderStatus";
@@ -14,12 +14,12 @@ const OrderSubHeader = ({
 const [modal, setModal] = useState(null);
 const downloadXls = () => (fieldsList) => {
     try {
-        const params = {
+        const postData = {
             orderId:id,
             ExportedFields:fieldsList
         }
         const name = `order-${id}.xls`;
-        postFileBlob(exportUrl,name,params);
+        generateExcelFileFromPost({url:exportUrl,name,postData});
         return result.data;
       } catch( error ) {
         return error;

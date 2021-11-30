@@ -1608,7 +1608,7 @@ app.get(["/ui-account/v1/getVendorConnections", "/getVendorConnections"], functi
 });
 
 app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
-  const { orderId, downloadAl} = req.query;
+  const { orderId, downloadAll} = req.query;
 
   if (!req.headers["sessionid"] || orderId === '14009754975') {
     return res.status(500).json({
@@ -1619,7 +1619,7 @@ app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
       },
     });
   }
-  if (downloadAl) {
+  if (downloadAll) {
     res.download(`file.zip`);
   }
   return res.download('invoice.pdf')
@@ -1789,7 +1789,7 @@ app.post("/ui-commerce/v1/downloadOrderDetails", async function (req, res) {
   }
 
   try {
-    res.download(`response.xlsx`);
+    res.download(`exportOrderDetail.xlsx`);
   } catch (error) {
     console.log('Error', error)
   }

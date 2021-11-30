@@ -67,6 +67,36 @@ const generateFile = (response, name, options) => {
     link.remove();
 }
 
+export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
+    try {
+        const sessionId = localStorage.getItem("sessionId");
+        const params = {
+            method: 'POST',
+            url: `${url}`,
+            headers: {
+                'Accept': '*/*',
+                'Accept-Language': 'en-us',
+                'Site': 'NA',
+                'Consumer': 'NA',
+                'TraceId': '35345345-Browse',
+                'SessionId': sessionId,
+                'Content-Type': 'application/json',
+            },
+            body: postData,
+            responseType: 'blob',
+        };
+        const response = await usPost(`${url}`, postData, params);
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(response.data);
+        link.download = name;
+        link.click();
+        link.remove();
+
+    } catch (error) {
+        console.error("error", error);
+    }
+}
+
 export const postFileBlob = async (url, name = '', params, options = { redirect: false }) => {
     const response = await usPost(url, params);
     generateFile(response, name, options);

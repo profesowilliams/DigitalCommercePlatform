@@ -15,6 +15,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
+import { generateExcelFileFromPost } from "../../../../utils/utils";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -129,31 +130,8 @@ const QuoteDetails = ({ componentProp }) => {
         ...extraOptions,
         "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : logoURL
       };
-      const sessionId = localStorage.getItem("sessionId");
-      const params = {
-        method: 'POST',
-        url: `${uiServiceEndPointExcel}`,
-        headers: {
-          'Accept': '*/*',
-          'Accept-Language': 'en-us',
-          'Site': 'NA',
-          'Consumer': 'NA',
-          'TraceId': '35345345-Browse',
-          'SessionId': sessionId,
-          'Content-Type': 'application/json',
-        },
-        body: postData,
-        responseType: 'blob',
-      };
-      // API call and see loader.
-      const response = await usPost(`${uiServiceEndPointExcel}`, postData, params);
-      const link = document.createElement('a');
-
-      link.href = window.URL.createObjectURL(response.data);
-      link.download = `quotes.xlsx`;
-
-      link.click();
-      link.remove();
+      generateExcelFileFromPost({url:uiServiceEndPointExcel,name:'quotes.xlsx',postData})
+     
     } catch (error) {
         console.error("error", error);
     }
