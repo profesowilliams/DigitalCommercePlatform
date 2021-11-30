@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { If } from '../../../helpers/If';
 import Info from '../../common/quotes/DisplayItemInfo';
 import Button from '../../Widgets/Button';
 
@@ -46,7 +45,6 @@ function EndUserInfo({endUser, info, onValueChange}) {
     return (
         <div className="cmp-qp__enduser-info">
             <p onClick={handleEditModeChange} className="cmp-qp__enduser-info--title">{info.endUserHeaderLabel}</p>
-            <If condition={endUser}> 
                 {!editMode && (
                     <>
                         <p className="cmp-qp__enduser-info--sub-title">{infoState.companyName}</p>
@@ -177,7 +175,6 @@ function EndUserInfo({endUser, info, onValueChange}) {
                         </form>
                     </div>
                 )}
-            </If>
         </div>
     );
 }
