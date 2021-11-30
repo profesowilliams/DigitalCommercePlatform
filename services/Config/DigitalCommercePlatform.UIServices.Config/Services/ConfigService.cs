@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalCommercePlatform.UIServices.Config.Actions.EstimationValidate;
 using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
@@ -10,6 +11,7 @@ using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.UI.ExceptionHandling;
@@ -20,8 +22,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -312,29 +314,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return getDealsForGrid;
         }
 
-        public async Task Refresh(Refresh.Request request)
+        public async Task<RefreshData.Response> RefreshVendor(RefreshData.Request request)
         {
-            try
+            var configurationRefreshUrl = _appConfigurationUrl.AppendPathSegments("Refresh", request.VendorName, request.Type);
+            if (!string.IsNullOrWhiteSpace(request.Version))
             {
-                var configurationRefreshUrl = _appConfigurationUrl.AppendPathSegments("Refresh", request.ProviderName, request.ConfigurationType);
+                configurationRefreshUrl = configurationRefreshUrl.AppendPathSegment(request.Version);
+            }
 
-                if (!string.IsNullOrWhiteSpace(request.Version))
-                {
-                    configurationRefreshUrl = configurationRefreshUrl.AppendPathSegment(request.Version);
-                }
-                
-                if (request.QueryParams != null)
-                {
-                    configurationRefreshUrl = configurationRefreshUrl.SetQueryParams(request.QueryParams);
-                }
-                
-                _ = await _middleTierHttpClient.PostAsync<Task>(configurationRefreshUrl, null, null);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception in refresh configurations : " + nameof(ConfigService));
-                throw;
-            }
+            var refreshResponse = await _middleTierHttpClient.PostAsync<HttpResponseModel>(configurationRefreshUrl, null, null);
+
+            var result = refreshResponse?.StatusCode ?? HttpStatusCode.OK;
+
+            var response = new RefreshData.Response();
+            response.Items = result == HttpStatusCode.OK ? true : false;
+            return response;
 
         }
 

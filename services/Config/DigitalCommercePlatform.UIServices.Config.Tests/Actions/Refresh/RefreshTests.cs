@@ -1,9 +1,13 @@
 //2021 (c) Tech Data Corporation - All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Services;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 using ActionsRefresh = DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 
@@ -14,32 +18,41 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.Refresh
         private readonly Mock<ILoggerFactory> _loggerFactory;
         private readonly Mock<IConfigService> _iConfigService;
         private readonly Mock<IHttpClientFactory> _iHttpClientFactory;
-        private readonly ActionsRefresh.Refresh.Handler _sut;
+        private readonly Mock<IMapper> _imapper;
+        private readonly ActionsRefresh.RefreshData.Handler _sut;
 
         public RefreshTests()
         {
             _loggerFactory = new Mock<ILoggerFactory>();
             _iConfigService = new Mock<IConfigService>();
             _iHttpClientFactory = new Mock<IHttpClientFactory>();
-            _sut = new ActionsRefresh.Refresh.Handler(_loggerFactory.Object, _iConfigService.Object, _iHttpClientFactory.Object);
+            _imapper = new Mock<IMapper>();
+            _sut = new ActionsRefresh.RefreshData.Handler(_imapper.Object,_loggerFactory.Object, _iConfigService.Object, _iHttpClientFactory.Object);
         }
 
-        [Fact]
-        public async void Handle_MustBeOk()
+        [Theory]
+        [AutoDomainData]
+        public async Task Handle_MustBeOk(ActionsRefresh.RefreshData.Response expected)
         {
             //arrange
-            var request = new ActionsRefresh.Refresh.Request 
-            { 
-                ProviderName = "Cisco",
-                ConfigurationType = "Estimate"
-            };
-            _iConfigService.Setup(x => x.Refresh(request));
+            _iConfigService.Setup(x => x.RefreshVendor(
+                    It.IsAny<ActionsRefresh.RefreshData.Request>()
+                    ))
+                .ReturnsAsync(expected);
+
+            var handler = new ActionsRefresh.RefreshData.Handler( _imapper.Object, _loggerFactory.Object, _iConfigService.Object, _iHttpClientFactory.Object);
 
             //act
-            await _sut.Handle(request, It.IsAny<CancellationToken>()).ConfigureAwait(false);
+            var request = new ActionsRefresh.RefreshData.Request
+            {
+                VendorName = "Cisco",
+                Type = "Estimate",
+                Version = "1"
+            };
 
+            var result = await handler.Handle(request, It.IsAny<CancellationToken>());
             //assert
-            _iConfigService.Verify(x => x.Refresh(request), Times.Once);
+            result.Should().NotBeNull();
         }
     }
 }

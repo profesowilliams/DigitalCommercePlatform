@@ -118,18 +118,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost("Refresh/{VendorName}/{Type}/{VersionNo?}")]
-        public async Task Refresh(string vendorName, string type, [FromQuery] string userId, [FromQuery] string customerNumber, string versionNo = null, CancellationToken cancellationToken = default)
+        [HttpGet]
+        [Route("refreshData")]
+        public async Task<ActionResult> Refresh([FromQuery] RefreshData.Request request)
         {
-            await Mediator.Publish(new Refresh.Request
-            {
-                ProviderName = vendorName,
-                ConfigurationType = type,
-                Version = versionNo,
-                UserId = userId,
-                CustomerNumber = customerNumber,
-                QueryParams = Request?.Query
-            }, cancellationToken).ConfigureAwait(false);
+            var data =new RefreshData.Request { Type = request?.Type ,Version=request?.Version,VendorName=request?.VendorName};
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
         }
     }
 }

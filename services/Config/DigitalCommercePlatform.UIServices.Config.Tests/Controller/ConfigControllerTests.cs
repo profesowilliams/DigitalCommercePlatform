@@ -207,13 +207,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [Fact]
         public async Task Get_Refresh_WithStatusOk()
         {
-            _mockMediator.Setup(x => x.Publish(It.IsAny<Refresh.Request>(), It.IsAny<CancellationToken>()));
+            ResponseBase<RefreshData.Response> expected = new ResponseBase<RefreshData.Response>();
+            _mockMediator.Setup(x => x.Send(
+                      It.IsAny<RefreshData.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
 
-            using var sut = GetController();
-
-            await sut.Refresh("Cisco", "Estimate", "1", "3", null, default).ConfigureAwait(false);
-
-            _mockMediator.Verify(x => x.Publish(It.IsAny<Refresh.Request>(), It.IsAny<CancellationToken>()), Times.Once);
+            var sut = GetController();
+            RefreshData.Request request = new RefreshData.Request() { Type = "Estimate", VendorName = "Cisco", Version = "1" };
+            var result = await sut.Refresh(request).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.OK);
         }
 
         private ConfigController GetController()
