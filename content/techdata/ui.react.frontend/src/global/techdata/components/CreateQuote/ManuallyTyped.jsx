@@ -35,14 +35,20 @@ const ManuallyTyped = ({
   const goToNext = async () => {
     try{
       if( estimatedIdListEndpoint ){
-        const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint.replace('{selected-id}', inputValue), { });
+        const { data: { content: { items } } } = await usGet(`${estimatedIdListEndpoint}&Id={selected-id}`.replace('{selected-id}', inputValue), { });
         if( items ){
           const filtered = items.filter((item) => item.configId === inputValue )
           if( filtered[0] ){
             const newEndpoint = validateCartEndpoint.replace('{selected-id}', inputValue)
             const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
-            if(isValid)
-              onClick(inputValue);
+            if(isValid) {
+              onClick(inputValue, {
+                redirectToPreview:true,
+                configurationItem: {
+                  ...filtered[0]
+                }
+              });
+            }
             else
               alert('Not a valid estimated ID')
           }else{

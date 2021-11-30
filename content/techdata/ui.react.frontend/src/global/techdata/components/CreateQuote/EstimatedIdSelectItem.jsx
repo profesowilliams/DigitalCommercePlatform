@@ -15,7 +15,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
     const getData = async () => {
       const { data: { content: { items } } } = await usGet(estimatedIdListEndpoint, { });
       if(items && items.length > 0){
-        const newItems = items.map(item =>({ id: item.configId, name: item.configId }));
+        const newItems = items.map(item =>({ id: item.configId, name: item.configId, vendor: item.vendor }));
         setEstimatedIdList(newItems);
         setEstimatedIdListError(false)
       }else{
@@ -36,7 +36,12 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
       const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
       if( isError ) return alert('Error');
       if( isValid ){
-        onClick(selected.id,{redirectToPreview:true});
+        onClick(selected.id, {
+          redirectToPreview:true,
+          configurationItem: {
+            ...selected
+          }
+        });
       }else{
         alert('Invalid estimated ID')
       }

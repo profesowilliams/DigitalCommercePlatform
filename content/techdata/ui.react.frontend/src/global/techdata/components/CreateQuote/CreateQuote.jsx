@@ -49,7 +49,7 @@ const QuoteCreate = ({
     if( id ){ 
       setCartID(id);
       if (redirectToPreview){
-        window.location.href = `quotes/quote-preview.html?id=${id}&isEstimateId=true`
+        window.location.href = `quotes/quote-preview.html?id=${id}&isEstimateId=true&vendor=${config.configurationItem.vendor}`
         return;
       }
       setStep(1);

@@ -4790,7 +4790,7 @@ app.put("/ui-content/v1/replaceCart", function (req, res) {
 
   return res.json({
     "content": {
-      "isSuccess": true
+      "isSuccess": false
     },
     "error": {
       "code": 0,
