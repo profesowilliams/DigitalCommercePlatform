@@ -33,6 +33,10 @@ use(function() {
         vendorConnectionsModalObject["getConnectionsEndPoint"] = this.uiServiceDomain + this.vendorConnectionEndpoint;
     }
 
+    if (this.uiServiceDomain != null && this.vendorDisconnectEndpoint != null) {
+        vendorConnectionsModalObject["disconnectEndPoint"] = this.uiServiceDomain + this.vendorDisconnectEndpoint;
+    }
+
     if (this.vendorConnectionEndpoint != null && this.setVendorConnectionEndpoint != null) {
         vendorConnectionsModalObject["setConnectionsEndPoint"] = this.uiServiceDomain + this.setVendorConnectionEndpoint;
     }

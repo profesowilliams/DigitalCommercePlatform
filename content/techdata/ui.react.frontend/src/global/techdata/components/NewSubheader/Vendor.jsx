@@ -13,7 +13,15 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 
 	// API calls
 	async function vendorDisconnect(vendor) {
-		console.error("Vendor Disconnect not implemented");
+		const url = vendorConfig.disconnectEndPoint;
+		try {
+			await get(url + `?vendor=${vendor}`);
+			return true;
+		} catch (e) {
+			console.error(`${vendor} disconnect failed:`);
+			console.error(e);
+			return false;
+		}
 		return false;
 	}
 

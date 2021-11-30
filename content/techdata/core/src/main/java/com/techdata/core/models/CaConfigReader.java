@@ -90,6 +90,8 @@ public class CaConfigReader {
 
     private String setVendorConnectionEndpoint;
 
+    private String vendorDisconnectEndpoint;
+
     private String configurationsEndpoint;
 
     private  String shopDomain;
@@ -203,6 +205,7 @@ public class CaConfigReader {
         dealsForEndpoint = serviceEndPointsConfiguration.dealsForEndpoint();
         vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
         setVendorConnectionEndpoint = serviceEndPointsConfiguration.setVendorConnectionEndpoint();
+        vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
@@ -518,4 +521,6 @@ public class CaConfigReader {
     }
 
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
+
+    public String getVendorDisconnectEndpoint() { return vendorDisconnectEndpoint; }
 }

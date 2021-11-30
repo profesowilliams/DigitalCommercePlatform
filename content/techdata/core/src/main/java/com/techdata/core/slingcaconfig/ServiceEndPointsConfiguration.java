@@ -86,6 +86,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Set Vendor connection Endpoint", description = "Vendor Connection Endpoint ")
     String setVendorConnectionEndpoint();
 
+    @Property(label = "Vendor Disconnect Endpoint", description = "Vendor Disconnect Endpoint ")
+    String vendorDisconnectEndpoint();
+
     @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ")
     String quotesPreviewEndPoint();
 

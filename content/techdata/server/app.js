@@ -1566,6 +1566,8 @@ app.get("/vendorConnect", (req, res) => {
 app.get("/ui-account/v1/vendorDisconnect", function(req, res) {
     const {vendor} = req.query;
     vendorConnections[vendor] = false;
+    console.log("disconnect triggered");
+    console.log(vendor);
     res.json({"isError" : false});
 })
 
