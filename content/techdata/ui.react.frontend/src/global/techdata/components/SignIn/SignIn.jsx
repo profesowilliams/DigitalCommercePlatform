@@ -20,6 +20,7 @@ import {
   signOutBasedOnParam,
   signOutForExpiredSession,
 } from "../../../../utils";
+import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
 const FA = require("react-fontawesome");
 
@@ -189,6 +190,13 @@ const SignIn = (props) => {
   };
 
   const onSignIn = () => {
+    DataLayerUtils.pushEvent("clickInfo", {
+      carouselName: "",
+      mastheadlevel: "",
+      name: "Sign in",
+      selectionDepth: "",
+      type: "button",
+    });
     redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
   };
 
