@@ -164,6 +164,13 @@ const SignIn = (props) => {
     isCodePresent();
     routeChange();
     isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+
+    // redirecting the non-dcp logged in user to home page
+    if(isPrivatePage && localStorage.getItem("sessionId") && localStorage.getItem("userData")) {
+        if(localStorage.getItem("userData").indexOf('"dcpAccess":true') < 0) {
+            window.location.replace(window.location.origin);
+        }
+    }
     showHideElements();
   }, []);
 
