@@ -454,8 +454,27 @@ function ProductLinesGrid({
     headerName: 'Track',
     field: 'trackings',
     sortable: false,
-    cellRenderer: () =>
-          <div></div>
+    cellRenderer: ({ node, api, setValue, data, value }) => {
+      return (
+          <div
+              onClick={() => {
+                invokeModal({
+                  content: (
+                    <TrackOrderModal
+                      data={data}
+                      trackingConfig={gridConfig.trackingConfig}
+                      pendingInfo={trackingModal.pendingInfo}
+                      showMoreFlag={showMoreFlag}
+                    ></TrackOrderModal>
+                  ),
+                  properties: {
+                    title: getTrackingModalTitle(gridProps.trackingConfig?.modalTitle, value),
+                  }
+                });
+              }} className='icon'>{getTrackingStatus(value) ? <i className='fas fa-truck'></i> : <div></div>}</div>
+
+      );
+    },
   });
 
   //Ship Date behaves differently between parent and child

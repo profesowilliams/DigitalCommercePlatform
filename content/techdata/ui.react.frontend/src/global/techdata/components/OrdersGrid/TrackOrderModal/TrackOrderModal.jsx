@@ -2,7 +2,7 @@ import React from "react";
 import MyOrderTrackings from "./MyOrderTrackings";
 
 export function getTrackingModalTitle(modalTitle, value) {
-  let orderNumber = (value.length > 0 ? value[0].orderNumber : "");
+  let orderNumber = (value.length > 0 ? value[0].orderNumber ? value[0].orderNumber : "" : "");
 
   return `${modalTitle} : ${orderNumber}`;
 }
