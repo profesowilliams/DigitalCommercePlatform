@@ -890,7 +890,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
           "extendedPriceFormatted": "",
           "availability": null,
           "rebateValue": null,
-          "urlProductImage": i%2 ? null : "/non-existing-image.png",
+          "urlProductImage": i%2 ? "http://cdn.cnetcontent.com/ps/TDUS/130x80/80000404.png" : "/non-existing-image.png",
           "urlProductSpecs": null,
           "children": [
             {
@@ -935,7 +935,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
               "extendedPriceFormatted": "720.0",
               "availability": null,
               "rebateValue": null,
-              "urlProductImage": i%2 ? null : "/non-existing-image.png",
+              "urlProductImage": i%2 ? "http://cdn.cnetcontent.com/ps/TDUS/130x80/80000404.png" : "/non-existing-image.png",
               "urlProductSpecs": null,
               "children": null,
               "agreements": null,

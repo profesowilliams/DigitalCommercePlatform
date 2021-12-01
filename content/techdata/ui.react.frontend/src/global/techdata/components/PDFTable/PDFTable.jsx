@@ -17,6 +17,9 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
             if (extraOptions.msrp){
                 localItem['msrp'] = true;
             }
+            if (extraOptions.image ){
+                localItem['image'] = true;
+            }
         }
 
         return localItem
@@ -32,7 +35,6 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
         "totalPriceFormatted":"Total",
         ...extraOptions
     }
-
     const ancillaryHeaderItems = {
         "description" : "Description",
         "value" : "Value",

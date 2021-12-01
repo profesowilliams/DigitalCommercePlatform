@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxItems, information, base64LogoHandler, optionsHandeler, logoUploadHandler }) => {
+const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxItems, information, base64LogoHandler, optionsHandeler, logoUploadHandler, logoURL }) => {
       const logoLabel = information['yourWhiteLogoLabel'] ? information['yourWhiteLogoLabel'] : '';
       const optionItems = checkboxItems ? Object.values(checkboxItems) : []
       const wexcTitle = titleLabel ? titleLabel : ''
@@ -49,7 +49,7 @@ const  WhitelabelExportConfiguration = ({ titleLabel, subtitleLabel, checkboxIte
                 </div>
                 <div className={`${excClassName}__base-logo`}>
                     <div className={`${excClassName}__base-logo-upload`}>
-                        {logoLabel.length > 0 && (<><img src={selectedFile} alt="logo" /><div className={`${excClassName}__base-logo-upload-file`}>
+                        {logoLabel.length > 0 && (<><img src={selectedFile !== '' ? selectedFile : logoURL} alt="logo" /><div className={`${excClassName}__base-logo-upload-file`}>
                             <input type="file" id="file" className={`${excClassName}__base-logo-upload-file-input`} accept="image/png,image/jpeg,image/jpg" onChange={(event) => onChangeLogoHandler(event)} />
                             <label htmlFor="file">{logoLabel}</label>
                         </div><div className={`${excClassName}__base-logo-upload-suggested`}>

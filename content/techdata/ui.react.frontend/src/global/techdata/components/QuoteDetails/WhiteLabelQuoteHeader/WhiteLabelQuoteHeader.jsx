@@ -8,7 +8,7 @@ import FullScreenLoader from "../../Widgets/FullScreenLoader";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 
 const WhiteLabelQuoteHeader = ({ componentProp, logoUploadHandler, setWhiteLabelOptions }) => {
-  const { uiServiceEndPoint, whiteLabel } = JSON.parse(componentProp);
+  const { uiServiceEndPoint, whiteLabel, logoURL } = JSON.parse(componentProp);
   const { information, titleLabel, subtitleLabel, checkboxItems } = whiteLabel || {};
   const { id } = getUrlParams();
   const [response, loading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -30,7 +30,7 @@ const WhiteLabelQuoteHeader = ({ componentProp, logoUploadHandler, setWhiteLabel
           console.log("base64String :: ", base64String)
         }}
         optionsHandeler = {(optionsList)=> setWhiteLabelOptions(optionsList)}
-
+        logoURL={logoURL}
         />
       <WhiteLabelQuoteContactInfo
         label={

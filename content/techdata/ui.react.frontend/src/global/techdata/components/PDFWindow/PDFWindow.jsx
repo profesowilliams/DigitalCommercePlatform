@@ -61,6 +61,9 @@ export const downloadClicked = (
             if (o === "The reseller logo") {
                 whiteLabelLogoFlag = true;
             }
+            if (o === "Product images") {
+                extraOptions['image'] = 'image';
+            }
         })
     }
 

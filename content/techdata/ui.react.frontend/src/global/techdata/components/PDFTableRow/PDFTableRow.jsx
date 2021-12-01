@@ -1,7 +1,8 @@
 import React from "react";
 import PDFTableCell from "../PDFTableCell/PDFTableCell";
 import PDFStyles from "../PDFWindow/PDFStyles";
-import { View } from '@react-pdf/renderer';
+import { Image, View } from '@react-pdf/renderer';
+import { getBase64FromUrl } from "../../../../utils/utils";
 
 const styles = PDFStyles;
 const idStyle = {...styles.tableCell, width:'5%', textAlign:'center'};
@@ -12,6 +13,7 @@ const quantityStyle = {...styles.tableCell, width:'10%', textAlign:'center'};
 const manufacturerStyle = {...styles.tableCell,width:'10%',textAlign:'center'}; 
 const vendorPartNoStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
 const msrpStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
+const imageStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
 
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
 
@@ -40,6 +42,21 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
                             cellItem={quoteItem.msrp} cellWidth="15%"
                             type={"currency"}  cellStyle={msrpStyle}
                         />
+                    ) : null}
+
+                    {flags.image === true ? (
+                        <View style={imageStyle}>
+                        { quoteItem?.urlProductImage ?
+                            (<Image
+                                src={quoteItem.urlProductImage ? getBase64FromUrl(quoteItem.urlProductImage) : ''}
+                            /> ) : (
+                                <PDFTableCell 
+                                    cellItem={'Image'} cellWidth="10%"
+                                    type={"currency"}  cellStyle={imageStyle}
+                                />
+                            ) 
+                        }
+                        </View>
                     ) : null}
                 </>
                 
