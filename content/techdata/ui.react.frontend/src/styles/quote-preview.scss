@@ -263,3 +263,12 @@
     }
 }
 
+
+.errorInput {
+    border-bottom: 1px solid red !important;
+    &__label {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
+    }
+}
