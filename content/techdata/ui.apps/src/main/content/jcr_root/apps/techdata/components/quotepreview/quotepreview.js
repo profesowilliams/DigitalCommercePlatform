@@ -233,6 +233,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["defaultChoiceLabel"]  = properties["defaultChoiceLabel"];
     }
 
+    if (properties && properties["successRedirectPage"]) {
+        jsonObject["successRedirectPage"]  = properties["successRedirectPage"];
+    }
+
     if (properties && properties["continueWithStandardPriceLabel"]) {
         jsonObject["continueWithStandardPriceLabel"]  = properties["continueWithStandardPriceLabel"];
     }
