@@ -7,6 +7,7 @@ import SavedCart from './SavedCart';
 import Pricing from './Pricing';
 import EstimatedId from './EstimatedId';
 import { usPost } from '../../../../utils/api';
+import Modal from '../Modal/Modal';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -23,12 +24,14 @@ const QuoteCreate = ({
     ...endpoints
   } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false)
+  const [createQuoteTitle, setCreateQuoteTitle] = useState(buttonTitle)
   const [currentCart, setCurrentCart] = useState(false);
   const [pricing, setPricing] = useState(false);
   const [step, setStep] = useState(0);
   const [cartID, setCartID] = useState(false);
   const [createQuoteButtonEnabled, setCreateQuoteButtonEnabled] = useState(false);
 
+  const [modal, setModal] = useState(null);
   const methods = optionsList;
 
   const validateActiveCart = () => {
@@ -76,16 +79,30 @@ const QuoteCreate = ({
         active: 'activeCart',
         estimate: 'estimationId',
       }
+      setCreateQuoteTitle("Quote Creating In Progress")
+      setPricing(false)
       //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
       //this conditins needs to be removed later
       let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
       const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
-      if( isError )
+      if( isError ){
         return alert( 'Error in create quote' )
+      }
+      setModal((previousInfo) => (
+        {
+          content: (
+            <div>Your Quote will be created shortly, it can take some minutes before you will be able to see it.<br/> When you close this message, you will see the Quotes dashboard page. <br/>Please refresh it after some minutes to see your quote.</div>
+          ),
+          properties: {
+              title:  'Create Quote',
+          },
+            ...previousInfo,
+        }
+    ));
+    setCreateQuoteTitle(buttonTitle)
       const { quoteId } = content;
-      alert(`Create quote: ${cartID ? cartID : 'Active cart' }, ${quoteId}`);
       window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
   }
 
@@ -136,16 +153,25 @@ const QuoteCreate = ({
         <Pricing 
           enabled={createQuoteButtonEnabled}
           createQuote={createQuote} 
-          buttonTitle={buttonTitle}
+          buttonTitle={createQuoteTitle}
           method={pricing}
           setMethod={(option)=>setPricing(option)}
           pricingConditions={pricingConditions}
           prev={prev}
         />
       }
-      {
+     
+     {
         requested && <p>Loading</p>
       }
+      {modal && <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={() => setModal(null)}
+      ></Modal>}
     </div>
   );
 };
