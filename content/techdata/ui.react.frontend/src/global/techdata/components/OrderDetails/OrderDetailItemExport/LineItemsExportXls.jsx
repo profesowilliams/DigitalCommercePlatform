@@ -5,7 +5,7 @@ const LineItemsExportXls = ({ columnList = [], onPayloadChange }) => {
     const {checkboxList,selectAllState,updateCheckboxList,switchSelectAll, itemsSelected} = useLineItemExport(columnList);
     return (
         <>
-            <p className="cmp-export-xls-subtitle">Select comuns to include in the XLS</p>
+            <p className="cmp-export-xls-subtitle">Select columns to include in the XLS</p>
             <div className="cmp-column-checkbox-info">
                 <p className="cmp-column-checkbox-info__deselect" onClick={switchSelectAll}>{selectAllState}</p>
                 <p className="selected">{itemsSelected()} selected</p>
