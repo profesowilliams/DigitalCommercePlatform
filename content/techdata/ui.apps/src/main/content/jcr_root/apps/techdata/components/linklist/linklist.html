@@ -8,7 +8,7 @@
                 <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
                    title="${item.platformName}"
                    href="${item.linkUrl}"
-                   class="${item.linkUrl == 'true' ? '' : 'nolink'}"
+                   class="${item.linkUrl ? '' : 'nolink'}"
                    target="${item.linkTarget == 'true' ? '_blank' : '_self'}"
                    data-displayLocation="${item.displayLocationPopUp == 'true' ? 'true' : 'false'}">
                     <article>
