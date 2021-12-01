@@ -20,6 +20,9 @@
                 cursor: pointer;
                 &.nolink {
                     cursor: default;
+                    &[data-displaylocation="true"] {
+                        cursor: pointer;
+                    }
                 }
 
                 article {
