@@ -426,6 +426,12 @@
                                     fieldLabel="Download File Name"
                                     value="Download PDF"
                                     name="./fileName"/>
+                            <downloadInvoicesEndpoint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="URL for Download Link"
+                                    fieldLabel="URL for Download Link"
+                                    name="./downloadInvoicesEndpoint"/>
                         </items>
                     </PDF>
                 </items>

@@ -214,6 +214,11 @@ use(function () {
         headerJsonObject["exportCSVLabel"] = properties["exportCSVLabel"];
     }
 
+    if (properties && properties["downloadInvoicesEndpoint"]) {
+        jsonObject["downloadInvoicesEndpoint"] = properties["downloadInvoicesEndpoint"];
+    }
+
+
     if (this.uiServiceDomain != null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
     }

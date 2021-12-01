@@ -741,7 +741,15 @@ module.exports = {
                   "msrp": null,
                   "invoice": null,
                   "shipDates": ['10-6-2021', '10-8-2021'],
-                  "invoices": [],
+                  "invoices": [
+                    {
+                      "id": "8035189627",
+                      "line": "1",
+                      "quantity": 3,
+                      "price": 38.19,
+                      "created": "11-18-2021"
+                    }
+                  ],
                   "trackings": [
                     {
                       "orderNumber": null,
@@ -893,7 +901,15 @@ module.exports = {
                   "totalPriceFormatted": "0.00",
                   "msrp": null,
                   "invoice": null,
-                  "invoices": [],
+                  "invoices": [
+                    {
+                      "id": "8035189627",
+                      "line": "2",
+                      "quantity": 3,
+                      "price": 16.35,
+                      "created": "11-18-2021"
+                    }
+                  ],
                   "trackings": [
                     {
                       "orderNumber": "6030684674",
@@ -1059,7 +1075,15 @@ module.exports = {
                   "totalPriceFormatted": "0.00",
                   "msrp": null,
                   "invoice": null,
-                  "invoices": [],
+                  "invoices": [
+                    {
+                      "id": "8035189627",
+                      "line": "2",
+                      "quantity": 3,
+                      "price": 16.35,
+                      "created": "11-18-2021"
+                    }
+                  ],
                   "trackings": [],
                   "discounts": null,
                   "contract": null,
@@ -1210,7 +1234,15 @@ module.exports = {
                   "totalPriceFormatted": "0.00",
                   "msrp": null,
                   "invoice": null,
-                  "invoices": [],
+                  "invoices": [
+                    {
+                      "id": "8035189627",
+                      "line": "1",
+                      "quantity": 3,
+                      "price": 38.19,
+                      "created": "11-18-2021"
+                    }
+                  ],
                   "trackings": [],
                   "discounts": null,
                   "contract": null,

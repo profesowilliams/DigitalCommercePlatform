@@ -11,6 +11,7 @@ import { thousandSeparator } from "../../../helpers/formatting";
 import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
+import { requestFileBlob } from "../../../../../utils/utils";
 
 function ProductLinesGrid({
   gridProps,
@@ -18,7 +19,8 @@ function ProductLinesGrid({
   labels,
   quoteOption,
   onMarkupChanged,
-  iconList
+  iconList,
+  downloadInvoicesEndpoint,
 }) {
 
   const [gridApi, setGridApi] = useState(null);
@@ -110,7 +112,19 @@ function ProductLinesGrid({
 
   function getTrackingStatus(trackingArray) {
     return trackingArray.length ? trackingArray.length > 0 : false;
-}
+  }
+
+  /**
+   * 
+   * @param {string} invoiceId 
+   * @param {string} orderId 
+   */
+  function openInvoicePdf(invoiceId,orderId) {
+    const url = downloadInvoicesEndpoint || 'nourl';
+    const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
+    const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
+    requestFileBlob(invoiceUrl,'',{redirect:true});
+  }
 
   //default column defs
   const columnDefs = [
@@ -246,15 +260,20 @@ function ProductLinesGrid({
     field: "invoice",
     sortable: false,
     cellRenderer: (props) => {
+      const orderID = props.data.id;
+      const invoiceId = props.data.invoices[0]?.id;
       return (
-          <span className='status'>
-            <a
+          <div onClick={() => openInvoicePdf(invoiceId, orderID)}>
+            <span className='status'>
+              <a
+                disabled="disabled"
                 className='cmp-grid-url-underlined'
-                href={props.value ? props.value : '#'}
                 target="_blank">
-              <i className="fas fa-external-link-alt"></i>
-            </a>
-          </span>
+                <i className="fas fa-external-link-alt"></i>
+              </a>
+            </span>
+          </div>
+          
       );
     },
   })
@@ -405,15 +424,20 @@ function ProductLinesGrid({
     field: "invoice",
     sortable: false,
     cellRenderer: (props) => {
+      const orderID = props.data.id;
+      const invoiceId = props.data.invoices[0]?.id;
       return (
-          <span className='status'>
-            <a
+          <div onClick={() => openInvoicePdf(invoiceId, orderID)}>
+            <span className='status'>
+              <a
+                disabled="disabled"
                 className='cmp-grid-url-underlined'
-                href={props.value ? props.value : '#'}
                 target="_blank">
-              <i className="fas fa-external-link-alt"></i>
-            </a>
-          </span>
+                <i className="fas fa-external-link-alt"></i>
+              </a>
+            </span>
+          </div>
+          
       );
     },
   })

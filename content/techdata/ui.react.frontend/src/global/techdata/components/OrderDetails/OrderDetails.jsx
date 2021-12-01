@@ -15,7 +15,8 @@ const OrderDetails = ({ componentProp }) => {
       productLines,
       whiteLabel,
       searchCriteria,
-      downloadOrderDetailsEndpoint
+      downloadOrderDetailsEndpoint,
+      downloadInvoicesEndpoint,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [iconList, setIconList] = useState([]);
@@ -75,6 +76,7 @@ const OrderDetails = ({ componentProp }) => {
         quoteOption={quoteOption}
         iconList={iconList}
         searchCriteria={searchCriteria}
+        downloadInvoicesEndpoint={downloadInvoicesEndpoint}
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}
