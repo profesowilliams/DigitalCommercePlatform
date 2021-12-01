@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.EndUserEmail, y => y.MapFrom(s => s.EndUserEmail))
                 .ForMember(x => x.EndUserType, y => y.MapFrom(s => s.EndUserType))
                 .ForMember(x => x.Type, y => y.MapFrom(s => s.Type))
+                .ForMember(x=> x.ResellerPO, y=>y.MapFrom(s=> s.VendorQuoteID))
 
                 .ForMember(x=> x.ResellerName, y=> y.MapFrom(s=> s.ResellerName))
                 .ForMember(x => x.ResellerId, y => y.MapFrom(s => s.ResellerId))
@@ -67,7 +68,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.ExpiresFrom, y => y.MapFrom(s => s.ExpiresFrom))
                 .ForMember(x => x.ExpiresTo, y => y.MapFrom(s => s.ExpiresTo))
                 .ForMember(x => x.DueDate, y => y.MapFrom(s => s.DueDate))
+                .ForMember(x => x.ResellerPO, y => y.MapFrom(s => s.VendorQuoteID))
                 .ForMember(x => x.VendorName, y => y.MapFrom(s => s.VendorName));
+
         }
     }
 }

@@ -46,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedData);
            
             var refinementRequest = new Mock<RefinementRequest>();
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
@@ -61,7 +61,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedDetailedData);
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedDetailedData);
             
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsDetailedFor(request).Result;
@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedSummaryData);
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedSummaryData);
             
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsSummaryFor(request).Result;
@@ -90,7 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             //arrange            
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>())).ThrowsAsync(new Exception("test 123"));
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null)).ThrowsAsync(new Exception("test 123"));
 
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             
@@ -99,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            httpClient.Verify(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            httpClient.Verify(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(),null), Times.Once);
         }
 
         private ResponseSummaryDto ReturnedSummaryData()
@@ -129,7 +129,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedData);
             
             var refinementRequest = new Mock<RefinementRequest>();
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);

@@ -37,5 +37,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public string RenewedDuration { get; set; }
         public List<OptionsDto> Options { get; set; }
         public RenewalInRuleDto Renewal { get; set; }
+        public string ResellerPO { get; set; }
     }
 }

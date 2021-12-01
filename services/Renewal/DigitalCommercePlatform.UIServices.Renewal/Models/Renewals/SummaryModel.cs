@@ -46,5 +46,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public string Support { get; set; }
         public List<OptionsModel> Options { get; set; }
         public RenewalInRuleModel Renewal { get; set; }
+        public string ResellerPO { get; set; }
     }
 }
