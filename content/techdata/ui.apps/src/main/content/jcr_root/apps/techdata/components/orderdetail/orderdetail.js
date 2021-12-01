@@ -214,20 +214,16 @@ use(function () {
         headerJsonObject["exportCSVLabel"] = properties["exportCSVLabel"];
     }
 
-    if (properties && properties["downloadInvoicesEndpoint"]) {
-        jsonObject["downloadInvoicesEndpoint"] = properties["downloadInvoicesEndpoint"];
+
+    if (this.uiServiceDomain != null && this.downloadIndividualInvoiceEndpoint != null) {
+        jsonObject["downloadInvoicesEndpoint"] = this.uiServiceDomain+this.downloadIndividualInvoiceEndpoint;
     }
 
-
-    if (this.uiServiceDomain != null) {
+    if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
     }
 
-    if (this.uiServiceDomain != null) {
-        jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
-    }
-
-    if (this.uiServiceDomain != null) {
+    if (this.uiServiceDomain != null && this.downloadOrderDetailsEndpoint != null) {
         jsonObject["downloadOrderDetailsEndpoint"] = this.uiServiceDomain+this.downloadOrderDetailsEndpoint;
     }
 

@@ -113,6 +113,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Download All Invoices Endpoint", description = "Download All Invoices Endpoint")
     String downloadAllInvoicesEndpoint();
 
+    @Property(label = "Download Individual Invoice Endpoint", description = "Download Individual Invoice Endpoint")
+    String downloadInvoiceEndpoint();
+
     @Property(label = "Get Deals For Endpoint", description = "Get Deals For Endpoint")
     String dealsForEndpoint();
 
@@ -124,5 +127,6 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Download Order Details XLS Endpoint", description = "Download Order Details XLS Endpoint")
     String downloadOrderDetailsEndpoint();
+
 
 }

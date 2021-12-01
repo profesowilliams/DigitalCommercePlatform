@@ -44,6 +44,8 @@ public class CaConfigReader {
 
     private String downloadAllInvoicesEndpoint;
 
+    private String downloadInvoiceEndpoint;
+
     private String dealsForEndpoint;
 
     private String myQuotesEndpoint;
@@ -202,6 +204,7 @@ public class CaConfigReader {
         quoteDetailEndpoint = serviceEndPointsConfiguration.quoteDetailEndpoint();
         orderDetailEndpoint = serviceEndPointsConfiguration.orderDetailEndpoint();
         downloadAllInvoicesEndpoint = serviceEndPointsConfiguration.downloadAllInvoicesEndpoint();
+        downloadInvoiceEndpoint = serviceEndPointsConfiguration.downloadInvoiceEndpoint();
         dealsForEndpoint = serviceEndPointsConfiguration.dealsForEndpoint();
         vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
         setVendorConnectionEndpoint = serviceEndPointsConfiguration.setVendorConnectionEndpoint();
@@ -498,6 +501,10 @@ public class CaConfigReader {
 
     public String getDownloadAllInvoicesEndpoint() {
         return downloadAllInvoicesEndpoint;
+    }
+
+    public String getDownloadInvoiceEndpoint() {
+        return downloadInvoiceEndpoint;
     }
 
     public String getDealsForEndpoint() {
