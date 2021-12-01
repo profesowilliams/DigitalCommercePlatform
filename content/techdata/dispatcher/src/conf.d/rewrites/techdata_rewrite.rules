@@ -3,6 +3,16 @@ RedirectMatch "^/$" "/us"
 
 # robot.txt
 RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt [PT,L]
+RewriteRule ^/us/sitemap.xml$  /content/techdata/americas/us/en.sitemap.xml [PT,L]
+RewriteRule ^/au/sitemap.xml$  /content/techdata/apac/au/en.sitemap.xml [PT,L]
+RewriteRule ^/hk/sitemap.xml$  /content/techdata/apac/hk/en.sitemap.xml [PT,L]
+RewriteRule ^/id/sitemap.xml$  /content/techdata/americas/id/en.sitemap.xml [PT,L]
+RewriteRule ^/in/sitemap.xml$  /content/techdata/apac/id/en.sitemap.xml [PT,L]
+RewriteRule ^/nz/sitemap.xml$  /content/techdata/apac/nz/en.sitemap.xml [PT,L]
+RewriteRule ^/th/sitemap.xml$  /content/techdata/apac/th/en.sitemap.xml [PT,L]
+RewriteRule ^/sg/sitemap.xml$  /content/techdata/apac/sg/en.sitemap.xml [PT,L]
+RewriteRule ^/vn/sitemap.xml$  /content/techdata/apac/vn/en.sitemap.xml [PT,L]
+RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
 # apac
 RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME}/apac/apac/en.html [PT,L]

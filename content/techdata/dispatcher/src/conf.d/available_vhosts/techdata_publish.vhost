@@ -15,6 +15,7 @@ PassEnv DISP_ID
 	<IfModule mod_headers.c>
 		Header always add X-Dispatcher ${DISP_ID}
 		Header always add X-Vhost "publish"
+		Header set Content-Disposition inline
 		Header merge X-Frame-Options SAMEORIGIN "expr=%{resp:X-Frame-Options}!='SAMEORIGIN'"
 		Header merge X-Content-Type-Options nosniff "expr=%{resp:X-Content-Type-Options}!='nosniff'"
 		# Make sure proxies don't deliver the wrong content
@@ -83,6 +84,7 @@ PassEnv DISP_ID
 	<IfModule mod_headers.c>
 		Header always add X-Dispatcher ${DISP_ID}
 		Header always add X-Vhost "publish"
+		Header set Content-Disposition inline
 		Header merge X-Frame-Options SAMEORIGIN "expr=%{resp:X-Frame-Options}!='SAMEORIGIN'"
 		Header merge X-Content-Type-Options nosniff "expr=%{resp:X-Content-Type-Options}!='nosniff'"
 		# Make sure proxies don't deliver the wrong content
