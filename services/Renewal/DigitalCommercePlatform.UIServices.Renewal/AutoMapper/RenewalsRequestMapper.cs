@@ -37,7 +37,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.CreatedTo, y => y.MapFrom(s => s.CreatedTo))
                 .ForMember(x => x.ExpiresFrom, y => y.MapFrom(s => s.ExpiresFrom))
                 .ForMember(x => x.ExpiresTo, y => y.MapFrom(s => s.ExpiresTo))
-                .ForMember(x => x.DueDate, y => y.MapFrom(s => s.DueDate))
+                .ForMember(x => x.DueDateFrom, y => y.MapFrom(s => s.DueDateFrom))
+                .ForMember(x => x.DueDateTo, y => y.MapFrom(s => s.DueDateTo))
                 .ForMember(x => x.VendorName, y => y.MapFrom(s => s.VendorName));
 
             CreateMap<SearchModel, SearchRenewalSummary.Request>()
@@ -67,7 +68,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.CreatedTo, y => y.MapFrom(s => s.CreatedTo))
                 .ForMember(x => x.ExpiresFrom, y => y.MapFrom(s => s.ExpiresFrom))
                 .ForMember(x => x.ExpiresTo, y => y.MapFrom(s => s.ExpiresTo))
-                .ForMember(x => x.DueDate, y => y.MapFrom(s => s.DueDate))
+                .ForMember(x => x.DueDateFrom, y => y.MapFrom(s => s.DueDateFrom))
+                .ForMember(x => x.DueDateTo, y => y.MapFrom(s => s.DueDateTo))
                 .ForMember(x => x.ResellerPO, y => y.MapFrom(s => s.VendorQuoteID))
                 .ForMember(x => x.VendorName, y => y.MapFrom(s => s.VendorName));
 

@@ -38,8 +38,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
             public List<string> VATNumber { get; set; }
             public List<string> VendorAccountName { get; set; }
             public List<string> VendorAccountNumber { get; set; }
-            public string EndUserType { get; set; }
-            public string ProgramName { get; set; }
+            public List<string> EndUserType { get; set; }
+            public List<string> ProgramName { get; set; }
             public string ResellerPO { get; set; }
             public string ContractID { get; set; }
             public bool Details { get; set; }
@@ -51,9 +51,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
             public DateTime? CreatedTo { get; set; }
             public DateTime? ExpiresFrom { get; set; }
             public DateTime? ExpiresTo { get; set; }
-            public DateTime? DueDate { get; set; }
+            public DateTime? DueDateFrom { get; set; }
+            public DateTime? DueDateTo { get; set; }
 
-        }
+    }
 
         public class Response
         {

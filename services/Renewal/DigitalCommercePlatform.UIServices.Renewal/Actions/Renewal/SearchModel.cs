@@ -23,8 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public int PageSize { get; set; } = 25;
         public bool WithPaginationInfo { get; set; } = false;
         public List<string> VendorName { get; set; }
-        public string EndUserType { get; set; }
-        public string ProgramName { get; set; }
+        public List<string> EndUserType { get; set; }
+        public List<string> ProgramName { get; set; }
         public string VendorQuoteID { get; set; }
         public List<string> ContractId { get; set; }
         public string ContractID { get; set; }
@@ -38,6 +38,5 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public DateTime? CreatedTo { get; set; }
         public DateTime? ExpiresFrom { get; set; }
         public DateTime? ExpiresTo { get; set; }
-        public DateTime? DueDate { get; set; }
     }
 }
