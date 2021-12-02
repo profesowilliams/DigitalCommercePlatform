@@ -7,6 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal
     [ExcludeFromCodeCoverage]
     public class OptionsDto
     {
+        public string Id { get; set; }
         public string AgreementNumber { get; set; }
         public string QuoteID { get; set; }
         public string ContractDuration { get; set; }

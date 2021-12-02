@@ -7,6 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal
     [ExcludeFromCodeCoverage]
     public class OptionsModel
     {
+        public string Id { get; set; }
         public string AgreementNumber { get; set; }
         public string QuoteID { get; set; }
         public string ContractDuration { get; set; }
