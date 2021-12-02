@@ -54,7 +54,11 @@ use(function () {
          * dcpQuotesLookupEndpoint: Endpoint for checking if quote ID entered exists, for DCP User
          * dcpSearchFailedPage:     Page to redirect DCP User for failed quote entered
          */
-          areaconfig.put("detailsPage", this.serviceData['quoteDetailPage'] || '');
+          if (res.properties["detailsPage"] != null) {
+              areaconfig.put("detailsPage", res.properties["detailsPage"]);
+            } else {
+                areaconfig.put("detailsPage", this.serviceData['quoteDetailPage'] || '');
+          }
           if(dcpLookupEndpoint == null) {
             areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteDcpLookupEndpoint'] || '');
           }
@@ -65,7 +69,11 @@ use(function () {
          * dcpOrdersLookupEndpoint: Endpoint for checking if order ID entered exists, for DCP User
          * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
          */
-        areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
+        if (res.properties["detailsPage"] != null) {
+              areaconfig.put("detailsPage", res.properties["detailsPage"]);
+        } else {
+            areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
+        }
         if(dcpLookupEndpoint == null){
           areaconfig.put("dcpLookupEndpoint", this.serviceData['orderDcpLookupEndpoint'] || '');
         }
