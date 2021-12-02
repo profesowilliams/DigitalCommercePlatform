@@ -236,7 +236,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private decimal? CalculateOtherFees(OrderModel order)
         {
-            decimal? otherFees = order.Items.Where(t => t.OtherFees.HasValue).Sum(t => t.Freight.Value);
+            decimal? otherFees = order.Items.Where(t => t.OtherFees.HasValue).Sum(t => t.OtherFees.Value);
             return otherFees ?? 0;
         }
         private decimal? CalculateTax(OrderModel order)
