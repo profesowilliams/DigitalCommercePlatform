@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorConnections;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
@@ -73,6 +74,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
         public async Task<ActionResult> VendorAuthorizeURL([FromQuery] string vendor)
         {
             var response = await Mediator.Send(new getVendorAuthorizeURL.Request(vendor)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("refreshData")]
+        public async Task<ActionResult> Refresh([FromQuery] RefreshData.Request request)
+        {
+            var response = await Mediator.Send(new RefreshData.Request { Type = request.Type, Version = request.Version, VendorName = request.VendorName }).ConfigureAwait(false);
             return Ok(response);
         }
     }

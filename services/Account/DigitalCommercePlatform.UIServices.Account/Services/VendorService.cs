@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
+using DigitalCommercePlatform.UIServices.Account.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorDisconnect;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorRefreshToken;
@@ -18,7 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     {
         private readonly string _coreSecurityUrl;
         private readonly string _vendorAutorizationURL;
+        private readonly string _appConfigurationUrl;
         private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<VendorService> _logger;
@@ -42,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _logger = logger;
             _coreSecurityUrl = appSettings.GetSetting(Globals.CoreSecurityUrl);
             _vendorAutorizationURL = appSettings.GetSetting("Vendor.Login.Cisco.Url");
+            _appConfigurationUrl = appSettings.GetSetting("App.Configuration.Url");
             _appSettings = appSettings;
         }
 
@@ -236,6 +238,26 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 throw ex;
             }
             return Task.FromResult(url);
+        }
+
+        public async Task<RefreshData.Response> RefreshVendor(RefreshData.Request request)
+        {
+            var configurationRefreshUrl = _appConfigurationUrl.AppendPathSegments("Refresh", request.VendorName, request.Type);
+
+            if (!string.IsNullOrWhiteSpace(request.Version))
+            {
+                configurationRefreshUrl = configurationRefreshUrl.AppendPathSegment(request.Version);
+            }
+
+            var refreshResponse = await _middleTierHttpClient.PostAsync<HttpResponseModel>(configurationRefreshUrl, null, null);
+
+            var result = refreshResponse?.StatusCode ?? HttpStatusCode.OK;
+
+            var response = new RefreshData.Response();
+            response.Refreshed = result == HttpStatusCode.OK ? true : false;
+
+            return response;
+
         }
 
         private List<string> VendorList()

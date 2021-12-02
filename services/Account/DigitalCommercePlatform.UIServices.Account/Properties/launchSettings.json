@@ -10,6 +10,7 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "commandLineArgs": "-c debug --n=\"UIService.Account\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5286 --urls=\"http://localhost\" --islocal=\"1\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
