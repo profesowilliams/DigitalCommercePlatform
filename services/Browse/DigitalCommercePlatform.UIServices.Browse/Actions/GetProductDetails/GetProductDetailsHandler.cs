@@ -342,7 +342,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 flags.DisplayStatus = indicators.ContainsKey(DisplayStatus) ? indicators[DisplayStatus].Value : null;
 
-                flags.FreeShipping = salesOrg == SalesOrg0100 && indicators.ContainsKey(FreightPolicyException) && string.Equals(indicators[FreightPolicyException].Value, FreightPolicyExceptionValue, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.FreeShipping = !(salesOrg == SalesOrg0100 && indicators.ContainsKey(FreightPolicyException) && string.Equals(indicators[FreightPolicyException].Value, FreightPolicyExceptionValue, System.StringComparison.InvariantCultureIgnoreCase));
 
                 return flags;
             }

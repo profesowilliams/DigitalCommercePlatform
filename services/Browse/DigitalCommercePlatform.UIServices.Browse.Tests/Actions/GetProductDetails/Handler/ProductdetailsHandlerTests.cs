@@ -340,7 +340,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             Warehouse=true,
-                            FreeShipping=true
+                            FreeShipping=false
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
@@ -592,7 +592,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             Warehouse=true,
-                            FreeShipping=false
+                            FreeShipping=true
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
@@ -848,7 +848,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
-                            Warehouse=true
+                            Warehouse=true,
+                            FreeShipping = true
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
