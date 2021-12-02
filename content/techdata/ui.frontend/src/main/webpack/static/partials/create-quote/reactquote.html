@@ -6,6 +6,7 @@
 		data-config='{
 			"label": "Create Quote",
 			"buttonTitle": "Create Quote",
+			"buttonTitleInProgress": "Quote Creation In Progress",
 			"optionsList": [
 			{ "key": "active", "label": "My Active Cart", "title": "CREATE QUOTE", "dropdownPlaceholder": "", "textPlaceholder": "", "manuallyTypedError": "" },
 			{
@@ -18,7 +19,7 @@
 			}
 			],
 			"quotePreviewUrl": "http://localhost:8080/quote.html?redirected=true",
-			"endpoint": "http://localhost:3000/ui-content/v1/replaceCart",
+			"endpoint": "http://localhost:3000/quote/create",
 			"cartslistEndpoint": "http://localhost:3000/savedCarts",
 			"cartdetailsEndpoint": "http://localhost:3000/cart",
 			"pricingConditions": "http://localhost:3000/pricingConditions",

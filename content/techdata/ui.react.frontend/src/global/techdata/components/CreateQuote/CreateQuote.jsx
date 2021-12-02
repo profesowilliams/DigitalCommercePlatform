@@ -20,11 +20,12 @@ const QuoteCreate = ({
     requested, authError, componentProp, 
   }) => {
   const { 
-    label, quotePreviewUrl, buttonTitle, optionsList, pricingConditions,
+    label, quotePreviewUrl, buttonTitle, buttonTitleInProgress, optionsList, pricingConditions,
     ...endpoints
   } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false)
   const [createQuoteTitle, setCreateQuoteTitle] = useState(buttonTitle)
+  const [disableCreateQuoteButton, setDisableCreateQuoteButton] = useState(false)
   const [currentCart, setCurrentCart] = useState(false);
   const [pricing, setPricing] = useState(false);
   const [step, setStep] = useState(0);
@@ -72,6 +73,18 @@ const QuoteCreate = ({
   const getErrorMessage = (text, messages = []) => {
     return `${text} ${messages.join(' -- ')}`
   }
+
+  const showSimpleModal = (title, content) => 
+    setModal((previousInfo) => (
+      {
+        content: content,
+        properties: {
+            title:  title,
+        },
+          ...previousInfo,
+      }
+    ));
+
   const createQuote = async () => {
       const { endpoint } = endpoints;
       const createFromTypes = {
@@ -79,31 +92,34 @@ const QuoteCreate = ({
         active: 'activeCart',
         estimate: 'estimationId',
       }
-      setCreateQuoteTitle("Quote Creating In Progress")
-      setPricing(false)
+      setDisableCreateQuoteButton(true);
+      setCreateQuoteTitle(buttonTitleInProgress);
+
       //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
       //this conditins needs to be removed later
       let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
-      const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
-      if( isError ){
-        return alert( 'Error in create quote' )
-      }
-      setModal((previousInfo) => (
-        {
-          content: (
-            <div>Your Quote will be created shortly, it can take some minutes before you will be able to see it.<br/> When you close this message, you will see the Quotes dashboard page. <br/>Please refresh it after some minutes to see your quote.</div>
-          ),
-          properties: {
-              title:  'Create Quote',
-          },
-            ...previousInfo,
+      try {
+        const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
+        if( isError ){
+          showSimpleModal('Create Quote', (
+            <div>There was an error creating the quote, please try again later.</div>
+          ));
         }
-    ));
-    setCreateQuoteTitle(buttonTitle)
-      const { quoteId } = content;
-      window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
+        else {
+          showSimpleModal('Create Quote', (
+            <div>Your Quote will be created shortly, it can take some minutes before you will be able to see it.<br/> When you close this message, you will see the Quotes dashboard page. <br/>Please refresh it after some minutes to see your quote.</div>
+          ));
+          const { quoteId } = content;
+          window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
+        }
+      }
+      catch(e) {
+        console.error(e);
+      }
+      setDisableCreateQuoteButton(false);
+      setCreateQuoteTitle(buttonTitle);
   }
 
 	useEffect(() => {
@@ -157,6 +173,7 @@ const QuoteCreate = ({
           method={pricing}
           setMethod={(option)=>setPricing(option)}
           pricingConditions={pricingConditions}
+          disableCreateQuoteButton={disableCreateQuoteButton}
           prev={prev}
         />
       }

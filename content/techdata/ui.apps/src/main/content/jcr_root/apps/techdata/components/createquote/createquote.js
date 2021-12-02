@@ -37,6 +37,9 @@ use(function () {
     if (properties.get("buttonTitle") != null) {
         jsonObject.put("buttonTitle", properties.get("buttonTitle"));
     }
+    if (properties.get("buttonTitleInProgress") != null) {
+        jsonObject.put("buttonTitleInProgress", properties.get("buttonTitleInProgress"));
+    }
 
     if (properties.get("quotePreviewUrl") != null) {
         jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));

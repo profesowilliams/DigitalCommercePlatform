@@ -21,6 +21,11 @@
 							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 							fieldLabel="Button Label"
 							name="./buttonTitle"/>
+					<buttonTitleInProgress
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Action In progress Button Label"
+							name="./buttonTitleInProgress"/>
 					<quotePreviewUrl
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
