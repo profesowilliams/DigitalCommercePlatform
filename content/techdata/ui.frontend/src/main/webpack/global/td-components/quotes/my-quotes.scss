@@ -9,12 +9,20 @@
     height: rem(55px);
     align-items: center;
     margin: 0;
+    @include mobile {
+        display: block;
+        height: auto;
+    }
     &__title {
         font-size: $font-size-small;
         text-transform: uppercase;
         color: get-color(text-mid-gray);
         width: rem(115px);
         align-self: baseline;
+        @include mobile {
+            width: 100%;
+            margin-bottom: rem(10px);
+        }
     }
     &__sub-title {
         font-size: $font-size-xxsmall;
@@ -35,6 +43,9 @@
         display: flex;
         justify-content: space-between;
         text-align: center;
+        @include mobile {
+            margin-bottom: rem(10px);
+        }
     }
 
     &__active-value {

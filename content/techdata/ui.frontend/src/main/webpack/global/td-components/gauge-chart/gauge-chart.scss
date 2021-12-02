@@ -4,6 +4,10 @@
     width: rem(450px);
     margin: 0;
 
+    @include mobile {
+        width: 100%;
+    }
+
     canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
@@ -32,14 +36,23 @@
             flex-wrap: wrap;
             width: auto;
             margin: 0 auto;
+            @include mobile {
+                justify-content: center;
+            }
             &--number {
                 font-size: $font-size-custom-large;
                 color: get-color(td-lightblue);
                 margin-right: rem(20px);
+                @include mobile {
+                    margin: rem(5px);
+                }
             }
             &--title {
                 font-size: $font-size-custom-midi;
                 color: get-color(brand-blue);
+                @include mobile {
+                    margin: rem(5px);
+                }
             }
         }
     }

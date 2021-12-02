@@ -28,13 +28,13 @@ const MyDeals = ({ componentProp }) => {
   },[])
   return(
     <>
+    <div className="cmp-deals__title">
+        <p>{ label }</p>
+    </div>
       <div className="cmp-deals">
         <div className="cmp-deals__table">
           <table cellPadding="0" cellSpacing="6">
             <thead>
-              <tr className="cmp-deals__title">
-                <td colSpan="2">{ label }</td>
-              </tr>
               <tr>
                 <td>
                   <br />

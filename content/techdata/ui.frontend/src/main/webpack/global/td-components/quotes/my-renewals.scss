@@ -46,6 +46,10 @@
 		width: auto;
 		margin: auto;
 		text-align: center;
+		@include mobile {
+			left: rem(60px);
+			bottom: rem(56px);
+		}
 		&--number {
 			font-size: $font-size-custom-large;
 		}
@@ -55,6 +59,10 @@
 			position: relative;
 			width: 100%;
 			height: 100%;
+		}
+		@include mobile {
+			grid-row: 2;
+			width: 50%;
 		}
 	}
 	&__error {

@@ -84,10 +84,16 @@
   }
   .cmp-dcp-widget-chart__body{
       display: flex;
+    @include mobile {
+     flex-direction: column-reverse;
+    }
   }
   .cmp-dcp-widget-chart__legend{
     margin-top: rem(20px);
     margin-left: 1rem;
+    @include mobile {
+      display: flex;
+    }
   }
   .cmp-dcp-widget-chart__chart{
     position: relative;

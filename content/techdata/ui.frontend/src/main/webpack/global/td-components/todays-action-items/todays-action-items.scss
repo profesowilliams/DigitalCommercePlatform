@@ -8,6 +8,12 @@
   flex-wrap: wrap;
   width: rem(444px);
   height: rem(55px);
+  @include mobile {
+    flex-wrap: nowrap;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+  }
   &__title {
     font-size: $font-size-small;
     text-transform: uppercase;
@@ -25,7 +31,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
+    @include mobile {
+      width: 100%;
+      margin-bottom: 10px;
+    }
     &__title {
         width: 100%;
         font-size: $font-size-xsmall;

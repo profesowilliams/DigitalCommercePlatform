@@ -9,6 +9,10 @@
 	height: rem(55px);
 	margin: 0 !important;
 
+	@include mobile {
+		height: rem(119px);
+	}
+
 	&__body {
 		display: grid;
 		grid-template-columns: 60% 40%;
@@ -50,6 +54,12 @@
 		flex-direction: column;
 		height: rem(15px);
 		margin-bottom: rem(2px);
+		@include mobile {
+			height: auto;
+			grid-row: 2;
+			margin-top:  rem(15px);
+			padding-left:  rem(10px);
+		}
 		div {
 			display: flex;
 			justify-content: flex-start;
