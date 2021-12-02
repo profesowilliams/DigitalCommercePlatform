@@ -223,4 +223,16 @@
       }
     }
   }
+  &__subscription-terms {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+    p {
+      margin-right: 1em;
+      line-height: 1.6em;
+      span {
+        display: block;
+      }
+    }
+  }
 }

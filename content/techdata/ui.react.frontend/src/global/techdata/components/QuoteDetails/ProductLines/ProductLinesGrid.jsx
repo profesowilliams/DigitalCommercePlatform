@@ -95,7 +95,7 @@ function ProductLinesGrid({
             onModelUpdateFinished={() => {
               markupChanged(mutableGridData);
             }}
-          ></ProductLinesChildGrid>
+          />
         </section>
       ),
     },
@@ -104,7 +104,7 @@ function ProductLinesGrid({
       field: "displayName",
       sortable: false,
       width: "600px",
-      cellHeight: () => 80,
+      cellHeight: () => props.data.startDate ? 150 : 80, // adjust row height for subscription items
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
                   line={props.data}
@@ -207,7 +207,7 @@ function ProductLinesGrid({
             initialMarkup={value || 0}
             resellerUnitPrice={data.unitPrice}
             labels={labels}
-          ></ProductLinesMarkupRow>
+          />
         );
       },
       sortable: false,
@@ -295,13 +295,13 @@ function ProductLinesGrid({
 
   useEffect(() => {
     quoteOption &&
-      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
+      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote");
   }, [quoteOption]);
 
   return (
     <section>
       {whiteLabelMode && (
-        <ProductLinesMarkupGlobal labels={labels}></ProductLinesMarkupGlobal>
+        <ProductLinesMarkupGlobal labels={labels} />
       )}
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
@@ -331,7 +331,7 @@ function ProductLinesGrid({
           onModelUpdateFinished={() => {
             markupChanged(mutableGridData);
           }}
-        ></Grid>
+        />
       </div>
     </section>
   );

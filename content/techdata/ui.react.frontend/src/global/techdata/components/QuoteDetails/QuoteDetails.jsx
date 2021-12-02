@@ -101,15 +101,15 @@ const QuoteDetails = ({ componentProp }) => {
     whiteLabelOptions !== null && whiteLabelOptions.forEach(e => {
       if (e === 'Part number- Tech data') {
         extraOptions.manufacturer = true;
-      } 
-      
+      }
+
       if (e === 'MSRP/List price ') {
           extraOptions.vendorPartNo = true;
-      } 
+      }
 
       if (e === 'Part number- manufacturer') {
           extraOptions.msrp = true;
-      } 
+      }
       if (e === "The reseller logo") {
         extraOptions.resellerLogo = true;
     }
@@ -131,7 +131,7 @@ const QuoteDetails = ({ componentProp }) => {
         "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : logoURL
       };
       generateExcelFileFromPost({url:uiServiceEndPointExcel,name:'quotes.xlsx',postData})
-     
+
     } catch (error) {
         console.error("error", error);
     }
@@ -176,7 +176,7 @@ const QuoteDetails = ({ componentProp }) => {
     /*actualQuoteLinesData : {
       quotes: Array -> contains data that represents actual state of quotes, regarding to applied markup etc;
       summary: {
-        ancillaryItems : {total : -> sum of all ancillary AncillaryItems, 
+        ancillaryItems : {total : -> sum of all ancillary AncillaryItems,
                           items: Array -> {description: description of item, value: actual value} }
         endUserSavings: difference between msrp and endUserTotal,
         endUserTotal: sum of the end user cost,
@@ -216,7 +216,7 @@ const QuoteDetails = ({ componentProp }) => {
     let source = vendorQuoteSource?.value || estimateIdSource?.value
                 ? []
                 : null;
-      
+
     if (vendorQuoteSource?.value) {
       source.push({
         type: vendorQuoteSource?.type,
@@ -244,7 +244,7 @@ const QuoteDetails = ({ componentProp }) => {
       deal = {
         spaId: dealSource?.value,
         vendor: vendorAttribute?.value,
-      } 
+      }
     }
 
     return deal;
@@ -271,7 +271,7 @@ const QuoteDetails = ({ componentProp }) => {
         dateLabels={{ createdDateLabel, expiresDateLabel }}
       />
       {
-        whiteLabelMode 
+        whiteLabelMode
           ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} setWhiteLabelOptions={setWhiteLabelOptions} /> )
           : (
             <>
@@ -309,7 +309,7 @@ const QuoteDetails = ({ componentProp }) => {
         onMarkupChanged={(quote) => {
           setQuoteWithMarkup([...quote]);
         }}
-      ></ProductLinesGrid>
+      />
       <QuoteSubtotal
         labels={whiteLabel}
         amount={quoteDetails?.subTotal}
@@ -341,7 +341,7 @@ const QuoteDetails = ({ componentProp }) => {
         messageObject={{"message401" : "You need to be logged in to view this"}}
     /> : (
     <FullScreenLoader>
-      <Loader visible={true}></Loader>
+      <Loader visible={true} />
     </FullScreenLoader>
   );
 };
