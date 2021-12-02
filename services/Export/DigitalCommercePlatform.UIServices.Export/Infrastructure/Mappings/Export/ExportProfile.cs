@@ -178,7 +178,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
     {
         public string Resolve(Internal.OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
         {
-            var poDate = source.PoDate.GetHashCode() == 0 ? string.Empty : source.PoDate.ToString("MM/dd/yy");
+            var poDate = !source.PoDate.HasValue ? string.Empty : source.PoDate.Value.ToString("MM/dd/yy");
             return poDate;
         }
     }

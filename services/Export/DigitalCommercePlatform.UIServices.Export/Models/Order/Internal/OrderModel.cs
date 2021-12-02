@@ -23,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Order.Internal
         public List<Item> Items { get; set; }
         public string CustomerPO { get; set; }
         public string EndUserPO { get; set; }
-        public DateTime PoDate { get; set; }
+        public DateTime? PoDate { get; set; }
         public bool BlindPackaging { get; set; }
         public string PaymentTermText { get; set; }
         public string FreightFormatted { get; set; }
