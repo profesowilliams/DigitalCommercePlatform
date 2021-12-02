@@ -12,7 +12,6 @@
         }
         .cmp-megamenu__primary {
             margin: 0;
-            padding-left: 0;
             padding: 16px 0;
             li {
                 display: inline;
@@ -50,6 +49,7 @@
 
         .cmp-megamenu__tabpanel--active {
             display: block;
+            margin-left: rem(16px);
         }
     }
 

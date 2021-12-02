@@ -45,11 +45,6 @@
 
         .cmp-megamenu__tabpanel {
             display: none;
-            &.cmp-megamenu__tabpanel--active {
-                .cmp-navigation__item {
-                    margin-left: rem(16px);
-                }
-            }
         }
 
         .cmp-megamenu__tabpanel--active {
