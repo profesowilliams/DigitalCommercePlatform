@@ -9,6 +9,8 @@ export const isVendorQuote = (source) => source.type === 'VendorQuote'
 
 export const isEstimate = (source) => source.type === 'Estimate'
 
+export const isPricingOptionsRequired = (quoteDetails, quoteWithoutPricing) => quoteWithoutPricing && !quoteDetails.tier
+
 export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetails.source)
 
 export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails.source)

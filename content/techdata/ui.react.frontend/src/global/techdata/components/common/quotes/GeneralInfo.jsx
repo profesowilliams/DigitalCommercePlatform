@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 
-function GeneralInfo({quoteDetails, gridProps, isDealRequired, info, onValueChange, readOnly}) {
+function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
 
     const source = quoteDetails.source;
@@ -286,12 +286,15 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, info, onValueChan
                 }
                 {!editMode && (
                     <>
-                        {generalInfoState.tier &&
+                        {(isPricingOptionsRequired || generalInfoState.tier) &&
                             <div className="cmp-qp__information-row--readonly">
                                 <span>
                                     {info.tierLabel}:
                                 </span>
                                 <div>
+                                    <span className={isPricingOptionsRequired ? 'cmp-qp__pricing-required' : ''}>
+                                        {isPricingOptionsRequired ? 'Please select a Pricing Option' : null}
+                                    </span>
                                     {generalInfoState.tierUserFriendlyLabel ? generalInfoState.tierUserFriendlyLabel : generalInfoState.tier }
                                 </div>
                             </div>

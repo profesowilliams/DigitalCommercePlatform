@@ -26,18 +26,22 @@
   }
 }
 
-div .errorDeal {
-  width: 60%;
-}
+.cmp-quote-preview {
 
-.errorDeal {
-  color: get-color(brand-secondary-text);
-  text-decoration: underline;
-  animation: error 1s ease-in-out both;
-  transition: all;
-}
+  div .errorDeal {
+    width: 60%;
+  }
 
-@keyframes error {
-  0% {background-color: get-color(brand-secondary-text); color: get-color(brand-white);}
-  100% {background-color: transparent; color: get-color(brand-secondary-text)}
+
+  .errorDeal, .cmp-qp__pricing-required {
+    color: get-color(brand-secondary-text);
+    text-decoration: underline;
+    animation: error 1s ease-in-out both;
+    transition: all;
+  }
+
+  @keyframes error {
+    0% {background-color: get-color(brand-secondary-text); color: get-color(brand-white);}
+    100% {background-color: transparent; color: get-color(brand-secondary-text)}
+  }
 }

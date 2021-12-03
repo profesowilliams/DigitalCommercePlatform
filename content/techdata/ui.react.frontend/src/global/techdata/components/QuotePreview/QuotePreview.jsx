@@ -9,7 +9,7 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isAllowedQuantityIncrease, isDealRequired } from "./QuoteTools";
+import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired } from "./QuoteTools";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -20,6 +20,7 @@ function QuotePreview(props) {
   const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
   const [didQuantitiesChange, setDidQuantitiesChange] = useState(false);
+  const [quoteWithoutPricing, setQuoteWithoutDealPricing] = useState(false);
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
 
   useEffect(() => {
@@ -76,11 +77,17 @@ function QuotePreview(props) {
   };
   
   const handleQuickQuote = useCallback((e) => {
-    if(isDealRequired(quoteDetails, true)){
+    const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
+          dealRequired = isDealRequired(quoteDetails, true);
+
+    if(pricingRequired || dealRequired) {
+      scrollToTopError();
       e.preventDefault();
-      setQuoteWithoutDeal(true)
-      scrollToTopError()
-    } else {
+
+      setQuoteWithoutDealPricing(pricingRequired);
+      setQuoteWithoutDeal(dealRequired)
+    }
+    else {
       createQuote(quoteDetails)
     }
   }, [quoteDetails]);
@@ -159,6 +166,7 @@ function QuotePreview(props) {
         <section>
           <ConfigGrid
             isDealRequired={isDealRequired(quoteDetails, quoteWithoutDeal)}
+            isPricingOptionsRequired={isPricingOptionsRequired(quoteDetails, quoteWithoutPricing)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
