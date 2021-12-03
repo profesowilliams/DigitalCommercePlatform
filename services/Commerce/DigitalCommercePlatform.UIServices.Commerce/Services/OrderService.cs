@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -123,7 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
 
             }
-            return findOrdersDto;        
+            return findOrdersDto;
         }
 
         private async Task FindInvoices(OrderModel item, List<InvoiceModel> invoiceDetails)
@@ -131,14 +132,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             if (invoiceDetails.Any())
             {
                 var invoices = invoiceDetails.Select(i => i.ID).Distinct().ToList();
+                await OrderReturnsInformationForInvoice(item, invoices);
+            }
+        }
+        /// <summary>
+        /// Set return parameter true false
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="invoices"></param>
+        /// <returns></returns>
 
-                if (invoices.Any())
+        private async Task OrderReturnsInformationForInvoice(OrderModel item, List<string> invoices)
+        {
+            if (invoices.Any())
+            {
+                foreach (var invoice in invoices)
                 {
-                    foreach (var invoice in invoices)
-                    {
-                        var _appreturn = _appSettings.GetSetting("App.Return.Url");
-                        _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=true&invoiceNumber", invoice);
+                    var _appreturn = _appSettings.GetSetting("App.Return.Url");
+                    _appreturn = _appreturn.AppendPathSegment("/Find").SetQueryParam("details=false&InvoiceNumbers", invoice);
 
+                    try
+                    {
                         var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
                         if (findReturnsDTO.Data.Any())
                         {
@@ -146,6 +160,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             break;
                         }
                     }
+                    catch (RemoteServerHttpException ex)
+                    {
+                        if (ex.Code == HttpStatusCode.NotFound)                        
+                            _logger.LogInformation("Calling App-Retrun to get return formation: returned Involice not found ! ");                        
+                        else if (ex.Code == HttpStatusCode.InternalServerError)
+                            _logger.LogInformation("Calling App-Retrun to get return formation: returned Internal server error ! ");
+                        else
+                            _logger.LogInformation("Calling App-Retrun to get return formation: returned error ! " + ex.Message.ToString());
+
+                        item.Return = false;
+                        break;
+                    }
+
                 }
             }
         }

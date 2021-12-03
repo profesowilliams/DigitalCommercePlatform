@@ -275,6 +275,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void OrderReturnsInformationForInvoice_Test()
+        {
+            OrderModel item = new()
+            {
+                Return = false
+            };
+            
+            List<string> invoices = new List<string> { "8033586697", "8033621249", "8033340557" };
+            Type type;
+            object objType;
+            InitiateOrderService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "OrderReturnsInformationForInvoice" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item, invoices });
+            Assert.NotNull(result);
+        }
+
         private void InitiateOrderService(out Type type, out object objType)
         {
             type = typeof(OrderService);
