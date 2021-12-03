@@ -7,8 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.103" />
-		<PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="5.2.103" />
+		<PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.3.5" />
+		<PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="5.3.5" />
 		<PackageReference Include="FluentAssertions" Version="6.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.12" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />

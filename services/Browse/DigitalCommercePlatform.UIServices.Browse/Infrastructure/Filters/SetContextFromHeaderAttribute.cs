@@ -1,6 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Features.Contexts;
+
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
@@ -32,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters
             if (string.IsNullOrWhiteSpace(uiContext.User.AccessToken)) { throw new ArgumentException("AccessToken is missing from the context!"); }
         }
 
+        [SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out", Justification = "<Pending>")]
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var validationErrors = new List<string>();

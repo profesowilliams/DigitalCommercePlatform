@@ -1,6 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIService.Browse;
-using DigitalFoundation.Common.Services;
+using DigitalFoundation.Common.Services.Layer.UI;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse
@@ -9,6 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Browse
     public static class Program
     {
         public static void Main(string[] args)
-            => DefaultProgram.RunUI<Startup>(typeof(Program), args);
+            => BaseUIDefaultProgram.Run<Startup>(typeof(Program), args);
     }
 }

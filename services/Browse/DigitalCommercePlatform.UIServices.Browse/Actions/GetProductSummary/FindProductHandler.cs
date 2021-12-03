@@ -3,7 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System;

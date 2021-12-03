@@ -8,7 +8,8 @@ using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts.Models;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
@@ -282,7 +283,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     {
                         new ValidateDto
                         {
-                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Source=new Source{ Id="p1", System="2"},
                             Restriction="ALLOW"
                         }
                     },
@@ -534,7 +535,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     {
                         new ValidateDto
                         {
-                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Source=new Source{ Id="p1", System="2"},
                             Restriction="ALLOW"
                         }
                     },
@@ -791,7 +792,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     {
                         new ValidateDto
                         {
-                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Source=new Source{ Id="p1", System="2"},
                             Restriction="ALLOW"
                         }
                     },

@@ -5,8 +5,9 @@ using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts.Models;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
@@ -42,10 +43,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         public async Task Handler_CallProductForDataAndValidate(Browse.Actions.GetProductsCompare.Request request)
         {
             //arrange
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(Array.Empty<ProductDto>())
                 .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(Array.Empty<ValidateDto>())
                 .Verifiable();
 
@@ -63,10 +64,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             //arrange
             productDtos.First().ExtendedSpecifications = null;
 
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(productDtos)
                 .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(Array.Empty<ValidateDto>())
                 .Verifiable();
 
@@ -89,10 +90,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 
             productDtos.First().ExtendedSpecifications = null;
 
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(productDtos)
                 .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null))
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(validateDtos)
                 .Verifiable();
 
@@ -185,7 +186,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     {
                         new ValidateDto
                         {
-                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Source=new Source{ Id="p1", System="2"},
                             Restriction="ALLOW"
                         }
                     },
@@ -291,7 +292,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     {
                         new ValidateDto
                         {
-                            Source=new DigitalFoundation.Common.Models.Source{ Id="p1", System="2"},
+                            Source=new Source{ Id="p1", System="2"},
                             Restriction="DENY"
                         }
                     },

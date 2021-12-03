@@ -1,6 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

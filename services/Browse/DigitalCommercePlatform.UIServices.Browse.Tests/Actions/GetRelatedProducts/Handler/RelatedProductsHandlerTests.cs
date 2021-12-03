@@ -3,7 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
