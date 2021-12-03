@@ -1,6 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
@@ -28,10 +28,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters
         public SetContextFromHeaderFilter(IUIContext uiContext)
         {
             _uiContext = uiContext ?? throw new ArgumentNullException(nameof(uiContext));
-            if (uiContext.User != null && string.IsNullOrWhiteSpace(uiContext.User.AccessToken)) {
+            if (uiContext.User != null && string.IsNullOrWhiteSpace(uiContext.User.AccessToken))
+            {
                 throw new ArgumentException("AccessToken is missing from the context!");
             }
-            
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

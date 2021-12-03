@@ -1,9 +1,9 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Providers.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

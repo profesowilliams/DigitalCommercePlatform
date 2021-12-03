@@ -3,7 +3,7 @@ using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
 //using DigitalFoundation.Common.Services.Pipeline;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;

@@ -2,9 +2,9 @@
 using DigitalCommercePlatform.UIServices.Search.Actions.Content;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Search.Models.Content;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
     public class ContentController : BaseUIServiceController
     {
         private readonly IContext _context;
+
         public ContentController(
             IMediator mediator,
             ILogger<ContentController> logger,

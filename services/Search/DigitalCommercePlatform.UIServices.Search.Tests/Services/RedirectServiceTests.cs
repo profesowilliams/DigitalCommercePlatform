@@ -1,9 +1,9 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Dto.Content;
 using DigitalCommercePlatform.UIServices.Search.Services;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public void GetRedirectThrowsExceptionOtherThanRemoteServerHttpException(string keyword)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null))
                 .ThrowsAsync(new Exception("test"));
 
             //act
@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null), Times.Once);
         }
 
         [Theory]
@@ -50,7 +50,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetRedirectThrowsWhenNotFoundReturned(string keyword)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null))
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.NotFound, details: null));
 
             //act
@@ -58,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             result.Should().BeNull();
-            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null), Times.Once);
         }
 
         [Theory]
@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public void GetRedirectThrowsOtherThanNotFound(string keyword)
         {
             //arrange
-            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null))
                 .ThrowsAsync(new RemoteServerHttpException(message: "test", statusCode: System.Net.HttpStatusCode.InternalServerError, details: null));
 
             //act
@@ -74,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null), Times.Once);
         }
 
         [Theory]
@@ -82,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetContentReturnsCorrectResult(string keyword, ContentDto response)
         {
             //Arrange
-            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()))
+            _middleTierHttpClient.Setup(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null))
                 .ReturnsAsync(response);
 
             //Act
@@ -91,7 +91,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Assert
             result.Should().NotBeNull();
 
-            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            _middleTierHttpClient.Verify(x => x.GetAsync<ContentDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null), Times.Once);
         }
 
         private RedirectService GetService() => new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object);

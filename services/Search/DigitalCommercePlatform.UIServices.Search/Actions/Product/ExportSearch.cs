@@ -2,9 +2,9 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using FluentValidation;
 using Flurl;
 using MediatR;

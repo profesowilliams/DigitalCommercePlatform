@@ -4,9 +4,9 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 .Verifiable();
 
             _httpClientMock
-                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto))
+                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
                 .ReturnsAsync(searchResponseDto)
                 .Verifiable();
 
@@ -75,7 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 .Returns(searchRequestDto);
 
             _httpClientMock
-                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto))
+                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
                 .ThrowsAsync(new RemoteServerHttpException("not found exception", System.Net.HttpStatusCode.NotFound, details: null))
                 ;
 
@@ -98,7 +98,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 .Returns(searchRequestDto);
 
             _httpClientMock
-                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto))
+                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
                 .ThrowsAsync(new RemoteServerHttpException("another excpetion", System.Net.HttpStatusCode.InternalServerError, details: null))
                 ;
 
@@ -121,7 +121,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 .Returns(searchRequestDto);
 
             _httpClientMock
-                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto))
+                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
                 .ThrowsAsync(new TestException())
                 ;
 
@@ -133,7 +133,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _logger.GetMessages(Microsoft.Extensions.Logging.LogLevel.Error).Should().ContainMatch("Exception at getting ExportSearch*");
         }
 
-        public class TestException : Exception { };
+        public class TestException : Exception
+        { };
 
         [Theory]
         [AutoDomainData(nameof(Handle_ProperlyMapData_Data))]
@@ -146,7 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 .Returns(searchRequestDto);
 
             _httpClientMock
-                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto))
+                .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
                 .ReturnsAsync(searchResponseDto);
 
             //act

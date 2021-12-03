@@ -1,11 +1,11 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
-using DigitalFoundation.Common.Client;
+using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
 using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.Extensions.DependencyInjection;

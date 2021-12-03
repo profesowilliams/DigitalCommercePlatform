@@ -2,7 +2,7 @@
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;

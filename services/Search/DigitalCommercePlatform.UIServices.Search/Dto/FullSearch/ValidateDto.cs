@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Models;
+
+using DigitalFoundation.Common.Features.Contexts.Models;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch

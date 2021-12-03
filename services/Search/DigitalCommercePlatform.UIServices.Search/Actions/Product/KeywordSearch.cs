@@ -5,7 +5,7 @@ using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Services;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

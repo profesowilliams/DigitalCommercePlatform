@@ -2,9 +2,9 @@
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.Controllers;
 using DigitalCommercePlatform.UIServices.Search.Models.Content;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;

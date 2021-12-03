@@ -1,8 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Services;
-using DigitalFoundation.Common.Logging;
-using DigitalFoundation.Common.Services.StartupConfiguration;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
+using DigitalFoundation.Common.Features.Logging;
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
