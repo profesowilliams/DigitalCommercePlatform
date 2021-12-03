@@ -13,5 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public bool Details { get; set; } = false;
         public int PageSize { get; set; } = 200;
         public int Page { get; set; } = 1;
+        public string SortBy { get; set; }
+        public bool SortByAscending { get; set; }
     }
 }
