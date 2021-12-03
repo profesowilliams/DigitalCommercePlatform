@@ -1,23 +1,25 @@
 import axios from 'axios';
 
-const sessionId = localStorage.getItem('sessionId')
+const sessionId = localStorage.getItem('sessionId');
+const userData = JSON.parse(localStorage.getItem('userData') || { id: 'NoAuth' });
+const traceId = `${userData.id}_${new Date().toISOString()}`;
 
 const USaxios = axios.create({
   headers:{
     common: { 
-      'TraceId': 'NA',
+      'TraceId': traceId,
       'Site': 'US',
       'Accept-Language': 'en-us',
-      'Consumer': 'NA',
+      'Consumer': 'AEM',
       'SessionId': sessionId,
       'Content-Type': 'application/json',
     }
   }
 });
 
-axios.defaults.headers.common['TraceId'] = 'NA';
+axios.defaults.headers.common['TraceId'] = traceId;
 axios.defaults.headers.common['Accept-Language'] = 'en-us';
-axios.defaults.headers.common['Consumer'] = 'NA';
+axios.defaults.headers.common['Consumer'] = 'AEM';
 axios.defaults.headers.common['SessionId'] = sessionId;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Site'] = 'NA';

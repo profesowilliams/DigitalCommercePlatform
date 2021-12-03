@@ -6,11 +6,12 @@ export function getQueryStringValue (key) {
     return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
+// Not updating the TraceId on this function as it does not appear to be used and may be a leftover from a POC
 export const prepareCommonHeader = () => ({
     "TraceId" : "NA",
     "Site": "NA",
     "Accept-Language" : "en-us",
-    "Consumer" : "NA",
+    "Consumer" : "AEM",
     "SessionId" : nanoid(16),
     "Content-Type": "application/json"
 });
