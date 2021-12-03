@@ -51,6 +51,7 @@ const SearchBar = ({ data, componentProp }) => {
     searchDomain,
     uiServiceDomain,
     typeAheadDomain,
+    dcpDomain,
   } = JSON.parse(componentProp);
 
   const [userData, setUserData] = useState(getUserDataInitialState);
@@ -98,7 +99,7 @@ const SearchBar = ({ data, componentProp }) => {
         );
         if (response?.data?.content?.items?.length === 1) {
           return (
-              window.location.origin +
+              dcpDomain +
               `${selectedArea.detailsPage}?id=${searchTerm}`
           );
         }
@@ -109,7 +110,7 @@ const SearchBar = ({ data, componentProp }) => {
             }): ${err}`
         );
       }
-      return window.location.origin + selectedArea.dcpSearchPage;
+      return dcpDomain + selectedArea.dcpSearchPage;
     } else {
       let searchTargetUrl =
           searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);

@@ -55,6 +55,12 @@
                                                 fieldDescription="Type Head Domain"
                                                 fieldLabel="Type Head Domain"
                                                 name="./typeAheadDomain"/>
+                                            <dcpDomain
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="DCP Domain"
+                                                fieldLabel="DCP Domain"
+                                                name="./dcpDomain"/>
                                             <placeholder
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

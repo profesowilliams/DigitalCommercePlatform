@@ -44,6 +44,9 @@ public @interface SearchBarConfiguration {
     @Property(label = "Typeahead Domain", description = "Typeahead Domain")
     String typeAheadDomain();
 
+    @Property(label = "DCP Domain", description = "DCP Domain")
+    String dcpDomain();
+
     @Property(label = "Typeahead Search Term Suffix", description = "Typeahead Search Term Suffix")
     String typeAheadSearchTermSuffix();
 

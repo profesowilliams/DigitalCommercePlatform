@@ -8,6 +8,7 @@ use(function () {
   jsonObject.put("id", properties.get("id") || '');
   jsonObject.put("placeholder", properties.get("placeholder") || '');
   jsonObject.put("searchDomain", properties.get("searchDomain") || this.serviceData['searchDomain'] || '');
+  jsonObject.put("dcpDomain", properties.get("dcpDomain") || this.serviceData['dcpDomain'] || '');
   jsonObject.put("uiServiceDomain", this.serviceData['uiServiceDomain'] || '');
   jsonObject.put("typeAheadDomain", properties.get("typeAheadDomain")
                                  || (this.serviceData['typeAheadDomain'] + this.serviceData['typeAheadSearchTermSuffix'])

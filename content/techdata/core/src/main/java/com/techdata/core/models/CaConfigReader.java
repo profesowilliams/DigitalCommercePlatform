@@ -170,6 +170,8 @@ public class CaConfigReader {
 
     private String downloadOrderDetailsEndpoint;
 
+    private String dcpDomain;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -234,6 +236,7 @@ public class CaConfigReader {
 
         spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
         typeAheadDomain = searchBarConfiguration.typeAheadDomain();
+        dcpDomain = searchBarConfiguration.dcpDomain();
         typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
         typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
         typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();
@@ -450,6 +453,8 @@ public class CaConfigReader {
     public String getTypeAheadDomain() {
         return typeAheadDomain;
     }
+
+    public String getDcpDomain() {return dcpDomain;}
 
     public String getTypeAheadSearchTermSuffix() {
         return typeAheadSearchTermSuffix;
