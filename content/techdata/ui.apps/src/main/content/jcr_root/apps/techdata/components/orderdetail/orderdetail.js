@@ -11,10 +11,15 @@ use(function () {
     var keywordDropdownData = {};
     var searchCriteriaData = {};
     var searchByDropDown = {};
+    var exportColumnListTab = {};
+    var exportColumnListValues = [];
 
     var resourceResolver = resource.getResourceResolver();
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
+
+    var exportColumnListNode = resourceResolver.getResource(currentNode.getPath() + "/exportColumnList");
+
 
     if (node !== null) {
         var childrenList = node.getChildren();
@@ -237,6 +242,28 @@ use(function () {
 
     if (searchCriteriaData != null) {
         productInfo["searchCriteria"] = searchCriteriaData;
+    }
+
+    if (exportColumnListNode !== null) {
+        var childrenList = exportColumnListNode.getChildren();
+
+        for (var [key, res] in Iterator(childrenList)) {
+            var columnLabel = res.properties["columnLabel"];
+            var columnKey = res.properties["columnKey"];
+            var itemData = {};
+            itemData.columnLabel = columnLabel;
+            itemData.columnKey = columnKey;
+            exportColumnListValues.push(itemData);
+        }
+    }
+
+    
+    if (exportColumnListValues != null) {
+        exportColumnListTab["columnList"] = exportColumnListValues;
+    }
+
+    if (exportColumnListTab != null) {
+        jsonObject["exportColumnList"] = exportColumnListTab;
     }
 
     var trackingConfigTrackingLogos = resourceResolver.getResource(currentNode.getPath() + "/trackingIcons");

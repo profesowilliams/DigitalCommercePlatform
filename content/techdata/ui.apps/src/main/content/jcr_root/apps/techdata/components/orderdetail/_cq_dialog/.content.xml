@@ -434,6 +434,52 @@
                                     name="./downloadInvoicesEndpoint"/>
                         </items>
                     </PDF>
+                      <exportColumnList
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Export Column List"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <columnList
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        composite="{Boolean}true"
+                                        fieldDescription="Click 'Add' to add key and value for drop down"
+                                        fieldLabel="Column List">
+                                        <field
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            name="./exportColumnList">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <column
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <columnLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Column Label"
+                                                            fieldLabel="Column Label"
+                                                            name="./columnLabel"/>
+                                                        <columnKey
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Column key"
+                                                            fieldLabel="Column key"
+                                                            name="./columnKey"/>
+                                                    </items>
+                                                </column>
+                                            </items>
+                                        </field>
+                                    </columnList>
+                                </items>
+                            </column>
+                        </items>
+                    </exportColumnList>
                 </items>
             </tabs>
         </items>

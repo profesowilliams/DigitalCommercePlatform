@@ -17,6 +17,7 @@ const OrderDetails = ({ componentProp }) => {
       searchCriteria,
       downloadOrderDetailsEndpoint,
       downloadInvoicesEndpoint,
+      exportColumnList
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [iconList, setIconList] = useState([]);
@@ -63,6 +64,7 @@ const OrderDetails = ({ componentProp }) => {
         orderDetails={orderDetails}
         columnList={productLines.columnList}
         exportUrl={downloadOrderDetailsEndpoint}
+        exportColumnList={exportColumnList}
         id={id}
       />
       <OrderDetailsInfo

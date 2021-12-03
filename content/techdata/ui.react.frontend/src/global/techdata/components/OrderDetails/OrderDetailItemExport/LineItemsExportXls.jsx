@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLineItemExport } from "./hooks/useOrderDetailExport";
 
-const LineItemsExportXls = ({ columnList = [], onPayloadChange }) => {
-    const {checkboxList,selectAllState,updateCheckboxList,switchSelectAll, itemsSelected} = useLineItemExport(columnList);
+const LineItemsExportXls = ({ exportColumnList = {}, onPayloadChange }) => {
+    const {checkboxList,selectAllState,updateCheckboxList,switchSelectAll, itemsSelected} = useLineItemExport(exportColumnList.columnList);
     return (
         <>
             <p className="cmp-export-xls-subtitle">Select columns to include in the XLS</p>

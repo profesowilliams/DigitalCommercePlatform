@@ -8,8 +8,8 @@ const OrderSubHeader = ({
       headerConfig,
       orderDetails,
       id,
-      columnList,
-      exportUrl
+      exportUrl,
+      exportColumnList
 }) => {
 const [modal, setModal] = useState(null);
 const downloadXls = () => (fieldsList) => {
@@ -95,7 +95,7 @@ const orderButton = (status) => {
         </div>
           {modal &&
               <Modal
-                modalExportChild={{Child:LineItemsExportXls, columnList}}
+                modalExportChild={{Child:LineItemsExportXls, exportColumnList}}
                 modalProperties={modal.properties}
                 onModalClosed={() => setModal(null)}
                 modalAction={modal.modalAction}
