@@ -76,7 +76,8 @@ const QuoteDetails = ({ componentProp }) => {
       downloadLinkText,
       whiteLabelLogo ? whiteLabelLogo : whiteLabelLogoUpload,
       whiteLabelOptions,
-      ancillaryItemsProps ? ancillaryItemsProps : ancillaryItems
+      ancillaryItemsProps ? ancillaryItemsProps : ancillaryItems,
+      checkboxItems,
     );
   }
 
@@ -155,6 +156,14 @@ const QuoteDetails = ({ componentProp }) => {
         downloadLinkATag.click();
       }
   }
+
+  const [checkboxItems, setCheckboxItems] = useState(null);
+
+  useEffect(() => {
+    if (whiteLabel?.checkboxItems && checkboxItems === null) {
+      setCheckboxItems(whiteLabel.checkboxItems);
+    }
+  }, [whiteLabel]);
 
   useEffect(() => {
     if (whiteLabelOptions) {

@@ -6,22 +6,22 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
     const getExtraOptions = () => {
         let localItem = {}
         if (extraOptions) {
-            if (extraOptions.manufacturer){
-                localItem['manufacturer'] = true;
+            if (extraOptions.manufacturerLabel){
+                
+                localItem['manufacturerLabel'] = true;
             }
 
-            if (extraOptions.vendorPartNo){
-                localItem['vendorPartNo'] = true;
+            if (extraOptions.partNumberTDLabel){
+                localItem['partNumberTDLabel'] = true;
             }
 
-            if (extraOptions.msrp){
-                localItem['msrp'] = true;
+            if (extraOptions.msrpLabel){
+                localItem['msrpLabel'] = true;
             }
-            if (extraOptions.image ){
-                localItem['image'] = true;
+            if (extraOptions.imageLabel ){
+                localItem['imageLabel'] = true;
             }
         }
-
         return localItem
     };
 
@@ -35,6 +35,7 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
         "totalPriceFormatted":"Total",
         ...extraOptions
     }
+
     const ancillaryHeaderItems = {
         "description" : "Description",
         "value" : "Value",

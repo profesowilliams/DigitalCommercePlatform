@@ -41,28 +41,22 @@ export const downloadClicked = (
     whiteLabelLogo,
     options,
     ancillaryItems,
+    checkboxItems,
 ) => {
     const imagePath = logoURL;
     let whiteLabelLogoFlag = false;
     let extraOptions = [];
     if (options) {
         options.forEach(o => {
-            if (o === 'Part number- Tech data') {
-                extraOptions['manufacturer'] = 'Manufacturer'
-            }
-    
-            if (o === 'MSRP/List price ') {
-                extraOptions['vendorPartNo'] = 'Part Number'
-            }
-    
-            if (o === 'Part number- manufacturer') {
-                extraOptions['msrp'] = 'MSRP'
-            }
+            Object.entries(checkboxItems).forEach(f => {
+                const key = f[0];
+                const value = f[1];
+                if (value == o) {
+                    extraOptions[key] = value
+                }
+            })
             if (o === "The reseller logo") {
                 whiteLabelLogoFlag = true;
-            }
-            if (o === "Product images") {
-                extraOptions['image'] = 'image';
             }
         })
     }

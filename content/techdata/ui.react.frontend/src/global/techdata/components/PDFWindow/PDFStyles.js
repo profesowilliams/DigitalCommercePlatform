@@ -20,12 +20,16 @@ export default StyleSheet.create({
         width: '100%',
         margin: '0',
         flexDirection: 'row',
+        justifyContent: 'flex-end',
         color: darkFontColor
     },
     subTotalSection: {
-        width: '50%',
+        width: '100%',
         margin: '0',
         flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignContent: 'flex-end',
+        alignItems: 'flex-end' ,
         color: darkFontColor,
         textAlign: 'right'
     },
@@ -71,5 +75,19 @@ export default StyleSheet.create({
         padding: '5',
         border: '1',
         borderColor: 'black'
+    },
+    tableTextHeader:{
+        fontSize: 10,
+        fontWeight: 100,
+    },
+    tableTextBody:{
+        textOverflow: 'ellipsis',
+        fontSize: 13,
+        fontWeight: 100,
+    },
+    cellVendorPart: {
+        textOverflow: 'ellipsis',
+        fontSize: 8,
+        fontWeight: 100,
     }
 });

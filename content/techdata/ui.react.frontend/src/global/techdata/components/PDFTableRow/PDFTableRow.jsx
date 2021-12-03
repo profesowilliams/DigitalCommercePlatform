@@ -10,53 +10,74 @@ const unitPriceStyle = {...styles.tableCell, width:'10%', textAlign:'right'};
 const totalPriceStyle = {...styles.tableCell, width:'10%', textAlign:'right'};
 const descriptionStyle = {...styles.tableCell, width:'60%'};
 const quantityStyle = {...styles.tableCell, width:'10%', textAlign:'center'};
-const manufacturerStyle = {...styles.tableCell,width:'10%',textAlign:'center'}; 
-const vendorPartNoStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
-const msrpStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
-const imageStyle = {...styles.tableCell,width:'10%',textAlign:'center'};
-
+const manufacturerStyle = {...styles.tableCell,width:'10%'}; 
+const vendorPartNoStyle = {...styles.tableCell,width:'20%', wordBreak: 'break-all'}; // 
+const vendorPartTextStyle = styles.cellVendorPart;
+const msrpStyle = {...styles.tableCell,width:'10%', wordBreak: 'break-all'};
+const imageStyle = {...styles.tableCell,width:'15%', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
+    
+    const ImageValidation = ({quoteItem}) => {
+        /**@type {string} */
+        let urlImage = quoteItem?.urlProductImage;
+        if (urlImage) {
+            urlImage = urlImage.replace(/^http:\/\//i, 'https://');
+        }
+        return(
+            <View style={imageStyle}>
+                { quoteItem?.urlProductImage ?
+                    (<Image
+                        src={urlImage ? getBase64FromUrl(urlImage) : ''}
+                    /> ) : (
+                        <PDFTableCell 
+                            header={true}
+                            cellItem={'Image'} 
+                            cellWidth="10%"
+                            cellStyle={imageStyle}
+                        />
+                    ) 
+                }
+            </View>
+        );
+    }
 
-    const CheckBoxFields = () => {
+    const CheckBoxFields = () => {        
         return <>
             {flags && Object.keys(flags).length > 0 ? (
-                <>
-                    {flags.manufacturer === true ? (
+                <>  
+                    {flags.msrpLabel === true ? (
                         <PDFTableCell 
-                            cellItem={quoteItem.manufacturer}
-                            cellWidth="15%" type={"currency"}
+                            header={header}
+                            cellItem={quoteItem.msrp ? quoteItem.msrp : quoteItem.msrpLabel}
+                            cellWidth={"10%"}
+                            type={"string"}
+                            cellStyle={msrpStyle}
+                        />
+                    ) : null}
+                    {flags.manufacturerLabel === true ? (
+                        <PDFTableCell 
+                            header={header}
+                            cellItem={quoteItem.manufacturer ? quoteItem.manufacturer : quoteItem.manufacturerLabel}
+                            cellWidth={"10%"}
+                            type={"string"}
                             cellStyle={manufacturerStyle}
                         />
                     ) : null}
                     
-                    {flags.vendorPartNo === true ? (
+                    {flags.partNumberTDLabel === true ? (
                         <PDFTableCell 
-                            cellItem={quoteItem.vendorPartNo}
-                            cellWidth="15%" type={"currency"}
+                            header={header}
+                            cellItem={quoteItem.vendorPartNo ? quoteItem.vendorPartNo : quoteItem.partNumberTDLabel}
+                            cellWidth={"15%"}
+                            type={"string"}
                             cellStyle={vendorPartNoStyle}
+                            style={vendorPartTextStyle}
                         />
                     ) : null}
                     
-                    {flags.msrp === true ? (
-                        <PDFTableCell 
-                            cellItem={quoteItem.msrp} cellWidth="15%"
-                            type={"currency"}  cellStyle={msrpStyle}
-                        />
-                    ) : null}
-
-                    {flags.image === true ? (
-                        <View style={imageStyle}>
-                        { quoteItem?.urlProductImage ?
-                            (<Image
-                                src={quoteItem.urlProductImage ? getBase64FromUrl(quoteItem.urlProductImage) : ''}
-                            /> ) : (
-                                <PDFTableCell 
-                                    cellItem={'Image'} cellWidth="10%"
-                                    type={"currency"}  cellStyle={imageStyle}
-                                />
-                            ) 
-                        }
-                        </View>
+                    
+                    {flags.imageLabel === true ? (
+                        <ImageValidation quoteItem={quoteItem} />
                     ) : null}
                 </>
                 
@@ -66,11 +87,11 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
 
     return (
         <View style={header ? styles.tableHeader : styles.tableRow}>
-            <PDFTableCell cellItem={quoteItem.id} cellWidth="5%" type={"string"} cellStyle={idStyle} />
-            <PDFTableCell cellItem={quoteItem.description} cellWidth="55%"  type={"string"}  cellStyle={descriptionStyle}/>
-            <PDFTableCell cellItem={currencySymbol + quoteItem.unitListPriceFormatted} type={"currency"} cellWidth="15%"  cellStyle={unitPriceStyle}/>
-            <PDFTableCell cellItem={quoteItem.quantity} type={"int"} cellWidth="10%"  cellStyle={quantityStyle} />
-            <PDFTableCell cellItem={currencySymbol + quoteItem.totalPriceFormatted} cellWidth="15%" type={"currency"}  cellStyle={totalPriceStyle}/>
+            <PDFTableCell header={header} cellItem={quoteItem.id} cellWidth="5%" type={"string"} cellStyle={idStyle} />
+            <PDFTableCell header={header} cellItem={quoteItem.description} cellWidth="55%"  type={"string"}  cellStyle={descriptionStyle}/>
+            <PDFTableCell header={header} cellItem={currencySymbol + quoteItem.unitListPriceFormatted} type={"currency"} cellWidth="15%"  cellStyle={unitPriceStyle}/>
+            <PDFTableCell header={header} cellItem={quoteItem.quantity} type={"int"} cellWidth="10%"  cellStyle={quantityStyle} />
+            <PDFTableCell header={header} cellItem={currencySymbol + quoteItem.totalPriceFormatted} cellWidth="15%" type={"currency"}  cellStyle={totalPriceStyle}/>
             <CheckBoxFields />
         </View>
     )
