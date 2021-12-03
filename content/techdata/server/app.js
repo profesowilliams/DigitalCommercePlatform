@@ -3508,21 +3508,22 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
         "quotePreview": {
           "quoteDetails": {
             "shipTo": null,
-            "endUser": {
+            "endUser": [{
               "id": null,
-              "companyName": "Some Company",
-              "name": "name",
-              "line1": "line1",
-              "line2": "line2",
-              "line3": "line3",
-              "city": "city",
-              "state": "state",
-              "zip": "zip",
-              "postalCode": "postalCode",
-              "country": "country",
-              "email": "email",
-              "phoneNumber": "phoneNumber"
-            },
+              "companyName": null,
+              "name": " ",
+              "line1": "2 BANK OF AMERICA PLZ",
+              "line2": "BANK OF OMNI",
+              "line3": null,
+              "city": null,
+              "state": "CHARLOTTE",
+              "zip": null,
+              "postalCode": "28280",
+              "country": "US",
+              "email": null,
+              "contactEmail": null,
+              "phoneNumber": null
+            }],
             "reseller": null,
             "configID": 'WC121011624NR',
             "source": {

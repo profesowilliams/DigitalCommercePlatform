@@ -16,3 +16,21 @@ export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetai
 export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails.source)
 
 export const isDealRequired = (quoteDetails, quoteWithoutDeal) => quoteWithoutDeal && isEstimate(quoteDetails.source) && !quoteDetails.spaId
+
+export const validateRequiredEnduserFields = (enduser) => {
+    // Removing line2 from this validation since is an optional Value.
+    if (enduser?.line2 === '' || enduser?.line2 === null) {
+        delete enduser.line2;
+    }
+    // Removing id from this validation since is returning null
+    if (enduser?.id === '' || enduser?.id === null) {
+        delete enduser.id;
+    }
+
+    return Object.values(enduser).some(value => value === null || value === '');
+}
+
+export const isEndUserMissing = (quoteDetails, quoteWithoutEndUser) => {
+    const endUser = quoteDetails.endUser && quoteDetails.endUser[0] ? quoteDetails.endUser[0] : quoteDetails.endUser;
+    return quoteWithoutEndUser && (!endUser || validateRequiredEnduserFields(endUser));
+}

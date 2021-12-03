@@ -1,4 +1,4 @@
-import React, { Element, useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
@@ -9,7 +9,7 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired } from "./QuoteTools";
+import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing } from "./QuoteTools";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -22,6 +22,7 @@ function QuotePreview(props) {
   const [didQuantitiesChange, setDidQuantitiesChange] = useState(false);
   const [quoteWithoutPricing, setQuoteWithoutDealPricing] = useState(false);
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
+  const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
 
   useEffect(() => {
     if(apiResponse?.content?.quotePreview?.quoteDetails) {
@@ -75,17 +76,19 @@ function QuotePreview(props) {
       behavior: "smooth"
     });
   };
-  
+
   const handleQuickQuote = useCallback((e) => {
     const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
-          dealRequired = isDealRequired(quoteDetails, true);
+          dealRequired = isDealRequired(quoteDetails, true),
+          userMissingFields = isEndUserMissing(quoteDetails, true);
 
-    if(pricingRequired || dealRequired) {
+    if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
       e.preventDefault();
 
+      setQuoteWithoutEndUser(userMissingFields);
       setQuoteWithoutDealPricing(pricingRequired);
-      setQuoteWithoutDeal(dealRequired)
+      setQuoteWithoutDeal(dealRequired);
     }
     else {
       createQuote(quoteDetails)
@@ -117,10 +120,11 @@ function QuotePreview(props) {
   }
 
   const endUserInfoChange = (endUserlInformation) =>{
+    setQuoteWithoutEndUser(false);
     setQuoteDetails((previousQuoteDetails) => (
       {
         ...previousQuoteDetails,
-        endUser: endUserlInformation,
+        endUser: [endUserlInformation],
       }
     ));
   }
@@ -167,6 +171,7 @@ function QuotePreview(props) {
           <ConfigGrid
             isDealRequired={isDealRequired(quoteDetails, quoteWithoutDeal)}
             isPricingOptionsRequired={isPricingOptionsRequired(quoteDetails, quoteWithoutPricing)}
+            isEndUserMissing={isEndUserMissing(quoteDetails, quoteWithoutEndUser)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
@@ -190,7 +195,6 @@ function QuotePreview(props) {
             />
           </div>
           <QuotePreviewContinue
-            isDealRequired={isDealRequired(quoteDetails)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             disableQuickQuoteButton={false}
