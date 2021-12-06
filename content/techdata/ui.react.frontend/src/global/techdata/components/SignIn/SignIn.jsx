@@ -96,14 +96,14 @@ const SignIn = (props) => {
         actionParam &&
         actionParam.startsWith(ACTION_QUERY_PARAM_LOGOUT_VALUE)
       ) {
-        handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl, redirectUrl);
+        handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl);
       } else if (actionParam && actionParam.startsWith(ACTION_QUERY_PARAM_LOGIN_VALUE)) {
-        handleLoginAction(actionParam, authUrl, clientId, redirectUrl);
+        handleLoginAction(actionParam, authUrl, clientId);
       }
     }
   };
   
-  function handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl, redirectUrl) {
+  function handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl) {
     let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
     if (actionParamValues.length > 0) {
       let redirectUrl =
@@ -120,7 +120,7 @@ const SignIn = (props) => {
     }
   }
 
-  function handleLoginAction(actionParam, authUrl, clientId, redirectUrl) {
+  function handleLoginAction(actionParam, authUrl, clientId) {
     let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
     if (actionParamValues.length > 0) {
       let redirectUrl = actionParamValues.length > 1 ? actionParamValues[1] : "";
