@@ -61,6 +61,12 @@ export const downloadClicked = (
         })
     }
 
+    const openPDF = (url) => {
+        if (url) {
+            window.open(url, '_blank');
+        }
+    };
+
     const PDFDocument = () => {
         return (
                 <Document>
@@ -119,7 +125,7 @@ export const downloadClicked = (
         return (
             <PDFDownloadLink document={<PDFDocument />} fileName={fileName}>
                 {({ blob, url, loading, error }) =>
-                    loading ? 'Preparing PDF to download...' : downloadLinkText
+                    loading ? 'Preparing PDF to download...' : openPDF(url)
                 }
             </PDFDownloadLink>
         )

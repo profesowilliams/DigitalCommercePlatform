@@ -9,7 +9,6 @@ import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
-import { usPost } from "../../../../utils/api";
 import { downloadClicked } from "../PDFWindow/PDFWindow";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
@@ -84,9 +83,7 @@ const QuoteDetails = ({ componentProp }) => {
   function onOptionChanged(option) {
       if (option?.key !== "whiteLabelQuote") {
         setExportOption(option);
-        downloadClickedEvent()
       } else {
-        downloadClickedEvent()
         setQuoteOption(option);
       }
   }
@@ -140,21 +137,10 @@ const QuoteDetails = ({ componentProp }) => {
 
   const handleUploadFileSelected = (whiteLabelLogo) => {
     setWhiteLabelLogoUpload(whiteLabelLogo)
-    downloadClickedEvent(whiteLabelLogo)
   }
 
   function exportToPDF() {
     downloadClickedEvent()
-      let downloadLinkDivTag = document.getElementById("pdfDownloadLink");
-      let downloadLinkATagCollection =
-        downloadLinkDivTag.getElementsByTagName("a");
-      let downloadLinkATag =
-        downloadLinkATagCollection.length > 0
-          ? downloadLinkATagCollection[0]
-          : undefined;
-      if (downloadLinkATag) {
-        downloadLinkATag.click();
-      }
   }
 
   const [checkboxItems, setCheckboxItems] = useState(null);
@@ -166,10 +152,10 @@ const QuoteDetails = ({ componentProp }) => {
   }, [whiteLabel]);
 
   useEffect(() => {
-    if (whiteLabelOptions) {
-      downloadClickedEvent();
+    if (whiteLabel?.checkboxItems && checkboxItems === null) {
+      setCheckboxItems(whiteLabel.checkboxItems);
     }
-  },[whiteLabelOptions]);
+  }, [whiteLabel]);
 
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
@@ -209,7 +195,6 @@ const QuoteDetails = ({ componentProp }) => {
 
   useEffect(() => {
     actualQuoteLinesData?.ancillaryItems?.items && setAncillaryItems(actualQuoteLinesData.ancillaryItems.items)
-    actualQuoteLinesData?.ancillaryItems?.items && downloadClickedEvent(null, actualQuoteLinesData?.ancillaryItems?.items);
   }, [actualQuoteLinesData]);
 
   const getSourceInformation = (attributes, type) =>
