@@ -23,9 +23,9 @@ const QuoteCreate = ({
     label, quotePreviewUrl, buttonTitle, buttonTitleInProgress, optionsList, pricingConditions,
     ...endpoints
   } = JSON.parse(componentProp);
-  const [methodSelected, setMethodSelected] = useState(false)
-  const [createQuoteTitle, setCreateQuoteTitle] = useState(buttonTitle)
-  const [disableCreateQuoteButton, setDisableCreateQuoteButton] = useState(false)
+  const [methodSelected, setMethodSelected] = useState(false);
+  const [createQuoteTitle, setCreateQuoteTitle] = useState(buttonTitle);
+  const [disableCreateQuoteButton, setDisableCreateQuoteButton] = useState(false);
   const [currentCart, setCurrentCart] = useState(false);
   const [pricing, setPricing] = useState(false);
   const [step, setStep] = useState(0);
@@ -74,16 +74,18 @@ const QuoteCreate = ({
     return `${text} ${messages.join(' -- ')}`
   }
 
-  const showSimpleModal = (title, content) => 
-    setModal((previousInfo) => (
-      {
-        content: content,
-        properties: {
-            title:  title,
-        },
-          ...previousInfo,
-      }
-    ));
+  const showSimpleModal = (title, content, onModalClosed=closeModal) =>
+    setModal((previousInfo) => ({
+      content: content,
+      properties: {
+          title:  title,
+      },
+      onModalClosed,
+      ...previousInfo,
+    })
+  );
+
+  const closeModal = () => setModal(null);
 
   const createQuote = async () => {
       const { endpoint } = endpoints;
@@ -110,13 +112,18 @@ const QuoteCreate = ({
         else {
           showSimpleModal('Create Quote', (
             <div>Your Quote will be created shortly, it can take some minutes before you will be able to see it.<br/> When you close this message, you will see the Quotes dashboard page. <br/>Please refresh it after some minutes to see your quote.</div>
-          ));
-          const { quoteId } = content;
-          window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
+          ), onModalClosed => {
+            closeModal();
+            const { quoteId } = content;
+            window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
+          });
         }
       }
       catch(e) {
         console.error(e);
+        showSimpleModal('Create Quote', (
+          <div>There was an error creating the quote, please try again later.</div>
+        ));
       }
       setDisableCreateQuoteButton(false);
       setCreateQuoteTitle(buttonTitle);
@@ -187,7 +194,7 @@ const QuoteCreate = ({
           modalProperties={modal.properties}
           modalAction={modal.modalAction}
           actionErrorMessage={modal.errorMessage}
-          onModalClosed={() => setModal(null)}
+          onModalClosed={modal.onModalClosed}
       ></Modal>}
     </div>
   );
