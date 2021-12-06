@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
 
 @Component(service = UIServiceHelper.class)
 public class UIServiceHelperImpl implements  UIServiceHelper {
@@ -37,9 +38,9 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
             conn.setReadTimeout(5 * 1000);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("TraceId", "35345345-Browse");
+            conn.setRequestProperty("TraceId", "AEM_" + Instant.now().toString());
             conn.setRequestProperty("Site", "NA");
-            conn.setRequestProperty("Consumer", "NA");
+            conn.setRequestProperty("Consumer", "AEM");
             conn.setRequestProperty("Accept-Language", "en-us");
             conn.setRequestProperty("sessionid", sessionID);
             if (conn.getResponseCode() != 200) {
