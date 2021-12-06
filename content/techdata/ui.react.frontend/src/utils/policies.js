@@ -7,7 +7,7 @@ export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirect
     let shopDomainNamesList = "shop.cstenet.com:shop.techdata.com:shop.dev.web.us.tdworldwide.com:shop-rc.cstenet.com:pilot.techdata.com";
     let actionLogin = 'action=login';
     let currUrl = window.location.href;
-    if(currUrl.indexOf('action=login')) {
+    if(currUrl.indexOf('action=login') > 0) {
         currUrl = currUrl.split(actionLogin)[0];
     }
     let redirectUri = encodeURIComponent(currUrl);
