@@ -195,6 +195,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             else
                 orderParameters.Origin = null;
 
+            if (orderParameters.Id != null)
+            {
+                orderParameters.Id = orderParameters.Id + "*";
+            }
+            else if (orderParameters.CustomerPO != null)
+            {
+                orderParameters.CustomerPO = orderParameters.CustomerPO + "*";
+            }
+
             string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
             var url = "";
             if (orderParameters.IdType == 0)

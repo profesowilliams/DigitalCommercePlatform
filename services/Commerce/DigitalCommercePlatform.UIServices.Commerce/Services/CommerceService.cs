@@ -95,6 +95,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             try
             {
+                if (query.Id != null)
+                {
+                    query.Id = query.Id + "*";
+                }
+                else if (query.EndUserName != null)
+                {
+                    query.EndUserName = query.EndUserName + "*";
+                }
+                else if (query.DealId != null)
+                {
+                    query.DealId = query.DealId + "*";
+                }
+
                 query.SortBy = _helperService.GetParameterName(query.SortBy);
                 string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
                 var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
