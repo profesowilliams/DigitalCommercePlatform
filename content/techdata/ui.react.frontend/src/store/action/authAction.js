@@ -1,7 +1,7 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
 import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
-import {refreshPage} from '../../utils/policies';
+import {refreshPage} from "../../utils/policies";
 
 export const signInRequest = () => {
 	return {
@@ -30,30 +30,30 @@ export const signOutRequest = () => {
 
 export const signInAsynAction = (apiUrl) => {
 
-	let code = localStorage.getItem('signInCode');
+	let code = localStorage.getItem("signInCode");
 	const signInUrl = apiUrl;
 
 	const  prepareSignInHeader = () => {
-		let code = localStorage.getItem('signInCode');
+		let code = localStorage.getItem("signInCode");
 		const sessionId = createSessionId();
 		createMaxTimeout();
 		setSessionId(sessionId);
 		return {
-			'TraceId': `AEM_${new Date().toISOString()}`,
-			'Site': 'NA',
-			'Accept-Language' : 'en-us',
-			'Consumer' : 'AEM',
-			'SessionId' : sessionId,
-			'Content-Type': 'application/json'
+			"TraceId" : "NA",
+			"Site": "NA",
+			"Accept-Language" : "en-us",
+			"Consumer" : "NA",
+			"SessionId" : sessionId,
+			"Content-Type": "application/json"
 		}
 	};
 
 	const  prepareSignInBody = () => {
-		let code = localStorage.getItem('signInCode');
+		let code = localStorage.getItem("signInCode");
 		return {
-			'code': code,
-			'RedirectUri': window.location.protocol + '//' + window.location.hostname  + window.location.pathname,
-			'applicationName': 'AEM'
+			"code": code,
+			"RedirectUri": window.location.protocol + "//" + window.location.hostname  + window.location.pathname,
+			"applicationName": "AEM"
 		}
 	};
 
@@ -89,7 +89,7 @@ export const isAlreadySignedIn = () => {
 }
 export const getLocalStorageUser = () => {
 	return dispatch => {
-		let user = JSON.parse(localStorage.getItem('userData'));
+		let user = JSON.parse(localStorage.getItem("userData"));
 		if(user)
 			dispatch(signInResponse(user));
 		else
