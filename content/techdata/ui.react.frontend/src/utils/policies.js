@@ -1,6 +1,6 @@
 import { getUser } from "./index";
 
-export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
+export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl, ignoreShopRoundtrip) => {
 
     let incomingHostname = window.location.host;
     // colon separated shop domain names
@@ -10,13 +10,21 @@ export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirect
         redirectUri = shopLoginRedirectUrl + "?returnURL=" + redirectUri;
         window.location.href = redirectUri;
     } else {
-        let authUrlLocal = authUrl + "?redirect_uri=" + redirectUri;
-        authUrlLocal = authUrlLocal + "&client_id=" + clientId;
-        authUrlLocal = authUrlLocal + "&response_type=code";
-        authUrlLocal = authUrlLocal + "&pfidpadapterId=ShieldBaseAuthnAdaptor";
-        window.location.href = authUrlLocal;
+        initiateLogin(authUrl, clientId, redirectUri, shopLoginRedirectUrl, ignoreShopRoundtrip);
     }
 };
+
+export const initiateLogin = (authUrl, clientId, redirectUri, shopLoginRedirectUrl, ignoreShopRoundtrip) => {
+    if(ignoreShopRoundtrip) {
+        // no login roundtrip needed
+        redirectUri = shopLoginRedirectUrl;
+    }
+    let authUrlLocal = authUrl + "?redirect_uri=" + redirectUri;
+    authUrlLocal = authUrlLocal + "&client_id=" + clientId;
+    authUrlLocal = authUrlLocal + "&response_type=code";
+    authUrlLocal = authUrlLocal + "&pfidpadapterId=ShieldBaseAuthnAdaptor";
+    window.location.href = authUrlLocal;
+}
 
 export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedirectUrl) => {
     const user = getUser();
@@ -30,7 +38,7 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedir
 
     return user || signinCode || !isPrivatePage || isEditMode
         ? null
-        : redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
+        : redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl, false/*ignore shop redirect*/);
 };
 
 export const refreshPage = () => {

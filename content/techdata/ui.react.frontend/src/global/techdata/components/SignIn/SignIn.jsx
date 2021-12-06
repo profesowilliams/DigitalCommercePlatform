@@ -27,6 +27,7 @@ const FA = require("react-fontawesome");
 const SignIn = (props) => {
   const ACTION_QUERY_PARAM = "action";
   const ACTION_QUERY_PARAM_LOGOUT_VALUE = "logout";
+  const ACTION_QUERY_PARAM_LOGIN_VALUE = "login";
   const ACTION_QUERY_PARAM_DELIMITER = "|";
   const REDIRECT_URL_QUERY_PARAM = "redirectUrl";
   const dispatch = useDispatch();
@@ -95,26 +96,43 @@ const SignIn = (props) => {
         actionParam &&
         actionParam.startsWith(ACTION_QUERY_PARAM_LOGOUT_VALUE)
       ) {
-        let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
-
-        if (actionParamValues.length > 0) {
-          let redirectUrl =
-            actionParamValues.length > 1 ? actionParamValues[1] : "";
-          if (redirectUrl) {
-            //what if redirectUrl value is non existent? Then logout will not occurr???
-            let logOutCompleteUrl = `${pingLogoutURL}?TargetResource=${redirectUrl}&InErrorResource=${errorPageUrl}`;
-            signOutBasedOnParam(
-              logoutURL,
-              pingLogoutURL,
-              errorPageUrl,
-              redirectUrl,
-              true /*ignore AEM round trip redirect*/
-            );
-          }
-        }
+        handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl, redirectUrl);
+      } else if (actionParam && actionParam.startsWith(ACTION_QUERY_PARAM_LOGIN_VALUE)) {
+        handleLoginAction(actionParam, authUrl, clientId, redirectUrl);
       }
     }
   };
+  
+  function handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl, redirectUrl) {
+    let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
+    if (actionParamValues.length > 0) {
+      let redirectUrl =
+        actionParamValues.length > 1 ? actionParamValues[1] : "";
+      if (redirectUrl) {
+        signOutBasedOnParam(
+          logoutURL,
+          pingLogoutURL,
+          errorPageUrl,
+          redirectUrl,
+          true /*ignore AEM round trip redirect*/
+        );
+      }
+    }
+  }
+
+  function handleLoginAction(actionParam, authUrl, clientId, redirectUrl) {
+    let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
+    if (actionParamValues.length > 0) {
+      let redirectUrl = actionParamValues.length > 1 ? actionParamValues[1] : "";
+      if(!localStorage.getItem("sessionId")) {
+        // for not logged in user - then authenticate and redirect to redirectUrl(shop)
+        redirectUnauthenticatedUser(authUrl, clientId, redirectUrl, true/*ignore shop redirect*/);
+      } else {
+        // for loggedin user - then redirect to shop
+        window.location.reload(redirectUrl);
+      }
+    }
+  }
 
   /**
    *
@@ -204,7 +222,7 @@ const SignIn = (props) => {
       selectionDepth: "",
       type: "button",
     });
-    redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
+    redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl, false/*ignore shop redirect*/);
   };
 
   const routeChange = () => {
