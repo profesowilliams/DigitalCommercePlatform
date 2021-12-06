@@ -102,7 +102,6 @@ const SignIn = (props) => {
       }
     }
   };
-  
   function handleLogoutAction(actionParam, logoutURL, pingLogoutURL, errorPageUrl) {
     let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
     if (actionParamValues.length > 0) {
@@ -124,12 +123,15 @@ const SignIn = (props) => {
     let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
     if (actionParamValues.length > 0) {
       let redirectUrl = actionParamValues.length > 1 ? actionParamValues[1] : "";
-      if(!localStorage.getItem("sessionId")) {
-        // for not logged in user - then authenticate and redirect to redirectUrl(shop)
-        redirectUnauthenticatedUser(authUrl, clientId, redirectUrl, true/*ignore shop redirect*/);
-      } else {
-        // for loggedin user - then redirect to shop
-        window.location.reload(redirectUrl);
+      if(redirectUrl) {
+          if(!localStorage.getItem("sessionId")) {
+            localStorage.setItem("redirectUrl", redirectUrl);
+            // for not logged in user - then authenticate and store redirectUrl(shop) to localStorage
+            redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
+          } else {
+            // for loggedin user - then redirect to shop
+            window.location.reload(redirectUrl);
+          }
       }
     }
   }
@@ -204,6 +206,11 @@ const SignIn = (props) => {
       let getCode = getQueryStringValue(codeQueryParam);
       localStorage.setItem("signInCode", getCode);
       signInCode = getCode;
+      let redirectUrlFromLS = localStorage.getItem("redirectUrl");
+      if(redirectUrlFromLS) {
+        localStorage.removeItem("redirectUrl");
+        window.location.reload(redirectUrlFromLS);
+      }
     }
     return signInCode;
   };
@@ -222,7 +229,7 @@ const SignIn = (props) => {
       selectionDepth: "",
       type: "button",
     });
-    redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl, false/*ignore shop redirect*/);
+    redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
   };
 
   const routeChange = () => {

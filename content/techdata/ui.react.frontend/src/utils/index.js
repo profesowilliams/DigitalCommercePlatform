@@ -61,6 +61,7 @@ export const cleanupLocalStorage = (logoutRedirectUrl) => {
     localStorage.removeItem('sessionMaxTimeout');
     localStorage.removeItem('sessionIdleTimeout');
     localStorage.removeItem('signInCode');
+    localStorage.removeItem('redirectUrl');
     localStorage.removeItem('ActiveCart');
     window.location.replace(logoutRedirectUrl);
 }

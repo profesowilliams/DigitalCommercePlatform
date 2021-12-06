@@ -10,6 +10,7 @@ const userMenu = (props) => {
     localStorage.removeItem('signout');
     localStorage.removeItem('userData');
     localStorage.removeItem('signInCode');
+    localStorage.removeItem('redirectUrl');
     localStorage.removeItem('sessionMaxTimeout');
     localStorage.removeItem('sessionIdleTimeout');
     localStorage.removeItem('activeCart');

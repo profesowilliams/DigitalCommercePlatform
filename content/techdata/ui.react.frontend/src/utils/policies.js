@@ -1,24 +1,27 @@
 import { getUser } from "./index";
 
-export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl, ignoreShopRoundtrip) => {
+export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
 
     let incomingHostname = window.location.host;
     // colon separated shop domain names
     let shopDomainNamesList = "shop.cstenet.com:shop.techdata.com:shop.dev.web.us.tdworldwide.com:shop-rc.cstenet.com:pilot.techdata.com";
-    let redirectUri = encodeURIComponent(window.location.href);
+    let actionLogin = 'action=login';
+    let currUrl = window.location.href;
+    if(currUrl.indexOf('action=login')) {
+        currUrl = currUrl.split(actionLogin)[0];
+    }
+    let redirectUri = encodeURIComponent(currUrl);
     if((incomingHostname.indexOf("shop") >= 0 || incomingHostname.indexOf("pilot") >= 0) && shopDomainNamesList.indexOf(incomingHostname) >= 0) {
+        //handle login for shop
         redirectUri = shopLoginRedirectUrl + "?returnURL=" + redirectUri;
         window.location.href = redirectUri;
     } else {
-        initiateLogin(authUrl, clientId, redirectUri, shopLoginRedirectUrl, ignoreShopRoundtrip);
+        //handle login for aem
+        initiateAEMLogin(authUrl, clientId, redirectUri);
     }
 };
 
-export const initiateLogin = (authUrl, clientId, redirectUri, shopLoginRedirectUrl, ignoreShopRoundtrip) => {
-    if(ignoreShopRoundtrip) {
-        // no login roundtrip needed
-        redirectUri = shopLoginRedirectUrl;
-    }
+export const initiateAEMLogin = (authUrl, clientId, redirectUri) => {
     let authUrlLocal = authUrl + "?redirect_uri=" + redirectUri;
     authUrlLocal = authUrlLocal + "&client_id=" + clientId;
     authUrlLocal = authUrlLocal + "&response_type=code";
@@ -38,7 +41,7 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedir
 
     return user || signinCode || !isPrivatePage || isEditMode
         ? null
-        : redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl, false/*ignore shop redirect*/);
+        : redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
 };
 
 export const refreshPage = () => {
