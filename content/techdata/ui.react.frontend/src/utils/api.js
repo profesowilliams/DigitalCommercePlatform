@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const sessionId = localStorage.getItem('sessionId');
-const userData = JSON.parse(localStorage.getItem('userData') || { id: 'NoAuth' });
+const userData = JSON.parse(localStorage.getItem('userData') || '{ "id": "NoAuth" }');
 const traceId = `${userData.id}_${new Date().toISOString()}`;
 
 const USaxios = axios.create({
