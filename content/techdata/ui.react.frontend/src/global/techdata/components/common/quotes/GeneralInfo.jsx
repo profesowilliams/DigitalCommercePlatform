@@ -415,10 +415,10 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
                             </div>
                         </div>
                     <div className="form-group">
-                        <Button btnClass="cmp-qp--save-information" disabled={characterError} onClick={handleSaveChanges}>
+                        <Button btnClass="cmp-quote-button cmp-qp--save-information" disabled={false} onClick={handleSaveChanges}>
                             {info.submitLabel}
                         </Button>
-                        <Button btnClass="cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>
+                        <Button btnClass="cmp-quote-button cmp-qp--cancel-information" disabled={false} onClick={handleCancelChanges}>
                             {info.cancelLabel}
                         </Button>
                     </div>

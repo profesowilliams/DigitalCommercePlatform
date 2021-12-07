@@ -78,7 +78,7 @@ const ManuallyTyped = ({
       <p>
         <InputText onChange={onChange} inputValue={inputValue} label={label} bottomSpace/>
       </p>
-      <Button disabled={!inputValue} onClick={goToNext}>Next</Button>
+      <Button btnClass="cmp-quote-button" disabled={!inputValue} onClick={goToNext}>Next</Button>
     </>
   );
 };

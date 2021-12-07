@@ -86,7 +86,7 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 				/>
 			)}
 			{step === 0 && (
-				<Button disabled={!estimatedType} onClick={nextStep}>
+				<Button btnClass="cmp-quote-button" disabled={!estimatedType} onClick={nextStep}>
 					Next
 				</Button>
 			)}

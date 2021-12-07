@@ -87,7 +87,7 @@ const SavedCart = ({
             label={method.dropdownPlaceholder}
           />
       }
-      { step === 0 && <Button disabled={!cartType} onClick={nextStep}>Next</Button>}
+      { step === 0 && <Button btnClass="cmp-quote-button" disabled={!cartType} onClick={nextStep}>Next</Button>}
     </>
   );
 };

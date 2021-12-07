@@ -1,0 +1,198 @@
+.filter-modal-container {
+  position: absolute;
+  background: rgba(0, 12, 33, 0.1);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
+  .filter-modal-container {
+    &__popup {
+      height: 760px;
+      width: 420px;
+      border-radius: 4px 0 0 4px;
+      background-color: #ffffff;
+      // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
+      position: absolute;
+      right: 0;
+      top: 100px;
+      padding-top: 20px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    &__close {
+      position: absolute;
+      top: 113px;
+      z-index: 1;
+      right: 398px;
+      background-color: transparent;
+      &:before {
+        content: "\f057";
+        @include font-awesome;
+        font-weight: 900;
+        font-size: 30px;
+      }
+    }
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 42px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #000c21;
+      h3 {
+        color: #000c21;
+        font-size: 23px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 32px;
+        margin: 0;
+      }
+      &--clear-all {
+        background: transparent;
+        border: 0;
+        text-decoration: underline;
+        color: #0067ab;
+        font-size: 12px;
+        cursor: pointer;
+        letter-spacing: 0;
+        line-height: 17px;
+      }
+    }
+    &__results {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0;
+      border: 1px solid #000c21;
+      border-radius: 0 0 0 4px;
+      background-color: #000c21;
+    }
+  }
+}
+
+.filter-option {
+  &__checkbox {
+    accent-color: black;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  &__label {
+    color: #555555;
+    font-size: 12px;
+  }
+  &__options {
+    border-bottom: 1px solid #d8d8d8;
+    >ul, >li {
+      &:last-child {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.filter-accordion {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  ul li {
+    list-style: none;
+    padding-left: 21px;
+  }
+  &__item {
+    list-style: none;
+    &--group {
+      padding: 8px 0;
+      padding-left: 42px;
+      position: relative;
+      .count {
+        position: absolute;
+        right: 47px;
+        top: 21px;
+        border-radius: 9.5px;
+        background-color: #001d44;
+        color: white;
+        text-align: center;
+        padding: 0px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+    }
+  }
+  h3 {
+    color: #555555;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    cursor: pointer;
+    font-weight: normal;
+    &.active {
+      color: #001d44;
+      font-weight: bold;
+      &:before {
+        content: "\f078";
+      }
+    }
+    &:before {
+      content: "\f054";
+      @include font-awesome;
+      padding-right: 6px;
+      font-weight: 900;
+    }
+  }
+}
+
+.filter-tags-container {
+  height: 106px;
+  width: 100%;
+  background-color: #FFFFFF;
+  box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.27%);
+  position: absolute;
+  bottom: 45px; // approx height of submit button
+  z-index: 1;
+  padding: 12px;
+  padding-top: 34px;
+  padding-bottom: 24px;
+  &.active {
+    height: 80%;
+  }
+  .filter-tags-more {
+    height: 1px;
+    width: 60px;
+    border: 2px solid #6D7278;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    box-sizing: border-box;
+    right: 0;
+    margin: 0 auto;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .filter-tags {
+    border-radius: 14px;
+    background-color: #001D44;
+    color: white;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    &__title {
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.07px;
+      line-height: 17px;
+      text-align: center;
+    }
+    &__close {
+      color: #FFFFFF;
+      font-family: "Font Awesome 5 Free";
+      font-size: 9px;
+      letter-spacing: 0;
+      line-height: 9px;
+      cursor: pointer;
+    }
+  }
+}

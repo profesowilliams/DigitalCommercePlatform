@@ -246,14 +246,14 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 </div>
                 <div className="form-group">
                   <Button
-                    btnClass="cmp-qp--save-information"
+                    btnClass="cmp-quote-button cmp-qp--save-information"
                     disabled={values ? true : false}
                     onClick={handleSaveChanges}
                   >
                     {info.submitLabel}
                   </Button>
                   <Button
-                    btnClass="cmp-qp--cancel-information"
+                    btnClass="cmp-quote-button cmp-qp--cancel-information"
                     disabled={false}
                     onClick={handleCancelChanges}
                   >

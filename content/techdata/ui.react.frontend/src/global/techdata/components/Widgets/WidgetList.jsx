@@ -20,7 +20,7 @@ const WidgetList = ({ items, onChange, openlist }) => {
           </li>
         })}
       </ul>
-      <Button disabled={!localSelected} onClick={confirm}>Select Cart</Button>
+      <Button btnClass="cmp-quote-button" disabled={!localSelected} onClick={confirm}>Select Cart</Button>
     </div>
   );
 };

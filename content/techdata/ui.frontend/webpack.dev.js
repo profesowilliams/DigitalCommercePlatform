@@ -1120,6 +1120,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "filter-renewal",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/filter-renewal.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "vendor-pages/vendorlogin-cisco.html",
                 template: path.resolve(
                     __dirname,

@@ -1,0 +1,90 @@
+{
+  "columnList": [
+    {
+      "columnLabel": "Config ID",
+      "sortable": true
+    },
+    {
+      "columnLabel": "Type",
+      "sortable": false
+    },
+    {
+      "columnLabel": "Vendor",
+      "sortable": false
+    },
+    {
+      "columnLabel": "Created",
+      "sortable": false
+    },
+    {
+      "columnLabel": "Expires",
+      "sortable": false
+    },
+    {
+      "columnLabel": "Config Name",
+      "sortable": true
+    },
+    {
+      "columnLabel": "End User Name",
+      "sortable": false
+    },
+    {
+      "columnLabel": "TD Quote Id",
+      "sortable": false
+    },
+    {
+      "columnLabel": "Action",
+      "sortable": false
+    }
+  ],
+  "uiServiceEndPoint": "http://localhost:3000null",
+  "itemsPerPage": "25",
+  "paginationStyle": "scroll",
+  "options": {
+    "defaultSortingColumnKey": "created",
+    "defaultSortingDirection": "desc"
+  },
+  "filterTitle": "Filters",
+  "clearAllFilterTitle": "clear all filter",
+  "showResultLabel": "Show Result",
+  "filterListValues": [
+    {
+      "accordionLabel": "Vendors and Program",
+      "filterOptionsValues": [
+        {
+          "filterOptionLabel": "Veeam",
+          "subFilterOptionsValues": [
+            {
+              "subFilterOptionsLabel": "Pro Partner"
+            },
+            {
+              "subFilterOptionsLabel": "Pro Partner Subscriber"
+            }
+          ]
+        },
+        {
+          "filterOptionLabel": "VMWare",
+          "subFilterOptionsValues": [
+            {
+              "subFilterOptionsLabel": "Support and Subscriber"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "accordionLabel": "End User Type",
+      "filterOptionsValues": [
+        {
+          "filterOptionLabel": "Academic"
+        },
+        {
+          "filterOptionLabel": "Educational"
+        }
+      ]
+    },
+    {
+      "accordionLabel": "Date"
+    }
+  ]
+}

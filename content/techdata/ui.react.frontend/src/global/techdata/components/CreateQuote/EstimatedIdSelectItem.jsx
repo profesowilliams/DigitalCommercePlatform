@@ -55,7 +55,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
       { estimatedIdList.length === 0 && estimatedIdListError &&
         <p className="cmp-error-message cmp-error-message__red">No Estimated ID's available </p>
       }
-      <Button disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
+      <Button btnClass="cmp-quote-button" disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
     </>
   );
 };

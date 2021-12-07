@@ -71,7 +71,7 @@ const EditConfig = ({ componentProp }) => {
                     inputValue={configurationId}
                     label={placeholderText}
                 />
-                <Button disabled={!configurationId} onClick={handleGetUrl}>
+                <Button btnClass="cmp-quote-button" disabled={!configurationId} onClick={handleGetUrl}>
                     {buttonTitle}
                 </Button>
             </>

@@ -133,14 +133,14 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     return (
       <div className="form-group">
           <Button
-            btnClass="cmp-qp--save-information"
+            btnClass="cmp-quote-button cmp-qp--save-information"
             disabled={false}
             onClick={handleSubmitBtn}
           >
             {info.submitLabel}
           </Button>
           <Button
-            btnClass="cmp-qp--cancel-information"
+            btnClass="cmp-quote-button cmp-qp--cancel-information"
             disabled={false}
             onClick={handleCancelBtn}
           >

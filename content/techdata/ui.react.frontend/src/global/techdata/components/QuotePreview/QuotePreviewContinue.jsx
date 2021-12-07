@@ -17,7 +17,7 @@ function QuotePreviewContinue({
   return (
     <div className="cmp-qp-continue">
       <Button
-        btnClass={"cmp-qp-continue__btn"}
+        btnClass={"cmp-quote-button cmp-qp-continue__btn"}
         disabled={disableQuickQuoteButton}
         onClick={handleQuickQuote}
       >
