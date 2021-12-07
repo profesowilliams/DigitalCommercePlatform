@@ -22,7 +22,6 @@ public class LanguageDropDownItem  {
 
     protected static final Logger log = LoggerFactory.getLogger(LanguageDropDownItem.class);
 
-
     private Page page;
     private boolean active;
     private String title;
@@ -42,8 +41,8 @@ public class LanguageDropDownItem  {
 
 
     private String initSVGFlag(Page page)
-    {
-        if (page.getName().length()==2) {
+    {  
+        if (page.getName().length() >= 0) {
             Resource assetResource = page.getContentResource().getResourceResolver().getResource(String.format("%s/%s.svg", DAM_TECHDATA_COUNTRY_FLAGS, page.getName()));
             if (assetResource != null) {
                 Asset asset = assetResource.adaptTo(Asset.class);
