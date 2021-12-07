@@ -13,7 +13,7 @@ const quantityStyle = {...styles.tableCell, width:'10%', textAlign:'center'};
 const manufacturerStyle = {...styles.tableCell,width:'10%'}; 
 const vendorPartNoStyle = {...styles.tableCell,width:'20%', wordBreak: 'break-all'}; // 
 const vendorPartTextStyle = styles.cellVendorPart;
-const msrpStyle = {...styles.tableCell,width:'10%', wordBreak: 'break-all'};
+const msrpStyle = {...styles.tableCell,width:'12%', wordBreak: 'break-all'};
 const imageStyle = {...styles.tableCell,width:'15%', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
     
@@ -32,7 +32,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
                         <PDFTableCell 
                             header={true}
                             cellItem={'Image'} 
-                            cellWidth="10%"
+                            cellWidth="8%"
                             cellStyle={imageStyle}
                         />
                     ) 
@@ -49,7 +49,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
                         <PDFTableCell 
                             header={header}
                             cellItem={quoteItem.msrp ? quoteItem.msrp : quoteItem.msrpLabel}
-                            cellWidth={"10%"}
+                            cellWidth={"12%"}
                             type={"string"}
                             cellStyle={msrpStyle}
                         />

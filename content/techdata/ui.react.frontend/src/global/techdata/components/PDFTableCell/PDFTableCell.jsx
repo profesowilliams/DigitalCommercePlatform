@@ -6,7 +6,7 @@ const styles = PDFStyles;
 const PDFTableCell = ({cellItem, cellWidth, cellStyle, header = false, style = null}) => {
     return (
         <View style={{...cellStyle, width:cellWidth}}>
-            <Text wrap break style={header ? styles.tableTextHeader : style ? style :styles.tableTextBody}>{cellItem}</Text>
+            <Text wrap break style={header ? style ? style : styles.tableTextHeader : style ? style :styles.tableTextBody}>{cellItem}</Text>
         </View>
     )
 }
