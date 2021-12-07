@@ -8,15 +8,19 @@ export const usePreservedStore = (columnApiRef) => {
         if (!cols.length) return
         const [colSorted] = cols;
         const { colId = '', sort = '' } = colSorted;
-        if (sort === 'desc' && colId === 'id') return
-        columnSorted.current = { colId, sort };
+        if ((sort === 'desc' && colId === 'id') || colId === 'created') return
+        columnSorted.current = {colId, sort};
     }
     async function sortPreservedState() {
         const { colId, sort } = columnSorted.current;
-        columnApiRef.current.applyColumnState({
-            state: [{colId,sort}],
-            defaultState: { sort: null }
-        })
+      
+        if (colId === 'created') return;
+        setTimeout(() => {
+            columnApiRef.current.applyColumnState({
+                state: [{ colId, sort }],
+                defaultState: { sort: null }
+            });
+        }, 1000)
     }
     return { onSortChanged, sortPreservedState }
 }

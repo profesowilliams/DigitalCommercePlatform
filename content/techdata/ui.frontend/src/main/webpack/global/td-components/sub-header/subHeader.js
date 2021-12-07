@@ -3,7 +3,8 @@ export const subHeader = () => {
 
     function toolsToggle(event) {
         let isntMenu;
-        const isSubHeader = event.target.parentNode.parentNode.classList[0] === "cmp-tabs";
+        const tabClassList = event.target?.parentNode?.parentNode?.classList;
+        const isSubHeader = Array.isArray(tabClassList) ? tabClassList[0] === "cmp-tabs" : "";
         const isMenu = event.target.parentNode.classList[0] === "cmp-tools";
         const isMenuBlank = event.target.parentNode.classList[0] === "menucategorieslist";
         if (isSubHeader || isMenu || isMenuBlank) {

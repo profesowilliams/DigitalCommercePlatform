@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '../Grid/Grid';
+import GridComponent from '../Grid/Grid';
 import GridSearchCriteria from '../Grid/GridSearchCriteria';
 import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
@@ -10,6 +10,7 @@ import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrd
 import { usePreservedStore } from '../../hooks/usePreservedStore';
 import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
 
+const Grid = React.memo(GridComponent);
 
 const USER_DATA = JSON.parse(localStorage.getItem("userData"));
 
@@ -381,12 +382,21 @@ function OrdersGrid(props) {
 		filteringExtension.onAfterGridInit(config);
 	}
 	const columnApiRef = React.useRef();
-	const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
-	async function handleRequestInterceptor (request){
-		const response = await filteringExtension.requestInterceptor(request)
-		sortPreservedState();
-		return response;
-	}
+    const hasToSortAgain = React.useRef(false);
+   
+    const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
+    async function handleRequestInterceptor(request) {
+        const response = await filteringExtension.requestInterceptor(request)
+        if (hasToSortAgain.current) {
+            sortPreservedState();
+            hasToSortAgain.current = false;
+        }
+        return response;
+    }
+    const handleOnSearchRequest = (query) => {
+        filteringExtension.onQueryChanged(query);
+        hasToSortAgain.current = true
+    }
 
   if(HAS_ORDER_ACCESS) {
     return (
@@ -398,7 +408,7 @@ function OrdersGrid(props) {
                     ButtonsComponentHeader={ButtonOrderDetails}
                     label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
                     componentProp={componentProp.searchCriteria}
-                    onSearchRequest={(query) =>filteringExtension.onQueryChanged(query)}
+                    onSearchRequest={handleOnSearchRequest}
                     onClearRequest={filteringExtension.onQueryChanged}
                 ></GridSearchCriteria>
                 <Grid
