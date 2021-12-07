@@ -18,14 +18,17 @@ const imageStyle = {...styles.tableCell,width:'15%', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
     
     const ImageValidation = ({quoteItem}) => {
+    
         /**@type {string} */
         let urlImage = quoteItem?.urlProductImage;
         if (urlImage) {
             urlImage = urlImage.replace(/^http:\/\//i, 'https://');
+        } else {
+           urlImage = '/non-existing-image.png'
         }
         return(
             <View style={imageStyle}>
-                { quoteItem?.urlProductImage ?
+                { urlImage ?
                     (<Image
                         src={urlImage ? getBase64FromUrl(urlImage) : ''}
                     /> ) : (
