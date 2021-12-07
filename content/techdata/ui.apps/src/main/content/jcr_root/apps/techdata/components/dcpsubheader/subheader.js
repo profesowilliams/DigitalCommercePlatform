@@ -53,6 +53,9 @@ use(function() {
         vendorConnectionsModalObject["vendorSignInCodeParameter"] = "code";
     }
 
+    if (properties && properties["disableVendorConnectionLink"]) {
+        vendorConnectionsModalObject["disableVendorConnectionLink"] = properties["disableVendorConnectionLink"];
+    }
     if (properties && properties["title"]) {
         vendorConnectionsModalObject["title"] = properties["title"];
     }

@@ -6,6 +6,7 @@ import VendorConnection from './VendorConnection';
 
 const DashboardSubheader = ({ componentProp }) => {
 	const { accountnumberLabel = 'Account Number', vendorConnectionsModal } = JSON.parse(componentProp);
+	const disableVendorConnectionLink = vendorConnectionsModal.disableVendorConnectionLink;
 	const dispatch = useDispatch();
 	const { userData, showError } = useSelector((state) => ({
 		userData: state.auth.userData,
@@ -89,26 +90,28 @@ const DashboardSubheader = ({ componentProp }) => {
 						{accountnumberLabel}: {getAccountNumber()}
 					</a>
 				</li>
-				<li
-					onClick={() =>
-						invokeModal({
-							content: (
-								<VendorConnection
-									vendors={vendorModal.vendors}
-									apiUrl={vendorModal.uiServiceEndPoint}
-									connectedLabel={vendorModal.connectedLabel}
-									disconnectedLabel={vendorModal.disconnectedLabel}
-									header={vendorModal.content}
-								></VendorConnection>
-							),
-							properties: vendorModal,
-						})
-					}
-				>
-					<a href='#'>
-						<i className='fas fa-link'></i>
-					</a>
-				</li>
+				{disableVendorConnectionLink == undefined && (
+                    <li
+                        onClick={() =>
+                            invokeModal({
+                                content: (
+                                    <VendorConnection
+                                        vendors={vendorModal.vendors}
+                                        apiUrl={vendorModal.uiServiceEndPoint}
+                                        connectedLabel={vendorModal.connectedLabel}
+                                        disconnectedLabel={vendorModal.disconnectedLabel}
+                                        header={vendorModal.content}
+                                    ></VendorConnection>
+                                ),
+                                properties: vendorModal,
+                            })
+                        }
+                    >
+                        <a href='#'>
+                            <i className='fas fa-link'></i>
+                        </a>
+                    </li>
+				)}
 			</ul>
 			{modal}
 		</Fragment>

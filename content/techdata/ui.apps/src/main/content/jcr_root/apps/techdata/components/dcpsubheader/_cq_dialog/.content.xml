@@ -116,6 +116,12 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
+                                            <disableVendorConnectionLink
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    fieldDescription="check to disable - esp for SHOP"
+                                                    fieldLabel="Disable Vendor Connection Link"
+                                                    name="./disableVendorConnectionLink"/>
                                             <title
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

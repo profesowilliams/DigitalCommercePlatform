@@ -14,6 +14,7 @@ const NewSubheader = ({ componentProp }) => {
 	const [userData, setUserData] = useState(null);
 	const menuItemRefs = useRef([]);
 	const loginPageCommonName = vendorConnectionsModal.loginPageCommonName;
+	const disableVendorConnectionLink = vendorConnectionsModal.disableVendorConnectionLink;
 
 	useEffect(() => {
 	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
@@ -288,24 +289,26 @@ const NewSubheader = ({ componentProp }) => {
 							{accountnumberLabel}: {getAccountNumber()}
 						</a>
 					</li>
-					<li
-						onClick={() => {
+					{disableVendorConnectionLink == undefined && (
+                        <li
+                            onClick={() => {
 
-							invokeModal({
-								content: (
-									<VendorConnection
-										vendorConfig={vendorConnectionsModal}
-									></VendorConnection>
-								),
-								properties: vendorModal,
-							})
-						}
-						}
-					>
-						<a href='#'>
-							<i className='fas fa-link'></i>
-						</a>
-					</li>
+                                invokeModal({
+                                    content: (
+                                        <VendorConnection
+                                            vendorConfig={vendorConnectionsModal}
+                                        ></VendorConnection>
+                                    ),
+                                    properties: vendorModal,
+                                })
+                            }
+                            }
+                        >
+                            <a href='#'>
+                                <i className='fas fa-link'></i>
+                            </a>
+                        </li>
+					)}
 				</ul>
 					{modal}
 				</>: null }
