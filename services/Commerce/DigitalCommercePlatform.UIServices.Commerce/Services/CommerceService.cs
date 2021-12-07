@@ -95,15 +95,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             try
             {
-                if (query.Id != null)
+                if (!string.IsNullOrWhiteSpace(query.Id))
                 {
                     query.Id = query.Id + "*";
                 }
-                else if (query.EndUserName != null)
+                else if (!string.IsNullOrWhiteSpace(query.EndUserName))
                 {
                     query.EndUserName = query.EndUserName + "*";
                 }
-                else if (query.DealId != null)
+                else if (!string.IsNullOrWhiteSpace(query.DealId))
                 {
                     query.DealId = query.DealId + "*";
                 }

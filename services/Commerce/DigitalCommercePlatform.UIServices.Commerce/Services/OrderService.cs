@@ -195,11 +195,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             else
                 orderParameters.Origin = null;
 
-            if (orderParameters.Id != null)
+            if(!string.IsNullOrWhiteSpace(orderParameters.Id))
             {
                 orderParameters.Id = orderParameters.Id + "*";
             }
-            else if (orderParameters.CustomerPO != null)
+            else if (!string.IsNullOrWhiteSpace(orderParameters.CustomerPO))
             {
                 orderParameters.CustomerPO = orderParameters.CustomerPO + "*";
             }
