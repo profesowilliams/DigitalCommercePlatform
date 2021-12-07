@@ -13,6 +13,7 @@ using DigitalFoundation.Common.Interfaces;
 using DigitalFoundation.Common.Providers.Cryptography;
 using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
 using DigitalCommercePlatform.UIServices.Order.Infrastructure;
+using DigitalFoundation.Common.Security.Token;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
@@ -29,6 +30,13 @@ namespace DigitalCommercePlatform.UIServices.Order
         {
             services.AddTransient<IOrderService, OrderService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+            services.AddSingleton<ITokenManagerService, TokenManagerService>();
+            services.AddScoped<IDigitalFoundationClient, DigitalFoundationClient>();
+
+            services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
+            services.AddScoped<IHashingService, DefaultHashingService>();
+            services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
+            services.AddNuanceAuthentication();
 
             services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
             services.AddScoped<IHashingService, DefaultHashingService>();

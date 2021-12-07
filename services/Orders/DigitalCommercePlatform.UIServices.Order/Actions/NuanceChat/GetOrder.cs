@@ -72,7 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
         }
         public class Validator : AbstractValidator<Request>
         {
-            public Validator(IHashingService hashingService)
+            public Validator()
             {
                 RuleFor(r => r).Cascade(CascadeMode.Stop).NotNull()
                     .ChildRules(re =>

@@ -44,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests
                        .MatchContains($"SiteSetting/{serviceName}")
                            .Returns(Defaults.GetSiteSettings())
                        .Build()
-                   .AddClient<IMiddleTierHttpClient>(coreClient)
+                   .AddClient<IDigitalFoundationClient>(coreClient)
                        .Build();
 
         public override void PostStartupConfigureServices(IServiceCollection serviceDescriptors)

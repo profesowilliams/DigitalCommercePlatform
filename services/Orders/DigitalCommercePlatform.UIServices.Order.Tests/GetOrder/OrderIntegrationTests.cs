@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.Models;
-using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Interfaces;
@@ -32,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Tests.GetOrder
         private IScope PrepareGetScope(NuanceChatBotResponseModel model)
         {
             var scope = _fixture.CreateChildScope();
-            scope.OverrideClient<IMiddleTierHttpClient>()
+            scope.OverrideClient<IDigitalFoundationClient>()
             .ForHttpMethod(HttpMethod.Get)
             .MatchContains("v1/GetOrder")
             .Returns(model).Build();

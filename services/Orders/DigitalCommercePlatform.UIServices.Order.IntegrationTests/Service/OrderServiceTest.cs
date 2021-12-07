@@ -61,9 +61,9 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
         public static void ServicesGetOrderTests(NuanceWebChatRequest request)
         {
             Init();
-            var httpClient = new Mock<IMiddleTierHttpClient>();
+            var httpClient = new Mock<IDigitalFoundationClient>();
 
-            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(ReturnedData);
 
             var service = new OrderService(httpClient.Object, Logger.Object, AppSettings.Object, GetMapper());
             var result = service.GetOrders(request).Result;
@@ -76,9 +76,9 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
         {
             //arrange
             Init();
-            var httpClient = new Mock<IMiddleTierHttpClient>();
+            var httpClient = new Mock<IDigitalFoundationClient>();
 
-            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()))
+            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>()))
                 .ThrowsAsync(new Exception("test 123"));
 
             var service = new OrderService(httpClient.Object, Logger.Object, AppSettings.Object, GetMapper());
@@ -88,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            httpClient.Verify(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()), Times.Once);
+            httpClient.Verify(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         private static ResponseDto ReturnedData()
