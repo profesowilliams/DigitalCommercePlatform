@@ -15,6 +15,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Models\Accounts\NuanceUser.cs" />
+    <Compile Remove="Services\AzureKeyVaultKeysProvider.cs" />
+    <Compile Remove="Services\IHashingService.cs" />
+    <Compile Remove="Services\NuanceUserObjectBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <AdditionalFiles Include="..\.sonarlint\dc-df-account-ui\CSharp\SonarLint.xml" Link="SonarLint.xml" />
   </ItemGroup>
 
@@ -32,10 +38,11 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.105" />
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.2.105" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.105" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.105" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.2.0" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.3.9" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.3.9" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.3.9" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.3.9" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />

@@ -1,12 +1,11 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Models;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Features.Cache;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Features.Contexts.Models;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;

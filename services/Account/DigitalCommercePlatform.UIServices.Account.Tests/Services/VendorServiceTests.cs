@@ -1,8 +1,9 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;

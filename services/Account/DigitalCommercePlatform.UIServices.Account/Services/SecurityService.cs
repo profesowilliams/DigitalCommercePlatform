@@ -1,11 +1,11 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using System;
 using System.Diagnostics.CodeAnalysis;

@@ -1,9 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Logging;
-using DigitalFoundation.Common.Services.StartupConfiguration;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
+using DigitalFoundation.Common.Providers.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.ServiceModel;
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Features.Logging;
+using Microsoft.AspNetCore.Authentication;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure;
+using DigitalFoundation.Common.Security;
+using DigitalFoundation.Common.Interfaces;
+using DigitalFoundation.Common.Providers.Cryptography;
+using DigitalFoundation.Common.Features.Contexts.Models.Nuance;
+using DigitalFoundation.Common.Security.AuthenticationHandler.Nuance;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -26,6 +33,10 @@ namespace DigitalCommercePlatform.UIServices.Account
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IUserAuthenticator, AccessTokenUserAuthenticator>();
+            services.AddAuthentication()
+                .AddScheme<AuthenticationSchemeOptions, AccessTokenAuthenticationHandler>("AccessTokenAuthentication", null);
+
             services.AddScoped<IRenewalsService>(provider =>
             {
                 var renewalsServiceUrl = provider.GetRequiredService<IAppSettings>().GetSetting("External.Order.RenewalsService.Url");
@@ -54,6 +65,11 @@ namespace DigitalCommercePlatform.UIServices.Account
             services.AddTransient<ITimeProvider, DefaultTimeProvider>();
             services.AddTransient<IRenewalsSummaryService, RenewalsSummaryService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+
+            services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
+            services.AddScoped<IHashingService, DefaultHashingService>();
+            services.AddScoped<INuanceUserObjectBuilder, NuanceUserObjectBuilder>();
+            services.AddScoped<INuanceService, NuanceService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

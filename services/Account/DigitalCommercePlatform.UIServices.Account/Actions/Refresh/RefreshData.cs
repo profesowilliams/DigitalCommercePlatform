@@ -1,9 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 

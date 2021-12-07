@@ -8,8 +8,8 @@ using DigitalCommercePlatform.UIServices.Order.AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
 using DigitalCommercePlatform.UIServices.Order.Services;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -63,7 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
             Init();
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
-            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), null, null)).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedData);
 
             var service = new OrderService(httpClient.Object, Logger.Object, AppSettings.Object, GetMapper());
             var result = service.GetOrders(request).Result;
@@ -78,7 +78,8 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
             Init();
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
-            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>())).ThrowsAsync(new Exception("test 123"));
+            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()))
+                .ThrowsAsync(new Exception("test 123"));
 
             var service = new OrderService(httpClient.Object, Logger.Object, AppSettings.Object, GetMapper());
 
@@ -87,7 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
 
             //assert
             act.Should().ThrowAsync<Exception>();
-            httpClient.Verify(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>()), Times.Once);
+            httpClient.Verify(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()), Times.Once);
         }
 
         private static ResponseDto ReturnedData()

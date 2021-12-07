@@ -8,16 +8,15 @@ using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 
 namespace DigitalCommercePlatform.UIServices.Order.Services
 {
-    public class OrderService:IOrderService
+    public class OrderService : IOrderService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<OrderService> _logger;

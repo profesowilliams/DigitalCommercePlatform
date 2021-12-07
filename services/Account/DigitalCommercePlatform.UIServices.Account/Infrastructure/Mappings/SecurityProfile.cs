@@ -13,14 +13,14 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
     {
         public SecurityProfile()
         {
-            CreateMap<DigitalFoundation.Common.Models.SalesDivision, SalesDivision>();
+            CreateMap<DigitalFoundation.Common.Features.Contexts.Models.SalesDivision, SalesDivision>();
 
-            CreateMap<DigitalFoundation.Common.Models.Customer, Customer>()
+            CreateMap<DigitalFoundation.Common.Features.Contexts.Models.Customer, Customer>()
                 .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.CustomerNumber))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CustomerName))
                 .ForMember(dest => dest.SalesOrg, opt => opt.MapFrom<SalesOrgResolver>());
 
-            CreateMap<DigitalFoundation.Common.Models.User, User>()
+            CreateMap<DigitalFoundation.Common.Features.Contexts.Models.User, User>()
                 .ForMember(dest => dest.CustomersV2, opt => opt.MapFrom(src => src.CustomerList))
                 .ForMember(dest => dest.Roles, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleList, opt => opt.MapFrom(src => src.RoleList));
@@ -30,9 +30,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
         }
 
         [ExcludeFromCodeCoverage]
-        public class CompanyNameResolver : IValueResolver<DigitalFoundation.Common.Models.User, User, string>
+        public class CompanyNameResolver : IValueResolver<DigitalFoundation.Common.Features.Contexts.Models.User, User, string>
         {
-            public string Resolve(DigitalFoundation.Common.Models.User source, User destination, string destMember, ResolutionContext context)
+            public string Resolve(DigitalFoundation.Common.Features.Contexts.Models.User source, User destination, string destMember, ResolutionContext context)
             {
                 // Current requirement is to take the first customer from the list
                 return source?.CustomerList?.FirstOrDefault()?.CustomerName;
@@ -40,9 +40,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Infrastructure.Mappings
         }
 
         [ExcludeFromCodeCoverage]
-        public class SalesOrgResolver : IValueResolver<DigitalFoundation.Common.Models.Customer, Customer, string>
+        public class SalesOrgResolver : IValueResolver<DigitalFoundation.Common.Features.Contexts.Models.Customer, Customer, string>
         {
-            public string Resolve(DigitalFoundation.Common.Models.Customer source, Customer destination, string destMember, ResolutionContext context)
+            public string Resolve(DigitalFoundation.Common.Features.Contexts.Models.Customer source, Customer destination, string destMember, ResolutionContext context)
             {
                 // Current requirement is to take the first customer from the list
                 return source?.SalesDivision?.FirstOrDefault()?.SalesOrg;

@@ -18,12 +18,10 @@ using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using RenewalsService;
@@ -34,6 +32,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
@@ -146,7 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                              SortBy = "expirationDate"
                          });
 
-            var dealsSummary = await _middleTierHttpClient.GetAsync<DigitalFoundation.Common.Models.FindResponse<DealsBase>>(url);
+            var dealsSummary = await _middleTierHttpClient.GetAsync<DigitalFoundation.Common.Features.Contexts.Models.FindResponse<DealsBase>>(url);
 
             var response = new List<DealsSummaryModel>();
             

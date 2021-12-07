@@ -1,8 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
-using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Features.Cache;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -41,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetUser
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
+                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Features.Contexts.Models.User>("User");
                 var user = _mapper.Map<User>(userFromCache);
 
                 var response = new ResponseBase<Response> { Content = new Response { User = user } };

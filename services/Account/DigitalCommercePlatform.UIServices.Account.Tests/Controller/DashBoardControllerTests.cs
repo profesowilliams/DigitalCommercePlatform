@@ -12,10 +12,9 @@ using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Models;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts.Models;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -28,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
+using DigitalFoundation.Common.Features.Contexts;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {

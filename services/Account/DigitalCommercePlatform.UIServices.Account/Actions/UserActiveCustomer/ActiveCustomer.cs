@@ -1,6 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Features.Cache;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System;
@@ -38,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
 
             private bool IsCustomerNumberValid(string customerNumber)
             {
-                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
+                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Features.Contexts.Models.User>("User");
                 bool isCustomerNumberValid = userFromCache.CustomerList.Any(i => i.CustomerNumber == customerNumber);
                 return isCustomerNumberValid;
             }
@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Models.User>("User");
+                var userFromCache = _sessionIdBasedCacheProvider.Get<DigitalFoundation.Common.Features.Contexts.Models.User>("User");
                 var customer = userFromCache.CustomerList.Where(i => i.CustomerNumber == request.CustomerNumber).SingleOrDefault();
                 userFromCache.ActiveCustomer = customer;
                 _sessionIdBasedCacheProvider.Remove("User");

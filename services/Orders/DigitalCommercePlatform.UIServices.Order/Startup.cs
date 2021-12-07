@@ -1,14 +1,18 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalFoundation.Common.Logging;
-using DigitalFoundation.Common.Services.StartupConfiguration;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using DigitalCommercePlatform.UIServices.Order.Services;
-
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Features.Logging;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Interfaces;
+using DigitalFoundation.Common.Providers.Cryptography;
+using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
+using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
@@ -25,6 +29,11 @@ namespace DigitalCommercePlatform.UIServices.Order
         {
             services.AddTransient<IOrderService, OrderService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+
+            services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
+            services.AddScoped<IHashingService, DefaultHashingService>();
+            services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
+            services.AddNuanceAuthentication();
 
         }
 
