@@ -53,7 +53,7 @@ function ConfigurationGridSearch({
     let configurations =
       query.configurations?.key &&
       query.configurations?.key !== "AllConfigurationTypes"
-        ? `&Type=${query.configurations.key}`
+        ? `&ConfigurationType=${query.configurations.key}`
         : "";
     let from =
       query.from?.key && query.from?.value
