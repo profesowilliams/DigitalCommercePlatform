@@ -133,6 +133,12 @@ Sling-ContextAware-Configuration-Classes: com.techdata.core.slingcaconfig.Servic
             <artifactId>org.osgi.resource</artifactId>
         </dependency>
         <dependency>
+            <artifactId>acs-aem-commons-bundle</artifactId>
+            <version>4.9.0</version>
+            <groupId>com.adobe.acs</groupId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.util.tracker</artifactId>
         </dependency>
