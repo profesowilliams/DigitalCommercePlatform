@@ -80,10 +80,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                             }
                         },
                          new RefinementGroupRequestDto(){
-                            Group = "Range",
+                            Group = "InStock",
                             Refinements = new List<RefinementRequestDto>()
                             {
-                                new RefinementRequestDto(){ Id = "inStock", Range = new RangeDto(){ Min = 1 } }
+                                new RefinementRequestDto(){ Id = "InStock", ValueId = "Y" }
                             }
                         }
                     });
