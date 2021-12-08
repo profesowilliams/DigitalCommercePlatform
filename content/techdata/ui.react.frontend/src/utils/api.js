@@ -1,5 +1,4 @@
 import axios from 'axios';
-import uuid from 'react-native-uuid';
 import { nanoid } from 'nanoid';
 
 const sessionId = localStorage.getItem('sessionId');
