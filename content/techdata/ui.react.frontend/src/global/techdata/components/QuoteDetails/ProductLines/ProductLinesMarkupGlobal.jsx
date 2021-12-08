@@ -32,38 +32,40 @@ const ProductLinesMarkupGlobal = (props) => {
       <div className="cmp-product-lines-grid__markup__label">
         {labels?.applyMarkupLabel || "Apply markup as"}:
       </div>
-      <button
-        className={`cmp-product-lines-grid__markup__button ${
-          activeUnit.key === UNITS.percentage.key
-            ? "cmp-product-lines-grid__markup__button--active"
-            : ""
-        }`}
-        onClick={() => {
-          setActiveUnit(UNITS.percentage);
-        }}
-      >
-        {UNITS.percentage.label}
-      </button>
-      <button
-        className={`cmp-product-lines-grid__markup__button ${
-          activeUnit.key === UNITS.currency.key
-            ? "cmp-product-lines-grid__markup__button--active"
-            : ""
-        }`}
-        onClick={() => {
-          setActiveUnit(UNITS.currency);
-        }}
-      >
-        {UNITS.currency.label}
-      </button>
-      <input
-        className="cmp-product-lines-grid__markup__input"
-        type="number"
-        value={markupValue}
-        onChange={(e) => {
-          setMarkupValue(e.target.value);
-        }}
-      />
+      <div className="cmp-product-lines-grid__markup__container">
+        <button
+          className={`cmp-product-lines-grid__markup__button ${
+            activeUnit.key === UNITS.percentage.key
+              ? "cmp-product-lines-grid__markup__button--active"
+              : ""
+          }`}
+          onClick={() => {
+            setActiveUnit(UNITS.percentage);
+          }}
+        >
+          {UNITS.percentage.label}
+        </button>
+        <button
+          className={`cmp-product-lines-grid__markup__button ${
+            activeUnit.key === UNITS.currency.key
+              ? "cmp-product-lines-grid__markup__button--active"
+              : ""
+          }`}
+          onClick={() => {
+            setActiveUnit(UNITS.currency);
+          }}
+        >
+          {UNITS.currency.label}
+        </button>
+        <input
+          className="cmp-product-lines-grid__markup__input"
+          type="number"
+          value={markupValue}
+          onChange={(e) => {
+            setMarkupValue(e.target.value);
+          }}
+        />
+      </div>
     </section>
   );
 };
