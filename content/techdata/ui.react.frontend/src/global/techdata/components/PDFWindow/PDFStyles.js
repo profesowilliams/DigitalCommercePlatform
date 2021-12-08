@@ -85,7 +85,7 @@ export default StyleSheet.create({
         fontSize: 13,
         fontWeight: 100,
     },
-    cellVendorPart: {
+    cellText: {
         textOverflow: 'ellipsis',
         fontSize: 8,
         fontWeight: 100,
