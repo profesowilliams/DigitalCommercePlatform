@@ -920,6 +920,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "td-renewals-details-react",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                        "/static/td-renewals-details-react.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "td-quote-details-react",
                 template: path.resolve(
                     __dirname,
