@@ -3,9 +3,9 @@ import { getUser } from "./index";
 export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
 
     // colon separated shop domain names
-    let actionLogin = 'action=login';
+    let actionLogin = '?action=login';
     let currUrl = window.location.href;
-    if(currUrl.indexOf('action=login') > 0) {
+    if(currUrl.indexOf('?action=login') > 0) {
         currUrl = currUrl.split(actionLogin)[0];
     }
     let redirectUri = encodeURIComponent(currUrl);

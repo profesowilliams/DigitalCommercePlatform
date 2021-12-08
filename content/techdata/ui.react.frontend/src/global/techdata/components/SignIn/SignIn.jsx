@@ -203,12 +203,12 @@ const SignIn = (props) => {
     }
     // SigIn Code Check from URL
     let searchValue = window.location.search;
-    if (searchValue && !searchValue.indexOf('action=login')) {
+    if (searchValue) {
       let getCode = getQueryStringValue(codeQueryParam);
       localStorage.setItem("signInCode", getCode);
       signInCode = getCode;
       let redirectUrlFromLS = localStorage.getItem("redirectUrl");
-      if(redirectUrlFromLS) {
+      if(redirectUrlFromLS && !searchValue.indexOf('action=login')) {
         localStorage.removeItem("redirectUrl");
         window.location.reload(redirectUrlFromLS);
       }
