@@ -13,6 +13,8 @@ export const prepareCommonHeader = () => ({
     "Accept-Language" : "en-us",
     "Consumer" : "AEM",
     "SessionId" : nanoid(16),
+    'x-correlation-id' : nanoid(20),
+	'x-operation-id' : nanoid(18),
     "Content-Type": "application/json"
 });
 
