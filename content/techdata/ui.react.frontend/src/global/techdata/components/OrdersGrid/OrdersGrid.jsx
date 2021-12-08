@@ -432,11 +432,11 @@ function OrdersGrid(props) {
     );
   } else {
     return (
-      <div className="cmp-error">
+        <div className="cmp-error">
         <div className="cmp-error__header">
           You do not have the required entitlement to access this information
         </div>
-      </div>
+        </div>
     )
   }
 }

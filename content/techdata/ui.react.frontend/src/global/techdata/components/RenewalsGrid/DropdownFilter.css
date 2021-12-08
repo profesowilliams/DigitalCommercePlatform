@@ -1,0 +1,57 @@
+.inputStyle {
+  margin-bottom: 1em;
+  padding: 0.25em;
+  border: 0;
+  border-bottom: 1px solid currentcolor;
+  font-weight: lighter;
+  letter-spacing: 0.15em;
+  border-radius: 0;
+}
+
+.inputStyle:focus,
+.inputStyle:active {
+  outline: 0;
+  border-bottom-color: blue;
+}
+
+.inputStyle input {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/1200px-Magnifying_glass_icon.svg.png);
+  display: inline-block;
+  width: 123px;
+  height: 21px;
+  background-repeat: no-repeat;
+  background-position: 96px 0;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+.inputStyle option:hover {
+  background-color: #f2f2f2;
+}
+
+.tooltip {
+  display: none;
+  padding: 0.5em;
+  height: 50px;
+}
+
+.tooltipContainer:hover > .tooltip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  margin-top: -17px;
+}
+
+.tooltip button {
+  background: none;
+  border: none;
+  padding: 0;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
