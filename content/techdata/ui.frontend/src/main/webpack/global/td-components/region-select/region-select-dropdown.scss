@@ -217,6 +217,8 @@
       &:last-child {
         width: 25%;
         padding: rem(20px) rem(35px);
+        overflow: hidden;
+        white-space: normal;
         @include mobile {
             width: unset;
             padding: unset;
@@ -228,7 +230,4 @@
       }
     }
   }
-}
-
-.cmp-country-flags {
 }

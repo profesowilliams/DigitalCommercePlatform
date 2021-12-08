@@ -243,6 +243,8 @@
       &:last-child {
         width: 25%;
         padding: 20px 35px;
+        overflow: hidden;
+        white-space: normal;
         @include mobile {
             width: unset;
             padding: unset;
