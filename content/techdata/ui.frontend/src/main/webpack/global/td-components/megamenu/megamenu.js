@@ -182,15 +182,44 @@ import bp from '../../../common-utils/js/media-match';
       mediaQueryList.addEventListener('change', triggerNavigationOnDesktop);
     });
     changeShopLoginUrlPrefix();
+    prefixAEMAuthUrlForAEMLinks();
   };
+
+  /**
+  * Given SHOP authenticated user, replace all links in megamenu matching aem urls patterns.
+  */
+  function prefixAEMAuthUrlForAEMLinks() {
+      let prefixAEMAuthUrl = "";
+      if (window.SHOP && window.SHOP.authentication) {
+        var megamenu = document.getElementById("shopHeaderContainer");
+        if (window.SHOP.authentication.isAuthenticated() && megamenu) {
+            var megamenuAnchorsLinks = megamenu.getElementsByTagName("a");
+            let prefixURLEle = document.querySelector('#aemSSOLoginRedirectUrl');
+            if(prefixURLEle) {
+                prefixAEMAuthUrl = document.querySelector('#aemSSOLoginRedirectUrl').getAttribute('data-aemSSOLoginRedirectUrl');
+                modifyAEMUrls(megamenuAnchorsLinks, prefixAEMAuthUrl);
+            }
+        }
+      }
+  }
+
+    function modifyAEMUrls(megamenuAnchorsLinks, prefixAEMAuthUrl) {
+        for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {
+            let incomingHref = megamenuAnchorsLinks[i].href;
+            if(incomingHref && (incomingHref.indexOf('sit.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('uat.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('stage.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('www.techdata.com') != -1)) {
+                let encodedUrl = encodeURIComponent(incomingHref);
+                megamenuAnchorsLinks[i].href = prefixAEMAuthUrl + "|" + encodedUrl;
+            }
+        }
+    }
 
     function changeShopLoginUrlPrefix () {
         let prefixShopAuthUrl = "";
         if(window.SHOP == undefined) { // ignore if its shop
             let sessionId = localStorage.getItem('sessionId');
-            var megamenu = document.getElementById("megamenu");
-            if(sessionId && megamenu) {
-                var megamenuAnchorsLinks = megamenu.getElementsByTagName("a");
+            var shopHeaderContainer = document.getElementById("megamenu");
+            if(sessionId && shopHeaderContainer) {
+                var megamenuAnchorsLinks = shopHeaderContainer.getElementsByTagName("a");
                 let prefixURLEle = document.querySelector('#ssoLoginRedirectUrl');
                 for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {
                     let incomingHref = megamenuAnchorsLinks[i].href;

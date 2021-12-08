@@ -26,6 +26,12 @@
                                 fieldDescription="URL used on megamenu links for shop"
                                 jcr:primaryType="nt:unstructured"
                                 name="./ssoLoginRedirectUrl" />
+                            <aemSSOLoginRedirectUrl
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldLabel="AEM SSO Login Redirect Url"
+                                fieldDescription="URL used on megamenu links for AEM"
+                                jcr:primaryType="nt:unstructured"
+                                name="./aemSSOLoginRedirectUrl" />
                             <actions
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

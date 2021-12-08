@@ -202,7 +202,8 @@ const SignIn = (props) => {
       signInCode = codeFromLocalStorage;
     }
     // SigIn Code Check from URL
-    if (window.location.search) {
+    let searchValue = window.location.search;
+    if (searchValue && !searchValue.indexOf('action=login')) {
       let getCode = getQueryStringValue(codeQueryParam);
       localStorage.setItem("signInCode", getCode);
       signInCode = getCode;

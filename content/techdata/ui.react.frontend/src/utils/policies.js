@@ -2,16 +2,14 @@ import { getUser } from "./index";
 
 export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
 
-    let incomingHostname = window.location.host;
     // colon separated shop domain names
-    let shopDomainNamesList = "shop.cstenet.com:shop.techdata.com:shop.dev.web.us.tdworldwide.com:shop-rc.cstenet.com:pilot.techdata.com";
     let actionLogin = 'action=login';
     let currUrl = window.location.href;
     if(currUrl.indexOf('action=login') > 0) {
         currUrl = currUrl.split(actionLogin)[0];
     }
     let redirectUri = encodeURIComponent(currUrl);
-    if((incomingHostname.indexOf("shop") >= 0 || incomingHostname.indexOf("pilot") >= 0) && shopDomainNamesList.indexOf(incomingHostname) >= 0) {
+    if(window.SHOP && window.SHOP.authentication) {
         //handle login for shop
         redirectUri = shopLoginRedirectUrl + "?returnURL=" + redirectUri;
         window.location.href = redirectUri;
