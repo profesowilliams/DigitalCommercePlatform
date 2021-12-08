@@ -14,7 +14,7 @@ function ConfigurationGrid(props) {
 
   return (
     <section>
-      <div className="cmp-configurations-grid">
+      <div className="cmp-renewals-grid">
         <Grid
           columnDefinition={columnDefs}
           options={options}

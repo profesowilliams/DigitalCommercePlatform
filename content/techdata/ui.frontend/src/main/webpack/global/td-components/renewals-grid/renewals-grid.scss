@@ -1,0 +1,16 @@
+@import '../../../site/variables';
+
+.cmp-renewals-grid {
+	width: 100%;
+	overflow: auto;
+    margin-top: rem(20px);
+    margin-right: rem(10px);
+	& .status {
+		display: flex;
+	}
+	& .icon {
+		display: flex;
+		margin-top: rem(20px);
+		margin-right: rem(5px);
+	}
+}
