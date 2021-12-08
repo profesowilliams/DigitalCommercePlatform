@@ -473,7 +473,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             if (exportedFields.Contains(nameof(ExportedFields.ExtendedCost)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.ExtendedPrice);
             if (exportedFields.Contains(nameof(ExportedFields.Status)))
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.Status);
+                SetCell(curXlRow, ++curCol, wsOrderDetail, line.Status ?? string.Empty);// Status
             if (exportedFields.Contains(nameof(ExportedFields.Tracking)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.TrackingNumber); // Tracking
             if (exportedFields.Contains(nameof(ExportedFields.Carrier)))
