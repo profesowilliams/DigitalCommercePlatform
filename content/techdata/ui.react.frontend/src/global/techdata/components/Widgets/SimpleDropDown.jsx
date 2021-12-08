@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-const INITIAL_SELECTED_VALUE = {value:""};
+
 function SimpleDropDown({ items = [], selectedIndex = 0, onItemSelected }) {
+	const INITIAL_SELECTED_VALUE = { value: " " };
 	const [expanded, setExpanded] = useState(false);
 	const initialItemSelected = items.length > 0 ? items[selectedIndex] : INITIAL_SELECTED_VALUE;
 	const [selectedItem, setSelectedItem] = useState(initialItemSelected);
