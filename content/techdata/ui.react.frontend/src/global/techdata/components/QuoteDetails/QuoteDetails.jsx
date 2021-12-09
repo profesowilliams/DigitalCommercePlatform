@@ -126,7 +126,7 @@ const QuoteDetails = ({ componentProp }) => {
             }
         ],
         ...extraOptions,
-        "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : logoURL
+        "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : null
       };
       generateExcelFileFromPost({url:uiServiceEndPointExcel,name:'quotes.xlsx',postData})
 
