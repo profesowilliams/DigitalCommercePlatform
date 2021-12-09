@@ -10,6 +10,7 @@ import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.osgi.service.component.annotations.Component;
@@ -22,6 +23,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -33,7 +35,8 @@ import com.day.cq.wcm.api.Page;
         property = {
                 "service.description=JSXF Servlet",
                 "service.vendor=techdata.com",
-                "sling.servlet.paths=/bin/testtd"
+                "sling.servlet.methods=" + HttpConstants.METHOD_POST,
+                "sling.servlet.paths=/bin/form"
         }
 )
 public class FormServlet extends SlingAllMethodsServlet {
@@ -57,10 +60,8 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         @Override
         protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
-                List<RequestParameter> l = request.getRequestParameterList();
                 Map<String, String> emailParams = new HashMap<String, String>();
 
-                BufferedReader bf = request.getReader();
                 String strLine = "";
                 String strJsonPayload = "";
                 String configValues = "";
@@ -72,64 +73,83 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailTemplatePath = "";
                 String emailSubject = "";
                 String confirmationEmailSubject = "";
-
-                Resource resource = resourceResolver.getResource(CA_CONFIG_PATH);
-
-                if (resource!=null)
+                try
                 {
-                        Page page = resource.adaptTo(Page.class);
-                        CommonConfigurations commonConfigurations =
-                                page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
-                        configValues = "Config value : " + commonConfigurations.emailSubject();
-                        toEmailAddresses = commonConfigurations.toEmails();
-                        submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
-                        confirmationEmailBody = commonConfigurations.confirmationEmailBody();
-                        emailParams.put("confirmationEmailBody", confirmationEmailBody);
-                        internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
-                        confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
-                        emailSubject = commonConfigurations.emailSubject();
-                        emailParams.put("subject", emailSubject);
-                        confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
-                        emailParams.put("confirmationSubject", confirmationEmailSubject);
+                        final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
+                        LOG.debug("isMultipart {}", isMultipart);
+                        PrintWriter out = null;
+                        out = response.getWriter();
+                        if (isMultipart) {
+                                final java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params = request.getRequestParameterMap();
+                                for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
+                                        final String k = pairs.getKey();
+                                        LOG.info("Key: {}", k);
+                                        final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
+                                        String value = "";
+                                        if (pArr.length > 1)
+                                        {
+                                                for (RequestParameter rp : pArr)
+                                                {
+                                                        value = value + rp.toString() + "|";
+                                                }
+                                        }else{
+                                                value = pArr[0].toString();
+                                        }
+                                        emailParams.put(k,value);
+                                        LOG.info("value is {}",value);
+                                }
 
-                }else {
-                        LOG.error("resource to read CA config from, is null");
+                                Resource resource = resourceResolver.getResource(CA_CONFIG_PATH);
+
+                                if (resource!=null)
+                                {
+                                        Page page = resource.adaptTo(Page.class);
+                                        CommonConfigurations commonConfigurations =
+                                                page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
+                                        configValues = "Config value : " + commonConfigurations.emailSubject();
+                                        toEmailAddresses = commonConfigurations.toEmails();
+                                        submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
+                                        confirmationEmailBody = commonConfigurations.confirmationEmailBody();
+                                        emailParams.put("confirmationEmailBody", confirmationEmailBody);
+                                        internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
+                                        confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
+                                        emailSubject = commonConfigurations.emailSubject();
+                                        emailParams.put("subject", emailSubject);
+                                        confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
+                                        emailParams.put("confirmationSubject", confirmationEmailSubject);
+
+                                }else {
+                                        LOG.error("resource to read CA config from, is null");
+                                }
+
+                                String[] toEmailAddressesArray = toEmailAddresses.split(",");
+                                String submitterEmailAddress = emailParams.get(submitterEmailFieldName);
+
+                                if (!internalEmailTemplatePath.isEmpty())
+                                {
+                                        LOG.info("Submitting internal email to {}", Arrays.toString(toEmailAddressesArray));
+                                        emailService.sendEmail(internalEmailTemplatePath, emailParams, toEmailAddressesArray);
+                                }else{
+                                        LOG.error("internal email template path is not set.");
+                                }
+
+                                if (!confirmationEmailTemplatePath.isEmpty() && submitterEmailAddress != null && !submitterEmailAddress.isEmpty())
+                                {
+                                        String[] submitterEmailAddressArray = submitterEmailAddress.split(",");
+                                        LOG.info("Submitting confirmation email to {}",Arrays.toString(submitterEmailAddressArray));
+                                        emailService.sendEmail(confirmationEmailTemplatePath, emailParams, submitterEmailAddressArray);
+                                }else{
+                                        LOG.error("confirmation email template path, or submitter email, or submitter email field name is incorrect, or is not set.");
+                                }
+
+
+                        }else{
+                                LOG.error("not multipart form data");
+                        }
                 }
 
-                String[] toEmailAddressesArray = toEmailAddresses.split(",");
-
-                while ((strLine = bf.readLine()) != null) {
-                        strJsonPayload = strJsonPayload + strLine;
+                catch (Exception e) {
+                        e.printStackTrace();
                 }
-
-                JsonObject jsonObject = new JsonParser().parse(strJsonPayload).getAsJsonObject();
-                Iterator<String> it  =  jsonObject.keySet().iterator();
-                while( it.hasNext() ) {
-
-                        String key = it.next();
-                        Object value = jsonObject.get(key);
-                        String strValue = value.toString().replace("\"","");
-                        emailParams.put(key, strValue);
-                }
-
-                String submitterEmailAddress = emailParams.get(submitterEmailFieldName);
-
-                if (!internalEmailTemplatePath.isEmpty())
-                {
-                        LOG.info("Submitting internal email to {}", Arrays.toString(toEmailAddressesArray));
-                        emailService.sendEmail(internalEmailTemplatePath, emailParams, toEmailAddressesArray);
-                }else{
-                        LOG.error("internal email template path is not set.");
-                }
-
-                if (!confirmationEmailTemplatePath.isEmpty() && submitterEmailAddress != null && !submitterEmailAddress.isEmpty())
-                {
-                        String[] submitterEmailAddressArray = submitterEmailAddress.split(",");
-                        LOG.info("Submitting confirmation email to {}",Arrays.toString(submitterEmailAddressArray));
-                        emailService.sendEmail(confirmationEmailTemplatePath, emailParams, submitterEmailAddressArray);
-                }else{
-                        LOG.error("confirmation email template path, or submitter email, or submitter email field name is incorrect, or is not set.");
-                }
-
         }
 }
