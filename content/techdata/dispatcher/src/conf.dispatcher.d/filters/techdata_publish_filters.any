@@ -39,3 +39,5 @@
 
 # Enable specific mime types clientlibs directories
 /0105 { /type "allow" /extension '(gltf|stl|obj|usdz|glb)' /method "GET" /path "/content/dam/*" }
+/0106 { /type "allow" /method "POST" /url "/bin/form" }  # form servlet allow
+

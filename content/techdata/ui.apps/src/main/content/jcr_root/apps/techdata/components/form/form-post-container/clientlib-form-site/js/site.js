@@ -7,6 +7,8 @@ function createFormData(form)
     var inputs     = form.getElementsByTagName('input');
     var selects     = form.getElementsByTagName('input');
     var inputsList = Array.prototype.slice.call(inputs);
+    var selects     = form.getElementsByTagName('select');
+    var selectsList = Array.prototype.slice.call(selects);
 
     inputsList.forEach(
         function (i) {
@@ -15,6 +17,16 @@ function createFormData(form)
             }
         }
     );
+
+    selectsList.forEach(
+        function (i) {
+            if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
+                newData.append(i.name, i.options[i.selectedIndex].value);
+            }
+        }
+
+    );
+
 
     return newData;
 }
