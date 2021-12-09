@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
-import java.util.UUID;
 
 @Component(service = UIServiceHelper.class)
 public class UIServiceHelperImpl implements  UIServiceHelper {
@@ -28,17 +27,11 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
     public JsonObject getUIServiceJSONResponse(String uiServiceEndpoint, String sessionID) {
         log.debug("Endpoint {}, session ID {}", uiServiceEndpoint, sessionID);
         String jsonData = StringUtils.EMPTY;
-        
+
         URL url = null;
         try {
             url = new URL(uiServiceEndpoint);
-            
-            UUID correlation = UUID.randomUUID();
-            String correlationId = correlation.toString();
 
-            UUID operation = UUID.randomUUID();
-            String operationId = operation.toString();
-            log.debug("correlationId {}, session ID {}", uiServiceEndpoint, sessionID);
             HttpURLConnection conn = null;
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(5 * 1000);
@@ -50,8 +43,6 @@ public class UIServiceHelperImpl implements  UIServiceHelper {
             conn.setRequestProperty("Consumer", "AEM");
             conn.setRequestProperty("Accept-Language", "en-us");
             conn.setRequestProperty("sessionid", sessionID);
-            conn.setRequestProperty("x-correlation-id", correlationId);
-            conn.setRequestProperty("x-operation-id", operationId);
             if (conn.getResponseCode() != 200) {
                 throw new UIServiceException("Failed : HTTP error code : " + conn.getResponseCode());
             }

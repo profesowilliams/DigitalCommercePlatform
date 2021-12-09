@@ -2,7 +2,6 @@ import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } fr
 import axios from '../../utils/axios';
 import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
 import {refreshPage} from '../../utils/policies';
-import { nanoid } from 'nanoid';
 
 export const signInRequest = () => {
 	return {
@@ -45,8 +44,6 @@ export const signInAsynAction = (apiUrl) => {
 			'Accept-Language' : 'en-us',
 			'Consumer' : 'AEM',
 			'SessionId' : sessionId,
-			'x-correlation-id' : nanoid(20),
-			'x-operation-id' : nanoid(18),
 			'Content-Type': 'application/json'
 		}
 	};
