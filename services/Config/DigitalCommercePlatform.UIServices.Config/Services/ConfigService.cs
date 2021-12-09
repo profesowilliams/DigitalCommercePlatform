@@ -307,7 +307,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 PageSize = 25,
                 Page = 1,
                 Details=request.Details,
-                PricingLevel=request.PricingOption
+                PricingLevel=request.PricingOption.ToString(),
+                EndUserSpaOnly=request.EndUserSpaOnly
             };
 
             var getDealsForGrid = GetDealsDetails(spaRequest);

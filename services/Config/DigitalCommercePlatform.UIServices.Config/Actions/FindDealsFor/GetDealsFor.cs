@@ -26,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
             public int PageSize { get; set; } = 25;
             public PricingOption? PricingOption { get; set; }
             public string Vendor { get; set; }
+            public bool EndUserSpaOnly { get; set; } = true;
 
             public Request()
             {

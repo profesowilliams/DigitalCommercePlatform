@@ -70,10 +70,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
                 ;
 
             CreateMap<DealsBase, DealsdetailsForProducts>()
-                //.ForMember(dest => dest.Bid, opt => opt.MapFrom(src => src.VendorBidNumber))-need confirmation which value to be mapped 
-                .ForMember(d => d.Bid, o => o.Ignore())
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Source.Version))
-                .ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src.VendorBidNumber))
+                .ForMember(dest => dest.Bid, opt => opt.MapFrom(src => src.VendorBidNumber))
+                .ForMember(dest => dest.DealId, opt => opt.MapFrom(src => src.Source.Id))
                 .ForMember(dest => dest.EndUserName, opt => opt.MapFrom(src => src.EndUserName))
                 .ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => src.ExpirationDate))
                 .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.VendorName))

@@ -33,15 +33,28 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public string[] ProductIds { get; set; }
         public string VendorBidNumber { get; set; }
         public string VendorName { get; set; }
-        public PricingOption? PricingLevel { get; set; }
+        public string PricingLevel { get; set; }
         public string EndUserName { get; set; }
         public DateTime? ValidFrom { get; set; }
         public DateTime? ValidTo { get; set; }
+        public DateTime? UpdatedFrom { get; set; }
+        public DateTime? UpdatedTo { get; set; }
         public bool Details { get; set; }
+        public SortField? Sort { get; set; }
         public bool SortAscending { get; set; }
         public bool TotalCount { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public bool EndUserSpaOnly { get; set; } = true;
+    }
+
+    public enum SortField
+    {
+        Description,
+        EndUserName,
+        ExpirationDate,
+        VendorBidNumber,
+        VendorName
     }
 
 }
