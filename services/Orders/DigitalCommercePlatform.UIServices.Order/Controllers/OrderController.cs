@@ -15,7 +15,6 @@ using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
     [ExcludeFromCodeCoverage]
-    //[SetContextFromHeader]
     [ApiController]
     [BasicAuth]
     [Authorize(AuthenticationSchemes = "NuanceAuth")]

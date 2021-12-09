@@ -37,12 +37,6 @@ namespace DigitalCommercePlatform.UIServices.Order
             services.AddScoped<IHashingService, DefaultHashingService>();
             services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
             services.AddNuanceAuthentication();
-
-            services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
-            services.AddScoped<IHashingService, DefaultHashingService>();
-            services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
-            services.AddNuanceAuthentication();
-
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

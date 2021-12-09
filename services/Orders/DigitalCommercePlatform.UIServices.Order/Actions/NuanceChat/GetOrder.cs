@@ -2,16 +2,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalCommercePlatform.UIServices.Order.Services;
-using DigitalFoundation.Common.Features.Contexts.Models.Nuance;
-using DigitalFoundation.Common.Interfaces;
-using DigitalFoundation.Common.Providers.Settings;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
