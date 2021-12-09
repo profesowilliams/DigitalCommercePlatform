@@ -878,17 +878,17 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
         private static Image GetResellerLogo(string logo)
         {
-            //using MemoryStream memoryStream = new();
-            if (!string.IsNullOrEmpty(logo))
+            var buffer = new Span<byte>(new byte[logo.Length]);
+            var isValidImage = !string.IsNullOrEmpty(logo) ? Convert.TryFromBase64String(logo, buffer, out int bytesParsed) : false;
+
+            if (isValidImage)
             {
-                byte[] bytes = Convert.FromBase64String(logo);
+                byte[] bytes = buffer.ToArray();
 
                 using (var ms = new MemoryStream(bytes))
                 {
                     return Image.FromStream(ms);
                 }
-                //await logo.CopyToAsync(memoryStream);
-                //return Image.FromStream(memoryStream);
             }
             else
             {
