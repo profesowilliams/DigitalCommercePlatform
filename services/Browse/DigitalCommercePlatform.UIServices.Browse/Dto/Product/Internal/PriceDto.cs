@@ -13,5 +13,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal
         public decimal? BasePrice { get; set; }
         public List<VolumePricingDto> VolumePricing { get; set; }
         public DateTime? BestPriceExpiration { get; set; }
+        public bool? BestPriceIncludesWebDiscount { get; set; }
     }
 }

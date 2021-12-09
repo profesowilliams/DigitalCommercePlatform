@@ -288,6 +288,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     BasePrice = canViewPrice ? x.Price.BasePrice : null,
                     BestPrice = canViewPrice ? x.Price.BestPrice : null,
                     BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration : null,
+                    BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
                     VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
                     {
                         Price = v.Price,

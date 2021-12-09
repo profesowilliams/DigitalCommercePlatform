@@ -12,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public decimal? BasePrice { get; set; }
         public decimal? BestPrice { get; set; }
         public DateTime? BestPriceExpiration { get; set; }
+        public bool? BestPriceIncludesWebDiscount { get; set; }
 
         public decimal? PromoAmount
         {

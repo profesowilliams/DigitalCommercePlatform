@@ -16,6 +16,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -47,6 +48,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
         public IReadOnlyCollection<string> Id { get; private set; }
         public bool Details { get; private set; }
+
+        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper);
 
         [Theory]
         [AutoDomainData]
@@ -94,6 +97,44 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             //assert
             actual.Should().NotBeNull();
             actual.Content.First().Should().BeEquivalentTo(expectedProduct);
+        }
+
+        [Fact]
+        public void MapPriceTest()
+        {
+            // Arrange
+            var productDto = new ProductDto
+            {
+                Price = new PriceDto
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+
+            var productModel = new ProductModel
+            {
+                Price = new PriceModel
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+            var canViewPrice = true;
+
+            MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
+            var handler = GetHandler();
+            //Act
+            sut.Invoke(handler, new object[] { productDto, productModel, canViewPrice });
+            //Assert
+            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
+            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
+            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
+            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
         }
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
