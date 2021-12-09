@@ -223,7 +223,7 @@ const SignIn = (props) => {
   };
 
   const onSignIn = () => {
-    DataLayerUtils.pushEvent("clickInfo", {
+    DataLayerUtils.pushEvent("click", {
       carouselName: "",
       mastheadlevel: "",
       name: "Sign in",
