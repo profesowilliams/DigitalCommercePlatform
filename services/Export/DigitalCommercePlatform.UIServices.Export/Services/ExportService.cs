@@ -461,7 +461,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             SetCell(curXlRow, ++curCol, wsOrderDetail, lineNumber.ToString());
             if (exportedFields.Contains(nameof(ExportedFields.MFRNo)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.MFRNumber);
-            SetCell(curXlRow, ++curCol, wsOrderDetail, line.Id);
             if (exportedFields.Contains(nameof(ExportedFields.TDNo)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.TDNumber);
             if (exportedFields.Contains(nameof(ExportedFields.Quantity)))
@@ -490,8 +489,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
                 SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); // Vendor Order#
             if (exportedFields.Contains(nameof(ExportedFields.TDPurchaseOrderNo)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, model.PONumber); // TD PO#
-            //if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
-            //    SetCell(curXlRow, ++curCol, wsOrderDetail, line.Contract?.Id); //Contract
+            if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
+                SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); //Contract
             if (exportedFields.Contains(nameof(ExportedFields.StartDate)))
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.StartDate == DateTime.MinValue ? notAvailable : line.StartDate.ToString()); // StartDate
             if (exportedFields.Contains(nameof(ExportedFields.EndDate)))
