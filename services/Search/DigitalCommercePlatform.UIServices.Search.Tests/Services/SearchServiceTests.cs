@@ -1,5 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
+using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
@@ -10,9 +12,11 @@ using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
+using Microsoft.Extensions.Localization;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using static DigitalCommercePlatform.UIServices.Search.Helpers.IndicatorsConstants;
@@ -26,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly FakeLogger<SearchService> _logger;
         private readonly Mock<IUIContext> _context;
         private readonly SearchService _searchService;
+        private Mock<ISiteSettings> _siteSettingsMock;
 
         public SearchServiceTests()
         {
@@ -33,8 +38,18 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
             _appSettingsMock.Setup(s => s.GetSetting("Search.App.Url")).Returns("http://app-Search/v1");
+            _siteSettingsMock = new Mock<ISiteSettings>();
+            _siteSettingsMock.Setup(s => s.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized")).Returns(
+                new List<string>
+                {
+                    "AvailabilityType","Price","InStock","Condition","ProductStatus","AuthorizedOnly"
+                });
             _context = new Mock<IUIContext>();
-            _searchService = new SearchService(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object);
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
+            var localizer = new Mock<IStringLocalizer>();
+            localizer.Setup(x => x["Search.UI.InternalRefinements"]).Returns(new LocalizedString("Search.UI.InternalRefinements", "{\"AvailabilityType\" : \"Availability Type\", \"Warehouse\" : \"In Warehouse\", \"Virtual\" : \"Virtual\", \"DropShip\" : \"Drop Ship\", \"Price\" : \"Price\", \"InStock\" : \"Stock Level\", \"InStockOnly\" : \"In Stock Only\", \"Condition\" : \"Condition\", \"Refurbished\" : \"Refurbished\", \"ProductStatus\" : \"Product Status\", \"DisplayStatus\" : \"Product Status\", \"Allocated\" : \"Allocated\", \"Active\" : \"Active\", \"PhasedOut\" : \"Phased Out\", \"Discontinued\" : \"Discontinued\", \"AuthorizedOnly\" : \"Authorization Status\", \"AuthRequiredView\" : \"Authorization Status\", \"HideUnauthorized\" : \"Hide Requires Authorization\"}"));
+
+            _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, localizer.Object, _siteSettingsMock.Object, mapper));
         }
 
         [Theory]
@@ -164,6 +179,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetProductReturnsCorrectResult(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.RefinementGroups.First().Group = "TopRefinements";
+            appResponse.RefinementGroups.First().Refinements.First().OriginalGroupName = "InStock";
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
                 .Returns(Task.FromResult(appResponse));
 
@@ -305,6 +322,27 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     },
                     new Dto.FullSearch.Internal.RefinementGroupResponseDto
                     {
+                        Group="Categories",
+                        Refinements = new List<Dto.FullSearch.Internal.RefinementDto>
+                        {
+                            new Dto.FullSearch.Internal.RefinementDto
+                            {
+                                Id="Categories",
+                                Name="Categories",
+                                Options = new List<Dto.FullSearch.Internal.RefinementOptionDto>
+                                {
+                                 new Dto.FullSearch.Internal.RefinementOptionDto
+                                 {
+                                     Id="y",
+                                     Text="yes",
+                                     Count=1
+                                 }
+                                }
+                            }
+                        }
+                    },
+                    new Dto.FullSearch.Internal.RefinementGroupResponseDto
+                    {
                         Group="CNETAttributes",
                         Refinements = new List<Dto.FullSearch.Internal.RefinementDto>
                         {
@@ -350,18 +388,41 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             {
                 new RefinementGroupResponseModel
                 {
-                    Group="InStock",
+                    Group="Stock Level",
                     Refinements= new List<RefinementModel>
                     {
                         new RefinementModel
                         {
                             Id="InStock",
-                            Name="InStock",
+                            Name="Stock Level",
+                            OriginalGroupName="InStock",
                             Range = new RangeModel
                             {
                                 Min=0,
                                 Max=100
                             },
+                            Options = new List<RefinementOptionModel>
+                            {
+                                new RefinementOptionModel
+                                {
+                                    Id="y",
+                                    Text="yes",
+                                    Count=1
+                                }
+                            }
+                        }
+                    }
+                },
+                new RefinementGroupResponseModel
+                {
+                    Group="Categories",
+                    Refinements= new List<RefinementModel>
+                    {
+                        new RefinementModel
+                        {
+                            Id="Categories",
+                            Name="Categories",
+                            OriginalGroupName="Categories",
                             Options = new List<RefinementOptionModel>
                             {
                                 new RefinementOptionModel
