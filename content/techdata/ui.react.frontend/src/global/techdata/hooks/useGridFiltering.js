@@ -20,9 +20,14 @@ export default function useGridFiltering() {
   }
 
   async function requestInterceptor(request) {
-    const url = filter?.current ? request.url + filter.current : request.url;
-    let response = await request.get(url);
-    return response;
+    try {
+      const url = filter?.current ? request.url + filter.current : request.url;
+      let response = await request.get(url);
+      return response;
+    } catch (error) {
+      console.error(error);
+      return []; // in case of error default value to show the no row message
+    }
   }
 
   return { onAfterGridInit, onQueryChanged, requestInterceptor };
