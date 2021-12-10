@@ -38,4 +38,10 @@ public @interface CommonConfigurations {
     @Property(label = "Confirmation Email Subject", description = "Confirmation Email Subject")
     String confirmationEmailSubject();
 
+    @Property(label = "Allowed File Extensions", description = "Specify comma separated list, like .pdf,.xls,.doc,.docx")
+    String allowedFileTypes() default ".pdf,.doc,.docx,.xls,.xlxs,.txt,.ppt,.jpeg,.png,.jpg,.gif";
+
+    @Property(label = "File Threshold in MB", description = "Specify upload file threshold size for form")
+    int fileThresholdInMB() default 10;
+
 }
