@@ -74,15 +74,6 @@ export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
         const params = {
             method: 'POST',
             url: `${url}`,
-            headers: {
-                'Accept': '*/*',
-                'Accept-Language': 'en-us',
-                'Site': 'NA',
-                'Consumer': 'NA',
-                'TraceId': '35345345-Browse',
-                'SessionId': sessionId,
-                'Content-Type': 'application/json',
-            },
             body: postData,
             responseType: 'blob',
         };
