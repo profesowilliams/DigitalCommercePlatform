@@ -20,102 +20,6 @@ const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
-const filterDataAem = {
-  columnList: [
-    {
-      columnLabel: "Config ID",
-      sortable: true,
-    },
-    {
-      columnLabel: "Type",
-      sortable: false,
-    },
-    {
-      columnLabel: "Vendor",
-      sortable: false,
-    },
-    {
-      columnLabel: "Created",
-      sortable: false,
-    },
-    {
-      columnLabel: "Expires",
-      sortable: false,
-    },
-    {
-      columnLabel: "Config Name",
-      sortable: true,
-    },
-    {
-      columnLabel: "End User Name",
-      sortable: false,
-    },
-    {
-      columnLabel: "TD Quote Id",
-      sortable: false,
-    },
-    {
-      columnLabel: "Action",
-      sortable: false,
-    },
-  ],
-  uiServiceEndPoint: "http://localhost:3000null",
-  itemsPerPage: "25",
-  paginationStyle: "scroll",
-  options: {
-    defaultSortingColumnKey: "created",
-    defaultSortingDirection: "desc",
-  },
-  filterTitle: "Filters",
-  clearAllFilterTitle: "clear all filter",
-  showResultLabel: "Show Result",
-  filterListValues: [
-    {
-      accordionLabel: "Vendors and Program",
-      filterOptionsValues: [
-        {
-          filterOptionLabel: "Veeam",
-          subFilterOptionsValues: [
-            {
-              subFilterOptionsLabel: "Pro Partner",
-            },
-            {
-              subFilterOptionsLabel: "Pro Partner Subscriber",
-            },
-          ],
-        },
-        {
-          filterOptionLabel: "VMWare",
-          subFilterOptionsValues: [
-            {
-              subFilterOptionsLabel: "Support and Subscriber",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      accordionLabel: "End User Type",
-      filterOptionsValues: [
-        {
-          filterOptionLabel: "Academic",
-        },
-        {
-          filterOptionLabel: "Educational",
-        },
-      ],
-    },
-    {
-      accordionLabel: "Date",
-    },
-  ],
-};
-
-// https://beta.reactjs.org/learn/choosing-the-state-structure#avoid-deeply-nested-state
-const aemFilterData = normaliseState(filterDataAem.filterListValues);
-
-console.log(aemFilterData);
-
 const Count = ({ children }) => {
   return <div className="count">{children}</div>;
 };
@@ -240,7 +144,9 @@ const isOneChecked = (filters, filter) =>
     return filters[id].checked === true;
   });
 
-const FilterModal = ({ handleFilterCloseClick }) => {
+const FilterModal = ({ aemData, handleFilterCloseClick }) => {
+  // https://beta.reactjs.org/learn/choosing-the-state-structure#avoid-deeply-nested-state
+  const aemFilterData = normaliseState(aemData.filterListValues);
   const [filters, setFilters] = useState(aemFilterData);
   const [showMore, setShowMore] = useState(false);
   const root = filters[0];
@@ -404,7 +310,7 @@ const FilterModal = ({ handleFilterCloseClick }) => {
           handleShowMore={handleShowMore}
         />
         <Button btnClass="cmp-quote-button filter-modal-container__results">
-          {filterDataAem.showResultLabel}
+          {aemData.showResultLabel}
         </Button>
       </FilterDialog>
     </div>

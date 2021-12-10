@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
 
-export default function App() {
+export default function RenewalFilter({ aemData }) {
   const [showModal, setShowModal] = useState(false);
   const handleFilterClick = () => {
     setShowModal(true);
@@ -14,11 +14,15 @@ export default function App() {
 
   return (
     <div>
-      <Button btnClass="btn-temporary" onClick={handleFilterClick}>Filter</Button>
+      <Button btnClass="btn-temporary" onClick={handleFilterClick}>
+        Filter
+      </Button>
       {showModal && (
-        <FilterModal handleFilterCloseClick={handleFilterCloseClick} />
+        <FilterModal
+          aemData={aemData}
+          handleFilterCloseClick={handleFilterCloseClick}
+        />
       )}
     </div>
   );
 }
-

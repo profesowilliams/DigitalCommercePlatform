@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "../Grid/Grid";
 import { getColumnDefinitions } from "./GenericColumnTypes";
+import RenewalFilter from "../RenewalFilter/RenewalFilter";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -14,6 +15,7 @@ function ConfigurationGrid(props) {
 
   return (
     <section>
+      <RenewalFilter aemData={componentProp}/>
       <div className="cmp-renewals-grid">
         <Grid
           columnDefinition={columnDefs}
