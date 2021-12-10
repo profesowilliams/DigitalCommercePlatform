@@ -141,7 +141,9 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             wsQuoteDetail.Cells[xlRow + 3, xlCol + 1].Value = $"Quote#: {quoteDetails.Id}";
             if (DateTime.TryParse(quoteDetails.Created, out DateTime created))
+            {
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 5].Value = $"Date: {created.ToShortDateString()}";
+            }
 
             bool isHPEQuote = quoteDetails.Attributes != null 
                 && quoteDetails.Attributes.Any(a => a.Name.Equals("VENDOR") && a.Value.Equals("HP"));
@@ -164,9 +166,13 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             else
             {
                 if (quoteDetails.VendorReference?.Count > 0 && rx.Match(originalEstimateId).Length > 0 && Convert.ToBoolean(quoteDetails.VendorReference.Where(s => s.Type.Equals("IsQuickQuoteCreated", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value))
+                {
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Estimate Id:";
+                }
                 else
+                {
                     wsQuoteDetail.Cells[xlRow + 3, xlCol + 6].Value = "Estimate/Deal ID:";
+                }
 
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 7].Value = !string.IsNullOrEmpty(originalEstimateId) ? originalEstimateId : estimateDealId;
                 wsQuoteDetail.Cells[xlRow + 3, xlCol + 7].Style.Font.Size = 11;
@@ -460,41 +466,94 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             var firstTracking = line.Trackings.Count() > 0 ? line.Trackings.First() : new TrackingDetails() { TrackingNumber = notAvailable, Carrier = notAvailable, InvoiceNumber = notAvailable };
             SetCell(curXlRow, ++curCol, wsOrderDetail, lineNumber.ToString());
             if (exportedFields.Contains(nameof(ExportedFields.MFRNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.MFRNumber);
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.TDNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.TDNumber);
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Quantity)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.Quantity.ToString());
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.UnitCost)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.UnitPrice?.ToString());
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Freight)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable);
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.ExtendedCost)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.ExtendedPrice);
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Status)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.Status ?? string.Empty);// Status
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Tracking)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.TrackingNumber); // Tracking
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Carrier)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.Carrier); // Carrier
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.ShipDate)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.Date.HasValue ? firstTracking.Date.Value.ToString() : notAvailable); // ship date
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.Invoice)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.InvoiceNumber); //  Invoice
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.SerialNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, string.Join(',', line.Serials)); // Serial nums
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.LicenseKeys)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.License); // License keys
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.VendorOrderNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); // Vendor Order#
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.TDPurchaseOrderNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, model.PONumber); // TD PO#
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); //Contract
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.StartDate)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.StartDate == DateTime.MinValue ? notAvailable : line.StartDate.ToString()); // StartDate
+            }
+
             if (exportedFields.Contains(nameof(ExportedFields.EndDate)))
+            {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, line.EndDate == DateTime.MinValue ? notAvailable : line.EndDate.ToString()); //EndDate
+            }
         }
 
         private void GenerateOrderDetailsSubHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, List<string> exportedFields)
@@ -736,15 +795,19 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             {
                 imgRange.Merge = true;
                 var logo = GetResellerLogo(resellerLogoBase64);
-
-                OfficeOpenXml.Drawing.ExcelPicture pic = wsQuoteDetail.Drawings.AddPicture("LOGO", logo);
-                pic.SetSize(100);
-                pic.From.Column = xlCol + 9;
-                pic.From.Row = xlRow - 1;
-                pic.To.Column = xlCol + 10;
+                // If the default logo is not found and no logo has been supplied, leave the area blank
+                // but still output the export
+                if (logo != null)
+                {
+                    OfficeOpenXml.Drawing.ExcelPicture pic = wsQuoteDetail.Drawings.AddPicture("LOGO", logo);
+                    pic.SetSize(100);
+                    pic.From.Column = xlCol + 9;
+                    pic.From.Row = xlRow - 1;
+                    pic.To.Column = xlCol + 10;
+                    pic.SetPosition(xlRow - 1, 10, xlCol + 9, 60);
+                    imgRange.Worksheet.Row(xlRow).Height = logo.PhysicalDimension.Height + 2;// 66;
+                }
                 imgRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                pic.SetPosition(xlRow - 1, 10, xlCol + 9, 60);
-                imgRange.Worksheet.Row(xlRow).Height = logo.PhysicalDimension.Height + 2;// 66;
                 imgRange.Style.Border.Top.Style = ExcelBorderStyle.Thick;
                 imgRange.Style.Border.Right.Style = ExcelBorderStyle.Thick;
             }
@@ -838,14 +901,19 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
         private static void PullInDataForQuickQuote(QuoteDetails quoteDetails, ref string originalEstimateId, ref string quickQuoteDealId)
         {
             if (quoteDetails.VendorReference == null || quoteDetails.VendorReference.Count == 0)
+            {
                 return;
+            }
 
             if (quoteDetails.VendorReference.Any(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)))
+            {
                 originalEstimateId = quoteDetails.VendorReference.Where(s => s.Type.Equals("OriginalEstimateId", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
+            }
 
             if (quoteDetails.VendorReference.Any(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)))
+            {
                 quickQuoteDealId = quoteDetails.VendorReference.Where(s => s.Type.Equals("DealIdentifier", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault().Value;
-
+            }
         }
 
         private static void GenerateQuoteDetailHeader(int xlRow, int xlCol, ExcelWorksheet wsQuoteDetail)
@@ -901,7 +969,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             var filename = "td-synnex-logo.png";
             string fileloc = "Content";
             string path = Path.Combine(Directory.GetCurrentDirectory(), fileloc, filename);
-            return Image.FromFile(path);
+            return File.Exists(path) ? Image.FromFile(path) : null;
         }
 
         private ExcelRange SetTermsConditionProperties(ExcelRange termsConditionLines)
@@ -997,15 +1065,23 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             sheet.Cells[xlRow, 11].Style.Numberformat.Format = "0";
 
             if (decimal.TryParse(line.UnitListPrice, out decimal listPrice))
+            {
                 sheet.Cells[xlRow, 12].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", listPrice);
+            }
             else
+            {
                 sheet.Cells[xlRow, 12].Value = "N/A";
+            }
 
             sheet.Cells[xlRow, 13].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", line.UnitPrice);
             if (decimal.TryParse(line.ExtendedPrice, out decimal extendedPrice))
+            {
                 sheet.Cells[xlRow, 14].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", extendedPrice);
+            }
             else
+            {
                 sheet.Cells[xlRow, 14].Value = "N/A";
+            }
         }
 
         private static void FillLineNumberData(ExcelWorksheet sheet, Line line, int xlRow)
@@ -1034,16 +1110,24 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             sheet.Cells[xlRow, 11].Style.Numberformat.Format = "0";
 
             if (decimal.TryParse(line.UnitListPrice, out decimal listPrice))
+            {
                 sheet.Cells[xlRow, 12].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", listPrice);
+            }
             else
+            {
                 sheet.Cells[xlRow, 12].Value = "N/A";
+            }
 
             sheet.Cells[xlRow, 13].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", line.UnitPrice);
 
             if (decimal.TryParse(line.ExtendedPrice, out decimal extendedPrice))
+            {
                 sheet.Cells[xlRow, 14].Value = string.Format("{0:$#,##0.00;($#,##0.00);$0.00}", extendedPrice);
+            }
             else
+            {
                 sheet.Cells[xlRow, 14].Value = "N/A";
+            }
         }
 
         private static int StyleAndInsertRow(ExcelWorksheet sheet, int xlRow)
