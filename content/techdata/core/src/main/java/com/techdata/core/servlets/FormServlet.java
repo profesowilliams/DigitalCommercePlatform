@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.adobe.acs.commons.email.EmailService;
 
+import javax.activation.DataSource;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.BufferedReader;
@@ -45,7 +47,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         EmailService emailService;
 
         private final static String CA_CONFIG_PATH = "/content/techdata";
-
+        private InputStream file;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +64,8 @@ public class FormServlet extends SlingAllMethodsServlet {
         protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
                 Map<String, String> emailParams = new HashMap<String, String>();
 
+
+
                 String strLine = "";
                 String strJsonPayload = "";
                 String configValues = "";
@@ -73,6 +77,9 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailTemplatePath = "";
                 String emailSubject = "";
                 String confirmationEmailSubject = "";
+                Map<String, DataSource> attachments = new HashMap<>();
+
+
                 try
                 {
                         final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
@@ -83,20 +90,37 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 final java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params = request.getRequestParameterMap();
                                 for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
                                         final String k = pairs.getKey();
-                                        LOG.info("Key: {}", k);
+                                        LOG.info("Key: {}. Key length is {}", k, k.length());
                                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
                                         String value = "";
-                                        if (pArr.length > 1)
+
+                                        if (k.equals("file"))
                                         {
-                                                for (RequestParameter rp : pArr)
+                                                LOG.debug("file input parameter found");
+                                                RequestParameter fileRequestParameter = pArr[0];
+                                                file = fileRequestParameter.getInputStream();
+                                                LOG.debug("file input parameter found. Name is {}, content type is {}", fileRequestParameter.getFileName(), fileRequestParameter.getContentType());
+                                                if (fileRequestParameter.getContentType()!= null && fileRequestParameter.getFileName() != null)
                                                 {
-                                                        value = value + rp.toString() + "|";
+                                                        attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
+                                                }else{
+                                                        LOG.error("Error in determining file uploaded");
                                                 }
                                         }else{
-                                                value = pArr[0].toString();
+                                                if (pArr.length > 1)
+                                                {
+                                                        for (RequestParameter rp : pArr)
+                                                        {
+                                                                value = value + rp.toString() + "|";
+                                                        }
+                                                }else{
+                                                        value = pArr[0].toString();
+                                                }
+                                                LOG.debug("after checking for file parameter");
+                                                emailParams.put(k,value);
+                                                LOG.info("value is {}",value);
                                         }
-                                        emailParams.put(k,value);
-                                        LOG.info("value is {}",value);
+
                                 }
 
                                 Resource resource = resourceResolver.getResource(CA_CONFIG_PATH);
@@ -128,7 +152,13 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 if (!internalEmailTemplatePath.isEmpty())
                                 {
                                         LOG.info("Submitting internal email to {}", Arrays.toString(toEmailAddressesArray));
-                                        emailService.sendEmail(internalEmailTemplatePath, emailParams, toEmailAddressesArray);
+                                        if (attachments.size() > 0)
+                                        {
+                                                emailService.sendEmail(internalEmailTemplatePath, emailParams, attachments, toEmailAddressesArray);
+                                        }else{
+                                                LOG.info("No attachments. Sending without attachments");
+                                                emailService.sendEmail(internalEmailTemplatePath, emailParams, toEmailAddressesArray);
+                                        }
                                 }else{
                                         LOG.error("internal email template path is not set.");
                                 }
