@@ -144,6 +144,10 @@
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Buttons List"
                                                                             value="buttonList"/>
+                                                                        <plainResellerColumn
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Plain Reseller Column"
+                                                                            value="plainResellerColumn"/>
                                                                         </items>
                                                                 </columnType>
                                                                 <sortable
