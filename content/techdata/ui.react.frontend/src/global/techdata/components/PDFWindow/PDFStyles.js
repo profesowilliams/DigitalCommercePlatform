@@ -89,5 +89,6 @@ export default StyleSheet.create({
         textOverflow: 'ellipsis',
         fontSize: 8,
         fontWeight: 100,
+        textAlign: 'left'
     }
 });

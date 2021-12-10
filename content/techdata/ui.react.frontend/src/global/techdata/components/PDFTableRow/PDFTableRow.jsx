@@ -14,7 +14,7 @@ const manufacturerStyle = {...styles.tableCell,width:'10%'};
 const vendorPartNoStyle = {...styles.tableCell,width:'20%', wordBreak: 'break-all'}; // 
 const textStyle = styles.cellText;
 const msrpStyle = {...styles.tableCell,width:'12%', wordBreak: 'break-all'};
-const imageStyle = {...styles.tableCell,width:'15%', wordBreak: 'break-all'};
+const imageStyle = {...styles.tableCell,width:'15%', height:'8vh', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
     
     const ImageValidation = ({quoteItem}) => {
@@ -23,14 +23,17 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
         if (urlImage) {
             urlImage = urlImage.replace(/^http:\/\//i, 'https://');
         } else {
-           urlImage = '/non-existing-image.png'
+           urlImage = '*'
         }
         return(
             <View style={imageStyle}>
                 { urlImage ?
-                    (<Image
-                        src={urlImage ? getBase64FromUrl(urlImage) : ''}
-                    /> ) : (
+                    urlImage === '*' ? (
+                        <View></View>
+                    ): (
+                        (<Image src={urlImage ? getBase64FromUrl(urlImage) : ''}/> )
+                    )
+                     : (
                         <PDFTableCell
                             header={true}
                             cellItem={'Image'} 
