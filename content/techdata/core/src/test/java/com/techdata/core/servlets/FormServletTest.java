@@ -43,7 +43,6 @@ class FormServletTest {
     @BeforeEach
     void setUp() {
         underTest = new FormServlet();
-        Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
     }
 
     @Test
@@ -105,6 +104,7 @@ class FormServletTest {
         Method underTestMethod;
         underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", Resource.class, Map.class);
         underTestMethod.setAccessible(true);
+        Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
         when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
         when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
