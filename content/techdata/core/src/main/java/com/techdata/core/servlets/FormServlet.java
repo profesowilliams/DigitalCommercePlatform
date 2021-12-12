@@ -5,6 +5,7 @@ import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.CommonConfigurations;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
+import com.techdata.core.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -40,25 +41,26 @@ import java.util.*;
 )
 public class FormServlet extends SlingAllMethodsServlet {
         private static final Logger LOG = LoggerFactory.getLogger(FormServlet.class);
+        private static final String FILE_PARAM_NAME = "file";
+        private static final String CONFIRMATION_EMAIL_BODY_PARAM_NAME = "confirmationEmailBody";
+        private static final String CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME = "confirmationSubject";
+        private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "subject";
+        private static final int ONE_MB_IN_BYTES = 1000000;
         @Reference
         private transient EmailService emailService;
-
-        private String toEmailAddresses = StringUtils.EMPTY;
+        private String[] toEmailAddresses;
         private String submitterEmailFieldName = StringUtils.EMPTY;
         private String internalEmailTemplatePath = StringUtils.EMPTY;
         private String confirmationEmailTemplatePath = StringUtils.EMPTY;
+        private Map<String, String[]> formSubmissionTargetGroups;
         private int thresholdFileSize = 10;
         private List<String> allowedFileTypes = new ArrayList<>();
-
-        private static final String CA_CONFIG_PATH = "/content/techdata";
-        private static final String FILE_PARAM_NAME = "file";
-        private static final int ONE_MB_IN_BYTES = 1000000;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
                 PrintWriter out = response.getWriter();
                 ResourceResolver resourceResolver = request.getResourceResolver();
-                Resource resource = resourceResolver.getResource(CA_CONFIG_PATH);
+                Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                 Page page = resource.adaptTo(Page.class);
                 ServiceEndPointsConfiguration serviceEndPointsConfiguration =
                         page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
@@ -73,16 +75,19 @@ public class FormServlet extends SlingAllMethodsServlet {
                 try
                 {
                         final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
-                        LOG.debug("isMultipart {}", isMultipart);
+
                         if (isMultipart) {
+                                LOG.info("Received Multi-part form data for processing");
                                 prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
-                                Resource resource = resourceResolver.getResource(CA_CONFIG_PATH);
+                                Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                                 if(populateEmailAttributesFromCAConfig(resource, emailParams)) {
-                                        if(isValidEmailRequest(request)) {
+                                        if(isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
                                                         internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
                                         } else {
-                                                LOG.error("Ignored:: Wrong form/email request with invalid upload file size or extension..");
+                                                LOG.info("Ignored:: Wrong form/email request with invalid upload file size or extension..");
+                                                sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
+                                                        internalEmailTemplatePath, confirmationEmailTemplatePath, null);
                                         }
                                 }
                         }
@@ -92,7 +97,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private boolean isValidEmailRequest(SlingHttpServletRequest request) {
+        private boolean isValidFileInEmailRequest(SlingHttpServletRequest request) {
                 RequestParameter requestParameter = request.getRequestParameter(FILE_PARAM_NAME);
                 if(requestParameter == null) {
                         return Boolean.TRUE;
@@ -108,11 +113,27 @@ public class FormServlet extends SlingAllMethodsServlet {
                 return Boolean.TRUE;
         }
 
+        private Map<String, String[]> getMapOfEmailAddress(String[] groupEmailArray)
+        {
+                Map<String, String[]> groupEmailMap = new HashMap<>();
+                for(String eachGroup : groupEmailArray)
+                {
+                        String[] groupInfo = eachGroup.split(Constants.PIPE_REGEX_ESCAPED);
+                        if (groupInfo.length > 1)
+                        {
+                                groupEmailMap.put(groupInfo[0], groupInfo[1].split(Constants.COMMA));
+                        }else{
+                                LOG.error("Error when creating Group Email for {}", eachGroup);
+                        }
+                }
+                return groupEmailMap;
+
+        }
+
         private void prepareEmailRequestFromFormData(java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params,
                                                      Map<String, DataSource> attachments, Map<String, String> emailParams) throws IOException {
                 for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
                         final String key = pairs.getKey();
-                        LOG.debug("Key: {}. Key length is {}", key, key.length());
                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
                         StringBuilder value = new StringBuilder();
 
@@ -137,13 +158,11 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 value.append(value.toString()).append(rp.toString()).append("|");
                         }
                 }
-                LOG.debug("after checking for file parameter");
                 emailParams.put(key,value.toString());
-                LOG.debug("value is {}",value);
+                LOG.debug("key is {}, value is {}",key, value);
         }
 
         private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments) throws IOException {
-                LOG.debug("file input parameter found");
                 RequestParameter fileRequestParameter = pArr[0];
 
                 LOG.debug("file input parameter found. Name is {}, content type is {}", fileRequestParameter.getFileName(), fileRequestParameter.getContentType());
@@ -165,44 +184,63 @@ public class FormServlet extends SlingAllMethodsServlet {
                         toEmailAddresses = commonConfigurations.toEmails();
                         submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
                         String confirmationEmailBody = commonConfigurations.confirmationEmailBody();
-                        emailParams.put("confirmationEmailBody", confirmationEmailBody);
+                        emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
                         internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
                         confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
                         String emailSubject = commonConfigurations.emailSubject();
-                        emailParams.put("subject", emailSubject);
+                        emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
                         String confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
                         thresholdFileSize = commonConfigurations.fileThresholdInMB();
-                        allowedFileTypes = Arrays.asList(commonConfigurations.allowedFileTypes().split(","));
-                        emailParams.put("confirmationSubject", confirmationEmailSubject);
+                        allowedFileTypes = Arrays.asList(commonConfigurations.allowedFileTypes());
+                        formSubmissionTargetGroups = getMapOfEmailAddress(commonConfigurations.formSubmissionTargetGroups());
+                        emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
                         flag = Boolean.TRUE;
                 } else {
-                        LOG.error("resource to read CA config from, is null");
+                        LOG.error("resource to read CA config is null");
                 }
                 return flag;
-
         }
 
-        private void sendEmailWithFormData(String toEmailAddresses, Map<String, String> emailParams, String submitterEmailFieldName,
+        private void sendEmailWithFormData(String[] toEmailAddresses, Map<String, String> emailParams, String submitterEmailFieldName,
                                            String internalEmailTemplatePath, String confirmationEmailTemplatePath, Map<String, DataSource> attachments) {
-                String[] toEmailAddressesArray = toEmailAddresses.split(",");
                 String submitterEmailAddress = emailParams.get(submitterEmailFieldName);
-
+                String[] internalEmailAddresses = getInternalEmailAddressArray(emailParams, toEmailAddresses, formSubmissionTargetGroups);
                 if (!internalEmailTemplatePath.isEmpty()) {
-                        if (attachments.size() > 0) {
-                                emailService.sendEmail(internalEmailTemplatePath, emailParams, attachments, toEmailAddressesArray);
+                        if (attachments!=null && attachments.size() > 0) {
+                                emailService.sendEmail(internalEmailTemplatePath, emailParams, attachments, internalEmailAddresses);
                         } else {
-                                LOG.debug("No attachments. Sending without attachments");
-                                emailService.sendEmail(internalEmailTemplatePath, emailParams, toEmailAddressesArray);
+                                LOG.info("No attachments. Sending without attachments");
+                                emailService.sendEmail(internalEmailTemplatePath, emailParams, internalEmailAddresses);
                         }
                 } else {
-                        LOG.error("internal email template path is not set.");
+                        LOG.error("Cannot send form email. Internal email template path is not set.");
                 }
 
                 if (!confirmationEmailTemplatePath.isEmpty() && submitterEmailAddress != null && !submitterEmailAddress.isEmpty()) {
-                        String[] submitterEmailAddressArray = submitterEmailAddress.split(",");
+                        String[] submitterEmailAddressArray = submitterEmailAddress.split(Constants.COMMA);
                         emailService.sendEmail(confirmationEmailTemplatePath, emailParams, submitterEmailAddressArray);
                 } else {
-                        LOG.error("confirmation email template path, or submitter email, or submitter email field name is incorrect, or is not set.");
+                        LOG.error("Cannot send confirmation email. Confirmation email template path, or submitter email, or submitter email field name is incorrect, or is not set.");
                 }
+        }
+
+        private String[] getInternalEmailAddressArray(Map<String, String> emailParams, String[] toEmailAddresses, Map<String, String[]> formSubmissionTargetGroups) {
+
+                String groupKey = emailParams.get(Constants.FORM_GROUP_KEY_FIELD);
+
+                if (groupKey != null)
+                {
+                        String[] internalAddressArray = formSubmissionTargetGroups.get(groupKey);
+                        if (internalAddressArray != null)
+                        {
+                                return internalAddressArray;
+                        }else{
+                                return toEmailAddresses;
+                        }
+                }else{
+                        LOG.error("Group Key Not found");
+                        return toEmailAddresses;
+                }
+
         }
 }

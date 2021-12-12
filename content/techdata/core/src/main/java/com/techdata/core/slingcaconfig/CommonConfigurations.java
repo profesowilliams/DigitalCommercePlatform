@@ -8,7 +8,7 @@ import org.apache.sling.caconfig.annotation.Property;
     description = "Common Configurations")
 public @interface CommonConfigurations {
 
-    @Property(label = "Product Empty Image Url", description = "Product Empty Image Url")
+    @Property(label = "Product Empty Image Url edited", description = "Product Empty Image Url")
     String productEmptyImageUrl();
 
     @Property(label = "Email Subject", description = "Email Subject")
@@ -17,8 +17,8 @@ public @interface CommonConfigurations {
     @Property(label = "From Email", description = "From Email")
     String fromEmail();
 
-    @Property(label = "To Emails, comma seperated", description = "To Emails, comma seperated")
-    String toEmails();
+    @Property(label = "Internal Emails", description = "Internal Emails")
+    String[] toEmails();
 
     @Property(label = "Catalog Endpoint", description = "Catalog Endpoint")
     String catalogEndpoint();
@@ -39,9 +39,12 @@ public @interface CommonConfigurations {
     String confirmationEmailSubject();
 
     @Property(label = "Allowed File Extensions", description = "Specify comma separated list, like .pdf,.xls,.doc,.docx")
-    String allowedFileTypes() default ".pdf,.doc,.docx,.xls,.xlxs,.txt,.ppt,.jpeg,.png,.jpg,.gif";
+    String[] allowedFileTypes() default {".pdf",".doc",".docx",".xls",".xlxs",".txt",".ppt",".jpeg",".png",".jpg",".gif"};
 
     @Property(label = "File Threshold in MB", description = "Specify upload file threshold size for form")
     int fileThresholdInMB() default 10;
+
+    @Property(label = "Target Groups Array", description = "Target Groups Array")
+    String[] formSubmissionTargetGroups();
 
 }

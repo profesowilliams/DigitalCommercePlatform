@@ -19,6 +19,11 @@ public class Constants {
     public static final String CATALOG_CF_CHILDREN_FOLDER_SUFFIX = "-children";
     public static final String CATALOG_DOCCOUNT = "docCount";
     public static final String CATALOG_MENU_ICON = "icon";
+    public static final String PIPE_REGEX_ESCAPED = "\\|";
+    public static final String TECHDATA_CONTENT_PAGE_ROOT = "/content/techdata";
+    public static final String[] EMAIL_DEFAULT_FILE_EXTENSIONS = {".pdf",".doc",".docx",".xls",".xlxs",".txt",".ppt",".jpeg",".png",".jpg",".gif"};
+    public static final String FORM_GROUP_KEY_FIELD = ":group";
+
 
     //VENDOR attributes
     public static final String VENDOR_NAME = "vendor-name";
