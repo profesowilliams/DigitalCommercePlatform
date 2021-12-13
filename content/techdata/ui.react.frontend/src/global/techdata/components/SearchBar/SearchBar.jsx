@@ -174,10 +174,13 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const lostFocus = () => {
-    setMobile(false);
-    setSearchInputFocused(false);
-    setChecked(false);
-    setFocus(false);
+    if (searchTermText.length === 0) {
+      setMobile(false);
+      setSearchInputFocused(false);
+      setChecked(false);
+      setFocus(false);
+    }
+    
   };
 
   const toggleSearchIcon = () => {
