@@ -240,7 +240,7 @@ public class CaConfigReader {
 
         spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
         typeAheadDomain = searchBarConfiguration.typeAheadDomain();
-        dcpDomain = searchBarConfiguration.dcpDomain();
+        dcpDomain = redirectConfiguration.dcpDomain();
         typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
         typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
         typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();

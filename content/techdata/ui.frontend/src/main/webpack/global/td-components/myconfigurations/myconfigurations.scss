@@ -76,7 +76,7 @@
     flex-direction: row;
     justify-content: space-between;
     @include mobile {
-      padding: 0px rem(15px);
+      padding: 0px 0px rem(15px) rem(15px);
      }
     span {
       text-transform: none;

@@ -29,5 +29,8 @@ public @interface RedirectConfiguration {
     @Property(label = "Shop Domain", description = "Shop Domain", order = 7)
     String shopDomainPage();
 
+    @Property(label = "DCP Domain", description = "DCP Domain")
+    String dcpDomain();
+
 
 }
