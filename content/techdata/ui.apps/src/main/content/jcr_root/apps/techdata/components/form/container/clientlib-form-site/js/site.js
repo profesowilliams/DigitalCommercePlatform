@@ -64,7 +64,7 @@
     function processFileValidations(fileEle, e) {
         //  validate file for invalid file size and extensions
         var invalidFileStatusCode = invalidFile(fileEle);
-        if(invalidFile(fileEle == WRONG_FILE_SIZE_STATUS) {
+        if(invalidFile(fileEle) == WRONG_FILE_SIZE_STATUS) {
                 document.getElementById(errorBlockId).innerHTML = invalidFileSizeText;
             e.preventDefault();
         } else if(invalidFile(fileEle) == WRONG_FILE_EXTN_STATUS) {
