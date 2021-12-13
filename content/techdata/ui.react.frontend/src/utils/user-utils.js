@@ -3,11 +3,14 @@ export const ACCESS_TYPES = {
     CAN_VIEW_ORDERS: 'CanViewOrders'
 }
 
+
 export const RENEWALS_TYPE = {
     resellerName: 'resellerName'
 }
 
 export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
+
+export const IS_TD_INTERNAL = getUserDataInitialState().email.toUpperCase().includes("@TECHDATA.COM")
 
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
