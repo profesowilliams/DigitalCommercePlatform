@@ -172,6 +172,8 @@ public class CaConfigReader {
 
     private String dcpDomain;
 
+    private String renewalsGridEndpoint;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -220,6 +222,7 @@ public class CaConfigReader {
         puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
         downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
+        renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
         cartURL = mcConfiguration.cartURL();
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
@@ -530,6 +533,10 @@ public class CaConfigReader {
 
     public String getDownloadOrderDetailsEndpoint() {
         return downloadOrderDetailsEndpoint;
+    }
+
+    public String getRenewalsGridEndpoint() {
+        return renewalsGridEndpoint;
     }
 
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }

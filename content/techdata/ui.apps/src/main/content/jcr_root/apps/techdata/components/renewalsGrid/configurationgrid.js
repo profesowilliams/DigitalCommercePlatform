@@ -25,7 +25,7 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["columnList"] = columnListValues;
     }
 
-    jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.configurationsEndpoint || '';
+    jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalsGridEndpoint || '';
 
     if (properties && properties["itemsPerPage"]) {
         jsonObject["itemsPerPage"] = properties["itemsPerPage"];

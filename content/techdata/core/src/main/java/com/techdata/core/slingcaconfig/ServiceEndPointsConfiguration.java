@@ -128,5 +128,7 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Download Order Details XLS Endpoint", description = "Download Order Details XLS Endpoint")
     String downloadOrderDetailsEndpoint();
 
+    @Property(label = "Renewals Grid Endpoint", description = "Renewals Grid Endpoint")
+    String renewalsGridEndpoint();
 
 }
