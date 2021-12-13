@@ -1,0 +1,46 @@
+.cmp-renewals-grid{
+    .ag-theme-alpine .ag-root-wrapper{
+        border: none;
+    }   
+}
+.cmp-renewals-subheader{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 1rem;
+    border-bottom: 4px solid #030f24;
+    align-items: center;
+    .navigation {
+        display: flex;
+        gap: 1rem;
+        p{
+            margin: 0;
+        }
+    }
+    .renewal-filters {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    .cmp-renewals-filter-container{
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+        cursor: pointer;
+        button{
+            background: none;
+        }        
+        svg{
+            color: #00558C;
+        }
+        &__button{
+            background: none;
+        }
+    }
+    .cmp-vertical-separator {
+        width: 2px;
+        background: #E2E7EB;
+        height: 1.3rem;
+        margin: auto 0;
+        display: inline;
+    }
+}
