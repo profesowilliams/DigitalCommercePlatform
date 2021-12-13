@@ -17,6 +17,9 @@
         var inputsList = Array.prototype.slice.call(inputs);
         var selects = form.getElementsByTagName('select');
         var selectsList = Array.prototype.slice.call(selects);
+        var textAreas = form.getElementsByTagName('textarea');
+        var textAreasList = Array.prototype.slice.call(textAreas);
+
 
         inputsList.forEach(
             function (i) {
@@ -40,6 +43,12 @@
                 if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
                     newData.append(i.name, i.options[i.selectedIndex].value);
                 }
+            }
+        );
+
+        textAreasList.forEach(
+            function (i) {
+                newData.append(i.name, i.value);
             }
         );
 
@@ -71,14 +80,15 @@
                 let data = createFormData(tdForm);
                 let endPoint = "/bin/form";
                 var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () { // Call a function when the state changes.
-                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                        console.log("successfully submitted");
+                var handlePOSTRequest = function () { // Call a function when the state changes.
+                    if (xhr.status === 200) {
+                        console.log("Successfully submitted");
                         successFlow(redirectSuccess);
-                    } else if (this.status === 404 || this.status === 500 || this.status === 503) {
+                    } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
                         console.error("Error in submitting form")
                     }
-                }
+                };
+                xhr.onreadystatechange = handlePOSTRequest;
                 xhr.open("POST", endPoint, true);
                 xhr.send(data);
             });
