@@ -1,0 +1,12 @@
+{
+  "ServerUri": "https://sonar.tddevops.com/",
+  "Organization": null,
+  "ProjectKey": "DC-DF-Localize-UI",
+  "ProjectName": "DC-DF-Localize-UI",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWuuOnS1dcRKQNJK_NPt",
+      "ProfileTimestamp": "2020-06-09T01:29:41Z"
+    }
+  }
+}
