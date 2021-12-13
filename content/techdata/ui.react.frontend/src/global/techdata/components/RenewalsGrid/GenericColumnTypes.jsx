@@ -55,10 +55,10 @@ export const getColumnDefinitions = (originalDefinitions) => {
         console.log(definition.type, columnTypes[definition.type], columnTypes)
         return columnTypes[definition.type](definition);
     });
-    return colDefs.filter(columnDef => columnDef !== null)
+    return colDefs.filter(columnDef => columnDef !== null);
 }
 
 export const filterColumnByEntitlementandHeaderName = ({ column, headerName, accessType }) => {
     const _headerName = headerName ? headerName : RENEWALS_TYPE.resellerName;
-    return column.headerName === _headerName && hasAccess({ user: getUserDataInitialState(), accessType: accessType || null })
+    return column.headerName === _headerName && hasAccess({ user: getUserDataInitialState(), accessType: accessType || null });
 }
