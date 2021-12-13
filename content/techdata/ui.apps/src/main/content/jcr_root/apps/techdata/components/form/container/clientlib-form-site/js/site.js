@@ -19,21 +19,27 @@
         var selectsList = Array.prototype.slice.call(selects);
         var textAreas = form.getElementsByTagName('textarea');
         var textAreasList = Array.prototype.slice.call(textAreas);
-
+        var errorBlockId = "cmp-form-error-block";
+        var invalidFileSizeText = "Validation Failed for file upload: invalid file size.";
+        var invalidFileExtnText = "Validation Failed for file upload: invalid file extension.";
+        var WRONG_FILE_SIZE_STATUS = "-1";
+        var WRONG_FILE_EXTN_STATUS = "-2";
 
         inputsList.forEach(
-            function (i) {
+            function (i, e) {
                 if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
+                    let fsize = 0;
+                    let file = 0;
                     if (i.type.startsWith("file")) {
                         if (i.files.length > 0) {
                             newData.append(i.name, i.files[0], i.files[0].name);
                             console.log("name of file is " + i.files[0].name);
+                            processFileValidations(i.files[0], e);
                         }
-
                     } else {
                         newData.append(i.name, i.value);
+                        processFileValidations(i, e);
                     }
-
                 }
             }
         );
@@ -53,6 +59,40 @@
         );
 
         return newData;
+    }
+
+    function processFileValidations(fileEle, e) {
+        //  validate file for invalid file size and extensions
+        var invalidFileStatusCode = invalidFile(fileEle);
+        if(invalidFile(fileEle == WRONG_FILE_SIZE_STATUS) {
+                document.getElementById(errorBlockId).innerHTML = invalidFileSizeText;
+            e.preventDefault();
+        } else if(invalidFile(fileEle) == WRONG_FILE_EXTN_STATUS) {
+            document.getElementById(errorBlockId).innerHTML = invalidFileExtnText;
+            e.preventDefault();
+        }
+    }
+
+    function invalidFile(fileEle) {
+        var formEle = document.getElementById('tdForm');
+        var thresholdFileSize = formEle.getAttribute('data-thresholdFileSize');
+        var allowedFileTypes = formEle.getAttribute('data-allowedFileTypes');
+        var fileThresholdInMB = 10;
+        if(thresholdFileSize) {
+            fileThresholdInMB = parseInt(thresholdFileSize);
+        }
+        let fsize = fileEle.size;
+        let fileSizeInMB = Math.round((fsize / (1024*1000)));
+        if (fileSizeInMB >= fileThresholdInMB) {
+            return WRONG_FILE_SIZE_STATUS;
+        }
+        var fileSplits = fileEle.name.split('.');
+        var fileExtension = fileSplits[fileSplits.length - 1];
+
+        if(fileExtension && !allowedFileTypes.indexOf('.' + fileExtension)) {
+            return WRONG_FILE_EXTN_STATUS;
+        }
+        return "0";
     }
 
     function successFlow(redirectSuccess) {

@@ -137,14 +137,15 @@ function processForm (e) {
 
     var formTextAreaElements = document.getElementsByClassName('cmp-form-text__textarea');
     for (var i=0, max=formTextAreaElements.length; i < max; i++) {
-            var currElement = formTextAreaElements[i];
-            if(!(/^([-@.,;A-Za-z0-9_:/ ]{2,})$/.test(currElement.value)) && buttonEle) {
-                var eleName = currElement.name;
-                document.getElementById("cmp-form-error-block").innerHTML = "Validation Failed for " + eleName;
-                e.preventDefault();
-                return false;
-            }
+        var currElement = formTextAreaElements[i];
+        if(!(/^([-@.,;A-Za-z0-9_:/ ]{2,})$/.test(currElement.value)) && buttonEle) {
+            var eleName = currElement.name;
+            document.getElementById("cmp-form-error-block").innerHTML = "Validation Failed for " + eleName;
+            e.preventDefault();
+            return false;
         }
+    }
+
     return true;
 };
 /**
