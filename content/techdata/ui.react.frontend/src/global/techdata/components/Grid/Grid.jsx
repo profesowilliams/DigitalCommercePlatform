@@ -164,8 +164,6 @@ function Grid(props) {
   if (options) {
     for (let key in options) {
       config.options[key] && (options[key] = config.options[key]);
-      config.options[key] && (options[key] = config.options[key]);
-      );
     }
   } else {
     options = config.options;

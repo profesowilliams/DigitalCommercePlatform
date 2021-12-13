@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "../Grid/Grid";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
+import { IS_TD_INTERNAL } from "../../../../utils/user-utils";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
