@@ -1,9 +1,12 @@
 import React from 'react'
+import ConfigGrid from './ConfigGrid/ConfigGrid';
 
 function RenewalsDetails({ componentProp }) {
     return (
-        <div>
-            <h1>renewals details test</h1>
+        <div className="cmp-quote-preview">
+            <section>
+                <ConfigGrid></ConfigGrid>
+            </section>
         </div>
     )
 }
