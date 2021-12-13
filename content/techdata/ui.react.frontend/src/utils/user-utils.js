@@ -3,6 +3,10 @@ export const ACCESS_TYPES = {
     CAN_VIEW_ORDERS: 'CanViewOrders'
 }
 
+export const RENEWALS_TYPE = {
+    resellerName: 'resellerName'
+}
+
 export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
 
 export const hasDCPAccess = (user) => {

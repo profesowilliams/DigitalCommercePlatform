@@ -1,3 +1,5 @@
+import { hasAccess, getUserDataInitialState, RENEWALS_TYPE } from "../../../../utils/user-utils";
+
 
 export const dateColumn = ({ columnLabel, columnKey, sortable = false }) => (
 {
@@ -56,3 +58,7 @@ export const getColumnDefinitions = (originalDefinitions) => {
     return colDefs.filter(columnDef => columnDef !== null)
 }
 
+export const filterColumnByEntitlementandHeaderName = ({ column, headerName, accessType }) => {
+    const _headerName = headerName ? headerName : RENEWALS_TYPE.resellerName;
+    return column.headerName === _headerName && hasAccess({ user: getUserDataInitialState(), accessType: accessType || null })
+}
