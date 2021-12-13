@@ -946,22 +946,23 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
         private static Image GetResellerLogo(string logo)
         {
-            var buffer = new Span<byte>(new byte[logo.Length]);
-            var isValidImage = !string.IsNullOrEmpty(logo) ? Convert.TryFromBase64String(logo, buffer, out int bytesParsed) : false;
-
-            if (isValidImage)
+            if (!string.IsNullOrEmpty(logo))
             {
-                byte[] bytes = buffer.ToArray();
+                var buffer = new Span<byte>(new byte[logo.Length]);
+                var isValidImage = !string.IsNullOrEmpty(logo) ? Convert.TryFromBase64String(logo, buffer, out int bytesParsed) : false;
 
-                using (var ms = new MemoryStream(bytes))
+                if (isValidImage)
                 {
-                    return Image.FromStream(ms);
+                    byte[] bytes = buffer.ToArray();
+
+                    using (var ms = new MemoryStream(bytes))
+                    {
+                        return Image.FromStream(ms);
+                    }
                 }
             }
-            else
-            {
-                return GetTdLogo();
-            }
+
+            return GetTdLogo();
         }
 
         private static Image GetTdLogo()
