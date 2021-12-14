@@ -36,6 +36,10 @@
                             console.log("name of file is " + i.files[0].name);
                             processFileValidations(i.files[0], e);
                         }
+                    } else if (i.type.startsWith("radio")) {
+                        if (i.checked) {
+                            newData.append(i.name, i.value);
+                        }
                     } else {
                         newData.append(i.name, i.value);
                     }
