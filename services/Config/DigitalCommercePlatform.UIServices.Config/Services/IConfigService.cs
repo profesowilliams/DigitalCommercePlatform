@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
+using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Models;
@@ -21,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         Task<bool> EstimationValidate(EstimationValidate.Request request);
         Task<string> GetPunchOutUrlAsync(PunchInModel request);
         Task<RefreshData.Response> RefreshVendor(RefreshData.Request request);
+        Task<SPADetails.Response> GetSPADetails(SPADetails.Request request);
 
     }
 }

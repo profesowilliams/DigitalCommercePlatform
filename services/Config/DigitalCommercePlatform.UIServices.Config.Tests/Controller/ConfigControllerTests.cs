@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
+using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -219,6 +220,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             result.Should().Equals(HttpStatusCode.OK);
         }
 
+        [Fact]
+        public async Task GetSPADetails()
+        {
+            ResponseBase<SPADetails.Response> expected = new ResponseBase<SPADetails.Response>();
+            _mockMediator.Setup(x => x.Send(
+                      It.IsAny<SPADetails.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            var sut = GetController();
+            var result = await sut.GetSpa("2294844", "PNV602,PNR703,PNL401C", true).ConfigureAwait(false);
+            result.Should().Equals(HttpStatusCode.OK);
+        }
         private ConfigController GetController()
         {
             var httpRequestMock = new Mock<HttpRequest>();

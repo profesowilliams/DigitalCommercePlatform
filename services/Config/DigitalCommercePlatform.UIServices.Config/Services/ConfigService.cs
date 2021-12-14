@@ -7,11 +7,11 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
+using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Models;
 using DigitalFoundation.Common.Services.UI.ExceptionHandling;
@@ -306,9 +306,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 EndUserName = request.EndUserName,
                 PageSize = 25,
                 Page = 1,
-                Details=request.Details,
-                PricingLevel=request.PricingOption.ToString(),
-                EndUserSpaOnly=request.EndUserSpaOnly
+                Details = request.Details,
+                PricingLevel = request.PricingOption.ToString(),
+                EndUserSpaOnly = request.EndUserSpaOnly
             };
 
             var getDealsForGrid = GetDealsDetails(spaRequest);
@@ -383,6 +383,41 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate");
             }
 
+        }
+
+        public async Task<SPADetails.Response> GetSPADetails(SPADetails.Request request)
+        {
+            List<string> mfrPartNumbers = request.ProductIds?.Split(",").ToList();
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa").BuildQuery(request);
+            SPADetails.Response response = new SPADetails.Response();
+            var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
+            if (spaResponse.Any())
+            {
+                var SPADetailResponse = new List<Models.SPA.SpaDetailModel>(spaResponse);
+                if (SPADetailResponse.FirstOrDefault().Products != null)
+                {
+                    List<Models.SPA.SpaProductModel> listProducts = new();
+
+                    var lstValidProducts = (from p in SPADetailResponse.SelectMany(i => i.Products).Where(i => i.ManufacturerPartNumber != null)
+                                            where mfrPartNumbers.Contains(p.ManufacturerPartNumber)
+                                            select p.ManufacturerPartNumber).Distinct().ToList();
+
+                    if (lstValidProducts.Any())
+                    {
+                        response.Items = new List<string>(lstValidProducts);
+                    }
+                }
+                else
+                {
+                    _logger.LogError("No products returned by app service for SPA id " + request.Id + nameof(ConfigService));
+                }
+            }
+            else
+            {
+                _logger.LogError("No records returned by app service for SPA id " + request.Id + nameof(ConfigService));
+            }
+
+            return response;
         }
     }
 }

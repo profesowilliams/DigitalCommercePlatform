@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
+using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalFoundation.Common.Contexts;
@@ -123,6 +124,21 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         public async Task<ActionResult> Refresh([FromQuery] RefreshData.Request request)
         {
             var data =new RefreshData.Request { Type = request?.Type ,Version=request?.Version,VendorName=request?.VendorName};
+            var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// This request is for deatils returned by SPA
+        /// </summary>
+        /// <param name="dealId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("applySPA")]
+        public async Task<ActionResult> GetSpa([FromQuery] string Id,string ProductIds, bool details=true)
+        {
+            var data = new SPADetails.Request { Id=Id,ProductIds=ProductIds,Details=details};
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }
