@@ -227,13 +227,14 @@
       }
     }
   }
-  &__subscription-terms {
-    display: flex;
-    flex-direction: row;
+  &__subscription-terms  {
     margin-bottom: 0;
     p {
-      margin-right: 1em;
+      margin-top: 0px;
+      margin-bottom: 0px;
       line-height: 1.6em;
+      display: grid;
+      grid-template-columns: 50% 50%;
       span {
         display: block;
       }

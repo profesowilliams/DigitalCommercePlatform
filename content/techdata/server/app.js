@@ -862,6 +862,15 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
   function getItems(amount){
     let items = [];
     for(let i = 0; i<=amount; i++){
+      const annuity = i % 2 === 0 ? null : {
+        "isAnnuity": true,
+        "startDate": "11/01/2021",
+        "endDate": "10/31/2022",
+        "duration": 12.0,
+        "billingFrequency": "Annual",
+        "autoRenewal": 12
+      };
+
       items.push(
         {
           "id": i,
@@ -1011,7 +1020,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
             }
           ],
           "ancillaryChargesWithTitles": null,
-          "annuity": null,
+          annuity,
           "isSubLine": false,
           "displayLineNumber": i,
           "attributes": [{

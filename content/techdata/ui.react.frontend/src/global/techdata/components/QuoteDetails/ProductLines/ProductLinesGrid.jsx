@@ -104,7 +104,7 @@ function ProductLinesGrid({
       field: "displayName",
       sortable: false,
       width: "600px",
-      cellHeight: (props) => props ? props?.data?.startDate ? 150 : 80 : 80, // adjust row height for subscription items
+      cellHeight: (props) => props && (props?.data?.startDate || props?.data?.annuity) ? 160 : 80, // adjust row height for subscription items
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
                   line={props.data}

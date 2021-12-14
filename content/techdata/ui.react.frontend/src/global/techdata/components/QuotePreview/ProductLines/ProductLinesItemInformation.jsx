@@ -25,7 +25,6 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
           src={line.urlProductImage ? line.urlProductImage : emptyImageUrl}
         />
   );
-
   return (
     <section>
       <div className="cmp-product-lines-grid__item-information">
@@ -52,22 +51,25 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
             {line.mfrNumber || " N/A "} | <b>TD#:</b>
             {line.tdNumber || " N/A "}
             {
-              line.REQUESTEDSTARTDATE ?
+              line.annuity &&
                 <div className="cmp-product-lines-grid__subscription-terms">
                   <p>
                     <b>Start Date:</b>
-                    <b>Auto Renew:</b>
-                    <b>Duration:</b>
-                    <b>Billing:</b>
+                    <span>{ line.annuity.startDate }</span>
                   </p>
                   <p>
-                    <span>{ line.REQUESTEDSTARTDATE }</span>
-                    <span>{ line.AUTORENEWALTERM }</span>
-                    <span>{ line.INITIALTERM }</span>
-                    <span>{ line.BILLINGTERM }</span>
+                    <b>Auto Renew:</b>
+                    <span>{ line.annuity.isAnnuity }</span>
+                  </p>
+                  <p>
+                    <b>Duration:</b>
+                    <span>{ line.annuity.duration }</span>
+                  </p>
+                  <p>
+                    <b>Billing:</b>
+                    <span>{ line.annuity.billingFrequency }</span>
                   </p>
                 </div>
-              : null
             }
           </div>
         </div>
