@@ -172,6 +172,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     request.Criteria.EndUser = request.Criteria.EndUser + "*";
                 }
+                //Fix this once the App-Service is returning response for Vendor Name.
+                //else if (request.Criteria.VendorName != null)
+                //{
+                //    request.Criteria.VendorName = request.Criteria.VendorName;
+                //}
 
                 var type = GetConfigurationType(request);
                 request.Criteria.ConfigurationType = null;
@@ -300,6 +305,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             string[] MfrPartNumbers = request.ProductIds?.Split(",").ToArray();
 
+            if (!string.IsNullOrEmpty(request.Vendor))
+                request.Vendor = request.Vendor + "*";
+
             Models.Configurations.Internal.FindSpaCriteriaModel spaRequest = new Models.Configurations.Internal.FindSpaCriteriaModel
             {
                 MfrPartNumbers = MfrPartNumbers,
@@ -308,7 +316,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 Page = 1,
                 Details = request.Details,
                 PricingLevel = request.PricingOption.ToString(),
-                EndUserSpaOnly = request.EndUserSpaOnly
+                EndUserSpaOnly = request.EndUserSpaOnly,
+                VendorName=request.Vendor
             };
 
             var getDealsForGrid = GetDealsDetails(spaRequest);

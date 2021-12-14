@@ -51,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
             return Ok(response);
         }
         /// <summary>
-        /// This request is for applying Deals in Quote details
+        /// This request is to Search Deals in Quote preview 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>

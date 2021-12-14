@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public SortDirection SortDirection { get; set; }
         public string ConfigName { get; set; }
         public string ConfigId { get; set; }
+        public IList<string> VendorName { get; set; }
     }
 
     public enum ConfigType
