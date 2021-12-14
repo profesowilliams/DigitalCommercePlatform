@@ -40,6 +40,12 @@ use(function () {
     if (properties.get("buttonTitleInProgress") != null) {
         jsonObject.put("buttonTitleInProgress", properties.get("buttonTitleInProgress"));
     }
+    if (properties.get("createQuoteInProgress") != null) {
+        jsonObject.put("createQuoteInProgress", properties.get("createQuoteInProgress"));
+    }
+    if (properties.get("createQuoteError") != null) {
+        jsonObject.put("createQuoteError", properties.get("createQuoteError"));
+    }
 
     if (properties.get("quotePreviewUrl") != null) {
         jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));

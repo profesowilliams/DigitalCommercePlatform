@@ -20,7 +20,7 @@ const QuoteCreate = ({
     requested, authError, componentProp, 
   }) => {
   const { 
-    label, quotePreviewUrl, buttonTitle, buttonTitleInProgress, optionsList, pricingConditions,
+    label, quotePreviewUrl, buttonTitle, buttonTitleInProgress, createQuoteInProgress, createQuoteError, optionsList, pricingConditions,
     ...endpoints
   } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
@@ -106,12 +106,12 @@ const QuoteCreate = ({
         const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
         if( isError ){
           showSimpleModal('Create Quote', (
-            <div>There was an error creating the quote, please try again later.</div>
+            <div>{createQuoteError}</div>
           ));
         }
         else {
           showSimpleModal('Create Quote', (
-            <div>Your Quote will be created shortly, it can take some minutes before you will be able to see it.<br/> When you close this message, you will see the Quotes dashboard page. <br/>Please refresh it after some minutes to see your quote.</div>
+            <div>{createQuoteInProgress}</div>
           ), onModalClosed => {
             closeModal();
             const { quoteId } = content;
@@ -122,7 +122,7 @@ const QuoteCreate = ({
       catch(e) {
         console.error(e);
         showSimpleModal('Create Quote', (
-          <div>There was an error creating the quote, please try again later.</div>
+          <div>{createQuoteError}</div>
         ));
       }
       setDisableCreateQuoteButton(false);

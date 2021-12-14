@@ -26,6 +26,16 @@
 							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 							fieldLabel="Action In progress Button Label"
 							name="./buttonTitleInProgress"/>
+					<createQuoteInProgress
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="InProgress Message For Create Quote"
+							name="./createQuoteInProgress"/>
+					<createQuoteError
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Error Message For Create Quote"
+							name="./createQuoteError"/>
 					<quotePreviewUrl
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
