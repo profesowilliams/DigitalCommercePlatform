@@ -1,6 +1,9 @@
 (function() {
 
     var errorMessage = document.getElementById("errorMessage");
+        var errorBlockId = "cmp-form-error-block";
+        var WRONG_FILE_SIZE_STATUS = "-1";
+        var WRONG_FILE_EXTN_STATUS = "-2";
 
     function documentReady(fn) {
         if (document.readyState !== "loading") {
@@ -19,14 +22,10 @@
         var selectsList = Array.prototype.slice.call(selects);
         var textAreas = form.getElementsByTagName('textarea');
         var textAreasList = Array.prototype.slice.call(textAreas);
-        var errorBlockId = "cmp-form-error-block";
-        var invalidFileSizeText = "Validation Failed for file upload: invalid file size.";
-        var invalidFileExtnText = "Validation Failed for file upload: invalid file extension.";
-        var WRONG_FILE_SIZE_STATUS = "-1";
-        var WRONG_FILE_EXTN_STATUS = "-2";
+        var invalidFileStatus = false;
 
         inputsList.forEach(
-            function (i, e) {
+            function (i) {
                 if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
                     let fsize = 0;
                     let file = 0;
@@ -34,7 +33,10 @@
                         if (i.files.length > 0) {
                             newData.append(i.name, i.files[0], i.files[0].name);
                             console.log("name of file is " + i.files[0].name);
-                            processFileValidations(i.files[0], e);
+                            if(!processFileValidations(i.files[0])) {
+                                invalidFileStatus = true;
+                                return;
+                            }
                         }
                     } else if (i.type.startsWith("radio")) {
                         if (i.checked) {
@@ -60,20 +62,21 @@
                 newData.append(i.name, i.value);
             }
         );
-
+        if(invalidFileStatus) return null;
         return newData;
     }
 
-    function processFileValidations(fileEle, e) {
+    function processFileValidations(fileEle) {
         //  validate file for invalid file size and extensions
         var invalidFileStatusCode = invalidFile(fileEle);
-        if(invalidFile(fileEle) == WRONG_FILE_SIZE_STATUS) {
-                document.getElementById(errorBlockId).innerHTML = invalidFileSizeText;
-            e.preventDefault();
-        } else if(invalidFile(fileEle) == WRONG_FILE_EXTN_STATUS) {
-            document.getElementById(errorBlockId).innerHTML = invalidFileExtnText;
-            e.preventDefault();
+        if(invalidFile(fileEle) == "-1") {
+            document.getElementById(errorBlockId).innerHTML = "Invalid file size, allowed files under 10 MB.";
+            return false;
+        } else if(invalidFile(fileEle) == "-2") {
+            document.getElementById(errorBlockId).innerHTML = "Invalid file format, allowed pdf files only.";
+            return false;
         }
+        return true;
     }
 
     function invalidFile(fileEle) {
@@ -87,13 +90,19 @@
         let fsize = fileEle.size;
         let fileSizeInMB = Math.round((fsize / (1024*1000)));
         if (fileSizeInMB >= fileThresholdInMB) {
-            return WRONG_FILE_SIZE_STATUS;
+            return "-1";
         }
         var fileSplits = fileEle.name.split('.');
-        var fileExtension = fileSplits[fileSplits.length - 1];
-
-        if(fileExtension && !allowedFileTypes.indexOf('.' + fileExtension)) {
-            return WRONG_FILE_EXTN_STATUS;
+        var fileExtension = null;
+        if(fileSplits.length > 1) {
+            fileExtension = fileSplits[fileSplits.length - 1];
+        }
+        if(fileExtension) {
+            if(allowedFileTypes.indexOf('.' + fileExtension) == -1) {
+                return "-2";
+            }
+        } else {
+            return "-2";
         }
         return "0";
     }
@@ -167,25 +176,29 @@
 
         if (submitButton) {
 
-
             submitButton.addEventListener("click", (e) => {
                 if (tdForm.reportValidity())
                 {
                     submitButton.disabled = true;
                     let data = createFormData(tdForm);
-                    let endPoint = "/bin/form";
-                    var xhr = new XMLHttpRequest();
-                    var handlePOSTRequest = function () { // Call a function when the state changes.
-                        if (xhr.status === 200) {
-                            console.log("Successfully submitted");
-                            successFlow(redirectSuccess);
-                        } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
-                            console.error("Error in submitting form")
-                        }
-                    };
-                    xhr.onreadystatechange = handlePOSTRequest;
-                    xhr.open("POST", endPoint, true);
-                    xhr.send(data);
+                    if(data == null) {
+                        e.preventDefault();
+                        console.warn('validation failed for form');
+                    } else {
+                        let endPoint = "/bin/form";
+                        var xhr = new XMLHttpRequest();
+                        var handlePOSTRequest = function () { // Call a function when the state changes.
+                            if (xhr.status === 200) {
+                                console.log("Successfully submitted");
+                                successFlow(redirectSuccess);
+                            } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
+                                console.error("Error in submitting form")
+                            }
+                        };
+                        xhr.onreadystatechange = handlePOSTRequest;
+                        xhr.open("POST", endPoint, true);
+                        xhr.send(data);
+                    }
                 }else{
                     e.preventDefault();
                     console.error();

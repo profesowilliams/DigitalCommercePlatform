@@ -19,8 +19,8 @@
       method="${container.method}" action="${container.action}" id="${container.id}" name="${container.name}"
       enctype="${container.enctype}"
       class="cmp-form ${grid.cssClass}"
-      data-allowedFileTypes="${serviceData.allowedFileTypes}"
-      data-thresholdFileSize="${serviceData.fileThresholdInMB}">
+      data-allowedFileTypes=".pdf"
+      data-thresholdFileSize="10">
     <div data-sly-test="${container.errorMessages}"
          data-sly-list.item="${container.errorMessages}"
          class="cmp-form-error">
