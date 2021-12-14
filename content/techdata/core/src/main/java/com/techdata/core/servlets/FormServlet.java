@@ -44,7 +44,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final String FILE_PARAM_NAME = "file";
         private static final String CONFIRMATION_EMAIL_BODY_PARAM_NAME = "confirmationEmailBody";
         private static final String CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME = "confirmationSubject";
-        private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "subject";
+        private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "internalEmailSubject";
         private static final int ONE_MB_IN_BYTES = 1000000;
         @Reference
         private transient EmailService emailService;
