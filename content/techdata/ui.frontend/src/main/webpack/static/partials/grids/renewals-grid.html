@@ -4,7 +4,7 @@
         data-cmp-type="react"
         className="cmp-renewals-grid"
         data-config='{
-        "uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-renewal/v1/Search",
+        "uiServiceEndPoint":"http://localhost:3000/ui-renewal/v1/Search",
         "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
         "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
         "createQuoteUrl":"/quote-preview?id={id}&isEstimateId={is-estimated-id}&vendor={vendor}",
@@ -27,7 +27,7 @@
           {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false, "type": "plainText"},
           {"columnLabel":"Vendor and program","columnKey":"vendor", "sortable": false, "type": "plainText"},
           {"columnLabel":"Agreement Nº","columnKey":"agreementNumber", "sortable": false, "type": "plainText"},
-          {"columnLabel":"Renewal Plan","columnKey":"renewalPlan", "sortable": false, "type": "plainText"},
+          {"columnLabel":"Renewal Plan","columnKey":"renewalPlan", "sortable": false, "type": "renewalPlan"},
           {"columnLabel":"Due in (Days)","columnKey":"dueDate", "sortable": true, "type": "date"},
           {"columnLabel":"Due Date","columnKey":"dueDate", "sortable": false, "type": "date"},
           {"columnLabel":"Price (USD)","columnKey":"price", "sortable": false, "type": "plainText"},

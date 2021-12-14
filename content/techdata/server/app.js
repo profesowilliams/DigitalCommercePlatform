@@ -3492,12 +3492,12 @@ app.get("/ui-config/v1/estimations/validate/", function (req, res) {
   });
 });
 
-app.get("/ui-config/v1/renewals", function (req, res) {
+app.get("/ui-renewal/v1/Search", function (req, res) {
   res.json({
     content: {
       pageNumber: 1,
       pageSize: 25,
-      totalItems: 25,
+      totalItems: 1,
       items: [
         {
           configId: "renewalVG116957111OI",

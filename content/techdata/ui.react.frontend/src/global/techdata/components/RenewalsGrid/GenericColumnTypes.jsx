@@ -1,3 +1,4 @@
+import React from "react";
 import { hasAccess, getUserDataInitialState, RENEWALS_TYPE } from "../../../../utils/user-utils";
 
 
@@ -28,6 +29,38 @@ export const plainTextColumn = ({ columnLabel, columnKey, sortable = false }) =>
     sortable: sortable,
 })
 
+export const buttonListColumn = ({ columnLabel, columnKey, sortable = false }) => (
+{
+    headerName: columnLabel,
+    field: columnKey,
+    sortable: sortable,
+    cellRenderer: ({ data }) => {
+      return (
+        <div>
+          <i className="fa fa-plus-circle" aria-hidden="true"></i>
+          <i className="fa fa-plus-square" aria-hidden="true"></i>
+          <i className="fa fa-plus-triangle" aria-hidden="true"></i>
+        </div>
+    )},
+})
+
+export const renewalPlanColumn = ({ columnLabel, columnKey, sortable = false }) => (
+{
+    headerName: columnLabel,
+    field: columnKey,
+    sortable: sortable,
+    expandable: true,
+    rowClass: ({ node, data }) => {
+      return `cmp-renewals_plan`;
+    },
+    detailRenderer: ({ data }) => {
+      return (
+        <div>
+          Custom Renewals Plan Row Details
+        </div>
+    )},
+})
+
 export const plainResellerColumnFn = ({ columnLabel, columnKey, sortable}) => {
     // check if Its a reseller or techdata employee
     //refactor needed
@@ -46,7 +79,8 @@ export const plainResellerColumnFn = ({ columnLabel, columnKey, sortable}) => {
 const columnTypes = {
     "date": dateColumn,
     "plainText": plainTextColumn,
-    "buttonList": plainTextColumn,
+    "buttonList": buttonListColumn,
+    "renewalPlan": renewalPlanColumn,
     "plainResellerColumn": plainResellerColumnFn
 }
 

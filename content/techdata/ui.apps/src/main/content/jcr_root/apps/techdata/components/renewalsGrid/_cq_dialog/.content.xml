@@ -148,6 +148,10 @@
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Plain Reseller Column"
                                                                             value="plainResellerColumn"/>
+                                                                        <renewalPlan
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Renewal Plan Column"
+                                                                            value="renewalPlan"/>
                                                                         </items>
                                                                 </columnType>
                                                                 <sortable
