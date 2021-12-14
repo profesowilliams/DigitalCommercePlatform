@@ -38,7 +38,6 @@
                         }
                     } else {
                         newData.append(i.name, i.value);
-                        processFileValidations(i, e);
                     }
                 }
             }
@@ -115,22 +114,30 @@
 
         if (submitButton) {
 
+
             submitButton.addEventListener("click", (e) => {
-                submitButton.disabled = true;
-                let data = createFormData(tdForm);
-                let endPoint = "/bin/form";
-                var xhr = new XMLHttpRequest();
-                var handlePOSTRequest = function () { // Call a function when the state changes.
-                    if (xhr.status === 200) {
-                        console.log("Successfully submitted");
-                        successFlow(redirectSuccess);
-                    } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
-                        console.error("Error in submitting form")
-                    }
-                };
-                xhr.onreadystatechange = handlePOSTRequest;
-                xhr.open("POST", endPoint, true);
-                xhr.send(data);
+                if (tdForm.reportValidity())
+                {
+                    submitButton.disabled = true;
+                    let data = createFormData(tdForm);
+                    let endPoint = "/bin/form";
+                    var xhr = new XMLHttpRequest();
+                    var handlePOSTRequest = function () { // Call a function when the state changes.
+                        if (xhr.status === 200) {
+                            console.log("Successfully submitted");
+                            successFlow(redirectSuccess);
+                        } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
+                            console.error("Error in submitting form")
+                        }
+                    };
+                    xhr.onreadystatechange = handlePOSTRequest;
+                    xhr.open("POST", endPoint, true);
+                    xhr.send(data);
+                }else{
+                    e.preventDefault();
+                    console.error();
+                }
+
             });
         } else {
             console.error("Submit Button Not Configured.");
