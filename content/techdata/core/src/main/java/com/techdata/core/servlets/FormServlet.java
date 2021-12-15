@@ -56,6 +56,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private Map<String, String[]> formSubmissionTargetGroups;
         private int thresholdFileSize = 10;
         private List<String> allowedFileTypes = new ArrayList<>();
+        private String textfieldRegexExpr = "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/]+$";
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -165,8 +166,8 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         public String validateString(String input) throws Exception {
-                final Pattern pattern = Pattern.compile("^[-@.,;A-Za-z0-9_:/ ]++$");
-                if (!pattern.matcher(input).matches()) {
+                final Pattern pattern = Pattern.compile(textfieldRegexExpr);
+                if (!pattern.matcher(input).find()) {
                         throw new Exception("Invalid form field, skipping the form and email submission.");
                 }
                 return input;
