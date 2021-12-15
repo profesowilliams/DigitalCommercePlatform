@@ -226,9 +226,10 @@ const SignIn = (props) => {
     DataLayerUtils.pushEvent("click", {
       carouselName: "",
       mastheadlevel: "",
-      name: "Sign in",
+      name: "Login",
       selectionDepth: "",
       type: "button",
+      category: "Login",
     });
     redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
   };

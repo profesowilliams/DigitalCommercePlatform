@@ -23,12 +23,13 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   };
 
   const handleSignOut = () => {
-    DataLayerUtils.pushEvent("clickInfo", {
+    DataLayerUtils.pushEvent("click", {
       carouselName: "",
       mastheadlevel: "",
-      name: "Sign Out",
+      name: "Logout",
       selectionDepth: "",
       type: "button",
+      category: "Logout",
     });
     signOut(
       config?.logoutURL ?? null,
