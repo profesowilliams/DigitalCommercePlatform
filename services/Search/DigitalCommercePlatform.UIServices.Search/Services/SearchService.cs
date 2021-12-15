@@ -147,7 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                     results.Add(
                         new RefinementGroupResponseModel
                         {
-                            Group = General,
+                            Group = Translate(General),
                             Refinements = new List<RefinementModel>()
                         }
                     );
