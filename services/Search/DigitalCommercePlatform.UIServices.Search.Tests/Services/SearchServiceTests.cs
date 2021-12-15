@@ -388,7 +388,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             {
                 new RefinementGroupResponseModel
                 {
-                    Group="Stock Level",
+                    Group="General",
                     Refinements= new List<RefinementModel>
                     {
                         new RefinementModel
@@ -410,14 +410,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                                     Count=1
                                 }
                             }
-                        }
-                    }
-                },
-                new RefinementGroupResponseModel
-                {
-                    Group="Categories",
-                    Refinements= new List<RefinementModel>
-                    {
+                        },
                         new RefinementModel
                         {
                             Id="Categories",
@@ -434,7 +427,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                             }
                         }
                     }
-                },
+                },               
                 new RefinementGroupResponseModel
                 {
                     Group="Group",

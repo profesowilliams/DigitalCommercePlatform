@@ -36,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         private const string CNETAttributes = "CNETAttributes";
         private const string TopRefinements = "TopRefinements";
+        private const string General = "General";
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly string _appSearchUrl;
         private readonly string _appProductUrl;
@@ -140,59 +141,72 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 }
             }
             else
-            {
+            {                
+                var generalGroup = results.Find(e => e.Group.Equals(General, StringComparison.InvariantCultureIgnoreCase));
+                if (generalGroup == null)
+                    results.Add(
+                        new RefinementGroupResponseModel
+                        {
+                            Group = General,
+                            Refinements = new List<RefinementModel>()
+                        }
+                    );
+
+                generalGroup = results.First(e => e.Group.Equals(General, StringComparison.InvariantCultureIgnoreCase));
+
                 var shouldTranslate = RefinementGroupShouldBeLocalized(group.Group);
-                results.Add(shouldTranslate ? GetLocalizedRefinementGroup(group) : new RefinementGroupResponseModel
-                {
-                    Group = group.Group,
-                    Refinements = group.Refinements.Select(x => new RefinementModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Type = x.Type,
-                        Range = x.Range is null ? null : new RangeModel
-                        {
-                            Max = x.Range.Max,
-                            Min = x.Range.Min
-                        },
-                        Options = x.Options.Select(o => new RefinementOptionModel
-                        {
-                            Count = o.Count,
-                            Id = o.Id,
-                            Text = o.Text,
-                            Selected = o.Selected
-                        }).ToList(),
-                        OriginalGroupName = group.Group
-                    }).ToList()
-                });
+                generalGroup.Refinements.AddRange(shouldTranslate ? GetLocalizedRefinements(group) : NotTranslatedRefinemntsModel(group));               
             }
         }
 
-        private RefinementGroupResponseModel GetLocalizedRefinementGroup(RefinementGroupResponseDto group)
+        private List<RefinementModel> NotTranslatedRefinemntsModel(RefinementGroupResponseDto group)
         {
-            return new RefinementGroupResponseModel
+            var refinements = group.Refinements.Select(x => new RefinementModel
             {
-                Group = Translate(group.Group),
-                Refinements = group.Refinements.Select(x => new RefinementModel
+                Id = x.Id,
+                Name = x.Name,
+                OriginalGroupName = group.Group,
+                Type = x.Type,
+                Range = x.Range is null ? null : new RangeModel
                 {
-                    Id = x.Id,
-                    Name = Translate(x.Name),
-                    Type = x.Type,
-                    Range = x.Range is null ? null : new RangeModel
-                    {
-                        Max = x.Range.Max,
-                        Min = x.Range.Min
-                    },
-                    Options = x.Options.Select(o => new RefinementOptionModel
-                    {
-                        Count = o.Count,
-                        Id = o.Id,
-                        Text = Translate(o.Text),
-                        Selected = o.Selected
-                    }).ToList(),
-                    OriginalGroupName = group.Group
-                }).ToList()
-            };
+                    Max = x.Range.Max,
+                    Min = x.Range.Min
+                },
+                Options = x.Options.Select(o => new RefinementOptionModel
+                {
+                    Count = o.Count,
+                    Id = o.Id,
+                    Text = o.Text,
+                    Selected = o.Selected
+                }).ToList(),                
+            }).ToList();
+
+            return refinements;
+        }
+
+        private List<RefinementModel> GetLocalizedRefinements(RefinementGroupResponseDto group)
+        {
+            var refinements = group.Refinements.Select(x => new RefinementModel
+            {
+                Id = x.Id,
+                Name = Translate(x.Name),
+                OriginalGroupName = group.Group,
+                Type = x.Type,
+                Range = x.Range is null ? null : new RangeModel
+                {
+                    Max = x.Range.Max,
+                    Min = x.Range.Min
+                },
+                Options = x.Options.Select(o => new RefinementOptionModel
+                {
+                    Count = o.Count,
+                    Id = o.Id,
+                    Text = Translate(o.Text),
+                    Selected = o.Selected
+                }).ToList(),                
+            }).ToList();
+
+            return refinements;
         }
 
         private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
