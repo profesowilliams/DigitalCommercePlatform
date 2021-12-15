@@ -6,7 +6,6 @@
             formElem && formElem.querySelectorAll('input, select,textarea').forEach(elem => {
                 if (elem.closest('.cmp-form-text')) {
                     const labelText = elem.closest('.cmp-form-text').querySelector('label').innerText;
-                    elem.placeholder = labelText;
                 } else if (elem.closest('.cmp-form-options')) {
                     const labelText = elem.closest('.cmp-form-options').querySelector('label').innerText;
                     const tag = document.createElement("option");
