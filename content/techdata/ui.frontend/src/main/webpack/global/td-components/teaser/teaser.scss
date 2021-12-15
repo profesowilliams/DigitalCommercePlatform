@@ -203,15 +203,22 @@
 
     .cmp-teaser__content {
         display: flex;
-        position: absolute;
-        top: 0;
+        position: relative;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
         justify-content: center;
         align-items: center;
-        //color: get-color(brand-white);
         padding: 3.438rem;
+        margin-top: -26%;
+        margin-left: 4%;
+        z-index: 1;
+
+        @include mobile {
+            margin-top: -27%;
+            margin-left: 13%;
+            padding: 0;
+        }
     }
 
     .cmp-teaser__pretitle {
@@ -219,7 +226,6 @@
     }
 
     .cmp-teaser__title {
-        //width: 3rem(50px
         float: left;
         width: 50%;
         max-width: rem(530px);
@@ -251,12 +257,17 @@
                 top: -10px;
             }
         }
+
+        @include mobile {
+            font-size: 1rem;
+            line-height: inherit;
+            padding-right: 2.438rem;
+        }
     }
 
     &__title-link {}
 
     .cmp-teaser__description {
-        //width: 38.rem(80px);
         float: left;
         width: 50%;
         text-shadow: 0 0 0.063rem #919599;
@@ -270,6 +281,13 @@
         padding-bottom: 0;
         margin: 0rem;
         max-width: rem(550px);
+
+        @include mobile {
+            font-size: 0.6rem;
+            line-height: inherit;
+            padding-left: 2rem;
+            width: 80%;
+        }
     }
 }
 
@@ -774,6 +792,7 @@
     .cmp-teaser__content {
         max-width: 1440px;
         margin: 0 auto;
+        left: 10%;
     }
 }
 
@@ -786,7 +805,7 @@
     }
 }
 
-.cmp-text-color--onDark-theme {
+ .cmp-text-color--onDark-theme {
     color: get-color(brand-white) !important;
 
     .cmp-teaser__desc-link, .cmp-teaser__title-link {
