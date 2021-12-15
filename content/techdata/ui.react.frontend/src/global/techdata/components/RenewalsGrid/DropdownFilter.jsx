@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
 function DropdownFilter({
   styleProps,
@@ -12,16 +12,16 @@ function DropdownFilter({
     dropdown: "",
     input: "",
   });
+  const [callbackExecuted, setCallbackExecuted] = useState(false)
   const { dropdown, input } = values;
 
-  useEffect(() => {
-    /**This is where you'll filter the grid when changing in the input */
-    if (callback) {
-      callback();
-    }
-  }, [input]);
+  const clickHandler = () => {
+    callback()
+    setCallbackExecuted(true)
+  };
 
   const onReset = () => {
+    setCallbackExecuted(false)
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
         setValues((prevSt) => {
@@ -45,11 +45,11 @@ function DropdownFilter({
     });
   };
 
-  /** in the future, please erase the renewals import directly and use it as a prop, when done that, also erase this dropdownOptions variable */
   let styles;
   if (!styleProps) {
     styles = {
       width: "250px",
+      tooltipWidth: "280px",
     };
   }
 
@@ -68,12 +68,15 @@ function DropdownFilter({
           placeholder={`Enter a ${chosenFilter}`}
           type={inputType || "text"}
         ></input>
+        <button className="tooltip__button" onClick={clickHandler}>
+          <i className="fa fa-search"></i>
+        </button>
         {/* Add logic with filterCounter prop in order to render this or a message when the filter results are 0 */}
         <div
-          style={{ width: styleProps?.width || styles.width }}
+          style={{ width: styleProps?.width || styles.tooltipWidth }}
           className="tooltip"
         >
-          <p>Search by {chosenFilter}</p>
+          {callbackExecuted && !filterCounter ? <p>Sorry, no rows to display</p> : <p>Search by {chosenFilter}</p>}
           <button onClick={onReset}>Reset</button>
         </div>
       </div>
@@ -103,3 +106,15 @@ function DropdownFilter({
 }
 
 export default DropdownFilter;
+DropdownFilter.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ).isRequired,
+  callback: PropTypes.func.isRequired,
+  filterCounter: PropTypes.number,
+  inputType: PropTypes.string,
+  styleProps: PropTypes.object,
+};

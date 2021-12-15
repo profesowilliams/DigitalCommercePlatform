@@ -18,7 +18,7 @@ export default function RenewalFilter({ aemData }) {
       <Button btnClass="cmp-renewals-filter__button" onClick={handleFilterClick}>
         Filter
       </Button>
-      <i class="fas fa-sliders-h"></i>
+      <i className="fas fa-sliders-h"></i>
       </div>
       {showModal && (
         <FilterModal

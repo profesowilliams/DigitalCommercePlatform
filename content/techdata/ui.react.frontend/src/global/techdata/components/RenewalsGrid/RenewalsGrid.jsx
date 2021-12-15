@@ -18,6 +18,10 @@ function ConfigurationGrid(props) {
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
 
+  const onRowFilter = () => {
+    console.log('this is the function where the filtering will ocur');
+  }
+
   const gridConfig = {
     ...componentProp,  
     paginationStyle: "none", 
@@ -33,8 +37,8 @@ function ConfigurationGrid(props) {
         <div className="renewal-filters">
           <div className="cmp-renewal-search">
               <DropdownFilter
+                callback={onRowFilter}
                 options={RENEWALS}
-                
               />
           </div>
           <VerticalSeparator/>

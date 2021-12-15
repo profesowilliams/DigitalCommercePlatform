@@ -1,38 +1,21 @@
 .inputStyle {
-  position: relative;
+  margin-bottom: 1em;
   padding: 0.25em;
   border: 0;
   border-bottom: 1px solid currentcolor;
   font-weight: lighter;
   letter-spacing: 0.15em;
   border-radius: 0;
-  color: rgba(85, 85, 85, 1);
-  font-family: "Open Sans";
-  font-size: 14px;
-  font-style: italic;
-  letter-spacing: 0;
-  line-height: 16px;
 }
-
-
-.inputStyle option {
-  height: 17.5px;
-  width: 170px;
-  color: rgba(0,12,33,1);
-  font-family: "Open Sans";
-  font-size: 14px;
-  letter-spacing: 0;
-  line-height: 17.5px;
-}
-
 
 .inputStyle:focus,
 .inputStyle:active {
   outline: 0;
-  border-bottom-color: #00558c;
+  border-bottom-color: blue;
 }
 
 .inputStyle input {
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Magnifying_glass_icon.svg/1200px-Magnifying_glass_icon.svg.png);
   display: inline-block;
   width: 123px;
   height: 21px;
@@ -47,18 +30,7 @@
 }
 
 .tooltip {
-  // width: 100%;
-  height: 17.5px;
-  width: 170px;
-  color: rgba(0,12,33,1);
-  font-family: "Open Sans";
-  font-size: 14px;
-  letter-spacing: 0;
-  line-height: 17.5px;
   display: none;
-  position: absolute;
-  background-color: white;
-  z-index: 10000;
   padding: 0.5em;
   height: 50px;
 }
@@ -82,9 +54,4 @@
   color: #069;
   text-decoration: underline;
   cursor: pointer;
-}
-
-.tooltip__button {
-  background-color: #00558c;
-  color: white;
 }
