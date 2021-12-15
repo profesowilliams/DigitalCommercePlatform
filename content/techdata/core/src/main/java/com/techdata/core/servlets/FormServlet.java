@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Component(
         immediate = true,
@@ -94,6 +95,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
                 catch (Exception e) {
                         LOG.error("Exception occurred during form submission", e);
+                        response.sendError(403, "Cannot proceed, invalid form request.");
                 }
         }
 
@@ -131,7 +133,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private void prepareEmailRequestFromFormData(java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params,
-                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws IOException {
+                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws Exception {
                 for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
                         final String key = pairs.getKey();
                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
@@ -149,7 +151,7 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
                                                       String key, Map<String, String> emailParams,
-                                                      StringBuilder value) {
+                                                      StringBuilder value) throws Exception {
                 value.append(pArr[0].toString());
                 if (pArr.length > 1)
                 {
@@ -158,19 +160,28 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 value.append(value.toString()).append(rp.toString()).append("|");
                         }
                 }
-                emailParams.put(key,value.toString());
                 LOG.debug("key is {}, value is {}",key, value);
+                emailParams.put(key, validateString(value.toString()));
+        }
+
+        public String validateString(String input) throws Exception {
+                final Pattern pattern = Pattern.compile("^[-@.,;A-Za-z0-9_:/ ]++$");
+                if (!pattern.matcher(input).matches()) {
+                        throw new Exception("Invalid form field, skipping the form and email submission.");
+                }
+                return input;
         }
 
         private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments) throws IOException {
                 RequestParameter fileRequestParameter = pArr[0];
 
                 LOG.debug("file input parameter found. Name is {}, content type is {}", fileRequestParameter.getFileName(), fileRequestParameter.getContentType());
-                if (fileRequestParameter.getContentType()!= null && fileRequestParameter.getFileName() != null && fileRequestParameter.getInputStream() != null)
+                if (fileRequestParameter.getContentType()!= null && fileRequestParameter.getFileName() != null
+                        && fileRequestParameter.getInputStream() != null && fileRequestParameter.getContentType().equals("application/pdf"))
                 {
                         InputStream file = fileRequestParameter.getInputStream();
                         attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
-                }else{
+                } else{
                         LOG.error("Error in determining file uploaded");
                 }
         }
