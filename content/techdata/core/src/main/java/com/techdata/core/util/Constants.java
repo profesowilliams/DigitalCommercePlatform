@@ -46,5 +46,4 @@ public class Constants {
 
     public static final int COUNTRY_PAGE = 3;
     public static final int LOCALE_PAGE = 4;
-
 }
