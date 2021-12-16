@@ -8,7 +8,7 @@ use(function () {
 	var keywordDropdownValues = [];
     var optionData = {};
     var searchCriteriaData = {};
-	var keywordDropdownData = {};
+    var keywordDropdownData = {};
 	var vendorDropdownData = {};
 	var methodDropdownData = {};
     var resourceResolver = resource.getResourceResolver();
@@ -97,7 +97,7 @@ use(function () {
 
 
     }
-	if (properties && properties["keywordDropdownLabel"]) {
+    if (properties && properties["keywordDropdownLabel"]) {
 		keywordDropdownData.label = properties["keywordDropdownLabel"];
 	}
 	var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
@@ -110,14 +110,14 @@ use(function () {
 				var labelValue = res.properties["value"];
 				var labelData = {};
 				labelData.key = labelKey;
-				labelData.value = labelValue;
+				labelData.value = labelValue;    
 				keyValues.push(labelData);
-				keywordDropdownData.items = keyValues;
+                keywordDropdownData.items = keyValues;
 
-			}
+            }
 
-
-		}
+            
+        }
 
 	if (properties && properties["vendorDropdownLabel"]) {
 		vendorDropdownData.label = properties["vendorDropdownLabel"];
@@ -251,11 +251,11 @@ use(function () {
     if (properties && properties["inputPlaceholder"]) {
         searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
     }
-     if (keywordDropdownData != null) {
+    if (keywordDropdownData != null) {
         searchCriteriaData["keywordDropdown"] = keywordDropdownData;
     }
 
-	if (vendorDropdownData != null) {
+    if (vendorDropdownData != null) {
         searchCriteriaData["vendorsDropdown"] = vendorDropdownData;
     }
 
