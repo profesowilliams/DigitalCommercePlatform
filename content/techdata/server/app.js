@@ -847,7 +847,7 @@ app.get("/cart", function (req, res) {
 
 //---QUOTE DETAILS MOCK API---//
 app.get("/ui-commerce/v1/quote/details", function (req, res) {
-  const { id } = req.query;
+  const { id, type } = req.query;
 
   if (!req.headers["SessionId"] && !id) {
       return res.status(500).json({
@@ -1060,7 +1060,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     return items;
   }
 
-  const response = {
+  const quoteDetailsResponse = {
     "content": {
       "details": {
         "shipTo": {
@@ -1184,6 +1184,178 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
       "isError": false
     }
   }
+
+  function getRenewalItems(amount){
+    let items = [];
+    for(let i = 0; i <= amount; i++){
+      items.push(
+        {
+          "id": i+1,
+          "parent": null,
+          "vendorPartNo": "CON-3ECMU-LASAV5SD",
+          "manufacturer": "CISCO",
+          "description": "SWSS UPG 3YR DISTI ASAV50 EDELIVERY",
+          "quantity": Math.floor(Math.random() * 11),
+          "unitPrice": 8037.99,
+          "unitPriceFormatted": "8,037.99",
+          "totalPrice": 16075.98,
+          "totalPriceFormatted": "16,075.98",
+          "msrp": null,
+          "invoice": null,
+          "invoices": null,
+          "trackings": null,
+          "discounts": null,
+          "contract": null,
+          "shortDescription": "Cisco SMARTnet Software Support Service - technical support - for L-ASAV50S-STD - 3 years",
+          "mfrNumber": "CON-3ECMU-LASAV5SD",
+          "tdNumber": "13410477",
+          "upcNumber": null,
+          "unitListPrice": "11997.0000000",
+          "unitListPriceFormatted": "11,997.00",
+          "extendedPrice": null,
+          "extendedPriceFormatted": "",
+          "availability": null,
+          "rebateValue": null,
+          "urlProductImage": "",
+          "urlProductSpecs": null,
+          "children": null,
+          "agreements": [],
+          "ancillaryChargesWithTitles": null,
+          "annuity": null,
+          "isSubLine": false,
+          "displayLineNumber": null,
+          "licenseStartDate": null,
+          "licenseEndDate": null,
+          "contractStartDate": null,
+          "contractEndDate": null,
+          "serviceContractDetails": null,
+          "contractNo": null,
+          "contractType": null,
+          "license": null,
+          "status": null,
+          "vendorStatus": null,
+          "customerPOLine": null,
+          "supplierQuoteRef": null,
+          "configID": null,
+          "locationID": null,
+          "serials": null,
+          "paKs": null,
+          "images": null
+        }
+      )
+    }
+    return items;
+  }
+
+  const renewalDetailsResponse = {
+    "content": {
+      "details": {
+        "shipTo": {
+          "id": null,
+          "companyName": "SHI INTERNATIONAL CORP",
+          "name": null,
+          "line1": "290 Davidson Ave",
+          "line2": null,
+          "line3": null,
+          "city": "Somerset",
+          "state": "NJ",
+          "zip": null,
+          "postalCode": "08873-4145",
+          "country": "US",
+          "email": null,
+          "contactEmail": null,
+          "phoneNumber": null
+        },
+        "endUser": {
+          "id": null,
+          "companyName": "SELECT MEDICAL HOLDINGS CORPOR",
+          "name": null,
+          "line1": "4718 GETTYSBURG RD.",
+          "line2": "SUITE 109",
+          "line3": null,
+          "city": "MECHANICSBURG",
+          "state": "PA",
+          "zip": null,
+          "postalCode": "17055",
+          "country": "US",
+          "email": null,
+          "contactEmail": null,
+          "phoneNumber": null
+        },
+        "reseller": {
+          "id": null,
+          "companyName": "SHI INTERNATIONAL CORP",
+          "name": "VINCE.3  CASALEE",
+          "line1": "290 Davidson Ave",
+          "line2": " ",
+          "line3": null,
+          "city": "Somerset",
+          "state": "NJ",
+          "zip": null,
+          "postalCode": "08873-4145",
+          "country": "US",
+          "email": "paul.wonderly@techdata.com",
+          "contactEmail": null,
+          "phoneNumber": "7328688854"
+        },
+        "source": [],
+        "notes": null,
+        "items": getRenewalItems(6),
+        "id": "121772377",
+        "orders": [],
+        "customerPO": null,
+        "endUserPO": null,
+        "poDate": null,
+        "quoteReference": "CCW-R QuoteId:381801212",
+        "spaId": null,
+        "currency": "USD",
+        "currencySymbol": "$",
+        "subTotal": 16075.98,
+        "subTotalFormatted": "16,075.98",
+        "tier": "Commercial",
+        "created": "10/13/21",
+        "expires": "11/13/21",
+        "deals": [],
+        "attributes": [
+          {
+            "name": "ISQUICKQUOTECREATED",
+            "value": "False"
+          },
+          {
+            "name": "VENDORQUOTEID",
+            "value": "381801212"
+          },
+          {
+            "name": "SOURCE",
+            "value": "1Source"
+          },
+          {
+            "name": "VENDOR",
+            "value": "CISCO"
+          },
+          {
+            "name": "VENDORQUOTETYPE",
+            "value": "CCW-R"
+          },
+          {
+            "name": "ShipCompleteType",
+            "value": "NA"
+          },
+          {
+            "name": "TAKEOVER",
+            "value": "false"
+          }
+        ]
+      }
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  }
+
+  const response = type ? renewalDetailsResponse : quoteDetailsResponse;
 
   setTimeout(() => {
       res.json(response);

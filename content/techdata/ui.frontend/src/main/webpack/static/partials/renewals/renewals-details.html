@@ -3,6 +3,22 @@
         data-component="RenewalsDetails"
         data-cmp-type="react"
         className="cmp-renewals-details"
-        data-config=''
+        data-config='{
+            "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details",
+            "productLines": {
+                "label": "Details",
+                "pdf": "Download PDF",
+                "xls": "Download XLS",
+                "columnList":[
+                    {"columnLabel":"Line","columnKey":"id", "sortable": false},
+                    {"columnLabel":"Product family","columnKey":"vendorPartNo", "sortable": false},
+                    {"columnLabel":"Product details","columnKey":"shortDescription", "sortable": false},
+                    {"columnLabel":"Mfr. part №","columnKey":"mfrNumber", "sortable": false},
+                    {"columnLabel":"Unit price (USD)","columnKey":"unitPrice", "sortable": false},
+                    {"columnLabel":"Quantity","columnKey":"quantity", "sortable": false},
+                    {"columnLabel":"Total (USD)","columnKey":"totalPrice", "sortable": false}
+                ]
+            }
+        }'
     ></div>
 </div>

@@ -12,9 +12,9 @@ function ConfigGrid({ props }) {
             </p>
             <div className="info-container">
                 <ResellerInfo />
-                <div class="info-divider"></div>
+                <div className="info-divider"></div>
                 <EndUserInfo />
-                <div class="info-divider"></div>
+                <div className="info-divider"></div>
                 <AgreementInfo />
             </div>
         </div>
