@@ -1,29 +1,57 @@
 package com.techdata.core.servlets;
 
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+
 import com.day.cq.wcm.api.Page;
+import com.techdata.core.models.CarouselComponentModel;
 import com.techdata.core.slingcaconfig.CommonConfigurations;
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.caconfig.ConfigurationBuilder;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
+
+import org.apache.sling.testing.resourceresolver.MockResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import io.wcm.testing.mock.aem.junit5.AemContext;
+import javax.activation.DataSource;
+import javax.servlet.ServletException;
 
 import static junit.framework.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@ExtendWith({AemContextExtension.class, MockitoExtension.class})
+
+@ExtendWith({MockitoExtension.class})
 class FormServletTest {
     private FormServlet underTest;
     Method internalEmailAddressMethod;
+
+    private final AemContext context = new AemContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
 
     @Mock
     Resource resource;
@@ -37,9 +65,37 @@ class FormServletTest {
     @Mock
     private CommonConfigurations commonConfigurations;
 
+    @InjectMocks
+    org.apache.commons.fileupload.servlet.ServletFileUpload servletFileUpload;
+
+    RequestParameter[] requestParameters;
+
+    @Mock
+    RequestParameter rp;
+
+    @Mock
+    SlingHttpServletResponse response;
+
+    @Mock
+    ResourceResolver resourceResolver;
+
+    @Mock
+    SlingHttpServletRequest mockRequest;
+
+
+    byte[] fileBytesMaxAllowed = new byte[1000000];
+    byte[] fileBytesAbove = new byte[1000001];
+
+
+
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws IllegalAccessException, NoSuchFieldException {
         underTest = new FormServlet();
+
+        context.load().json("/com.techdata.core.models/actionItems.json", "/action");
+
+
     }
 
     @Test
@@ -50,7 +106,6 @@ class FormServletTest {
         try {
             internalEmailAddressMethod = underTest.getClass().getDeclaredMethod("getInternalEmailAddressArray", Map.class, String[].class, Map.class);
             internalEmailAddressMethod.setAccessible(true);
-//            assertNull(internalEmailAddressMethod);
             Map<String, String> testParameterMapWithKey = new HashMap<String, String>();
             Map<String, String> testParameterMapWithoutKey = new HashMap<String, String>();
             Map<String, String[]> testGroupEmailParameterMap = new HashMap<String, String[]>();
@@ -102,16 +157,116 @@ class FormServletTest {
         underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", CommonConfigurations.class, Map.class);
         underTestMethod.setAccessible(true);
 
-        Mockito.lenient().when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
-        Mockito.lenient().when(commonConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
-        Mockito.lenient().when(commonConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
-        Mockito.lenient().when(commonConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
-        Mockito.lenient().when(commonConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
-        Mockito.lenient().when(commonConfigurations.emailSubject()).thenReturn("emailSubject");
-        Mockito.lenient().when(commonConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
-        Mockito.lenient().when(commonConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
+        when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
+        when(commonConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
+        when(commonConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
+        when(commonConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
+        when(commonConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
+        when(commonConfigurations.emailSubject()).thenReturn("emailSubject");
+        when(commonConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
 
         underTestMethod.invoke(underTest, commonConfigurations, emailParams);
     }
+
+    @Test
+    void testIsValidFileInEmailRequestInvalidFileType() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+
+
+        List<String> allowedFileTypesMockValues = new ArrayList<>();
+        allowedFileTypesMockValues.add(".pdf");
+        int thresholdFileSizeMockValue = 1;
+
+        Field allowedFileTypes = underTest.getClass().getDeclaredField("allowedFileExtensions");
+        allowedFileTypes.setAccessible(true);
+        allowedFileTypes.set(underTest, allowedFileTypesMockValues);
+
+        Field thresholdFileSize = underTest.getClass().getDeclaredField("thresholdFileSize");
+        thresholdFileSize.setAccessible(true);
+        thresholdFileSize.set(underTest, thresholdFileSizeMockValue);
+
+        MockSlingHttpServletRequest mockRequest = context.request();
+        mockRequest.addRequestParameter("file",fileBytesMaxAllowed, "application/pdf", "somefile.zip");
+
+        Method underTestMethod;
+        underTestMethod = underTest.getClass().getDeclaredMethod("isValidFileInEmailRequest", SlingHttpServletRequest.class);
+        underTestMethod.setAccessible(true);
+
+        assertFalse((boolean) underTestMethod.invoke(underTest, mockRequest));
+
+    }
+
+        @Test
+        void testIsValidFileInEmailRequest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+            for (int i = 0;  i < 1000000; i++) {
+                fileBytesMaxAllowed[i] = 'a';
+                fileBytesAbove[i] = 'a';
+            }
+
+        List<String> allowedFileTypesMockValues = new ArrayList<>();
+        allowedFileTypesMockValues.add(".pdf");
+        int thresholdFileSizeMockValue = 1;
+
+        List<String> allowedFileContentTypesMockValue = new ArrayList<>();
+        allowedFileContentTypesMockValue.add("application/pdf");
+
+        Field allowedFileTypes = underTest.getClass().getDeclaredField("allowedFileExtensions");
+        allowedFileTypes.setAccessible(true);
+        allowedFileTypes.set(underTest, allowedFileTypesMockValues);
+
+        Field thresholdFileSize = underTest.getClass().getDeclaredField("thresholdFileSize");
+        thresholdFileSize.setAccessible(true);
+        thresholdFileSize.set(underTest, thresholdFileSizeMockValue);
+
+        Field allowedFileContentTypes = underTest.getClass().getDeclaredField("allowedFileContentTypes");
+        allowedFileContentTypes.setAccessible(true);
+        allowedFileContentTypes.set(underTest, allowedFileContentTypesMockValue);
+
+        MockSlingHttpServletRequest mockRequest = context.request();
+        mockRequest.addRequestParameter("file",fileBytesMaxAllowed, "application/pdf", "somefile.pdf");
+
+        Method underTestMethod;
+        underTestMethod = underTest.getClass().getDeclaredMethod("isValidFileInEmailRequest", SlingHttpServletRequest.class);
+        underTestMethod.setAccessible(true);
+
+        assertTrue((boolean) underTestMethod.invoke(underTest, mockRequest));
+
+    }
+
+    @Test
+    void testIsValidFileInEmailRequestWithLargeFile() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+
+        fileBytesAbove[1000000] = 'a';
+        MockSlingHttpServletRequest mockRequest = context.request();
+        mockRequest.addRequestParameter("file",fileBytesAbove, "application/pdf", "somefile.pdf");
+
+        Method underTestMethod;
+        underTestMethod = underTest.getClass().getDeclaredMethod("isValidFileInEmailRequest", SlingHttpServletRequest.class);
+        underTestMethod.setAccessible(true);
+
+        assertFalse((boolean) underTestMethod.invoke(underTest, mockRequest));
+
+    }
+
+    @Test
+    void testDoPost() throws ServletException, IOException, NoSuchFieldException, IllegalAccessException {
+
+        String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
+        String[] allowedFileContentTypesMockValue = new String[]{"application/pdf"};
+
+        when(mockRequest.getResourceResolver()).thenReturn(resourceResolver);
+        when(resourceResolver.getResource(any())).thenReturn(resource);
+        when(resource.adaptTo(Page.class)).thenReturn(page);
+        when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
+        Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
+        when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
+        when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
+        when(commonConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
+        when(commonConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
+
+        when(mockRequest.getMethod()).thenReturn("POST");
+        when(mockRequest.getContentType()).thenReturn("multipart/form-data");
+        underTest.doPost(mockRequest, response);
+    }
+
 
 }
