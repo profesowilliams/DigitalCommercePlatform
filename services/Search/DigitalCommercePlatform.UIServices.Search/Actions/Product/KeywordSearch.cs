@@ -47,21 +47,23 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly ISearchService _searchService;
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
+            private readonly ISortService _sortService;
             private readonly string _catalog;
             private readonly List<RefinementGroupRequestDto> _defaultIndicators;
             private const string _categories = "CATEGORIES";
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISiteSettings siteSettings)
+            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISiteSettings siteSettings, ISortService sortService)
             {
                 _searchService = searchService;
                 _logger = logger;
                 _mapper = mapper;
+                _sortService = sortService;
                 _catalog = siteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
                 _defaultIndicators = JsonHelper.DeserializeObjectSafely<List<RefinementGroupRequestDto>>(
                     value: siteSettings.TryGetSetting("Search.UI.DefaultIndicators")?.ToString(),
                     settings: JsonSerializerSettingsHelper.GetJsonSerializerSettings(),
-                    defaultValue: new List<RefinementGroupRequestDto>() { 
-                        new RefinementGroupRequestDto(){ 
+                    defaultValue: new List<RefinementGroupRequestDto>() {
+                        new RefinementGroupRequestDto(){
                             Group = "AvailabilityType",
                             Refinements = new List<RefinementRequestDto>()
                             {
@@ -116,12 +118,16 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 appRequest.RefinementGroups ??= new List<RefinementGroupRequestDto>();
                 appRequest.RefinementGroups.AddRange(_defaultIndicators);
                 appRequest.GetDetails = new Dictionary<Enums.Details, bool> { { Enums.Details.TopRefinementsAndResult, true }, { Enums.Details.Price, true }, { Enums.Details.Authorizations, true } };
+                appRequest.Sort = _sortService.GetDefaultSortDto();
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
                 if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)
                 {
                     response.Products.FirstOrDefault().IsExactMatch = true;
                 }
+
+                response.SortingOptions = _sortService.GetDefaultSortingOptions();
+
                 return new Response(response);
             }
         }

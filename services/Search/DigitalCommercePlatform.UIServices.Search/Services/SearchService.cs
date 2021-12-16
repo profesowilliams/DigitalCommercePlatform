@@ -13,9 +13,7 @@ using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +26,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             ILogger<SearchService> Logger,
             IAppSettings AppSettings,
             IUIContext Context,
-            IStringLocalizer StringLocalizer,
             ISiteSettings SiteSettings,
-            IMapper Mapper);
+            IMapper Mapper,
+            ITranslationService TranslationService);
 
     public class SearchService : ISearchService
     {
@@ -42,24 +40,27 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly string _appProductUrl;
         private readonly ILogger<SearchService> _logger;
         private readonly IUIContext _context;
-        private readonly IStringLocalizer _stringLocalizer;
         private readonly ISiteSettings _siteSettings;
         private readonly IMapper _mapper;
+        private readonly ITranslationService _translationService;
         private readonly List<string> _refinementsGroupThatShouldBeLocalized;
-        private Dictionary<string, string> _internalRefinementsTranslations = null;
+        private readonly Dictionary<string, string> _internalRefinementsTranslations = null;
 
         public SearchService(SearchServiceArgs args)
         {
             _logger = args.Logger;
             _context = args.Context;
-            _stringLocalizer = args.StringLocalizer;
             _siteSettings = args.SiteSettings;
             _middleTierHttpClient = args.MiddleTierHttpClient;
             _appSearchUrl = args.AppSettings.GetSetting("Search.App.Url");
             _appProductUrl = args.AppSettings.GetSetting("Product.App.Url");
             _mapper = args.Mapper;
 
+            _translationService = args.TranslationService;
+
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
+
+            _translationService.FetchTranslations("Search.UI.InternalRefinements", ref _internalRefinementsTranslations);
         }
 
         public async Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous)
@@ -141,13 +142,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 }
             }
             else
-            {                
+            {
                 var generalGroup = results.Find(e => e.Group.Equals(General, StringComparison.InvariantCultureIgnoreCase));
                 if (generalGroup == null)
                     results.Add(
                         new RefinementGroupResponseModel
                         {
-                            Group = Translate(General),
+                            Group = _translationService.Translate(_internalRefinementsTranslations, General),
                             Refinements = new List<RefinementModel>()
                         }
                     );
@@ -155,7 +156,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 generalGroup = results.First(e => e.Group.Equals(General, StringComparison.InvariantCultureIgnoreCase));
 
                 var shouldTranslate = RefinementGroupShouldBeLocalized(group.Group);
-                generalGroup.Refinements.AddRange(shouldTranslate ? GetLocalizedRefinements(group) : NotTranslatedRefinemntsModel(group));               
+                generalGroup.Refinements.AddRange(shouldTranslate ? GetLocalizedRefinements(group) : NotTranslatedRefinemntsModel(group));
             }
         }
 
@@ -178,7 +179,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                     Id = o.Id,
                     Text = o.Text,
                     Selected = o.Selected
-                }).ToList(),                
+                }).ToList(),
             }).ToList();
 
             return refinements;
@@ -189,7 +190,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var refinements = group.Refinements.Select(x => new RefinementModel
             {
                 Id = x.Id,
-                Name = Translate(x.Name),
+                Name = _translationService.Translate(_internalRefinementsTranslations, x.Name),
                 OriginalGroupName = group.Group,
                 Type = x.Type,
                 Range = x.Range is null ? null : new RangeModel
@@ -201,9 +202,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 {
                     Count = o.Count,
                     Id = o.Id,
-                    Text = Translate(o.Text),
+                    Text = _translationService.Translate(_internalRefinementsTranslations, o.Text),
                     Selected = o.Selected
-                }).ToList(),                
+                }).ToList(),
             }).ToList();
 
             return refinements;
@@ -232,10 +233,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 if (!RefinementGroupShouldBeLocalized(r.Name, r.OriginalGroupName))
                     return;
 
-                r.Name = Translate(r.Name);
+                r.Name = _translationService.Translate(_internalRefinementsTranslations, r.Name);
                 r.Options.ForEach(o =>
                 {
-                    o.Text = Translate(o.Text);
+                    o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
                 });
             });
         }
@@ -243,31 +244,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private bool RefinementGroupShouldBeLocalized(params string[] groups)
         {
             return _refinementsGroupThatShouldBeLocalized.Intersect(groups)?.Any() == true;
-        }
-
-        // this method should be removed whenever IStringLocalizer will be fixed for missing translations
-        private string Translate(string key, string fallback = null)
-        {
-            PopulateInternalRefinementsTranslations();
-
-            if (!_internalRefinementsTranslations.TryGetValue(key, out var translation))
-                return fallback ?? key;
-
-            return translation;
-        }
-
-        private void PopulateInternalRefinementsTranslations()
-        {
-            try
-            {
-                if (_internalRefinementsTranslations is null)
-                    _internalRefinementsTranslations = JsonConvert.DeserializeObject<Dictionary<string, string>>(_stringLocalizer["Search.UI.InternalRefinements"]);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception at PopulateInternalRefinementsTranslations");
-                _internalRefinementsTranslations = new Dictionary<string, string>();
-            }
         }
 
         private void AddIndicators(ElasticItemDto productDto, ElasticItemModel productModel)

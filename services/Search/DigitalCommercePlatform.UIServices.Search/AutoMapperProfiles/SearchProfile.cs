@@ -29,7 +29,8 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<SortRequestModel, SortRequestDto>();
             CreateMap<FullSearchRequestModel, SearchRequestDto>()
                 .ForMember(dest => dest.RangeFilters, opt => opt.Ignore())
-                .ForMember(dest => dest.GetDetails, opt => opt.Ignore());
+                .ForMember(dest => dest.GetDetails, opt => opt.Ignore())
+                ;
             CreateMap<MainSpecificationDto, MainSpecificationModel>();
             CreateMap<ImageDto, ImageModel>();
             CreateMap<ElasticPriceDto, ElasticPriceModel>();
@@ -66,6 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<SearchReportDto, SearchReportModel>();
             CreateMap<SearchResponseDto, FullSearchResponseModel>()
                 .ForMember(dest => dest.TopRefinements, opt => opt.Ignore())
+                .ForMember(dest => dest.SortingOptions, opt => opt.Ignore())
                 ;
 
             CreateMap<Dto.Content.ContentSearchResponseDto, Models.Content.FullSearchResponseModel>();

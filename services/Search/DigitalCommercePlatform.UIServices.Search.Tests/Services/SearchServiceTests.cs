@@ -12,7 +12,6 @@ using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
-using Microsoft.Extensions.Localization;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -29,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly FakeLogger<SearchService> _logger;
         private readonly Mock<IUIContext> _context;
+        private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly SearchService _searchService;
         private Mock<ISiteSettings> _siteSettingsMock;
 
@@ -46,10 +46,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 });
             _context = new Mock<IUIContext>();
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
-            var localizer = new Mock<IStringLocalizer>();
-            localizer.Setup(x => x["Search.UI.InternalRefinements"]).Returns(new LocalizedString("Search.UI.InternalRefinements", "{\"AvailabilityType\" : \"Availability Type\", \"Warehouse\" : \"In Warehouse\", \"Virtual\" : \"Virtual\", \"DropShip\" : \"Drop Ship\", \"Price\" : \"Price\", \"InStock\" : \"Stock Level\", \"InStockOnly\" : \"In Stock Only\", \"Condition\" : \"Condition\", \"Refurbished\" : \"Refurbished\", \"ProductStatus\" : \"Product Status\", \"DisplayStatus\" : \"Product Status\", \"Allocated\" : \"Allocated\", \"Active\" : \"Active\", \"PhasedOut\" : \"Phased Out\", \"Discontinued\" : \"Discontinued\", \"AuthorizedOnly\" : \"Authorization Status\", \"AuthRequiredView\" : \"Authorization Status\", \"HideUnauthorized\" : \"Hide Requires Authorization\"}"));
 
-            _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, localizer.Object, _siteSettingsMock.Object, mapper));
+            _translationServiceMock = new Mock<ITranslationService>();
+
+            _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _siteSettingsMock.Object, mapper, _translationServiceMock.Object));
         }
 
         [Theory]
@@ -290,6 +290,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetAdvancedRefinements_MapResponseProperly(SearchRequestDto request)
         {
             //arrange
+            _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), null)).Returns((Dictionary<string, string> dict, string key, string fallback) => key);
+            _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), "InStock", null)).Returns("Stock Level");
+
             var appResponse = new SearchResponseDto
             {
                 RefinementGroups = new List<Dto.FullSearch.Internal.RefinementGroupResponseDto>
@@ -427,7 +430,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                             }
                         }
                     }
-                },               
+                },
                 new RefinementGroupResponseModel
                 {
                     Group="Group",

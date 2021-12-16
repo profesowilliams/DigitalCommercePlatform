@@ -1,21 +1,16 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
-using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
-using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
-using FluentValidation.TestHelper;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly FakeLogger<KeywordSearch.Handler> _logger;
         private readonly Mapper _mapper;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
+        private readonly Mock<ISortService> _sortServiceMock;
 
         public KeywordSearchTests()
         {
@@ -36,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog.All.DefaultCatalog")).Returns("FCS");
             _siteSettingsMock.Setup(s => s.TryGetSetting("Search.UI.DefaultIndicators")).Returns("[{ \"Group\":\"AvailabilityType\", \"Refinements\":[{ \"Id\":\"DropShip\", \"ValueId\":\"Y\" },{ \"Id\": \"Warehouse\", \"ValueId\": \"Y\" }, { \"Id\":\"Virtual\", \"ValueId\":\"Y\" }]},{ \"Group\":\"ProductStatus\", \"Refinements\":[{\"Id\":\"DisplayStatus\",\"ValueId\":\"Allocated\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"PhasedOut\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"Active\"}]},{\"Group\":\"InStock\",\"Refinements\":[{\"Id\":\"InStock\",\"ValueId\":\"Y\"}]}]");
+            _sortServiceMock = new Mock<ISortService>();
         }
 
         [Theory]
@@ -77,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(new FullSearchResponseModel()));
 
             var sut = GetHandler();
-            
+
             //act
             var result = await sut.Handle(request, default).ConfigureAwait(false);
 
@@ -151,7 +148,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //Arrange
             _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
             var _siteSettingsMockEmpty = new Mock<ISiteSettings>();
-            var sut = new KeywordSearch.Handler(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMockEmpty.Object);
+            var sut = GetHandler();
 
             //Act
             var result = await sut.Handle(request, default).ConfigureAwait(false);
@@ -161,7 +158,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
 
-
-        private KeywordSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object);
+        private KeywordSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object);
     }
 }

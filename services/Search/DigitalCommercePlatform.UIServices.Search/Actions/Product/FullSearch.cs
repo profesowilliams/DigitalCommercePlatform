@@ -42,12 +42,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly ISearchService _searchService;
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
+            private readonly ISortService _sortService;
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper)
+            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService)
             {
                 _searchService = searchService;
                 _logger = logger;
                 _mapper = mapper;
+                _sortService = sortService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -69,7 +71,19 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     appRequest.GetDetails.Add(Details.SearchWithoutRefinements, true);
                 }
 
-                return new Response(await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous));
+                if (appRequest.Sort is null)
+                {
+                    appRequest.Sort = _sortService.GetDefaultSortDto();
+                }
+
+                var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous).ConfigureAwait(false);
+
+                if (request.FullSearchRequestModel.GetRefinements)
+                {
+                    response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort);
+                }
+
+                return new Response(response);
             }
         }
 

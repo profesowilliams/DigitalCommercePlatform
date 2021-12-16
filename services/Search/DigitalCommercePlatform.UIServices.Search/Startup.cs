@@ -34,6 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
 
             services.AddTransient<SearchServiceArgs>();
+            services.AddSingleton<ITranslationService, TranslationService>();
+            services.AddScoped<ISortService, SortService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

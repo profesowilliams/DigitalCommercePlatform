@@ -21,12 +21,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<ISearchService> _searchServiceMock;
         private readonly FakeLogger<FullSearch.Handler> _logger;
         private readonly Mapper _mapper;
+        private readonly Mock<ISortService> _sortServiceMock;
 
         public FullSearchTests()
         {
             _logger = new FakeLogger<FullSearch.Handler>();
             _searchServiceMock = new Mock<ISearchService>();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
+            _sortServiceMock = new Mock<ISortService>();
         }
 
         [Theory]
@@ -182,6 +184,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.Is<SearchRequestDto>(r => r.GetDetails.ContainsKey(Enums.Details.TopRefinementsAndResult) && r.GetDetails[Enums.Details.TopRefinementsAndResult]), It.IsAny<bool>()), Times.Once);
         }
 
-        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper);
+        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object);
     }
 }
