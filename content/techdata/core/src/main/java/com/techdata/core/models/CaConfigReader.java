@@ -10,6 +10,7 @@ import com.techdata.core.slingcaconfig.RedirectConfiguration;
 import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
 import com.techdata.core.slingcaconfig.MiniCartConfiguration;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
@@ -17,6 +18,7 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
@@ -172,6 +174,10 @@ public class CaConfigReader {
 
     private String dcpDomain;
 
+    private String allowedFileExtensions;
+
+    private String fileThresholdInMB;
+
     private String renewalsGridEndpoint;
 
     @PostConstruct
@@ -220,7 +226,7 @@ public class CaConfigReader {
         accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
         puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
-        downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();   
+        downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
         cartURL = mcConfiguration.cartURL();
@@ -267,6 +273,8 @@ public class CaConfigReader {
         CommonConfigurations commonConfigurations = page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
 
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
+        allowedFileExtensions = String.join(",", Arrays.asList(commonConfigurations.allowedFileExtensions()));
+        fileThresholdInMB = String.valueOf(commonConfigurations.fileThresholdInMB());
     }
 
     public String getUiServiceDomain() {
@@ -542,4 +550,12 @@ public class CaConfigReader {
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
 
     public String getVendorDisconnectEndpoint() { return vendorDisconnectEndpoint; }
+
+    public String getAllowedFileExtensions() {
+        return allowedFileExtensions;
+    }
+
+    public String getFileThresholdInMB() {
+        return fileThresholdInMB;
+    }
 }

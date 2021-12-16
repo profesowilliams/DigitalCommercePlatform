@@ -125,6 +125,7 @@ class CaConfigReaderTest {
         when(redirectConfiguration.orderDetailPage()).thenReturn("orderDetailPage");
 
         when(commonConfigurations.productEmptyImageUrl()).thenReturn("productEmptyImageUrl");
+        when(commonConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
 
 
 

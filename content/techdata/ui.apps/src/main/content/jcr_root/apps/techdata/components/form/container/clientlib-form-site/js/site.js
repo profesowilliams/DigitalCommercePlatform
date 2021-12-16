@@ -73,7 +73,7 @@
             document.getElementById(errorBlockId).innerHTML = "Invalid file size, allowed files under 10 MB.";
             return false;
         } else if(invalidFile(fileEle) == "-2") {
-            document.getElementById(errorBlockId).innerHTML = "Invalid file format, allowed pdf files only.";
+            document.getElementById(errorBlockId).innerHTML = "Invalid file format, allowed pdf, zip files only.";
             return false;
         }
         return true;
