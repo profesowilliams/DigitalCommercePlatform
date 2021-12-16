@@ -56,4 +56,3 @@ namespace DigitalCommercePlatform.UIServices.Product.Tests.Actions
         }
     }
 }
-

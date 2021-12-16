@@ -34,7 +34,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Tests.Services
             //Assert
             productService.Should().BeOfType<ProductService>();
             _appSettingsMock.Verify(x => x.GetSetting("App.Product.Url"), Times.Once);
-
         }
 
         [Theory]
@@ -57,6 +56,5 @@ namespace DigitalCommercePlatform.UIServices.Product.Tests.Services
         {
             return new ProductService(_middleTierHttpClientMock.Object, _appSettingsMock.Object, _loggerMock);
         }
-
     }
 }

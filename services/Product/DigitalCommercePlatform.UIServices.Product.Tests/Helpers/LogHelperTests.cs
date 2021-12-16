@@ -18,7 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Tests.Helpers
             var response = LogHelper.ExcludeHealthChecks(httpContext, 0, new ArgumentException("test exception"));
             //Assert
             response.Should().Be(Serilog.Events.LogEventLevel.Error);
-
         }
 
         [Fact]
@@ -28,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Product.Tests.Helpers
             var response = LogHelper.ExcludeHealthChecks(new DefaultHttpContext(), 0, null);
             //Assert
             response.Should().Be(Serilog.Events.LogEventLevel.Information);
-
         }
     }
 }
