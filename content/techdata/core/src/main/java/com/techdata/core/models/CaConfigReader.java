@@ -220,8 +220,7 @@ public class CaConfigReader {
         accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
         puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
-        downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
-        renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
+        downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();   
         shopDomain = mcConfiguration.shopDomain();
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
         cartURL = mcConfiguration.cartURL();
