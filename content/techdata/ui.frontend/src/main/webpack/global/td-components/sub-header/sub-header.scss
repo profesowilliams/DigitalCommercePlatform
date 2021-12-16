@@ -26,6 +26,9 @@
 
         &+li {
           border-left: rem(1px) solid get-color(brand-white);
+          @include mobile {
+            display: none;
+          }
         }
 
         a,
@@ -43,6 +46,10 @@
 
       &--right {
         align-items: center;
+        @include mobile {          
+          margin: 0 auto !important;
+        }
+
       }
 
       &--left {
@@ -232,6 +239,16 @@
     }
 
     @include mobile {
+
+      ol {
+        display: none;
+      }
+
+
+      .cmp-sub-header__wrapper ul li+li {
+        display: none !important;
+        border-left: rem(0px) solid get-color(brand-white);
+      }
 
       .submenu-button-container {
         display: flex;
