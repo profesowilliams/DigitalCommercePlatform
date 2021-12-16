@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<Models.Quote.Quote.Internal.AgreementModel, Models.Quote.AgreementModel>();
 
             CreateMap<ItemModel, Line>()
+                .ForMember(dest => dest.Annuity, opt => opt.MapFrom(src => src.Annuity))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom<ItemDescriptionResolver>())
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ItemManufacturerResolver>())
                 .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<ItemTDPartNumberResolver>())
@@ -113,7 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<DiscountDto, Discount>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<ItemDto, Line>()
+            CreateMap<ItemDto, Line>()                
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Qty))
                 .ForMember(dest => dest.VendorPartNo, opt => opt.MapFrom(src => src.VendorPartNo))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.ListPrice))

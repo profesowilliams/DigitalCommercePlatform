@@ -1,21 +1,27 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
 using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.TestUtilities;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
@@ -26,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
         private readonly Mock<ILogger<CommerceService>> _logger;
         private readonly Mock<IHelperService> _helperService;
+        private readonly ICommerceService _commerceService;
         private readonly Mock<ICartService> _cartService;
         private readonly Mock<IUIContext> _uiContext;
         private readonly Mock<IMapper> _mapper;
@@ -39,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             _uiContext = new Mock<IUIContext>();
             _helperService = new Mock<IHelperService>();
             _mapper = new Mock<IMapper>();
+            _commerceService = new CommerceService(_middleTierHttpClient.Object,_logger.Object,_appSettings.Object,_cartService.Object,_uiContext.Object,_mapper.Object,_helperService.Object);
         }
 
 
@@ -267,6 +275,115 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         }
 
+        [Fact]
+        public void MapAnnuity_Test()
+        {
+            //arrange
+            QuoteModel input = new();
+            List<ItemModel> items = new List<ItemModel>();            
+            ItemModel item = new ItemModel();
+
+            List<AttributeDto> attributes = new List<AttributeDto>();
+
+            AttributeDto materialAttribute  = new AttributeDto();
+            materialAttribute.Name = "materialtype";
+            materialAttribute.Value = "service";
+            attributes.Add(materialAttribute);
+
+            AttributeDto endDate = new AttributeDto();
+            endDate.Name = "requestedenddate";
+            endDate.Value = "6-13-2022";
+            attributes.Add(endDate);
+
+            AttributeDto startDate = new AttributeDto();
+            startDate.Name = "requestedstartdate";
+            startDate.Value = "6-13-2021";
+            attributes.Add(startDate);
+
+            AttributeDto billingTermAttribute = new AttributeDto();
+            billingTermAttribute.Name = "billingterm";
+            billingTermAttribute.Value = "Monthly";
+            attributes.Add(billingTermAttribute);
+
+            AttributeDto autoRenewalTermAttribute = new AttributeDto();
+            autoRenewalTermAttribute.Name = "initialterm";
+            autoRenewalTermAttribute.Value = "36";
+            attributes.Add(autoRenewalTermAttribute);
+
+            AttributeDto dealDurationAttribute = new AttributeDto();
+            dealDurationAttribute.Name = "autorenewalterm";
+            dealDurationAttribute.Value = "1";
+            attributes.Add(dealDurationAttribute);
+
+            item.Attributes = attributes;
+            items.Add(item);
+
+            input.Items = items;
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapAnnuity" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { input });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void BuildAnnuity_Test()
+        {
+            //arrange
+
+            ItemModel input = new ItemModel();
+
+            List<AttributeDto> attributes = new List<AttributeDto>();
+
+            AttributeDto materialAttribute = new AttributeDto();
+            materialAttribute.Name = "materialtype";
+            materialAttribute.Value = "service";
+            attributes.Add(materialAttribute);
+
+            AttributeDto endDate = new AttributeDto();
+            endDate.Name = "requestedenddate";
+            endDate.Value = "6-13-2022";
+            attributes.Add(endDate);
+
+            AttributeDto startDate = new AttributeDto();
+            startDate.Name = "requestedstartdate";
+            startDate.Value = "6-13-2021";
+            attributes.Add(startDate);
+
+            AttributeDto billingTermAttribute = new AttributeDto();
+            billingTermAttribute.Name = "billingterm";
+            billingTermAttribute.Value = "Monthly";
+            attributes.Add(billingTermAttribute);
+
+            AttributeDto autoRenewalTermAttribute = new AttributeDto();
+            autoRenewalTermAttribute.Name = "initialterm";
+            autoRenewalTermAttribute.Value = "36";
+            attributes.Add(autoRenewalTermAttribute);
+
+            AttributeDto dealDurationAttribute = new AttributeDto();
+            dealDurationAttribute.Name = "autorenewalterm";
+            dealDurationAttribute.Value = "1";
+            attributes.Add(dealDurationAttribute);
+
+            input.Attributes = attributes;
+   
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildAnnuity" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { input });
+            Assert.Null(result);
+        }
 
         private void InitiateCommerceService(out Type type, out object objType)
         {
@@ -282,5 +399,66 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 );
         }
 
+    // Public methods Unit test cases
+        [Theory]
+        [AutoDomainData]
+        public async Task GetQuote(GetQuote.Request request)
+        {
+            // Act
+            var result = await _commerceService.GetQuote(request);
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task FindQuotes(FindModel request)
+        {
+            // Act
+            var result = await _commerceService.FindQuotes(request);
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetPricingConditions(GetPricingConditions.Request request)
+        {
+            // Act
+            var result = await _commerceService.GetPricingConditions(request);
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateQuoteFrom(CreateQuote.Request request)
+        {
+            // Act
+            var result = await _commerceService.CreateQuoteFrom(request);
+            // Assert
+            Assert.Null(result);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateQuoteFromExpired(CreateQuoteFrom.Request request)
+        {
+            // Act
+            var result = await _commerceService.CreateQuoteFromExpired(request);
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task UpdateQuote(UpdateQuote.Request request)
+        {
+            // Act
+            var result = await _commerceService.UpdateQuote(request);
+            // Assert
+            Assert.NotNull(result);
+        }
     }
 }

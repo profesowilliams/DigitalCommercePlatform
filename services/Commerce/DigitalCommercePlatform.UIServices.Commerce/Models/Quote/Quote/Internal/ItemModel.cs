@@ -12,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string Solution { get; set; }
         public decimal ConfirmedQuantity { get; set; }
         public string Status { get; set; }
+        public Annuity Annuity { get; set; }
         public string StatusNotes { get; set; }
         public DateTime Updated { get; set; }
         public List<MarginModel> Margins { get; set; }

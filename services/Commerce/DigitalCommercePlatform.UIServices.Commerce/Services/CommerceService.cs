@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -31,7 +31,6 @@ using ContactModel = DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Qu
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
-    [ExcludeFromCodeCoverage]
     public class CommerceService : ICommerceService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
@@ -67,7 +66,45 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
 
             var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
-            return getQuoteResponse?.FirstOrDefault();
+
+            var response = getQuoteResponse?.FirstOrDefault();
+
+            if (response != null)
+                response = MapAnnuity(response);
+
+            return response;
+        }
+
+        private QuoteModel MapAnnuity(QuoteModel input)
+        {
+            if (input.Items.Any())
+            {
+                foreach (var line in input.Items)
+                {
+                    BuildAnnuity(line);
+                }
+            }
+            return input;
+        }
+
+        private void BuildAnnuity(ItemModel line)
+        {
+            var attribute = line.Attributes.Where(x => x.Name.ToLower().Equals("materialtype")).FirstOrDefault();
+            if (string.Equals(attribute?.Value?.ToLower(), "service"))
+            {
+                var startDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out var sdt) ? sdt : null as DateTime?;
+                var endDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out var edt) ? edt : null as DateTime?;
+                line.Annuity = new Annuity
+                {
+                    BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault().Value ?? string.Empty,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault().Value ?? string.Empty, // or use servicelength                             
+                    AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any()
+                };
+            }
         }
 
         public Task<string> GetQuotes(string Id)
@@ -307,7 +344,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         Id = !string.IsNullOrWhiteSpace(item.TDNumber) ?  item.TDNumber : item.MFRNumber,
                         Type = !string.IsNullOrWhiteSpace(item.TDNumber) ? "TECHDATA" : "MANUFACTURER",
                         Manufacturer = item.Manufacturer,
-                        Name = !string.IsNullOrWhiteSpace(item.ShortDescription) ?  item.ShortDescription : item.MFRNumber, 
+                        Name = !string.IsNullOrWhiteSpace(item.ShortDescription) ?  item.ShortDescription : item.MFRNumber,
                     }
                 };
             //vendorquoteid

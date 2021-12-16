@@ -44,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 lines.Add(new Line
                 {
+                    Annuity = item.Annuity,
                     Id = item.Id,
                     Parent = item.Parent,
                     Availability = item.Availability,
