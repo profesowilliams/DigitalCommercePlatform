@@ -38,13 +38,19 @@ public @interface CommonConfigurations {
     @Property(label = "Confirmation Email Subject", description = "Confirmation Email Subject")
     String confirmationEmailSubject();
 
-    @Property(label = "Allowed File Extensions", description = "Specify comma separated list, like .pdf,.xls,.doc,.docx")
-    String[] allowedFileTypes() default {".pdf",".doc",".docx",".xls",".xlxs",".txt",".ppt",".jpeg",".png",".jpg",".gif"};
+    @Property(label = "Allowed File Extensions", description = "Specify comma separated list, like .pdf,.zip")
+    String[] allowedFileExtensions() default {".pdf",".zip"};
+
+    @Property(label = "Allowed File Content types", description = "Specify comma separated list, like application/pdf, application/zip")
+    String[] allowedFileContentTypes() default {"application/pdf", "application/zip"};
 
     @Property(label = "File Threshold in MB", description = "Specify upload file threshold size for form")
     int fileThresholdInMB() default 10;
 
     @Property(label = "Target Groups Array", description = "Target Groups Array")
     String[] formSubmissionTargetGroups();
+
+    @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
+    String textfieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
 
 }

@@ -55,8 +55,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         private String confirmationEmailTemplatePath = StringUtils.EMPTY;
         private Map<String, String[]> formSubmissionTargetGroups;
         private int thresholdFileSize = 10;
-        private List<String> allowedFileTypes = new ArrayList<>();
-        private String textfieldRegexExpr = "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/]+$";
+        private List<String> allowedFileExtensions = new ArrayList<>();
+        private List<String> allowedFileContentTypes = new ArrayList<>();
+        private String textfieldRegexExpr;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -80,10 +81,16 @@ public class FormServlet extends SlingAllMethodsServlet {
 
                         if (isMultipart) {
                                 LOG.info("Received Multi-part form data for processing");
-                                prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                 Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
-                                if(populateEmailAttributesFromCAConfig(resource, emailParams)) {
-                                        if(isValidFileInEmailRequest(request)) {
+                                CommonConfigurations commonConfigurations = getCAConfigEmailObject(resource);
+                                if(commonConfigurations != null) {
+                                        thresholdFileSize = commonConfigurations.fileThresholdInMB();
+                                        allowedFileExtensions = Arrays.asList(commonConfigurations.allowedFileExtensions());
+                                        allowedFileContentTypes = Arrays.asList(commonConfigurations.allowedFileContentTypes());
+                                        textfieldRegexExpr = commonConfigurations.textfieldRegexString();
+                                        prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
+                                        populateEmailAttributesFromCAConfig(commonConfigurations, emailParams);
+                                        if (isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
                                                         internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
                                         } else {
@@ -100,17 +107,25 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
+        private CommonConfigurations getCAConfigEmailObject(Resource resource) {
+                if(resource == null || resource.adaptTo(Page.class) == null) return null;
+                Page page = resource.adaptTo(Page.class);
+                return page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
+        }
+
         private boolean isValidFileInEmailRequest(SlingHttpServletRequest request) {
                 RequestParameter requestParameter = request.getRequestParameter(FILE_PARAM_NAME);
-                if(requestParameter == null) {
+                if(requestParameter == null || StringUtils.isEmpty(requestParameter.getFileName())) {
                         return Boolean.TRUE;
                 }
                 String fileExtension = requestParameter.getFileName().substring(requestParameter.getFileName().lastIndexOf("."));
                 int thresholdFileSizeInBytes = thresholdFileSize * ONE_MB_IN_BYTES;
                 // if incoming file less than threshold and not in allowed file types then ignore the request
-                if(requestParameter.getSize() > thresholdFileSizeInBytes || !allowedFileTypes.contains(fileExtension)) {
-                        LOG.error("Skipped form and email processing as attachment file size or extension is invalid!!");
-                        LOG.error("Incoming file size {} and extension {}.", thresholdFileSizeInBytes, fileExtension);
+                if(requestParameter.getSize() > thresholdFileSizeInBytes || !allowedFileExtensions.contains(fileExtension)
+                        || !allowedFileContentTypes.contains(requestParameter.getContentType())) {
+                        LOG.error("Skipped form and email processing as attachment file size or extension/content-type is invalid!!");
+                        LOG.error("Incoming file size {}, extension {} and content type {}.",
+                                thresholdFileSizeInBytes, fileExtension, requestParameter.getContentType());
                         return Boolean.FALSE;
                 }
                 return Boolean.TRUE;
@@ -165,10 +180,11 @@ public class FormServlet extends SlingAllMethodsServlet {
                 emailParams.put(key, validateString(value.toString()));
         }
 
-        public String validateString(String input) throws Exception {
+        public String validateString(String input) throws IOException {
+                if(StringUtils.isEmpty(input)) return input;
                 final Pattern pattern = Pattern.compile(textfieldRegexExpr);
                 if (!pattern.matcher(input).find()) {
-                        throw new Exception("Invalid form field, skipping the form and email submission.");
+                        throw new IOException("Invalid form field, skipping the form and email submission.");
                 }
                 return input;
         }
@@ -176,9 +192,8 @@ public class FormServlet extends SlingAllMethodsServlet {
         private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments) throws IOException {
                 RequestParameter fileRequestParameter = pArr[0];
 
-                LOG.debug("file input parameter found. Name is {}, content type is {}", fileRequestParameter.getFileName(), fileRequestParameter.getContentType());
-                if (fileRequestParameter.getContentType()!= null && fileRequestParameter.getFileName() != null
-                        && fileRequestParameter.getInputStream() != null && fileRequestParameter.getContentType().equals("application/pdf"))
+                LOG.debug("file input parameter found. Name is {} ", fileRequestParameter.getFileName());
+                if (StringUtils.isNotEmpty(fileRequestParameter.getFileName()) && fileRequestParameter.getInputStream() != null )
                 {
                         InputStream file = fileRequestParameter.getInputStream();
                         attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
@@ -187,30 +202,18 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private boolean populateEmailAttributesFromCAConfig(Resource resource, Map<String, String> emailParams) {
-                boolean flag = Boolean.FALSE;
-                if (resource != null) {
-                        Page page = resource.adaptTo(Page.class);
-                        CommonConfigurations commonConfigurations =
-                                page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
-                        toEmailAddresses = commonConfigurations.toEmails();
-                        submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
-                        String confirmationEmailBody = commonConfigurations.confirmationEmailBody();
-                        emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
-                        internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
-                        confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
-                        String emailSubject = commonConfigurations.emailSubject();
-                        emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
-                        String confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
-                        thresholdFileSize = commonConfigurations.fileThresholdInMB();
-                        allowedFileTypes = Arrays.asList(commonConfigurations.allowedFileTypes());
-                        formSubmissionTargetGroups = getMapOfEmailAddress(commonConfigurations.formSubmissionTargetGroups());
-                        emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
-                        flag = Boolean.TRUE;
-                } else {
-                        LOG.error("resource to read CA config is null");
-                }
-                return flag;
+        private void populateEmailAttributesFromCAConfig(CommonConfigurations commonConfigurations, Map<String, String> emailParams) {
+                toEmailAddresses = commonConfigurations.toEmails();
+                submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
+                String confirmationEmailBody = commonConfigurations.confirmationEmailBody();
+                emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
+                internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
+                confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
+                String emailSubject = commonConfigurations.emailSubject();
+                emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
+                String confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
+                formSubmissionTargetGroups = getMapOfEmailAddress(commonConfigurations.formSubmissionTargetGroups());
+                emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
         }
 
         private void sendEmailWithFormData(String[] toEmailAddresses, Map<String, String> emailParams, String submitterEmailFieldName,

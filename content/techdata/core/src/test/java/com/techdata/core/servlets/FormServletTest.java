@@ -1,15 +1,9 @@
 package com.techdata.core.servlets;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.CommonConfigurations;
+import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +13,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import static junit.framework.Assert.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
 class FormServletTest {
@@ -103,23 +99,19 @@ class FormServletTest {
         Map<String, String[]> emailParams = new HashMap<>();
 
         Method underTestMethod;
-        underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", Resource.class, Map.class);
+        underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", CommonConfigurations.class, Map.class);
         underTestMethod.setAccessible(true);
-        Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
-        when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
-        when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
-        when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
-        when(commonConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
-        when(commonConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
-        when(commonConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
-        when(commonConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
-        when(commonConfigurations.emailSubject()).thenReturn("emailSubject");
-        when(commonConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
-        when(commonConfigurations.allowedFileTypes()).thenReturn(allowedFileTypesArray);
 
-        boolean flag = (boolean) underTestMethod.invoke(underTest, resource, emailParams);
-        assertTrue(flag);
+        Mockito.lenient().when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
+        Mockito.lenient().when(commonConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
+        Mockito.lenient().when(commonConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
+        Mockito.lenient().when(commonConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
+        Mockito.lenient().when(commonConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
+        Mockito.lenient().when(commonConfigurations.emailSubject()).thenReturn("emailSubject");
+        Mockito.lenient().when(commonConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
+        Mockito.lenient().when(commonConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
+
+        underTestMethod.invoke(underTest, commonConfigurations, emailParams);
     }
-
 
 }
