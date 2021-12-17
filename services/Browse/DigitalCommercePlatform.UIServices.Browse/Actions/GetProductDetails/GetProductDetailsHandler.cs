@@ -142,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     product.Documents = documents;
             }
 
-            private async Task MapMarketing(ProductDto x, ProductModel product)
+            private static async Task MapMarketing(ProductDto x, ProductModel product)
             {
                 if (x.Marketing == null)
                     return;
@@ -197,7 +197,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     };
             }
 
-            private void MapSpecifications(ProductDto x, ProductModel product)
+            private static void MapSpecifications(ProductDto x, ProductModel product)
             {
                 var specifications = new ProductSpecificationsModel();
 
@@ -226,7 +226,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Specifications = specifications.MainSpecifications != null || specifications.ExtendedSpecifications != null ? specifications : null;
             }
 
-            private void MapIndicators(ProductModel product, Flags flags)
+            private static void MapIndicators(ProductModel product, Flags flags)
             {
                 product.IndicatorsFlags = new IndicatorFlags
                 {
@@ -241,7 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 };
             }
 
-            private void MapNotes(ProductDto x, ProductModel product, string salesOrg)
+            private static void MapNotes(ProductDto x, ProductModel product, string salesOrg)
             {
                 product.Notes = x.SalesOrganizations
                                     ?.FirstOrDefault(s => s.Id == salesOrg)
@@ -253,7 +253,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                                     });
             }
 
-            private void MapAuthorizations(ProductModel product, Flags flags)
+            private static void MapAuthorizations(ProductModel product, Flags flags)
             {
                 product.Authorization = new AuthorizationModel
                 {
@@ -279,8 +279,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice)
             {
-                if (x.Price == null)
-                    return;
+                if (x.Price == null)                
+                    return;                
 
                 product.Price = new PriceModel
                 {
@@ -322,7 +322,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Images = imagesModel.Any() ? imagesModel : null;
             }
 
-            private Flags ExtractFlags(IEnumerable<ValidateDto> validateDto, ProductDto productDto, string salesOrg, string site)
+            private static Flags ExtractFlags(IEnumerable<ValidateDto> validateDto, ProductDto productDto, string salesOrg, string site)
             {
                 var flags = new Flags();
 
@@ -348,7 +348,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return flags;
             }
 
-            private async Task<XmlDocument> GetXmlDocument(string url)
+            private static async Task<XmlDocument> GetXmlDocument(string url)
             {
                 if (string.IsNullOrEmpty(url))
                     return null;
@@ -359,7 +359,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return xml;
             }
 
-            private UlListXmlDto SerializeUlList(XmlDocument document)
+            private static UlListXmlDto SerializeUlList(XmlDocument document)
             {
                 if (document == null)
                     return null;
