@@ -180,8 +180,6 @@ public class CaConfigReader {
 
     private String renewalsGridEndpoint;
 
-    private String agGridLicenseKey;
-
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -277,7 +275,6 @@ public class CaConfigReader {
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
         allowedFileExtensions = String.join(",", Arrays.asList(commonConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(commonConfigurations.fileThresholdInMB());
-        agGridLicenseKey = commonConfigurations.agGridLicenseKey();
     }
 
     public String getUiServiceDomain() {
@@ -560,8 +557,5 @@ public class CaConfigReader {
 
     public String getFileThresholdInMB() {
         return fileThresholdInMB;
-    }
-    public String getAgGridLicenseKey() {
-        return agGridLicenseKey;
     }
 }

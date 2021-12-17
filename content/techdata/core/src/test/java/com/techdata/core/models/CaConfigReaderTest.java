@@ -126,7 +126,10 @@ class CaConfigReaderTest {
 
         when(commonConfigurations.productEmptyImageUrl()).thenReturn("productEmptyImageUrl");
         when(commonConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
-        when(commonConfigurations.agGridLicenseKey()).thenReturn("agGridLicenseKey");
+
+
+
+
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -178,6 +181,5 @@ class CaConfigReaderTest {
         assertEquals("orderDetailPage", underTest.getOrderDetailPage());
 
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
-        assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
     }
 }
