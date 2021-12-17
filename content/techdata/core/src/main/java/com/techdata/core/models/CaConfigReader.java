@@ -170,6 +170,18 @@ public class CaConfigReader {
 
     private String productEmptyImageUrl;
 
+    private String noRowsErrorMessage;
+
+    private String errorGettingDataMessage500;
+
+    private String errorGettingDataMessage401;
+
+    private String errorGettingDataMessage403;
+
+    private String errorGettingDataMessage404;
+
+    private String errorGettingDataMessage408;
+
     private String downloadOrderDetailsEndpoint;
 
     private String dcpDomain;
@@ -273,6 +285,12 @@ public class CaConfigReader {
         CommonConfigurations commonConfigurations = page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
 
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
+        noRowsErrorMessage = commonConfigurations.noRowsErrorMessage();
+        errorGettingDataMessage500 = commonConfigurations.errorGettingDataMessage500();
+        errorGettingDataMessage401 = commonConfigurations.errorGettingDataMessage401();
+        errorGettingDataMessage403 = commonConfigurations.errorGettingDataMessage403();
+        errorGettingDataMessage404 = commonConfigurations.errorGettingDataMessage404();
+        errorGettingDataMessage408 = commonConfigurations.errorGettingDataMessage408();
         allowedFileExtensions = String.join(",", Arrays.asList(commonConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(commonConfigurations.fileThresholdInMB());
     }
@@ -537,6 +555,30 @@ public class CaConfigReader {
 
     public String getProductEmptyImageUrl() {
         return productEmptyImageUrl;
+    }
+
+    public String getNoRowsErrorMessage() {
+        return noRowsErrorMessage;
+    }
+
+    public String getErrorGettingDataMessage500() {
+        return errorGettingDataMessage500;
+    }
+
+    public String getErrorGettingDataMessage401() {
+        return errorGettingDataMessage401;
+    }
+
+    public String getErrorGettingDataMessage403() {
+        return errorGettingDataMessage403;
+    }
+
+    public String getErrorGettingDataMessage404() {
+        return errorGettingDataMessage404;
+    }
+
+    public String getErrorGettingDataMessage408() {
+        return errorGettingDataMessage408;
     }
 
     public String getDownloadOrderDetailsEndpoint() {

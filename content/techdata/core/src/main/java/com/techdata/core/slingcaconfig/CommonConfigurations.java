@@ -11,6 +11,26 @@ public @interface CommonConfigurations {
     @Property(label = "Product Empty Image Url edited", description = "Product Empty Image Url")
     String productEmptyImageUrl();
 
+    @Property(label = "No Rows Error Message", description = "No Rows Error Message")
+    String noRowsErrorMessage();
+
+    @Property(label = "Error Getting Data Message", description = "Message for unknwon or 500 errors")
+    String errorGettingDataMessage500();
+
+    @Property(label = "Error Getting Data Message - Unauthorized", description = "Message for 401 errors")
+    String errorGettingDataMessage401();
+
+    @Property(label = "Error Getting Data Message - Forbidden", description = "Message for 403 errors")
+    String errorGettingDataMessage403();
+
+    @Property(label = "Error Getting Data Message - Not Found", description = "Message for 404 errors")
+    String errorGettingDataMessage404();
+
+    @Property(label = "Error Getting Data Message - Request Timeout", description = "Message for 408 errors")
+    String errorGettingDataMessage408();
+    @Property(label = "AG-Grid License Key", description = "AG-Grid License Key")
+    String agGridLicenseKey();
+
     @Property(label = "Email Subject", description = "Email Subject")
     String emailSubject();
 

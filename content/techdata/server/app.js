@@ -863,12 +863,12 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     let items = [];
     for(let i = 0; i<=amount; i++){
       const annuity = i % 2 === 0 ? null : {
-        "isAnnuity": true,
+        "isAnnuity": false,
+        "autoRenewal": true,
         "startDate": "11/01/2021",
         "endDate": "10/31/2022",
         "duration": 12.0,
-        "billingFrequency": "Annual",
-        "autoRenewal": 12
+        "billingFrequency": "Annual"
       };
 
       items.push(

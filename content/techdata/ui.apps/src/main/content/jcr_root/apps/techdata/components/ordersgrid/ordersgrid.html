@@ -2,7 +2,7 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<sly data-sly-use.listUse="${'ordersgrid.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,orderGridEndpoint=serviceData.orderGridEndpoint,downloadAllInvoicesEndpoint=serviceData.downloadAllInvoicesEndpoint}">
+<sly data-sly-use.listUse="${'ordersgrid.js' @ multifieldName='columnList', uiServiceDomain=serviceData.uiServiceDomain,orderGridEndpoint=serviceData.orderGridEndpoint,downloadAllInvoicesEndpoint=serviceData.downloadAllInvoicesEndpoint,noRowsErrorMessage=serviceData.noRowsErrorMessage,errorGettingDataMessage500=serviceData.errorGettingDataMessage500,errorGettingDataMessage401=serviceData.errorGettingDataMessage401,errorGettingDataMessage403=serviceData.errorGettingDataMessage403,errorGettingDataMessage404=serviceData.errorGettingDataMessage404,errorGettingDataMessage408=serviceData.errorGettingDataMessage408}">
 
 <div data-component="OrdersGrid" data-cmp-type="react" className="cmp-orders-grid" data-config="${listUse.configJson}">
             </div>
