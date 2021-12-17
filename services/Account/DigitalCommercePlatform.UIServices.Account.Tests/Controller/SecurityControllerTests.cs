@@ -1,14 +1,15 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoFixture.Xunit2;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+using DigitalCommercePlatform.UIServices.Account.Actions.InHouseAccount;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -269,5 +270,23 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         //        anonymousAttribute.Should().BeNull();
         //    }
         //}
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetInHouseAccount(
+           ResponseBase<GetInHouseAccount.Response> expected,
+           [Frozen] Mock<IMediator> mediator,
+           [Set(nameof(GetAppSettings))]
+            [Greedy] SecurityController controller)
+        {
+            mediator.Setup(x => x.Send(
+                       It.IsAny<GetInHouseAccount.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var result = await controller.GetUserAsync("DCP").ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
     }
 }

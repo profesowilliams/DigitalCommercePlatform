@@ -10,5 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<ClientLoginCodeTokenResponseModel> GetToken(string code,string redirectUri);
         Task<ValidateUserResponseModel> GetUser(string applicationName);
         Task<ClientRevokeTokenResponseModel> RevokePingTokenAsync(string sessionId);
+        public bool GetInHouseAccount();
     }
 }

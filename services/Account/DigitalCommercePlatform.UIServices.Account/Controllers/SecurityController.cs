@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Account.Actions.GetUser;
+using DigitalCommercePlatform.UIServices.Account.Actions.InHouseAccount;
 using DigitalCommercePlatform.UIServices.Account.Actions.Logout;
 using DigitalCommercePlatform.UIServices.Account.Actions.UserActiveCustomer;
 using DigitalCommercePlatform.UIServices.Account.Actions.ValidateUser;
@@ -97,6 +98,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Controllers
             if (response.Error.IsError)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("isInhouseAccount/{applicationName}")]
+        public async Task<IActionResult> GetInHouseAccount([FromRoute] string applicationName)
+        {
+            var response = await Mediator.Send(new GetInHouseAccount.Request(applicationName)).ConfigureAwait(false);
+
+            if (response.Error.IsError)
+            {
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);

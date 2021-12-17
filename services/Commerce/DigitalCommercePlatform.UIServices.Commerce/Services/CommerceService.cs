@@ -89,21 +89,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private void BuildAnnuity(ItemModel line)
         {
-            var attribute = line.Attributes.Where(x => x.Name.ToLower().Equals("materialtype")).FirstOrDefault();
-            if (string.Equals(attribute?.Value?.ToLower(), "service"))
+            try
             {
-                var startDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
-                DateTimeStyles.None, out var sdt) ? sdt : null as DateTime?;
-                var endDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
-                DateTimeStyles.None, out var edt) ? edt : null as DateTime?;
-                line.Annuity = new Annuity
+                var attribute = line.Attributes.Where(x => x.Name.ToLower().Equals("materialtype")).FirstOrDefault();
+                if (string.Equals(attribute?.Value?.ToLower(), "service"))
                 {
-                    BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault().Value ?? string.Empty,
-                    StartDate = startDate,
-                    EndDate = endDate,
-                    Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault().Value ?? string.Empty, // or use servicelength                             
-                    AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any()
-                };
+                    var startDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var sdt) ? sdt : null as DateTime?;
+                    var endDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out var edt) ? edt : null as DateTime?;
+                    line.Annuity = new Annuity
+                    {
+                        BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault()?.Value ?? string.Empty,
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
+                        AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any()
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error ocuured at BuildAnnuity" + ex, ex.Message);
             }
         }
 
@@ -403,16 +410,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
-            CreateQuoteRequest(request.CreateModelFrom);
-            ActiveCartModel activeCart = await _cartService.GetActiveCartAsync();
-            if (activeCart.Items != null)
+            try
             {
-                request.CreateModelFrom.Items = new List<ItemModel>();
-                foreach (var cartLine in activeCart.Items)
+                CreateQuoteRequest(request.CreateModelFrom);
+                ActiveCartModel activeCart = await _cartService.GetActiveCartAsync();
+                if (activeCart == null)
                 {
-                    ItemModel item = new();
-                    item.Id = cartLine.ItemId;
-                    item.Product = new List<ProductModel> {
+                    throw new UIServiceException("Invalid Active Cart" + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                if (activeCart.Items != null)
+                {
+                    request.CreateModelFrom.Items = new List<ItemModel>();
+                    foreach (var cartLine in activeCart.Items)
+                    {
+                        ItemModel item = new();
+                        item.Id = cartLine.ItemId;
+                        item.Product = new List<ProductModel> {
                         new ProductModel {
                             Id = cartLine.ProductId,
                             Manufacturer = cartLine.ProductId, // call product service to get mfg part #
@@ -420,19 +433,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             Type = "1",
                         }
                     };
-                    decimal tmpvalue;
-                    decimal? result = null;
+                        decimal tmpvalue;
+                        decimal? result = null;
 
-                    if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
-                        result = tmpvalue;
-                    item.Quantity = result;
-                    request.CreateModelFrom.Items.Add(item);
+                        if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
+                            result = tmpvalue;
+                        item.Quantity = result;
+                        request.CreateModelFrom.Items.Add(item);
+                    }
                 }
+                request.CreateModelFrom.TargetSystem = "R3";
+                request.CreateModelFrom.System = "Q";
+                var response = await CallCreateQuote(request.CreateModelFrom);
+                return response;
             }
-            request.CreateModelFrom.TargetSystem = "R3";
-            request.CreateModelFrom.System = "Q";
-            var response = await CallCreateQuote(request.CreateModelFrom);
-            return response;
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error while creating Cart from Active Cart" + ex.Message);
+                throw ex;
+            }
+
         }
 
         public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)

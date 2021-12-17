@@ -3,12 +3,15 @@ using DigitalCommercePlatform.UIServices.Account.Infrastructure;
 using DigitalCommercePlatform.UIServices.Account.Models.Accounts;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Security.Messages;
 using DigitalFoundation.Common.Security.SecurityServiceClient;
-using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
@@ -21,22 +24,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _clientSecret;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly IUIContext _context;
+        private readonly IAppSettings _appSettings;
+        private readonly ILogger<SecurityService> _logger;
+        private readonly string _validInHouseAccounts;
 
-        public SecurityService(IAppSettings appSettings, IMiddleTierHttpClient middleTierHttpClient, IUIContext context)
+        public SecurityService(IAppSettings appSettings, IMiddleTierHttpClient middleTierHttpClient, IUIContext context, ILogger<SecurityService> logger)
         {
-            if (appSettings == null) { throw new ArgumentNullException(nameof(appSettings)); }
-
-            _coreSecurityUrl = appSettings.TryGetSetting(Globals.CoreSecurityUrl) ??
-                                                        throw new InvalidOperationException($"{Globals.CoreSecurityUrl} is missing from AppSettings");
-
-            _clientId = appSettings.TryGetSetting(Globals.AemClientId) ??
-                                                        throw new InvalidOperationException($"{Globals.AemClientId} is missing from AppSettings");
-
-            _clientSecret = appSettings.TryGetSetting(Globals.AemClientSecret) ??
-                                                        throw new InvalidOperationException($"{Globals.AemClientSecret} is missing from AppSettings");
-
+            _logger = logger;
             _context = context;
-
+            _appSettings = appSettings;
+            if (appSettings == null) { throw new ArgumentNullException(nameof(appSettings)); }
+            _coreSecurityUrl = appSettings.TryGetSetting("Core.Security.Url");
+            _clientId = appSettings.TryGetSetting("Aem.ClientId");
+            _clientSecret = appSettings.TryGetSetting("Aem.ClientSecret");
+            _validInHouseAccounts = appSettings.GetSetting("Core.Security.HouseAccounts");
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
         }
 
@@ -51,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 RedirectUri = new Uri(redirectUri)
             };
 
-            var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
+        var tokenResponseDto = await _middleTierHttpClient.GetLoginCodeTokenAsync(clientLoginCodeTokenRequest);
             return tokenResponseDto;
         }
 
@@ -89,6 +90,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             };
 
             return await _middleTierHttpClient.PostAsync<ClientRevokeTokenResponseModel>(url, null, request).ConfigureAwait(false);
+        }
+
+        public bool GetInHouseAccount()
+        {
+            try
+            {
+                var customerNumber = _context.User.ActiveCustomer.CustomerNumber;
+
+                if (string.IsNullOrEmpty(customerNumber) || _validInHouseAccounts == null)
+                    return false;
+
+                if (_validInHouseAccounts.Contains(customerNumber))
+                    return true;
+                else
+                    return false;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation("Error occured while calling In House Account" + ex.Message);
+                 return false;
+            }
+            
         }
     }
 }

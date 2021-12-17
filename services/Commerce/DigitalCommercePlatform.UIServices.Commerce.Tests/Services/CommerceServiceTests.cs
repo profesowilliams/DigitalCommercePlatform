@@ -14,6 +14,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Client;
 using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Services.UI.ExceptionHandling;
 using DigitalFoundation.Common.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using Microsoft.Extensions.Logging;
@@ -46,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             _uiContext = new Mock<IUIContext>();
             _helperService = new Mock<IHelperService>();
             _mapper = new Mock<IMapper>();
-            _commerceService = new CommerceService(_middleTierHttpClient.Object,_logger.Object,_appSettings.Object,_cartService.Object,_uiContext.Object,_mapper.Object,_helperService.Object);
+            _commerceService = new CommerceService(_middleTierHttpClient.Object, _logger.Object, _appSettings.Object, _cartService.Object, _uiContext.Object, _mapper.Object, _helperService.Object);
         }
 
 
@@ -280,12 +281,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             //arrange
             QuoteModel input = new();
-            List<ItemModel> items = new List<ItemModel>();            
+            List<ItemModel> items = new List<ItemModel>();
             ItemModel item = new ItemModel();
 
             List<AttributeDto> attributes = new List<AttributeDto>();
 
-            AttributeDto materialAttribute  = new AttributeDto();
+            AttributeDto materialAttribute = new AttributeDto();
             materialAttribute.Name = "materialtype";
             materialAttribute.Value = "service";
             attributes.Add(materialAttribute);
@@ -372,7 +373,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             attributes.Add(dealDurationAttribute);
 
             input.Attributes = attributes;
-   
+
             Type type;
             object objType;
             InitiateCommerceService(out type, out objType);
@@ -399,7 +400,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 );
         }
 
-    // Public methods Unit test cases
+        // Public methods Unit test cases
         [Theory]
         [AutoDomainData]
         public async Task GetQuote(GetQuote.Request request)
@@ -459,6 +460,90 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var result = await _commerceService.UpdateQuote(request);
             // Assert
             Assert.NotNull(result);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
+        {
+            //arrange
+            request.CreateModelFrom.CreateFromId = "";
+            request.CreateModelFrom.CreateFromType = Models.Enums.QuoteCreationSourceType.ActiveCart;
+            request.CreateModelFrom.TargetSystem = "R3";
+            request.CreateModelFrom.PricingCondition = "Commercial";
+
+            // Act
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => _commerceService.CreateQuoteFromActiveCart(request));
+
+            // Assert
+            Assert.Equal("Invalid Active Cart", ex.Result.Message);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void CreateQuoteFromSavedCart_Exception(CreateQuoteFrom.Request request)
+        {
+            //arrange
+            request.CreateModelFrom.CreateFromId = "96725045";
+            request.CreateModelFrom.CreateFromType = Models.Enums.QuoteCreationSourceType.SavedCart;
+            request.CreateModelFrom.TargetSystem = "R3";
+            request.CreateModelFrom.PricingCondition = "Commercial";
+
+            // Act
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>( () => _commerceService.CreateQuoteFromSavedCart(request));
+
+            // Assert
+            Assert.Equal("Invalid savedCartId: 96725045", ex.Result.Message);
+
+        }
+
+        [Fact]
+        public void BuildAnnuity_NullCheck()
+        {
+            //arrange
+
+            ItemModel input = new ItemModel();
+
+            List<AttributeDto> attributes = new List<AttributeDto>();
+
+            AttributeDto materialAttribute = new AttributeDto();
+            materialAttribute.Name = "materialtype";
+            materialAttribute.Value = "service";
+            attributes.Add(materialAttribute);
+
+            AttributeDto endDate = new AttributeDto();
+            endDate.Name = "requestedenddate";
+            endDate.Value = "6-13-2022";
+            attributes.Add(endDate);
+
+            AttributeDto startDate = new AttributeDto();
+            startDate.Name = "requestedstartdate";
+            attributes.Add(startDate);
+
+            AttributeDto billingTermAttribute = new AttributeDto();
+            billingTermAttribute.Name = "billingterm";
+            attributes.Add(billingTermAttribute);
+
+            AttributeDto autoRenewalTermAttribute = new AttributeDto();
+            autoRenewalTermAttribute.Name = "initialterm";
+            attributes.Add(autoRenewalTermAttribute);
+
+            AttributeDto dealDurationAttribute = new AttributeDto();
+            dealDurationAttribute.Name = "autorenewalterm";
+            attributes.Add(dealDurationAttribute);
+
+            input.Attributes = attributes;
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildAnnuity" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { input });
+            Assert.Null(result);
         }
     }
 }
