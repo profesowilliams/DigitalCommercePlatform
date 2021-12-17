@@ -69,11 +69,8 @@
     function processFileValidations(fileEle) {
         //  validate file for invalid file size and extensions
         var invalidFileStatusCode = invalidFile(fileEle);
-        if(invalidFile(fileEle) == "-1") {
-            document.getElementById(errorBlockId).innerHTML = "Invalid file size, allowed files under 10 MB.";
-            return false;
-        } else if(invalidFile(fileEle) == "-2") {
-            document.getElementById(errorBlockId).innerHTML = "Invalid file format, allowed pdf, zip files only.";
+        if(invalidFile(fileEle) == "-1" || invalidFile(fileEle) == "-2") {
+            document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
             return false;
         }
         return true;
