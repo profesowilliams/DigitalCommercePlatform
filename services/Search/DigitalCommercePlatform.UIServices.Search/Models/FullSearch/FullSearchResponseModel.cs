@@ -19,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public bool HasMoreRefinements { get; set; }
         public IEnumerable<string> Territories { get; set; }
         public IEnumerable<DropdownElementModel> SortingOptions { get; set; }
+        public bool IsLoggedIn { get; set; }
     }
 }

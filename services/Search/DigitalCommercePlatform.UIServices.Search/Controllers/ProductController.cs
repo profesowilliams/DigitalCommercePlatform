@@ -3,13 +3,15 @@ using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,28 +37,32 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
             _context = context;
         }
 
+        private bool IsLoggedIn => Context.User is not null;
+
         [AllowAnonymous]
         [HttpPost]
         [Route("FullSearch")]
-        public async Task<ActionResult> FullSearch(FullSearchRequestModel productSearch)
+        public async Task<ActionResult<FullSearchResponseModel>> FullSearch(FullSearchRequestModel productSearch)
         {
             var response = await Mediator.Send(new FullSearch.Request(_context.User == null, productSearch)).ConfigureAwait(false);
+            response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("KeywordSearch")]
-        public async Task<ActionResult> KeywordSearch(string keyword, string categoryId)
+        public async Task<ActionResult<FullSearchResponseModel>> KeywordSearch(string keyword, string categoryId)
         {
             var response = await Mediator.Send(new KeywordSearch.Request(_context.User == null, keyword, categoryId)).ConfigureAwait(false);
+            response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
 
         [AllowAnonymous]
         [HttpPost]
         [Route("GetAdvancedRefinements")]
-        public async Task<ActionResult> GetAdvancedRefinements(FullSearchRequestModel productSearch)
+        public async Task<ActionResult<IEnumerable<RefinementGroupResponseModel>>> GetAdvancedRefinements(FullSearchRequestModel productSearch)
         {
             var response = await Mediator.Send(new GetAdvancedRefinements.Request(productSearch)).ConfigureAwait(false);
             return Ok(response.Results);

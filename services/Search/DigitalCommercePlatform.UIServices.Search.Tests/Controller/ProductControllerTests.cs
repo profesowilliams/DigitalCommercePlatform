@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Search.Controllers;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -137,6 +138,37 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Controller
 
             result.Should().NotBeNull();
             result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(IsLoggedIn_ReturnExpectedValue_Data))]
+        public async Task IsLoggedIn_ReturnExpectedValue(User user, bool expected, KeywordSearch.Response response)
+        {
+            //arrange
+            _mockContext.Setup(x => x.User)
+                .Returns(user);
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<KeywordSearch.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(response);
+
+            var sut = GetController();
+
+            //act
+            var actual = await sut.KeywordSearch("test", null);
+
+            //assert
+            ((FullSearchResponseModel)((OkObjectResult)actual.Result).Value).IsLoggedIn.Should().Be(expected);
+        }
+
+        public static IEnumerable<object> IsLoggedIn_ReturnExpectedValue_Data()
+        {
+            return new[]
+            {
+                new object[]{null, false},
+                new object[]{new User(),true}
+            };
         }
     }
 }

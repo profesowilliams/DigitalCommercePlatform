@@ -68,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<SearchResponseDto, FullSearchResponseModel>()
                 .ForMember(dest => dest.TopRefinements, opt => opt.Ignore())
                 .ForMember(dest => dest.SortingOptions, opt => opt.Ignore())
+                .ForMember(dest => dest.IsLoggedIn, opt => opt.Ignore())
                 ;
 
             CreateMap<Dto.Content.ContentSearchResponseDto, Models.Content.FullSearchResponseModel>();
