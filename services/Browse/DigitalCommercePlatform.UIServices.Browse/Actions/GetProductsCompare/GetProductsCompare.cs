@@ -153,6 +153,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                     BestPrice = x.Price?.BestPrice,
                     BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration : null,
                     ListPrice = x.Price?.ListPrice,
+                    BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
                     VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
                     {
                         MinQuantity = p.MinQuantity.Value,

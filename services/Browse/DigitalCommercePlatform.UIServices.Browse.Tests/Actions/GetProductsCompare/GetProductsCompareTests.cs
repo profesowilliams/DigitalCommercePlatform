@@ -15,6 +15,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -103,6 +104,49 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             //assert
             actual.Products.First().Should().BeEquivalentTo(expectedProduct);
         }
+
+        [Fact]
+        public void MapPriceTest()
+        {
+            // Arrange
+            var productDto = new ProductDto
+            {
+                Price = new PriceDto
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+
+            var productModel = new ProductModel
+            {
+                Price = new PriceModel
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+                 Authorization = new AuthorizationModel
+                 {
+                      CanViewPrice = true,
+                 },
+            };
+
+            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
+            var handler = GetHandler();
+            //Act
+            sut.Invoke(handler, new object[] { productDto, productModel });
+            //Assert
+            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
+            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
+            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
+            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
+        }
+
+        private Browse.Actions.GetProductsCompare.Handler GetHandler() => new(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
         {
