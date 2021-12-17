@@ -2,8 +2,8 @@
 use(['../common/utils.js'], function (utils) {
   var jsonObject = {};
   var resourceResolver = resource.getResourceResolver();
-    var optionData = {};
-    var searchCriteriaData = {};
+  var optionData = {};
+  var searchCriteriaData = {};
 
   if (properties && properties["configDetailUrl"]) {
     jsonObject["configDetailUrl"] = properties["configDetailUrl"] + properties["configDetailUrlSuffix"];
@@ -63,9 +63,9 @@ use(['../common/utils.js'], function (utils) {
   var keywordDropdownData = {};
 
   if (properties && properties["keywordDropdownLabel"]) {
-		keywordDropdownData.label = properties["keywordDropdownLabel"];
-	}
-	var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
+    keywordDropdownData.label = properties["keywordDropdownLabel"];
+  }
+  var keywordListNode = resourceResolver.getResource(currentNode.getPath() + "/keywordList");
 
   if (keywordListNode !== null) {
     var childrenList = keywordListNode.getChildren();
@@ -83,11 +83,11 @@ use(['../common/utils.js'], function (utils) {
 
   var configurationTypesDropdownData = {};
 
-  if(properties && properties["configurationTypesDropdownLabel"]) {
+  if (properties && properties["configurationTypesDropdownLabel"]) {
     configurationTypesDropdownData.label = properties["configurationTypesDropdownLabel"] || "";
   }
 
-	var configurationTypesListNode = resourceResolver.getResource(currentNode.getPath() + "/configurationTypesList");
+  var configurationTypesListNode = resourceResolver.getResource(currentNode.getPath() + "/configurationTypesList");
 
   if (configurationTypesListNode !== null) {
     var childrenList = configurationTypesListNode.getChildren();
@@ -127,66 +127,67 @@ use(['../common/utils.js'], function (utils) {
     jsonObject["statusLabelsList"] = statusLabelsListValues;
   }
 
-    jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain+this.serviceData.configurationsEndpoint || '';
+  jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.configurationsEndpoint || '';
+  jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey || '';
 
-    if (properties && properties["itemsPerPage"]) {
-        jsonObject["itemsPerPage"]= properties["itemsPerPage"];
-    }
-    if (properties && properties["paginationStyle"]) {
-        jsonObject["paginationStyle"] = properties["paginationStyle"];
-    }
-    if (properties && properties["defaultSortingColumnKey"]) {
-        optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
-    }
-    if (properties && properties["defaultSortingDirection"]) {
-        optionData.defaultSortingDirection = properties["defaultSortingDirection"];
-    }
+  if (properties && properties["itemsPerPage"]) {
+    jsonObject["itemsPerPage"] = properties["itemsPerPage"];
+  }
+  if (properties && properties["paginationStyle"]) {
+    jsonObject["paginationStyle"] = properties["paginationStyle"];
+  }
+  if (properties && properties["defaultSortingColumnKey"]) {
+    optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
+  }
+  if (properties && properties["defaultSortingDirection"]) {
+    optionData.defaultSortingDirection = properties["defaultSortingDirection"];
+  }
 
-    if (properties && properties["spaDealsIdLabel"]) {
-        jsonObject["spaDealsIdLabel"] = properties["spaDealsIdLabel"];
-    }
+  if (properties && properties["spaDealsIdLabel"]) {
+    jsonObject["spaDealsIdLabel"] = properties["spaDealsIdLabel"];
+  }
 
-    if (optionData != null) {
-        jsonObject["options"] = optionData;
-    }
+  if (optionData != null) {
+    jsonObject["options"] = optionData;
+  }
 
-    if (properties && properties["searchTitle"]) {
-      searchCriteriaData.title = properties["searchTitle"];
-    }
+  if (properties && properties["searchTitle"]) {
+    searchCriteriaData.title = properties["searchTitle"];
+  }
 
-    if (properties && properties["searchButtonLabel"]) {
-      searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
-    }
+  if (properties && properties["searchButtonLabel"]) {
+    searchCriteriaData.searchButtonLabel = properties["searchButtonLabel"];
+  }
 
-    if (properties && properties["clearButtonLabel"]) {
-      searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
-    }
+  if (properties && properties["clearButtonLabel"]) {
+    searchCriteriaData.clearButtonLabel = properties["clearButtonLabel"];
+  }
 
-    if (properties && properties["inputPlaceholder"]) {
-      searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
-    }
-    if (properties && properties["fromLabel"]) {
-      searchCriteriaData.fromLabel = properties["fromLabel"];
-    }
-    if (properties && properties["toLabel"]) {
-      searchCriteriaData.toLabel = properties["toLabel"];
-    }
-    if (properties && properties["datePlaceholder"]) {
-      searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
-    }
-    if (keywordDropdownData != null) {
-      searchCriteriaData["keywordDropdown"] = keywordDropdownData;
-    }
+  if (properties && properties["inputPlaceholder"]) {
+    searchCriteriaData.inputPlaceholder = properties["inputPlaceholder"];
+  }
+  if (properties && properties["fromLabel"]) {
+    searchCriteriaData.fromLabel = properties["fromLabel"];
+  }
+  if (properties && properties["toLabel"]) {
+    searchCriteriaData.toLabel = properties["toLabel"];
+  }
+  if (properties && properties["datePlaceholder"]) {
+    searchCriteriaData.datePlaceholder = properties["datePlaceholder"];
+  }
+  if (keywordDropdownData != null) {
+    searchCriteriaData["keywordDropdown"] = keywordDropdownData;
+  }
 
-    if (configurationTypesDropdownData != null) {
-      searchCriteriaData["configurationTypesDropdown"] = configurationTypesDropdownData;
-    }
+  if (configurationTypesDropdownData != null) {
+    searchCriteriaData["configurationTypesDropdown"] = configurationTypesDropdownData;
+  }
 
-    if (searchCriteriaData != null) {
-      jsonObject["searchCriteria"] = searchCriteriaData;
-    }
+  if (searchCriteriaData != null) {
+    jsonObject["searchCriteria"] = searchCriteriaData;
+  }
 
-    return {
-        configJson: JSON.stringify(jsonObject)
-    };
+  return {
+    configJson: JSON.stringify(jsonObject)
+  };
 });

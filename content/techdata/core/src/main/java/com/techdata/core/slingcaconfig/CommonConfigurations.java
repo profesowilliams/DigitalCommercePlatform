@@ -11,6 +11,9 @@ public @interface CommonConfigurations {
     @Property(label = "Product Empty Image Url edited", description = "Product Empty Image Url")
     String productEmptyImageUrl();
 
+    @Property(label = "AG-Grid License Key", description = "AG-Grid License Key")
+    String agGridLicenseKey();
+
     @Property(label = "Email Subject", description = "Email Subject")
     String emailSubject();
 
@@ -51,6 +54,5 @@ public @interface CommonConfigurations {
     String[] formSubmissionTargetGroups();
 
     @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
-    String textfieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$Â£*+{}?|]+$";
-
+    String textfieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
 }
