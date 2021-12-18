@@ -138,11 +138,7 @@ public class LanguageDropDownModel implements LanguageNavigation {
 	}
 	
 	public String getCountryRootPageTitle() {
-		final Page countryRootPage = currentPage.getParent(getCountryPageDepthFromCurrentPage());
-		if (Objects.nonNull(countryRootPage)) {
-			return countryRootPage.getPageTitle();
-		}
-		return StringUtils.EMPTY;
+		return currentPage.getParent(getCountryPageDepthFromCurrentPage()).getProperties().get("navTitle").toString();
 	}
 
 	public String getOverRideCurrentPage(){
