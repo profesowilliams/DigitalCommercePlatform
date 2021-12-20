@@ -1,7 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Export.Models.Common;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal;
-using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

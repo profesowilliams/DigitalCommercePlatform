@@ -8,7 +8,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
-using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services

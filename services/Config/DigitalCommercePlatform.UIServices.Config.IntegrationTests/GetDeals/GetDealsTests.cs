@@ -1,7 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentAssertions;
 using System;
 using System.Threading.Tasks;

@@ -1,10 +1,10 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Export.Controllers;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;

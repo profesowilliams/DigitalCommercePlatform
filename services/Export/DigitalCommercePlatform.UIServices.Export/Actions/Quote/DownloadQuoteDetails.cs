@@ -4,7 +4,7 @@ using DigitalCommercePlatform.UIServices.Export.Models.Common;
 using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using DigitalCommercePlatform.UIServices.Export.Models.UIServices.Commerce;
 using DigitalCommercePlatform.UIServices.Export.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;

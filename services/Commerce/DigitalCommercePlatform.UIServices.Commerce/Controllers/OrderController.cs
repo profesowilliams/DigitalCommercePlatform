@@ -6,16 +6,16 @@ using DigitalCommercePlatform.UIServices.Commerce.Actions.GetRecentOrders;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Security.PolicyAuthorization.Attributes;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Providers.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using DigitalFoundation.Common.Services.Layer.UI;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 {

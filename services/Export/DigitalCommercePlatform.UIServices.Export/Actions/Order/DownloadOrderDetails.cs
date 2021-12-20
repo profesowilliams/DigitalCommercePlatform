@@ -3,7 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Export.Models.Common;
 using Internal = DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Export.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;

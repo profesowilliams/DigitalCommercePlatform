@@ -10,10 +10,9 @@ using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Http.Controller;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -26,6 +25,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using DigitalFoundation.Common.Services.Layer.UI;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 {

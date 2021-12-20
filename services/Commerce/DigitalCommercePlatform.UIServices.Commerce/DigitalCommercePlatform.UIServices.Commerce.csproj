@@ -33,14 +33,14 @@
 
   <ItemGroup>
     <PackageReference Include="DigitalCommercePlatform.UIServices.Common.Cart" Version="2021.8.27.1" />
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.105" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.105" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.105" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.3.20" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.3.20" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.3.20" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Techdata.Common.Utility" Version="2021.4.30.1" />
+    <PackageReference Include="Techdata.Common.Utility" Version="2021.11.5.2" />
   </ItemGroup>
 </Project>

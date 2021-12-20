@@ -1,16 +1,14 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
-using DigitalCommercePlatform.UIServices.Renewal.AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
-using DigitalFoundation.Common.Cache.UI;
-using DigitalFoundation.Common.Contexts;
-using DigitalFoundation.Common.Settings;
+using DigitalFoundation.Common.Features.Cache;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

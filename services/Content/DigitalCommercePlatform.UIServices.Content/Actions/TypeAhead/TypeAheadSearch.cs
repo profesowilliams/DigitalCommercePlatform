@@ -2,7 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
 using DigitalCommercePlatform.UIServices.Content.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;

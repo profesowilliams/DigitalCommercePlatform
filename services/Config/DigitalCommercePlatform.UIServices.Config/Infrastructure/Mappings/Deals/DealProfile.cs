@@ -6,7 +6,7 @@ using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deals.Re
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals.Internal;
-using DigitalFoundation.Common.Models;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

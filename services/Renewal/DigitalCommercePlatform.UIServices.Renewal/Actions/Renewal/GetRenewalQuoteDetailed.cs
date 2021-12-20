@@ -2,7 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;

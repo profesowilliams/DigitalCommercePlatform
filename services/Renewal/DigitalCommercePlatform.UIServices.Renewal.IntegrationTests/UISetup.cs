@@ -1,7 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Renewal;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Contexts;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
                 .SetMockable<IUIContext>()
                 .Wrap(x =>
                 {
-                    x.SetUser(new DigitalFoundation.Common.Models.User
+                    x.SetUser(new User
                     {
                         ID = Guid.NewGuid().ToString(),
                         FirstName = "FirstName",

@@ -2,8 +2,8 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
-using DigitalFoundation.Common.Services.Actions.Abstract;
-using DigitalFoundation.Common.Services.UI.ExceptionHandling;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;

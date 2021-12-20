@@ -1,5 +1,6 @@
-﻿using DigitalCommercePlatform.UIServices.Config.Models.Common;
-using DigitalFoundation.Common.Models;
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Config.Models.Common;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using FluentAssertions;
 using System.Collections.Generic;
 using Xunit;

@@ -16,9 +16,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="DigitalFoundation.Common" Version="5.2.115" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.2.115" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.2.115" />
+    <PackageReference Include="DigitalFoundation.Common" Version="5.3.20" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.3.20" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.3.20" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
