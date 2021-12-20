@@ -1,8 +1,8 @@
 ﻿using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
-using DigitalFoundation.Common.Client;
-using DigitalFoundation.Common.Settings;
-using DigitalFoundation.Common.SimpleHttpClient.Exceptions;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
