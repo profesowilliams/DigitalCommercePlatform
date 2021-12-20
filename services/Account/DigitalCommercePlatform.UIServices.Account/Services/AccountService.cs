@@ -313,18 +313,20 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract)
         {
-            var renewalSearchDto = new RenewalSearchDto
-            {
-                CustomerNumber = customerNumber,
-                SalesOrganization = salesOrganization,
-                ExpirationSearchFrom = DateTime.Today.AddDays(numberOfDaysToSubtract * -1)
-            };
+            var url = _priceServiceURL.AppendPathSegments("Spa", "Find")
+                         .SetQueryParams(new
+                         {
+                             Details = true,
+                             EndUserSpaOnly = true,
+                             Page = 1,
+                             TotalCount = true,
+                         });
 
-            var renewalResponseDto = await _renewalsService.RenewalSearchAsync(renewalSearchDto);
+            var dealsSummary = await _middleTierHttpClient
+                .GetAsync<DigitalFoundation.Common.Features.Contexts.Models.FindResponse<DealsBase>>(url);
 
-            var renewalSearchResult = renewalResponseDto?.Select(s => s.ExpirationDate.ToShortDateString()).ToList();
-
-            return renewalSearchResult;
+            var result = dealsSummary.Data.Select(e => e.ExpirationDate?.ToShortDateString()).ToList();
+            return result;
         }
 
         public async Task<MyOrdersStatusDashboard> GetMyOrdersStatusAsync(GetMyOrdersStatus.Request request)
