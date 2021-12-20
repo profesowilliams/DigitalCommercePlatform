@@ -164,11 +164,11 @@
         var tdForm = document.getElementById("tdForm");
         var redirectSuccess = document.getElementsByName(":redirect");
 
-        initValidation(tdForm);
-
         if (!tdForm)
         {
             console.error("Form ID not configured");
+        } else {
+            initValidation(tdForm);
         }
 
         if (submitButton) {
