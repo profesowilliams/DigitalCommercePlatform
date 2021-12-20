@@ -90,7 +90,7 @@ const DashboardSubheader = ({ componentProp }) => {
 						{accountnumberLabel}: {getAccountNumber()}
 					</a>
 				</li>
-				{(disableVendorConnectionLink && disableVendorConnectionLink == false) && (
+				{(disableVendorConnectionLink && (disableVendorConnectionLink == false || disableVendorConnectionLink == "false"))&& (
                     <li
                         onClick={() =>
                             invokeModal({
