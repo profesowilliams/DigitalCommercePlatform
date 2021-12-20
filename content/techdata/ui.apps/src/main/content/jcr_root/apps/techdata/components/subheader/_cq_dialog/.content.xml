@@ -41,6 +41,24 @@
                                                     fieldDescription="Enter Vendor Title"
                                                     fieldLabel="Title"
                                                     name="./title"/>
+                                            <disableVendorConnectionLink
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="linkItems"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldDescription="check to disable - esp for SHOP"
+                                                    fieldLabel="Disable Vendor Connection Link"
+                                                    name="./disableVendorConnectionLink">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <default
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="TRUE"
+                                                            value="true"/>
+                                                    <article
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="FALSE"
+                                                            value="false"/>
+                                                </items>
+                                            </disableVendorConnectionLink>
                                             <buttonLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

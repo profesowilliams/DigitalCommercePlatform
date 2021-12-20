@@ -289,7 +289,7 @@ const NewSubheader = ({ componentProp }) => {
 							{accountnumberLabel}: {getAccountNumber()}
 						</a>
 					</li>
-					{disableVendorConnectionLink == undefined && (
+					{(disableVendorConnectionLink && disableVendorConnectionLink == false) && (
                         <li
                             onClick={() => {
 
