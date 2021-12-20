@@ -31,11 +31,13 @@ const columnDefs = [
     headerName: "Quantity",
     field: "quantity",
     sortable: false,
+    width: "100px",
   },
   {
     headerName: "Total (USD)",
     field: "totalPrice",
     sortable: false,
+    width: "150px",
   },
 ];
 

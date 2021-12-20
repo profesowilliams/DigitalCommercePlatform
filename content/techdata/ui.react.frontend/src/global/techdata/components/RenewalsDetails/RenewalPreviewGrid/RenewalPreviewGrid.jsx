@@ -36,12 +36,32 @@ function Note() {
   );
 }
 
+function ProductDetails({data}) {
+  /**
+   * serial № and instance is hardcoded for now.
+   * Replace with actual key from API res once there's clarity.
+   */
+  return (
+    <div className="cmp-renewal-preview__prod-details">
+      <p className="short-desc">{data.shortDescription}</p>
+      <span><b>Serial №: </b>0N417-0V3EH-38V8A-092KM-CHQM5</span>
+      <span><b>Instance: </b>185956778</span>
+    </div>
+  );
+}
+
 function RenewalPreviewGrid({ data, gridProps }) {
   const gridData = data.items ?? [];
   const gridConfig = {
     ...gridProps,
     serverSide: false,
     paginationStyle: "none",
+  };
+
+  columnDefs[2] = {
+    ...columnDefs[2],
+    cellHeight: () => 80,
+    cellRenderer: ({ data }) => <ProductDetails data={data}/>,
   };
 
   /*
