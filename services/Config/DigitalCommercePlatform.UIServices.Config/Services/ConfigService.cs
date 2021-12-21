@@ -172,11 +172,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     request.Criteria.EndUser = request.Criteria.EndUser + "*";
                 }
-                //Fix this once the App-Service is returning response for Vendor Name.
-                //else if (request.Criteria.VendorName != null)
-                //{
-                //    request.Criteria.VendorName = request.Criteria.VendorName;
-                //}
 
                 var type = GetConfigurationType(request);
                 request.Criteria.ConfigurationType = null;

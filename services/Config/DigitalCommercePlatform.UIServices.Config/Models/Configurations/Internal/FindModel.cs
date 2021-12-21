@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal
@@ -23,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public int PageSize { get; set; }
         public bool WithPaginationInfo { get; set; }
         public string Name { get; set; }
+        public IList<string> VendorName { get; set; }
 
     }
 

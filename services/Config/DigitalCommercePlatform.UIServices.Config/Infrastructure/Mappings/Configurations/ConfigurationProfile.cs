@@ -30,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.SortByAscending, o => o.Ignore())
                 .ForMember(d => d.WithPaginationInfo, o => o.Ignore())
                 .ForMember(d => d.Name, o => o.Ignore())
+                .ForMember(d => d.VendorName, o => o.Ignore())
                 ;
 
             CreateMap<Models.Configurations.FindModel, Models.Configurations.Internal.FindModel>()
