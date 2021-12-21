@@ -29,14 +29,6 @@ const getDataLayer = () => {
   return dataLayer;
 };
 
-export const generateDataLayerId = async (prefix, idData, separator = '-') => {
-  const msgUint8 = new TextEncoder().encode(idData); // encode as (utf-8) Uint8Array
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
-  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
-  return prefix + separator + hashHex.substring(0, 10);
-};
-
 // https://github.com/adobe/adobe-client-data-layer/wiki#push
 export const pushData = data => {
   if (isDataLayerEnabled()) {
@@ -49,7 +41,7 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
     getDataLayer().push({
       event: eventName,
-      clickInfo: eventInfo,
+      eventInfo: eventInfo,
       ...extraData
     });
   }
@@ -75,82 +67,6 @@ export const removeEventListener = (eventName, handler) => {
   if (isDataLayerEnabled()) {
     getDataLayer().removeEventListener(eventName, handler);
   }
-};
-
-/**
- * Converts all keys of a given GraphQL response from kebab-case or snake_case into camelCase.
- */
-const transformGraphqlResponse = o => {
-  const result = {};
-
-  Object.entries(o).forEach(([key, value]) => {
-    if (key === '__typename') {
-      return;
-    }
-
-    if (Array.isArray(value)) {
-      result[toCamel(key)] = value.map(item => transformGraphqlResponse(item));
-    } else if (typeof value === 'object' && value !== null) {
-      result[toCamel(key)] = transformGraphqlResponse(value);
-    } else {
-      result[toCamel(key)] = value;
-    }
-  });
-  return result;
-};
-
-const toCamel = s =>
-  s.replace(/([-_][a-z])/gi, group =>
-    group
-      .toUpperCase()
-      .replace('-', '')
-      .replace('_', '')
-  );
-
-/**
- * Remove fields which are not required by MSE SDK and add fields which are unavailable in GraphQL.
- */
-export const transformCart = cart => {
-  let newCart = {};
-  try {
-    const { id, prices, totalQuantity } = cart;
-    const { subtotalExcludingTax, subtotalIncludingTax } = prices || {};
-
-    const items = cart.items
-      ? cart.items.map(item => {
-        const { price } = item.prices;
-        const { value, currency } = price;
-        return {
-          prices: {
-            price
-          },
-          canApplyMsrp: false,
-          id: item.uid,
-          formattedPrice: `${value} ${currency}`,
-          quantity: item.quantity,
-          product: {
-            productId: 0,
-            name: item.product.name,
-            sku: item.product.sku
-          }
-        };
-      })
-      : [];
-
-    newCart = {
-      id,
-      items,
-      prices: {
-        subtotalExcludingTax,
-        subtotalIncludingTax
-      },
-      totalQuantity
-    };
-  } catch (e) {
-    console.error(e);
-  }
-
-  return newCart;
 };
 
 export { transformGraphqlResponse };
