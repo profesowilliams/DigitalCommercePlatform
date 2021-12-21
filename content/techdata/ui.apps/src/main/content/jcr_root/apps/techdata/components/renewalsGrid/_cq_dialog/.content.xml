@@ -234,6 +234,13 @@
                                                                     fieldLabel="Accordion Label"
                                                                     name="./accordionLabel"
                                                                     required="{Boolean}true"/>
+                                                                <filterField
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldDescription="Enter field to match service request"
+                                                                    fieldLabel="Filter Field"
+                                                                    name="./filterField"
+                                                                    required="{Boolean}true"/>
                                                                 <filtersOptions
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

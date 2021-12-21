@@ -36,54 +36,63 @@
             columnLabel="Config ID"
             columnKey="configId"
             sortable="{Boolean}true"
+            columnType="plainText"
         />
         <item1
             jcr:primaryType="nt:unstructured"
             columnLabel="Type"
             columnKey="configurationType"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item2
             jcr:primaryType="nt:unstructured"
             columnLabel="Vendor"
             columnKey="vendor"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item3
             jcr:primaryType="nt:unstructured"
             columnLabel="Created"
             columnKey="created"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item4
             jcr:primaryType="nt:unstructured"
             columnLabel="Expires"
             columnKey="expires"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item5
             jcr:primaryType="nt:unstructured"
             columnLabel="Config Name"
             columnKey="configName"
             sortable="{Boolean}true"
+            columnType="plainText"
         />
         <item6
             jcr:primaryType="nt:unstructured"
             columnLabel="End User Name"
             columnKey="endUserName"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item7
             jcr:primaryType="nt:unstructured"
             columnLabel="TD Quote Id"
             columnKey="quotes"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
         <item8
             jcr:primaryType="nt:unstructured"
             columnLabel="Action"
             columnKey="action"
             sortable="{Boolean}false"
+            columnType="plainText"
         />
     </columnList>
     <statusLabelsList jcr:primaryType="nt:unstructured">

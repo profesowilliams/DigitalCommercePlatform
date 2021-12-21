@@ -83,8 +83,10 @@ use(['../common/utils.js'], function(utils) {
         var childrenList = node.getChildren();
         for (var [key, res] in Iterator(childrenList)) {
             var accordionLabel = res.properties["accordionLabel"];
+            const filterField = res.properties["filterField"];
             var itemData = {};
             itemData.accordionLabel = accordionLabel;
+            itemData.filterField = filterField;
             var childNode = resourceResolver.getResource(res.getPath() + '/filtersOptionsList');
 
             if (childNode != null) {
