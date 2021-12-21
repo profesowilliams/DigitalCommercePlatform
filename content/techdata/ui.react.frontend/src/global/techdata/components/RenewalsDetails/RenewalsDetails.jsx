@@ -23,7 +23,7 @@ function RenewalsDetails(props) {
     <div className="cmp-quote-preview cmp-renewal-preview">
       {renewalsDetails ? (
         <section>
-          <ConfigGrid />
+          <ConfigGrid data={renewalsDetails} gridProps={componentProp} />
           <RenewalPreviewGrid
             data={renewalsDetails}
             gridProps={componentProp.productLines}

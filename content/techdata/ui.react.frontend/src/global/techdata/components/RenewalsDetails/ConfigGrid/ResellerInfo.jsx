@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function ResellerInfo({props}) {
-  const ResellerInfo = () => {
+function ResellerInfo({ reseller }) {
+  const ResellerInfo = ({ reseller }) => {
     return (
       <div className="cmp-renewals-qp__reseller-info--address-group">
-        <p>
-          <Info>RECARTA IT LIMITED</Info>
-        </p>
+        <p>{reseller.companyName && <Info><b>{reseller.companyName}</b></Info>}</p>
         <p>
           <Info label="Account No">1234567</Info>
           <Info label="Previous purchase order No">1234567</Info>
@@ -16,13 +14,10 @@ function ResellerInfo({props}) {
     );
   };
 
-  
   return (
     <div className="cmp-renewals-qp__reseller-info">
-        <p className="cmp-renewals-qp__reseller-info--sub-title">
-        Reseller
-        </p>
-        <ResellerInfo />
+      <p className="cmp-renewals-qp__reseller-info--sub-title">Reseller</p>
+      <ResellerInfo reseller={reseller} />
     </div>
   );
 }

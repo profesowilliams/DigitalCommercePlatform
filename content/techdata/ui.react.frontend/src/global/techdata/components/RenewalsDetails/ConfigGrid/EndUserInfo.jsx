@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function EndUserInfo({props}) {
-  const EndUserInfo = () => {
+function EndUserInfo({ endUser }) {
+  const EndUserInfo = ({ endUser }) => {
     return (
       <div className="cmp-renewals-qp__enduser-info--address-group">
+        <p>{endUser.companyName && <Info><b>{endUser.companyName}</b></Info>}</p>
         <p>
-          <Info>AVENIR GLOBAL CHERRY- ADVERTISING LTD</Info>
+          {endUser.name && <Info>{endUser.name}</Info>}
+          {endUser.line1 && <Info>{endUser.line1}</Info>}
+          <Info>
+            {(endUser.line2 && `${endUser.line2},`) +
+              (endUser.state && `${endUser.state} `) +
+              (endUser.postalCode && `${endUser.postalCode}`)}
+          </Info>
+          {endUser.city && <Info>{endUser.city}</Info>}
         </p>
         <p>
-          <Info>Uche Ogbonna</Info>
-          <Info>168-170 Bermondsey Street</Info>
-          <Info>London, ENG 54673</Info>
-          <Info>United Kingdom</Info>
-        </p>
-        <p>  
-          <Info label="Email">UcheOgbonna@emailexample.com</Info>
-          <Info label="Phone">1234567</Info>
+          {endUser.email && <Info label="Email">{endUser.email}</Info>}
+          {endUser.phoneNumber && <Info label="Phone">1234567</Info>}
           <Info label="End user type">Academic</Info>
           <Info label="Vendor account No">3456789</Info>
           <Info label="Previous purchase order No">7894561235</Info>
@@ -25,13 +27,10 @@ function EndUserInfo({props}) {
     );
   };
 
-  
   return (
     <div className="cmp-renewals-qp__enduser-info">
-        <p className="cmp-renewals-qp__enduser-info--sub-title">
-        End User
-        </p>
-        <EndUserInfo />
+      <p className="cmp-renewals-qp__enduser-info--sub-title">End User</p>
+      <EndUserInfo endUser={endUser} />
     </div>
   );
 }
