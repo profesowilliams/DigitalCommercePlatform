@@ -32,7 +32,6 @@
                     if (i.type.startsWith("file")) {
                         if (i.files.length > 0) {
                             newData.append(i.name, i.files[0], i.files[0].name);
-                            console.log("name of file is " + i.files[0].name);
                             if(!processFileValidations(i.files[0])) {
                                 invalidFileStatus = true;
                                 return;
@@ -95,7 +94,7 @@
             fileExtension = fileSplits[fileSplits.length - 1];
         }
         if(fileExtension) {
-            if(allowedFileTypes.indexOf('.' + fileExtension) == -1) {
+            if(allowedFileTypes && allowedFileTypes?.indexOf('.' + fileExtension) == -1) {
                 return "-2";
             }
         } else {
@@ -169,6 +168,31 @@
             console.error("Form ID not configured");
         } else {
             initValidation(tdForm);
+        }
+
+        /////////////////////
+        var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
+        var inputsList = Array.prototype.slice.call(inputs); // creating an array
+        inputsList.forEach( // iterating array to search the input file
+            function (i, e) {
+                if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
+                    if (i.type.startsWith("file")) { // Founding input file
+                        var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+                    }
+                }
+
+                
+            }
+        );
+        /////////////////////
+
+        /**
+         * handler that change the attribute of the submit boton when the user upload something
+         * and permit validate again the file
+         */
+        function handlerInputFile() {
+            let submitButton = document.getElementById("formSubmit");
+            submitButton.disabled = false;
         }
 
         if (submitButton) {
