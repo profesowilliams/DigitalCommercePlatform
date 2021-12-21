@@ -10,6 +10,13 @@ parameters:
 
 
 steps:
+#.NET 5
+- task: UseDotNet@2
+  displayName: Use .NET 5.x
+  inputs:
+    packageType: 'sdk'
+    version: '5.x'
+    
 - task: DotNetCoreCLI@2
   displayName: Restore Packages
   inputs:
