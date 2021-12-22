@@ -33,7 +33,7 @@ function ConfigurationGrid(props) {
       <div className="cmp-renewals-subheader">
         <div className="navigation">
           <p>26-50 of 108 results</p>
-          <p>{'<'} 2 of 3 {'>'}</p>
+          <p><i class="fas fa-chevron-left"></i> 2 of 3 <i class="fas fa-chevron-right"></i></p>
         </div>
         <div className="renewal-filters">
           <div className="cmp-renewal-search">
