@@ -128,9 +128,6 @@ const SignIn = (props) => {
             localStorage.setItem("redirectUrl", redirectUrl);
             // for not logged in user - then authenticate and store redirectUrl(shop) to localStorage
             redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
-          } else {
-            // for loggedin user - then redirect to shop
-            window.location.reload(redirectUrl);
           }
       }
     }
@@ -207,11 +204,6 @@ const SignIn = (props) => {
       let getCode = getQueryStringValue(codeQueryParam);
       localStorage.setItem("signInCode", getCode);
       signInCode = getCode;
-      let redirectUrlFromLS = localStorage.getItem("redirectUrl");
-      if(redirectUrlFromLS && !searchValue.indexOf('action=login')) {
-        localStorage.removeItem("redirectUrl");
-        window.location.reload(redirectUrlFromLS);
-      }
     }
     return signInCode;
   };

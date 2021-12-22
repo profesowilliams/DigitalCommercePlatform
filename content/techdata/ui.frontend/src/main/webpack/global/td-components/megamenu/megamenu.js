@@ -206,7 +206,7 @@ import bp from '../../../common-utils/js/media-match';
     function modifyAEMUrls(megamenuAnchorsLinks, prefixAEMAuthUrl) {
         for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {
             let incomingHref = megamenuAnchorsLinks[i].href;
-            if(incomingHref && (incomingHref.indexOf('sit.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('uat.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('stage.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('www.techdata.com') != -1)) {
+            if(incomingHref && (incomingHref.indexOf('sit.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('uat.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('stage.dc.tdebusiness.cloud') != -1 || incomingHref.indexOf('www.techdata.com') != -1) || incomingHref.indexOf('https://techdata.com') != -1) {
                 let encodedUrl = encodeURIComponent(incomingHref);
                 megamenuAnchorsLinks[i].href = prefixAEMAuthUrl + "|" + encodedUrl;
             }
