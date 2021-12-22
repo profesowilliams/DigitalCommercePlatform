@@ -68,5 +68,3 @@ export const removeEventListener = (eventName, handler) => {
     getDataLayer().removeEventListener(eventName, handler);
   }
 };
-
-export { transformGraphqlResponse };
