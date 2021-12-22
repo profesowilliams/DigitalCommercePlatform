@@ -46,6 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Conf
                 .ForMember(d => d.SortBy, o => o.MapFrom(s => s.SortBy))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.ConfigName))
                 .ForMember(d => d.SortByAscending, o => o.MapFrom<SortByResolver>())
+                .ForMember(d => d.VendorName, o => o.MapFrom(s => s.VendorName))
                 .ForMember(d => d.WithPaginationInfo, o => o.Ignore())
                 ;
 
