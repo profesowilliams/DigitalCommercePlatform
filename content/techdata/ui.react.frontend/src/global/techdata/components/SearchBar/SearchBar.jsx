@@ -98,10 +98,17 @@ const SearchBar = ({ data, componentProp }) => {
           uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm)
         );
         if (response?.data?.content?.items?.length === 1) {
-          return (
-              dcpDomain +
-              `${selectedArea.detailsPage}?id=${searchTerm}`
-          );
+          const validation = uiServiceDomain + `${selectedArea.validateResponseEndPoint}?id=${searchTerm}`; // request to validate if the value exist
+          const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // URL for re locate in some grid with the ID param to search
+          
+          const _dcpDomain = dcpDomain + `${selectedArea.detailsPage}?id=${searchTerm}`; // return value of before
+          const resValidation = await axios.get(validation);
+
+          if (resValidation.data.content) {
+            return _dcpDomain;
+          } else { 
+            return searchURL;
+          }
         }
       } catch (err) {
         console.error(
@@ -157,7 +164,8 @@ const SearchBar = ({ data, componentProp }) => {
     if (searchTermText === "") {
       return null;
     } else {
-      window.location.href = await getSearchUrl(searchTermText);
+      const response = await getSearchUrl(searchTermText);
+      window.location.href = response;  
     }
   };
 

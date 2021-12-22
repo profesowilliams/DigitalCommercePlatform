@@ -24,6 +24,9 @@ use(function () {
       var area = res.properties["area"];
       var areaLabel = res.properties["areaLabel"];
 
+      var partialEndPoint = res.properties["partialEndPoint"];
+      var validateResponseEndPoint = res.properties["validateResponseEndPoint"]
+
       var areaconfig = new Packages.org.json.JSONObject();
       var areaEndpoint, areaSuggestionUrl, dcpLookupEndpoint;
       if (res.properties["areaEndpoint"] != null) {
@@ -42,6 +45,9 @@ use(function () {
         areaSuggestionUrl = this.serviceData[area + "SuggestionUrl"];
       }
 
+      areaconfig.put("partialEndPoint", partialEndPoint);
+      areaconfig.put("validateResponseEndPoint", validateResponseEndPoint);
+
       areaconfig.put("areaLabel", areaLabel);
       areaconfig.put("area", area);
       areaconfig.put("endpoint", areaEndpoint || '');
@@ -54,6 +60,8 @@ use(function () {
          * quoteDetailPage:         Page to redirect DCP User for successful quote entered
          * dcpQuotesLookupEndpoint: Endpoint for checking if quote ID entered exists, for DCP User
          * dcpSearchFailedPage:     Page to redirect DCP User for failed quote entered
+         * partialEndPoint:         Page to redirect to the GRID with queryParam to make a search
+         * validateResponseEndPoint: Endpoint for checking if quote ID entered exists
          */
           if (res.properties["detailsPage"] != null) {
               areaconfig.put("detailsPage", res.properties["detailsPage"]);
@@ -63,23 +71,51 @@ use(function () {
           if(dcpLookupEndpoint == null) {
             areaconfig.put("dcpLookupEndpoint", this.serviceData['quoteDcpLookupEndpoint'] || '');
           }
+
+          if (res.properties["partialEndPoint"] != null) {
+            areaconfig.put("partialEndPoint", res.properties["partialEndPoint"]);
+          } else {
+            areaconfig.put("partialEndPoint", this.serviceData['quotePartialEndPoint'] || '');
+          }
+
+          if (res.properties["validateResponseEndPoint"] != null) {
+            areaconfig.put("validateResponseEndPoint", res.properties["validateResponseEndPoint"]);
+          } else {
+            areaconfig.put("validateResponseEndPoint", this.serviceData['quoteValidateResponseEndPoint'] || '');
+          }
+
           areaconfig.put("dcpSearchPage", res.properties['dcpSearchFailedPage'] || '');
           } else if (area === 'order') {
-        /**
-         * orderDetailPage:         Page to redirect DCP User for successful order entered
-         * dcpOrdersLookupEndpoint: Endpoint for checking if order ID entered exists, for DCP User
-         * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
-         */
-        if (res.properties["detailsPage"] != null) {
-              areaconfig.put("detailsPage", res.properties["detailsPage"]);
-        } else {
-            areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
-        }
-        if(dcpLookupEndpoint == null){
-          areaconfig.put("dcpLookupEndpoint", this.serviceData['orderDcpLookupEndpoint'] || '');
-        }
-        areaconfig.put("dcpSearchPage", res.properties['ordersGridPage'] || '');
-      }
+            /**
+             * orderDetailPage:         Page to redirect DCP User for successful order entered
+             * dcpOrdersLookupEndpoint: Endpoint for checking if order ID entered exists, for DCP User
+             * dcpSearchFailedPage:     Page to redirect DCP User for failed order entered
+             * partialEndPoint:         Page to redirect to the GRID with queryParam to make a search
+             * validateResponseEndPoint: Endpoint for checking if quote ID entered exists
+             */
+            if (res.properties["detailsPage"] != null) {
+                  areaconfig.put("detailsPage", res.properties["detailsPage"]);
+            } else {
+                areaconfig.put("detailsPage", this.serviceData['orderDetailPage'] || '');
+            }
+            if(dcpLookupEndpoint == null){
+              areaconfig.put("dcpLookupEndpoint", this.serviceData['orderDcpLookupEndpoint'] || '');
+            }
+
+            if (res.properties["partialEndPoint"] != null) {
+              areaconfig.put("partialEndPoint", res.properties["partialEndPoint"]);
+            } else {
+              areaconfig.put("partialEndPoint", this.serviceData['orderPartialEndPoint'] || '');
+            }
+  
+            if (res.properties["validateResponseEndPoint"] != null) {
+              areaconfig.put("validateResponseEndPoint", res.properties["validateResponseEndPoint"]);
+            } else {
+              areaconfig.put("validateResponseEndPoint", this.serviceData['orderValidateResponseEndPoint'] || '');
+            }
+
+            areaconfig.put("dcpSearchPage", res.properties['ordersGridPage'] || '');
+          }
 
       jsonArray.put(areaconfig);
     }

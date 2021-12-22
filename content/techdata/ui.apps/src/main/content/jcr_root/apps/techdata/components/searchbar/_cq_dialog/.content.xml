@@ -138,6 +138,18 @@
                                                                 fieldDescription="Enter Dcp Lookup Endpoint"
                                                                 fieldLabel="Dcp Lookup Endpoint"
                                                                 name="./dcpLookupEndpoint" />
+                                                        <partialEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Dcp Partial Endpoint"
+                                                                fieldLabel="Dcp Partial EndPoint"
+                                                                name="./partialEndPoint" />
+                                                        <validateResponseEndPoint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldDescription="Enter Dcp Validate Response Endpoint"
+                                                                fieldLabel="Dcp Validate Response EndPoint"
+                                                                name="./validateResponseEndPoint" />
                                                         <detailsPage
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

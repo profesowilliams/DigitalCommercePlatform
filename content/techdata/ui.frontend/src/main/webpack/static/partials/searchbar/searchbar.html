@@ -7,11 +7,19 @@
 			"uiServiceDomain":"http://localhost:3000",
 			"typeAheadDomain":"http://localhost:3000/typeahead?keyword={search-term}&searchApplication=shop",
 			"searchDomain":"https://shop.cstenet.com",
+			"dcpDomain": "http://localhost:8080",
 			"areaList":[
+				{
+					"area": "all",
+					"areaSuggestionUrl": "/searchall?kw={search-term}&pks=1&pksi={suggestion-index}",
+					"endpoint": "/searchall?b=1&kw={search-term}",
+					"dcpLookupEndpoint": "",
+					"areaLabel": "Search In All Categories"
+			  	},
 				{
 					"area":"product","areaSuggestionUrl":"/searchall?kw={search-term}&pks=1&pksi={suggestion-index}",
 					"endpoint":"/searchall?b=1&kw={search-term}",
-					"areaLabel":"Search in Products"
+					"areaLabel":"Search in Cate"
 				},
 				{
 					"area":"content",
@@ -23,15 +31,19 @@
 					"area":"quote","areaSuggestionUrl":"undefined",
 					"endpoint":"/quotes/0?quoteType=null&quoteId={search-term}",
 					"areaLabel":"Search in Quotes",
-					"dcpLookupEndpoint": "/ui-commerce/v1/quote",
-					"detailsPage": "/dcp/quotes/quote-detail.html",
+					"dcpLookupEndpoint": "/searchbar/orders",
+					"detailsPage": "/quote-details-pdf-demo",
+					"validateResponseEndPoint": "/ui-commerce/v1/quote/details",
+					"partialEndPoint": "/quotes-grid",
 					"dcpSearchPage": "/content/techdata/language-masters/en/products"
 				},
 				{
 					"area":"order","areaSuggestionUrl":"undefined",
 					"endpoint":"/orderv2/search/results?kw={search-term}&pks=1&TwelveMonthSearch=false",
 					"areaLabel":"Search in Orders",
-					"detailsPage": "/dcp/orders/order-details.html",
+					"detailsPage": "/order-details-demo",
+					"validateResponseEndPoint": "/ui-commerce/v1/order/details",
+					"partialEndPoint": "/orders-grid",
 					"dcpLookupEndpoint": "/searchbar/orders",
 					"dcpSearchPage": "/content/techdata/language-masters"
 				},

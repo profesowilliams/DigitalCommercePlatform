@@ -37,6 +37,18 @@ public @interface SearchBarConfiguration {
 
     @Property(label = "Quote DCP Lookup Endpoint", description = "Quote DCP Lookup Endpoint")
     String quoteDcpLookupEndpoint();
+    
+    @Property(label = "Quote DCP Validate Response Endpoint", description = "Quote DCP Validate Response Endpoint")
+    String quoteValidateResponseEndPoint();
+    
+    @Property(label = "Quote DCP Partial Endpoint", description = "Quote DCP Partial Endpoint")
+    String quotePartialEndPoint();
+
+    @Property(label = "Order DCP Validate Response Endpoint", description = "Order DCP Validate Response Endpoint")
+    String orderValidateResponseEndPoint();
+    
+    @Property(label = "Order DCP Partial Endpoint", description = "Order DCP Partial Endpoint")
+    String orderPartialEndPoint();
 
     @Property(label = "SPA Search", description = "SPA Search")
     String spaSearchEndpoint();

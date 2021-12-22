@@ -123,6 +123,14 @@ public class CaConfigReader {
     private String orderSearchEndpoint;
 
     private String quoteDcpLookupEndpoint;
+    
+    private String quoteValidateResponseEndPoint;
+
+    private String quotePartialEndPoint;
+
+    private String orderValidateResponseEndPoint;
+
+    private String orderPartialEndPoint;
 
     private String orderDcpLookupEndpoint;
 
@@ -254,7 +262,10 @@ public class CaConfigReader {
         quoteSearchEndpoint = searchBarConfiguration.quoteSearchEndpoint();
         orderDcpLookupEndpoint = searchBarConfiguration.orderDcpLookupEndpoint();
         quoteDcpLookupEndpoint = searchBarConfiguration.quoteDcpLookupEndpoint();
-
+        orderValidateResponseEndPoint = searchBarConfiguration.orderValidateResponseEndPoint();
+        quoteValidateResponseEndPoint = searchBarConfiguration.quoteValidateResponseEndPoint();
+        orderPartialEndPoint = searchBarConfiguration.orderPartialEndPoint();
+        quotePartialEndPoint = searchBarConfiguration.quotePartialEndPoint();
         spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
         typeAheadDomain = searchBarConfiguration.typeAheadDomain();
         dcpDomain = redirectConfiguration.dcpDomain();
@@ -473,6 +484,22 @@ public class CaConfigReader {
 
     public String getQuoteDcpLookupEndpoint() {
         return quoteDcpLookupEndpoint;
+    }
+
+    public String getQuotePartialEndPoint() {
+        return quotePartialEndPoint;
+    }
+
+    public String getOrderValidateResponseEndPoint() {
+        return orderValidateResponseEndPoint;
+    }
+
+    public String getOrderPartialEndPoint() {
+        return orderPartialEndPoint;
+    }
+
+    public String getQuoteValidateResponseEndPoint() {
+        return quoteValidateResponseEndPoint;
     }
 
     public String getSpaSearchEndpoint() {

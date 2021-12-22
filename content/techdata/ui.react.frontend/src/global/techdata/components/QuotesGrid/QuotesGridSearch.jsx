@@ -1,10 +1,29 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 
-function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
+function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
+  const _query = useRef({});
+  const idParam = useRef();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    let _id = params.get('id');
+    
+    params.delete('id');
+    if (_id) {    
+        const url = new URL(uiServiceEndPoint);
+        let pathName = url.pathname ?? "";
+            pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
+        idParam.current = _id;
+        handleFilterChange({key:'id', value: _id}, "keyword");
+        const res = dispatchQueryChange(_query.current)
+        onSearchRequest({ queryString: res })
+    }
+  }, [idParam])
+
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -35,8 +54,6 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
   };
 
-  const _query = useRef({});
-
   function dispatchQueryChange(query) {
     let keyword =
       query.keyword?.key && query.keyword?.value
@@ -64,6 +81,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress }) {
     } else {
       onQueryChanged("");
     }
+    return concatedQuery;
   }
 
   function isQueryValid(query) {

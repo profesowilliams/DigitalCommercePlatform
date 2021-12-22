@@ -19,6 +19,8 @@ function QuotesGrid(props) {
     return formatedDate;
   };
 
+  const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
+
   const getDealsIdLabel = (deals) =>
     deals && deals.length > 1
       ? spaDealsIdLabel
@@ -46,6 +48,10 @@ function QuotesGrid(props) {
             ...previousInfo,
         }
     ));
+  }
+
+  const handleOnSearchRequest = (query) => {
+    filteringExtension.onQueryChanged(query);
   }
 
   const columnDefs = [
@@ -149,8 +155,9 @@ function QuotesGrid(props) {
           Filters={QuotesGridSearch}
           label={componentProp.searchCriteria?.title ?? "Filter Quotes"}
           componentProp={componentProp.searchCriteria}
-          onSearchRequest={filteringExtension.onQueryChanged}
+          onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
+          uiServiceEndPoint={uiServiceEndPoint}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

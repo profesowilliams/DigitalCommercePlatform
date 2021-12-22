@@ -21,6 +21,7 @@ function GridSearchCriteria({
   onClearRequest,
   HeaderButtonOptions,
   ButtonsComponentHeader,
+  uiServiceEndPoint,
 }) {
 	const filter = useRef(null);
 	let [filterActive, setFilterActive] = useState(false);
@@ -97,6 +98,8 @@ function GridSearchCriteria({
 						setFilterActive={setFilterActive}
 						setExternalFilterActive={setExternalFilterActive}
 						onKeyPress={(isEnter) => isEnter && onSearch()}
+						onSearchRequest={onSearchRequest}
+						uiServiceEndPoint={uiServiceEndPoint}
 					></Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>

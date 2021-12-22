@@ -530,7 +530,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
         }
 
         items.push({
-            id: Number(`${pageNumber}${4009754974 + i}`),
+            id: Number(`${pageNumber}${id ? id + 1 : 4009754974 + i}`),
             quoteReference: examplesQuoteReference[count],
             vendor: null,
             created: utils.getRandomDate(),
@@ -562,17 +562,17 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
     res.json(response);
 });
 
-app.get("/ui-commerce/v1/quote", function (req, res) {
-    const id = req.query.id;
-    const response = {
-        data: [id],
-        error: {
-            code: 0,
-            message: [],
-            isError: false,
-        },
-    };
-    res.json(response);
+app.get("/ui-commerce/v1/quotesingle", function (req, res) {
+  const id = req.query.id;
+  const response = {
+      data: [id],
+      error: {
+          code: 0,
+          message: [],
+          isError: false,
+      },
+  };
+  res.json(response);
 });
 
 app.get("/ui-commerce/v1/quotedetails", function (req, res) {
@@ -603,7 +603,7 @@ app.get("/ui-commerce/v1/order/details", function (req, res) {
         "isError": true
       }
     };
-    const response = id != 603068538 ? utils.getOrderDetailsResponse() : errorObject;
+    const response = id != 603068538 && id != 00000 ? utils.getOrderDetailsResponse() : errorObject;
     res.json(response);
 });
 
@@ -618,9 +618,11 @@ app.get("/ui-commerce/v1/order/", function (req, res) {
 
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
+    console.log(req.query);
     const details = req.query.details || true;
     const pageSize = req.query.PageSize || 25;
     const pageNumber = req.query.PageNumber || 1;
+    const id = req.query.id;
     const items = [];
     const status = [
         'onHold',
@@ -629,6 +631,8 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         'shipped',
         'cancelled',
     ];
+    console.log('id', id);
+
     const orderReportFlag = req.query.status 
                               ? 
                               req.query.status 
@@ -657,7 +661,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
         const statusID = getRandom(5);
         const manufacturerExample = Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 6);
         items.push({
-            id: Number(`${pageNumber}${4009754974 + i}`),
+            id: Number(`${pageNumber}${id ? id + 1 : 4009754974 + i}`),
             created: new Date().toISOString(),
             reseller: Number(`${pageNumber}${111048 + i}`),
             shipTo: "UPS",
@@ -848,7 +852,16 @@ app.get("/cart", function (req, res) {
 //---QUOTE DETAILS MOCK API---//
 app.get("/ui-commerce/v1/quote/details", function (req, res) {
   const { id, type } = req.query;
-
+  const errorObject = {
+    "content": null,
+    "error": {
+      "code": 404,
+      "messages": [
+        "UserId : 702318 for TraceId : NA Error connecting to http://app-order/v1. Reported an error: NotFound. http://app-order/v1?id=603068538"
+      ],
+      "isError": true
+    }
+  };
   if (!req.headers["SessionId"] && !id) {
       return res.status(500).json({
           error: {
@@ -1057,7 +1070,8 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         }
       )
     }
-    return items;
+    console.log(id == 00000 ? errorObject : items);
+    return id == 00000 ? errorObject : items;
   }
 
   const quoteDetailsResponse = {
@@ -1358,7 +1372,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
   const response = type ? renewalDetailsResponse : quoteDetailsResponse;
 
   setTimeout(() => {
-      res.json(response);
+    res.json(id == 00000 ? errorObject : response);
   }, 2000)
 });
 

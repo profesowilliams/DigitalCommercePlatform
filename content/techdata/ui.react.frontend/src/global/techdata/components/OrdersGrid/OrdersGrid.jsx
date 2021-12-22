@@ -15,7 +15,6 @@ const Grid = React.memo(GridComponent);
 const USER_DATA = JSON.parse(localStorage.getItem("userData"));
 
 function OrdersGrid(props) {
-    
     const componentProp = JSON.parse(props.componentProp);
     const filteringExtension = useGridFiltering();
     const labelFilterGrid = componentProp.searchCriteria?.labelButtonFilter ? componentProp.searchCriteria.labelButtonFilter : "Open Orders Report"
@@ -23,8 +22,8 @@ function OrdersGrid(props) {
     const [orderReportStatus, setOrderReportStatus] = useState(false);
     const showMoreFlag = componentProp.showMoreFlag ? componentProp.showMoreFlag : false;
     const [modal, setModal] = useState(null);
-
     const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
+    const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
 
     const STATUS = {
         onHold: 'onHold',
@@ -385,6 +384,7 @@ function OrdersGrid(props) {
     const hasToSortAgain = React.useRef(false);
    
     const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
+
     async function handleRequestInterceptor(request) {
         const response = await filteringExtension.requestInterceptor(request)
         if (hasToSortAgain.current) {
@@ -393,6 +393,7 @@ function OrdersGrid(props) {
         }
         return response;
     }
+    
     const handleOnSearchRequest = (query) => {
         filteringExtension.onQueryChanged(query);
         hasToSortAgain.current = true
@@ -410,6 +411,7 @@ function OrdersGrid(props) {
                     componentProp={componentProp.searchCriteria}
                     onSearchRequest={handleOnSearchRequest}
                     onClearRequest={filteringExtension.onQueryChanged}
+                    uiServiceEndPoint={uiServiceEndPoint}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}
