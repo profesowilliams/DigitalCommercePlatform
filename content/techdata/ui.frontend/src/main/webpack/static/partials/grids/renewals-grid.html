@@ -29,15 +29,15 @@
         "itemsPerPage":"25", "paginationStyle": "pages",
         "options": {"defaultSortingColumnKey": "created", "defaultSortingDirection": "desc"},
         "columnList":[
-          {"columnLabel":"Reseller Name","columnKey":"resellerName", "sortable": true, "type": "plainResellerColumn"},
-          {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false, "type": "plainText"},
+          {"columnLabel":"Reseller name","columnKey":"reseller", "sortable": false, "type": "plainText"},
+          {"columnLabel":"End user name","columnKey":"endUser", "sortable": false, "type": "plainText"},
           {"columnLabel":"Vendor and program","columnKey":"vendor", "sortable": false, "type": "plainText"},
-          {"columnLabel":"Agreement Nº","columnKey":"agreementNumber", "sortable": false, "type": "plainText"},
-          {"columnLabel":"Renewal Plan","columnKey":"renewalPlan", "sortable": false, "type": "renewalPlan"},
-          {"columnLabel":"Due in (Days)","columnKey":"dueDate", "sortable": true, "type": "date"},
-          {"columnLabel":"Due Date","columnKey":"dueDate", "sortable": false, "type": "date"},
+          {"columnLabel":"Agreement No","columnKey":"agreementNumber", "sortable": false, "type": "plainText"},
+          {"columnLabel":"Renewal Plan","columnKey":"contract", "sortable": false, "type": "plainText"},
+          {"columnLabel":"Due in (days)","columnKey":"dueDateDays", "sortable": false, "type": "plainText"},
+          {"columnLabel":"Due Date","columnKey":"dueDate", "sortable": false, "type": "plainText"},
           {"columnLabel":"Price (USD)","columnKey":"price", "sortable": false, "type": "plainText"},
-          {"columnLabel":"Action","columnKey":"action", "sortable": false, "type": "buttonList"}
+          {"columnLabel":"Actions","columnKey":"actions", "sortable": false, "type": "buttonList"}
         ],
         "searchCriteria":{
           "keywordDropdown":{},
@@ -89,7 +89,7 @@
           },
           {
             "accordionLabel": "Date",
-            "filterField" : "date",
+            "filterField" : "date"
           }
         ]}'>
       </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "../Grid/Grid";
+import GridRenewal from "../Grid/GridRenewal";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
 import DropdownFilter from "./DropdownFilter";
@@ -50,11 +51,11 @@ function ConfigurationGrid(props) {
       </div>
 
       <div className="cmp-renewals-grid">
-        <Grid
+        <GridRenewal
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
-        ></Grid>
+        ></GridRenewal>
       </div>
     </section>
   );
