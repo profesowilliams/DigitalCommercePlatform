@@ -26,6 +26,7 @@
 
         &+li {
           border-left: rem(1px) solid get-color(brand-white);
+
           @include mobile {
             display: none;
           }
@@ -46,7 +47,8 @@
 
       &--right {
         align-items: center;
-        @include mobile {          
+
+        @include mobile {
           margin: 0 auto !important;
         }
 
@@ -160,7 +162,10 @@
       }
     }
 
-    .submenu {
+    // below is subHeader hamburger menu //
+
+
+    .subheader-menu {
       display: flex;
       flex-direction: row;
       list-style-type: none;
@@ -172,7 +177,7 @@
       }
     }
 
-    .submenu-button-container {
+    .subheader-button-container {
       display: none;
       height: 100%;
       width: 30px;
@@ -182,13 +187,13 @@
       align-items: center;
     }
 
-    #submenu-toggle {
+    #subheader-toggle {
       display: none;
 
       &:checked {
         + {
-          .submenu-button-container {
-            .submenu-button {
+          .subheader-button-container {
+            .subheader-button {
               &::before {
                 margin-top: 0px;
                 transform: rotate(405deg);
@@ -206,7 +211,7 @@
       }
     }
 
-    .submenu-button {
+    .subheader-button {
       display: block;
       background-color: #fff;
       position: absolute;
@@ -239,22 +244,19 @@
     }
 
     @include mobile {
-
       ol {
         display: none;
       }
-
-
       .cmp-sub-header__wrapper ul li+li {
         display: none !important;
         border-left: rem(0px) solid get-color(brand-white);
       }
 
-      .submenu-button-container {
+      .subheader-button-container {
         display: flex;
       }
 
-      .submenu {
+      .subheader {
         position: absolute;
         top: 0;
         margin-top: 50px;
@@ -274,9 +276,9 @@
         }
       }
 
-      #submenu-toggle {
+      #subheader-toggle {
         ~ {
-          .submenu {
+          .subheader {
             li {
               height: 0;
               margin: 0;
@@ -289,7 +291,7 @@
 
         &:checked {
           ~ {
-            .submenu {
+            .subheader {
               li {
                 border: 1px solid #fff;
                 height: 2.5em;
@@ -302,6 +304,9 @@
         }
       }
     }
+   
+    /// above is THE END of subHeader hamburger menu ///
+
   }
 }
 
