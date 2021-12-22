@@ -80,7 +80,7 @@ const orderButton = (status) => {
   return (
       <div className="cmp-td-order-details__header">
         <div className="cmp-td-order-details__header__details">
-          <button onClick={()=> {window.history.go(-1); return false}} className="cmp-td-order-details__header__details--icon">
+          <button onClick={()=> {window.history.go(location.href.indexOf('#') > 0 ? -2 : -1); return false}} className="cmp-td-order-details__header__details--icon">
               <i className="fas fa-chevron-left" />
           </button>
           <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
