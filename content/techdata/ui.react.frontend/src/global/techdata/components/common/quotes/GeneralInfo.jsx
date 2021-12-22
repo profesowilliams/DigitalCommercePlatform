@@ -223,11 +223,14 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
     }
 
     const replaceSearchTerm = (originalStr, searchTerm) => {
-        const productIds = quoteDetails.items?.map((lineItem) => lineItem.mfrNumber);
-
+        let productIds = quoteDetails.items?.map((lineItem) => {
+            const childProductIds = lineItem.children.map((children) => children.vendorPartNo);
+            return lineItem.mfrNumber + "," + childProductIds.join(',');
+        });
+        productIds = productIds.join(',').replace(/(,)\1+/g, ',');
         return originalStr
             .replace("{end-user-name}", searchTerm)
-            .replace("{manufacturer-parts-id-array}", productIds.join(','))
+            .replace("{manufacturer-parts-id-array}", productIds)
             .replace("{order-level}", generalInfoState.tier);
     }
 
