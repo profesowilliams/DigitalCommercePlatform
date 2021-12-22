@@ -1,22 +1,12 @@
 (function(){
 
     const ACTION_LOGIN_QUERY_PARAM = "action=login";
-    const REDIRECT_URL = "redirectUrl";
     const ACTION_QUERY_PARAM = "action";
     const ACTION_QUERY_PARAM_DELIMITER = "|";
 
-
     function handleAutoLoginInAEM(event) {
-        let redirectUrlFromLS = localStorage.getItem(REDIRECT_URL);
         let searchValue = window.location.search;
-        if(searchValue.indexOf(ACTION_LOGIN_QUERY_PARAM) == -1) {
-            if(redirectUrlFromLS) {
-                // redirectBasedOnLocalStorageUrl
-                localStorage.removeItem(REDIRECT_URL);
-                window.location.href = redirectUrlFromLS;
-                event.preventDefault();
-            }
-        } else {
+        if(searchValue.indexOf(ACTION_LOGIN_QUERY_PARAM) > -1) {
             let actionParam = getQueryStringValue(ACTION_QUERY_PARAM);
             let actionParamValues = actionParam.split(ACTION_QUERY_PARAM_DELIMITER);
             if (actionParamValues.length > 0) {

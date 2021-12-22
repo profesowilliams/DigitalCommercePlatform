@@ -42,8 +42,16 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedir
         : redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
 };
 
-export const refreshPage = () => {
-    const { search, origin, pathname } = window.location;
-    if (search) window.location.href = `${origin}${pathname}`;
+export const refreshPage = event => {
+    let REDIRECT_URL = "redirectUrl";
+    let redirectUrlFromLS = localStorage.getItem(REDIRECT_URL);
+    if(redirectUrlFromLS) {
+        localStorage.removeItem(REDIRECT_URL);
+        window.location.href = redirectUrlFromLS;
+        return true;
+    } else {
+        const { search, origin, pathname } = window.location;
+        if (search) window.location.href = `${origin}${pathname}`;
+    }
     return true;
 };
