@@ -5,20 +5,20 @@ import {
   IS_TD_INTERNAL,
   RENEWALS_TYPE,
 } from "../../../../utils/user-utils";
+import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
   const { value, data } = eventProps;
- 
   const columnFields = {
     reseller: value?.name,
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
-    contract: <ContractColumn data={data} />,
+    renewal: <ContractColumn data={data} />,
     dueDateDays: <DueDateColumn columnDefinition={definition} columnValue={data?.dueDate}/>,
-    price: (data?.items[0]?.unitPrice == 0 ? '0' : data?.items[0]?.unitPrice) ?? ""
+    price : thousandSeparator(value)
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
   return columnFields[columnKey] || defaultValue();

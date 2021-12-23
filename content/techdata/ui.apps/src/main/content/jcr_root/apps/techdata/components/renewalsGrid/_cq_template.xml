@@ -33,66 +33,66 @@
     <columnList jcr:primaryType="nt:unstructured">
         <item0
             jcr:primaryType="nt:unstructured"
-            columnLabel="Config ID"
-            columnKey="configId"
-            sortable="{Boolean}true"
+            columnLabel="Reseller name"
+            columnKey="reseller"
+            sortable="{Boolean}false"
             columnType="plainText"
         />
         <item1
             jcr:primaryType="nt:unstructured"
-            columnLabel="Type"
-            columnKey="configurationType"
+            columnLabel="End user name"
+            columnKey="endUser"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item2
             jcr:primaryType="nt:unstructured"
-            columnLabel="Vendor"
+            columnLabel="Vendor and program"
             columnKey="vendor"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item3
             jcr:primaryType="nt:unstructured"
-            columnLabel="Created"
-            columnKey="created"
+            columnLabel="Agreement No"
+            columnKey="agreementNumber"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item4
             jcr:primaryType="nt:unstructured"
-            columnLabel="Expires"
-            columnKey="expires"
+            columnLabel="Renewal Plan"
+            columnKey="renewal"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item5
             jcr:primaryType="nt:unstructured"
-            columnLabel="Config Name"
-            columnKey="configName"
+            columnLabel="Due in (days)"
+            columnKey="dueDateDays"
             sortable="{Boolean}true"
             columnType="plainText"
         />
         <item6
             jcr:primaryType="nt:unstructured"
-            columnLabel="End User Name"
-            columnKey="endUserName"
+            columnLabel="Due Date"
+            columnKey="dueDate"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item7
             jcr:primaryType="nt:unstructured"
-            columnLabel="TD Quote Id"
-            columnKey="quotes"
+            columnLabel="Price (USD)"
+            columnKey="price"
             sortable="{Boolean}false"
             columnType="plainText"
         />
         <item8
             jcr:primaryType="nt:unstructured"
-            columnLabel="Action"
-            columnKey="action"
+            columnLabel="Actions"
+            columnKey="actions"
             sortable="{Boolean}false"
-            columnType="plainText"
+            columnType="buttonList"
         />
     </columnList>
     <statusLabelsList jcr:primaryType="nt:unstructured">
