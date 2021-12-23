@@ -34,7 +34,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
 public class EnhancedListTest {
     private final AemContext aemContext = new AemContext();
-
     EnhancedList enhancedList;
     @Mock
     Resource resource;
