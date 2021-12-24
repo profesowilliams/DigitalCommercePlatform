@@ -5,10 +5,12 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.GetProductPrice;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Services.Layer.UI;
@@ -139,6 +141,20 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         {
             var data = new SPADetails.Request { Id=Id,ProductIds=ProductIds,Details=details};
             var response = await Mediator.Send(data).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// This request is for deatils returned by SPA
+        /// </summary>
+        /// <param name="dealId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("productPrice")]
+        public async Task<ActionResult> GetProductPrice([FromBody] PriceCriteriaModel criteria)
+        {
+            var response = await Mediator.Send(new GetProductPrice.Request(criteria)).ConfigureAwait(false);
             return Ok(response);
         }
     }

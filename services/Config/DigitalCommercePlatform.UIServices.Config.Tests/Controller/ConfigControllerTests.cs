@@ -5,14 +5,17 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetPunchOutUrl;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.GetProductPrice;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -25,7 +28,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using DigitalFoundation.Common.Services.Layer.UI;
 
 namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 {
@@ -233,6 +235,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var result = await sut.GetSpa("2294844", "PNV602,PNR703,PNL401C", true).ConfigureAwait(false);
             result.Should().Equals(HttpStatusCode.OK);
         }
+
+        [Fact]
+        public async Task GetProductPrice()
+        {
+            //arrange
+            ResponseBase<GetProductPrice.Response> expected = new ResponseBase<GetProductPrice.Response>();
+            _mockMediator.Setup(x => x.Send(
+                      It.IsAny<GetProductPrice.Request>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(expected);
+
+            //act
+            PriceCriteriaModel request = new PriceCriteriaModel();
+            var sut = GetController();
+            var result = await sut.GetProductPrice(request).ConfigureAwait(false);
+
+            //assert
+            result.Should().Equals(HttpStatusCode.OK);
+        }
+
         private ConfigController GetController()
         {
             var httpRequestMock = new Mock<HttpRequest>();

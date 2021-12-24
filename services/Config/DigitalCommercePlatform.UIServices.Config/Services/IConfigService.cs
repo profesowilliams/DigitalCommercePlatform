@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -23,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         Task<string> GetPunchOutUrlAsync(PunchInModel request);
         Task<RefreshData.Response> RefreshVendor(RefreshData.Request request);
         Task<SPADetails.Response> GetSPADetails(SPADetails.Request request);
+        Task<GetProductPrice.Response> GetProductPrice(GetProductPrice.Request request);
 
     }
 }

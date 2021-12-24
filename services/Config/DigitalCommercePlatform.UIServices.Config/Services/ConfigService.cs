@@ -29,6 +29,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
+using Newtonsoft.Json;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -271,7 +273,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 _logger.LogInformation($"Requested url is: {requestUrl}");
 
                 var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
-                var requestJson = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
                 var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
 
                 httpResponse.EnsureSuccessStatusCode();
@@ -421,6 +423,32 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 _logger.LogError("No records returned by app service for SPA id " + request.Id + nameof(ConfigService));
             }
 
+            return response;
+        }
+
+        public async Task<GetProductPrice.Response> GetProductPrice(GetProductPrice.Request request)
+        {
+            
+            string _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
+            GetProductPrice.Response response;
+            _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(request, Formatting.Indented));
+            try
+            {
+                response = await _middleTierHttpClient.PostAsync<GetProductPrice.Response>(_appPriceUrl, null, request);
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Code == HttpStatusCode.BadRequest && ex.InnerException is RemoteServerHttpException innerException)
+                {
+                    object exceptionDetails = innerException?.Details;
+                    object body = exceptionDetails?.GetType().GetProperty("Body")?.GetValue(exceptionDetails, null);
+                    response = JsonConvert.DeserializeObject<GetProductPrice.Response>(body as string);
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return response;
         }
     }
