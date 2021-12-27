@@ -19,7 +19,7 @@
     const ANALYTICS_EVENTINFO_NAME_PN = "name";
     const ANALYTICS_EVENTINFO_CAROUSEL_NAME_PN = "carouselName";
     const ANALYTICS_EVENTINFO_REGION_PN = "region";
-    const ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN = "mastheadlevel"
+    const ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN = "mastheadlevel";
     const ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN = "selectionDepth";
     const ANALYTICS_EVENTINFO_TYPE_PN = "type";
     const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link";
@@ -27,6 +27,8 @@
     const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta";
     const IMAGE_CSS_CLASSNAME = "cmp-image";
     const TEASER_CONTENT_CSS_CLASSNAME = "cmp-teaser__content";
+    const MEGAMENU_CLASSNAME = "cmp-megamenu__analytics-link";
+    const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
@@ -158,6 +160,27 @@
 
     }
 
+    function megamenuClickEventHandler(elemClicked) {
+        const mastheadlevel = elemClicked.getAttribute('data-level');
+        let clickHier =  elemClicked.getAttribute('data-hier');
+        const titleVal = elemClicked.getAttribute('title');
+        const clickInfo = {};
+
+        if (mastheadlevel === 'L4') {
+            const level3EleHier = document.querySelector('.cmp-megamenu__tertiary .cmp-megamenu__item--active')
+                .getAttribute('data-hier');
+            clickHier = level3EleHier + '>' + titleVal;
+        }
+
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = 'mastheader';
+        clickInfo[ANALYTICS_EVENTINFO_MASTHEADLEVEL_PN] = mastheadlevel;
+        clickInfo[ANALYTICS_EVENTINFO_CLICKHEIR_PN] = clickHier;
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = titleVal;
+
+        pushToDataLayer(clickInfo);
+    }
+
     function attachClickEventListener(element) {
         element.addEventListener("click", addClickToDataLayer);
     }
@@ -178,6 +201,8 @@
         var className = event.currentTarget.className;
         if (className && (className.startsWith(IMAGE_CSS_CLASSNAME) || className.startsWith(TEASER_CONTENT_CSS_CLASSNAME))) {
             imageClickEventHandler(event.currentTarget.id, event.currentTarget);
+        } else if (className && (className.startsWith(MEGAMENU_CLASSNAME))) {
+            megamenuClickEventHandler(event.currentTarget);
         } else {
             var element = event.currentTarget;
             var componentId = getClickId(element);

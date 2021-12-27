@@ -210,6 +210,13 @@ public class SubNavLinks {
 
     public String getMenuID() {return (this.getRootParentTitle()+"-"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT); }
 
+    public String getLevels() {
+        if(this.getDocCount() == null)
+            return (this.getRootParentTitle()+">"+this.getPageTitle()).toLowerCase(Locale.ROOT);
+        else
+            return (this.getRootParentTitle()+">"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT);
+    }
+
     public String getRootParentLink(){
         return this.rootParentLink;
     }
