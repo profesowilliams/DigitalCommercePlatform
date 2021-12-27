@@ -200,6 +200,8 @@ public class CaConfigReader {
 
     private String renewalsGridEndpoint;
 
+    private String renewalDetailLineItemEndpoint;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -249,6 +251,7 @@ public class CaConfigReader {
         downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
+        renewalDetailLineItemEndpoint = serviceEndPointsConfiguration.renewalDetailLineItemEndpoint();
         cartURL = mcConfiguration.cartURL();
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
@@ -614,6 +617,10 @@ public class CaConfigReader {
 
     public String getRenewalsGridEndpoint() {
         return renewalsGridEndpoint;
+    }
+
+    public String getRenewalDetailLineItemEndpoint(){
+        return renewalDetailLineItemEndpoint;
     }
 
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }

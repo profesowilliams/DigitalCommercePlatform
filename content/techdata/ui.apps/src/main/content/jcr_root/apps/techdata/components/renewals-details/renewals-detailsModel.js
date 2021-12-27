@@ -3,9 +3,16 @@ use(['../common/utils.js'], function(utils) {
     var jsonObject = {};
 
     var productLines = {};
-
+    var quotePreview = {};
+    var reseller = {};
+    var agreementInfo = {};
+    var endCustomer = {};
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
+    }
+
+    if (properties && properties["lineItemDetailsLabel"]) {
+        productLines["lineItemDetailsLabel"] = properties["lineItemDetailsLabel"];
     }
 
     if (properties && properties["productfamily"]) {
@@ -30,8 +37,110 @@ use(['../common/utils.js'], function(utils) {
         productLines["note"] = properties["note"];
     }
 
-    if(productLines != null){
+    if (this.renewalDetailLineItemEndpoint) {
+        jsonObject["renewalDetailLineItemEndpoint"] = this.renewalDetailLineItemEndpoint;
+    }
+
+    if (properties && properties["quotePreviewlabel"]) {
+        quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];
+    }
+
+    if (properties && properties["resellerLabel"]) {
+        reseller["resellerLabel"] = properties["resellerLabel"];
+    }
+
+    if (properties && properties["accountNoLabel"]) {
+        reseller["accountNoLabel"] = properties["accountNoLabel"];
+    }
+    if (properties && properties["resellerVendorAccountNoLabel"]) {
+        quotePreview["resellerVendorAccountNoLabel"] = properties["resellerVendorAccountNoLabel"];
+    }
+
+    if (properties && properties["previousPurchaseOrderNoLabel"]) {
+        reseller["previousPurchaseOrderNoLabel"] = quotePreview["previousPurchaseOrderNoLabel"];
+    }
+
+    if (reseller != null) {
+        quotePreview["reseller"] = reseller;
+    }
+
+
+    if (properties && properties["endCustomerLabel"]) {
+        endCustomer["endCustomerLabel"] = properties["endCustomerLabel"];
+    }
+
+    if (properties && properties["emailLabel"]) {
+        endCustomer["emailLabel"] = properties["emailLabel"];
+    }
+
+    if (properties && properties["phoneLabel"]) {
+        endCustomer["phoneLabel"] = properties["phoneLabel"];
+    }
+    if (properties && properties["endCustomerType"]) {
+        endCustomer["endCustomerType"] = properties["endCustomerType"];
+    }
+    if (properties && properties["vendorAccountNo"]) {
+        endCustomer["vendorAccountNo"] = properties["vendorAccountNo"];
+    }
+    if (properties && properties["endCustpreviousPurchaseOrderNo"]) {
+        endCustomer["endCustpreviousPurchaseOrderNo"] = properties["endCustpreviousPurchaseOrderNo"];
+    }
+    if (endCustomer != null) {
+        quotePreview["productLines"] = endCustomer;
+    }
+
+    if (properties && properties["agreementInfoLabel"]) {
+        agreementInfo["agreementInfoLabel"] = properties["agreementInfoLabel"];
+    }
+
+    if (properties && properties["programLabel"]) {
+        agreementInfo["programLabel"] = properties["programLabel"];
+    }
+
+    if (properties && properties["durationLabel"]) {
+        agreementInfo["durationLabel"] = properties["durationLabel"];
+    }
+    if (properties && properties["supportLevelLabel"]) {
+        agreementInfo["supportLevelLabel"] = properties["supportLevelLabel"];
+    }
+    if (properties && properties["distiQuoteNoLabel"]) {
+        agreementInfo["distiQuoteNoLabel"] = properties["distiQuoteNoLabel"];
+    }
+    if (properties && properties["agreementNoLabel"]) {
+        agreementInfo["agreementNoLabel"] = properties["agreementNoLabel"];
+    }
+    if (properties && properties["distiQuoteLabel"]) {
+        agreementInfo["distiQuoteLabel"] = properties["distiQuoteLabel"];
+    }
+    if (properties && properties["quotedueDateLabel"]) {
+        agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
+    }
+    if (properties && properties["quotedueDateLabel"]) {
+        agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
+    }
+    if (properties && properties["agreeStartDateLabel"]) {
+        agreementInfo["agreeStartDateLabel"] = properties["agreeStartDateLabel"];
+    }
+    if (properties && properties["agreeEndDateLabel"]) {
+        agreementInfo["agreeEndDateLabel"] = properties["agreeEndDateLabel"];
+    }
+    if (properties && properties["usageStartDateLabel"]) {
+        agreementInfo["usageStartDateLabel"] = properties["usageStartDateLabel"];
+    }
+    if (properties && properties["usageEndDateLabel"]) {
+        agreementInfo["usageEndDateLabel"] = properties["usageEndDateLabel"];
+    }
+
+    if (agreementInfo != null) {
+        quotePreview["agreementInfo"] = agreementInfo;
+    }
+
+    if (productLines != null) {
         jsonObject["productLines"] = productLines;
+    }
+
+    if (quotePreview != null) {
+        jsonObject["quotePreview"] = quotePreview;
     }
     return {
         configJson: JSON.stringify(jsonObject)

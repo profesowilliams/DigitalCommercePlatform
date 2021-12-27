@@ -131,4 +131,7 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Renewals Grid Endpoint", description = "Renewals Grid Endpoint")
     String renewalsGridEndpoint();
 
+     @Property(label = "Renewal Details Line Item Endpoint", description = "Renewal Details Line Item Endpoint")
+    String renewalDetailLineItemEndpoint();
+
 }
