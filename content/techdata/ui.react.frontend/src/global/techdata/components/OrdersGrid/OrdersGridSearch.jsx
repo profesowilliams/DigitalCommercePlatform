@@ -83,13 +83,13 @@ const config = {
     let from =
       query.from?.key && query.from?.value
         ? `&createdFrom=${new Date(
-            query.from.value.setUTCHours(0, 0, 0)
+            Date.UTC(query.from.value.getFullYear(),query.from.value.getMonth(), query.from.value.getDate())
           ).toISOString()}`
         : "";
     let to =
       query.to?.key && query.to?.value
         ? `&createdTo=${new Date(
-            query.to.value.setUTCHours(23, 59, 59)
+            new Date(Date.UTC(query.to.value.getFullYear(),query.to.value.getMonth(), query.to.value.getDate())).setUTCHours(23, 59, 59)
           ).toISOString()}`
         : "";
    
@@ -144,14 +144,14 @@ const config = {
         pickerKey={"from"}
         placeholder={config.datePlaceholder}
         label={config.fromLabel}
-        forceZeroUTC={true}
+        forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
       ></SimpleDatePicker>
       <SimpleDatePicker
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}
-        forceZeroUTC={true}
+        forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
       ></SimpleDatePicker>
     </div>
