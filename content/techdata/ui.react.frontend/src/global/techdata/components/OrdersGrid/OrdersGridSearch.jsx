@@ -15,13 +15,17 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   };
   const _query = useRef({});
   const idParam = useRef();
+  const flagKeyword = useRef(false);
+  const flagManufacturer = useRef(false);
+  const flagMethod = useRef(false);
+  const flagFrom = useRef(false);
+  const flagTo = useRef(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     let _id = params.get('id');
-    
     params.delete('id');
-    if (_id) {    
+    if (_id && idParam.current === undefined) {
         const url = new URL(uiServiceEndPoint);
         let pathName = url.pathname ?? "";
             pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
@@ -127,32 +131,71 @@ const config = {
         key={"keyword"}
         items={config.keywordDropdown.items}
         placeholder={config.inputPlaceholder}
-        onQueryChanged={(change) => handleFilterChange(change, "keyword")}
+        onQueryChanged={(change) => {
+          if (flagKeyword.current) {
+            handleFilterChange(change, "keyword")
+          } else {
+            flagKeyword.current = true;     
+          }
+          
+        }}
         onKeyPress={(isEnter) => onKeyPress(isEnter)}
       ></QueryInput>
       <SimpleDropDown
         key={"manufacturer"}
         items={config.vendorsDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "manufacturer")}
+        onItemSelected={(change) => {
+          if (flagManufacturer.current) {
+            handleFilterChange(change, "manufacturer")
+          } else {
+            flagManufacturer.current = true
+          }
+        }
+          
+        }
       ></SimpleDropDown>
       <SimpleDropDown
         key={"method"}
         items={config.methodsDropdown.items}
-        onItemSelected={(change) => handleFilterChange(change, "method")}
+        onItemSelected={(change) => {
+          if (flagMethod.current) {
+            handleFilterChange(change, "method")
+          } else {
+            flagMethod.current = true
+          }
+        }
+          
+        }
       ></SimpleDropDown>
       <SimpleDatePicker
         pickerKey={"from"}
         placeholder={config.datePlaceholder}
         label={config.fromLabel}
         forceZeroUTC={false}
-        onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
+        onSelectedDateChanged={(change) => {
+          if (flagFrom.current) {
+            handleFilterChange(change, "from")
+          } else {
+            flagFrom.current = true
+          }
+        }
+          
+        }
       ></SimpleDatePicker>
       <SimpleDatePicker
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}
         forceZeroUTC={false}
-        onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
+        onSelectedDateChanged={(change) => {
+          if (flagTo.current) {
+            handleFilterChange(change, "to")
+          } else {
+            flagTo.current = true
+          }
+        }
+          
+        }
       ></SimpleDatePicker>
     </div>
   );

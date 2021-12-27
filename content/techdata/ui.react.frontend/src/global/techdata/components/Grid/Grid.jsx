@@ -217,7 +217,7 @@ function Grid(props) {
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true`
-          : "";
+          : "&SortDirection=desc&SortBy=id&WithPaginationInfo=true"; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? "";
       pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${

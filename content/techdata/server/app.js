@@ -518,7 +518,7 @@ app.get("/dealsSummary", function (req, res) {
 
 //---QUOTES GRID MOCK API---//
 app.get("/ui-commerce/v1/quote/", function (req, res) {
-  const id = req.query.id;
+  const id = req.query.quoteIdFilter;
   const details = req.query.details || true;
   const pageSize = req.query.PageSize || 25;
   const pageNumber = req.query.PageNumber || 1;
@@ -637,7 +637,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   const id = req.query.id;
   const items = [];
   const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
-  console.log("id", id);
+  // console.log("id", id);
 
   const orderReportFlag = req.query.status
     ? req.query.status === "OPEN"
