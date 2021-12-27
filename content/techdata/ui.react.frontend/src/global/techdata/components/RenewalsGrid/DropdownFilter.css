@@ -1,11 +1,38 @@
 .inputStyle {
-  margin-bottom: 1em;
   padding: 0.25em;
   border: 0;
-  border-bottom: 1px solid currentcolor;
   font-weight: lighter;
   letter-spacing: 0.15em;
   border-radius: 0;
+  /* margin-bottom: 1em; */
+  border-bottom: 1px solid currentcolor;
+}
+
+.searchStyle {
+  padding: 0.25em;
+  border: 0;
+  font-weight: lighter;
+  letter-spacing: 0.15em;
+  border-radius: 0;
+}
+
+select.searchStyle {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  /* no standardized syntax available, no ie-friendly solution available */
+}
+
+select + i.fa {
+  float: right;
+  margin-top: -30px;
+  margin-right: 5px;
+  /* this is so when you click on the chevron, your click actually goes on the dropdown menu */
+  /* pointer-events: none; */
+  /* everything after this is just to cover up the original arrow */
+  /* (for browsers that don't support the syntax used above) */
+  background-color: #fff;
+  padding-right: 5px;
 }
 
 .inputStyle:focus,
@@ -33,6 +60,67 @@
   display: none;
   padding: 0.5em;
   height: 50px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.navbar {
+  overflow: hidden;
+  /* background-color: #333; */
+}
+
+.navbar a {
+  float: left;
+  /* font-size: 16px; */
+  /* color: white; */
+  text-align: center;
+  /* padding: 14px 16px; */
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  /* font-size: 16px;   */
+  border: none;
+  outline: none;
+  /* color: white; */
+  padding: 2px 2px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* .navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+} */
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 5px 2px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  width: 250px;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .tooltipContainer:hover > .tooltip {
