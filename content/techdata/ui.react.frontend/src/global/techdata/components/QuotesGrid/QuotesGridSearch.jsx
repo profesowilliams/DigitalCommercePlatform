@@ -18,7 +18,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         let pathName = url.pathname ?? "";
             pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
         idParam.current = _id;
-        handleFilterChange({key:'id', value: _id}, "keyword");
+        handleFilterChange({key:'quoteIdFilter', value: _id}, "keyword");
         const res = dispatchQueryChange(_query.current)
         onSearchRequest({ queryString: res })
     }

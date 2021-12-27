@@ -26,8 +26,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         let pathName = url.pathname ?? "";
             pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
         idParam.current = _id;
-        handleFilterChange({key:'id', value: _id}, "keyword");
-        const res = dispatchQueryChange(_query.current)
+        const res = handleFilterChange({key:'id', value: _id}, "keyword");
         onSearchRequest({ queryString: res })
     }
   }, [idParam, componentProp])
@@ -117,7 +116,8 @@ const config = {
   function handleFilterChange(change, filterName) {
     if (change) {
       _query.current[filterName] = change;
-      dispatchQueryChange(_query.current);
+      const res = dispatchQueryChange(_query.current);
+      return res
     }
   }
  
