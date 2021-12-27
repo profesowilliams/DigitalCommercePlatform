@@ -81,51 +81,29 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
             }
 
-            public Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                /*  DetailedResponseModel renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
-                  RefinementGroupsModel refainmentGroup = new();
+                DetailedResponseModel renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
+                RefinementGroupsModel refainmentGroup = new();
 
-                  if (_homeAccount != _context.ImpersonatedAccount)
-                  {
-                      refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
-
-                      if (refainmentGroup == null)
-                      {
-                          refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { Type = "Renewal" }).ConfigureAwait(false);
-                          _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup, _cacheExpiration);
-                      }
-                  }*/
-
-                var renewalsResponse = new DetailedResponseModel();
-                renewalsResponse.Response = new List<DetailedModel>();
-
-                var detailedModel = new DetailedModel();
-                detailedModel.Items = new List<ItemModel>();
-
-                for (var i = 0; i < 10; i++)
+                if (_homeAccount != _context.ImpersonatedAccount)
                 {
-                    var item = new ItemModel();
+                    refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
 
-                    item.ID = i.ToString();
-                    item.Product = new List<ProductModel> { new ProductModel { Id = item.ID, Name = "Name" + item.ID, Family = "Family" + item.ID, Classification = "Classification" + item.ID, Manufacturer = "Manufacturer" + item.ID, LocalManufacturer = "LocalManufacturer" + item.ID, ManufacturerId = item.ID, Type = "Type" + item.ID } };
-                    item.UnitCost = 101.01m + i;
-                    item.Quantity = 100 + i;
-                    item.TotalPrice = item.Quantity * item.UnitCost;
-                    item.SerialNumbers = new List<string> { "SerialNumber" + item.ID };
-                    item.Instance = "instance" + item.ID;
-                    detailedModel.Items.Add(item);
+                    if (refainmentGroup == null)
+                    {
+                        refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { Type = "Renewal" }).ConfigureAwait(false);
+                        _sessionIdBasedCacheProvider.Put(request.SessionId, refainmentGroup, _cacheExpiration);
+                    }
                 }
-
-                renewalsResponse.Response.Add(detailedModel);
 
                 var response = new Response
                 {
                     Items = renewalsResponse,
-                    // RefinementGroups = refainmentGroup
+                    RefinementGroups = refainmentGroup
                 };
 
-                return Task.Run(() => new ResponseBase<Response> { Content = response });
+                return new ResponseBase<Response> { Content = response };
             }
 
             public class Validator : AbstractValidator<Request>
