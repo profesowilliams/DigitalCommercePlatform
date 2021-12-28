@@ -19,11 +19,11 @@ const dueIconsMapped = (days) => {
 function DueDateColumn({ columnDefinition, columnValue }) {
   const days = differenceInDays(new Date(columnValue), new Date());
   return (
-    <>
+    <div className="cmp-due-date-column"> 
       {dueIconsMapped(parseInt(days))}
       {"  "}
       {days}
-    </>
+    </div>
   );
 }
 
