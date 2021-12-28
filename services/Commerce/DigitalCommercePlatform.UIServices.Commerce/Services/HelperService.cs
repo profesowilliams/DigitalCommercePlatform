@@ -63,6 +63,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 sortBy = "Updated";
             }
+            else if (parameter.ToLower() == "endusername")
+            {
+                sortBy = "EndUserName";
+            }
             else
             {
                 sortBy = "Created";
