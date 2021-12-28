@@ -125,16 +125,6 @@ class CaConfigReaderTest {
         when(redirectConfiguration.orderDetailPage()).thenReturn("orderDetailPage");
 
         when(commonConfigurations.productEmptyImageUrl()).thenReturn("productEmptyImageUrl");
-        when(commonConfigurations.noRowsErrorMessage()).thenReturn("noRowsErrorMessage");
-        when(commonConfigurations.errorGettingDataMessage500()).thenReturn("errorGettingDataMessage500");
-        when(commonConfigurations.errorGettingDataMessage401()).thenReturn("errorGettingDataMessage401");
-        when(commonConfigurations.errorGettingDataMessage403()).thenReturn("errorGettingDataMessage403");
-        when(commonConfigurations.errorGettingDataMessage404()).thenReturn("errorGettingDataMessage404");
-        when(commonConfigurations.errorGettingDataMessage408()).thenReturn("errorGettingDataMessage408");
-
-
-
-
         when(commonConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
 
 
@@ -191,11 +181,5 @@ class CaConfigReaderTest {
         assertEquals("orderDetailPage", underTest.getOrderDetailPage());
 
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
-        assertEquals("noRowsErrorMessage", underTest.getNoRowsErrorMessage());
-        assertEquals("errorGettingDataMessage500", underTest.getErrorGettingDataMessage500());
-        assertEquals("errorGettingDataMessage401", underTest.getErrorGettingDataMessage401());
-        assertEquals("errorGettingDataMessage403", underTest.getErrorGettingDataMessage403());
-        assertEquals("errorGettingDataMessage404", underTest.getErrorGettingDataMessage404());
-        assertEquals("errorGettingDataMessage408", underTest.getErrorGettingDataMessage408());
     }
 }

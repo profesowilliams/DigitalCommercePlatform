@@ -897,7 +897,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         i % 2 === 0
           ? null
           : {
-              isAnnuity: false,
+              isAnnuity: true,
               autoRenewal: true,
               startDate: "11/01/2021",
               endDate: "10/31/2022",

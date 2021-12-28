@@ -2,7 +2,7 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
 	<div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<div id="QuoteDetails" data-observe-mutation data-sly-use.model="${'quotedetail.js' @uiServiceDomain=serviceData.uiServiceDomain,quoteDetailEndpoint=serviceData.quoteDetailEndpoint,shopDomainPage=serviceData.shopDomainPage,quoteDetailsXLSEndpoint=serviceData.quoteDetailsXLSEndpoint,productEmptyImageUrl=serviceData.productEmptyImageUrl,serviceData=serviceData,noRowsErrorMessage=serviceData.noRowsErrorMessage,errorGettingDataMessage500=serviceData.errorGettingDataMessage500,errorGettingDataMessage401=serviceData.errorGettingDataMessage401,errorGettingDataMessage403=serviceData.errorGettingDataMessage403,errorGettingDataMessage404=serviceData.errorGettingDataMessage404,errorGettingDataMessage408=serviceData.errorGettingDataMessage408}">
+<div id="QuoteDetails" data-observe-mutation data-sly-use.model="${'quotedetail.js' @uiServiceDomain=serviceData.uiServiceDomain,quoteDetailEndpoint=serviceData.quoteDetailEndpoint,shopDomainPage=serviceData.shopDomainPage,quoteDetailsXLSEndpoint=serviceData.quoteDetailsXLSEndpoint,productEmptyImageUrl=serviceData.productEmptyImageUrl,serviceData=serviceData}">
 	<div
 			data-component="QuoteDetails"
 			data-cmp-type="react"

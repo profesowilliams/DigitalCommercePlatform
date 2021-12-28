@@ -211,25 +211,6 @@ use(['../common/utils.js'], function (utils) {
         productLinesTab["columnList"] = listValues;
     }
 
-    if (this.noRowsErrorMessage) {
-        productLinesTab["noRowsErrorMessage"] = this.noRowsErrorMessage;
-    }
-    if (this.errorGettingDataMessage500) {
-        jsonObject["errorGettingDataMessage500"] = this.errorGettingDataMessage500;
-    }
-    if (this.errorGettingDataMessage401) {
-        jsonObject["errorGettingDataMessage401"] = this.errorGettingDataMessage401;
-    }
-    if (this.errorGettingDataMessage403) {
-        jsonObject["errorGettingDataMessage403"] = this.errorGettingDataMessage403;
-    }
-    if (this.errorGettingDataMessage404) {
-        jsonObject["errorGettingDataMessage404"] = this.errorGettingDataMessage404;
-    }
-    if (this.errorGettingDataMessage408) {
-        jsonObject["errorGettingDataMessage408"] = this.errorGettingDataMessage408;
-    }
-
     if (productLinesTab != null) {
         jsonObject["productLines"] = productLinesTab;
     }

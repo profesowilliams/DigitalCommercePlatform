@@ -2,7 +2,7 @@
     <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
         <div class="cq-placeholder" data-emptyText="${component.title}"></div>
     </sly>
-    <sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList', serviceData=serviceData,uiServiceDomain=serviceData.uiServiceDomain,quoteGridEndpoint=serviceData.quoteGridEndpoint,shopDomain=serviceData.shopDomain,cartURL=serviceData.cartURL,noRowsErrorMessage=serviceData.noRowsErrorMessage,errorGettingDataMessage500=serviceData.errorGettingDataMessage500,errorGettingDataMessage401=serviceData.errorGettingDataMessage401,errorGettingDataMessage403=serviceData.errorGettingDataMessage403,errorGettingDataMessage404=serviceData.errorGettingDataMessage404,errorGettingDataMessage408=serviceData.errorGettingDataMessage408}">
+    <sly data-sly-use.listUse="${'quotesgrid.js' @ multifieldName='columnList', serviceData=serviceData,uiServiceDomain=serviceData.uiServiceDomain,quoteGridEndpoint=serviceData.quoteGridEndpoint,shopDomain=serviceData.shopDomain,cartURL=serviceData.cartURL}">
 
         <div data-component="QuotesGrid" data-cmp-type="react" className="cmp-quotes-grid" data-config="${listUse.configJson}">
         </div>
