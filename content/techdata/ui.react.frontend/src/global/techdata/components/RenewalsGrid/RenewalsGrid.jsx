@@ -1,5 +1,9 @@
-import React from "react";
-import Grid from "../Grid/Grid";
+import React, { useState, useMemo } from "react";
+import {
+  pageCalculator,
+  maxCounterCalculator,
+  minCounterCalculator,
+} from "../../../../utils/paginationUtil";
 import GridRenewal from "../Grid/GridRenewal";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
@@ -7,11 +11,14 @@ import DropdownFilter from "./DropdownFilter";
 import { RENEWALS } from "./FilterOptions";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 
-
-
 function ConfigurationGrid(props) {
+  const [paginationData, setPaginationData] = useState({
+    totalCounter: 0,
+    stepBy: 25,
+    currentPage: 1,
+  });
+  const { totalCounter, stepBy, currentPage } = paginationData;
   const componentProp = JSON.parse(props.componentProp);
-  VerticalSeparator
   const options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "asc",
@@ -20,38 +27,82 @@ function ConfigurationGrid(props) {
   const columnDefs = getColumnDefinitions(componentProp.columnList);
 
   const onRowFilter = () => {
-    console.log('this is the function where the filtering will ocur');
-  }
+    console.log("this is where the filtering logic goes");
+  };
+
+  const totalPaginationCounter = useMemo(
+    () => pageCalculator(totalCounter, stepBy),
+    [totalCounter]
+  );
+
+  const minPaginationCounter = useMemo(
+    () => minCounterCalculator(stepBy, currentPage),
+    [currentPage]
+  );
+
+  const maxPaginationCounter = useMemo(
+    () => maxCounterCalculator(minPaginationCounter, totalCounter, stepBy),
+    [minPaginationCounter]
+  );
+
+  const incrementHandler = () => {
+    setPaginationData((prevSt) => {
+      return {
+        ...prevSt,
+        currentPage: (prevSt.currentPage += 1),
+      };
+    });
+  };
+
+  const decrementHandler = () => {
+    setPaginationData((prevSt) => {
+      return {
+        ...prevSt,
+        currentPage: (prevSt.currentPage -= 1),
+      };
+    });
+  };
 
   const gridConfig = {
-    ...componentProp,  
-    paginationStyle: "none", 
+    ...componentProp,
+    paginationStyle: "none",
   };
 
   return (
     <section>
       <div className="cmp-renewals-subheader">
         <div className="navigation">
-          <p>26-50 of 108 results</p>
-          <p><i class="fas fa-chevron-left"></i> 2 of 3 <i class="fas fa-chevron-right"></i></p>
+          <p>
+            {minPaginationCounter}-{maxPaginationCounter} of {totalCounter}{" "}
+            results
+          </p>
+          <p>
+            <button disabled={currentPage === 1} onClick={decrementHandler}>
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            {currentPage} of {totalPaginationCounter}{" "}
+            <button
+              disabled={currentPage === totalPaginationCounter}
+              onClick={incrementHandler}
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </p>
         </div>
         <div className="renewal-filters">
           <div className="cmp-renewal-search">
-              <DropdownFilter
-                callback={onRowFilter}
-                options={RENEWALS}
-              />
+            <DropdownFilter callback={onRowFilter} options={RENEWALS} />
           </div>
-          <VerticalSeparator/>
+          <VerticalSeparator />
           <div className="cmp-renewal-filter">
             <RenewalFilter aemData={componentProp} />
           </div>
         </div>
-
       </div>
 
       <div className="cmp-renewals-grid">
         <GridRenewal
+          getPaginationData={setPaginationData}
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}

@@ -204,6 +204,12 @@ function GridRenewal(props) {
               lastRow: response?.totalItems ?? 25,
               rowCount: response?.totalItems ?? 25,
             });
+            props.getPaginationData(prevState => {
+              return {
+                ...prevState,
+                totalCounter: response?.items?.count,
+              }
+            })
             handleNoRowMsg(response)
           }
         );

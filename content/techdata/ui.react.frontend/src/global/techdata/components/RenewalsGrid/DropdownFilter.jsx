@@ -36,13 +36,11 @@ function DropdownFilter({
 
   const changeHandler = (evt) => {
     evt.preventDefault();
-    const { name } = evt.target;
-
+    const { value, name } = evt.target;
     setValues((prevSt) => {
       return {
         ...prevSt,
-        [name]: name,
-        dropdown: name,
+        [name]: value,
       };
     });
   };
@@ -83,52 +81,28 @@ function DropdownFilter({
         </div>
       </div>
     );
-  } else {
-    return (
-
-      <div class="navbar">
-        <div class="dropdown">
-          <button class="dropbtn">Search
-            &nbsp;&nbsp;<i class="fa fa-search"></i>
-          </button>
-          <div class="dropdown-content">
-            {options.map((option) => (
-            <a key={option.value} value={option.value} name={option.value} onClick={changeHandler}>
-              {option.label}
-            </a>
-          ))}
-          </div>
-        </div>
-      </div>);
   }
 
-  
-    // <div>
-    //   <select
-    //     id="select-box"
-    //     ref={refSearch}
-    //     className="searchStyle"
-    //     style={styleProps || styles}
-    //     onChange={changeHandler}
-    //     value={dropdown}
-    //     name="dropdown"
-    //     placeholder="Search"
-    //   >
-    //     <option value="" disabled={!dropdown.length}>
-    //       Search
-    //     </option>
-    //     {options.map((option) => (
-    //       <option key={option.value} value={option.value}>
-    //         {option.label}
-    //       </option>
-    //     ))}
-
-    //   </select>
-    //   <button onClick={onHandover}>
-    //       <i className="fa fa-search"></i>
-    //     </button>
-    // </div>
-  // );
+  return (
+    <select
+      id="select-box"
+      className="inputStyle"
+      style={styleProps || styles}
+      onChange={changeHandler}
+      value={dropdown}
+      name="dropdown"
+      placeholder="Search"
+    >
+      <option value="" disabled={!dropdown.length}>
+        Search by
+      </option>
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  );
 }
 
 export default DropdownFilter;

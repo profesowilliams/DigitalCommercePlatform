@@ -39,7 +39,7 @@
   background-repeat: no-repeat;
   background-position: 96px 0;
   vertical-align: middle;
-  margin-bottom: 0;
+  // margin-bottom: 0;
 }
 
 .inputStyle option:hover {
@@ -52,6 +52,7 @@
   width: 170px;
   color: rgba(0,12,33,1);
   font-family: "Open Sans";
+  top: 45px;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 17.5px;
