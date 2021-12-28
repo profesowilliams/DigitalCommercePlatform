@@ -55,7 +55,7 @@ function ConfigurationGrid(props) {
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
-        ></GridRenewal>
+        />
       </div>
     </section>
   );
