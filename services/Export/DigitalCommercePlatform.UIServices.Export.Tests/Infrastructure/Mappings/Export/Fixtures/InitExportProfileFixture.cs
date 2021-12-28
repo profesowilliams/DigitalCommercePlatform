@@ -2,7 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export;
 
-namespace DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Export.Fixtures
+namespace DigitalCommercePlatform.UIServices.Export.Tests.Infrastructure.Mappings.Export.Fixtures
 {
     public class InitExportProfileFixture
     {

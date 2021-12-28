@@ -949,16 +949,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             if (!string.IsNullOrEmpty(logo))
             {
                 var buffer = new Span<byte>(new byte[logo.Length]);
-                var isValidImage = !string.IsNullOrEmpty(logo) ? Convert.TryFromBase64String(logo, buffer, out int bytesParsed) : false;
+                var isValidImage = Convert.TryFromBase64String(logo, buffer, out _);
 
                 if (isValidImage)
                 {
                     byte[] bytes = buffer.ToArray();
 
-                    using (var ms = new MemoryStream(bytes))
-                    {
-                        return Image.FromStream(ms);
-                    }
+                    using var ms = new MemoryStream(bytes);
+                    return Image.FromStream(ms);
                 }
             }
 

@@ -1,4 +1,5 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Export.Actions.Order;
 using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Export.Controllers;
 using DigitalFoundation.Common.Features.Contexts;
@@ -53,19 +54,83 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
             result.Should().BeOfType<FileContentResult>();
         }
 
-        [Fact]
-        public async Task DownloadQuoteDetailsShouldReturnNotFoundResult()
+        internal class DownloadQuoteDetailsNotFoundResultData : TheoryData<ResponseBase<DownloadQuoteDetails.Response>>
         {
-            ResponseBase<DownloadQuoteDetails.Response> expected = new();
+            public DownloadQuoteDetailsNotFoundResultData()
+            {
+                Add(null);
+                Add(new ResponseBase<DownloadQuoteDetails.Response>());
+                Add(new ResponseBase<DownloadQuoteDetails.Response>() { 
+                    Content = new()
+                    {
+                        BinaryContent = null
+                    }
+                });
+            }
+        }
 
+        [Theory]
+        [ClassData(typeof(DownloadQuoteDetailsNotFoundResultData))]
+        public async Task DownloadQuoteDetailsShouldReturnNotFoundResult(ResponseBase<DownloadQuoteDetails.Response> response)
+        {
             _mockMediator.Setup(x => x.Send(
                        It.IsAny<DownloadQuoteDetails.Request>(),
                        It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
+                   .ReturnsAsync(response);
 
             DownloadQuoteDetails.Request criteria = new();
             var controller = GetController();
             var result = await controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
+
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task DownloadOrderDetailsShouldReturnFileContentResult(ResponseBase<DownloadOrderDetails.Response> expected)
+        {
+            expected.Content.MimeType = DownloadOrderDetails.mimeType;
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<DownloadOrderDetails.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            DownloadOrderDetails.Request criteria = new();
+            var controller = GetController();
+            var result = await controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
+
+            result.Should().BeOfType<FileContentResult>();
+        }
+
+        internal class DownloadOrderDetailsNotFoundResultData : TheoryData<ResponseBase<DownloadOrderDetails.Response>>
+        {
+            public DownloadOrderDetailsNotFoundResultData()
+            {
+                Add(null);
+                Add(new ResponseBase<DownloadOrderDetails.Response>());
+                Add(new ResponseBase<DownloadOrderDetails.Response>()
+                {
+                    Content = new()
+                    {
+                        BinaryContent = null
+                    }
+                });
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(DownloadOrderDetailsNotFoundResultData))]
+        public async Task DownloadOrderDetailsShouldReturnNotFoundResult(ResponseBase<DownloadOrderDetails.Response> response)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<DownloadOrderDetails.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(response);
+
+            DownloadOrderDetails.Request criteria = new();
+            var controller = GetController();
+            var result = await controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
         }

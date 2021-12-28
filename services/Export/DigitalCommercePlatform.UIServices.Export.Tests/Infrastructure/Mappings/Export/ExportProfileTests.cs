@@ -1,6 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Export.Fixtures;
+using DigitalCommercePlatform.UIServices.Export.Tests.Infrastructure.Mappings.Export.Fixtures;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Export.Tests.Infrastructure.Mappings.Export

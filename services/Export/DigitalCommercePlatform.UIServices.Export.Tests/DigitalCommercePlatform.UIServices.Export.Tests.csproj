@@ -23,8 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Infrastructure\Mappings\Common\" />
-    <Folder Include="Infrastructure\Mappings\Export\Resolvers\" />
     <Folder Include="Models\Common\" />
   </ItemGroup>
   <ItemGroup>

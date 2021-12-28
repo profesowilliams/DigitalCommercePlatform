@@ -7,11 +7,7 @@ using Internal = DigitalCommercePlatform.UIServices.Export.Models.Order.Internal
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
-using AutoMapper;
-using System.Collections.Generic;
-using DigitalCommercePlatform.UIServices.Export.Models.Order;
-using Techdata.Common.Utility.CarrierTracking;
-using Techdata.Common.Utility.CarrierTracking.Model;
+using DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export.Resolvers;
 
 namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export
 {
@@ -26,13 +22,13 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForMember(dest => dest.UnitListPrice, opt => opt.MapFrom(src => src.UnitListPrice))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
-                .ForMember(dest => dest.UnitListPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitListPrice)))
-                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
-                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)))
+                .ForMember(dest => dest.UnitListPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.UnitListPrice)))
+                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.UnitPrice)))
+                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.TotalPrice)))
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
 
-                .ForMember(d => d.VendorPartNo , o => o.Ignore())
+                .ForMember(d => d.VendorPartNo, o => o.Ignore())
                 .ForMember(d => d.Manufacturer, o => o.Ignore())
                 .ForMember(d => d.MSRP, o => o.Ignore())
                 .ForMember(d => d.Invoice, o => o.Ignore())
@@ -50,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(d => d.StartDate, o => o.Ignore())
                 .ForMember(d => d.EndDate, o => o.Ignore())
                 ;
-            
+
             CreateMap<AddressModel, Address>()
                 .ForPath(dest => dest.Line1, opt => opt.MapFrom(src => src.Address.Line1))
                 .ForPath(dest => dest.Line2, opt => opt.MapFrom(src => src.Address.Line2))
@@ -94,11 +90,11 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
                 .ForMember(dest => dest.VendorReference, opt => opt.MapFrom(src => src.VendorReference))
                 .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
-                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
+                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.Price)))
                 .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
-                
+
                 .ForMember(d => d.Notes, o => o.Ignore())
                 .ForMember(d => d.SPAId, o => o.Ignore())
                 ;
@@ -110,8 +106,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ManufacturerResolver>())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
                 .ForMember(dest => dest.Trackings, opt => opt.MapFrom<ShipmentsResolver>())
-                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
-                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)))
+                .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.UnitPrice)))
+                .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.TotalPrice)))
                 .ForPath(dest => dest.ExtendedPrice, opt => opt.MapFrom(src => src.TotalPurchaseCost))
                 .ForPath(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
                 .ForPath(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
@@ -120,7 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForPath(dest => dest.EndDate, opt => opt.MapFrom(src => src.ContractEndDate))
                 .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
 
-                .ForMember(d => d.VendorPartNo , o => o.Ignore())
+                .ForMember(d => d.VendorPartNo, o => o.Ignore())
                 .ForMember(d => d.MSRP, o => o.Ignore())
                 .ForMember(d => d.Invoice, o => o.Ignore())
                 //.ForMember(d => d.Contract, o => o.Ignore())
@@ -159,7 +155,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                  .ForPath(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.Id))
                  .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
 
-                 .ForMember(d => d.CanBeExpedited , o => o.Ignore())
+                 .ForMember(d => d.CanBeExpedited, o => o.Ignore())
                  .ForMember(d => d.EndUserNotifications, o => o.Ignore())
                  .ForMember(d => d.ResellerNotifications, o => o.Ignore())
                  .ForMember(d => d.Message, o => o.Ignore())
@@ -171,150 +167,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                  .ForMember(d => d.ConfigurationOrderStatus, o => o.Ignore())
                  .ForMember(d => d.SiteURL, o => o.Ignore())
                  ;
-        }
-    }
-    [ExcludeFromCodeCoverage]
-    public class DateResolver : IValueResolver<Internal.OrderModel, OrderDetailModel, string>
-    {
-        public string Resolve(Internal.OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
-        {
-            var poDate = !source.PoDate.HasValue ? string.Empty : source.PoDate.Value.ToString("MM/dd/yy");
-            return poDate;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class TDPartResolver : IValueResolver<Item, Line, string>
-    {
-        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
-        {
-            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Id : "Unavailable";
-            return description;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class ShipmentsResolver : IValueResolver<Item, Line, List<TrackingDetails>>
-    {
-        public List<TrackingDetails> Resolve(Item source, Line destination, List<TrackingDetails> destMember, ResolutionContext context)
-        {
-            if (source.Shipments?.Count == 0)
-                return new List<TrackingDetails>();
-
-            return source.Shipments
-                         .Select(shipment => new TrackingDetails()
-                         {
-                             Carrier = shipment.Carrier,
-                             Description = shipment.Description,
-                             TrackingNumber = shipment.TrackingNumber,
-                             Date = shipment.Date
-                         })
-                         .ToList();
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class LineTotalResolver : IValueResolver<Item, Line, decimal?>
-    {
-        public decimal? Resolve(Item source, Line destination, decimal? destMember, ResolutionContext context)
-        {
-            if (source.TotalPrice is null or (decimal?)0.0)
-                source.TotalPrice = source.UnitPrice * source.Quantity;
-
-            return source.TotalPrice;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class VendorPartResolver : IValueResolver<Item, Line, string>
-    {
-        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
-        {
-            var description = source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER")).FirstOrDefault()?.Id : "Unavailable";
-            return description;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class TDPartNameResolver : IValueResolver<Item, Line, string>
-    {
-        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
-        {
-            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Name : "Unavailable";
-            return description;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class ManufacturerResolver : IValueResolver<Item, Line, string>
-    {
-        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
-        {
-            var description = source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA")).FirstOrDefault()?.Manufacturer : "Unavailable";
-            return description;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class LineTrackingsResolver : IValueResolver<Item, Line, List<TrackingDetails>>
-    {
-        public List<TrackingDetails> Resolve(Item source, Line destination, List<TrackingDetails> destMember, ResolutionContext context)
-        {
-            var _objShipment = new ShipmentUtility();
-            var _objTrackingQuery = new TrackingQuery();
-
-            var trackingDetails = source?.Shipments.Select(i => new TrackingDetails
-            {
-                ID = i.ID,
-                Carrier = i.Carrier,
-                Date = i.Date,
-                Description = i.Description,
-                DNote = i.DNote,
-                DNoteLineNumber = i.DNoteLineNumber,
-                GoodsReceiptNo = i.GoodsReceiptNo,
-                ServiceLevel = i.ServiceLevel,
-                TrackingNumber = i.TrackingNumber,
-                TrackingLink = _objShipment.GetSingleCarrierInformation(new TrackingQuery { TrackingId = i.TrackingNumber })?.CarrierURL,
-                Type = i.Type
-            }).ToList();
-
-            return trackingDetails;
-        }
-    }
-
-    [ExcludeFromCodeCoverage]
-    public class EndUserResolver : IValueResolver<Internal.OrderModel, OrderDetailModel, List<Address>>
-    {
-        public List<Address> Resolve(Internal.OrderModel source, OrderDetailModel destination, List<Address> destMember, ResolutionContext context)
-        {
-            var orderLines = source.Items.Where(x => x.EndUser != null).ToList();
-            var lstEndUsers = new List<Address>();
-
-            foreach (Item orderLine in orderLines)
-            {
-                if (!lstEndUsers.Where(a => a.CompanyName != null && a.CompanyName.ToUpper().Contains(orderLine.EndUser.Name?.ToUpper())).Any())
-                {
-                    var address = new Address
-                    {
-                        City = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.City) ? string.Empty : orderLine.EndUser.Address.City,
-                        State = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.State) ? string.Empty : orderLine.EndUser.Address.State,
-                        Line1 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line1) ? string.Empty : orderLine.EndUser.Address.Line1,
-                        Line2 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line2) ? string.Empty : orderLine.EndUser.Address.Line2,
-                        Line3 = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Line3) ? string.Empty : orderLine.EndUser.Address.Line3,
-                        Country = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Country) ? string.Empty : orderLine.EndUser.Address.Country,
-                        Zip = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
-                        PostalCode = string.IsNullOrWhiteSpace(orderLine.EndUser.Address.Zip) ? string.Empty : orderLine.EndUser.Address.Zip,
-                        CompanyName = string.IsNullOrWhiteSpace(orderLine.EndUser.Name) ? string.Empty : orderLine.EndUser.Name,
-                        PhoneNumber = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Phone) ? string.Empty : orderLine.EndUser.Contact?.Phone,
-                        Name = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Name) ? string.Empty : orderLine.EndUser.Contact?.Name,
-                        ContactEmail = string.IsNullOrWhiteSpace(orderLine.EndUser.Contact?.Email) ? string.Empty : orderLine.EndUser.Contact?.Email,
-                    };
-
-                    if (!string.IsNullOrWhiteSpace(address.CompanyName) || !string.IsNullOrWhiteSpace(address.Name))
-                        lstEndUsers.Add(address);
-                }
-            }
-            return lstEndUsers;
         }
     }
 }

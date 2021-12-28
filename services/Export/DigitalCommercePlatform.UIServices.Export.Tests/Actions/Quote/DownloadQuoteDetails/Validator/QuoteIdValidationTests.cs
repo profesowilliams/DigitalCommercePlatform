@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Actions.Quote.Download
 
         [Theory]
         [ClassData(typeof(InvalidQuoteIdData))]
-        public async Task IdValidationShouldReturnError(DQD.Request request)
+        public async Task QuoteIdValidationShouldReturnError(DQD.Request request)
         {
             var result = await _validator.TestValidateAsync(request);
 

@@ -72,10 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
             {
                 var getQuoteRequest = new GetQuote.Request(new List<string> { request.QuoteId }, true);
                 var quoteModel = await _commerceService.GetQuote(getQuoteRequest);
-                Response response = new()
-                {
-                    MimeType = mimeType
-                };
+                Response response = new();
 
                 if (quoteModel != null)
                 {
@@ -83,6 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                     var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request);
                     DownloadableFile file = new (binaryContentXls, request.QuoteId + ".xls", mimeType);
                     response.BinaryContent = file.BinaryContent;
+                    response.MimeType = file.MimeType;
                 }
 
                 return await Task.FromResult(new ResponseBase<Response> { Content = response });

@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Common
 {
-    [ExcludeFromCodeCoverage]
     public class DateTimeToStringConverter : ITypeConverter<DateTime?, string>
     {
         public static readonly string Format = "MM/dd/yyyy";
