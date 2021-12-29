@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
-using DigitalCommercePlatform.UIServices.Order.Infrastructure.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using DigitalFoundation.Common.Services.Layer.UI;
-using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
+using DigitalFoundation.Common.Services.Base;
 
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
@@ -20,16 +18,15 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
     [Authorize(AuthenticationSchemes = "NuanceAuth")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
-    public class OrderController : BaseUIServiceController
+    public class OrderController : BaseController /*BaseUIServiceController*/
     {
 
         public OrderController(IMediator mediator, 
-            ILogger<BaseUIServiceController> logger, 
-            IUIContext context, IAppSettings appSettings, 
-            ISiteSettings siteSettings) : base(mediator, logger, context, appSettings, siteSettings)
+            ILogger<BaseUIServiceController> logger) : base(mediator, logger)
         {
 
         }
+
         [HttpPost]
         [Route("GetOrder")]
         public async Task<IActionResult> GetOrder([FromBody] NuanceWebChatRequest request)

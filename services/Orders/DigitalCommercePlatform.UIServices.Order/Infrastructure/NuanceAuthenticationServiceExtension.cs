@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Infrastructure
         public static AuthenticationBuilder AddNuanceAuthentication(this IServiceCollection services)
         {
             services.AddScoped<IUserAuthenticator, NuanceUserAuthenticator>();
+            
             return services.AddAuthentication()
                 .AddScheme<AuthenticationSchemeOptions, NuanceAuthenticationHandler>("NuanceAuth", null);
         }
