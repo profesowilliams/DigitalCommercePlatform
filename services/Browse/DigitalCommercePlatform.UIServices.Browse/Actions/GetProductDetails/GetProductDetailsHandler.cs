@@ -8,8 +8,8 @@ using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Services;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using System.Collections.Generic;
@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string Virtual = "Virtual";
             private const string Logo = "Logo";
             private const string PromoText = "PromoText";
-            private const string FreightPolicyException = "FreightPolicyException";            
+            private const string FreightPolicyException = "FreightPolicyException";
             private const string FreightPolicyExceptionValue = "X";
             private const string SalesOrg0100 = "0100";
             private readonly IBrowseService _productRepositoryServices;
@@ -279,8 +279,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice)
             {
-                if (x.Price == null)                
-                    return;                
+                if (x.Price == null)
+                    return;
 
                 product.Price = new PriceModel
                 {
@@ -348,12 +348,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return flags;
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0008:Use explicit type", Justification = "<Pending>")]
             private static async Task<XmlDocument> GetXmlDocument(string url)
             {
                 if (string.IsNullOrEmpty(url))
                     return null;
                 XmlDocument xml = new();
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
                 var wrq = WebRequest.Create(url) as HttpWebRequest;
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
                 var response = await wrq.GetResponseAsync().ConfigureAwait(false);
                 xml.Load(new XmlTextReader(response.GetResponseStream()));
                 return xml;
