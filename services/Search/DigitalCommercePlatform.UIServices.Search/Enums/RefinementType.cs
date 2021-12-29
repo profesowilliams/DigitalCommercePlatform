@@ -5,6 +5,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Enums
     {
         MultiSelect,
         SingleSelect,
-        Range
+        Range,
+        SingleSelectAndRange
     }
 }
