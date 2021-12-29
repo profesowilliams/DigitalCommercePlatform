@@ -1,22 +1,9 @@
 package com.techdata.core.servlets;
 
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-
 import com.day.cq.wcm.api.Page;
-import com.techdata.core.models.CarouselComponentModel;
-import com.techdata.core.slingcaconfig.CommonConfigurations;
-import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
+import com.techdata.core.slingcaconfig.FormConfigurations;
+import io.wcm.testing.mock.aem.junit5.AemContext;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
@@ -25,9 +12,6 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
-
-import org.apache.sling.testing.resourceresolver.MockResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,20 +20,25 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import io.wcm.testing.mock.aem.junit5.AemContext;
-import javax.activation.DataSource;
 import javax.servlet.ServletException;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
 @ExtendWith({MockitoExtension.class})
 class FormServletTest {
     private FormServlet underTest;
-    Method internalEmailAddressMethod;
+    Method testPopulateEmailAttributesFromCAConfig;
 
     private final AemContext context = new AemContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
 
@@ -63,7 +52,7 @@ class FormServletTest {
     private ConfigurationBuilder configurationBuilder;
 
     @Mock
-    private CommonConfigurations commonConfigurations;
+    private FormConfigurations formConfigurations;
 
     @InjectMocks
     org.apache.commons.fileupload.servlet.ServletFileUpload servletFileUpload;
@@ -154,18 +143,18 @@ class FormServletTest {
         Map<String, String[]> emailParams = new HashMap<>();
 
         Method underTestMethod;
-        underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", CommonConfigurations.class, Map.class);
+        underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", FormConfigurations.class, Map.class);
         underTestMethod.setAccessible(true);
 
-        when(commonConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
-        when(commonConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
-        when(commonConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
-        when(commonConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
-        when(commonConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
-        when(commonConfigurations.emailSubject()).thenReturn("emailSubject");
-        when(commonConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
+        when(formConfigurations.formSubmissionTargetGroups()).thenReturn(arrayFromCA);
+        when(formConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
+        when(formConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
+        when(formConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
+        when(formConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
+        when(formConfigurations.emailSubject()).thenReturn("emailSubject");
+        when(formConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
 
-        underTestMethod.invoke(underTest, commonConfigurations, emailParams);
+        underTestMethod.invoke(underTest, formConfigurations, emailParams);
     }
 
     @Test
@@ -259,9 +248,9 @@ class FormServletTest {
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
         Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
-        when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
-        when(commonConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
-        when(commonConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
+        when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
+        when(formConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
+        when(formConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
 
         when(mockRequest.getMethod()).thenReturn("POST");
         when(mockRequest.getContentType()).thenReturn("multipart/form-data");

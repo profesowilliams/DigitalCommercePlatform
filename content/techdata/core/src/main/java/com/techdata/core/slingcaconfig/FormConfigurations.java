@@ -47,7 +47,7 @@ public @interface FormConfigurations {
     @Property(label = "Target Groups Array", description = "Target Groups Array")
     String[] formSubmissionTargetGroups();
 
-    @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
-    String textFieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
+//    @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
+//    String textFieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
 
 }

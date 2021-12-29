@@ -3,7 +3,6 @@ package com.techdata.core.servlets;
 
 import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
-import com.techdata.core.slingcaconfig.CommonConfigurations;
 import com.techdata.core.slingcaconfig.FormConfigurations;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 import com.techdata.core.util.Constants;

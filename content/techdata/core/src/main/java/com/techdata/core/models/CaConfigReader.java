@@ -4,12 +4,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
-import com.techdata.core.slingcaconfig.CommonConfigurations;
-import com.techdata.core.slingcaconfig.SearchBarConfiguration;
-import com.techdata.core.slingcaconfig.RedirectConfiguration;
-import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
-import com.techdata.core.slingcaconfig.MiniCartConfiguration;
-import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
+import com.techdata.core.slingcaconfig.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -285,10 +280,11 @@ public class CaConfigReader {
 
     private void buildComonConfigurationsConfigs() {
         CommonConfigurations commonConfigurations = page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
+        FormConfigurations formConfigurations = page.adaptTo(ConfigurationBuilder.class).as(FormConfigurations.class);
 
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
-        allowedFileExtensions = String.join(",", Arrays.asList(commonConfigurations.allowedFileExtensions()));
-        fileThresholdInMB = String.valueOf(commonConfigurations.fileThresholdInMB());
+        allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
+        fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
     }
 
     public String getUiServiceDomain() {

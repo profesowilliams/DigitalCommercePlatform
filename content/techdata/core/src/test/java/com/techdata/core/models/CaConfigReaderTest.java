@@ -1,12 +1,7 @@
 package com.techdata.core.models;
 
 import com.day.cq.wcm.api.Page;
-import com.techdata.core.slingcaconfig.CommonConfigurations;
-import com.techdata.core.slingcaconfig.SearchBarConfiguration;
-import com.techdata.core.slingcaconfig.RedirectConfiguration;
-import com.techdata.core.slingcaconfig.AnalyticsConfiguration;
-import com.techdata.core.slingcaconfig.MiniCartConfiguration;
-import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
+import com.techdata.core.slingcaconfig.*;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +44,9 @@ class CaConfigReaderTest {
     @Mock
     private CommonConfigurations commonConfigurations;
 
+    @Mock
+    private FormConfigurations formConfigurations;
+
     @BeforeEach
     void setUp() {
         underTest = new CaConfigReader();
@@ -71,6 +69,7 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(SearchBarConfiguration.class)).thenReturn(searchBarConfiguration);
         when(configurationBuilder.as(RedirectConfiguration.class)).thenReturn(redirectConfiguration);
         when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
+        when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
 
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");
@@ -125,10 +124,7 @@ class CaConfigReaderTest {
         when(redirectConfiguration.orderDetailPage()).thenReturn("orderDetailPage");
 
         when(commonConfigurations.productEmptyImageUrl()).thenReturn("productEmptyImageUrl");
-        when(commonConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
-
-
-
+        when(formConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
 
 
         underTest.init();
