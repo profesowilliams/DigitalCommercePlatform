@@ -28,6 +28,7 @@
     const IMAGE_CSS_CLASSNAME = "cmp-image";
     const TEASER_CONTENT_CSS_CLASSNAME = "cmp-teaser__content";
     const MEGAMENU_CLASSNAME = "cmp-megamenu__analytics-link";
+    const MEGAMENU_TABS_CLASSNAME = "cmp-megamenu__tab-text";
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
 
     function parseNameFromElement(elementClicked) {
@@ -201,7 +202,7 @@
         var className = event.currentTarget.className;
         if (className && (className.startsWith(IMAGE_CSS_CLASSNAME) || className.startsWith(TEASER_CONTENT_CSS_CLASSNAME))) {
             imageClickEventHandler(event.currentTarget.id, event.currentTarget);
-        } else if (className && (className.startsWith(MEGAMENU_CLASSNAME))) {
+        } else if (className && (className.startsWith(MEGAMENU_CLASSNAME) || className.startsWith(MEGAMENU_TABS_CLASSNAME))) {
             megamenuClickEventHandler(event.currentTarget);
         } else {
             var element = event.currentTarget;
