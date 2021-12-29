@@ -103,6 +103,7 @@ const SearchBar = ({ data, componentProp }) => {
       );
       if (response?.data?.content?.items?.length === 1) {
         const validation = uiServiceDomain + `${selectedArea.validateResponseEndPoint}&id=${searchTerm}`; // request to validate if the value exist
+        // const validation = uiServiceDomain + `${selectedArea.validateResponseEndPoint}?id=${searchTerm}`; // dev link
         const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // URL for re locate in some grid with the ID param to search
         
         const detailsPage = dcpDomain + `${selectedArea.detailsPage}?id=${searchTerm}`; // return value of before
@@ -113,6 +114,9 @@ const SearchBar = ({ data, componentProp }) => {
         } else { 
           return searchURL;
         }
+      } else {
+        const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // URL for re locate in some grid with the ID param to search
+        return searchURL;
       }
     } catch (err) {
       console.error(
