@@ -4,6 +4,7 @@ package com.techdata.core.servlets;
 import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.CommonConfigurations;
+import com.techdata.core.slingcaconfig.FormConfigurations;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 import com.techdata.core.util.Constants;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +58,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private int thresholdFileSize = 10;
         private List<String> allowedFileExtensions = new ArrayList<>();
         private List<String> allowedFileContentTypes = new ArrayList<>();
-        private String textfieldRegexExpr;
+        private String textfieldRegexExpr = "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -82,14 +83,14 @@ public class FormServlet extends SlingAllMethodsServlet {
                         if (isMultipart) {
                                 LOG.info("Received Multi-part form data for processing");
                                 Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
-                                CommonConfigurations commonConfigurations = getCAConfigEmailObject(resource);
-                                if(commonConfigurations != null) {
-                                        thresholdFileSize = commonConfigurations.fileThresholdInMB();
-                                        allowedFileExtensions = Arrays.asList(commonConfigurations.allowedFileExtensions());
-                                        allowedFileContentTypes = Arrays.asList(commonConfigurations.allowedFileContentTypes());
-                                        textfieldRegexExpr = commonConfigurations.textfieldRegexString();
+                                FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
+                                if(formConfigurations != null) {
+                                        thresholdFileSize = formConfigurations.fileThresholdInMB();
+                                        allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
+                                        allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+//                                        textfieldRegexExpr = formConfigurations.textFieldRegexString();
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
-                                        populateEmailAttributesFromCAConfig(commonConfigurations, emailParams);
+                                        populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
                                         if (isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
                                                         internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
@@ -107,10 +108,10 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private CommonConfigurations getCAConfigEmailObject(Resource resource) {
+        private FormConfigurations getCAConfigFormEmailObject(Resource resource) {
                 if(resource == null || resource.adaptTo(Page.class) == null) return null;
                 Page page = resource.adaptTo(Page.class);
-                return page.adaptTo(ConfigurationBuilder.class).as(CommonConfigurations.class);
+                return page.adaptTo(ConfigurationBuilder.class).as(FormConfigurations.class);
         }
 
         private boolean isValidFileInEmailRequest(SlingHttpServletRequest request) {
@@ -202,17 +203,17 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private void populateEmailAttributesFromCAConfig(CommonConfigurations commonConfigurations, Map<String, String> emailParams) {
-                toEmailAddresses = commonConfigurations.toEmails();
-                submitterEmailFieldName = commonConfigurations.submitterEmailFieldName();
-                String confirmationEmailBody = commonConfigurations.confirmationEmailBody();
+        private void populateEmailAttributesFromCAConfig(FormConfigurations formConfigurations, Map<String, String> emailParams) {
+                toEmailAddresses = formConfigurations.toEmails();
+                submitterEmailFieldName = formConfigurations.submitterEmailFieldName();
+                String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
-                internalEmailTemplatePath = commonConfigurations.internalEmailTemplatePath();
-                confirmationEmailTemplatePath = commonConfigurations.confirmationEmailTemplatePath();
-                String emailSubject = commonConfigurations.emailSubject();
+                internalEmailTemplatePath = formConfigurations.internalEmailTemplatePath();
+                confirmationEmailTemplatePath = formConfigurations.confirmationEmailTemplatePath();
+                String emailSubject = formConfigurations.emailSubject();
                 emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
-                String confirmationEmailSubject = commonConfigurations.confirmationEmailSubject();
-                formSubmissionTargetGroups = getMapOfEmailAddress(commonConfigurations.formSubmissionTargetGroups());
+                String confirmationEmailSubject = formConfigurations.confirmationEmailSubject();
+                formSubmissionTargetGroups = getMapOfEmailAddress(formConfigurations.formSubmissionTargetGroups());
                 emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
         }
 

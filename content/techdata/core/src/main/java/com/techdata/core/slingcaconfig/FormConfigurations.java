@@ -4,12 +4,9 @@ import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
 @Configuration(
-    label = "Common Configurations",
-    description = "Common Configurations")
-public @interface CommonConfigurations {
-
-    @Property(label = "Product Empty Image Url edited", description = "Product Empty Image Url")
-    String productEmptyImageUrl();
+    label = "Form Configurations",
+    description = "Form and Email Configurations")
+public @interface FormConfigurations {
 
     @Property(label = "Email Subject", description = "Email Subject")
     String emailSubject();
@@ -52,6 +49,5 @@ public @interface CommonConfigurations {
 
     @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
     String textFieldRegexString() default "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
-
 
 }
