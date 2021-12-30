@@ -44,7 +44,7 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
-Sling-ContextAware-Configuration-Classes: com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration,com.techdata.core.slingcaconfig.MiniCartConfiguration,com.techdata.core.slingcaconfig.AnalyticsConfiguration,com.techdata.core.slingcaconfig.CatalogServiceConfiguration,com.techdata.core.slingcaconfig.SearchBarConfiguration,com.techdata.core.slingcaconfig.RedirectConfiguration,com.techdata.core.slingcaconfig.CommonConfigurations
+Sling-ContextAware-Configuration-Classes: com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration,com.techdata.core.slingcaconfig.MiniCartConfiguration,com.techdata.core.slingcaconfig.AnalyticsConfiguration,com.techdata.core.slingcaconfig.CatalogServiceConfiguration,com.techdata.core.slingcaconfig.SearchBarConfiguration,com.techdata.core.slingcaconfig.RedirectConfiguration,com.techdata.core.slingcaconfig.CommonConfigurations,com.techdata.core.slingcaconfig.FormConfigurations
                                 ]]></bnd>
                         </configuration>
                     </execution>

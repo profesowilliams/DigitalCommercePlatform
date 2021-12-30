@@ -1,21 +1,12 @@
 package com.techdata.core.models;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Style;
-
-import org.apache.commons.lang3.StringUtils;
+import lombok.Getter;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -28,7 +19,11 @@ import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lombok.Getter;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Model(
 	adaptables = {SlingHttpServletRequest.class},

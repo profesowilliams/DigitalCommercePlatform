@@ -47,7 +47,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final String CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME = "confirmationSubject";
         private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "internalEmailSubject";
         private static final int ONE_MB_IN_BYTES = 1000000;
+        public static final String A_TO_Z_LOWERCASE = "a-z";
         @Reference
+
         private transient EmailService emailService;
         private String[] toEmailAddresses;
         private String submitterEmailFieldName = StringUtils.EMPTY;
@@ -57,7 +59,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private int thresholdFileSize = 10;
         private List<String> allowedFileExtensions = new ArrayList<>();
         private List<String> allowedFileContentTypes = new ArrayList<>();
-        private String textfieldRegexExpr = "^[-a-zA-Z0-9.,;_@=%:\r\n \\\\/()!$£*+{}?|]+$";
+        private String textFieldRegexExpr;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -87,7 +89,9 @@ public class FormServlet extends SlingAllMethodsServlet {
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
-//                                        textfieldRegexExpr = formConfigurations.textFieldRegexString();
+                                        textFieldRegexExpr = formConfigurations.textFieldRegexString();
+                                        // adding carriage-return/new-line/backslash chars to regex
+                                        textFieldRegexExpr = textFieldRegexExpr.replace(A_TO_Z_LOWERCASE, EXTRA_REGEX_CHARS + A_TO_Z_LOWERCASE);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
                                         if (isValidFileInEmailRequest(request)) {
@@ -149,7 +153,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private void prepareEmailRequestFromFormData(java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params,
-                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws Exception {
+                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws IOException {
                 for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
                         final String key = pairs.getKey();
                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
@@ -167,7 +171,7 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
                                                       String key, Map<String, String> emailParams,
-                                                      StringBuilder value) throws Exception {
+                                                      StringBuilder value) throws IOException {
                 value.append(pArr[0].toString());
                 if (pArr.length > 1)
                 {
@@ -182,7 +186,7 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         public String validateString(String input) throws IOException {
                 if(StringUtils.isEmpty(input)) return input;
-                final Pattern pattern = Pattern.compile(textfieldRegexExpr);
+                final Pattern pattern = Pattern.compile(textFieldRegexExpr);
                 if (!pattern.matcher(input).find()) {
                         throw new IOException("Invalid form field, skipping the form and email submission.");
                 }
@@ -258,4 +262,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
 
         }
+
+        // new line, carriage-returns, slashes
+        private static final String EXTRA_REGEX_CHARS = "\r\n\\\\";
 }
