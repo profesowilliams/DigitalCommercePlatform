@@ -1,5 +1,5 @@
-FROM techdata.azurecr.io/df-base-debian-5:latest
+FROM techdata.azurecr.io/df-base-debian-6:latest
 ARG BuildConfiguration=Debug
 ARG Environment=Development
-COPY bin/$BuildConfiguration/net5.0/. app
+COPY bin/$BuildConfiguration/net6.0/. app
 ENV ASPNETCORE_ENVIRONMENT $Environment
