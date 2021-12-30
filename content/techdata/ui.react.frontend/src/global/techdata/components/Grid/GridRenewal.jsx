@@ -198,11 +198,11 @@ function GridRenewal(props) {
 
         getGridData(config.itemsPerPage, pageNo, sortKey, sortDir, handleNoRowMsg).then(
           (response) => {
-            const rowData = response?.items?.response.slice(0,25) ?? 0;
+            const rowData = response?.items?.response ?? 0;
             params.success({
               rowData,
-              lastRow: response?.totalItems ?? 25,
-              rowCount: response?.totalItems ?? 25,
+              lastRow: rowData.length ?? 0,
+              rowCount: rowData.length ?? 0,
             });
             props.getPaginationData(prevState => {
               return {

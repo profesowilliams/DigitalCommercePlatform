@@ -12,11 +12,14 @@
 		margin-top: rem(20px);
 		margin-right: rem(5px);
 	}
-	.cmp-due-date-column{
+	.cmp-due-date-day-column{
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		width: calc(100% / 2);
 		margin: 0 auto;
+	}
+	.cmp-due-date-column{
+		text-align: left;
 	}
 }

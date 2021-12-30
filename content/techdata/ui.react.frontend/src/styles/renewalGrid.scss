@@ -1,61 +1,51 @@
-.cmp-renewals-grid {
-  .ag-theme-alpine .ag-root-wrapper {
-    border: none;
-  }
+.cmp-renewals-grid{
+  .ag-theme-alpine .ag-root-wrapper{
+      border: none;
+  }   
 }
-.cmp-renewals-subheader {
+.cmp-renewals-subheader{
   display: flex;
   justify-content: space-between;
   padding: 5px 1rem;
   border-bottom: 2px solid #030f24;
   align-items: center;
   .navigation {
-    display: flex;
-    gap: 1rem;
-    p {
-      margin: 0;
-    }
-    & button {
-      cursor: pointer;
-      background: none;
-      &:disabled {
-        cursor: auto;
+      display: flex;
+      gap: 1rem;
+      p{
+          margin: 0;
       }
-      & i {
-        color: #000c21;
-      }
-    }
   }
   .renewal-filters {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
   }
-  .cmp-renewals-filter-container {
-    display: flex;
-    gap: 0.3rem;
-    align-items: center;
-    cursor: pointer;
-    button {
-      background: none;
-    }
-    svg {
-      color: #00558c;
-    }
-    &__button {
-      background: none;
-    }
+  .cmp-renewals-filter-container{
+      display: flex;
+      gap: 0.3rem;
+      align-items: center;
+      cursor: pointer;
+      button{
+          background: none;
+      }        
+      svg{
+          color: #00558C;
+      }
+      &__button{
+          background: none;
+      }
   }
   .cmp-vertical-separator {
-    width: 2px;
-    background: #e2e7eb;
-    height: 1.3rem;
-    margin: auto 0;
-    display: inline;
+      width: 2px;
+      background: #E2E7EB;
+      height: 1.3rem;
+      margin: auto 0;
+      display: inline;
   }
 }
-.cmp-renewals-grid {
-  .ag-react-container {
-    font-size: 0.875rem;
+.cmp-renewals-grid{
+  .ag-react-container{
+      font-size: 0.875rem;
   }
 }

@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
+import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 
-export default function RenewalFilter({ aemData }) {
-  const [showModal, setShowModal] = useState(false);
+export default function RenewalFilter({ aemData, queryChanged }) {
+  
+  const isFilterModalOpen = useRenewalGridState(state => state.isFilterModalOpen);
+  const effects = useRenewalGridState(state => state.effects);
+  const {toggleFilterModal} = effects;
+  console.log("render ❓❓");
   const handleFilterClick = () => {
-    setShowModal(true);
+    toggleFilterModal();
   };
 
   const handleFilterCloseClick = () => {
-    setShowModal(false);
+    toggleFilterModal({justClose:true});
   };
 
   return (
@@ -20,9 +25,10 @@ export default function RenewalFilter({ aemData }) {
       </Button>
       <i className="fas fa-sliders-h"></i>
       </div>
-      {showModal && (
+      {isFilterModalOpen && (
         <FilterModal
           aemData={aemData}
+          queryChanged={queryChanged}
           handleFilterCloseClick={handleFilterCloseClick}
         />
       )}

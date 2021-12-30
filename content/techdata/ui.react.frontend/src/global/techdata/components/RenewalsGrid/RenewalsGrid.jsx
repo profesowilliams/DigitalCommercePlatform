@@ -4,6 +4,7 @@ import {
   maxCounterCalculator,
   minCounterCalculator,
 } from "../../../../utils/paginationUtil";
+import useGridFiltering from "../../hooks/useGridFiltering";
 import GridRenewal from "../Grid/GridRenewal";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
@@ -17,6 +18,7 @@ function ConfigurationGrid(props) {
     stepBy: 25,
     currentPage: 1,
   });
+  const {onAfterGridInit, onQueryChanged, requestInterceptor} = useGridFiltering();
   const { totalCounter, stepBy, currentPage } = paginationData;
   const componentProp = JSON.parse(props.componentProp);
   const options = {
@@ -63,6 +65,10 @@ function ConfigurationGrid(props) {
     });
   };
 
+  const handleOnQueryChange = query => {
+    onQueryChanged(query)
+  }
+
   const gridConfig = {
     ...componentProp,
     paginationStyle: "none",
@@ -95,7 +101,7 @@ function ConfigurationGrid(props) {
           </div>
           <VerticalSeparator />
           <div className="cmp-renewal-filter">
-            <RenewalFilter aemData={componentProp} />
+            <RenewalFilter aemData={componentProp} queryChanged={handleOnQueryChange} />
           </div>
         </div>
       </div>
@@ -106,6 +112,8 @@ function ConfigurationGrid(props) {
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
+          onAfterGridInit={onAfterGridInit}
+          requestInterceptor={requestInterceptor}
         />
       </div>
     </section>

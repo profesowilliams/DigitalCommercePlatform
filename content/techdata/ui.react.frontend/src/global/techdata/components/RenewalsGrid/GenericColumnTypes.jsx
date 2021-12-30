@@ -3,11 +3,13 @@ import {
   getUserDataInitialState,
   hasAccess,
   IS_TD_INTERNAL,
-  RENEWALS_TYPE,
+  RENEWALS_TYPE
 } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
+import DueDateDayColumn from "./DueDateDayColumn";
+
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
@@ -17,7 +19,8 @@ const columnFieldsMap = (definition, eventProps) => {
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
     renewal: <ContractColumn data={data} />,
-    dueDateDays: <DueDateColumn columnDefinition={definition} columnValue={data?.dueDate}/>,
+    dueDateDays: <DueDateDayColumn columnValue={data?.dueDate}/>,
+    dueDate: <DueDateColumn columnValue={value}/>,
     price : thousandSeparator(value)
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
@@ -49,6 +52,7 @@ export const plainTextColumn = (definition) => {
     headerName: columnLabel,
     field: columnKey,
     sortable: sortable,
+    width: columnKey == 'vendor' ? '300px' : null, 
     resizable: true,
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
   };

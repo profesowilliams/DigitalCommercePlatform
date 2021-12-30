@@ -128,7 +128,7 @@
             &__title {
                 font-size: rem(70px);
                 font-weight: 600;
-                text-shadow: 0 2px 4px rgb(0 0 0 / 50%);
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
                 padding-left: rem(34px);
                 order: 1;
                 margin: 0;
@@ -733,7 +733,7 @@
 .cmp-quadriptych-teaser-reverse {
     &.cmp-quadriptych-teaser {
         .cmp-teaser {
-            box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+            box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
             border: none;
             display: flex;
             flex-direction: column;
@@ -741,7 +741,7 @@
             height: rem(380px);
 
             &:hover {
-                box-shadow: 0 rem(3px) rem(4px) rgb(0 0 0 / 30%);
+                box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
 
                 .cmp-teaser__title {
                     background-color: get-color(brand-blue) !important;

@@ -15,6 +15,7 @@ const normaliseState = (data) => {
   data.forEach((item) => {
     s[(temp += 1)] = {
       title: item.accordionLabel,
+      field:item.filterField,
       id: temp,
       open: false,
       checked: false,
@@ -25,6 +26,7 @@ const normaliseState = (data) => {
       item.filterOptionsValues.forEach((subItem) => {
         s[(temp += 1)] = {
           title: subItem.filterOptionLabel,
+          field:item.filterField,
           id: temp,
           open: false,
           checked: false,
@@ -34,6 +36,7 @@ const normaliseState = (data) => {
           subItem.subFilterOptionsValues.forEach((finalItem) => {
             s[(temp += 1)] = {
               title: finalItem.subFilterOptionsLabel,
+              field:item.filterField,
               id: temp,
               open: false,
               checked: false,
