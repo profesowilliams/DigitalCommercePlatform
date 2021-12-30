@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Search.Dto.Content;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Enums;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
@@ -15,11 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
 {
     public class SearchProfile : Profile
     {
-        private const string N = "N";
-        private const string Orderable = "Orderable";
-        private const string AuthRequiredPrice = "AuthRequiredPrice";
-        private const string Y = "Y";
-
         public SearchProfile()
         {
             CreateMap<RangeModel, RangeDto>();
@@ -40,7 +36,6 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<ProductNoteDto, ProductNoteModel>();
             CreateMap<SalesOrgStocksDto, StockModel>()
                 .ForMember(dest => dest.TotalAvailable, opt => opt.MapFrom(x => x.Total))
-                .ForMember(dest => dest.VendorDirectInventory, opt => opt.Ignore())
                 .ForMember(dest => dest.VendorDirectInventory, opt => opt.Ignore())
                 .ForMember(dest => dest.VendorShipped, opt => opt.Ignore());
             CreateMap<ElasticItemDto, ElasticItemModel>()
@@ -99,10 +94,10 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             var orderable = false;
             var authrequiredprice = false;
 
-            orderable = x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, N, StringComparison.InvariantCultureIgnoreCase)) == null
-                                                              && x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, Y, StringComparison.InvariantCultureIgnoreCase)) != null;
+            orderable = x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, IndicatorsConstants.Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, IndicatorsConstants.N, StringComparison.InvariantCultureIgnoreCase)) == null
+                                                              && x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, IndicatorsConstants.Orderable, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, IndicatorsConstants.Y, StringComparison.InvariantCultureIgnoreCase)) != null;
 
-            authrequiredprice = x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, AuthRequiredPrice, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, Y, StringComparison.InvariantCultureIgnoreCase)) != null;
+            authrequiredprice = x.Indicators?.FirstOrDefault(i => string.Equals(i.Type, IndicatorsConstants.AuthRequiredPrice, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, IndicatorsConstants.Y, StringComparison.InvariantCultureIgnoreCase)) != null;
 
             return (orderable, authrequiredprice);
         }

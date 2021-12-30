@@ -33,18 +33,18 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     public class SearchService : ISearchService
     {
         private const string CNETAttributes = "CNETAttributes";
-        private const string TopRefinements = "TopRefinements";
         private const string General = "General";
-        private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _appSearchUrl;
+        private const string TopRefinements = "TopRefinements";
         private readonly string _appProductUrl;
-        private readonly ILogger<SearchService> _logger;
+        private readonly string _appSearchUrl;
         private readonly IUIContext _context;
-        private readonly ISiteSettings _siteSettings;
-        private readonly IMapper _mapper;
-        private readonly ITranslationService _translationService;
-        private readonly List<string> _refinementsGroupThatShouldBeLocalized;
         private readonly Dictionary<string, string> _internalRefinementsTranslations = null;
+        private readonly ILogger<SearchService> _logger;
+        private readonly IMapper _mapper;
+        private readonly IMiddleTierHttpClient _middleTierHttpClient;
+        private readonly List<string> _refinementsGroupThatShouldBeLocalized;
+        private readonly ISiteSettings _siteSettings;
+        private readonly ITranslationService _translationService;
 
         public SearchService(SearchServiceArgs args)
         {
@@ -61,16 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
 
             _translationService.FetchTranslations("Search.UI.InternalRefinements", ref _internalRefinementsTranslations);
-        }
-
-        public async Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous)
-        {
-            var appSearchResponse = await GetProductData(request);
-            var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
-
-            if (fullSearchResponse != null)
-                MapFields(appSearchResponse, ref fullSearchResponse);
-            return fullSearchResponse;
         }
 
         public async Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request)
@@ -90,10 +80,177 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             return results;
         }
 
+        public async Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous)
+        {
+            var appSearchResponse = await GetProductData(request);
+            var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
+
+            if (fullSearchResponse != null)
+                MapFields(appSearchResponse, ref fullSearchResponse);
+            return fullSearchResponse;
+        }
+
         public async Task<List<ProductSearchPreviewModel>> GetProductSearchPreviewData(SearchRequestDto request)
         {
             var results = await GetProductData(request);
             return _mapper.Map<List<ProductSearchPreviewModel>>(results?.Products);
+        }
+
+        public async Task<List<TypeAheadModel>> GetTypeAhead(TypeAhead.Request request)
+        {
+            var typeAheadUrl = _appSearchUrl.AppendPathSegment("/TypeAhead").BuildQuery(request);
+            try
+            {
+                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<List<TypeAheadModel>>(typeAheadUrl);
+                return getTypeAheadResponse;
+            }
+            catch (Exception ex)
+            {
+                if (ex is RemoteServerHttpException)
+                {
+                    var remoteEx = ex as RemoteServerHttpException;
+                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                }
+                _logger.LogError(ex, "Exception at getting GetTypeAhead : " + nameof(SearchService));
+                throw ex;
+            }
+        }
+
+        private static void SetVendorShipped(ElasticItemDto appSearchProduct, ElasticItemModel product)
+        {
+            if (appSearchProduct.Stock?.VendorDesignated == 0 &&
+                appSearchProduct.Indicators?.FirstOrDefault(i => string.Equals(i.Type, DropShip, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, Y, StringComparison.InvariantCultureIgnoreCase)) != null &&
+                appSearchProduct.Indicators.FirstOrDefault(i => string.Equals(i.Type, Warehouse, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, N, StringComparison.InvariantCultureIgnoreCase)) != null)
+            {
+                product.Stock.VendorShipped = true;
+            }
+        }
+
+        private void AddFreeShuppingIndicator(ElasticItemDto productDto, ElasticItemModel productModel)
+        {
+            var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
+            if (freeShipping != null)
+            {
+                productModel.Indicators.Add(_mapper.Map<IndicatorModel>(freeShipping));
+            }
+        }
+
+        private void AddIndicators(ElasticItemDto productDto, ElasticItemModel productModel)
+        {
+            if (productModel.Indicators == null)
+                productModel.Indicators = new();
+
+            AddFreeShuppingIndicator(productDto, productModel);
+        }
+
+        private List<RefinementModel> GetLocalizedRefinements(RefinementGroupResponseDto group)
+        {
+            var refinements = group.Refinements.Select(x => new RefinementModel
+            {
+                Id = x.Id,
+                Name = _translationService.Translate(_internalRefinementsTranslations, x.Name),
+                OriginalGroupName = group.Group,
+                Type = x.Type,
+                Range = x.Range is null ? null : new RangeModel
+                {
+                    Max = x.Range.Max,
+                    Min = x.Range.Min
+                },
+                Options = x.Options.Select(o => new RefinementOptionModel
+                {
+                    Count = o.Count,
+                    Id = o.Id,
+                    Text = _translationService.Translate(_internalRefinementsTranslations, o.Text),
+                    Selected = o.Selected
+                }).ToList(),
+            }).ToList();
+
+            return refinements;
+        }
+
+        private async Task<SearchResponseDto> GetProductData(SearchRequestDto request)
+        {
+            var url = _appSearchUrl
+           .AppendPathSegment("Product")
+           .ToString();
+
+            try
+            {
+                return await _middleTierHttpClient.PostAsync<SearchResponseDto>(url, null, request).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                if (ex is RemoteServerHttpException)
+                {
+                    var remoteEx = ex as RemoteServerHttpException;
+                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return null;
+                    }
+                }
+                _logger.LogError(ex, "Exception at getting GetProductData : " + nameof(SearchService));
+                throw;
+            }
+        }
+
+        private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
+        {
+            foreach (var product in fullSearchResponse.Products)
+            {
+                var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
+                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null)
+                {
+                    product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
+                }
+                product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
+                var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
+                SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
+                AddIndicators(appSearchProduct, product);
+                SetVendorShipped(appSearchProduct, product);
+            }
+
+            var topRefinementsDto = appSearchResponse.RefinementGroups?.FirstOrDefault(x => x.Group.Equals(TopRefinements, StringComparison.InvariantCultureIgnoreCase))?.Refinements;
+            fullSearchResponse.TopRefinements = _mapper.Map<List<RefinementModel>>(topRefinementsDto);
+
+            fullSearchResponse.TopRefinements.ForEach(r =>
+            {
+                if (!RefinementGroupShouldBeLocalized(r.Name, r.OriginalGroupName))
+                    return;
+
+                r.Name = _translationService.Translate(_internalRefinementsTranslations, r.Name);
+                r.Options.ForEach(o =>
+                {
+                    o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
+                });
+            });
+        }
+
+        private List<RefinementModel> NotTranslatedRefinemntsModel(RefinementGroupResponseDto group)
+        {
+            var refinements = group.Refinements.Select(x => new RefinementModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                OriginalGroupName = group.Group,
+                Type = x.Type,
+                Range = x.Range is null ? null : new RangeModel
+                {
+                    Max = x.Range.Max,
+                    Min = x.Range.Min
+                },
+                Options = x.Options.Select(o => new RefinementOptionModel
+                {
+                    Count = o.Count,
+                    Id = o.Id,
+                    Text = o.Text,
+                    Selected = o.Selected
+                }).ToList(),
+            }).ToList();
+
+            return refinements;
         }
 
         private void ProcessRefinementGroup(List<RefinementGroupResponseModel> results, RefinementGroupResponseDto group)
@@ -160,155 +317,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             }
         }
 
-        private List<RefinementModel> NotTranslatedRefinemntsModel(RefinementGroupResponseDto group)
-        {
-            var refinements = group.Refinements.Select(x => new RefinementModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                OriginalGroupName = group.Group,
-                Type = x.Type,
-                Range = x.Range is null ? null : new RangeModel
-                {
-                    Max = x.Range.Max,
-                    Min = x.Range.Min
-                },
-                Options = x.Options.Select(o => new RefinementOptionModel
-                {
-                    Count = o.Count,
-                    Id = o.Id,
-                    Text = o.Text,
-                    Selected = o.Selected
-                }).ToList(),
-            }).ToList();
-
-            return refinements;
-        }
-
-        private List<RefinementModel> GetLocalizedRefinements(RefinementGroupResponseDto group)
-        {
-            var refinements = group.Refinements.Select(x => new RefinementModel
-            {
-                Id = x.Id,
-                Name = _translationService.Translate(_internalRefinementsTranslations, x.Name),
-                OriginalGroupName = group.Group,
-                Type = x.Type,
-                Range = x.Range is null ? null : new RangeModel
-                {
-                    Max = x.Range.Max,
-                    Min = x.Range.Min
-                },
-                Options = x.Options.Select(o => new RefinementOptionModel
-                {
-                    Count = o.Count,
-                    Id = o.Id,
-                    Text = _translationService.Translate(_internalRefinementsTranslations, o.Text),
-                    Selected = o.Selected
-                }).ToList(),
-            }).ToList();
-
-            return refinements;
-        }
-
-        private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
-        {
-            foreach (var product in fullSearchResponse.Products)
-            {
-                var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
-                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null)
-                {
-                    product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
-                }
-                product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
-                var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
-                SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
-                AddIndicators(appSearchProduct, product);
-            }
-
-            var topRefinementsDto = appSearchResponse.RefinementGroups?.FirstOrDefault(x => x.Group.Equals(TopRefinements, StringComparison.InvariantCultureIgnoreCase))?.Refinements;
-            fullSearchResponse.TopRefinements = _mapper.Map<List<RefinementModel>>(topRefinementsDto);
-
-            fullSearchResponse.TopRefinements.ForEach(r =>
-            {
-                if (!RefinementGroupShouldBeLocalized(r.Name, r.OriginalGroupName))
-                    return;
-
-                r.Name = _translationService.Translate(_internalRefinementsTranslations, r.Name);
-                r.Options.ForEach(o =>
-                {
-                    o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
-                });
-            });
-        }
-
         private bool RefinementGroupShouldBeLocalized(params string[] groups)
         {
             return _refinementsGroupThatShouldBeLocalized.Intersect(groups)?.Any() == true;
-        }
-
-        private void AddIndicators(ElasticItemDto productDto, ElasticItemModel productModel)
-        {
-            if (productModel.Indicators == null)
-                productModel.Indicators = new();
-
-            AddFreeShuppingIndicator(productDto, productModel);
-        }
-
-        private void AddFreeShuppingIndicator(ElasticItemDto productDto, ElasticItemModel productModel)
-        {
-            var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
-            if (freeShipping != null)
-            {
-                productModel.Indicators.Add(_mapper.Map<IndicatorModel>(freeShipping));
-            }
-        }
-
-        private async Task<SearchResponseDto> GetProductData(SearchRequestDto request)
-        {
-            var url = _appSearchUrl
-           .AppendPathSegment("Product")
-           .ToString();
-
-            try
-            {
-                return await _middleTierHttpClient.PostAsync<SearchResponseDto>(url, null, request).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                if (ex is RemoteServerHttpException)
-                {
-                    var remoteEx = ex as RemoteServerHttpException;
-                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                    {
-                        return null;
-                    }
-                }
-                _logger.LogError(ex, "Exception at getting GetProductData : " + nameof(SearchService));
-                throw;
-            }
-        }
-
-        public async Task<List<TypeAheadModel>> GetTypeAhead(TypeAhead.Request request)
-        {
-            var typeAheadUrl = _appSearchUrl.AppendPathSegment("/TypeAhead").BuildQuery(request);
-            try
-            {
-                var getTypeAheadResponse = await _middleTierHttpClient.GetAsync<List<TypeAheadModel>>(typeAheadUrl);
-                return getTypeAheadResponse;
-            }
-            catch (Exception ex)
-            {
-                if (ex is RemoteServerHttpException)
-                {
-                    var remoteEx = ex as RemoteServerHttpException;
-                    if (remoteEx.Code == System.Net.HttpStatusCode.NotFound)
-                    {
-                        return null;
-                    }
-                }
-                _logger.LogError(ex, "Exception at getting GetTypeAhead : " + nameof(SearchService));
-                throw ex;
-            }
         }
     }
 }
