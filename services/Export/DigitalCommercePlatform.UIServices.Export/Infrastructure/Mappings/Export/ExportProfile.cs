@@ -11,7 +11,6 @@ using DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export.R
 
 namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Export
 {
-    [ExcludeFromCodeCoverage]
     public class ExportProfile : ProfileBase
     {
         public ExportProfile()
