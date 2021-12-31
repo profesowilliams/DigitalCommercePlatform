@@ -43,17 +43,24 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
             private readonly ISortService _sortService;
+            private readonly IItemsPerPageService _itemsPerPageService;
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService)
+            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService, IItemsPerPageService itemsPerPageService)
             {
                 _searchService = searchService;
                 _logger = logger;
                 _mapper = mapper;
                 _sortService = sortService;
+                _itemsPerPageService = itemsPerPageService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                if (request.FullSearchRequestModel.PageSize == 0)
+                {
+                    request.FullSearchRequestModel.PageSize = _itemsPerPageService.GetDefaultItemsPerPage();
+                }
+
                 var appRequest = _mapper.Map<SearchRequestDto>(request.FullSearchRequestModel);
                 appRequest.GetDetails ??= new Dictionary<Details, bool>();
                 if (!request.IsAnonymous)
@@ -81,6 +88,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 if (request.FullSearchRequestModel.GetRefinements)
                 {
                     response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort);
+                    response.ItemsPerPageOptions = _itemsPerPageService.GetItemsPerPageOptionsBasedOnRequest(request.FullSearchRequestModel.PageSize);
                 }
 
                 return new Response(response);

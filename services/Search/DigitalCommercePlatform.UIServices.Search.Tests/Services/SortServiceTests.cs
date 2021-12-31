@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public void GetDefaultSortingOptions_ReturnSortingOptions()
         {
             //arrange
-            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel>>(key)).Returns(GetDefaultSortOptions);
+            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(GetDefaultSortOptions);
 
             _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), null))
                 .Returns((Dictionary<string, string> dict, string key, string fallback) => $"{key}Translated");
@@ -50,10 +50,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData(nameof(GetDefaultSortDto_ReturnsExpected_Data))]
-        public void GetDefaultSortDto_ReturnsExpected(List<DropdownElementModel> sortOptions, SortRequestDto expected)
+        public void GetDefaultSortDto_ReturnsExpected(List<DropdownElementModel<string>> sortOptions, SortRequestDto expected)
         {
             //arrange
-            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel>>(key)).Returns(sortOptions);
+            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(sortOptions);
 
             //act
             var actual = GetSut.GetDefaultSortDto();
@@ -94,10 +94,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData(nameof(GetSortingOptionsBasedOnRequest_ReturnExpected_Data))]
-        public void GetSortingOptionsBasedOnRequest_ReturnExpected(SortRequestModel sortRequestModel, IEnumerable<DropdownElementModel> expectedValue)
+        public void GetSortingOptionsBasedOnRequest_ReturnExpected(SortRequestModel sortRequestModel, IEnumerable<DropdownElementModel<string>> expectedValue)
         {
             //arrange
-            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel>>(key)).Returns(GetDefaultSortOptions);
+            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(GetDefaultSortOptions);
 
             //act
             var actual = GetSut.GetSortingOptionsBasedOnRequest(sortRequestModel);
@@ -138,22 +138,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             };
         }
 
-        private static List<DropdownElementModel> GetDefaultSortOptions =>
-            new List<DropdownElementModel>
+        private static List<DropdownElementModel<string>> GetDefaultSortOptions =>
+            new List<DropdownElementModel<string>>
             {
-                new DropdownElementModel{ Id="Relevance", Selected=false},
-                new DropdownElementModel{ Id="Stock", Selected=false},
-                new DropdownElementModel{ Id="Price.True", Selected=true},
-                new DropdownElementModel{ Id="Price.False", Selected=false}
+                new DropdownElementModel<string>{ Id="Relevance", Selected=false},
+                new DropdownElementModel<string>{ Id="Stock", Selected=false},
+                new DropdownElementModel<string>{ Id="Price.True", Selected=true},
+                new DropdownElementModel<string>{ Id="Price.False", Selected=false}
             };
 
-        private static List<DropdownElementModel> GetDefaultTranslatedSortOptions =>
-            new List<DropdownElementModel>
+        private static List<DropdownElementModel<string>> GetDefaultTranslatedSortOptions =>
+            new List<DropdownElementModel<string>>
             {
-                new DropdownElementModel{ Id="Relevance", Selected=false, Name="RelevanceTranslated"},
-                new DropdownElementModel{ Id="Stock", Selected=false, Name="StockTranslated"},
-                new DropdownElementModel{ Id="Price.True", Selected=true, Name="Price.TrueTranslated"},
-                new DropdownElementModel{ Id="Price.False", Selected=false, Name="Price.FalseTranslated"}
+                new DropdownElementModel<string>{ Id="Relevance", Selected=false, Name="RelevanceTranslated"},
+                new DropdownElementModel<string>{ Id="Stock", Selected=false, Name="StockTranslated"},
+                new DropdownElementModel<string>{ Id="Price.True", Selected=true, Name="Price.TrueTranslated"},
+                new DropdownElementModel<string>{ Id="Price.False", Selected=false, Name="Price.FalseTranslated"}
             };
     }
 }

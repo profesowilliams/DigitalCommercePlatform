@@ -18,7 +18,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public CategoryBreadcrumbModel CategoryBreadcrumb { get; set; }
         public bool HasMoreRefinements { get; set; }
         public IEnumerable<string> Territories { get; set; }
-        public IEnumerable<DropdownElementModel> SortingOptions { get; set; }
+        public IEnumerable<DropdownElementModel<string>> SortingOptions { get; set; }
+        public IEnumerable<DropdownElementModel<int>> ItemsPerPageOptions { get; set; }
         public bool IsLoggedIn { get; set; }
     }
 }

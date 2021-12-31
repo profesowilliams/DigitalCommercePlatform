@@ -13,21 +13,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         SortRequestDto GetDefaultSortDto();
 
-        IEnumerable<DropdownElementModel> GetDefaultSortingOptions();
+        IEnumerable<DropdownElementModel<string>> GetDefaultSortingOptions();
 
-        IEnumerable<DropdownElementModel> GetSortingOptionsBasedOnRequest(SortRequestModel sort);
+        IEnumerable<DropdownElementModel<string>> GetSortingOptionsBasedOnRequest(SortRequestModel sort);
     }
 
     public class SortService : ISortService
     {
-        private readonly List<DropdownElementModel> _sortingOptions;
+        private readonly List<DropdownElementModel<string>> _sortingOptions;
 
         public SortService(ISiteSettings siteSettings, ITranslationService translationService)
         {
             Dictionary<string, string> translations = null;
             translationService.FetchTranslations("Search.UI.SortingOptions", ref translations);
 
-            _sortingOptions = siteSettings.GetSetting<List<DropdownElementModel>>("Search.UI.SortingOptions");
+            _sortingOptions = siteSettings.GetSetting<List<DropdownElementModel<string>>>("Search.UI.SortingOptions");
 
             _sortingOptions = _sortingOptions.Select(x =>
            {
@@ -55,9 +55,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             };
         }
 
-        public IEnumerable<DropdownElementModel> GetDefaultSortingOptions() => _sortingOptions;
+        public IEnumerable<DropdownElementModel<string>> GetDefaultSortingOptions() => _sortingOptions;
 
-        public IEnumerable<DropdownElementModel> GetSortingOptionsBasedOnRequest(SortRequestModel sort)
+        public IEnumerable<DropdownElementModel<string>> GetSortingOptionsBasedOnRequest(SortRequestModel sort)
         {
             if (sort is null)
                 return _sortingOptions;

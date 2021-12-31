@@ -42,25 +42,29 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             }
         }
 
+        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService);
+
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly ISearchService _searchService;
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
             private readonly ISortService _sortService;
+            private readonly IItemsPerPageService _itemsPerPageService;
             private readonly string _catalog;
             private readonly List<RefinementGroupRequestDto> _defaultIndicators;
             private const string _categories = "CATEGORIES";
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISiteSettings siteSettings, ISortService sortService)
+            public Handler(KeywordSearchHandlerArgs args)
             {
-                _searchService = searchService;
-                _logger = logger;
-                _mapper = mapper;
-                _sortService = sortService;
-                _catalog = siteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
+                _searchService = args.SearchService;
+                _logger = args.Logger;
+                _mapper = args.Mapper;
+                _sortService = args.SortService;
+                _itemsPerPageService = args.ItemsPerPageService;
+                _catalog = args.SiteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
                 _defaultIndicators = JsonHelper.DeserializeObjectSafely<List<RefinementGroupRequestDto>>(
-                    value: siteSettings.TryGetSetting("Search.UI.DefaultIndicators")?.ToString(),
+                    value: args.SiteSettings.TryGetSetting("Search.UI.DefaultIndicators")?.ToString(),
                     settings: JsonSerializerSettingsHelper.GetJsonSerializerSettings(),
                     defaultValue: new List<RefinementGroupRequestDto>() {
                         new RefinementGroupRequestDto(){
@@ -119,6 +123,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 appRequest.RefinementGroups.AddRange(_defaultIndicators);
                 appRequest.GetDetails = new Dictionary<Enums.Details, bool> { { Enums.Details.TopRefinementsAndResult, true }, { Enums.Details.Price, true }, { Enums.Details.Authorizations, true } };
                 appRequest.Sort = _sortService.GetDefaultSortDto();
+                appRequest.PageSize = _itemsPerPageService.GetDefaultItemsPerPage();
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
                 if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)
@@ -127,6 +132,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 }
 
                 response.SortingOptions = _sortService.GetDefaultSortingOptions();
+                response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
 
                 return new Response(response);
             }

@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
     public class FullSearchRequestModel
     {
         public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 25;
+        public int PageSize { get; set; }
         public string SearchString { get; set; }
         public string OrderLevel { get; set; } = "Commercial";
         public List<RefinementGroupRequestModel> RefinementGroups { get; set; }

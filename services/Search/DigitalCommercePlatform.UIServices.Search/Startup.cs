@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using static DigitalCommercePlatform.UIServices.Search.Actions.Product.KeywordSearch;
 
 namespace DigitalCommercePlatform.UIServices.Search
 {
@@ -36,6 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddTransient<SearchServiceArgs>();
             services.AddSingleton<ITranslationService, TranslationService>();
             services.AddScoped<ISortService, SortService>();
+            services.AddScoped<IItemsPerPageService, ItemsPerPageService>();
+
+            services.AddScoped<KeywordSearchHandlerArgs>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

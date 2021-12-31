@@ -21,8 +21,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<ISearchService> _searchServiceMock;
         private readonly FakeLogger<KeywordSearch.Handler> _logger;
         private readonly Mapper _mapper;
-        private readonly Mock<ISiteSettings> _siteSettingsMock;
+        private Mock<ISiteSettings> _siteSettingsMock;
         private readonly Mock<ISortService> _sortServiceMock;
+        private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
 
         public KeywordSearchTests()
         {
@@ -33,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _siteSettingsMock.Setup(s => s.TryGetSetting("Catalog.All.DefaultCatalog")).Returns("FCS");
             _siteSettingsMock.Setup(s => s.TryGetSetting("Search.UI.DefaultIndicators")).Returns("[{ \"Group\":\"AvailabilityType\", \"Refinements\":[{ \"Id\":\"DropShip\", \"ValueId\":\"Y\" },{ \"Id\": \"Warehouse\", \"ValueId\": \"Y\" }, { \"Id\":\"Virtual\", \"ValueId\":\"Y\" }]},{ \"Group\":\"ProductStatus\", \"Refinements\":[{\"Id\":\"DisplayStatus\",\"ValueId\":\"Allocated\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"PhasedOut\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"Active\"}]},{\"Group\":\"InStock\",\"Refinements\":[{\"Id\":\"InStock\",\"ValueId\":\"Y\"}]}]");
             _sortServiceMock = new Mock<ISortService>();
+            _itemsPerPageServiceMock = new Mock<IItemsPerPageService>();
         }
 
         [Theory]
@@ -147,7 +149,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         {
             //Arrange
             _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
-            var _siteSettingsMockEmpty = new Mock<ISiteSettings>();
+            _siteSettingsMock = new Mock<ISiteSettings>();
             var sut = GetHandler();
 
             //Act
@@ -158,6 +160,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
 
-        private KeywordSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object);
+        private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object));
     }
 }
