@@ -212,9 +212,9 @@ public class SubNavLinks {
 
     public String getLevels() {
         if(this.getDocCount() == null)
-            return (this.getRootParentTitle()+">"+this.getPageTitle()).toLowerCase(Locale.ROOT);
+            return (this.getRootParentTitle()+">"+this.getPageTitle());
         else
-            return (this.getRootParentTitle()+">"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT);
+            return (this.getRootParentTitle()+">"+this.getDocCount()+this.getPageTitle());
     }
 
     public String getRootParentLink(){

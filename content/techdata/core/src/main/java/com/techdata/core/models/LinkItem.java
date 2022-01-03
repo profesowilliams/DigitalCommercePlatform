@@ -130,6 +130,10 @@ public class LinkItem {
         return this.getPlatformName().toLowerCase(Locale.ROOT);
     }
 
+    public String getMobilePlatformLevel(){
+        return this.getPlatformName();
+    }
+
     public List<SubNavLinks> getSecondaryMenuItems() {
         return this.subLinks;
     }
