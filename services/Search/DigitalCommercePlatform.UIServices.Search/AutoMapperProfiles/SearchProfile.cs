@@ -87,7 +87,9 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.Territories, opt => opt.MapFrom(src => src.Territories))
             ;
 
-            CreateMap<IndicatorDto, IndicatorModel>();
+            CreateMap<IndicatorDto, IndicatorModel>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.Value) ? null : src.Value))
+                ;
         }
 
         public static (bool orderable, bool authrequiredprice) GetFlags(ElasticItemDto x)

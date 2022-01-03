@@ -3,6 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
 using DigitalCommercePlatform.UIServices.Search.Services;
@@ -16,6 +17,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 using static DigitalCommercePlatform.UIServices.Search.Helpers.IndicatorsConstants;
@@ -405,8 +407,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Should().NotBeNull();
             result.Products[0].Indicators.Should().NotBeNullOrEmpty();
             result.Products[0].Indicators.Find(e => e.Type == FreeShipping).Should().NotBeNull();
-            result.Products[1].Indicators.Should().BeEmpty();
-            result.Products[2].Indicators.Should().BeEmpty();
         }
 
         [Theory]
@@ -613,6 +613,61 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //assert
             result.Should().BeNull();
             _middleTierHttpClient.Verify(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null), Times.Once);
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(AddFreeShuppingIndicator_Test_Data))]
+        public void AddFreeShuppingIndicator_Test(ElasticItemDto productDto, ElasticItemModel productModel, string expectedValue)
+        {
+            // Arrange
+            MethodInfo sut = typeof(SearchService).GetMethod("AddFreeShuppingIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((Dictionary<string, string> dict, string key, string fallback) => { return $"{key}_Translated"; })
+                .Verifiable();
+            //Act
+
+            sut.Invoke(_searchService, new object[] { productDto, productModel });
+            //Assert
+            _translationServiceMock.VerifyAll();
+            productModel.Indicators.FirstOrDefault(x => x.Type == "FreeShipping").Should().NotBeNull();
+            productModel.Indicators.First(x => x.Type == "FreeShipping").Value.Should().Be(expectedValue);
+        }
+
+        public static IEnumerable<object> AddFreeShuppingIndicator_Test_Data()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    new ElasticItemDto
+                    {
+                    },
+                    new ElasticItemModel
+                    {
+                        Indicators = new()
+                    },
+                    "FreeShipping.N_Translated"
+                },
+                new object[]
+                {
+                    new ElasticItemDto
+                    {
+                        Indicators = new List<IndicatorDto>
+                        {
+                            new IndicatorDto
+                            {
+                                Type="FreeShipping",
+                                Value="Y"
+                            }
+                        }
+                    },
+                    new ElasticItemModel
+                    {
+                        Indicators = new()
+                    },
+                    "FreeShipping.Y_Translated"
+                }
+            };
         }
     }
 }

@@ -39,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly string _appSearchUrl;
         private readonly IUIContext _context;
         private readonly Dictionary<string, string> _internalRefinementsTranslations = null;
+        private readonly Dictionary<string, string> _indicatorsTranslations = null;
         private readonly ILogger<SearchService> _logger;
         private readonly IMapper _mapper;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
@@ -61,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
 
             _translationService.FetchTranslations("Search.UI.InternalRefinements", ref _internalRefinementsTranslations);
+            _translationService.FetchTranslations("Search.UI.Indicators", ref _indicatorsTranslations);
         }
 
         public async Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request)
@@ -134,7 +136,16 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
             if (freeShipping != null)
             {
+                freeShipping.Value = _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{freeShipping.Value}", freeShipping.Value);
                 productModel.Indicators.Add(_mapper.Map<IndicatorModel>(freeShipping));
+            }
+            else
+            {
+                productModel.Indicators.Add(new IndicatorModel
+                {
+                    Type = FreeShipping,
+                    Value = _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{N}", N)
+                });
             }
         }
 
