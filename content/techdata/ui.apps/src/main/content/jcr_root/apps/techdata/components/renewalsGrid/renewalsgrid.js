@@ -26,8 +26,10 @@ use(['../common/utils.js'], function (utils) {
   }
 
   jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.configurationsEndpoint || '';
-  jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
 
+  if (this.agGridLicenseKey) {
+    jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+  }
   if (properties && properties["itemsPerPage"]) {
     jsonObject["itemsPerPage"] = properties["itemsPerPage"];
   }

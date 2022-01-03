@@ -41,8 +41,6 @@ use(function () {
     return trackingJson;
   }
 
-  jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
-
   if (node !== null) {
     var childrenList = node.getChildren();
 
@@ -119,7 +117,6 @@ use(function () {
   }
 
   var vendorListNode = resourceResolver.getResource(currentNode.getPath() + "/vendorList");
-
   if (vendorListNode !== null) {
     var childrenList = vendorListNode.getChildren();
     var vendorValues = [];
@@ -133,6 +130,11 @@ use(function () {
       vendorDropdownData.items = vendorValues;
     }
   }
+
+  if (this.agGridLicenseKey) { 
+    jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+  }
+		}
 
   if (properties && properties["methodDropdownLabel"]) {
     methodDropdownData.label = properties["methodDropdownLabel"];

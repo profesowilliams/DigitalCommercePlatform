@@ -128,8 +128,10 @@ use(['../common/utils.js'], function (utils) {
   }
 
   jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.configurationsEndpoint || '';
-  jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey || '';
 
+  if (this.agGridLicenseKey) {
+    jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+  }
   if (properties && properties["itemsPerPage"]) {
     jsonObject["itemsPerPage"] = properties["itemsPerPage"];
   }
@@ -142,7 +144,6 @@ use(['../common/utils.js'], function (utils) {
   if (properties && properties["defaultSortingDirection"]) {
     optionData.defaultSortingDirection = properties["defaultSortingDirection"];
   }
-
   if (properties && properties["spaDealsIdLabel"]) {
     jsonObject["spaDealsIdLabel"] = properties["spaDealsIdLabel"];
   }

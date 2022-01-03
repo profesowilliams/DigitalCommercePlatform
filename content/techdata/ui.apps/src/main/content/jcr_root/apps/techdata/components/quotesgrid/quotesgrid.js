@@ -90,12 +90,13 @@ use(function () {
     jsonObject["label"] = properties["label"];
   }
 
-  jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
-
   if (this.uiServiceDomain != null) {
     jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.quoteGridEndpoint;
   }
 
+  if (this.agGridLicenseKey) {
+    jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+  }
   if (properties && properties["itemsPerPage"]) {
     jsonObject["itemsPerPage"] = properties["itemsPerPage"];
   }
