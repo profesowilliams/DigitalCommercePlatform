@@ -1,7 +1,7 @@
 package com.techdata.core.models;
 
+import com.adobe.cq.wcm.core.components.models.Embed;
 import com.day.cq.wcm.api.designer.Style;
-import com.techdata.core.workflow.process.impl.CatalogServiceSynchProcess;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +24,9 @@ class EmbedModelTest {
     private final AemContext ctx = new AemContext();
 
     private EmbedModel embedModel;
+
+    @Mock
+    Embed embed;
 
     @Mock
     private Style currentStyle;
@@ -68,5 +71,28 @@ class EmbedModelTest {
             "AdButler.ads.push({handler: function(opt){ AdButler.register(168525, 214424, [226,200], 'placement_214424_'+opt.place, opt); }, opt: { place: plc214424++, keywords: abkw, domain: 'servedbyadbutler.com', click:'CLICK_MACRO_PLACEHOLDER' }});\n" +
             "</script>";
     private static final Logger log = LoggerFactory.getLogger(EmbedModelTest.class);
-
+    @Test
+    void testgetCode(){
+        assertEquals(null,embedModel.getCode());
+    }
+    @Test
+    void testgetScripturl(){
+        assertEquals(null,embedModel.getScripturl());
+    }
+    @Test
+    void testgetHtml(){
+        assertEquals(null,embed.getHtml());
+    }
+    @Test
+    void testgetEmbeddableResourceType(){
+        assertEquals(null,embed.getEmbeddableResourceType());
+    }
+    @Test
+    void testgetUrl(){
+        assertEquals(null,embed.getUrl());
+    }
+    @Test
+    void testgetExportedTypes() {
+        assertEquals(null,embed.getExportedType());
+    }
 }

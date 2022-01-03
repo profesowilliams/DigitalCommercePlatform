@@ -1,6 +1,7 @@
 package com.techdata.core.util;
 
 import acscommons.com.google.common.reflect.TypeToken;
+import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.dam.cfm.ContentFragmentException;
 import com.adobe.cq.dam.cfm.FragmentTemplate;
@@ -22,6 +23,7 @@ import javax.jcr.Session;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -35,7 +37,7 @@ public class ContentFragmentUtilTest {
     ResourceResolver resourceResolver;
 
     @Mock
-    Resource resource;
+    Resource resource,parentResource;
 
     @Mock
     Session session;
@@ -46,6 +48,12 @@ public class ContentFragmentUtilTest {
     @Mock
     ContentFragment contentFragment;
 
+    @Mock
+    Iterator<ContentElement> contentElementIterator;
+
+    @Mock
+    ContentElement contentElement;
+
     @BeforeEach
     void setUp() {
         contentFragmentUtil = new ContentFragmentUtil();
@@ -53,30 +61,25 @@ public class ContentFragmentUtilTest {
 
     @Test
     void processSyncContentFragmentsTest() throws PersistenceException, RepositoryException, ContentFragmentException {
-         String JSON_TEST_DATA = "{\"TestValue\": {\n" +
-                "        \"key1\": 1,\n" +
-                "        \"key2\": 2\n" +
-                "      }}";
+        String JSON_TEST_DATA = "{\n" +
+                "\t\"children\": [{}],\n" +
+                "\t\"key\": \"key1\",\n" +
+                "\t\"name\": \"name1\"\n" +
+                "}";
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(JSON_TEST_DATA, JsonObject.class);
-        JsonObject supplyPrice = jsonObject.get("TestValue").getAsJsonObject();
-        Type type = new TypeToken<HashMap<String, Double>>() {
-        }.getType();
-        HashMap<String, Double> parsedJson = gson.fromJson(supplyPrice, type);
         JsonArray jsonArray = new JsonArray();
-        for(String key : parsedJson.keySet()) {
-            JsonObject jo = new JsonObject();
-            jo.addProperty("key", key);
-            jo.addProperty("name", parsedJson.get(key));
-            jsonArray.add(jo);
-        }
-        JsonObject result = new JsonObject();
-        result.add("TestValue", jsonArray.getAsJsonArray());
+        jsonArray.add(jsonObject);
         when(resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT)).thenReturn(resource);
         when(resourceResolver.getResource(Constants.CATALOG_CF_MODEL_PATH)).thenReturn(resource);
         when(resource.adaptTo(FragmentTemplate.class)).thenReturn(fragmentTemplate);
-        when(fragmentTemplate.createFragment(resource,"key1","1.0")).thenReturn(contentFragment);
-        when(fragmentTemplate.createFragment(resource,"key2","2.0")).thenReturn(contentFragment);
+        when(fragmentTemplate.createFragment(resource,"key1","name1")).thenReturn(contentFragment);
+        when(contentFragment.getElements()).thenReturn(contentElementIterator);
+        when(contentElementIterator.hasNext()).thenReturn(true,false);
+        when(contentElementIterator.next()).thenReturn(contentElement);
+        when(contentElement.getName()).thenReturn("key");
+        when(resourceResolver.adaptTo(Session.class)).thenReturn(session);
+        when(session.nodeExists("/content/techdata/key1-children")).thenReturn(true);
         contentFragmentUtil.processSyncContentFragments(jsonArray,Constants.TECHDATA_CONTENT_PAGE_ROOT,resourceResolver);
     }
 }

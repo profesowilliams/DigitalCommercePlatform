@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import org.apache.sling.api.resource.ValueMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,9 @@ class LanguageDropDownModelTest {
     private PageManager pageManager;
 
     private String navigationRoot;
+
+    @Mock
+    ValueMap valueMap;
 
     @BeforeEach
     void setUp() {
@@ -63,5 +67,24 @@ class LanguageDropDownModelTest {
         when(parentPage.getDepth()).thenReturn(6);
         assertEquals(0, underTest.getRegionListItems().size());
         assertEquals(0, underTest.getLanguageListItems().size());
+    }
+    @Test
+    void testgetNavigationRoot(){
+        assertEquals(null, underTest.getNavigationRoot());
+    }
+    @Test
+    void testCountryRootPageTitle(){
+        when(currentPage.getPageManager()).thenReturn(pageManager);
+        when(currentPage.getDepth()).thenReturn(8);
+        when(pageManager.getPage(navigationRoot)).thenReturn(navPage);
+        when(navPage.getDepth()).thenReturn(4);
+        when(currentPage.getParent(2)).thenReturn(parentPage);
+        when(parentPage.getProperties()).thenReturn(valueMap);
+        when(valueMap.get("navTitle")).thenReturn("navTitle");
+        assertEquals("navTitle", underTest.getCountryRootPageTitle());
+    }
+    @Test
+    void testgetOverRideCurrentPage(){
+        assertEquals(null, underTest.getOverRideCurrentPage());
     }
 }

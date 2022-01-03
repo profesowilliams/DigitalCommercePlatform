@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.mockito.Mockito.when;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
@@ -36,5 +35,37 @@ public class AzureAppInsightsModelTest {
         when(insightsConfiguration.getCoorelationHeaderExcludedDomains()).thenReturn(coorelation);
         when(insightsConfiguration.getEnableAjaxPerfTracking()).thenReturn(true);
         azureAppInsightsModel.init();
+    }
+    @Test
+    void testappInsightsSdkLocation(){
+        azureAppInsightsModel.getAppInsightsSdkLocation();
+    }
+    @Test
+    void testcookieDomain(){
+        azureAppInsightsModel.getCookieDomain();
+    }
+    @Test
+    void testcoorelationHeaderExcludedDomains(){
+        azureAppInsightsModel.getCoorelationHeaderExcludedDomains();
+    }
+    @Test
+    void testinstrumentationKey(){
+        azureAppInsightsModel.getInstrumentationKey();
+    }
+    @Test
+    void testenableAjaxErrorStatusText(){
+        azureAppInsightsModel.isEnableAjaxErrorStatusText();
+    }
+    @Test
+    void testenableAjaxPerfTracking(){
+        azureAppInsightsModel.isEnableAjaxPerfTracking();
+    }
+    @Test
+    void testenableApplicationInsights(){
+        azureAppInsightsModel.isEnableApplicationInsights();
+    }
+    @Test
+    void testenableCorsCorrelation(){
+        azureAppInsightsModel.isEnableCorsCorrelation();
     }
 }

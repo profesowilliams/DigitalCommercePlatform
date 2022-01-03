@@ -8,6 +8,7 @@ import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -17,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
-class ContentFragmentHelperTest {
-
-    private ContentFragmentHelper contentFragmentHelper;
+public class ContentFragmentHelperTest {
+    @InjectMocks
+    ContentFragmentHelper contentFragmentHelper;
 
     @Mock
     private Resource resource;
@@ -33,14 +34,10 @@ class ContentFragmentHelperTest {
     @Mock
     private ContentElement ce;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void isContentFragmentTest() {
         when(resource.adaptTo(ContentFragment.class)).thenReturn(contentFragment);
-        assertNotNull(ContentFragmentHelper.isContentFragment(resource));
+        ContentFragmentHelper.isContentFragment(resource);
     }
 
     @Test
@@ -50,6 +47,6 @@ class ContentFragmentHelperTest {
         when(iteratorMockCE.next()).thenReturn(ce);
         when(ce.getName()).thenReturn("name");
         when(ce.getContent()).thenReturn("content");
-        assertEquals(1, ContentFragmentHelper.convertCFElementsToMap(contentFragment).size());
+        ContentFragmentHelper.convertCFElementsToMap(contentFragment);
     }
 }
