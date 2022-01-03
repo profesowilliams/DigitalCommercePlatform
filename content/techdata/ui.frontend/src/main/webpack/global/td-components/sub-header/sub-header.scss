@@ -94,34 +94,33 @@
 
   &--sub-nav {
     background-color: get-color(td-dark-blue);
-    display: flex !important;
     width: 100%;
     line-height: rem(60px);
     height: rem(43px);
+    display: grid !important;
+    grid-template-columns: 75% 25%;
+    grid-auto-rows: rem(43px);
+
 
     >ol {
       margin: 0;
       padding: 0;
       align-self: center;
-      display: flex;
-      margin-block-start: 0;
-      margin-block-end: 0;
-      margin-inline-start: 0px;
-      margin-inline-end: 0px;
-      padding-inline-start: 0;
+      display: flex !important;
+      justify-content: space-between;
 
       &.cmp-tabs__tablist li {
 
         &:first-child,
         &.dashboard {
-          margin-right: rem(70px);
+          margin-right: rem(54px);
         }
       }
 
       >li {
         display: inline-flex;
         position: relative;
-        padding: 0 rem(15px) !important;
+        padding: 0 rem(5px) 0 rem(15px) !important;
         z-index: 10;
 
         a,
@@ -156,7 +155,7 @@
         }
 
         &:first-child {
-          margin-right: rem(70px);
+          margin-right: rem(54px);
         }
 
       }
@@ -247,6 +246,7 @@
       ol {
         display: none;
       }
+
       .cmp-sub-header__wrapper ul li+li {
         display: none !important;
         border-left: rem(0px) solid get-color(brand-white);
@@ -304,7 +304,7 @@
         }
       }
     }
-   
+
     /// above is THE END of subHeader hamburger menu ///
 
   }
