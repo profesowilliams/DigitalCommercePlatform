@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 use(function () {
     function getDataFromMultifield (resourceResolver, multifieldPropertyName, populateFieldsCallback) {
         var columnListValues = null;
 
-        var node = resourceResolver.getResource(currentNode.getPath() + "/" + multifieldPropertyName);
+        var node = resourceResolver.getResource(currentNode.getPath() + '/' + multifieldPropertyName);
 
         if (node !== null) {
             columnListValues = [];
@@ -17,8 +17,11 @@ use(function () {
         return columnListValues;
     }
     function populateCommonConfigurations (targetObject, serviceData) {
-        if (serviceData["productEmptyImageUrl"]) {
-            targetObject["productEmptyImageUrl"] = serviceData["productEmptyImageUrl"];
+        if (serviceData['productEmptyImageUrl']) {
+            targetObject['productEmptyImageUrl'] = serviceData['productEmptyImageUrl'];
+        }
+        if (serviceData['agGridLicenseKey']) {
+            targetObject['agGridLicenseKey'] = serviceData['agGridLicenseKey'];
         }
     }
     function getCheckoutConfigurations (serviceData) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
+import { LicenseManager } from 'ag-grid-enterprise';
 import { get } from "../../../../utils/api";
 
 function Grid(props) {
@@ -17,6 +18,7 @@ function Grid(props) {
     requestInterceptor,
     onSortChanged
   } = Object.assign({}, props);
+  let isLicenseSet = false;
   const componentVersion = "1.2.0";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
@@ -61,8 +63,8 @@ function Grid(props) {
   }
 
   /*
-	function that returns AG grid vnode outside main return function to keep that
-	node on useState hook and set it once per component lifecycle or on demand
+    function that returns AG grid vnode outside main return function to keep that
+    node on useState hook and set it once per component lifecycle or on demand
   */
   const AgGrid = () => (
     <AgGridReact
@@ -120,11 +122,19 @@ function Grid(props) {
     </AgGridReact>
   );
 
+  const setLicenseKey = () => {
+    if (isLicenseSet != true) {
+      LicenseManager.setLicenseKey(config.agGridLicenseKey);
+      isLicenseSet = true;
+    }
+  };
+
   const renderers = {
     CustomNoRowsOverlay: CustomNoRowsOverlay
   };
-  
   let filteredColumns = [];
+
+  setLicenseKey();
   // disable default behaviour of column being movable
   columnDefinition.forEach((column) => {
     if (column.movable !== true || column.suppressMovable === false)
@@ -181,7 +191,7 @@ function Grid(props) {
         const sortDir = params.request.sortModel?.[0]?.sort;
 
         const handleNoRowMsg = (response) => {
-          if(!response?.items || response?.items.length === 0) {
+          if (!response?.items || response?.items.length === 0) {
             gridApi.current.showNoRowsOverlay();
           }
         }
@@ -199,7 +209,7 @@ function Grid(props) {
       },
     };
   }
-  
+
   async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
@@ -211,9 +221,8 @@ function Grid(props) {
           : "&SortDirection=desc&SortBy=id&WithPaginationInfo=true"; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? "";
       pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
-      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${
-        url.search !== "" ? "&" : "?"
-      }${pages}${sortParams}`;
+      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${url.search !== "" ? "&" : "?"
+        }${pages}${sortParams}`;
       let response = null;
       // check if request interceptor is attached and use it.
       // otherwise get data according to grid state
@@ -278,7 +287,7 @@ function Grid(props) {
       onAfterGridInit({
         node: gridNodeRef.current,
         api: _.api,
-        columnApi:_.columnApi,
+        columnApi: _.columnApi,
         gridResetRequest: () => resetGrid(),
       });
     }
@@ -431,9 +440,8 @@ function Grid(props) {
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
       <Fragment>
         <div
-          className={`page-info ${
-            config.paginationStyle === "scroll" ? "visible" : "hidden"
-          }`}
+          className={`page-info ${config.paginationStyle === "scroll" ? "visible" : "hidden"
+            }`}
         >
           {actualRange.from} - {actualRange.to} of {actualRange.total}
         </div>

@@ -11,4 +11,7 @@ public @interface CommonConfigurations {
     @Property(label = "Product Empty Image Url edited", description = "Product Empty Image Url")
     String productEmptyImageUrl();
 
+    @Property(label = "AG-Grid License Key", description = "AG-Grid License Key")
+    String agGridLicenseKey();
+    
 }

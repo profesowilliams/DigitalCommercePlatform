@@ -182,6 +182,8 @@ public class CaConfigReader {
 
     private String renewalsGridEndpoint;
 
+    private String agGridLicenseKey;
+
     private String renewalDetailLineItemEndpoint;
 
     @PostConstruct
@@ -282,6 +284,7 @@ public class CaConfigReader {
         FormConfigurations formConfigurations = page.adaptTo(ConfigurationBuilder.class).as(FormConfigurations.class);
 
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
+        agGridLicenseKey = commonConfigurations.agGridLicenseKey();
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
     }
@@ -579,6 +582,10 @@ public class CaConfigReader {
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
 
     public String getVendorDisconnectEndpoint() { return vendorDisconnectEndpoint; }
+
+    public String getAgGridLicenseKey() {
+        return agGridLicenseKey;
+    }
 
     public String getAllowedFileExtensions() {
         return allowedFileExtensions;

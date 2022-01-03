@@ -3,7 +3,7 @@
       <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
 
-  <sly data-sly-use.model="${'configurationgrid.js' @ multifieldName='columnList', serviceData=serviceData}">
+  <sly data-sly-use.model="${'renewalsgrid.js' @ multifieldName='columnList', serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey}">
 
   <div data-observe-mutation>
     <div
