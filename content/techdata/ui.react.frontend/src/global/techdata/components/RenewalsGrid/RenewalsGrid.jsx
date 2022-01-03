@@ -44,7 +44,7 @@ function ConfigurationGrid(props) {
 
   const maxPaginationCounter = useMemo(
     () => maxCounterCalculator(minPaginationCounter, totalCounter, stepBy),
-    [minPaginationCounter]
+    [minPaginationCounter, totalCounter]
   );
 
   const incrementHandler = () => {
