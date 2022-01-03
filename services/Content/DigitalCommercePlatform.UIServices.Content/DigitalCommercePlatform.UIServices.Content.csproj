@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <CodeAnalysisRuleSet>DigitalCommercePlatform.UIServices.Content.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
@@ -36,10 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="5.3.24" />
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="5.3.24" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="5.3.24" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="5.3.24" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.15" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
