@@ -21,6 +21,10 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   const flagFrom = useRef(false);
   const flagTo = useRef(false);
 
+  /**
+   * Effect if there is a ID param in the URL catch and
+   * create a filter URL to use and fetch the data
+   * */ 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     let _id = params.get('id');
@@ -30,9 +34,10 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         let pathName = url.pathname ?? "";
             pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
         idParam.current = _id;
-        const res = handleFilterChange({key:'id', value: _id}, "keyword");
-        onSearchRequest({ queryString: res })
+        const res = handleFilterChange({key:'general', value: _id}, "general"); // Force the General key
+        onSearchRequest({ queryString: res }) // execute the filter afther get the new filter value
     }
+
   }, [idParam, componentProp])
 
   const defaultVendorsDropdown = {
@@ -95,8 +100,13 @@ const config = {
             new Date(Date.UTC(query.to.value.getFullYear(),query.to.value.getMonth(), query.to.value.getDate())).setUTCHours(23, 59, 59)
           ).toISOString()}`
         : "";
-   
-    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}`;
+    // Filters by URL
+    let general =    
+      query.general?.key && query.general?.value
+        ? `&idType=GENERAL&id=${query.general.value}`
+        : "";
+
+    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
     if (isQueryValid(query)) {
       onQueryChanged(concatedQuery);
     } else {

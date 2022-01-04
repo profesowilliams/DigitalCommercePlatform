@@ -92,6 +92,30 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   /**
+   * Function that validate if exist values with the params that 
+   * try to search and concat in a new URL to redirect and search
+   * @param {string} searchTerm 
+   * @returns 
+   */
+  const getURLToGrid = async (searchTerm) => {
+    // GENERAL
+    const validation = `${uiServiceDomain}` + `${selectedArea.validateResponseEndPoint}` + '&idType=GENERAL' + `&id=${searchTerm}`;  // SIT link
+    // const validation =  `${uiServiceDomain}` + `${selectedArea.validateResponseEndPoint}` + '?idType=GENERAL' + `?id=${searchTerm}`;  // dev link
+    const resValidation = await axios.get(validation);
+
+    if (resValidation?.data.content) {
+      const items = resValidation?.data.content.items;
+      if (items.length === 1) {
+        const detailsPage = dcpDomain + `${selectedArea.detailsPage}?id=${searchTerm}`; // return value of before 
+        return detailsPage;
+      } else {
+        const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`
+        return searchURL;
+      }
+    }
+  };
+
+  /**
    * Function that format the URL that will redirect the user to search
    * @param {string} searchTerm 
    * @returns 
@@ -102,20 +126,10 @@ const SearchBar = ({ data, componentProp }) => {
         uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm)
       );
       if (response?.data?.content?.items?.length === 1) {
-        const validation = uiServiceDomain + `${selectedArea.validateResponseEndPoint}&id=${searchTerm}`; // request to validate if the value exist
-        // const validation = uiServiceDomain + `${selectedArea.validateResponseEndPoint}?id=${searchTerm}`; // dev link
-        const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // URL for re locate in some grid with the ID param to search
-        
-        const detailsPage = dcpDomain + `${selectedArea.detailsPage}?id=${searchTerm}`; // return value of before
-        const resValidation = await axios.get(validation);
-
-        if (resValidation.data.content) {
-          return detailsPage;
-        } else { 
-          return searchURL;
-        }
+        const searchURL = await getURLToGrid(searchTerm)
+        return searchURL;
       } else {
-        const searchURL = dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // URL for re locate in some grid with the ID param to search
+        const searchURL = await getURLToGrid(searchTerm)
         return searchURL;
       }
     } catch (err) {
@@ -133,6 +147,7 @@ const SearchBar = ({ data, componentProp }) => {
    * @returns 
    */
   const getSearchUrl = async (searchTerm) => {
+    
     if (hasDCPAccess(userData) && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       const urlResponse = await getURLToSearchInGrid(searchTerm)
       return urlResponse;
@@ -187,7 +202,8 @@ const SearchBar = ({ data, componentProp }) => {
       return null;
     } else {
       const response = await getSearchUrl(searchTermText);
-      window.location.href = response;  
+
+      window.location.href = response;
     }
   };
 

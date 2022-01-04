@@ -585,7 +585,7 @@ app.get("/ui-commerce/v1/quotesingle", function (req, res) {
 });
 
 app.get("/ui-commerce/v1/quotedetails", function (req, res) {
-  console.log(req.url);
+  // console.log(req.url);
   const id = req.query.id;
   const response = utils.getQuoteDetailsResponse();
   res.json(response);
@@ -593,14 +593,14 @@ app.get("/ui-commerce/v1/quotedetails", function (req, res) {
 
 //---ORDER DETAILS MOCK API---//
 app.get("/ui-commerce/v1/orderdetails", function (req, res) {
-  console.log(req.url);
+  // console.log(req.url);
   const id = req.query.id;
   const response = utils.getOrderDetailsResponse();
   res.json(response);
 });
 
 app.get("/ui-commerce/v1/order/details", function (req, res) {
-  console.log(req.url);
+  // console.log(req.url);
   const id = req.query.id;
   const errorObject = {
     content: null,
@@ -630,14 +630,16 @@ app.get("/ui-commerce/v1/order/", function (req, res) {
 
 //---ORDERS GRID MOCK API---//
 app.get("/ui-commerce/v1/orders/", function (req, res) {
-  console.log(req.query);
   const details = req.query.details || true;
   const pageSize = req.query.PageSize || 25;
   const pageNumber = req.query.PageNumber || 1;
   const id = req.query.id;
+  const idType = req.query.idType;
+  console.log("🚀 ~ file: app.js ~ line 639 ~ idType", idType)
+
   const items = [];
   const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
-  // console.log("id", id);
+  let pageSizeWithParams = idType && idType === 'GENERAL?id=00000' ? 1 : pageSize;
 
   const orderReportFlag = req.query.status
     ? req.query.status === "OPEN"
@@ -665,7 +667,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     }
     return invoices;
   }
-  for (let i = 0; i < pageSize; i++) {
+  for (let i = 0; i < pageSizeWithParams; i++) {
     const totalPrice = 73002.31 + getRandom(1000);
     const statusID = getRandom(5);
     const manufacturerExample =
