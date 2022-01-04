@@ -134,7 +134,6 @@ use(function () {
   if (this.agGridLicenseKey) { 
     jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
   }
-		}
 
   if (properties && properties["methodDropdownLabel"]) {
     methodDropdownData.label = properties["methodDropdownLabel"];
