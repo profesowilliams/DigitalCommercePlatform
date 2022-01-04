@@ -152,6 +152,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                  .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
                  .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                  .ForPath(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.Id))
+                 .ForPath(dest => dest.PaymentDetails.ContractNo, opt => opt.MapFrom(src => src.ContractNo))
                  .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
 
                  .ForMember(d => d.CanBeExpedited, o => o.Ignore())

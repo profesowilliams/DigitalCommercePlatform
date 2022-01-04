@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Order.Internal
         public bool BlindPackaging { get; set; }
         public string PaymentTermText { get; set; }
         public string FreightFormatted { get; set; }
+        public string ContractNo { get; set; }
         public decimal? Freight { get; set; }
         public decimal? Tax { get; set; }
         public decimal? TotalCharge { get; set; }

@@ -71,7 +71,10 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             GenerateOrderDetailSection(xlRow, xlCol, wsOrderDetail, orderDetails.OrderNumber, orderDetails.PODate, orderDetails.PONumber, orderDetails.EndUserPO);
 
             GenerateEndUserShipToDetailHeader(xlRow, xlCol, wsOrderDetail);
-            GenerateEndUserShipToDetailSection(xlRow, xlCol, wsOrderDetail, orderDetails.EndUser?.First(), orderDetails.ShipTo);
+            if (orderDetails.EndUser?.Count > 0)
+            {
+                GenerateEndUserShipToDetailSection(xlRow, xlCol, wsOrderDetail, orderDetails.EndUser?.FirstOrDefault(), orderDetails.ShipTo);
+            }            
 
             GenerateOrderDetailsHeader(xlRow, xlCol, wsOrderDetail);
             GenerateOrderDetailsSubHeader(xlRow, xlCol, wsOrderDetail, exportedFields);
@@ -409,15 +412,15 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             headerRng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
             SetCell(currentRow + 6, xlCol + 14, wsOrderDetail, "SubTotal");
-            SetCell(currentRow + 6, xlCol + 15, wsOrderDetail, paymentDetails.Subtotal.Value.ToString());
+            SetCell(currentRow + 6, xlCol + 15, wsOrderDetail, paymentDetails.Subtotal.HasValue ? paymentDetails.Subtotal.Value.ToString() : "0");
             SetCell(currentRow + 7, xlCol + 14, wsOrderDetail, "Tax");
-            SetCell(currentRow + 7, xlCol + 15, wsOrderDetail, paymentDetails.Tax.Value.ToString());
+            SetCell(currentRow + 7, xlCol + 15, wsOrderDetail, paymentDetails.Tax.HasValue ? paymentDetails.Tax.Value.ToString() : "0");
             SetCell(currentRow + 8, xlCol + 14, wsOrderDetail, "Freight");
-            SetCell(currentRow + 8, xlCol + 15, wsOrderDetail, paymentDetails.Freight.Value.ToString());
+            SetCell(currentRow + 8, xlCol + 15, wsOrderDetail, paymentDetails.Freight.HasValue ? paymentDetails.Freight.Value.ToString() : "0");
             SetCell(currentRow + 9, xlCol + 14, wsOrderDetail, "OtherFees");
-            SetCell(currentRow + 9, xlCol + 15, wsOrderDetail, paymentDetails.OtherFees.Value.ToString());
+            SetCell(currentRow + 9, xlCol + 15, wsOrderDetail, paymentDetails.OtherFees.HasValue ? paymentDetails.OtherFees.Value.ToString() : "0");
             SetCell(currentRow + 10, xlCol + 14, wsOrderDetail, "Total");
-            SetCell(currentRow + 10, xlCol + 15, wsOrderDetail, paymentDetails.Total.Value.ToString());
+            SetCell(currentRow + 10, xlCol + 15, wsOrderDetail, paymentDetails.Total.HasValue ? paymentDetails.Total.Value.ToString() : "0");
 
             var rng = wsOrderDetail.Cells[currentRow + 4, xlCol + 13, currentRow + 11, xlCol + 18];
             rng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
@@ -542,7 +545,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
             {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); //Contract
+                SetCell(curXlRow, ++curCol, wsOrderDetail, model.PaymentDetails.ContractNo); //Contract
             }
 
             if (exportedFields.Contains(nameof(ExportedFields.StartDate)))
