@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
@@ -29,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<IBrowseService> _mockBrowseService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
+        private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly Mapper _mapper;
 
         public ProductDetailsHandlerTests()
@@ -41,15 +43,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageSize")).Returns("400x300");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
+            _translationServiceMock = new Mock<ITranslationService>();
+            _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((Dictionary<string, string> _, string key, string _) => $"{key}_TRANSLATED");
+
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
-            _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper);
+            _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
         }
 
         public IReadOnlyCollection<string> Id { get; private set; }
         public bool Details { get; private set; }
 
-        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper);
+        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
 
         [Theory]
         [AutoDomainData]
@@ -127,9 +133,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             var canViewPrice = true;
 
             MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
-            var handler = GetHandler();
             //Act
-            sut.Invoke(handler, new object[] { productDto, productModel, canViewPrice });
+            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice });
             //Assert
             productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
             productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
@@ -382,7 +387,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             Warehouse=true,
-                            FreeShipping=false
+                            FreeShipping=false,
+                            FreeShippingLabel="FREESHIPPING.FALSE_TRANSLATED"
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
@@ -634,7 +640,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             Warehouse=true,
-                            FreeShipping=true
+                            FreeShipping=true,
+                            FreeShippingLabel="FREESHIPPING.TRUE_TRANSLATED"
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel
@@ -891,7 +898,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             Warehouse=true,
-                            FreeShipping = true
+                            FreeShipping = true,
+                            FreeShippingLabel = "FREESHIPPING.TRUE_TRANSLATED"
                         },
                         Status="Active",
                         Specifications = new ProductSpecificationsModel

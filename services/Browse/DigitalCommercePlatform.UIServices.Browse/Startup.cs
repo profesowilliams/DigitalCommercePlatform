@@ -1,8 +1,11 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Logging;
+using DigitalFoundation.Common.Security.Token;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
+using DigitalFoundation.Common.Services.Providers.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +29,10 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.AddSingleton<ICachingService, CachingService>();
             services.AddTransient<ISortingService, SortingService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
+
+            services.AddDigitalFoundationLocalizationProvider(StartupLogger);
+            services.AddSingleton<ITokenManagerService, TokenManagerService>();
+            services.AddSingleton<ITranslationService, TranslationService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

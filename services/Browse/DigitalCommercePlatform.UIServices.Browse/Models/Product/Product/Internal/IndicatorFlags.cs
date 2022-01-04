@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal
@@ -20,5 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
 
         public bool Virtual { get; set; }
         public bool FreeShipping { get; set; }
+        public string FreeShippingLabel { get; set; }
     }
 }

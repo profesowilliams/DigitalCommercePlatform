@@ -1,13 +1,9 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using DigitalCommercePlatform.UIService.Browse;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Summary;
 using DigitalFoundation.Common.Features.Client;
-using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
 using DigitalFoundation.Common.IntegrationTestUtilities.Fakes;
@@ -37,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
                                 .Extend("UI.Security.CorsAllowedOrigin", "true")
                                 .Extend("UI.Security.CorsAllowedHeaders", "true")
                                 .Extend("UI.Security.CorsAllowedMethods", "true")
+                                .Extend("Core.Localization.Url", "http://localize.fake")
                                 .Extend("MaxPageSize", "100"))
                        .MatchContains($"/Data/{serviceName}")
                        .Returns<Dictionary<string, string>>()

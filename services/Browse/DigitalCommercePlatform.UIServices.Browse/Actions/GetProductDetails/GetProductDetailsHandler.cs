@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Dto.MarketingXML;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
@@ -71,14 +72,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly IBrowseService _productRepositoryServices;
             private readonly string _imageSize;
             private readonly IMapper _mapper;
+            private readonly ITranslationService _translationService;
             private readonly string _onOrderArrivalDateFormat;
 
-            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper)
+            private readonly Dictionary<string, string> _indicatorsTranslations = null;
+
+            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper, ITranslationService translationService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
                 _mapper = mapper;
+                _translationService = translationService;
+                _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -226,7 +232,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Specifications = specifications.MainSpecifications != null || specifications.ExtendedSpecifications != null ? specifications : null;
             }
 
-            private static void MapIndicators(ProductModel product, Flags flags)
+            private void MapIndicators(ProductModel product, Flags flags)
             {
                 product.IndicatorsFlags = new IndicatorFlags
                 {
@@ -237,7 +243,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     Returnable = flags.Returnable,
                     Virtual = flags.VirtualProduct,
                     Warehouse = flags.Warehouse,
-                    FreeShipping = flags.FreeShipping
+                    FreeShipping = flags.FreeShipping,
+                    FreeShippingLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.FreeShipping)}.{flags.FreeShipping}".ToUpperInvariant())
                 };
             }
 
