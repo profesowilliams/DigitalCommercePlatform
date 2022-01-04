@@ -1,91 +1,181 @@
 <div data-observe-mutation>
-    <div
-        data-component="RenewalsGrid"
-        data-cmp-type="react"
-        className="cmp-renewals-grid"
-        data-config='{
-        "uiServiceEndPoint":"http://localhost:3000/ui-renewal/v1/Search",
-        "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
-        "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
-        "createQuoteUrl":"/quote-preview?id={id}&isEstimateId={is-estimated-id}&vendor={vendor}",
-        "actionColumnLabel":"Create Quote",
-        "quotesModal":{
-          "title":"Config ID",
-          "content":"There are multiple items associated with this Config ID. Please choose the item you would like to review:",
-          "quotePreffixLabel":"Quote: "
-        },
-        "statusLabelsList":[
-          {"labelKey":"Multiple","labelValue":"Multiple","labelDescription":"Multiple thingies!"},
-          {"labelKey":"Pending","labelValue":"Pending","labelDescription":"There are things still not done!"},
-          {"labelKey":"Expired","labelValue":"Expired","labelDescription":"reached the expiration date without being associated to an order.  Click duplicate to create a new clone.","buttonIcon":"fas fa-download","buttonLabel":"Duplicate"},
-          {"labelKey":"Failed","labelValue":"Failed","labelDescription":"Quote creation failed for an unknown reason.","buttonIcon":"fas fa-download","buttonLabel":"Retry"}
-        ],
-        "itemsPerPage":"25", "paginationStyle": "pages",
-        "options": {"defaultSortingColumnKey": "created", "defaultSortingDirection": "desc"},
-        "columnList":[
-          {"columnLabel":"Reseller name","columnKey":"reseller", "sortable": true, "type": "plainText"},
-          {"columnLabel":"End user name","columnKey":"endUser", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Vendor and program","columnKey":"vendor", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Agreement No","columnKey":"agreementNumber", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Renewal Plan","columnKey":"renewal", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Due in (days)","columnKey":"dueDateDays", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Due Date","columnKey":"dueDate", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Price (USD)","columnKey":"price", "sortable": true, "type": "plainText"},
-          {"columnLabel":"Actions","columnKey":"actions", "sortable": true, "type": "buttonList"}
-        ],
-        "searchCriteria":{
-          "keywordDropdown":{},
-          "configurationTypesDropdown": {
+  <div
+    data-component="RenewalsGrid"
+    data-cmp-type="react"
+    className="cmp-renewals-grid"
+    data-config='
+    {
+      "uiServiceEndPoint":"http://localhost:3000/ui-renewal/v1/Search",
+      "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
+      "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
+      "createQuoteUrl":"/quote-preview?id={id}&isEstimateId={is-estimated-id}&vendor={vendor}",
+      "actionColumnLabel":"Create Quote",
+      "agGridLicenseKey":"ThisIsAnInvalidAgGridLicenseKey",
+      "quotesModal":{
+         "title":"Config ID",
+         "content":"There are multiple items associated with this Config ID. Please choose the item you would like to review:",
+         "quotePreffixLabel":"Quote: "
+      },
+      "statusLabelsList":[
+         {
+            "labelKey":"Multiple",
+            "labelValue":"Multiple",
+            "labelDescription":"Multiple thingies!"
+         },
+         {
+            "labelKey":"Pending",
+            "labelValue":"Pending",
+            "labelDescription":"There are things still not done!"
+         },
+         {
+            "labelKey":"Expired",
+            "labelValue":"Expired",
+            "labelDescription":"reached the expiration date without being associated to an order.  Click duplicate to create a new clone.",
+            "buttonIcon":"fas fa-download",
+            "buttonLabel":"Duplicate"
+         },
+         {
+            "labelKey":"Failed",
+            "labelValue":"Failed",
+            "labelDescription":"Quote creation failed for an unknown reason.",
+            "buttonIcon":"fas fa-download",
+            "buttonLabel":"Retry"
+         }
+      ],
+      "itemsPerPage":"25",
+      "paginationStyle":"pages",
+      "options":{
+         "defaultSortingColumnKey":"created",
+         "defaultSortingDirection":"desc"
+      },
+      "columnList":[
+         {
+            "columnLabel":"Reseller name",
+            "columnKey":"reseller",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"End user name",
+            "columnKey":"endUser",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Vendor and program",
+            "columnKey":"vendor",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Agreement No",
+            "columnKey":"agreementNumber",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Renewal Plan",
+            "columnKey":"renewal",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Due in (days)",
+            "columnKey":"dueDateDays",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Due Date",
+            "columnKey":"dueDate",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Price (USD)",
+            "columnKey":"price",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
+            "columnLabel":"Actions",
+            "columnKey":"actions",
+            "sortable":true,
+            "type":"buttonList"
+         }
+      ],
+      "searchCriteria":{
+         "keywordDropdown":{
+            
+         },
+         "configurationTypesDropdown":{
             "items":[
-              {"key":"Estimate","value":"Estimate"},
-              {"key":"VendorQuote","value":"Vendor Quote"},
-              {"key":"Deal","value":"Deal"}
+               {
+                  "key":"Estimate",
+                  "value":"Estimate"
+               },
+               {
+                  "key":"VendorQuote",
+                  "value":"Vendor Quote"
+               },
+               {
+                  "key":"Deal",
+                  "value":"Deal"
+               }
             ]
-          }
-        },
-        "checkout":{"uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
-        "redirectUrl": "https://shop.techdata.com/cart"},
-        "spaDealsIdLabel": "multiple",
-        "filterTitle": "Filters",
-        "clearAllFilterTitle": "clear all filter",
-        "showResultLabel": "Show Result",
-        "filterListValues": [{
-            "accordionLabel": "Vendors and Program",
-            "filterField" : "vendor",
-            "filterOptionsValues": [{
-                "filterOptionLabel": "Veeam",
-                "subFilterOptionsValues": [{
-                    "subFilterOptionsLabel": "Pro Partner"
-                  },
-                  {
-                    "subFilterOptionsLabel": "Pro Partner Subscriber"
-                  }
-                ]
-              },
-              {
-                "filterOptionLabel": "VMWare",
-                "subFilterOptionsValues": [{
-                  "subFilterOptionsLabel": "Support and Subscriber"
-                }]
-              }
+         }
+      },
+      "checkout":{
+         "uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
+         "redirectUrl":"https://shop.techdata.com/cart"
+      },
+      "spaDealsIdLabel":"multiple",
+      "filterTitle":"Filters",
+      "clearAllFilterTitle":"clear all filter",
+      "showResultLabel":"Show Result",
+      "filterListValues":[
+         {
+            "accordionLabel":"Vendors and Program",
+            "filterField":"vendor",
+            "filterOptionsValues":[
+               {
+                  "filterOptionLabel":"Veeam",
+                  "subFilterOptionsValues":[
+                     {
+                        "subFilterOptionsLabel":"Pro Partner"
+                     },
+                     {
+                        "subFilterOptionsLabel":"Pro Partner Subscriber"
+                     }
+                  ]
+               },
+               {
+                  "filterOptionLabel":"VMWare",
+                  "subFilterOptionsValues":[
+                     {
+                        "subFilterOptionsLabel":"Support and Subscriber"
+                     }
+                  ]
+               }
             ]
-          },
-          {
-            "accordionLabel": "End User Type",
-            "filterField" : "endUserType",
-            "filterOptionsValues": [{
-                "filterOptionLabel": "Academic"
-              },
-              {
-                "filterOptionLabel": "Educational"
-              }
+         },
+         {
+            "accordionLabel":"End User Type",
+            "filterField":"endUserType",
+            "filterOptionsValues":[
+               {
+                  "filterOptionLabel":"Academic"
+               },
+               {
+                  "filterOptionLabel":"Educational"
+               }
             ]
-          },
-          {
-            "accordionLabel": "Date",
-            "filterField" : "date"
-          }
-        ]},
-        "agGridLicenseKey": "ThisIsAnInvalidAgGridLicenseKey"}'>
-      </div>
+         },
+         {
+            "accordionLabel":"Date",
+            "filterField":"date"
+         }
+      ]
+   }'
+  ></div>
 </div>

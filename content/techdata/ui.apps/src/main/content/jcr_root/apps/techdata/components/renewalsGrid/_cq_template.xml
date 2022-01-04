@@ -141,4 +141,56 @@
             value="Config Name"
         />
     </keywordList>
+    <filterList   
+        jcr:primaryType="nt:unstructured">
+        <item0          
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="Vendors and Program"
+            filterField="vendor">
+            <filtersOptionsList            
+                jcr:primaryType="nt:unstructured">
+                <item0            
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Veeam">
+                    <subFilterOptionList                       
+                        jcr:primaryType="nt:unstructured">
+                        <item0                            
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Pro Partner"/>
+                        <item1               
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Pro Partner Subscriber"/>
+                    </subFilterOptionList>
+                </item0>
+                <item1                 
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="VMWare">
+                    <subFilterOptionList               
+                        jcr:primaryType="nt:unstructured">
+                        <item0             
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Support and Subscriber"/>
+                    </subFilterOptionList>
+                </item1>
+            </filtersOptionsList>
+        </item0>
+        <item1      
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="End User Type"
+            filterField="endUserType">
+            <filtersOptionsList             
+                jcr:primaryType="nt:unstructured">
+                <item0            
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Academic"/>
+                <item1                  
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Educational"/>
+            </filtersOptionsList>
+        </item1>
+        <item2      
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="Date"
+            filterField="date"/>
+    </filterList>
 </jcr:root>
