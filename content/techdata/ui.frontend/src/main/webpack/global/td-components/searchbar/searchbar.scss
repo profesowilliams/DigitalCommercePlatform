@@ -98,7 +98,8 @@
       &--mobile {
         padding: rem(6px) rem(10px);
         visibility: visible;
-        width: 78%;
+        display: flex;
+        width: 86%;
       }
     }
   }
