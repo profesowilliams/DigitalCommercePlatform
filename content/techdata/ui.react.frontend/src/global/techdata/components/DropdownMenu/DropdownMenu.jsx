@@ -17,18 +17,6 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       setShowSecondary((prevSecondary) => !prevSecondary);
     }
   };
-  const handleLinkClick = (linkUrl, dcpLink, linkTitle) => {
-      let finalLinkUrl = hasDCPAccess(userDataCheck) ? dcpLink : linkUrl 
-      if(finalLinkUrl != undefined){
-        DataLayerUtils.pushEvent("click", {
-          name: linkTitle,
-          selectionDepth: "",
-          type: "link",
-          category: "profile dropdown",
-        });
-        window.location.href = finalLinkUrl
-      }
-  }
 
   const handleBackBtnClick = () => {
     setShowSecondary((prevSecondary) => !prevSecondary);
@@ -118,7 +106,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                   className="cmp-sign-in-list-content--item"
                 >
                   <a
-                     onClick={()=>handleLinkClick(linkUrl, dcpLink, linkTitle)}
+                    href={hasDCPAccess(userDataCheck) ? dcpLink : linkUrl}
                     className="cmp-sign-in-list-content--item-link"
                   >
                     <i

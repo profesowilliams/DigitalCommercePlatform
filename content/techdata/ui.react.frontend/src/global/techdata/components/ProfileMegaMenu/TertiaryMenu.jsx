@@ -6,32 +6,12 @@ function TertiaryMenu({tertiaryData, userData}) {
         e.stopPropagation();
     }
 
-    const handleTertiaryLinkClick = (linkUrl, dcpLink, linkTitle) => {
-        let finalLinkUrl = hasDCPAccess(userDataCheck) ? dcpLink : linkUrl;
-        if(finalLinkUrl != undefined){
-            DataLayerUtils.pushEvent("click", {
-                name: linkTitle,
-                selectionDepth: "",
-                type: "link",
-                category: "profile dropdown",
-              });
-            window.location.href = finalLinkUrl
-          }
-      };
-
     return (
         <ul className="cmp-sign-in-group">
             {tertiaryData.items.map(item => {
                 return (
                     <li key={Symbol(item.tertiaryLabel).toString()} onClick={(e) => handleTertiaryClick(e)} className={`cmp-sign-in--item ${item.tertiaryMenus ? 'has-child' : ''}`}>
-                        <a href={hasDCPAccess(userData) ? item.tertiaryDcpLink : item.tertiaryLink}
-                        onClick={() =>
-                            handleTertiaryLinkClick(
-                              item.tertiaryLink,
-                              item.tertiaryDcpLink,
-                              item.tertiaryLabel
-                            )
-                          }>
+                        <a href={hasDCPAccess(userData) ? item.tertiaryDcpLink : item.tertiaryLink}>
                             {item.tertiaryLabel}
                         </a>
                     </li>
