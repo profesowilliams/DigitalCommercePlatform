@@ -1,12 +1,10 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
-using DigitalCommercePlatform.UIServices.Browse.Models.Product.Find;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Services.Layer.UI;
