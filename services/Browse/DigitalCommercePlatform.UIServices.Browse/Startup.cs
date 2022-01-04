@@ -7,6 +7,7 @@ using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using DigitalFoundation.Common.Services.Providers.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.AddDigitalFoundationLocalizationProvider(StartupLogger);
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
             services.AddSingleton<ITranslationService, TranslationService>();
+
+            services.AddSingleton<IMemoryCache, MemoryCache>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
