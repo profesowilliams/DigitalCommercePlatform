@@ -1,8 +1,8 @@
 @import '../../variables';
 @import '../../../site/variables';
 
-.cmp-dcp-widget{
-  &-chart{
+.cmp-dcp-widget {
+  &-chart {
     &__title {
       font-size: $font-size-small;
       font-weight: normal;
@@ -12,51 +12,61 @@
       text-transform: uppercase;
       padding-bottom: 10px;
     }
+
     &__container {
       font-size: $font-size-xxsmall;
       color: get-color(text-mid-gray);
       width: 100%;
     }
+
     &__chart {
-      &-row{
+      &-row {
         display: flex;
       }
+
       & canvas {
         padding-bottom: rem(5px);
         width: rem(154px) !important;
       }
     }
+
     &__sub-title {
       font-size: $font-size-xxsmall;
       color: get-color(text-light-charcoal);
       padding: rem(0px) rem(12px) rem(0px) rem(2.5px);
-      &-wrapp{
+
+      &-wrapp {
         padding-bottom: 10px;
       }
+
       &-color-1 {
         border-right: rem(6px) solid get-color(brand-primary-text);
         display: inline-block;
         vertical-align: top;
         height: rem(14px);
       }
+
       &-color-2 {
         border-right: rem(6px) solid get-color(td-lightblue);
         display: inline-block;
         vertical-align: top;
         height: rem(14px);
       }
+
       &-color-3 {
         border-right: rem(6px) solid get-color(brand-blue);
         display: inline-block;
         vertical-align: top;
         height: rem(14px);
       }
+
       &-color-4 {
         border-right: rem(6px) solid get-color(td-primary-blue);
         display: inline-block;
         vertical-align: top;
         height: rem(14px);
       }
+
       &-color-5 {
         border-right: rem(6px) solid get-color(td-lightblue);
         display: inline-block;
@@ -67,55 +77,65 @@
   }
 }
 
-.cmp-myconfigurations{
+.cmp-myconfigurations {
   width: 100%;
-  .cmp-dcp-widget-chart__title{
+
+  .cmp-dcp-widget-chart__title {
     margin: 0;
     padding-bottom: rem(15px);
-    display: flex;    
+    display: flex;
     -ms-flex-direction: row;
     flex-direction: row;
     justify-content: space-between;
+
     @include mobile {
       padding: 0px 0px rem(15px) rem(15px);
-     }
+    }
+
     span {
       text-transform: none;
     }
   }
-  .cmp-dcp-widget-chart__body{
-      display: flex;
-      width: max-content;
-      margin: 0 auto;
+
+  .cmp-dcp-widget-chart__body {
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+
     @include mobile {
-     flex-direction: column-reverse;
+      flex-direction: column-reverse;
     }
   }
-  .cmp-dcp-widget-chart__legend{
+
+  .cmp-dcp-widget-chart__legend {
     margin-top: rem(20px);
-    margin-left: 1rem;
+
     @include mobile {
       display: flex;
     }
   }
-  .cmp-dcp-widget-chart__chart{
+
+  .cmp-dcp-widget-chart__chart {
     position: relative;
-    &-row{
+
+    &-row {
       display: flex;
     }
+
     & canvas {
       padding-bottom: rem(5px);
       width: rem(112px) !important;
       height: auto !important;
     }
-    & span{
+
+    & span {
       font-size: rem(22.5px);
       line-height: rem(22.5px);
       position: absolute;
-      width: 100%;
+      width: 100%; 
       text-align: center;
       margin: auto;
-      top: calc( 50% - 11.25px );
+      top: calc(50% - 11.25px);
     }
   }
 }

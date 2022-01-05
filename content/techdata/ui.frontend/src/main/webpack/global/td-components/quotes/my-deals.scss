@@ -11,9 +11,11 @@
     display: flex;
     width: max-content;
     margin: 0 auto;
+
     @include mobile {
         flex-direction: column-reverse;
     }
+
     &__title {
         font-size: $font-size-small;
         text-transform: uppercase;
@@ -22,75 +24,89 @@
         text-transform: uppercase;
         padding-bottom: 10px;
     }
+
     &__table {
         font-size: $font-size-xxsmall;
         color: get-color(text-mid-gray);
         width: auto;
+
         table {
             display: flex;
             flex-direction: column;
             width: 100%;
         }
 
-        tbody{
-            // margin-left: rem(16px);
+        tbody {
             @include mobile {
                 display: flex;
             }
         }
     }
+
     &__sub-title {
         font-size: $font-size-xxsmall;
         color: get-color(text-light-charcoal);
 
-        &-digits{
+        &-digits {
             font-size: $font-size-xxsmall;
             color: get-color(text-light-charcoal);
             text-align: right;
             padding-left: rem(40px);
         }
 
-        &-color-1{
+        &-color-1 {
             border-right: rem(6px) solid get-color(brand-primary-text);
         }
-        &-color-2{
+
+        &-color-2 {
             border-right: rem(6px) solid get-color(td-lightblue);
         }
-        &-color-3{
+
+        &-color-3 {
             border-right: rem(6px) solid get-color(brand-blue);
         }
     }
-    &__bar-Graph{
+
+    &__bar-Graph {
         display: flex;
-        margin:0 0 0 rem(24px);
-        section{
+        margin: 0 0 0 rem(24px);
+
+        section {
             padding-top: rem(25px);
-            margin:0 rem(20px);
+            margin: 0 rem(20px);
+
             &:first-of-type {
                 margin-right: rem(42px);
             }
+
             &:last-of-type {
                 margin-right: 0;
             }
-            i,svg{
+
+            i,
+            svg {
                 font-size: rem(50px);
             }
         }
     }
-    &__count{
+
+    &__count {
         text-align: center;
         font-size: $font-size-custom-medium;
         padding-top: rem(17px);
     }
-    &__icon-color-1{
+
+    &__icon-color-1 {
         color: get-color(brand-primary-text);
 
     }
-    &__icon-color-2{
+ 
+    &__icon-color-2 {
         color: get-color(td-lightblue);
 
     }
-    &__icon-color-3{
+
+    &__icon-color-3 {
         color: get-color(brand-blue);
 
     }
