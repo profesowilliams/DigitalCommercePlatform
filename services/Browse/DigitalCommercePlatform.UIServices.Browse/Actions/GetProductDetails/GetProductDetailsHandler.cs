@@ -117,7 +117,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                     MapSpecifications(x, product);
 
-                    MapStock(x, product, flags.DropShip);
+                    MapStock(x, product, flags);
 
                     await MapMarketing(x, product);
 
@@ -173,7 +173,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.WhatsInTheBox = SerializeUlList(whatsInTheDoc)?.Ul?.Li?.Select(x => x.Text).ToArray();
             }
 
-            private void MapStock(ProductDto x, ProductModel product, bool dropShip)
+            private void MapStock(ProductDto x, ProductModel product, Flags flags)
             {
                 if (x.Stock == null)
                     return;
@@ -181,8 +181,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Stock = new StockModel
                 {
                     TotalAvailable = x.Stock.Total,
+                    Corporate = x.Stock.Td,
                     VendorDirectInventory = x.Stock.VendorDesignated,
-                    VendorShipped = dropShip && !x.Stock.VendorDesignated.HasValue,
+                    VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == null,
                     Plants = x.Plants?.Select(p => new PlantModel
                     {
                         Name = p.Stock?.LocationName,

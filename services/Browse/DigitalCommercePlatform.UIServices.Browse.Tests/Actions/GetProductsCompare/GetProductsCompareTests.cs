@@ -23,8 +23,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 {
     public class GetProductsCompareTests
     {
-        private readonly Mock<IMiddleTierHttpClient> _httpClientMock;
         private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly Mock<IMiddleTierHttpClient> _httpClientMock;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
 
@@ -38,115 +38,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 
             _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
         }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task Handler_CallProductForDataAndValidate(Browse.Actions.GetProductsCompare.Request request)
-        {
-            //arrange
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(Array.Empty<ProductDto>())
-                .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(Array.Empty<ValidateDto>())
-                .Verifiable();
-
-            //act
-            _ = await _sut.Handle(request, default).ConfigureAwait(false);
-
-            //assert
-            _httpClientMock.Verify();
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public async Task Handler_ProperlyCalculateSpecificationMatrix(Browse.Actions.GetProductsCompare.Request request, IEnumerable<ProductDto> productDtos)
-        {
-            //arrange
-            productDtos.First().ExtendedSpecifications = null;
-
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(productDtos)
-                .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(Array.Empty<ValidateDto>())
-                .Verifiable();
-
-            //act
-            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
-
-            //assert
-            actual.SpecificationGroups.Should().HaveCount(6);
-            actual.SpecificationGroups.All(x => x.Specifications.Count() == 3).Should().BeTrue();
-            actual.SpecificationGroups.All(x => x.Specifications.All(s => s.Values.Count() == 3)).Should().BeTrue();
-            actual.SpecificationGroups.All(x => x.Specifications.All(s => !s.IsIdentical)).Should().BeTrue();
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(Handler_ProperlyMapProducts_Data))]
-        public async Task Handler_ProperlyMapProducts(IEnumerable<ProductDto> productDtos, IEnumerable<ValidateDto> validateDtos, ProductModel expectedProduct, Browse.Actions.GetProductsCompare.Request request)
-        {
-            //arrange
-            request.SalesOrg = "0100";
-
-            productDtos.First().ExtendedSpecifications = null;
-
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(productDtos)
-                .Verifiable();
-            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
-                .ReturnsAsync(validateDtos)
-                .Verifiable();
-
-            //act
-            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
-
-            //assert
-            actual.Products.First().Should().BeEquivalentTo(expectedProduct);
-        }
-
-        [Fact]
-        public void MapPriceTest()
-        {
-            // Arrange
-            var productDto = new ProductDto
-            {
-                Price = new PriceDto
-                {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
-                    BestPriceIncludesWebDiscount = true,
-                },
-            };
-
-            var productModel = new ProductModel
-            {
-                Price = new PriceModel
-                {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
-                    BestPriceIncludesWebDiscount = true,
-                },
-                 Authorization = new AuthorizationModel
-                 {
-                      CanViewPrice = true,
-                 },
-            };
-
-            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
-            var handler = GetHandler();
-            //Act
-            sut.Invoke(handler, new object[] { productDto, productModel });
-            //Assert
-            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
-            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
-            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
-            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
-        }
-
-        private Browse.Actions.GetProductsCompare.Handler GetHandler() => new(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
         {
@@ -188,7 +79,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             },
                             Stock = new StockDto
                             {
-                                VendorDesignated=1,
+                                VendorDesignated=null,
                                 Td=1,
                                 Total=2
                             },
@@ -244,7 +135,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
-                            VendorDirectInventory=1,
+                            Corporate = 1,
+                            VendorDirectInventory=null,
                             VendorShipped=true,
                             Plants = new List<PlantModel>
                             {
@@ -350,6 +242,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
+                            Corporate = 1,
                             VendorDirectInventory=1,
                             VendorShipped=false,
                             Plants = new List<PlantModel>
@@ -384,34 +277,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     }
                 }
             };
-        }
-
-        [Theory]
-        [AutoDomainData]
-        public void Validator_ReturnValid(Browse.Actions.GetProductsCompare.Request request)
-        {
-            //arrange
-            var sut = new Browse.Actions.GetProductsCompare.Validator();
-
-            //act
-            var result = sut.TestValidate(request);
-
-            //assert
-            result.ShouldNotHaveAnyValidationErrors();
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(Validator_ReturnInValid_Data))]
-        public void Validator_ReturnInValid(Browse.Actions.GetProductsCompare.Request request, string notValidProperty)
-        {
-            //arrange
-            var sut = new Browse.Actions.GetProductsCompare.Validator();
-
-            //act
-            var result = sut.TestValidate(request);
-
-            //assert
-            result.ShouldHaveValidationErrorFor(notValidProperty);
         }
 
         public static IEnumerable<object> Validator_ReturnInValid_Data()
@@ -490,5 +355,142 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 }
             };
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task Handler_CallProductForDataAndValidate(Browse.Actions.GetProductsCompare.Request request)
+        {
+            //arrange
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(Array.Empty<ProductDto>())
+                .Verifiable();
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(Array.Empty<ValidateDto>())
+                .Verifiable();
+
+            //act
+            _ = await _sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            _httpClientMock.Verify();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task Handler_ProperlyCalculateSpecificationMatrix(Browse.Actions.GetProductsCompare.Request request, IEnumerable<ProductDto> productDtos)
+        {
+            //arrange
+            productDtos.First().ExtendedSpecifications = null;
+
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(productDtos)
+                .Verifiable();
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(Array.Empty<ValidateDto>())
+                .Verifiable();
+
+            //act
+            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            actual.SpecificationGroups.Should().HaveCount(6);
+            actual.SpecificationGroups.All(x => x.Specifications.Count() == 3).Should().BeTrue();
+            actual.SpecificationGroups.All(x => x.Specifications.All(s => s.Values.Count() == 3)).Should().BeTrue();
+            actual.SpecificationGroups.All(x => x.Specifications.All(s => !s.IsIdentical)).Should().BeTrue();
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(Handler_ProperlyMapProducts_Data))]
+        public async Task Handler_ProperlyMapProducts(IEnumerable<ProductDto> productDtos, IEnumerable<ValidateDto> validateDtos, ProductModel expectedProduct, Browse.Actions.GetProductsCompare.Request request)
+        {
+            //arrange
+            request.SalesOrg = "0100";
+
+            productDtos.First().ExtendedSpecifications = null;
+
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(productDtos)
+                .Verifiable();
+            _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
+                .ReturnsAsync(validateDtos)
+                .Verifiable();
+
+            //act
+            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            actual.Products.First().Should().BeEquivalentTo(expectedProduct);
+        }
+
+        [Fact]
+        public void MapPriceTest()
+        {
+            // Arrange
+            var productDto = new ProductDto
+            {
+                Price = new PriceDto
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+
+            var productModel = new ProductModel
+            {
+                Price = new PriceModel
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+                Authorization = new AuthorizationModel
+                {
+                    CanViewPrice = true,
+                },
+            };
+
+            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
+            var handler = GetHandler();
+            //Act
+            sut.Invoke(handler, new object[] { productDto, productModel });
+            //Assert
+            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
+            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
+            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
+            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(Validator_ReturnInValid_Data))]
+        public void Validator_ReturnInValid(Browse.Actions.GetProductsCompare.Request request, string notValidProperty)
+        {
+            //arrange
+            var sut = new Browse.Actions.GetProductsCompare.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldHaveValidationErrorFor(notValidProperty);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void Validator_ReturnValid(Browse.Actions.GetProductsCompare.Request request)
+        {
+            //arrange
+            var sut = new Browse.Actions.GetProductsCompare.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        private Browse.Actions.GetProductsCompare.Handler GetHandler() => new(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
     }
 }

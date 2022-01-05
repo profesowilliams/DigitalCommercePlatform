@@ -20,26 +20,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 {
     public class GetProductsCompare
     {
-        public class Request : IRequest<CompareModel>
-        {
-            public IEnumerable<string> Ids { get; set; }
-            public string SalesOrg { get; set; }
-            public string Site { get; set; }
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, CompareModel>
         {
             private const string ALLOW = "ALLOW";
+            private const string AuthRequiredPrice = "AuthRequiredPrice";
             private const string DropShip = "DropShip";
             private const string Orderable = "Orderable";
-            private const string AuthRequiredPrice = "AuthRequiredPrice";
-            private const string Y = "Y";
-            private const string Thumbnail = "75x75";
             private const string ProductShot = "Product shot";
+            private const string Thumbnail = "75x75";
+            private const string Warehouse = "Warehouse";
+            private const string Y = "Y";
             private readonly IMiddleTierHttpClient _httpClient;
-            private readonly string _productAppUrl;
             private readonly string _onOrderArrivalDateFormat;
+            private readonly string _productAppUrl;
 
             public Handler(IMiddleTierHttpClient httpClient, IAppSettings appSettings, ISiteSettings siteSettings)
             {
@@ -71,6 +65,157 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 throw new NotImplementedException();
             }
 
+            private static Dictionary<string, HashSet<string>> CreateSpecificationGroupMatrix(IEnumerable<ProductDto> productsDto)
+            {
+                var specMatrix = new Dictionary<string, HashSet<string>>();
+
+                foreach (var extendedSpec in productsDto.Where(x => x.ExtendedSpecifications != null).SelectMany(x => x.ExtendedSpecifications))
+                {
+                    if (!specMatrix.ContainsKey(extendedSpec.GroupName))
+                    {
+                        specMatrix.Add(extendedSpec.GroupName, new HashSet<string>());
+                    }
+
+                    foreach (var spec in extendedSpec.Specifications)
+                    {
+                        specMatrix[extendedSpec.GroupName].Add(spec.Name);
+                    }
+                }
+
+                return specMatrix;
+            }
+
+            private static (bool vendorShipped, bool orderable, bool authrequiredprice) GetFlags(Request request, ProductDto x)
+            {
+                var indicators = ProductMapperHelper.ExtractFinalIndicators(x.Indicators, request.SalesOrg, request.Site);
+
+                var warehouse = indicators.ContainsKey(Warehouse) && string.Equals(indicators[Warehouse].Value, Y, StringComparison.InvariantCultureIgnoreCase);
+                var dropShip = indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, StringComparison.InvariantCultureIgnoreCase);
+                var vendorShipped = x.Stock?.VendorDesignated == null && dropShip && !warehouse;
+
+                var orderable = indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, StringComparison.InvariantCultureIgnoreCase);
+
+                var authrequiredprice = indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, Y, StringComparison.InvariantCultureIgnoreCase);
+
+                return (vendorShipped, orderable, authrequiredprice);
+            }
+
+            private static void MapAuthorizations(ProductModel product, bool isValid, bool orderable, bool authrequiredprice)
+            {
+                product.Authorization = new AuthorizationModel();
+                product.Authorization.CanOrder = isValid && orderable;
+                product.Authorization.CanViewPrice = isValid || !authrequiredprice;
+            }
+
+            private static ProductModel MapBasedInformation(ProductDto x)
+            {
+                var product = new ProductModel();
+                product.Id = x.Source.Id;
+                product.ManufacturerPartNumber = x.ManufacturerPartNumber;
+                product.Description = x.Description;
+                product.DisplayName = string.IsNullOrWhiteSpace(x.ShortDescription) ? x.Name : x.ShortDescription;
+                product.ThumbnailImage = x.Images?.FirstOrDefault(i => string.Equals(i.Key, Thumbnail, StringComparison.InvariantCultureIgnoreCase)).Value?.FirstOrDefault(x => string.Equals(x.Type, ProductShot, StringComparison.InvariantCultureIgnoreCase))?.Url;
+                return product;
+            }
+
+            private static void MapPrice(ProductDto x, ProductModel product)
+            {
+                product.Price = new PriceModel
+                {
+                    BasePrice = x.Price?.BasePrice,
+                    BestPrice = x.Price?.BestPrice,
+                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration : null,
+                    ListPrice = x.Price?.ListPrice,
+                    BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
+                    VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
+                    {
+                        MinQuantity = p.MinQuantity.Value,
+                        Price = p.Price
+                    })
+                };
+            }
+
+            private static void MapStock(ProductDto x, ProductModel product, bool vendorShipped)
+            {
+                product.Stock = new StockModel
+                {
+                    TotalAvailable = x.Stock?.Total,
+                    Corporate = x.Stock?.Td,
+                    VendorDirectInventory = x.Stock?.VendorDesignated,
+                    VendorShipped = vendorShipped
+                };
+            }
+
+            private static List<SpecificationGroupModel> PopulateSpecificationModel(IEnumerable<ProductDto> productsDto, Dictionary<string, HashSet<string>> specMatrix)
+            {
+                var specGroups = new List<SpecificationGroupModel>();
+
+                foreach (var specGroup in specMatrix.Keys)
+                {
+                    ProcessSpecificationGroup(productsDto, specMatrix, specGroups, specGroup);
+                }
+
+                return specGroups;
+            }
+
+            private static void ProcessSpecification(IEnumerable<ProductDto> productsDto, string specGroup, SpecificationGroupModel existingSpecGroup, string specName)
+            {
+                var existingSpec = existingSpecGroup.Specifications.FirstOrDefault(x => x.Name == specName);
+                if (existingSpec == null)
+                {
+                    existingSpec = new SpecificationModel { Name = specName, Values = new List<string>() };
+                    existingSpecGroup.Specifications = existingSpecGroup.Specifications.Append(existingSpec);
+                }
+
+                foreach (var product in productsDto)
+                {
+                    var productSpecValue = product.ExtendedSpecifications?.FirstOrDefault(x => x.GroupName == specGroup)
+                                                    ?.Specifications.FirstOrDefault(x => x.Name == specName);
+
+                    existingSpec.Values = existingSpec.Values.Append(productSpecValue?.Value ?? "");
+                }
+            }
+
+            private static void ProcessSpecificationGroup(IEnumerable<ProductDto> productsDto, Dictionary<string, HashSet<string>> specMatrix, List<SpecificationGroupModel> specGroups, string specGroup)
+            {
+                var existingSpecGroup = specGroups.FirstOrDefault(x => x.Group == specGroup);
+                if (existingSpecGroup == null)
+                {
+                    existingSpecGroup = new SpecificationGroupModel { Group = specGroup, Specifications = new List<SpecificationModel>() };
+                    specGroups.Add(existingSpecGroup);
+                }
+
+                foreach (var specName in specMatrix[specGroup])
+                {
+                    ProcessSpecification(productsDto, specGroup, existingSpecGroup, specName);
+                }
+            }
+
+            private OnOrderModel MapOnOrder(Dto.Product.Internal.OnOrderDto onOrder)
+            {
+                return onOrder == null
+                    ? null
+                    : new OnOrderModel
+                    {
+                        Stock = onOrder.Stock,
+                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
+                    };
+            }
+
+            private void MapPlants(ProductDto x, ProductModel product)
+            {
+                if (x.Plants != null)
+                {
+                    product.Stock.Plants = x.Plants.Select(p =>
+                    new PlantModel
+                    {
+                        Name = p.Stock?.LocationName,
+                        Quantity = p.Stock?.AvailableToPromise ?? 0,
+                        OnOrder = MapOnOrder(p.Stock?.OnOrder)
+                    });
+                }
+            }
+
             private IEnumerable<ProductModel> MapProducts(Request request, IEnumerable<ProductDto> productsDto, IEnumerable<ValidateDto> validateDto)
             {
                 return productsDto.Select(x =>
@@ -93,159 +238,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 }).ToList();
             }
 
-            private static ProductModel MapBasedInformation(ProductDto x)
-            {
-                var product = new ProductModel();
-                product.Id = x.Source.Id;
-                product.ManufacturerPartNumber = x.ManufacturerPartNumber;
-                product.Description = x.Description;
-                product.DisplayName = string.IsNullOrWhiteSpace(x.ShortDescription) ? x.Name : x.ShortDescription;
-                product.ThumbnailImage = x.Images?.FirstOrDefault(i => string.Equals(i.Key, Thumbnail, StringComparison.InvariantCultureIgnoreCase)).Value?.FirstOrDefault(x => string.Equals(x.Type, ProductShot, StringComparison.InvariantCultureIgnoreCase))?.Url;
-                return product;
-            }
-
-            private static void MapStock(ProductDto x, ProductModel product, bool vendorShipped)
-            {
-                product.Stock = new StockModel
-                {
-                    TotalAvailable = x.Stock?.Total,
-                    VendorDirectInventory = x.Stock?.VendorDesignated,
-                    VendorShipped = vendorShipped
-                };
-            }
-
-            private void MapPlants(ProductDto x, ProductModel product)
-            {
-                if (x.Plants != null)
-                {
-                    product.Stock.Plants = x.Plants.Select(p =>
-                    new PlantModel
-                    {
-                        Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise ?? 0,
-                        OnOrder = MapOnOrder(p.Stock?.OnOrder)
-                    });
-                }
-            }
-
-            private OnOrderModel MapOnOrder(Dto.Product.Internal.OnOrderDto onOrder)
-            {
-                return onOrder == null
-                    ? null
-                    : new OnOrderModel
-                    {
-                        Stock = onOrder.Stock,
-                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
-                    };
-            }
-            private static void MapAuthorizations(ProductModel product, bool isValid, bool orderable, bool authrequiredprice)
-            {
-                product.Authorization = new AuthorizationModel();
-                product.Authorization.CanOrder = isValid && orderable;
-                product.Authorization.CanViewPrice = isValid || !authrequiredprice;
-            }
-
-            private static void MapPrice(ProductDto x, ProductModel product)
-            {
-                product.Price = new PriceModel
-                {
-                    BasePrice = x.Price?.BasePrice,
-                    BestPrice = x.Price?.BestPrice,
-                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration : null,
-                    ListPrice = x.Price?.ListPrice,
-                    BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
-                    VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
-                    {
-                        MinQuantity = p.MinQuantity.Value,
-                        Price = p.Price
-                    })
-                };
-            }
-
-            private static (bool vendorShipped, bool orderable, bool authrequiredprice) GetFlags(Request request, ProductDto x)
-            {
-                var indicators = ProductMapperHelper.ExtractFinalIndicators(x.Indicators, request.SalesOrg, request.Site);
-
-                var vendorShipped = x.Stock?.VendorDesignated != null && indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, StringComparison.InvariantCultureIgnoreCase);
-
-                var orderable = indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, StringComparison.InvariantCultureIgnoreCase);
-
-                var authrequiredprice = indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, Y, StringComparison.InvariantCultureIgnoreCase);
-
-                return (vendorShipped, orderable, authrequiredprice);
-            }
-
-            private static List<SpecificationGroupModel> PopulateSpecificationModel(IEnumerable<ProductDto> productsDto, Dictionary<string, HashSet<string>> specMatrix)
-            {
-                var specGroups = new List<SpecificationGroupModel>();
-
-                foreach (var specGroup in specMatrix.Keys)
-                {
-                    ProcessSpecificationGroup(productsDto, specMatrix, specGroups, specGroup);
-                }
-
-                return specGroups;
-            }
-
-            private static void ProcessSpecificationGroup(IEnumerable<ProductDto> productsDto, Dictionary<string, HashSet<string>> specMatrix, List<SpecificationGroupModel> specGroups, string specGroup)
-            {
-                var existingSpecGroup = specGroups.FirstOrDefault(x => x.Group == specGroup);
-                if (existingSpecGroup == null)
-                {
-                    existingSpecGroup = new SpecificationGroupModel { Group = specGroup, Specifications = new List<SpecificationModel>() };
-                    specGroups.Add(existingSpecGroup);
-                }
-
-                foreach (var specName in specMatrix[specGroup])
-                {
-                    ProcessSpecification(productsDto, specGroup, existingSpecGroup, specName);
-                }
-            }
-
-            private static void ProcessSpecification(IEnumerable<ProductDto> productsDto, string specGroup, SpecificationGroupModel existingSpecGroup, string specName)
-            {
-                var existingSpec = existingSpecGroup.Specifications.FirstOrDefault(x => x.Name == specName);
-                if (existingSpec == null)
-                {
-                    existingSpec = new SpecificationModel { Name = specName, Values = new List<string>() };
-                    existingSpecGroup.Specifications = existingSpecGroup.Specifications.Append(existingSpec);
-                }
-
-                foreach (var product in productsDto)
-                {
-                    var productSpecValue = product.ExtendedSpecifications?.FirstOrDefault(x => x.GroupName == specGroup)
-                                                    ?.Specifications.FirstOrDefault(x => x.Name == specName);
-
-                    existingSpec.Values = existingSpec.Values.Append(productSpecValue?.Value ?? "");
-                }
-            }
-
-            private static Dictionary<string, HashSet<string>> CreateSpecificationGroupMatrix(IEnumerable<ProductDto> productsDto)
-            {
-                var specMatrix = new Dictionary<string, HashSet<string>>();
-
-                foreach (var extendedSpec in productsDto.Where(x => x.ExtendedSpecifications != null).SelectMany(x => x.ExtendedSpecifications))
-                {
-                    if (!specMatrix.ContainsKey(extendedSpec.GroupName))
-                    {
-                        specMatrix.Add(extendedSpec.GroupName, new HashSet<string>());
-                    }
-
-                    foreach (var spec in extendedSpec.Specifications)
-                    {
-                        specMatrix[extendedSpec.GroupName].Add(spec.Name);
-                    }
-                }
-
-                return specMatrix;
-            }
-
-            private Task<IEnumerable<ValidateDto>> ValidateProductTask(Request request)
-            {
-                var validateProductUrl = _productAppUrl.AppendPathSegment("Validate").SetQueryParam("id", request.Ids);
-                return _httpClient.GetAsync<IEnumerable<ValidateDto>>(validateProductUrl);
-            }
-
             private Task<IEnumerable<ProductDto>> ProductsDtoTask(Request request)
             {
                 var productDataUrl = _productAppUrl
@@ -253,6 +245,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                                             .SetQueryParam("details", true);
                 return _httpClient.GetAsync<IEnumerable<ProductDto>>(productDataUrl);
             }
+
+            private Task<IEnumerable<ValidateDto>> ValidateProductTask(Request request)
+            {
+                var validateProductUrl = _productAppUrl.AppendPathSegment("Validate").SetQueryParam("id", request.Ids);
+                return _httpClient.GetAsync<IEnumerable<ValidateDto>>(validateProductUrl);
+            }
+        }
+
+        public class Request : IRequest<CompareModel>
+        {
+            public IEnumerable<string> Ids { get; set; }
+            public string SalesOrg { get; set; }
+            public string Site { get; set; }
         }
 
         public class Validator : AbstractValidator<Request>

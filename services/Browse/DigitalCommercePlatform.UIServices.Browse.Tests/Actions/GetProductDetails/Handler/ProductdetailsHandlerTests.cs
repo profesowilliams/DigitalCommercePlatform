@@ -27,11 +27,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
     public class ProductDetailsHandlerTests
     {
         private readonly Mock<IAppSettings> _appSettingsMock;
-        private readonly GetProductDetailsHandler.Handler _sut;
+        private readonly Mapper _mapper;
         private readonly Mock<IBrowseService> _mockBrowseService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
+        private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
-        private readonly Mapper _mapper;
 
         public ProductDetailsHandlerTests()
         {
@@ -52,95 +52,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
         }
 
-        public IReadOnlyCollection<string> Id { get; private set; }
         public bool Details { get; private set; }
-
-        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetProductDetails(IEnumerable<ProductDto> expected)
-        {
-            expected.First().Plants.First().Stock.OnOrder = new OnOrderDto
-            {
-                Stock = 44,
-                ArrivalDate = new DateTime(2044, 12, 31)
-            };
-            _mockBrowseService.Setup(x => x.GetProductDetails(
-                       It.IsAny<GetProductDetailsHandler.Request>()
-                       ))
-                   .ReturnsAsync(expected);
-
-            var request = new GetProductDetailsHandler.Request(Id, "0100", "US");
-
-            var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
-
-            result.Should().NotBeNull();
-            result.Content.First().Stock.Plants.First().OnOrder.Should().NotBeNull();
-            result.Content.First().Stock.Plants.First().OnOrder.Stock.Should().Be(44);
-            result.Content.First().Stock.Plants.First().OnOrder.ArrivalDate.Should().Be("2044/12/31");
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(Handler_ProperlyMapProducts_Data))]
-        [AutoDomainData(nameof(Handler_ProperlyMapProductsMarketingsNull_Data))]
-        [AutoDomainData(nameof(Handler_ProperlyMapProductsWhatsInTheBoxNullUrlNull_Data))]
-        public async Task Handler_ProperlyMapProducts(IEnumerable<ProductDto> productDtos, IEnumerable<ValidateDto> validateDtos, ProductModel expectedProduct, GetProductDetailsHandler.Request request)
-        {
-            //arrange
-            request.SalesOrg = "0100";
-
-            _mockBrowseService.Setup(x => x.GetProductDetails(request))
-                .ReturnsAsync(productDtos)
-                .Verifiable();
-            _mockBrowseService.Setup(x => x.ValidateProductTask(request.Id))
-                .ReturnsAsync(validateDtos)
-                .Verifiable();
-
-            //act
-            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
-
-            //assert
-            actual.Should().NotBeNull();
-            actual.Content.First().Should().BeEquivalentTo(expectedProduct);
-        }
-
-        [Fact]
-        public void MapPriceTest()
-        {
-            // Arrange
-            var productDto = new ProductDto
-            {
-                Price = new PriceDto
-                {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
-                    BestPriceIncludesWebDiscount = true,
-                },
-            };
-
-            var productModel = new ProductModel
-            {
-                Price = new PriceModel
-                {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
-                    BestPriceIncludesWebDiscount = true,
-                },
-            };
-            var canViewPrice = true;
-
-            MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
-            //Act
-            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice });
-            //Assert
-            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
-            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
-            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
-            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
-        }
+        public IReadOnlyCollection<string> Id { get; private set; }
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
         {
@@ -342,6 +255,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
+                            Corporate = 1,
                             VendorDirectInventory=1,
                             VendorShipped=false,
                             Plants = new List<PlantModel>
@@ -595,6 +509,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
+                            Corporate = 1,
                             VendorDirectInventory=1,
                             VendorShipped=false,
                             Plants = new List<PlantModel>
@@ -853,6 +768,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         Stock = new StockModel
                         {
                             TotalAvailable=2,
+                            Corporate = 1,
                             VendorDirectInventory=1,
                             VendorShipped=false,
                             Plants = new List<PlantModel>
@@ -943,5 +859,92 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 }
             };
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductDetails(IEnumerable<ProductDto> expected)
+        {
+            expected.First().Plants.First().Stock.OnOrder = new OnOrderDto
+            {
+                Stock = 44,
+                ArrivalDate = new DateTime(2044, 12, 31)
+            };
+            _mockBrowseService.Setup(x => x.GetProductDetails(
+                       It.IsAny<GetProductDetailsHandler.Request>()
+                       ))
+                   .ReturnsAsync(expected);
+
+            var request = new GetProductDetailsHandler.Request(Id, "0100", "US");
+
+            var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
+
+            result.Should().NotBeNull();
+            result.Content.First().Stock.Plants.First().OnOrder.Should().NotBeNull();
+            result.Content.First().Stock.Plants.First().OnOrder.Stock.Should().Be(44);
+            result.Content.First().Stock.Plants.First().OnOrder.ArrivalDate.Should().Be("2044/12/31");
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(Handler_ProperlyMapProducts_Data))]
+        [AutoDomainData(nameof(Handler_ProperlyMapProductsMarketingsNull_Data))]
+        [AutoDomainData(nameof(Handler_ProperlyMapProductsWhatsInTheBoxNullUrlNull_Data))]
+        public async Task Handler_ProperlyMapProducts(IEnumerable<ProductDto> productDtos, IEnumerable<ValidateDto> validateDtos, ProductModel expectedProduct, GetProductDetailsHandler.Request request)
+        {
+            //arrange
+            request.SalesOrg = "0100";
+
+            _mockBrowseService.Setup(x => x.GetProductDetails(request))
+                .ReturnsAsync(productDtos)
+                .Verifiable();
+            _mockBrowseService.Setup(x => x.ValidateProductTask(request.Id))
+                .ReturnsAsync(validateDtos)
+                .Verifiable();
+
+            //act
+            var actual = await _sut.Handle(request, default).ConfigureAwait(false);
+
+            //assert
+            actual.Should().NotBeNull();
+            actual.Content.First().Should().BeEquivalentTo(expectedProduct);
+        }
+
+        [Fact]
+        public void MapPriceTest()
+        {
+            // Arrange
+            var productDto = new ProductDto
+            {
+                Price = new PriceDto
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+
+            var productModel = new ProductModel
+            {
+                Price = new PriceModel
+                {
+                    BestPrice = 75.55m,
+                    BasePrice = 89.99m,
+                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceIncludesWebDiscount = true,
+                },
+            };
+            var canViewPrice = true;
+
+            MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
+            //Act
+            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice });
+            //Assert
+            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
+            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
+            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
+            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
+        }
+
+        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
     }
 }

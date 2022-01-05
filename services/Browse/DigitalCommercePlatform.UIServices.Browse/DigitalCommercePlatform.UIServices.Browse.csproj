@@ -27,15 +27,19 @@
   <ItemGroup>
     <Compile Remove="Actions\Browse\**" />
     <Compile Remove="Actions\GetMenuDetails\**" />
+    <Compile Remove="Connected Services\**" />
     <Compile Remove="Infrastructure\Logging\**" />
     <Content Remove="Actions\Browse\**" />
     <Content Remove="Actions\GetMenuDetails\**" />
+    <Content Remove="Connected Services\**" />
     <Content Remove="Infrastructure\Logging\**" />
     <EmbeddedResource Remove="Actions\Browse\**" />
     <EmbeddedResource Remove="Actions\GetMenuDetails\**" />
+    <EmbeddedResource Remove="Connected Services\**" />
     <EmbeddedResource Remove="Infrastructure\Logging\**" />
     <None Remove="Actions\Browse\**" />
     <None Remove="Actions\GetMenuDetails\**" />
+    <None Remove="Connected Services\**" />
     <None Remove="Infrastructure\Logging\**" />
   </ItemGroup>
 
@@ -52,10 +56,6 @@
 
   <ItemGroup>
     <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Connected Services\" />
   </ItemGroup>
 
   <ItemGroup>
