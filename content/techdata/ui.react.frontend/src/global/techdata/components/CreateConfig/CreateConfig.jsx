@@ -14,9 +14,9 @@ const CreateConfig = ({ componentProp }) => {
   const createConfig = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+    var currentUrl = window.location.href.replace('.html', '.post2get.html');
     const params = {
-      "PostBackURL": (window.location.href || POST_BACK_URL) + "/",
+      "PostBackURL": (currentUrl || POST_BACK_URL) + "/",
       "Vendor": methodSelected.label,
       "ConfigurationId": "",
       "Function": "CCW_ESTIMATE",

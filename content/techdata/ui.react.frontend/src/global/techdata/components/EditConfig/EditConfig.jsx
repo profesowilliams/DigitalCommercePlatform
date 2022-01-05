@@ -38,8 +38,9 @@ const EditConfig = ({ componentProp }) => {
         setConfigurationId(value);
     };
     const getRedirectUrl = async (e) => {
+        var currentUrl = window.location.href.replace('.html', '.post2get.html');
         const body = { 
-            "PostBackURL": window.location.href,  
+            "PostBackURL": currentUrl,  
             "Vendor": "Cisco",  
             "ConfigurationId": configurationId,  
             "Function": "CCW_ESTIMATE",  
