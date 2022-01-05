@@ -8,12 +8,14 @@
   flex-wrap: wrap;
   width: 100%;
   height: rem(55px);
+
   @include mobile {
     flex-wrap: nowrap;
     width: auto;
     height: auto;
     flex-direction: column;
   }
+
   &__title {
     font-size: $font-size-small;
     text-transform: uppercase;
@@ -22,6 +24,7 @@
     text-transform: uppercase;
     padding-bottom: rem(25px);
   }
+
   &__tab {
     border-radius: rem(5px);
     border: rem(1px) solid get-color(td-lightblue);
@@ -31,29 +34,31 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
     @include mobile {
       width: 100%;
       margin-bottom: 10px;
     }
+
     &__title {
-        width: 100%;
-        font-size: $font-size-xsmall;
-        font: $open-sans;
-        line-height: 17px;
-        text-transform: uppercase;
-        color: get-color(td-dark-blue);
+      width: 100%;
+      font-size: $font-size-xsmall;
+      font: $open-sans;
+      line-height: 17px;
+      text-transform: uppercase;
+      color: get-color(td-dark-blue);
     }
 
     &__items {
-        font-size: rem(36px);
-        color: get-color(td-lightblue);
+      font-size: rem(36px);
+      color: get-color(td-lightblue);
     }
 
     &__action-icon {
-        font-size: $font-size-custom-xxxlarge;
-        color: get-color(v-divider-gray);
-        size: 39.51px;
-        line-height: 40px;
+      font-size: $font-size-custom-xxxlarge;
+      color: get-color(v-divider-gray);
+      size: 39.51px;
+      line-height: 40px;
     }
 
   }
