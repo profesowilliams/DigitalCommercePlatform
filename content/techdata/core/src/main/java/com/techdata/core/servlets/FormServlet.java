@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
                 "service.description=Form Submission Servlet",
                 "service.vendor=techdata.com",
                 "sling.servlet.methods=" + HttpConstants.METHOD_POST,
-                "sling.servlet.paths=/bin/form"
+                "sling.servlet.resourcetypes=blah/blah/blah"
         }
 )
 public class FormServlet extends SlingAllMethodsServlet {
