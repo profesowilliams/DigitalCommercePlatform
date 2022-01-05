@@ -12,6 +12,7 @@
     createQuoteUrlSuffix="?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
     defaultSortingColumnKey="created"
     defaultSortingDirection="desc"
+    showResultLabel="Show Result">
 >
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0
