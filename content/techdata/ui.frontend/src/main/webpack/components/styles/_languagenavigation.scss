@@ -252,6 +252,12 @@
         border-right: 0px solid get-color(brand-text-lightgray);
         //height: 300px; this is causing an issue in UAT bug 199700
         column-width: 200px;
+        &--europe {
+          column-width: auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+        }
       }
 
       &__seperator-l {
