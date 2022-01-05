@@ -3,18 +3,14 @@
 
 .mydeals {
     position: relative;
-    left: rem(-10px);
 }
 
 .cmp-deals {
     font-family: 'Open Sans', sans-serif;
     justify-content: space-between;
     display: flex;
-    width: rem(464px);
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 15px;
+    width: max-content;
+    margin: 0 auto;
     @include mobile {
         flex-direction: column-reverse;
     }
@@ -29,14 +25,15 @@
     &__table {
         font-size: $font-size-xxsmall;
         color: get-color(text-mid-gray);
-        width: 100%;
+        width: auto;
         table {
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
 
         tbody{
-            margin-left: rem(16px);
+            // margin-left: rem(16px);
             @include mobile {
                 display: flex;
             }
@@ -65,11 +62,15 @@
     }
     &__bar-Graph{
         display: flex;
+        margin:0 0 0 rem(24px);
         section{
             padding-top: rem(25px);
-            padding-right: rem(64px);
+            margin:0 rem(20px);
+            &:first-of-type {
+                margin-right: rem(42px);
+            }
             &:last-of-type {
-                padding-right: rem(32px);
+                margin-right: 0;
             }
             i,svg{
                 font-size: rem(50px);
