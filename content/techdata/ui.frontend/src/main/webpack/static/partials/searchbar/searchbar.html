@@ -31,7 +31,7 @@
 					"area":"quote","areaSuggestionUrl":"undefined",
 					"endpoint":"/quotes/0?quoteType=null&quoteId={search-term}",
 					"areaLabel":"Search in Quotes",
-					"dcpLookupEndpoint": "/searchbar/orders",
+					"dcpLookupEndpoint": "/ui-commerce/v1/quote?PageSize=25&PageNumber=1&SortDirection=desc&SortBy=created&WithPaginationInfo=true&quoteIdFilter={search-term}",
 					"detailsPage": "/quote-details-pdf-demo",
 					"validateResponseEndPoint":"/ui-commerce/v1/quotes",
 					"partialEndPoint": "/quotes-grid",
@@ -44,7 +44,7 @@
 					"detailsPage": "/order-details-demo",
 					"validateResponseEndPoint": "/ui-commerce/v1/orders",
 					"partialEndPoint": "/orders-grid",
-					"dcpLookupEndpoint": "/searchbar/orders",
+					"dcpLookupEndpoint": "/ui-commerce/v1/orders?withpaginationinfo=true&PageSize=25&PageNumber=1&SortDirection=desc&SortBy=created&idType=GENERAL&id={search-term}",
 					"dcpSearchPage": "/content/techdata/language-masters"
 				},
 				{

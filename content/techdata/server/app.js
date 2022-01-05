@@ -613,7 +613,7 @@ app.get("/ui-commerce/v1/order/details", function (req, res) {
     },
   };
   const response =
-    id != 603068538 && id != 00000
+    id != 603068538
       ? utils.getOrderDetailsResponse()
       : errorObject;
   res.json(response);
@@ -639,8 +639,16 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
 
   const items = [];
   const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
-  let pageSizeWithParams = idType && idType === 'GENERAL?id=00000' ? 1 : pageSize;
+  let pageSizeWithParams;
+  if (idType && idType == 'GENERAL?id=00000') {
+    pageSizeWithParams = 1;
+  } else if (idType && idType == 'GENERAL?id=11111') {
+    pageSizeWithParams = 5;
+  } else {
+    pageSizeWithParams =  pageSize;
+  }
 
+  const reseller = id;
   const orderReportFlag = req.query.status
     ? req.query.status === "OPEN"
       ? true
@@ -676,7 +684,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     items.push({
       id: Number(`${pageNumber}${id ? id + 1 : 4009754974 + i}`),
       created: new Date().toISOString(),
-      reseller: Number(`${pageNumber}${111048 + i}`),
+      reseller: Number(`${pageNumber}${reseller ? reseller + i : 111048 + i}`),
       shipTo: "UPS",
       type: "Manual",
       priceFormatted: 73002.31 + getRandom(1000),
