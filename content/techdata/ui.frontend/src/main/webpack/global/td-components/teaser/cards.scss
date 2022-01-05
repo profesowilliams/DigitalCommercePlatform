@@ -19,6 +19,10 @@
 			color: get-color(text-dark-grey) !important;
 			cursor: default;
 
+			@include mobile {
+				box-shadow: none;
+			}
+
 			&:hover {
 				color: get-color(brand-blue) !important;
 				cursor: default;
