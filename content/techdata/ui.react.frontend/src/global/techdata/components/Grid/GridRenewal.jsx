@@ -207,6 +207,7 @@ function GridRenewal(props) {
             props.getPaginationData(prevState => {
               return {
                 ...prevState,
+                currentResultsInPage: response?.items?.response?.length,
                 totalCounter: response?.items?.count,
               }
             })

@@ -17,9 +17,10 @@ function ConfigurationGrid(props) {
     totalCounter: 0,
     stepBy: 25,
     currentPage: 1,
+    currentResultsInPage: 0,
   });
   const {onAfterGridInit, onQueryChanged, requestInterceptor} = useGridFiltering();
-  const { totalCounter, stepBy, currentPage } = paginationData;
+  const { totalCounter, stepBy, currentPage, currentResultsInPage } = paginationData;
   const componentProp = JSON.parse(props.componentProp);
   const options = {
     defaultSortingColumnKey: "dueDate",
@@ -43,8 +44,8 @@ function ConfigurationGrid(props) {
   );
 
   const maxPaginationCounter = useMemo(
-    () => maxCounterCalculator(minPaginationCounter, totalCounter, stepBy),
-    [minPaginationCounter, totalCounter]
+    () => maxCounterCalculator(minPaginationCounter, totalCounter, stepBy, currentResultsInPage),
+    [minPaginationCounter, totalCounter, currentResultsInPage]
   );
 
   const incrementHandler = () => {
