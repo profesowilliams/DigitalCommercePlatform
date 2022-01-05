@@ -36,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<ProductNoteDto, ProductNoteModel>();
             CreateMap<SalesOrgStocksDto, StockModel>()
                 .ForMember(dest => dest.TotalAvailable, opt => opt.MapFrom(x => x.Total))
+                .ForMember(dest => dest.Corporate, opt => opt.MapFrom(x => x.Td))
                 .ForMember(dest => dest.VendorDirectInventory, opt => opt.Ignore())
                 .ForMember(dest => dest.VendorShipped, opt => opt.Ignore());
             CreateMap<ElasticItemDto, ElasticItemModel>()
