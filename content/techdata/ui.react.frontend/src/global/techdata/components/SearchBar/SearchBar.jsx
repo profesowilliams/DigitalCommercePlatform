@@ -101,7 +101,8 @@ const SearchBar = ({ data, componentProp }) => {
       const dcpDomainEndPoint = uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm);
       const response = await axios.get(dcpDomainEndPoint);
       if (response?.data?.content?.items?.length === 1) {
-        return dcpDomain + `${selectedArea.detailsPage}?id=${searchTerm}`; // return of details
+        const detailsRow = response.data.content.items[0];
+        return dcpDomain + `${selectedArea.detailsPage}?id=${detailsRow.id}`; // return of details
       } else {
         return dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`;
       }
@@ -176,7 +177,6 @@ const SearchBar = ({ data, componentProp }) => {
       return null;
     } else {
       const response = await getSearchUrl(searchTermText);
-
       window.location.href = response;
     }
   };
