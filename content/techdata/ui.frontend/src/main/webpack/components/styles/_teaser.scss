@@ -213,10 +213,8 @@
         align-items: center;
         padding: 3.438rem;
         z-index: 1;
-
+        
         @include mobile {
-            margin-top: -27%;
-            margin-left: 13%;
             padding: 0;
         }
     }
@@ -259,7 +257,7 @@
         }
 
         @include mobile {
-            font-size: 1rem;
+            font-size: 0.8rem;
             line-height: inherit;
             padding-right: 2.438rem;
         }
@@ -317,7 +315,9 @@
         align-content: center;
         align-items: center;
         position: absolute;
-        top: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: 100%;
         height: 100%;
         box-sizing: border-box;
