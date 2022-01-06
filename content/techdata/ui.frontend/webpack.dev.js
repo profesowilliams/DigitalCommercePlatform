@@ -1030,6 +1030,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "spinner",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/utilities/spinner.html"
+
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "filmstrip-slider",
                 template: path.resolve(
                     __dirname,
