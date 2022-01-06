@@ -88,6 +88,7 @@ function ProductLinesGrid({
       detailRenderer: ({ data }) => (
         <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
           <ProductLinesChildGrid
+            license={gridProps.agGridLicenseKey}
             columnDefiniton={
               whiteLabelMode ? whiteLabelCols() : quoteDetailsCols()
             }

@@ -13,6 +13,8 @@ function RenewalsDetails(props) {
   );
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
+  componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
+
   useEffect(() => {
     if (apiResponse?.content?.details) {
       setRenewalsDetails(apiResponse?.content?.details);

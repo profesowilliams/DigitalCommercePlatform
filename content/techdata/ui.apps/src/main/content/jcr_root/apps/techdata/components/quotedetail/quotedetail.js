@@ -74,6 +74,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["subtotalLabel"] = properties["subtotalLabel"];
     }
 
+    if (this.agGridLicenseKey) {
+        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+    }
+
     if (this.uiServiceDomain !== null) {
         jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.quoteDetailEndpoint;
     }

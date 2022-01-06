@@ -12,6 +12,7 @@ const OrderDetails = ({ componentProp }) => {
       headerConfig,
       infoConfig,
       uiServiceEndPoint,
+      agGridLicenseKey,
       productLines,
       whiteLabel,
       searchCriteria,
@@ -25,6 +26,7 @@ const OrderDetails = ({ componentProp }) => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
+  
   useEffect(() => {
     if (iconList.length === 0) {
       productLines?.iconList && setIconList(productLines.iconList);
@@ -56,6 +58,8 @@ const OrderDetails = ({ componentProp }) => {
       }
     }
   }, [response]);
+
+  productLines.agGridLicenseKey = agGridLicenseKey;
 
   return orderDetails ? (
     <>

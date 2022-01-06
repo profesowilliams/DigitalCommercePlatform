@@ -24,6 +24,8 @@ function QuotePreview(props) {
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
   const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
 
+  componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
+
   useEffect(() => {
     if(apiResponse?.content?.quotePreview?.quoteDetails) {
       setQuoteDetails(apiResponse?.content?.quotePreview?.quoteDetails);

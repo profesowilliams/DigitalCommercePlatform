@@ -219,6 +219,9 @@ use(function () {
         headerJsonObject["exportCSVLabel"] = properties["exportCSVLabel"];
     }
 
+    if (this.agGridLicenseKey) {
+        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+    }
 
     if (this.uiServiceDomain != null && this.downloadIndividualInvoiceEndpoint != null) {
         jsonObject["downloadInvoicesEndpoint"] = this.uiServiceDomain+this.downloadIndividualInvoiceEndpoint;

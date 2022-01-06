@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "../../Grid/Grid";
 
-function ProductLinesChildGrid({ data, columns, columnDefiniton }) {
+function ProductLinesChildGrid({ license, data, columns, columnDefiniton }) {
   const cols = columnDefiniton.map((col) => {
     col.field === "id" &&
       (col.cellRenderer = (props) => {
@@ -18,6 +18,7 @@ function ProductLinesChildGrid({ data, columns, columnDefiniton }) {
         <Grid
           columnDefinition={cols}
           config={{
+            agGridLicenseKey: license,
             columnList: columns,
             serverSide: false,
             paginationStyle: "none",

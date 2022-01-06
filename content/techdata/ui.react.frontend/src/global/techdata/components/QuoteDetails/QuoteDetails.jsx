@@ -28,6 +28,7 @@ const QuoteDetails = ({ componentProp }) => {
     endUseproductLines,
     uiServiceEndPoint,
     uiServiceEndPointExcel,
+    agGridLicenseKey,
     logoURL,
     fileName,
     downloadLinkText,
@@ -48,6 +49,8 @@ const QuoteDetails = ({ componentProp }) => {
   const [whiteLabelLogoUpload, setWhiteLabelLogoUpload] = useState(null);
   const [ancillaryItems, setAncillaryItems] = useState(null);
   const [modal, setModal] = useState(null);
+
+  productLines.agGridLicenseKey = agGridLicenseKey;
 
   function onQuoteCheckout() {
     redirectToCart(id, checkout, onErrorHandler);

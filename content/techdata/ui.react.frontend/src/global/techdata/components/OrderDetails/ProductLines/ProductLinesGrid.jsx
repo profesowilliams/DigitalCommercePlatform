@@ -38,6 +38,7 @@ function ProductLinesGrid({
     serverSide: false,
     paginationStyle: "none",
   };
+  const agGridLicenseKey = gridProps.agGridLicenseKey;
   const NO_SHIP_DATE_LABEL = gridConfig?.noShipDateLabel ? gridConfig.noShipDateLabel : 'No Ship Date'
   const filteringExtension = useGridFiltering();  
   const columnsList = gridConfig.columnList;
@@ -144,6 +145,7 @@ function ProductLinesGrid({
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
+                license={agGridLicenseKey}
                 columnDefiniton={columnDefsChildren}
                 data={data.children}
                 columns={columnsList}

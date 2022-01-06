@@ -4,7 +4,7 @@
 </sly>
 test
 
-<sly data-sly-use.model="${'renewals-detailsModel.js' @ renewalDetailLineItemEndpoint=serviceData.renewalDetailLineItemEndpoint}">
+<sly data-sly-use.model="${'renewals-detailsModel.js' @ renewalDetailLineItemEndpoint=serviceData.renewalDetailLineItemEndpoint,agGridLicenseKey=serviceData.agGridLicenseKey}">
 
 <div data-observe-mutation>
 <div  data-cmp-type="react" data-config="${model.configJson}"></div>

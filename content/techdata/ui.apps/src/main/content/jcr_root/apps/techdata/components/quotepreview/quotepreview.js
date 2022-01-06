@@ -220,6 +220,10 @@ use(['../common/utils.js'], function (utils) {
         productLinesGrid["productEmptyImageUrl"] = this.productEmptyImageUrl;
     }
 
+    if (this.agGridLicenseKey) {
+        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+    }
+
     if (properties && properties["subtotalLabel"]) {
         jsonObject["subtotalLabel"]  = properties["subtotalLabel"];
     }
