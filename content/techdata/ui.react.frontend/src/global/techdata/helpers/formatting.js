@@ -17,12 +17,12 @@ function getTextContentAfterComma(text = "") {
     const reg = /.*?,(.*)/;
     return text.match(reg)[1];
 }
-function getTextBeforeComma(text = ""){
+function getTextBeforeComma(text = "") {
     const reg = /(.*?),.*/;
     return text.match(reg)[1];
 }
 export function removeCommaIfContentNull(child = []) {
-    if (!Array.isArray(child)) return child 
+    if (!Array.isArray(child)) return child
     if (child.length > 2) {
         const afterComma = getTextContentAfterComma(child.join("").trim());
         const beforeComma = getTextBeforeComma(child.join("").trim());
@@ -33,4 +33,9 @@ export function removeCommaIfContentNull(child = []) {
     } else {
         return child;
     }
+}
+
+export function addDays(days = 0, date = new Date(), ) {
+  const dateWithDays = date.setDate(date.getDate() + days);
+  return new Date(dateWithDays);
 }

@@ -4,7 +4,8 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 
 const FilterItem = ({ id }) => {
 
-  const { filterList, effects } = useRenewalGridState();
+  const filterList = useRenewalGridState(state => state.filterList);
+  const effects = useRenewalGridState(state => state.effects);
   if (!filterList) return null;
   const { setFilterList } = effects;
   const filter = filterList[id];
@@ -18,8 +19,11 @@ const FilterItem = ({ id }) => {
   const handleCheckBoxClick = () => {
     const filtersCopy = produce(filterList, (filterDraft) => {
       // toggle the checked state of filter
-      const currentFilter = { ...filter, checked: !filter.checked };
-      childIds.map((id) => {
+      //{title: 'Support and Subscriber', field: 'vendor', id: 6, open: true, checked: false}
+      filterDraft[id].checked = !filterDraft[id].checked;
+      const filter = filterDraft[id];
+      console.log('childIds 📛', childIds);
+      childIds.forEach((id) => {
         return (filterDraft[id].open = !filterDraft[id].open);
       });
 
@@ -27,13 +31,13 @@ const FilterItem = ({ id }) => {
        * if filter checked enable all children
        * else, viceversa
        */
-      if (childIds.length > 0 && currentFilter.checked) {
+      if (childIds.length > 0 && filter.checked) {
         childIds.map((id) => {
           return (filterDraft[id].checked = true);
         });
       }
 
-      if (childIds.length > 0 && !currentFilter.checked) {
+      if (childIds.length > 0 && !filter.checked) {
         childIds.map((id) => {
           return (filterDraft[id].checked = false);
         });
@@ -42,9 +46,9 @@ const FilterItem = ({ id }) => {
       /**
        * to handle checkbox logic for nested accordion.
        */
-      if (childIds.length === 0 && "parentId" in currentFilter) {
-        const oneChecked = isOneChecked(filterDraft, currentFilter);
-        const parent = filterDraft[currentFilter.parentId];
+      if (childIds.length === 0 && "parentId" in filter) {
+        const oneChecked = isOneChecked(filterDraft, filter);
+        const parent = filterDraft[filter.parentId];
 
         if (oneChecked) {
           parent.checked = true;
@@ -59,11 +63,11 @@ const FilterItem = ({ id }) => {
         }
       }
 
-      const currentFilterIndex = filterDraft.findIndex(
-        (filter) => filter.id === currentFilter.id
+      const filterIndex = filterDraft.findIndex(
+        (filter) => filter.id === filter.id
       );
-      const currentFilterUpdate = filterDraft[currentFilterIndex];
-      currentFilterUpdate.checked = !currentFilterUpdate.checked;
+      const filterUpdate = filterDraft[filterIndex];
+      filterUpdate.checked = !filterUpdate.checked;
     });
     setFilterList(filtersCopy);
   };

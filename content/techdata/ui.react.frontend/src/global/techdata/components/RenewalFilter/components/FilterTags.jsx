@@ -4,7 +4,8 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 
 function FilterTags() {
   const [showMore, setShowMore] = useState(false);
-  const { filterList, effects } = useRenewalGridState();
+  const filterList = useRenewalGridState(state => state.filterList);
+  const effects = useRenewalGridState(state => state.effects);
   const { setFilterList } = effects;
   const handleShowMore = () => {
     setShowMore(!showMore);
@@ -14,19 +15,16 @@ function FilterTags() {
       return filters[id].checked === true;
     });
   const handleTagsCloseClick = (filter) => {
-    const filtersCopy = [...filterList];
-    filtersCopy.forEach((f) => {
-      if (f.id === filter.id) {
-        f["checked"] = false;
-      }
-    });
-
+    const filtersCopy = [...filterList].map((item) => {
+      const {id} = item;
+      if ( id === filter.id ) return {...item,checked:false};
+      return {...item}
+    }); 
     /**
      * to handle checkbox logic for nested accordion when u interact with tags.
      */
     if (filter.childIds.length === 0 && "parentId" in filter) {
       const oneChecked = isOneChecked(filtersCopy, filter);
-
       const parent = filtersCopy[filter.parentId];
       if (!oneChecked && "parentId" in parent) {
         parent.checked = false;

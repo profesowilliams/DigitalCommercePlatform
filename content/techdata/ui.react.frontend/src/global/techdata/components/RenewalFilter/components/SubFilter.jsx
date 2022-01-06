@@ -3,7 +3,7 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import FilterItem from "./FilterItem";
 
 function SubFilter({ id }) {
-  const { filterList } = useRenewalGridState();
+  const filterList = useRenewalGridState(state => state.filterList);
   if (!filterList) return null;
   const filter = filterList[id];
   const childIds = filter?.childIds;

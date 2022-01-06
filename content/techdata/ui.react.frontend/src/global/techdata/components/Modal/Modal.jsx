@@ -31,7 +31,7 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, act
 		setModalVisible(isModalVisible ?? true);
 	}, [isModalVisible]);
 	
-	console.log("🚀 ~ file: Modal.jsx ~ line 4 ~ Modal ~ modalAction", modalAction)
+	
 	return modalVisible ? (
 		<div className={`cmp-modal ${modalVisible ? 'visible' : 'hidden'} `}>
 			<div className='cmp-modal_container'>

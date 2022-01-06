@@ -147,7 +147,7 @@
         <item0          
             jcr:primaryType="nt:unstructured"
             accordionLabel="Vendors and Program"
-            filterField="vendor">
+            filterField="ProgramName">
             <filtersOptionsList            
                 jcr:primaryType="nt:unstructured">
                 <item0            

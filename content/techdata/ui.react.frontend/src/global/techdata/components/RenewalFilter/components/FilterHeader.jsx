@@ -3,8 +3,9 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import Button from "../../Widgets/Button";
 
 function FilterHeader() {
-  const {filterList, effects} = useRenewalGridState();
-  const {setFilterList} = effects;
+  const filterList = useRenewalGridState(state => state.filterList);
+  const effects = useRenewalGridState(state => state.effects);
+  const {setFilterList, clearDateFilters} = effects;
   const handleClearFilter = () => {
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
@@ -15,6 +16,7 @@ function FilterHeader() {
       return filter;
     });
     setFilterList(filtersCopy);
+    clearDateFilters();
   };
   return (
     <div className="filter-modal-container__header">

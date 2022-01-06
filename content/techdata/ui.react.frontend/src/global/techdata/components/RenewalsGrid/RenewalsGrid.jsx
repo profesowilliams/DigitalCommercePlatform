@@ -12,7 +12,7 @@ import DropdownFilter from "./DropdownFilter";
 import { RENEWALS } from "./FilterOptions";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 
-function ConfigurationGrid(props) {
+function RenewalsGrid(props) {
   const [paginationData, setPaginationData] = useState({
     totalCounter: 0,
     stepBy: 25,
@@ -20,7 +20,7 @@ function ConfigurationGrid(props) {
     currentResultsInPage: 0,
   });
   const {onAfterGridInit, onQueryChanged, requestInterceptor} = useGridFiltering();
-  const { totalCounter, stepBy, currentPage, currentResultsInPage } = paginationData;
+  const { totalCounter, stepBy, currentPage, currentResultsInPage } = paginationData; 
   const componentProp = JSON.parse(props.componentProp);
   const options = {
     defaultSortingColumnKey: "dueDate",
@@ -66,10 +66,6 @@ function ConfigurationGrid(props) {
     });
   };
 
-  const handleOnQueryChange = query => {
-    onQueryChanged(query)
-  }
-
   const gridConfig = {
     ...componentProp,
     paginationStyle: "none",
@@ -102,14 +98,14 @@ function ConfigurationGrid(props) {
           </div>
           <VerticalSeparator />
           <div className="cmp-renewal-filter">
-            <RenewalFilter aemData={componentProp} queryChanged={handleOnQueryChange} />
+            <RenewalFilter aemData={componentProp} onQueryChanged={onQueryChanged} />
           </div>
         </div>
       </div>
 
       <div className="cmp-renewals-grid">
         <GridRenewal
-          getPaginationData={setPaginationData}
+          getPaginationData={setPaginationData}         
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
@@ -121,4 +117,4 @@ function ConfigurationGrid(props) {
   );
 }
 
-export default ConfigurationGrid;
+export default RenewalsGrid;

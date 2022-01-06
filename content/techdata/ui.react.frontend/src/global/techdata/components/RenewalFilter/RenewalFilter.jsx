@@ -3,7 +3,7 @@ import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 
-export default function RenewalFilter({ aemData, queryChanged }) {
+export default function RenewalFilter({ aemData, onQueryChanged }) {
   
   const isFilterModalOpen = useRenewalGridState(state => state.isFilterModalOpen);
   const effects = useRenewalGridState(state => state.effects);
@@ -27,9 +27,9 @@ export default function RenewalFilter({ aemData, queryChanged }) {
       </div>
       {isFilterModalOpen && (
         <FilterModal
-          aemData={aemData}
-          queryChanged={queryChanged}
+          aemData={aemData}        
           handleFilterCloseClick={handleFilterCloseClick}
+          onQueryChanged={onQueryChanged}
         />
       )}
     </div>
