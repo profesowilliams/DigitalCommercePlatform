@@ -251,7 +251,8 @@
 // New nav dots styling
 .cmp-carousel__indicators {
   align-self: center;
-  width: 50%;
+  width: auto;
+  flex-wrap: nowrap;
   
   //New classes for position of carousel dots
   &--left {

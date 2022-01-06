@@ -251,7 +251,8 @@
 
 .executive-grid {
   .cmp-carousel__indicators {
-    width: 50%;
+    width: auto;
+    flex-wrap: nowrap;
   }
   .dp-carousel__nav-label {
     background-color: get-color(brand-blue);
