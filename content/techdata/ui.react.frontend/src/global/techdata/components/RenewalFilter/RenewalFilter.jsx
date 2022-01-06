@@ -8,7 +8,6 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   const isFilterModalOpen = useRenewalGridState(state => state.isFilterModalOpen);
   const effects = useRenewalGridState(state => state.effects);
   const {toggleFilterModal} = effects;
-  console.log("render ❓❓");
   const handleFilterClick = () => {
     toggleFilterModal();
   };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { normalizeErrorCode } from '../../../../utils/utils';
+import { normalizeErrorCode } from "../../../../utils/utils";
 
 function GridRenewal(props) {
   let {
@@ -16,7 +16,7 @@ function GridRenewal(props) {
     getRowIdCallback,
     onModelUpdateFinished,
     requestInterceptor,
-    onSortChanged
+    onSortChanged,
   } = Object.assign({}, props);
   const componentVersion = "1.2.0";
   const gridData = data;
@@ -60,9 +60,9 @@ function GridRenewal(props) {
 
   const noRowMsg = {
     noRowsMessageFunc: (props) => {
-      return noRowsErrorMessage.current
-    }
-  }
+      return noRowsErrorMessage.current;
+    },
+  };
 
   /*
 	function that returns AG grid vnode outside main return function to keep that
@@ -72,7 +72,7 @@ function GridRenewal(props) {
     <AgGridReact
       key={Math.floor(1000 * Math.random()).toString()}
       frameworkComponents={renderers}
-      noRowsOverlayComponent={'CustomNoRowsOverlay'}
+      noRowsOverlayComponent={"CustomNoRowsOverlay"}
       noRowsOverlayComponentParams={noRowMsg}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
@@ -107,7 +107,6 @@ function GridRenewal(props) {
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}
     >
-
       {filteredColumns.map((column) => {
         return (
           <AgGridColumn
@@ -126,9 +125,9 @@ function GridRenewal(props) {
   );
 
   const renderers = {
-    CustomNoRowsOverlay: CustomNoRowsOverlay
+    CustomNoRowsOverlay: CustomNoRowsOverlay,
   };
-  
+
   let filteredColumns = [];
   // disable default behaviour of column being movable
   columnDefinition.forEach((column) => {
@@ -150,7 +149,7 @@ function GridRenewal(props) {
       if (el.cellRenderer) renderers[el.field] = el.cellRenderer;
       // attach detail renderer if exist
       if (el.expandable && el.detailRenderer)
-        renderers.$$detailRenderer = el.detailRenderer;
+      renderers.$$detailRenderer = el.detailRenderer;
       filteredColumns.push(el);
     }
   });
@@ -186,38 +185,45 @@ function GridRenewal(props) {
         const sortDir = params.request.sortModel?.[0]?.sort;
 
         const handleNoRowMsg = (response) => {
-          if(response.isError) {
-            noRowsErrorMessage.current = config[`errorGettingDataMessage${response.code}`];
+          if (response.isError) {
+            noRowsErrorMessage.current =
+              config[`errorGettingDataMessage${response.code}`];
             gridApi.current.showNoRowsOverlay();
-          }
-          else if(!response?.items?.response || response?.items?.response.length === 0) {
+          } else if (
+            !response?.items?.response ||
+            response?.items?.response.length === 0
+          ) {
             noRowsErrorMessage.current = config.noRowsErrorMessage;
             // gridApi.current.showNoRowsOverlay();
           }
-        }
+        };
 
-        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir, handleNoRowMsg).then(
-          (response) => {
-            const rowData = response?.items?.response ?? 0;
-            params.success({
-              rowData,
-              lastRow: rowData.length ?? 0,
-              rowCount: rowData.length ?? 0,
-            });
-            props.getPaginationData(prevState => {
-              return {
-                ...prevState,
-                currentResultsInPage: response?.items?.response?.length,
-                totalCounter: response?.items?.count,
-              }
-            })
-            handleNoRowMsg(response)
-          }
-        );
+        getGridData(
+          config.itemsPerPage,
+          pageNo,
+          sortKey,
+          sortDir,
+          handleNoRowMsg
+        ).then((response) => {
+          const rowData = response?.items?.response ?? 0;
+          params.success({
+            rowData,
+            lastRow: rowData.length ?? 0,
+            rowCount: rowData.length ?? 0,
+          });
+          props.getPaginationData((prevState) => {
+            return {
+              ...prevState,
+              currentResultsInPage: response?.items?.response?.length,
+              totalCounter: response?.items?.count,
+            };
+          });
+          handleNoRowMsg(response);
+        });
       },
     };
   }
-  
+
   async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
@@ -307,7 +313,7 @@ function GridRenewal(props) {
       onAfterGridInit({
         node: gridNodeRef.current,
         api: _.api,
-        columnApi:_.columnApi,
+        columnApi: _.columnApi,
         gridResetRequest: () => resetGrid(),
       });
     }

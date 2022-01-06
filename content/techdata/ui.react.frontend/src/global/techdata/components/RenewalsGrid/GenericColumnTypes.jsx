@@ -3,13 +3,13 @@ import {
   getUserDataInitialState,
   hasAccess,
   IS_TD_INTERNAL,
-  RENEWALS_TYPE
+  RENEWALS_TYPE,
 } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
-
+import DropdownDownloadList from "./DropdownDonwloadList";
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
@@ -19,9 +19,9 @@ const columnFieldsMap = (definition, eventProps) => {
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
     renewal: <ContractColumn data={data} />,
-    dueDateDays: <DueDateDayColumn columnValue={data?.dueDate}/>,
-    dueDate: <DueDateColumn columnValue={value}/>,
-    price : thousandSeparator(value)
+    dueDateDays: <DueDateDayColumn columnValue={data?.dueDate} />,
+    dueDate: <DueDateColumn columnValue={value} />,
+    price: thousandSeparator(value),
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
   return columnFields[columnKey] || defaultValue();
@@ -52,7 +52,7 @@ export const plainTextColumn = (definition) => {
     headerName: columnLabel,
     field: columnKey,
     sortable: sortable,
-    width: columnKey == 'vendor' ? '300px' : null, 
+    width: columnKey == "vendor" ? "300px" : null,
     resizable: true,
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
   };
@@ -66,15 +66,9 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  cellRenderer: ({ data }) => {
-    return (
-      <div>
-        <i className="fa fa-plus-circle" aria-hidden="true"></i>
-        <i className="fa fa-plus-square" aria-hidden="true"></i>
-        <i className="fa fa-plus-triangle" aria-hidden="true"></i>
-      </div>
-    );
-  },
+  expandable: true,
+  valueFormatter: ({}) => "...",
+  detailRenderer: ({}) => <DropdownDownloadList />,
 });
 
 export const renewalPlanColumn = ({
