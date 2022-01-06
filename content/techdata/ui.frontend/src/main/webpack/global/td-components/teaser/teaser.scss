@@ -830,3 +830,12 @@
         text-decoration: none;
     }
 }
+// cmp button green styles
+
+.cmp-teaser-button-green {
+    &.cmp-teaser--button {
+        .cmp-teaser:not(:hover) svg circle {
+            fill: #003030;
+        }
+    }
+}
