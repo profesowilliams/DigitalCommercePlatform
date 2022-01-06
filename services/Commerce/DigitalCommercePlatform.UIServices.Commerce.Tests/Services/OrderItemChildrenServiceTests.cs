@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void LinesAreEmptyForInvalidInput()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var result = sut.GetOrderLinesWithChildren(null);
 
@@ -46,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void ChildrenLinesAreGenerated()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var orderModel = new OrderDetailModel
             {
@@ -143,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             type = typeof(OrderItemChildrenService);
             objType = Activator.CreateInstance(type,
                 new SubstringService(),
-                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object)
+                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object)
             );
         }
 

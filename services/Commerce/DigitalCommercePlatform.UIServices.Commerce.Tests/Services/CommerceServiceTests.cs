@@ -277,6 +277,31 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void CreateQuoteRequestFromQuotePreview_Test()
+        {
+            //arrange
+            QuotePreviewModel request = new QuotePreviewModel();
+
+            request.QuoteDetails = new QuotePreview() { Id="123",Currency="USD",ConfigurationId="123",BuyMethod="Test",};
+            request.QuoteDetails.Source = new VendorReferenceModel() { Type = "123", Value = "123" };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var CreateQuotePreview = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CreateQuoteRequestFromQuotePreview" && x.IsPrivate);
+
+            //Act
+            var result = CreateQuotePreview.Invoke(objType, new object[] { request });
+
+            //Assert
+            Assert.NotNull(result);
+
+        }
+
+
+        [Fact]
         public void MapAnnuity_Test()
         {
             //arrange
@@ -464,7 +489,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         [Theory]
         [AutoDomainData]
-        public async Task CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
+        public void CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
         {
             //arrange
             request.CreateModelFrom.CreateFromId = "";
@@ -544,6 +569,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { input });
             Assert.Null(result);
+        }
+
+        [Fact]
+        public void GetAccountDetails()
+        {
+            //arrange 
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123",true,"Cisco");
+
+            //Act
+            var result = _commerceService.QuotePreview(request);
+
+            //Assert
+            Assert.NotNull(result);
         }
     }
 }

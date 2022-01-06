@@ -9,7 +9,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string CustomerNumber { get; set; }
         public string MappedAccount { get; set; }
         public string BuyMethod { get; set; }
-        public bool IsExclusive { get; set; }
+        public bool? IsExclusive { get; set; }
         public string BeGeoId { get; set; }
         public string UserId { get; set; }
         public string FirstName { get; set; }

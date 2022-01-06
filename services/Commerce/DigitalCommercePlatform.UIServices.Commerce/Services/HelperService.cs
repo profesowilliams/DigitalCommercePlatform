@@ -2,19 +2,18 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -134,6 +133,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             //var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == _context.User.ActiveCustomer.SalesOrganization).FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
             var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == "0100").FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
+            if (response == null)
+            {
+                response = new OrderPricingCondtionMapping();
+                response.Type = "Government";
+                response.TypeId = "001";
+                response.Level = "Education (Higher)";
+                response.LevelId = "EH";
+                response.SalesOrganization = "0100";
+                response.Site = "US";
+                response.Description = "Education (Higher)";
+            }
             return response;
         }
 
@@ -218,38 +228,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         /// <returns></returns>
         public async Task<AccountDetails> GetCustomerAccountDetails()
         {
+            bool? response = false;
             try
             {
-                var requestUrl = _appSettings.TryGetSetting("External.US.Customer.Url")
-                  ?? throw new InvalidOperationException($"External.US.Customer.Url is missing from AppSettings");
+                var customerId = _context.User.ActiveCustomer.CustomerNumber;
+                string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
+                var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
+                var appResponse = await _middleTierHttpClient.GetAsync<IEnumerable<AccountDetails>>(customerURL);
+                response = appResponse is null ? false : appResponse.FirstOrDefault().IsExclusive;
 
-            _logger.LogInformation($"GetCustomerAccountDetails Requested url is: {requestUrl}");
-
-            requestUrl = requestUrl + "customerService/getAccountDetails";
-
-            var request = JsonConvert.SerializeObject(
-                new AccountDetailsFindModel
-                {
-                    Value = _context?.User?.ID,
-                    Type = "USERID"
-                }
-                );
-            var httpClient = _httpClientFactory.CreateClient("CustomerAPIClient");
-            
-            var httpResponse = await httpClient.PostAsync(requestUrl, new StringContent(request, Encoding.UTF8, "application/json"));
-
-            httpResponse.EnsureSuccessStatusCode();
-
-            var response = JsonConvert.DeserializeObject<AccountDetails>(httpResponse.Content.ReadAsStringAsync().Result);
-            
-                return response;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error getting Order Level & Type {nameof(HelperService.GetCustomerAccountDetails)}");
-                // always return response 
-                return new AccountDetails { BuyMethod = "TDShop46" };
+                _logger.LogInformation("Error while consuming App-Customer Service " + ex.Message);
+                response = false;
             }
+            return new AccountDetails { IsExclusive = response };
         }
 
         /// <summary>
@@ -265,7 +259,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 _appProductServiceURL = _appSettings.GetSetting("Product.App.Url");
             }

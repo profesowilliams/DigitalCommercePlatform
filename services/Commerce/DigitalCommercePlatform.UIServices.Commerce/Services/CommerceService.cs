@@ -12,12 +12,12 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
-using DigitalFoundation.Common.Features.Client;
-using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
-using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -192,10 +192,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             else
             {
-                lstPricingConditions.Add(new PricingCondition("Higher Education", "HigherEducation"));
-                lstPricingConditions.Add(new PricingCondition("Lower Education", "LowerEducation"));
-                lstPricingConditions.Add(new PricingCondition("State", "State"));
-                lstPricingConditions.Add(new PricingCondition("Federal", "Federal"));
+                lstPricingConditions.Add(new PricingCondition("Higher Education", "EduHigher"));
+                lstPricingConditions.Add(new PricingCondition("Lower Education", "EduK12"));
+                lstPricingConditions.Add(new PricingCondition("State", "GovtState"));
+                lstPricingConditions.Add(new PricingCondition("Federal", "GovtFederal"));
                 lstPricingConditions.Add(new PricingCondition("Medical", "Medical"));
             }
 
@@ -232,6 +232,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
                 else
                 {
+                    _logger.LogInformation("error while create a quote " + ex.Message);
                     throw;
                 }
             }
@@ -248,13 +249,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 input.QuoteDetails.BuyMethod = input.QuoteDetails?.BuyMethod ?? "tdavnet67";
                 if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdavnet67"))
                 {
-                    createModelFrom.TargetSystem = "ECC"; // verify logic for this
+                    createModelFrom.TargetSystem = "ECC";
                 }
                 else
                 {
-                    createModelFrom.TargetSystem = "R3"; // verify logic for this
+                    createModelFrom.TargetSystem = "R3";
                 }
-
                 input.QuoteDetails.Tier = string.IsNullOrWhiteSpace(input.QuoteDetails.Tier) ? "Commercial" : input.QuoteDetails.Tier;
                 _helperService.GetOrderPricingConditions(input.QuoteDetails.Tier, out TypeModel orderType, out LevelModel orderLevel);
                 createModelFrom.Type = orderType;
@@ -543,6 +543,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
                 quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
 
+                var isExclusive = _helperService.GetCustomerAccountDetails().Result.IsExclusive;
+                quotePreview.IsExclusive = isExclusive;
+                quotePreview.BuyMethod = isExclusive == true ? "tdavnet67" : "sap46";
                 QuotePreviewModel response = new QuotePreviewModel
                 {
                     QuoteDetails = quotePreview

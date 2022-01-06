@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         private HelperService GetHelperService()
         {
-            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
+            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
         }
 
         private void InitiateHelperService(out Type type, out object objType)
