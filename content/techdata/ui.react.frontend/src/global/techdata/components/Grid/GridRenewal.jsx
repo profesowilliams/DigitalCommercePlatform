@@ -205,7 +205,10 @@ function GridRenewal(props) {
           sortDir,
           handleNoRowMsg
         ).then((response) => {
-          const rowData = response?.items?.response ?? 0;
+          let rowData = response?.items?.response ?? 0;
+          rowData = rowData.map((data) => {
+            return { ...data, actions: true };
+          });
           params.success({
             rowData,
             lastRow: rowData.length ?? 0,
