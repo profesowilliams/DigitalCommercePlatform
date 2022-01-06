@@ -545,7 +545,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 
             if (exportedFields.Contains(nameof(ExportedFields.ContractNo)))
             {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, model.PaymentDetails.ContractNo); //Contract
+                SetCell(curXlRow, ++curCol, wsOrderDetail, line.ContractNo); //Contract
             }
 
             if (exportedFields.Contains(nameof(ExportedFields.StartDate)))

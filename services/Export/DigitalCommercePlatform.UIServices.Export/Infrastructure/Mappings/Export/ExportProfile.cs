@@ -26,6 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format(PRICE_FORMAT, src.TotalPrice)))
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.ContractNo, opt => opt.MapFrom(src => src.ContractNumber))
 
                 .ForMember(d => d.VendorPartNo, o => o.Ignore())
                 .ForMember(d => d.Manufacturer, o => o.Ignore())
@@ -114,6 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForPath(dest => dest.StartDate, opt => opt.MapFrom(src => src.ContractStartDate))
                 .ForPath(dest => dest.EndDate, opt => opt.MapFrom(src => src.ContractEndDate))
                 .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForPath(dest => dest.ContractNo, opt => opt.MapFrom(src => src.ContractNo))
 
                 .ForMember(d => d.VendorPartNo, o => o.Ignore())
                 .ForMember(d => d.MSRP, o => o.Ignore())
@@ -152,7 +154,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                  .ForPath(dest => dest.PODate, opt => opt.MapFrom(src => src.PoDate))
                  .ForPath(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                  .ForPath(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.Id))
-                 .ForPath(dest => dest.PaymentDetails.ContractNo, opt => opt.MapFrom(src => src.ContractNo))
                  .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>())
 
                  .ForMember(d => d.CanBeExpedited, o => o.Ignore())

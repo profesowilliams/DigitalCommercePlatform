@@ -16,6 +16,5 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Order.Internal
         public decimal? Freight { get; set; }
         public decimal? OtherFees { get; set; }
         public decimal? Total { get; set; }
-        public string ContractNo { get; set; }
     }
 }
