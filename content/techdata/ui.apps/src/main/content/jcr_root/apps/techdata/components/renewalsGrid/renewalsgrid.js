@@ -1,8 +1,8 @@
 "use strict";
 use(['../common/utils.js'], function (utils) {
-  var jsonObject = {};
-  var resourceResolver = resource.getResourceResolver();
-  var optionData = {};
+  let jsonObject = {};
+  let resourceResolver = resource.getResourceResolver();
+  let optionData = {};
 
   if (properties && properties["detailUrl"]) {
     jsonObject["detailUrl"] = properties["detailUrl"] + properties["detailUrlSuffix"];
@@ -10,8 +10,8 @@ use(['../common/utils.js'], function (utils) {
 
   //Column definition
 
-  var columnListValues = utils.getDataFromMultifield(resourceResolver, "columnList", function (childResource) {
-    var itemData = {};
+  let columnListValues = utils.getDataFromMultifield(resourceResolver, "columnList", function (childResource) {
+    let itemData = {};
 
     itemData.columnLabel = childResource.properties["columnLabel"];
     itemData.columnKey = childResource.properties["columnKey"];
@@ -60,34 +60,34 @@ use(['../common/utils.js'], function (utils) {
   }
 
 
-  var resourceResolver = resource.getResourceResolver();
-  var node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
-  var filterListValues = [];
+  let resourceResolver = resource.getResourceResolver();
+  let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
+  let filterListValues = [];
   if (node !== null) {
-    var childrenList = node.getChildren();
-    for (var [key, res] in Iterator(childrenList)) {
-      var accordionLabel = res.properties["accordionLabel"];
-      const filterField = res.properties["filterField"];
-      var itemData = {};
+    let childrenList = node.getChildren();
+    for (let [key, res] in Iterator(childrenList)) {
+      let accordionLabel = res.properties["accordionLabel"];
+      let filterField = res.properties["filterField"];
+      let itemData = {};
       itemData.accordionLabel = accordionLabel;
       itemData.filterField = filterField;
-      var childNode = resourceResolver.getResource(res.getPath() + '/filtersOptionsList');
+      let childNode = resourceResolver.getResource(res.getPath() + '/filtersOptionsList');
 
       if (childNode != null) {
         itemData.filterOptionsValues = [];
-        var childNodeList = childNode.getChildren();
-        for (var [childkey, childRes] in Iterator(childNodeList)) {
-          var childDataItem = {};
-          var filterOptionLabel = childRes.properties["filterOptionLabel"];
+        let childNodeList = childNode.getChildren();
+        for (let [childkey, childRes] in Iterator(childNodeList)) {
+          let childDataItem = {};
+          let filterOptionLabel = childRes.properties["filterOptionLabel"];
           childDataItem.filterOptionLabel = filterOptionLabel;
-          var subChildNode = resourceResolver.getResource(childRes.getPath() + '/subFilterOptionList');
+          let subChildNode = resourceResolver.getResource(childRes.getPath() + '/subFilterOptionList');
 
           if (subChildNode != null) {
-            var subFilterOptionsValues = [];
-            var subChildNodeList = subChildNode.getChildren();
+            let subFilterOptionsValues = [];
+            let subChildNodeList = subChildNode.getChildren();
 
-            for (var [subChildKey, subChildRes] in Iterator(subChildNodeList)) {
-              var subChildDataItem = {};
+            for (let [subChildKey, subChildRes] in Iterator(subChildNodeList)) {
+              let subChildDataItem = {};
               subChildDataItem.subFilterOptionsLabel = subChildRes.properties["subFilterOptionsLabel"];
               subFilterOptionsValues.push(subChildDataItem);
             }
