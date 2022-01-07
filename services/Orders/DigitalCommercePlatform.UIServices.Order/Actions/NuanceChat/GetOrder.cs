@@ -77,7 +77,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
 
                                 request.RuleFor(r => r.OrderQuery.CustomerPo).NotEmpty().When(m => string.IsNullOrEmpty(m.OrderQuery.OrderId));
                                 request.RuleFor(r => r.OrderQuery.OrderId).NotEmpty().When(m => string.IsNullOrEmpty(m.OrderQuery.CustomerPo));
-                                request.RuleFor(r => r.OrderQuery.LineId).NotEmpty().When(m => string.IsNullOrEmpty(m.OrderQuery.ManufacturerPartNumber));
 
                                 request.RuleFor(r => r.Header.ResellerId).NotEmpty();
                                 request.RuleFor(r => r.Header.Hmac).NotEmpty();
