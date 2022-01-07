@@ -167,6 +167,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                  .ForMember(d => d.StandardOrderStatus, o => o.Ignore())
                  .ForMember(d => d.ConfigurationOrderStatus, o => o.Ignore())
                  .ForMember(d => d.SiteURL, o => o.Ignore())
+
+                 .ForMember(d => d.ExportedFields, o => o.Ignore())
                  ;
         }
     }

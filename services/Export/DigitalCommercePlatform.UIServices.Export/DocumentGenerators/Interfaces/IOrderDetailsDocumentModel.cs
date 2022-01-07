@@ -1,13 +1,11 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces;
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Export.Models.Order.Internal;
+using DigitalCommercePlatform.UIServices.Export.Models;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Export.Models
+namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces
 {
-    [ExcludeFromCodeCoverage]
-    public class OrderDetailModel : IOrderDetailsDocumentModel
+    public interface IOrderDetailsDocumentModel : IDocumentModel
     {
         public List<string> ExportedFields { get; set; }
 

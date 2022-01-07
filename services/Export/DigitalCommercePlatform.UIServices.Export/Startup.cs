@@ -1,4 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Export.DocumentGenerators;
+using DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces;
 using DigitalCommercePlatform.UIServices.Export.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Services.Layer.UI;
@@ -24,6 +26,9 @@ namespace DigitalCommercePlatform.UIServices.Export
         {
             services.AddTransient<IExportService, ExportService>();
             services.AddTransient<ICommerceService, CommerceService>();
+            services.AddTransient<IOrderDetailsDocumentGenerator, OrderDetailsDocumentGenerator>();
+            services.AddSingleton<IOrderDetailsDocumentGeneratorSettings, OrderDetailsDocumentGeneratorSettings>();
+                
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddHttpClient("OneSourceClient");
         }
