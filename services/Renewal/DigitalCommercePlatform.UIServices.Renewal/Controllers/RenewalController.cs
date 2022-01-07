@@ -62,6 +62,28 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Search")]
+        public async Task<IActionResult> SearchRenewalsPost([FromBody] SearchModel model, [FromHeader] string sessionId)
+        {
+            model.SessionId = sessionId;
+
+            if (model.Details)
+            {
+                var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
+                var response = await Mediator.Send(request).ConfigureAwait(false);
+
+                return Ok(response);
+            }
+            else
+            {
+                var request = _mapper.Map<SearchRenewalSummary.Request>(model);
+                var response = await Mediator.Send(request).ConfigureAwait(false);
+
+                return Ok(response);
+            }
+        }
+
         [LogQuery]
         [HttpGet]
         [Route("Details")]
