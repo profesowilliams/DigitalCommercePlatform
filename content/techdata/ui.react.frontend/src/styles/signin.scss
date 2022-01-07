@@ -112,12 +112,12 @@
                 margin-bottom: 10px;
                 display: flex;
                 &-link {
+                  cursor: pointer;
                     text-decoration: none;
                     @include desktop {
                       position: relative;
                     }
-
-                    &--icon {
+                 &--icon {
                         color: #1798d1;
                         @include desktop {
                           position: absolute;
