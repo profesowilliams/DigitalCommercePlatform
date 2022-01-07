@@ -16,7 +16,8 @@ function Grid(props) {
     getRowIdCallback,
     onModelUpdateFinished,
     requestInterceptor,
-    onSortChanged
+    onSortChanged,
+    handlerIsRowMaster,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.2.0";
@@ -68,6 +69,12 @@ function Grid(props) {
   */
   const AgGrid = () => (
     <AgGridReact
+      masterDetail={true}
+      isRowMaster={function (dataItem) {
+        if (typeof handlerIsRowMaster === "function") {
+          return handlerIsRowMaster(dataItem);
+        }
+      }}
       key={Math.floor(1000 * Math.random()).toString()}
       frameworkComponents={renderers}
       noRowsOverlayComponent={'CustomNoRowsOverlay'}

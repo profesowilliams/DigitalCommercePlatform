@@ -127,6 +127,16 @@ function ProductLinesGrid({
     requestFileBlob(invoiceUrl,'',{redirect:true});
   }
 
+  /**
+   * handler that validate if a row in OrderDetails have a
+   * children that can expand and show a chevrons
+   * @param {any} dataItem 
+   * @returns 
+   */
+  const handlerIsRowMaster = (dataItem) => {
+    return dataItem ? dataItem?.children?.length > 0 : false;
+  };
+
   //default column defs
   const columnDefs = [
     {
@@ -778,6 +788,7 @@ function ProductLinesGrid({
           requestLocalFilter={(request) =>
             filteringExtension.requestLocalFilter(request)
           }
+          handlerIsRowMaster={handlerIsRowMaster}
         ></Grid>
       </div>
       {modal && <Modal
