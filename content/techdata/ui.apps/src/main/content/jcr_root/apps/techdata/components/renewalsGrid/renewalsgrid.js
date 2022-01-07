@@ -60,7 +60,6 @@ use(['../common/utils.js'], function (utils) {
   }
 
 
-  let resourceResolver = resource.getResourceResolver();
   let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
   let filterListValues = [];
   if (node !== null) {

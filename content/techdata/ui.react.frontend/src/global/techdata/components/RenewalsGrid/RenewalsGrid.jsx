@@ -94,7 +94,7 @@ function RenewalsGrid(props) {
         </div>
         <div className="renewal-filters">
           <div className="cmp-renewal-search">
-            <DropdownFilter callback={onRowFilter} options={RENEWALS} />
+            <DropdownFilter callback={onRowFilter} options={RENEWALS} onQueryChanged={onQueryChanged} />
           </div>
           <VerticalSeparator />
           <div className="cmp-renewal-filter">

@@ -1,3 +1,5 @@
+$brand-blue: #000c21;
+$secondary-link-blue: #006bae;
 .inputStyle {
   position: relative;
   padding: 0.25em;
@@ -12,24 +14,23 @@
   font-style: italic;
   letter-spacing: 0;
   line-height: 16px;
+  width: 15rem;
 }
-
 
 .inputStyle option {
   height: 17.5px;
   width: 170px;
-  color: rgba(0,12,33,1);
+  color: rgba(0, 12, 33, 1);
   font-family: "Open Sans";
   font-size: 14px;
   letter-spacing: 0;
   line-height: 17.5px;
 }
 
-
 .inputStyle:focus,
 .inputStyle:active {
   outline: 0;
-  border-bottom-color: #00558c;
+  border-bottom-color: $secondary-link-blue;
 }
 
 .inputStyle input {
@@ -46,11 +47,11 @@
   background-color: #f2f2f2;
 }
 
-.tooltip {
+.cmp-search-tooltip {
   // width: 100%;
   height: 17.5px;
   width: 170px;
-  color: rgba(0,12,33,1);
+  color: rgba(0, 12, 33, 1);
   font-family: "Open Sans";
   top: 45px;
   font-size: 14px;
@@ -62,8 +63,16 @@
   z-index: 10000;
   padding: 0.5em;
   height: 50px;
+  &__button {
+    background-color: $brand-blue;
+    svg {
+      color: white !important;
+    }
+  }
 }
-
+.tooltipContainer {
+  position: relative;
+}
 .tooltipContainer:hover > .tooltip {
   display: flex;
   flex-direction: row;
@@ -86,6 +95,53 @@
 }
 
 .tooltip__button {
-  background-color: #00558c;
+  background-color: $secondary-link-blue;
   color: white;
+}
+
+.cmp-search-select-container{
+  position: relative;
+  &__box{
+    cursor: pointer;
+  }
+}
+.cmp-renewal-search {
+  cursor: pointer;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  span {
+    color: #555555;
+  }
+  svg {
+    color: $secondary-link-blue;
+  }
+}
+.cmp-search-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0.5px 0.5px 8px #000000ad;
+  padding: 9px;
+  position: absolute;
+  height: fit-content;
+  z-index: 5;
+  background: white;
+  top: 1.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 17rem;
+  label{
+    cursor: pointer;
+  }
+  &__reset{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: space-between;
+    a{
+      color: $secondary-link-blue;
+      text-decoration: underline;
+    }
+  }
 }

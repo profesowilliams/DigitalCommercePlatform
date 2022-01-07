@@ -17,8 +17,6 @@ export default function useGridFiltering() {
 
   function onQueryChanged(query, options = {filterStrategy:'get'} ) {
     if (options.filterStrategy === 'post') willDoPostRequest.current = true;
-    
-
     query ? (filter.current = query.queryString) : (filter.current = null);
     if (resetCallback.current) {
       resetCallback.current();
