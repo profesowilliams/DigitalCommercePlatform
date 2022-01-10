@@ -107,7 +107,7 @@ function DropdownFilter({
           </button>
         </div>
         <If condition={isResetVisible}>
-          <div className="cmp-search-options" style={{padding:'0 10px'}}>
+          <div className="cmp-search-options" style={{padding:'5px 10px'}}>
             <div className="cmp-search-options__reset">
               <label>
                 {callbackExecuted && !filterCounter ? <p>Sorry, no rows to display</p> : <p>Search by {chosenFilter}</p>}

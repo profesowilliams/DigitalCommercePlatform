@@ -65,7 +65,7 @@ $secondary-link-blue: #006bae;
   height: 50px;
   &__button {
     background-color: $brand-blue;
-    svg {
+    i {
       color: white !important;
     }
   }
@@ -113,7 +113,7 @@ $secondary-link-blue: #006bae;
   span {
     color: #555555;
   }
-  svg {
+  i {
     color: $secondary-link-blue;
   }
 }
