@@ -11,7 +11,7 @@ export function DateOptionsList() {
       {dateOptionsList.map((item, index) => (
         <li key={index}>
           <input
-            type="checkbox"
+            type="radio"
             name="date"
             key={Math.random()}
             id={index}

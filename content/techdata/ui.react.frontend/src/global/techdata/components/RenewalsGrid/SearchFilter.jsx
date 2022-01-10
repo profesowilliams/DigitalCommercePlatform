@@ -3,7 +3,7 @@ import React, { useRef, useState, useCallback } from "react";
 import { If } from "../../helpers/If";
 
 
-function DropdownFilter({
+function SearchFilter({
   styleProps,
   options,
   callback,
@@ -27,10 +27,7 @@ function DropdownFilter({
     callback()
     setCallbackExecuted(true)
   };
-
- 
   
-
   const onReset = () => {
     setCallbackExecuted(false)
     for (const key in values) {
@@ -96,7 +93,7 @@ function DropdownFilter({
 
   if (option.length) {    
     const chosenFilter = options.find(
-      ({value}) => value === option
+      ({searchKey}) => searchKey === option
     ).label;
     return (
       <div className="cmp-search-select-container">
@@ -139,8 +136,8 @@ function DropdownFilter({
           <If condition={true}>
           <div className="cmp-search-options">
             {options.map((option) => (
-              <label key={option.value} onClick={() => changeHandler(option.value)}>
-            {option.label}
+              <label key={option.searchKey} onClick={() => changeHandler(option.searchKey)}>
+            {option.searchLabel}
           </label>
         ))}
           </div>   
@@ -152,12 +149,12 @@ function DropdownFilter({
   );
 }
 
-export default DropdownFilter;
-DropdownFilter.propTypes = {
+export default SearchFilter;
+SearchFilter.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string,
+      searchLabel: PropTypes.string,
+      searchKey: PropTypes.string,
     })
   ).isRequired,
   callback: PropTypes.func.isRequired,

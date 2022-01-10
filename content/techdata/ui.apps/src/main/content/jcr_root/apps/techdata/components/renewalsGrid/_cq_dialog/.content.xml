@@ -287,6 +287,26 @@
                                     </column>
                                 </items>
                             </filters>
+                       <search jcr:primaryType="nt:unstructured" jcr:title="Search" sling:resourceType="granite/ui/components/coral/foundation/container" margin="{Boolean}true">
+                            <items jcr:primaryType="nt:unstructured">
+                                <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <actions jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/multifield" composite="{Boolean}true" fieldDescription="Click 'Add' to add search options" fieldLabel="Search Options">
+                                            <field jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container" name="./searchOptionsList">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <searchLabel jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Enter Search Label" fieldLabel="Search Label" name="./searchLabel" />
+                                                            <searchKey jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Enter Search Key" fieldLabel="Search Key" name="./searchKey" />
+                                                        </items>
+                                                    </column>
+                                                </items>
+                                            </field>
+                                        </actions>
+                                    </items>
+                                </column>
+                            </items>
+                        </search>
                         </items>
                     </tabs>
                 </items>

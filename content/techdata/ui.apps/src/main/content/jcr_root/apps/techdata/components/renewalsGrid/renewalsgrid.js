@@ -25,6 +25,17 @@ use(['../common/utils.js'], function (utils) {
     jsonObject["columnList"] = columnListValues;
   }
 
+  //Search Options
+  let searchOptionsValues = utils.getDataFromMultifield(resourceResolver, "searchOptionsList", function (childResource) {
+    let itemData = {};
+    itemData.searchLabel = childResource.properties["searchLabel"];
+    itemData.searchKey = childResource.properties["searchKey"];
+    return itemData;
+  });
+
+  if (searchOptionsValues != null) {
+    jsonObject["searchOptionsList"] = searchOptionsValues;
+  }
   jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalsGridEndpoint || '';
 
   if (this.agGridLicenseKey) {

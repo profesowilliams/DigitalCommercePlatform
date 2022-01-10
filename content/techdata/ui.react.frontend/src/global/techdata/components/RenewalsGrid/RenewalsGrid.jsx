@@ -8,7 +8,7 @@ import useGridFiltering from "../../hooks/useGridFiltering";
 import GridRenewal from "../Grid/GridRenewal";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
-import DropdownFilter from "./DropdownFilter";
+import SearchFilter from "./SearchFilter";
 import { RENEWALS } from "./FilterOptions";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 
@@ -22,6 +22,7 @@ function RenewalsGrid(props) {
   const {onAfterGridInit, onQueryChanged, requestInterceptor} = useGridFiltering();
   const { totalCounter, stepBy, currentPage, currentResultsInPage } = paginationData; 
   const componentProp = JSON.parse(props.componentProp);
+  const { searchOptionsList } = componentProp;
   const options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "asc",
@@ -94,7 +95,7 @@ function RenewalsGrid(props) {
         </div>
         <div className="renewal-filters">
           <div className="cmp-renewal-search">
-            <DropdownFilter callback={onRowFilter} options={RENEWALS} onQueryChanged={onQueryChanged} />
+            <SearchFilter callback={onRowFilter} options={searchOptionsList} onQueryChanged={onQueryChanged} />
           </div>
           <VerticalSeparator />
           <div className="cmp-renewal-filter">
