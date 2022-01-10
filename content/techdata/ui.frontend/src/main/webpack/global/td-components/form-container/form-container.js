@@ -4,9 +4,9 @@
         const formElems = document.querySelectorAll('.form-style-container .cmp-form');
         formElems && formElems.forEach(formElem => {
             formElem && formElem.querySelectorAll('input, select,textarea').forEach(elem => {
-                if (elem.closest('.cmp-form-text')) {
+                if (elem.closest('.cmp-form-text') && elem.closest('.cmp-form-text').querySelector('label')) {
                     const labelText = elem.closest('.cmp-form-text').querySelector('label').innerText;
-                } else if (elem.closest('.cmp-form-options')) {
+                } else if (elem.closest('.cmp-form-options') && elem.closest('.cmp-form-options').querySelector('label')) {
                     const labelText = elem.closest('.cmp-form-options').querySelector('label').innerText;
                     const tag = document.createElement("option");
                     const text = document.createTextNode(labelText);

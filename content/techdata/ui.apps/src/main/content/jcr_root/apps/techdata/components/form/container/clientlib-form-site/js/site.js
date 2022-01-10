@@ -171,19 +171,21 @@
         }
 
         /////////////////////
-        var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
-        var inputsList = Array.prototype.slice.call(inputs); // creating an array
-        inputsList.forEach( // iterating array to search the input file
-            function (i, e) {
-                if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
-                    if (i.type.startsWith("file")) { // Founding input file
-                        var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+        if(tdForm) {
+            var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
+            var inputsList = Array.prototype.slice.call(inputs); // creating an array
+            inputsList.forEach( // iterating array to search the input file
+                function (i, e) {
+                    if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
+                        if (i.type.startsWith("file")) { // Founding input file
+                            var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+                        }
                     }
-                }
 
-                
-            }
-        );
+
+                }
+            );
+        }
         /////////////////////
 
         /**
