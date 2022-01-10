@@ -31,6 +31,7 @@
 					font-weight: 600;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
+					letter-spacing: rem(-0.5px);
 				}
 				.cmp-teaser__title {
 					color: get-color(brand-blue) !important;
@@ -62,8 +63,8 @@
 				&-link {
 					text-decoration: none;
 					line-height: 1.5rem;
-					color: get-color(text-dark-grey);
-					font-weight: 300;
+					color: get-color(text-mid-charcoal);
+					font-weight: 500;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
 				}

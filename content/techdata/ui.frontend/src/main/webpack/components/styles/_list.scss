@@ -275,7 +275,7 @@
       transition: all 0.3s;
     }
     .cmp-list__item-link {
-      color: get-color(secondary-light-grey);
+      color: get-color(text-mid-charcoal);
       font-size: rem(20px);
       font-weight: 300;
       text-decoration: none;
@@ -322,7 +322,7 @@
       .cmp-list__item-link {
         color: get-color(secondary-light-grey);
         font-size: rem(20px);
-        font-weight: 300;
+        font-weight: 500;
         text-decoration: none;
         padding: rem(16px);
         transition: all 0.3s;
@@ -394,11 +394,11 @@
           }
           span.cmp-list__item-title {
             text-decoration: none;
-            font-size: 13px;
-            line-height: 15px;
+            font-size: rem(13px);
+            line-height: rem(15px);
             text-align: center;
-            color: rgba(0, 0, 0, 0.55);
-            margin: 0 5px;
+            color: get-color(text-mid-charcoal);
+            margin: 0 rem(5px);
           }
         }
       }

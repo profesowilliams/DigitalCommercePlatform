@@ -4,18 +4,6 @@
   display: flex;
   flex-direction: column;
 }
-.cmp-carousel__item {}
-.cmp-carousel__actions {}
-.cmp-carousel__action {}
-.cmp-carousel__action--disabled {}
-.cmp-carousel__action--previous {}
-.cmp-carousel__action--next {}
-.cmp-carousel__action--pause {}
-.cmp-carousel__action--play {}
-.cmp-carousel__action-icon {}
-.cmp-carousel__action-text {}
-.cmp-carousel__indicator {}
-
 .dp-carousel{
   &.dp-carousel__navigation--hero1{
     .dp-carousel__nav{
