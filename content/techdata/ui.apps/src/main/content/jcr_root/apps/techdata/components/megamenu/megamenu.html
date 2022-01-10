@@ -6,7 +6,7 @@
         <div class="cmp-megamenu__body">
             <div class="cmp-megamenu__title">Menu</div>
             <i class="cmp-megamenu__back fas fa-chevron-left"></i>
-            <ol class="cmp-megamenu__primary" data-sly-list="${model.firstLevelMenuItems}">
+            <ol class="cmp-megamenu__primary" data-sly-list="${model.firstLevelMenuItems}"> 
                 <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.linkUrl}">
                     <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="true"  data-level="L1" data-hier="${item.platformName}" data-cmp-isprivate="${item.isPrivate ? 'true' : 'false'}" style="display: ${item.isPrivate ? 'none' : '' @ context='styleToken'};" data-cmp-children="${item.platformMenuID}" title="${item.platformName}" class="cmp-megamenu__tab-text">${item.platformName}</a>
                 </li>
