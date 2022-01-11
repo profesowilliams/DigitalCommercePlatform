@@ -170,6 +170,15 @@
     }
 
     &__row {
+      display: flex;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      align-items: stretch;
+
+      @include mobile {
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
       &:after {
         content: "";
         display: table;
