@@ -194,4 +194,26 @@
             accordionLabel="Date"
             filterField="date"/>
     </filterList>
+    <searchOptionsList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            searchKey="serial"
+            searchLabel="Serial №"/>
+        <item1
+            jcr:primaryType="nt:unstructured"
+            searchKey="agreement"
+            searchLabel="Agreement №"/>
+        <item2
+            jcr:primaryType="nt:unstructured"
+            searchKey="instance"
+            searchLabel="Instance №"/>
+        <item3
+            jcr:primaryType="nt:unstructured"
+            searchKey="resellerPreviousOrder"
+            searchLabel="Reseller Previous Order №"/>
+        <item4
+            jcr:primaryType="nt:unstructured"
+            searchKey="endUserPreviousOrder"
+            searchLabel="End User Previous Order №"/>
+    </searchOptionsList>
 </jcr:root>
