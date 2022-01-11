@@ -223,12 +223,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.MFRNo)))
             {
                 curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "MFR#");
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "MFR No");
             }
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDNo)))
             {
                 curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD#");
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD No");
             }
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Quantity)))
             {
@@ -289,17 +289,17 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.VendorOrderNo)))
             {
                 curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "VENDOR ORDER#");
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "VENDOR ORDER No");
             }
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDPurchaseOrderNo)))
             {
                 curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD PO#");
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD PO No");
             }
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ContractNo)))
             {
                 curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "CONTRACT");
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "CONTRACT No");
             }
             if (exportedFields.Contains(nameof(OrderDetailsExportedFields.StartDate)))
             {
@@ -344,13 +344,13 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void GenerateOrderDetailSection(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, string orderNumber, string poDate, string poNumber, string endUserPO)
         {
-            SetCell(xlRow + 4, xlCol + 1, wsOrderDetail, "Order#");
+            SetCell(xlRow + 4, xlCol + 1, wsOrderDetail, "Order No");
             SetCell(xlRow + 4, xlCol + 2, wsOrderDetail, orderNumber);
             SetCell(xlRow + 5, xlCol + 1, wsOrderDetail, "Placed On");
             SetCell(xlRow + 5, xlCol + 2, wsOrderDetail, poDate);
-            SetCell(xlRow + 6, xlCol + 1, wsOrderDetail, "PO#");
+            SetCell(xlRow + 6, xlCol + 1, wsOrderDetail, "PO No");
             SetCell(xlRow + 6, xlCol + 2, wsOrderDetail, poNumber);
-            SetCell(xlRow + 7, xlCol + 1, wsOrderDetail, "End Customer PO#");
+            SetCell(xlRow + 7, xlCol + 1, wsOrderDetail, "End Customer PO No");
             SetCell(xlRow + 7, xlCol + 2, wsOrderDetail, endUserPO);
         }
 
@@ -390,7 +390,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         private void GenerateOrderDetailHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
         {
             var headerRange = wsOrderDetail.Cells[xlRow + 2, xlCol, xlRow + 2, xlCol + 19];
-            SetOrderHeaderStyle(xlRow + 2, xlCol, xlRow + 2, xlCol + 19, wsOrderDetail, "PO# Please cancel test order Order Details");
+            SetOrderHeaderStyle(xlRow + 2, xlCol, xlRow + 2, xlCol + 19, wsOrderDetail, "PO No Please cancel test order Order Details");
             headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
