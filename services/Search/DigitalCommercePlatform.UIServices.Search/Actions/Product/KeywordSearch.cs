@@ -45,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             }
         }
 
-        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService);
+        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -56,6 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly IItemsPerPageService _itemsPerPageService;
             private readonly string _catalog;
             private readonly IDefaultIndicatorsService _defaultIndicatorsService;
+            private readonly IMarketService _marketService;
             private const string _categories = "CATEGORIES";
 
             public Handler(KeywordSearchHandlerArgs args)
@@ -67,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _itemsPerPageService = args.ItemsPerPageService;
                 _catalog = args.SiteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
                 _defaultIndicatorsService = args.DefaultIndicatorsService;
+                _marketService = args.MarketService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -98,6 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 appRequest.GetDetails = new Dictionary<Enums.Details, bool> { { Enums.Details.TopRefinementsAndResult, true }, { Enums.Details.Price, true }, { Enums.Details.Authorizations, true } };
                 appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 appRequest.PageSize = _itemsPerPageService.GetDefaultItemsPerPage();
+                appRequest.Territories = _marketService.GetMarkets(request.ProfileId);
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
                 if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)

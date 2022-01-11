@@ -25,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private Mock<ISiteSettings> _siteSettingsMock;
         private readonly Mock<ISortService> _sortServiceMock;
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
+        private readonly Mock<IMarketService> _marketServiceMock;
         private readonly Mock<IDefaultIndicatorsService> _defaultIndicatorsServiceMock;
 
         public KeywordSearchTests()
@@ -37,6 +38,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _siteSettingsMock.Setup(s => s.TryGetSetting("Search.UI.DefaultIndicators")).Returns("[{ \"Group\":\"AvailabilityType\", \"Refinements\":[{ \"Id\":\"DropShip\", \"ValueId\":\"Y\" },{ \"Id\": \"Warehouse\", \"ValueId\": \"Y\" }, { \"Id\":\"Virtual\", \"ValueId\":\"Y\" }]},{ \"Group\":\"ProductStatus\", \"Refinements\":[{\"Id\":\"DisplayStatus\",\"ValueId\":\"Allocated\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"PhasedOut\"},{\"Id\":\"DisplayStatus\",\"ValueId\":\"Active\"}]},{\"Group\":\"InStock\",\"Refinements\":[{\"Id\":\"InStock\",\"ValueId\":\"Y\"}]}]");
             _sortServiceMock = new Mock<ISortService>();
             _itemsPerPageServiceMock = new Mock<IItemsPerPageService>();
+
+            _marketServiceMock = new Mock<IMarketService>();
 
             _defaultIndicatorsServiceMock = new Mock<IDefaultIndicatorsService>();
         }
@@ -164,6 +167,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
 
-        private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object, _defaultIndicatorsServiceMock.Object));
+        private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object, _defaultIndicatorsServiceMock.Object, _marketServiceMock.Object));
     }
 }

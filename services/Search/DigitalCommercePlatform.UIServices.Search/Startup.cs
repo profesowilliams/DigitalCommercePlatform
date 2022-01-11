@@ -47,6 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddScoped<IProfileService, ProfileService>();
 
             services.AddScoped<IDefaultIndicatorsService, DefaultIndicatorsService>();
+
+            services.AddScoped<IMarketService, MarketService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
