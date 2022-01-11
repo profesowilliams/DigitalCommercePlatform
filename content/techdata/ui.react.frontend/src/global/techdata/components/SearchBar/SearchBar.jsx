@@ -122,15 +122,10 @@ const SearchBar = ({ data, componentProp }) => {
    * @returns 
    */
   const getSearchUrl = async (searchTerm) => {
-    
     if (hasDCPAccess(userData) && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       const urlResponse = await getURLToSearchInGrid(searchTerm)
       return urlResponse;
-    } else if ((selectedArea.area === "quote" || selectedArea.area === "order")) {
-      const urlResponse = await getURLToSearchInGrid(searchTerm)
-      return urlResponse;
-    }
-     else {
+    } else {
       let searchTargetUrl =
           searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
       if (getShopLoginUrlPrefix() !== "") {
