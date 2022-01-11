@@ -156,7 +156,7 @@ function TopItemsBarChart(props) {
 						</div>
 					</Fragment>
 				) : (
-					<Fragment> Loading... </Fragment>
+					<Fragment> <div class="spinner"><div class="loading">Loading…</div></div> </Fragment>
 				)}
 			</div>
 		</section>

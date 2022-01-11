@@ -104,7 +104,7 @@ const MyConfigurations = ({ componentProp }) => {
       ) : error ? (
         <p> Error </p>
       ) : (
-        <p> Loading... </p>
+        <p>  <div class="spinner"><div class="loading">Loading…</div></div>  </p>
       )}
     </div>
   );

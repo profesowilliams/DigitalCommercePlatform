@@ -109,7 +109,7 @@ function MyRenewals(props) {
 					)}
 				</Fragment>
 			) : (
-				<Fragment> Loading... </Fragment>
+				<Fragment> <div class="spinner"><div class="loading">Loading…</div></div> </Fragment>
 			)}
 		</section>
 	);
