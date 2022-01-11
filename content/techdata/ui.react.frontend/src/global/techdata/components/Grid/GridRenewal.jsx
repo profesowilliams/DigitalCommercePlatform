@@ -106,6 +106,10 @@ function GridRenewal(props) {
       onCellValueChanged={onModelUpdated}
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}
+      icons={{
+        groupExpanded: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
+        groupContracted: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
+      }}
     >
       {filteredColumns.map((column) => {
         return (
@@ -149,7 +153,7 @@ function GridRenewal(props) {
       if (el.cellRenderer) renderers[el.field] = el.cellRenderer;
       // attach detail renderer if exist
       if (el.expandable && el.detailRenderer)
-      renderers.$$detailRenderer = el.detailRenderer;
+        renderers.$$detailRenderer = el.detailRenderer;
       filteredColumns.push(el);
     }
   });

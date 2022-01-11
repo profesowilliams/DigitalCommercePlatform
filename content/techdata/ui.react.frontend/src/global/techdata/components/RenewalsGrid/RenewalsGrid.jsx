@@ -86,7 +86,7 @@ function RenewalsGrid(props) {
             </button>
             {currentPage} of {totalPaginationCounter}{" "}
             <button
-              disabled={currentPage === totalPaginationCounter}
+              disabled={currentPage === totalPaginationCounter || !totalPaginationCounter}
               onClick={incrementHandler}
             >
               <i className="fas fa-chevron-right"></i>

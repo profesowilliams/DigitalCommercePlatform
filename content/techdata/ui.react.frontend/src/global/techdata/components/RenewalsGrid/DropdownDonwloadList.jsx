@@ -1,6 +1,6 @@
 import React from "react";
 
-function DropdownDownloadList(props) {
+function DropdownDownloadList({ data }) {
   return (
     <div className="icon-container">
       <button>
@@ -15,7 +15,7 @@ function DropdownDownloadList(props) {
       |
       <button>
         <i className="far fa-eye"></i>
-        See more
+        See details
       </button>
     </div>
   );

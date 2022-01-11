@@ -67,8 +67,10 @@ export const buttonListColumn = ({
   field: columnKey,
   sortable: sortable,
   expandable: true,
-  valueFormatter: ({}) => "...",
-  detailRenderer: ({}) => <DropdownDownloadList />,
+  valueFormatter: () => "",
+  detailRenderer: ({ data, evt }) => (
+    <DropdownDownloadList data={data} moreData={evt} />
+  ),
 });
 
 export const renewalPlanColumn = ({

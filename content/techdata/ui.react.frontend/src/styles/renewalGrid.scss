@@ -71,3 +71,8 @@ span.ag-group-value {
   font-size: x-large;
   font-weight: bold;
 }
+
+.ag-cell-wrapper.ag-row-group {
+  display: flex;
+  justify-content: center;
+}
