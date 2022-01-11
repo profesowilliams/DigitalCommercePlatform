@@ -1,10 +1,12 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Security.Token;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using DigitalFoundation.Common.Services.Providers.Localization;
+using DigitalFoundation.Common.Services.Providers.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +42,11 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddScoped<IItemsPerPageService, ItemsPerPageService>();
 
             services.AddScoped<KeywordSearchHandlerArgs>();
+
+            services.AddProfileProvider(StartupLogger);
+            services.AddScoped<IProfileService, ProfileService>();
+
+            services.AddScoped<IDefaultIndicatorsService, DefaultIndicatorsService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

@@ -1,8 +1,10 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Enums;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using FluentValidation;
 using MediatR;
@@ -19,11 +21,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
         {
             public bool IsAnonymous { get; set; }
             public FullSearchRequestModel FullSearchRequestModel { get; set; }
+            public SearchProfileId ProfileId { get; set; }
 
-            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel)
+            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel, SearchProfileId profileId)
             {
                 IsAnonymous = isAnonymous;
                 FullSearchRequestModel = fullSearchRequestModel;
+                ProfileId = profileId;
             }
         }
 
@@ -80,14 +84,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 if (appRequest.Sort is null)
                 {
-                    appRequest.Sort = _sortService.GetDefaultSortDto();
+                    appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 }
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous).ConfigureAwait(false);
 
                 if (request.FullSearchRequestModel.GetRefinements)
                 {
-                    response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort);
+                    response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort, request.ProfileId);
                     response.ItemsPerPageOptions = _itemsPerPageService.GetItemsPerPageOptionsBasedOnRequest(request.FullSearchRequestModel.PageSize);
                 }
 

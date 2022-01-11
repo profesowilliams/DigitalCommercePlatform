@@ -1,9 +1,10 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
-using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Providers.Settings;
 using MediatR;
@@ -23,12 +24,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public string Keyword { get; set; }
             public string CategoryId { get; set; }
             public string Catalog { get; set; }
+            public SearchProfileId ProfileId { get; set; }
 
-            public Request(bool isAnonymous, string keyword, string categoryId)
+            public Request(bool isAnonymous, string keyword, string categoryId, SearchProfileId profileId)
             {
                 IsAnonymous = isAnonymous;
                 Keyword = keyword;
                 CategoryId = categoryId;
+                ProfileId = profileId;
             }
         }
 
@@ -42,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             }
         }
 
-        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService);
+        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -52,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly ISortService _sortService;
             private readonly IItemsPerPageService _itemsPerPageService;
             private readonly string _catalog;
-            private readonly List<RefinementGroupRequestDto> _defaultIndicators;
+            private readonly IDefaultIndicatorsService _defaultIndicatorsService;
             private const string _categories = "CATEGORIES";
 
             public Handler(KeywordSearchHandlerArgs args)
@@ -63,36 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _sortService = args.SortService;
                 _itemsPerPageService = args.ItemsPerPageService;
                 _catalog = args.SiteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
-                _defaultIndicators = JsonHelper.DeserializeObjectSafely<List<RefinementGroupRequestDto>>(
-                    value: args.SiteSettings.TryGetSetting("Search.UI.DefaultIndicators")?.ToString(),
-                    settings: JsonSerializerSettingsHelper.GetJsonSerializerSettings(),
-                    defaultValue: new List<RefinementGroupRequestDto>() {
-                        new RefinementGroupRequestDto(){
-                            Group = "AvailabilityType",
-                            Refinements = new List<RefinementRequestDto>()
-                            {
-                                new RefinementRequestDto(){ Id = "DropShip", ValueId = "Y" },
-                                new RefinementRequestDto(){ Id = "Warehouse", ValueId = "Y" },
-                                new RefinementRequestDto(){ Id = "Virtual", ValueId = "Y" }
-                            }
-                        },
-                         new RefinementGroupRequestDto(){
-                            Group = "ProductStatus",
-                            Refinements = new List<RefinementRequestDto>()
-                            {
-                                new RefinementRequestDto(){ Id = "DisplayStatus", ValueId = "Allocated" },
-                                new RefinementRequestDto(){ Id = "DisplayStatus", ValueId = "PhasedOut" },
-                                new RefinementRequestDto(){ Id = "DisplayStatus", ValueId = "Active" }
-                            }
-                        },
-                         new RefinementGroupRequestDto(){
-                            Group = "InStock",
-                            Refinements = new List<RefinementRequestDto>()
-                            {
-                                new RefinementRequestDto(){ Id = "InStock", ValueId = "Y" }
-                            }
-                        }
-                    });
+                _defaultIndicatorsService = args.DefaultIndicatorsService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -120,9 +94,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     };
                 }
                 appRequest.RefinementGroups ??= new List<RefinementGroupRequestDto>();
-                appRequest.RefinementGroups.AddRange(_defaultIndicators);
+                appRequest.RefinementGroups.AddRange(_defaultIndicatorsService.GetDefaultIndicators(request.ProfileId) ?? new());
                 appRequest.GetDetails = new Dictionary<Enums.Details, bool> { { Enums.Details.TopRefinementsAndResult, true }, { Enums.Details.Price, true }, { Enums.Details.Authorizations, true } };
-                appRequest.Sort = _sortService.GetDefaultSortDto();
+                appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 appRequest.PageSize = _itemsPerPageService.GetDefaultItemsPerPage();
 
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
@@ -131,7 +105,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     response.Products.FirstOrDefault().IsExactMatch = true;
                 }
 
-                response.SortingOptions = _sortService.GetDefaultSortingOptions();
+                response.SortingOptions = _sortService.GetDefaultSortingOptions(request.ProfileId);
                 response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
 
                 return new Response(response);

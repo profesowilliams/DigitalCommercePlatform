@@ -1,4 +1,5 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
@@ -122,7 +123,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         {
             //arrange
             var sut = new FullSearch.Validator();
-            var request = new FullSearch.Request(false, new Models.FullSearch.FullSearchRequestModel());
+            var request = new FullSearch.Request(false, new Models.FullSearch.FullSearchRequestModel(), null);
 
             //act
             var result = sut.TestValidate(request);

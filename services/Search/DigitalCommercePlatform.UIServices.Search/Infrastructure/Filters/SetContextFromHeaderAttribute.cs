@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters
 
             if (!context.HttpContext.Request.Headers.TryGetValue("TraceId", out StringValues traceId) || string.IsNullOrWhiteSpace(traceId))
             {
-                validationErrors.Add("The TraceId field is required.");
+                traceId = Guid.NewGuid().ToString();
             }
 
             if (validationErrors.Any())

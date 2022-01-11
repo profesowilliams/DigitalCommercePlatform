@@ -1,4 +1,5 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.Filters;
@@ -44,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("FullSearch")]
         public async Task<ActionResult<FullSearchResponseModel>> FullSearch(FullSearchRequestModel productSearch)
         {
-            var response = await Mediator.Send(new FullSearch.Request(_context.User == null, productSearch)).ConfigureAwait(false);
+            var response = await Mediator.Send(new FullSearch.Request(!IsLoggedIn, productSearch, new(_context.User?.ID, _context.User?.ActiveCustomer?.CustomerNumber))).ConfigureAwait(false);
             response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
@@ -54,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("KeywordSearch")]
         public async Task<ActionResult<FullSearchResponseModel>> KeywordSearch(string keyword, string categoryId)
         {
-            var response = await Mediator.Send(new KeywordSearch.Request(_context.User == null, keyword, categoryId)).ConfigureAwait(false);
+            var response = await Mediator.Send(new KeywordSearch.Request(!IsLoggedIn, keyword, categoryId, new(_context.User?.ID, _context.User?.ActiveCustomer?.CustomerNumber))).ConfigureAwait(false);
             response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
