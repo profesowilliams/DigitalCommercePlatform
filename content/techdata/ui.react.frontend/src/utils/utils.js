@@ -78,6 +78,10 @@ export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
             responseType: 'blob',
         };
         const response = await usPost(`${url}`, postData, params);
+        if (response.data.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+            alert('There was an error encountered during export.');
+            return;
+        }
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(response.data);
         link.download = name;
