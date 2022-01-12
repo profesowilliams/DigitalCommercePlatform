@@ -35,6 +35,7 @@ function GridRenewal(props) {
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
   const gridApi = useRef(null);
+  const serverError = useRef(false);
   const DEFAULT_ROW_HEIGHT = 25;
 
   const updatingFinished =
@@ -50,9 +51,14 @@ function GridRenewal(props) {
   };
 
   const CustomNoRowsOverlay = (props) => {
+    useEffect(() => {
+      const timer = setTimeout(() =>{
+        if (serverError.current) document.location.reload(true)},1800)
+      return () => {clearTimeout(timer); serverError.current = false};
+    },[])
     return (
       <div className=" customErrorNoRows">
-        {props.noRowsMessageFunc(props)}
+        {serverError.current ? config['errorGettingDataMessage'] : props.noRowsMessageFunc(props)}
         <i className="far info-circle errorIcon"></i>
       </div>
     );
@@ -189,7 +195,13 @@ function GridRenewal(props) {
         const sortDir = params.request.sortModel?.[0]?.sort;
 
         const handleNoRowMsg = (response) => {
-          if (response.isError) {
+          
+          if (!response) {           
+            noRowsErrorMessage.current = config['errorGettingDataMessage']
+            serverError.current = true;
+            gridApi.current.showNoRowsOverlay();
+          }
+          if (response?.isError) {
             noRowsErrorMessage.current =
               config[`errorGettingDataMessage${response.code}`];
             gridApi.current.showNoRowsOverlay();
@@ -209,10 +221,13 @@ function GridRenewal(props) {
           sortDir,
           handleNoRowMsg
         ).then((response) => {
-          let rowData = response?.items?.response ?? 0;
-          rowData = rowData.map((data) => {
+          
+          let rowData = response  ? response?.items?.response ?? 0 : [];
+
+          rowData = rowData.length && rowData.map((data) => {
             return { ...data, actions: true };
           });
+
           params.success({
             rowData,
             lastRow: rowData.length ?? 0,
@@ -266,11 +281,6 @@ function GridRenewal(props) {
         }
       }
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
-
-      if (response?.data?.error.isError) {
-        response.data.error.code = normalizeErrorCode(response.data.error.code);
-        return response?.data?.error;
-      }
 
       return response?.data?.content;
     }

@@ -6627,12 +6627,23 @@ app.post("/ui-renewal/v1/Search", (req, res) => {
     responseItemList = responseItemList.filter(({ endUserType }) =>
       payload.EndUserType.includes(formatValue(endUserType.toLowerCase()))
     );
+  
+  if (payload?.DueDateFrom){
+    responseItemList = responseItemList.filter(({dueDate}) => 
+       new Date(dueDate).getTime() >= new Date(payload.DueDateFrom).getTime()
+    )
+  }
+  if (payload?.DueDateFrom && payload?.DueDateTo){
+    responseItemList = responseItemList.filter(({dueDate}) => 
+       new Date(dueDate).getTime() >= new Date(payload.DueDateFrom).getTime() &&
+       new Date(dueDate).getTime() <= new Date(payload.DueDateTo).getTime() 
+    )
+  }
   response.content.items.response = responseItemList;
   res.json(response);
   console.log(
-    "🚀 ~ file: app.js ~ line 6627 ~ app.post ~ response",
     response.content.items.response.map(
-      (e) => e.endUserType + " " + e.programName
+      (e) => e.dueDate
     )
   );
 });
