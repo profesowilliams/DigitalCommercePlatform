@@ -37,7 +37,6 @@ using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
-    [ExcludeFromCodeCoverage]
     public class AccountService : IAccountService
     {
         private readonly string _configurationsServiceUrl;
@@ -53,21 +52,28 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly IRenewalsService _renewalsService;
         private readonly IMapper _mapper;
 
+        public record AccountServiceArgs(
+            IMiddleTierHttpClient middleTierHttpClient,
+            IAppSettings appSettings,
+            ILogger<AccountService> logger,
+            IMapper mapper,
+            IRenewalsService renewalsService,
+            IUIContext uiContext
+            );
 
-        public AccountService(IMiddleTierHttpClient middleTierHttpClient, IAppSettings appSettings,
-            ILogger<AccountService> logger, IMapper mapper, IRenewalsService renewalsService, IUIContext uiContext)
+        public AccountService(AccountServiceArgs args)
         {
-            _uiContext = uiContext;
-            _middleTierHttpClient = middleTierHttpClient;
-            _logger = logger;
-            _mapper = mapper;
-            _configurationsServiceUrl = appSettings.GetSetting("App.Configuration.Url");
-            _ordersServiceUrl = appSettings.GetSetting("App.Order.Url");
-            _quoteServiceURL = appSettings.GetSetting("App.Quote.Url");
-            _cartServiceURL = appSettings.GetSetting("App.Cart.Url");
-            _priceServiceURL = appSettings.GetSetting("App.Price.Url");
-            _renewalsService = renewalsService ?? throw new ArgumentNullException(nameof(renewalsService));
-            _customerServiceURL = appSettings.GetSetting("App.Customer.Url");
+            _uiContext = args.uiContext;
+            _middleTierHttpClient = args.middleTierHttpClient;
+            _logger = args.logger;
+            _mapper = args.mapper;
+            _configurationsServiceUrl = args.appSettings.GetSetting("App.Configuration.Url");
+            _ordersServiceUrl = args.appSettings.GetSetting("App.Order.Url");
+            _quoteServiceURL = args.appSettings.GetSetting("App.Quote.Url");
+            _cartServiceURL = args.appSettings.GetSetting("App.Cart.Url");
+            _priceServiceURL = args.appSettings.GetSetting("App.Price.Url");
+            _renewalsService = args.renewalsService ?? throw new ArgumentNullException(nameof(args.renewalsService));
+            _customerServiceURL = args.appSettings.GetSetting("App.Customer.Url");
         }
 
         private static List<OpenResellerItems> AddSequenceNumber(List<OpenResellerItems> openItems)
@@ -94,7 +100,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
                 var quotesSummary = await _middleTierHttpClient.GetAsync<Response>(url);
 
-
                 response = new ConfigurationsSummaryModel
                 {
                     Quoted = quotesSummary.Quoted,
@@ -106,14 +111,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             catch (RemoteServerHttpException ex)
             {
-
                 if (ex.Code == HttpStatusCode.BadRequest && ex.InnerException is RemoteServerHttpException innerException)
                 {
                     object exceptionDetails = innerException?.Details;
                     object body = exceptionDetails?.GetType().GetProperty("Body")?.GetValue(exceptionDetails, null);
                     throw new UIServiceException("Bad Request GetConfigurationsSummary for user id : " + _uiContext.User.ID, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
-                else if(ex.Code == HttpStatusCode.NotFound)
+                else if (ex.Code == HttpStatusCode.NotFound)
                 {
                     _logger.LogError(ex, "No records Found GetConfigurationsSummaryAsync : " + nameof(AccountService));
                     return new ConfigurationsSummaryModel
@@ -129,7 +133,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 _logger.LogError(e, "error while calling GetConfigurationsSummaryAsync : " + nameof(AccountService));
                 throw new UIServiceException("error while calling GetConfigurationsSummaryAsync for user id : " + _uiContext.User.ID, (int)UIServiceExceptionCode.GenericBadRequestError);
-
             }
             return response;
         }
@@ -149,26 +152,22 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var dealsSummary = await _middleTierHttpClient.GetAsync<DigitalFoundation.Common.Features.Contexts.Models.FindResponse<DealsBase>>(url);
 
             var response = new List<DealsSummaryModel>();
-            
 
             for (int i = 1; i < 4; i++)
             {
                 DealsSummaryModel objDeal = new DealsSummaryModel
                 {
-
                     Value = i == 1 ? dealsSummary?.Data?.Where(t => t.ExpirationDate <= DateTime.Now.AddDays(2)).Count() :
                             i == 2 ? dealsSummary?.Data?.Where(t => t.ExpirationDate <= DateTime.Now.AddDays(7)).Count() :
                             dealsSummary?.Data?.Where(t => t.ExpirationDate > DateTime.Now.AddDays(7)).Count()
-
                 };
                 response.Add(objDeal);
             }
-            return await Task.FromResult(response);
+            return response;
         }
 
-        public async Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request)
-        {            
-
+        public DealModel GetTopDeals(GetTopDeals.Request request)
+        {
             var deals = new List<OpenResellerItems>();
             for (int i = 0; i < 5; i++)
             {
@@ -187,7 +186,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             {
                 Items = deals
             };
-            return await Task.FromResult(response);
+            return response;
         }
 
         public async Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request)
@@ -197,7 +196,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return response;
         }
 
-        public async Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request)
+        public GetConfigurationsForModel GetConfigurationsFor(GetConfigurationsFor.Request request)
         {
             var items = new List<GetConfigurationsForItem>();
             var randomNumber = GetRandomNumber(100, 600);
@@ -217,7 +216,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 TotalNumberOfConfigurationsItems = items.Count
             };
 
-            return await Task.FromResult(result);
+            return result;
         }
 
         public static int GetRandomNumber(int min, int max)
@@ -259,7 +258,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 return 0;
             }
         }
-
 
         private async Task<int> GetExpiringDeals()
         {
@@ -451,7 +449,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             return decimal.Parse(ammount);
             // If some of values are null we are returning zero. If IN_PROCESS is null it means zero orders in process
-            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements 
+            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements
         }
 
         private int GetCountFor(List<OrderStatsDataDto> orderStatsDataDtos, string orderStatus)
@@ -463,7 +461,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             return int.Parse(count);
             // If some of values are null we are returning zero. If IN_PROCESS is null it means zero orders in process
-            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements 
+            // SingleOrDefault here is to break execution if more than one item is present - we can't have two  IN_PROCESS elements
         }
 
         public async Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request)
@@ -471,26 +469,33 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var customerId = _uiContext.User.ActiveCustomer?.CustomerNumber;
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
             var response = await _middleTierHttpClient.GetAsync<IEnumerable<AddressDetails>>(customerURL);
-            if (response.Any())
+
+            if (!response.Any())
+                return response;
+
+            var addressesDetails = response.First();
+
+            if (!(bool)addressesDetails.addresses.Any())
+                return response;
+
+            if (request.IgnoreSalesOrganization == false)
             {
                 // Current requirement is if system is 2 to take the 0100 as sales org
                 var salesOrg = _uiContext.User.ActiveCustomer?.System == "2" ? "0100" : string.Empty;
-
-                if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria && t.SalesOrganization == salesOrg).ToList();
-                else if (response.FirstOrDefault().addresses.Any() && request.Criteria != "ALL" && request.IgnoreSalesOrganization == true)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.AddressType.ToUpper() == request.Criteria).ToList();
-                else if (response.FirstOrDefault().addresses.Any() && request.IgnoreSalesOrganization == false)
-                    response.FirstOrDefault().addresses = response.FirstOrDefault().addresses.Where(t => t.SalesOrganization == salesOrg).ToList();
-                else
-                    return response;
+                addressesDetails.addresses = addressesDetails.addresses.Where(t => t.SalesOrganization == salesOrg).ToList();
             }
+
+            if (request.Criteria != "ALL")
+            {
+                addressesDetails.addresses = addressesDetails.addresses
+                    .Where(t => t.AddressType.Equals(request.Criteria, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            }
+
             return response;
         }
 
         public async Task<List<OrderModel>> GetTopOrdersAsync(GetTopOrders.Request request)
         {
-
             TextInfo setTextCase = CultureInfo.CurrentCulture.TextInfo;
 
             request.Sortby = string.IsNullOrWhiteSpace(request.Sortby) ? "Price" : request.Sortby;
@@ -503,7 +508,5 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var orderNumberDto = await _middleTierHttpClient.GetAsync<OrdersContainer>(url);
             return orderNumberDto.Data.ToList();
         }
-
-
     }
 }

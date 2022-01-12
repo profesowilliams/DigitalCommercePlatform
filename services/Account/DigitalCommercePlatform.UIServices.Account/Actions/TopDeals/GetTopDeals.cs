@@ -41,11 +41,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.TopDeals
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var deals = await _accountService.GetTopDealsAsync(request);
+                var deals = _accountService.GetTopDeals(request);
                 var mappedDeals = _mapper.Map<Response>(deals);
-                return new ResponseBase<Response> { Content = mappedDeals };
+                return Task.FromResult(new ResponseBase<Response> { Content = mappedDeals });
             }
         }
 

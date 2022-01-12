@@ -56,10 +56,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFo
                 _logger = logger;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var configurationsModel = await _accountServices.GetConfigurationsForAsync(request);
-                return new ResponseBase<Response> { Content = new Response { ConfigurationsData = configurationsModel } };
+                var configurationsModel = _accountServices.GetConfigurationsFor(request);
+                return Task.FromResult(new ResponseBase<Response> { Content = new Response { ConfigurationsData = configurationsModel } });
             }
         }
 

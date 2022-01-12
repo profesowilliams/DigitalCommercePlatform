@@ -25,19 +25,31 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
     public interface IAccountService
     {
         Task<ConfigurationsSummaryModel> GetConfigurationsSummaryAsync(GetConfigurationsSummary.Request request);
+
         Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request);
+
         Task<List<OrderModel>> GetTopOrdersAsync(GetTopOrders.Request request);
-        Task<DealModel> GetTopDealsAsync(GetTopDeals.Request request);
+
+        DealModel GetTopDeals(GetTopDeals.Request request);
+
         Task<List<SavedCartDetailsModel>> GetSavedCartListAsync(GetCartsList.Request request);
-        Task <ActionItemsModel>GetActionItemsSummaryAsync(GetActionItems.Request request);
-        Task <TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
+
+        Task<ActionItemsModel> GetActionItemsSummaryAsync(GetActionItems.Request request);
+
+        Task<TopConfigurationDto> GetTopConfigurationsAsync(GetTopConfigurations.Request request);
+
         Task<QuoteStatistics> MyQuotesSummaryAsync(MyQuoteDashboard.Request request);
+
         Task<FindResponse<IEnumerable<QuoteModel>>> GetTopQuotesAsync(GetTopQuotes.Request request);
+
         Task<List<string>> GetRenewalsExpirationDatesAsync(string customerNumber, string salesOrganization, int numberOfDaysToSubtract);
+
         Task<MyOrdersDashboard> GetMyOrdersSummaryAsync(GetMyOrders.Request request);
+
         Task<MyOrdersStatusDashboard> GetMyOrdersStatusAsync(GetMyOrdersStatus.Request request);
 
-        Task<GetConfigurationsForModel> GetConfigurationsForAsync(GetConfigurationsFor.Request request);
+        GetConfigurationsForModel GetConfigurationsFor(GetConfigurationsFor.Request request);
+
         Task<IEnumerable<AddressDetails>> GetAddress(GetAddress.Request request);
     }
 }
