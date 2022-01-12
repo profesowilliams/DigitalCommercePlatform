@@ -17,7 +17,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       setShowSecondary((prevSecondary) => !prevSecondary);
     }
   };
-  const handleLinkClick = (linkUrl, dcpLink, linkTitle) => {
+  const handleLinkClick = (linkUrl, dcpLink, linkTitle, linkTarget ) => {
       let finalLinkUrl = hasDCPAccess(userDataCheck) ? dcpLink : linkUrl 
       if(finalLinkUrl != undefined){
         DataLayerUtils.pushEvent("click", {
@@ -26,7 +26,9 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
           type: "link",
           category: "profile dropdown",
         });
-        window.location.href = finalLinkUrl
+        linkTarget ?
+          window.open(finalLinkUrl, 'blank') :
+          window.location.href = finalLinkUrl;
       }
   }
 
@@ -112,13 +114,13 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               <span>EC ID: {userId}</span>
             </p>
             <ul className="cmp-sign-in-list-content">
-              {items.map(({ linkTitle, dcpLink, linkUrl, iconUrl }) => (
+              {items.map(({ linkTitle, dcpLink, linkUrl, iconUrl, linkTarget }) => (
                 <li
                   key={Symbol(linkTitle).toString()}
                   className="cmp-sign-in-list-content--item"
                 >
                   <a
-                     onClick={()=>handleLinkClick(linkUrl, dcpLink, linkTitle)}
+                    onClick={() => handleLinkClick(linkUrl, dcpLink, linkTitle, linkTarget )}
                     className="cmp-sign-in-list-content--item-link"
                   >
                     <i
@@ -161,6 +163,7 @@ DropdownMenu.propTypes = {
       LinkUrl: PropTypes.string,
       dcpLink: PropTypes.string,
       iconUrl: PropTypes.string,
+      linkTarget: PropTypes.bool
     })
   ).isRequired,
   userDataCheck: PropTypes.shape({
