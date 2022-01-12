@@ -63,6 +63,7 @@ const SearchBar = ({ data, componentProp }) => {
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [isFocus, setFocus] = useState(false);
+  const [originURL, setOriginURL] = useState(null);
   
   const [width] = useWindowSize();
   const mobileState = width <= 767;
@@ -73,6 +74,15 @@ const SearchBar = ({ data, componentProp }) => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
     return () => clearTimeout(timeOutId);
   }, [searchTermText]);
+
+  useEffect(() => {
+    console.log("🚀 ~ file: OrdersGridSearch.jsx ~ line 30 ~ useEffect ~ window.location", window.location)
+    const urlOrigin = window.location.origin;
+    console.log("🚀 ~ file: SearchBar.jsx ~ line 81 ~ useEffect ~ urlOrigin", urlOrigin)
+    setOriginURL(urlOrigin);
+    // const params = new URLSearchParams(window.location.search);
+    // console.log("🚀 ~ file: SearchBar.jsx ~ line 80 ~ useEffect ~ params", params)
+  }, []);
 
   const replaceSearchTerm = (originalStr, searchTerm) => {
     return originalStr.replace("{search-term}", searchTerm);
@@ -98,21 +108,30 @@ const SearchBar = ({ data, componentProp }) => {
    */
   const getURLToSearchInGrid = async (searchTerm) => {
     try {
-      const dcpDomainEndPoint = uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm);
-      const response = await axios.get(dcpDomainEndPoint);
-      if (response?.data?.content?.items?.length === 1) {
-        const detailsRow = response.data.content.items[0];
-        return dcpDomain + `${selectedArea.detailsPage}?id=${detailsRow.id}`; // return of details
+      // Validate the place where from try to search
+      if (dcpDomain && dcpDomain === originURL) {
+        const dcpDomainEndPoint = uiServiceDomain + selectedArea.dcpLookupEndpoint.replace('{search-term}', searchTerm);
+        const response = await axios.get(dcpDomainEndPoint); //validation
+        if (response?.data?.content?.items?.length === 1) {
+          const detailsRow = response.data.content.items[0];
+          return dcpDomain + `${selectedArea.detailsPage}?id=${detailsRow.id}`; // send to details
+        } else {
+          return dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // send to partial search
+        }
       } else {
-        return dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`;
+          return dcpDomain + `${selectedArea.partialEndPoint}?id=${searchTerm}`; // force send to partial search
       }
-      
     } catch (err) {
       console.error(
           `Error calling UI Serivce Endpoint (${
               uiServiceDomain + selectedArea.dcpLookupEndpoint
           }): ${err}`
       );
+      // What should happen if some error happened??? 
+      // keep in the page???
+      // redirect to shop????
+      // return searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
+
     }
   }
 
@@ -122,10 +141,11 @@ const SearchBar = ({ data, componentProp }) => {
    * @returns 
    */
   const getSearchUrl = async (searchTerm) => {
+    // if the user have DCP Access can search by the DCP domain
     if (hasDCPAccess(userData) && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       const urlResponse = await getURLToSearchInGrid(searchTerm)
       return urlResponse;
-    } else {
+    } else { // If not so redirect to shop
       let searchTargetUrl =
           searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
       if (getShopLoginUrlPrefix() !== "") {
