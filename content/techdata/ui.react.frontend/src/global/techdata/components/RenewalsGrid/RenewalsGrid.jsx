@@ -70,6 +70,7 @@ function RenewalsGrid(props) {
   const gridConfig = {
     ...componentProp,
     paginationStyle: "none",
+    noRowsErrorMessage:'No data found'
   };
 
   return (

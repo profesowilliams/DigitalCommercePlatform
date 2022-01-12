@@ -30,7 +30,7 @@
       background: none;
       color: #555555;
     }
-    i {
+    i, svg {
       color: #00558c;
     }
     &__button {
@@ -60,7 +60,7 @@
     button {
       cursor: pointer;
       background-color: inherit;
-      svg {
+      svg, i {
         margin-right: 0.7em;
       }
     }

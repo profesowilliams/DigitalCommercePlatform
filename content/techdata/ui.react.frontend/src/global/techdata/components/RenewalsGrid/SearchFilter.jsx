@@ -77,24 +77,31 @@ function SearchFilter({
   function triggerSearch (){
     const {option} = values;   
     const inputValue = inputRef.current.value;
+    if (!inputValue) return fetchAll()
     const query = {
       queryString : `&${option}=${inputValue}`
     }
     onQueryChanged(query);
-    // onReset();
-    // setSwitchDropdown(false);
+    onReset();
+    setSwitchDropdown(false);
   }
+
+  function fetchAll () {
+    onQueryChanged()
+    onReset();
+    setSwitchDropdown(false);
+  }
+
   const triggerSearchOnEnter = (event) => {
     if(event.keyCode === 13){
       triggerSearch();
     }
   }
- 
 
   if (option.length) {    
     const chosenFilter = options.find(
       ({searchKey}) => searchKey === option
-    ).label;
+    ).searchLabel;
     return (
       <div className="cmp-search-select-container">
         <div className="cmp-search-select-container__box">
@@ -140,6 +147,7 @@ function SearchFilter({
             {option.searchLabel}
           </label>
         ))}
+          <label onClick={() => fetchAll()}>Reset</label>
           </div>   
         </If>
       </div>   

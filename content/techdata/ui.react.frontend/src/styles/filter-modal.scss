@@ -103,6 +103,9 @@
     border-bottom: 1px solid #d8d8d8;
     > ul,
     > li {
+      label{
+        text-transform: capitalize;
+      }
       &:last-child {
         padding-bottom: 10px;
       }

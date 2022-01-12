@@ -2,9 +2,12 @@
   <div
     data-component="RenewalsGrid"
     data-cmp-type="react"
-    className="cmp-renewals-grid"
-    data-config='
-    {
+    className="cmp-renewals-grid"   
+  ></div>
+</div>
+<script>
+   const renewalsGridDom = document.querySelector("[data-component='RenewalsGrid']");
+   const AEM_DATA = {
       "uiServiceEndPoint":"http://localhost:3000/ui-renewal/v1/Search",
       "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
       "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
@@ -74,6 +77,12 @@
             "type":"plainText"
          },
          {
+            "columnLabel":"End user type",
+            "columnKey":"endUserType",
+            "sortable":true,
+            "type":"plainText"
+         },
+         {
             "columnLabel":"Renewal Plan",
             "columnKey":"renewal",
             "sortable":true,
@@ -111,7 +120,7 @@
          },
          {
             "searchLabel":"Agreement No",
-            "searchKey":"agreementNo"
+            "searchKey":"agreementNumber"
          },
          {
             "searchLabel":"Instance No",
@@ -183,13 +192,19 @@
          },
          {
             "accordionLabel":"End User Type",
-            "filterField":"endUserType",
+            "filterField":"EndUserType",
             "filterOptionsValues":[
                {
-                  "filterOptionLabel":"Academic"
+                  "filterOptionLabel":"academic"
                },
                {
-                  "filterOptionLabel":"Educational"
+                  "filterOptionLabel":"educational"
+               },
+               {
+                  "filterOptionLabel":"corporate"
+               },
+               {
+                  "filterOptionLabel":"goverment"
                }
             ]
          },
@@ -198,6 +213,7 @@
             "filterField":"date"
          }
       ]
-   }'
-  ></div>
-</div>
+   };
+   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+
+</script>

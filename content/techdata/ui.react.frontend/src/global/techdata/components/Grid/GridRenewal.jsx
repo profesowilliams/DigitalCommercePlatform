@@ -198,7 +198,7 @@ function GridRenewal(props) {
             response?.items?.response.length === 0
           ) {
             noRowsErrorMessage.current = config.noRowsErrorMessage;
-            // gridApi.current.showNoRowsOverlay();
+            gridApi.current.showNoRowsOverlay();
           }
         };
 

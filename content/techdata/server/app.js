@@ -613,9 +613,7 @@ app.get("/ui-commerce/v1/order/details", function (req, res) {
     },
   };
   const response =
-    id != 603068538
-      ? utils.getOrderDetailsResponse()
-      : errorObject;
+    id != 603068538 ? utils.getOrderDetailsResponse() : errorObject;
   res.json(response);
 });
 
@@ -635,17 +633,16 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   const pageNumber = req.query.PageNumber || 1;
   const id = req.query.id;
   const idType = req.query.idType;
-  
 
   const items = [];
   const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
   let pageSizeWithParams;
-  if (idType && idType == 'GENERAL?id=00000') {
+  if (idType && idType == "GENERAL?id=00000") {
     pageSizeWithParams = 1;
-  } else if (idType && idType == 'GENERAL?id=11111') {
+  } else if (idType && idType == "GENERAL?id=11111") {
     pageSizeWithParams = 5;
   } else {
-    pageSizeWithParams =  pageSize;
+    pageSizeWithParams = pageSize;
   }
 
   const reseller = id;
@@ -3745,7 +3742,7 @@ app.get("/ui-config/v1/estimations/validate/", function (req, res) {
   });
 });
 
-app.post('/ui-renewal/v1/Search', (req, res) => {
+app.post("/ui-renewal/v1/Search", (req, res) => {
   const response = {
     content: {
       items: {
@@ -3799,7 +3796,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -3818,7 +3815,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Academic",
             renewedDuration: "5 Years",
             agreementNumber: "00819727",
             support: "Basic",
@@ -3909,7 +3906,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -3928,7 +3925,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Educational",
             renewedDuration: "3 Years",
             agreementNumber: "00787589",
             support: "Basic",
@@ -4019,7 +4016,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4038,7 +4035,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Corporate",
             renewedDuration: "1 Year",
             agreementNumber: "00879096",
             support: "Basic",
@@ -4163,7 +4160,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4182,7 +4179,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "5 Years",
             agreementNumber: "00787589",
             support: "Basic",
@@ -4273,7 +4270,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4292,7 +4289,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "3 Years",
             agreementNumber: "00819727",
             support: "Basic",
@@ -4383,7 +4380,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4402,7 +4399,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Academic",
             renewedDuration: "5 Years",
             agreementNumber: "00836503",
             support: "Basic",
@@ -4493,7 +4490,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4512,7 +4509,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Educational",
             renewedDuration: "3 Years",
             agreementNumber: "01052169",
             support: "Basic",
@@ -4603,7 +4600,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4622,7 +4619,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Corporate",
             renewedDuration: "3 Years",
             agreementNumber: "00888195",
             support: "Basic",
@@ -4713,7 +4710,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4732,7 +4729,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "5 Years",
             agreementNumber: "01124170",
             support: "Basic",
@@ -4823,7 +4820,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4842,7 +4839,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Academic",
             renewedDuration: "3 Years",
             agreementNumber: "01127706",
             support: "Basic",
@@ -4933,7 +4930,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -4952,7 +4949,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Educational",
             renewedDuration: "5 Years",
             agreementNumber: "01127706",
             support: "Basic",
@@ -5043,7 +5040,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5062,7 +5059,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Educational",
             renewedDuration: "5 Years",
             agreementNumber: "01486661",
             support: "Production",
@@ -5153,7 +5150,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5172,7 +5169,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Corporate",
             renewedDuration: "3 Years",
             agreementNumber: "01482674",
             support: "Basic",
@@ -5263,7 +5260,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5282,7 +5279,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Corporate",
             renewedDuration: "3 Years",
             agreementNumber: "01486661",
             support: "Production",
@@ -5373,7 +5370,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5393,7 +5390,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
                 "AVT Technology Solutions (Tech Data) United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Academic",
             renewedDuration: "3 Years",
             agreementNumber: "01602469",
             support: "Basic",
@@ -5484,7 +5481,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5503,7 +5500,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "3 Years",
             agreementNumber: "01619970",
             support: "Production",
@@ -5594,7 +5591,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5613,7 +5610,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Educational",
             renewedDuration: "3 Years",
             agreementNumber: "01620729",
             support: "Production",
@@ -5704,7 +5701,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner Subscriber",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5723,7 +5720,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Corporate",
             renewedDuration: "3 Years",
             agreementNumber: "00879096",
             support: "Basic",
@@ -5814,7 +5811,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5833,7 +5830,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "1 Year",
             agreementNumber: "00904252",
             support: "Production",
@@ -5958,7 +5955,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
             vendorSalesRep: null,
             vendorSalesAssociate: null,
             attributes: [],
-            programName: "Pro Partner Program",
+            programName: "Pro Partner",
             quoteCurrent: null,
             firstAvailableOrderDate: "0001-01-01T00:00:00",
             lastOrderDate: "0001-01-01T00:00:00",
@@ -5978,7 +5975,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
                 "AVT Technology Solutions (Tech Data) United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Academic",
             renewedDuration: "5 Years",
             agreementNumber: "01628465",
             support: "Basic",
@@ -6088,7 +6085,7 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
               vendorsTDName: "Tech Data United States",
               vendorsTDNumber: null,
             },
-            endUserType: "Commercial",
+            endUserType: "Goverment",
             renewedDuration: "5 Years",
             agreementNumber: "01124227",
             support: "Basic",
@@ -6616,9 +6613,29 @@ app.post('/ui-renewal/v1/Search', (req, res) => {
   };
   // {ProgramName: [],endUserType: []}
   const payload = req.body;
-  res.json(response);
+  console.log(payload);
 
-})
+  const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
+  let responseItemList = response.content.items.response;
+  if (payload?.ProgramName)
+    responseItemList = responseItemList.filter(({ programName }) =>
+      payload.ProgramName.map((i) => formatValue(i)).includes(
+        formatValue(programName)
+      )
+    );
+  if (payload?.EndUserType)
+    responseItemList = responseItemList.filter(({ endUserType }) =>
+      payload.EndUserType.includes(formatValue(endUserType.toLowerCase()))
+    );
+  response.content.items.response = responseItemList;
+  res.json(response);
+  console.log(
+    "🚀 ~ file: app.js ~ line 6627 ~ app.post ~ response",
+    response.content.items.response.map(
+      (e) => e.endUserType + " " + e.programName
+    )
+  );
+});
 
 app.get("/ui-renewal/v1/Search", function (req, res) {
   //vendor=SupportandSubscriber&endUserType=Academic
@@ -9492,10 +9509,16 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
   };
   console.log("❗❗ req query", req.query);
   const query = req.query;
-  const formatValue = name => name.replace(/\s/g, "").toLowerCase();
+  const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
   let responseItemList = response.content.items.response;
-  if (query.vendor) responseItemList = responseItemList.filter(({programName}) => query.vendor.includes(formatValue(programName)))
-  if (query.endUserType) responseItemList = responseItemList.filter(({endUser}) => query.endUserType.includes(formatValue(endUser.name)) )
+  if (query.agreementNumber)
+    responseItemList = responseItemList.filter(({ agreementNumber }) =>
+    formatValue(query.agreementNumber) === formatValue(agreementNumber)
+    );
+  if (query.endUserType)
+    responseItemList = responseItemList.filter(({ endUser }) =>
+      query.endUserType.includes(formatValue(endUser.name))
+    );
   response.content.items.response = responseItemList;
   res.json(response);
 });
