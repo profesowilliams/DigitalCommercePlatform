@@ -1,12 +1,14 @@
 package com.techdata.core.servlets;
 
 
+import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
 import com.techdata.core.slingcaconfig.FormConfigurations;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
+import org.apache.sling.api.request.RequestParameterMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.caconfig.ConfigurationBuilder;
@@ -19,6 +21,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -32,12 +36,14 @@ import java.util.Map;
 
 import static junit.framework.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith({MockitoExtension.class})
 class FormServletTest {
-    private FormServlet underTest;
+    @InjectMocks
+    FormServlet underTest;
     Method testPopulateEmailAttributesFromCAConfig;
 
     private final AemContext context = new AemContext(ResourceResolverType.RESOURCERESOLVER_MOCK);
@@ -71,11 +77,15 @@ class FormServletTest {
     @Mock
     SlingHttpServletRequest mockRequest;
 
+    @Mock
+    EmailService emailService;
+
 
     byte[] fileBytesMaxAllowed = new byte[1000000];
     byte[] fileBytesAbove = new byte[1000001];
-
-
+    private static final Logger log = LoggerFactory.getLogger(FormServlet.class);
+    @Mock
+    RequestParameterMap value;
 
 
     @BeforeEach
@@ -84,7 +94,14 @@ class FormServletTest {
 
         context.load().json("/com.techdata.core.models/actionItems.json", "/action");
 
-
+        Field field = null;
+        try {
+            field = underTest.getClass().getDeclaredField("emailService");
+            field.setAccessible(true);
+            field.set(underTest, emailService);
+        }catch (NoSuchFieldException | IllegalAccessException e) {
+            log.error("Error occurred in Form Servlet setup", e);
+        }
     }
 
     @Test
@@ -241,6 +258,9 @@ class FormServletTest {
 
         String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
         String[] allowedFileContentTypesMockValue = new String[]{"application/pdf"};
+        String[] emails = new String[]{"test@techdata.com"};
+        String[] groups = new String[]{"author"};
+
 
         when(mockRequest.getResourceResolver()).thenReturn(resourceResolver);
         when(resourceResolver.getResource(any())).thenReturn(resource);
@@ -251,11 +271,25 @@ class FormServletTest {
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
         when(formConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
         when(formConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
-
+        when(formConfigurations.textFieldRegexString()).thenReturn("textFieldRegexExpr");
+        when(mockRequest.getRequestParameterMap()).thenReturn(value);
+        when(formConfigurations.toEmails()).thenReturn(emails);
+        when(formConfigurations.submitterEmailFieldName()).thenReturn("email");
+        when(formConfigurations.confirmationEmailBody()).thenReturn("This is a test email");
+        when(formConfigurations.internalEmailTemplatePath()).thenReturn("/content/template");
+        when(formConfigurations.formSubmissionTargetGroups()).thenReturn(groups);
+        when(formConfigurations.confirmationEmailSubject()).thenReturn("Test Subject");
+        when(formConfigurations.emailSubject()).thenReturn("Test Subject");
+        when(formConfigurations.confirmationEmailTemplatePath()).thenReturn("/content/template.txt");
         when(mockRequest.getMethod()).thenReturn("POST");
         when(mockRequest.getContentType()).thenReturn("multipart/form-data");
+        Map emailMap = new HashMap<>();
+        emailMap.put("email","test@test.com");
+        Map attachementMap = new HashMap<>();
+        emailMap.put("email",".pdf");
+        List<String> list = new ArrayList<String>();
+        list.add("emailMap");
+        Mockito.lenient().when(emailService.sendEmail("/content/template",emailMap, attachementMap,emails)).thenReturn(list);
         underTest.doPost(mockRequest, response);
     }
-
-
 }

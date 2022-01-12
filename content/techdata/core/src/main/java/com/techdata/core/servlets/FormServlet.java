@@ -37,7 +37,8 @@ import java.util.regex.Pattern;
                 "service.description=Form Submission Servlet",
                 "service.vendor=techdata.com",
                 "sling.servlet.methods=" + HttpConstants.METHOD_POST,
-                "sling.servlet.resourcetypes=blah/blah/blah"
+                "sling.servlet.resourcetypes=techdata/components/tdpostform",
+
         }
 )
 public class FormServlet extends SlingAllMethodsServlet {
@@ -73,7 +74,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         @Override
-        protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) {
                 Map<String, String> emailParams = new HashMap<>();
                 ResourceResolver resourceResolver = request.getResourceResolver();
                 Map<String, DataSource> attachments = new HashMap<>();
@@ -105,9 +106,8 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 }
                         }
                 }
-                catch (Exception e) {
-                        LOG.error("Exception occurred during form submission", e);
-                        response.sendError(403, "Cannot proceed, invalid form request.");
+                catch (IOException e) {
+                        LOG.error("403, Exception occurred during form submission", e);
                 }
         }
 
@@ -207,7 +207,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private void populateEmailAttributesFromCAConfig(FormConfigurations formConfigurations, Map<String, String> emailParams) {
-                toEmailAddresses = formConfigurations.toEmails();
+                        toEmailAddresses = formConfigurations.toEmails();
                 submitterEmailFieldName = formConfigurations.submitterEmailFieldName();
                 String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
