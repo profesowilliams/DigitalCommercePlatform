@@ -1,21 +1,27 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RenewalsService;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -60,6 +66,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             //Assert
             Assert.NotNull(result);
         }
+
+        #region GetAddress Unit Tests
 
         [Fact]
         public async Task GetAddress_ResponseReturnNoAddresses_SimpleReturn()
@@ -504,8 +512,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             });
         }
 
+        #endregion GetAddress Unit Tests
+
+        #region GetTopOrdersAsync Unit Tests
+
         [Fact]
-        public async Task GetTopOrdersAsync_RequestToSortDescTop1_RunsGetWithValid()
+        public async Task GetTopOrdersAsync_RequestToSortDescTop1_RunsGetWithValidUrl()
         {
             //Arrange
             _middleTierHttpClient.Setup(t => t.GetAsync<OrdersContainer>(It.IsAny<string>(), It.IsAny<List<object>>(),
@@ -535,7 +547,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
         }
 
         [Fact]
-        public async Task GetTopOrdersAsync__RequestToSortAscByDate_RunsGetWithValid()
+        public async Task GetTopOrdersAsync__RequestToSortAscByDate_RunsGetWithValidUrl()
         {
             //Arrange
             _middleTierHttpClient.Setup(t => t.GetAsync<OrdersContainer>(It.IsAny<string>(), It.IsAny<List<object>>(),
@@ -564,8 +576,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                 It.IsAny<Dictionary<string, string>>()), Times.Once());
         }
 
+        #endregion GetTopOrdersAsync Unit Tests
+
+        #region GetTopQuotesAsync Unit Tests
+
         [Fact]
-        public async Task GetTopQuotesAsync__RequestToSortAscByDate_RunsGetWithValid()
+        public async Task GetTopQuotesAsync__RequestToSortAscByDate_RunsGetWithValidUrl()
         {
             //Arrange
             _middleTierHttpClient.Setup(t => t.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(
@@ -595,7 +611,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
         }
 
         [Fact]
-        public async Task GetTopQuotesAsync__RequestToSortDescByPrice_RunsGetWithValid()
+        public async Task GetTopQuotesAsync__RequestToSortDescByPrice_RunsGetWithValidUrl()
         {
             //Arrange
             _middleTierHttpClient.Setup(t => t.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(
@@ -619,6 +635,138 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
 
             //Assert
             _middleTierHttpClient.Verify(x => x.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        #endregion GetTopQuotesAsync Unit Tests
+
+        #region GetActionItemsSummaryAsync Unit Tests
+
+        [Fact]
+        public async Task GetActionItemsSummaryAsync_RunsWithValidUrlsOnceEachMethod()
+        {
+            //Arrange
+            var request = new GetActionItems.Request();
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<OrderNumberDto>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new OrderNumberDto() { Count = 1 });
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<DealsExpiringDto>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new DealsExpiringDto() { Count = 1 });
+
+            var urlExpectedOrders = "Find?Status=ON_HOLD&WithPaginationInfo=True";
+            var urlExpectedDeals = $"Find?ValidTo={DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}&TotalCount=True&Details=False";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetActionItemsSummaryAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<OrderNumberDto>(It.Is<string>(s => s.EndsWith(urlExpectedOrders)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+
+            _middleTierHttpClient.Verify(x => x.GetAsync<DealsExpiringDto>(It.Is<string>(s => s.EndsWith(urlExpectedDeals)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task GetActionItemsSummaryAsync_GetBlockedOrdersClientThrowsException_BlockedOrdersEqualsZero()
+        {
+            //Arrange
+            var request = new GetActionItems.Request();
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<OrderNumberDto>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .Throws(new RemoteServerHttpException("", System.Net.HttpStatusCode.NotFound, new object()));
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<DealsExpiringDto>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new DealsExpiringDto() { Count = 1 });
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetActionItemsSummaryAsync(request);
+
+            //Assert
+            result.OrdersBlocked.Should().Be(0);
+        }
+
+        #endregion GetActionItemsSummaryAsync Unit Tests
+
+        [Fact]
+        public async Task GetTopConfigurationsAsync_RunsWithValidUrlOnce()
+        {
+            //Arrange
+            var request = new GetTopConfigurations.Request()
+            {
+                SortBy = "",
+                SortDirection = "asc",
+                Top = 1
+            };
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<TopConfigurationDto>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new TopConfigurationDto());
+
+            var urlExpected = "find?Details=False&SortBy=TotalListPrice&SortByAscending=True&Page=1&PageSize=1";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetTopConfigurationsAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<TopConfigurationDto>(
+                It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task MyQuotesSummaryAsync_RunsWithValidUrl()
+        {
+            //Arrange
+            var request = new MyQuoteDashboard.Request();
+
+            _middleTierHttpClient.Setup(t => t.GetAsync<QuoteStatistics>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new QuoteStatistics());
+
+            var urlExpected = "/GetQuoteStatistics";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.MyQuotesSummaryAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<QuoteStatistics>(
+                It.Is<string>(s => s.EndsWith(urlExpected)),
                 It.IsAny<List<object>>(),
                 It.IsAny<Dictionary<string, object>>(),
                 It.IsAny<Dictionary<string, string>>()), Times.Once());
