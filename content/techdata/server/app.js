@@ -10828,7 +10828,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           currencySymbol: "$",
           subTotal: 96957.48,
           subTotalFormatted: "96,957.48",
-          tier: "EduErate",
+          tier: null,
           configurationId: "QJ128146301OP",
           description: "Deal ID 52296358",
           vendor: vendor || "CISCO",

@@ -10,6 +10,7 @@ import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing } from "./QuoteTools";
+import Modal from '../Modal/Modal';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -23,6 +24,7 @@ function QuotePreview(props) {
   const [quoteWithoutPricing, setQuoteWithoutDealPricing] = useState(false);
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
   const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
+  const [modal, setModal] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
@@ -31,6 +33,22 @@ function QuotePreview(props) {
       setQuoteDetails(apiResponse?.content?.quotePreview?.quoteDetails);
     }
   }, [apiResponse]);
+
+  const showSimpleModal = (title, content, onModalClosed=closeModal) =>
+    setModal((previousInfo) => ({
+      content: content,
+      properties: {
+          title:  title,
+      },
+      onModalClosed,
+      ...previousInfo,
+    })
+  );
+
+  const closeModal = () => setModal(null);
+  const showErrorModal = () => showSimpleModal('Create Quote', (
+    <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+  ));
 
   const onGridUpdate = (data, didQuantitiesChange) => {
     let subTotal = data.reduce((subTotal, {extendedPrice}) => subTotal + extendedPrice, 0);
@@ -53,19 +71,27 @@ function QuotePreview(props) {
       const quoteDetails = { ...quoteDetailsResponse };
       if (quoteDetails.reseller && quoteDetails.reseller.length > 0 && activeCustomer) {
         quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
-      }    
-      const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
-      if (result.data?.content) {
-        /** TODO: next steps with quoteId & confirmationId
-         * Next screens are not refined, will show confirmation via alert
-         * for now. This will be replaced with new logic at a later time.
-         */
-        if (result.data.content.quoteId && window) {
-          window.alert("Deal applied");
-        }
       }
+
+      const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
+
+      if (!result.data?.error?.isError && result.data?.content?.confirmationId) {
+        const { confirmationId } = result.data.content;
+        showSimpleModal('Create Quote', (
+          <div>Your quote is being created and will be available in a few minutes - confirmationId:{confirmationId}</div>
+        ), onModalClosed => {
+          closeModal();
+          window.location.href = URL_QUOTES_GRID;
+        });
+      }
+      else {
+        showErrorModal();
+      }
+
       return result.data;
     } catch( error ) {
+      showErrorModal();
+
       return error;
     } finally {
       setLoadingCreateQuote(false);
@@ -84,6 +110,24 @@ function QuotePreview(props) {
           dealRequired = isDealRequired(quoteDetails, true),
           userMissingFields = isEndUserMissing(quoteDetails, true);
 
+    tryCreateQuote(e, pricingRequired, dealRequired, userMissingFields, quoteDetails);
+  }, [quoteDetails]);
+
+  const handleQuickQuoteWithoutDeals = (e) => {
+    const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
+          userMissingFields = isEndUserMissing(quoteDetails, true);
+
+    const quoteDetailsCopy = { ...quoteDetails };
+
+    // remove deal if present
+    if (quoteDetailsCopy.hasOwnProperty("deal")) {
+      delete quoteDetailsCopy.deal;
+    }
+
+    tryCreateQuote(e, pricingRequired, false, userMissingFields, quoteDetailsCopy);
+  };
+
+  const tryCreateQuote = (e, pricingRequired, dealRequired, userMissingFields, quote) => {
     if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
       e.preventDefault();
@@ -93,21 +137,9 @@ function QuotePreview(props) {
       setQuoteWithoutDeal(dealRequired);
     }
     else {
-      createQuote(quoteDetails)
+      createQuote(quote);
     }
-  }, [quoteDetails]);
-
-  const handleQuickQuoteWithoutDeals = (e) => {
-    e.preventDefault();
-    setQuoteWithoutDeal(false);
-    const quoteDetailsCopy = { ...quoteDetails };
-
-    // remove deal if present
-    if (quoteDetailsCopy.hasOwnProperty("deal")) {
-      delete quoteDetailsCopy.deal;
-    }
-    createQuote(quoteDetailsCopy).then(res => window.location.href = URL_QUOTES_GRID);
-  };
+  }
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => (
@@ -204,6 +236,14 @@ function QuotePreview(props) {
             handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}/>
         </section>
       )}
+      {modal && <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={modal.onModalClosed}
+      ></Modal>}
     </div>
   );
 }
