@@ -224,10 +224,15 @@ function Grid(props) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
       const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
+      const createdFrom = new Date();
+      let createdTo = new Date();
+      createdTo.setDate(createdTo.getDate() - 31);
+      const createdParam = `&createdFrom=${createdFrom.toLocaleDateString()}&createdTo=${createdTo.toLocaleDateString()}`;
+
       const sortParams =
         sortKey && sortDir
-          ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true`
-          : "&SortDirection=desc&SortBy=id&WithPaginationInfo=true"; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
+          ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${createdParam}`
+          : `&SortDirection=desc&SortBy=id&WithPaginationInfo=true${createdParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? "";
       pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${url.search !== "" ? "&" : "?"
