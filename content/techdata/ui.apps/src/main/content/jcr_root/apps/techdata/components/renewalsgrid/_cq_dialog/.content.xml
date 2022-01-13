@@ -307,6 +307,63 @@
                                 </column>
                             </items>
                         </search>
+                
+                  <productGrid
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Product Grid"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <quoteId
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Quote Id Label"
+                                                fieldLabel="Quote Id Label"
+                                                name="./quoteIdLabel"
+                                                required="{Boolean}true"/>
+                                            <refNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Ref No Label"
+                                                fieldLabel="Ref No Label"
+                                                name="./refNoLabel"
+                                                required="{Boolean}true"/>
+                                            <expiryDate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Expiry Date Label"
+                                                fieldLabel="Expiry Date Label"
+                                                name="./expiryDateLabel"
+                                                required="{Boolean}true"/>
+                                            <downloadPDF
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Download PDF Label"
+                                                fieldLabel="Download PDF Label"
+                                                name="./downloadPDFLabel"
+                                                required="{Boolean}true"/>
+                                            <downloadXLS
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Download XLS Label"
+                                                fieldLabel="Enter Download XLS Label"
+                                                name="./downloadXLSLabel"
+                                                required="{Boolean}true"/>
+                                            <seeDetails
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter See Details Label"
+                                                fieldLabel="See Details Label"
+                                                name="./seeDetailsLabel"
+                                                required="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </productGrid>             
                         </items>
                     </tabs>
                 </items>
