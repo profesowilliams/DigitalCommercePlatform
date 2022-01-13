@@ -4,6 +4,6 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interface
 {
     public interface IDocumentGeneratorSettings
     {
-        
+        public string FontName { get; set; }
     }
 }

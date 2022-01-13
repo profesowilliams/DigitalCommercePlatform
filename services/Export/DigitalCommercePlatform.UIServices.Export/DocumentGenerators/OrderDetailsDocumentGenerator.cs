@@ -23,6 +23,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
     {
         protected override IOrderDetailsDocumentGeneratorSettings _settings { get; set; }
 
+        private static readonly string _notAvailable = "Not available";
+        private static readonly TrackingDetails _notAvailableTracking = new() { TrackingNumber = _notAvailable, Carrier = _notAvailable, InvoiceNumber = _notAvailable };
+
+        private static readonly int _col = 2;
+        private static readonly int _row = 2;
+
         public OrderDetailsDocumentGenerator(IOrderDetailsDocumentGeneratorSettings settings)
         {
             _settings = settings;
@@ -30,328 +36,199 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         public override Task<byte[]> XlsGenerate(IOrderDetailsDocumentModel orderDetails)
         {
-            int xlRow = 2;
-            int xlCol = 2;
-
             using var p = new ExcelPackage();
             ExcelWorksheet wsOrderDetail = p.Workbook.Worksheets.Add(_settings.WorkSheetName);
             p.Workbook.Worksheets.MoveToStart(_settings.WorkSheetName);
 
-            GenerateOrderReportHeader(xlRow, xlCol, wsOrderDetail);
+            GenerateOrderReportHeader(wsOrderDetail);
+            GenerateOrderDetailHeader(wsOrderDetail);
+            GenerateOrderDetailSection(wsOrderDetail, orderDetails);
 
-            GenerateOrderDetailHeader(xlRow, xlCol, wsOrderDetail);
-            GenerateOrderDetailSection(xlRow, xlCol, wsOrderDetail, orderDetails.OrderNumber, orderDetails.PODate, orderDetails.PONumber, orderDetails.EndUserPO);
+            GenerateEndUserShipToDetailHeader(wsOrderDetail);
+            GenerateEndUserShipToDetailSection(wsOrderDetail, orderDetails.EndUser?.First(), orderDetails.ShipTo);
 
-            GenerateEndUserShipToDetailHeader(xlRow, xlCol, wsOrderDetail);
-            GenerateEndUserShipToDetailSection(xlRow, xlCol, wsOrderDetail, orderDetails.EndUser?.First(), orderDetails.ShipTo);
+            GenerateOrderDetailsHeader(wsOrderDetail);
+            GenerateOrderDetailsSubHeader(wsOrderDetail, orderDetails.ExportedFields);
+            int currentRow = GenerateOrderDetailsSection(wsOrderDetail, orderDetails);
 
-            GenerateOrderDetailsHeader(xlRow, xlCol, wsOrderDetail);
-            GenerateOrderDetailsSubHeader(xlRow, xlCol, wsOrderDetail, orderDetails.ExportedFields);
-            int currentRow = GenerateOrderDetailsSection(xlRow, xlCol, wsOrderDetail, orderDetails, orderDetails.ExportedFields);
-
-            GeneratePaymentDetailsHeader(currentRow, xlCol, wsOrderDetail);
-            GeneratePaymentMethodSection(currentRow, xlCol, wsOrderDetail);
-            GeneratePaymentTotalSection(currentRow, xlCol, wsOrderDetail, orderDetails.PaymentDetails);
+            GeneratePaymentDetailsHeader(currentRow, wsOrderDetail);
+            GeneratePaymentMethodSection(currentRow, wsOrderDetail);
+            GeneratePaymentTotalSection(currentRow, wsOrderDetail, orderDetails.PaymentDetails);
 
             AdjustAllColumnWidths(wsOrderDetail);
-            ExcelRange orderReport = wsOrderDetail.Cells[2, 2, currentRow + 13, 21];
+            ExcelRange orderReport = wsOrderDetail.Cells[_row, _col, currentRow + 13, 21];
             orderReport.Style.Border.BorderAround(ExcelBorderStyle.Thick);
 
             return Task.FromResult(p.GetAsByteArray());
         }
 
-        private void GeneratePaymentTotalSection(int currentRow, int xlCol, ExcelWorksheet wsOrderDetail, PaymentDetails paymentDetails)
+        private void GeneratePaymentTotalSection(int currentRow, ExcelWorksheet wsOrderDetail, PaymentDetails paymentDetails)
         {
-            ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 4, xlCol + 13, currentRow + 4, xlCol + 18];
-            SetOrderHeaderStyle(currentRow + 4, xlCol + 13, currentRow + 4, xlCol + 18, wsOrderDetail, "Total");
+            ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 4, _col + 13, currentRow + 4, _col + 18];
+            SetOrderHeaderStyle(currentRow + 4, _col + 13, currentRow + 4, _col + 18, wsOrderDetail, "Total");
             headerRng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
-            SetCell(currentRow + 6, xlCol + 14, wsOrderDetail, "SubTotal");
-            SetCell(currentRow + 6, xlCol + 15, wsOrderDetail, paymentDetails.Subtotal.Value.ToString());
-            SetCell(currentRow + 7, xlCol + 14, wsOrderDetail, "Tax");
-            SetCell(currentRow + 7, xlCol + 15, wsOrderDetail, paymentDetails.Tax.Value.ToString());
-            SetCell(currentRow + 8, xlCol + 14, wsOrderDetail, "Freight");
-            SetCell(currentRow + 8, xlCol + 15, wsOrderDetail, paymentDetails.Freight.Value.ToString());
-            SetCell(currentRow + 9, xlCol + 14, wsOrderDetail, "OtherFees");
-            SetCell(currentRow + 9, xlCol + 15, wsOrderDetail, paymentDetails.OtherFees.Value.ToString());
-            SetCell(currentRow + 10, xlCol + 14, wsOrderDetail, "Total");
-            SetCell(currentRow + 10, xlCol + 15, wsOrderDetail, paymentDetails.Total.Value.ToString());
+            SetCell(currentRow + 6, _col + 14, wsOrderDetail, "SubTotal");
+            SetCell(currentRow + 6, _col + 15, wsOrderDetail, paymentDetails.Subtotal.Value.ToString());
+            SetCell(currentRow + 7, _col + 14, wsOrderDetail, "Tax");
+            SetCell(currentRow + 7, _col + 15, wsOrderDetail, paymentDetails.Tax.Value.ToString());
+            SetCell(currentRow + 8, _col + 14, wsOrderDetail, "Freight");
+            SetCell(currentRow + 8, _col + 15, wsOrderDetail, paymentDetails.Freight.Value.ToString());
+            SetCell(currentRow + 9, _col + 14, wsOrderDetail, "OtherFees");
+            SetCell(currentRow + 9, _col + 15, wsOrderDetail, paymentDetails.OtherFees.Value.ToString());
+            SetCell(currentRow + 10, _col + 14, wsOrderDetail, "Total");
+            SetCell(currentRow + 10, _col + 15, wsOrderDetail, paymentDetails.Total.Value.ToString());
 
-            var rng = wsOrderDetail.Cells[currentRow + 4, xlCol + 13, currentRow + 11, xlCol + 18];
+            var rng = wsOrderDetail.Cells[currentRow + 4, _col + 13, currentRow + 11, _col + 18];
             rng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
-        private void GeneratePaymentMethodSection(int currentRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private void GeneratePaymentMethodSection(int currentRow, ExcelWorksheet wsOrderDetail)
         {
-            ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 4, xlCol + 1, currentRow + 4, xlCol + 4];
-            SetOrderHeaderStyle(currentRow + 4, xlCol + 1, currentRow + 4, xlCol + 4, wsOrderDetail, "Payment Method");
+            ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 4, _col + 1, currentRow + 4, _col + 4];
+            SetOrderHeaderStyle(currentRow + 4, _col + 1, currentRow + 4, _col + 4, wsOrderDetail, "Payment Method");
             headerRng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
-            ExcelRange rng = wsOrderDetail.Cells[currentRow + 6, xlCol + 1, currentRow + 11, xlCol + 4];
+            ExcelRange rng = wsOrderDetail.Cells[currentRow + 6, _col + 1, currentRow + 11, _col + 4];
             rng.Merge = true;
             rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             rng.Style.Font.Bold = true;
             rng.Value = "30 days net";
 
-            rng = wsOrderDetail.Cells[currentRow + 4, xlCol + 1, currentRow + 11, xlCol + 4];
+            rng = wsOrderDetail.Cells[currentRow + 4, _col + 1, currentRow + 11, _col + 4];
             rng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
-        private void GeneratePaymentDetailsHeader(int currentRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private void GeneratePaymentDetailsHeader(int currentRow, ExcelWorksheet wsOrderDetail)
         {
-            ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 2, xlCol + 1, currentRow + 2, xlCol + 4];
-            SetOrderHeaderStyle(currentRow + 2, xlCol + 1, currentRow + 2, xlCol + 4, wsOrderDetail, "Payment Details");
+            //ExcelRange headerRng = wsOrderDetail.Cells[currentRow + 2, _col + 1, currentRow + 2, _col + 4];
+            SetOrderHeaderStyle(currentRow + 2, _col + 1, currentRow + 2, _col + 4, wsOrderDetail, "Payment Details");
         }
 
-        private int GenerateOrderDetailsSection(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, IOrderDetailsDocumentModel model, List<string> exportedFields)
+        private int GenerateOrderDetailsSection(ExcelWorksheet wsOrderDetail, IOrderDetailsDocumentModel model)
         {
-            List<Line> lines = model.Lines;
             int lineNumber = 1;
-            var curXlRow = xlRow + 18 + lineNumber;
-            string notAvailable = "Not available";
-            foreach (var line in lines)
+            foreach (var line in model.Lines)
             {
-                SetLineData(xlCol, wsOrderDetail, lineNumber, curXlRow, notAvailable, line, model, exportedFields);
+                SetLineData(wsOrderDetail, lineNumber, _row + 18 + lineNumber, line, model, line.Trackings.FirstOrDefault() ?? _notAvailableTracking);
                 lineNumber++;
-                curXlRow = xlRow + 18 + lineNumber;
+                
             }
-            return curXlRow;
+            return _row + 18 + lineNumber;
         }
 
-        private void SetLineData(int xlCol, ExcelWorksheet wsOrderDetail, int lineNumber, int curXlRow, string notAvailable, Line line, IOrderDetailsDocumentModel model, List<string> exportedFields)
+        private void SetLineData(ExcelWorksheet wsOrderDetail, int lineNumber, int curXlRow, Line line, 
+            IOrderDetailsDocumentModel model, TrackingDetails firstTracking)
         {
-            int curCol = xlCol;
-            var firstTracking = line.Trackings.Count() > 0 ? line.Trackings.First() : new TrackingDetails() { TrackingNumber = notAvailable, Carrier = notAvailable, InvoiceNumber = notAvailable };
+            int curCol = _col;
             SetCell(curXlRow, ++curCol, wsOrderDetail, lineNumber.ToString());
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.MFRNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.MFRNumber);
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.TDNumber);
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Quantity)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.Quantity.ToString());
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.UnitCost)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.UnitPrice?.ToString());
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Freight)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable);
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ExtendedCost)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.ExtendedPrice);
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Status)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.Status ?? string.Empty);// Status
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Tracking)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.TrackingNumber); // Tracking
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Carrier)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.Carrier); // Carrier
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ShipDate)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.Date.HasValue ? firstTracking.Date.Value.ToString() : notAvailable); // ship date
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Invoice)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, firstTracking.InvoiceNumber); //  Invoice
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.SerialNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, string.Join(',', line.Serials)); // Serial nums
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.LicenseKeys)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.License); // License keys
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.VendorOrderNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, notAvailable); // Vendor Order#
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDPurchaseOrderNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, model.PONumber); // TD PO#
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ContractNo)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.ContractNo); //Contract
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.StartDate)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.StartDate == DateTime.MinValue ? notAvailable : line.StartDate.ToString()); // StartDate
-            }
-
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.EndDate)))
-            {
-                SetCell(curXlRow, ++curCol, wsOrderDetail, line.EndDate == DateTime.MinValue ? notAvailable : line.EndDate.ToString()); //EndDate
-            }
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.MFRNo, line.MFRNumber);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.TDNo, line.TDNumber);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Quantity, line.Quantity.ToString());
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.UnitCost, line.UnitPrice?.ToString());
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Freight, _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ExtendedCost, line.ExtendedPrice);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Status, line.Status ?? string.Empty);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Tracking, firstTracking.TrackingNumber);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Carrier, firstTracking.Carrier);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ShipDate, firstTracking.Date.HasValue ? firstTracking.Date.Value.ToString() : _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Invoice, firstTracking.InvoiceNumber);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.SerialNo, string.Join(',', line.Serials));
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.LicenseKeys, line.License);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.VendorOrderNo, _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.TDPurchaseOrderNo, model.PONumber);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ContractNo, line.ContractNo);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.StartDate, line.StartDate == DateTime.MinValue ? _notAvailable : line.StartDate.ToString());
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.EndDate, line.EndDate == DateTime.MinValue ? _notAvailable : line.EndDate.ToString());
         }
 
-        private void GenerateOrderDetailsSubHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, List<string> exportedFields)
+        private int CheckExportedFieldsAndSetCell(ExcelWorksheet wsOrderDetail, int curXlRow, IOrderDetailsDocumentModel model,
+            int curCol, OrderDetailsExportedFields field, string text)
         {
-            int curCol = xlCol;
-            int curRow = xlRow + 18;
-            curCol++;
-            SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "LINE");
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.MFRNo)))
+            if (model.ExportedFields.Contains(nameof(field)))
             {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "MFR No");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDNo)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD No");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Quantity)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "QTY");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.UnitCost)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "UNIT COST");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Freight)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "FREIGHT");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ExtendedCost)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "EXTENDED COST");
+                SetCell(curXlRow, ++curCol, wsOrderDetail, text);
             }
 
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Status)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "STATUS");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Tracking)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TRACKING");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Carrier)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "CARRIER");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ShipDate)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "SHIP DATE / ESTIMATED SHIP DATE");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.Invoice)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "INVOICE");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.SerialNo)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "SERIAL NUMBERS");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.LicenseKeys)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "LICENSE KEYS");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.VendorOrderNo)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "VENDOR ORDER No");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.TDPurchaseOrderNo)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "TD PO No");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.ContractNo)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "CONTRACT No");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.StartDate)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "START DATE");
-            }
-            if (exportedFields.Contains(nameof(OrderDetailsExportedFields.EndDate)))
-            {
-                curCol++;
-                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "END DATE");
-            }
-            var subheaderRng = wsOrderDetail.Cells[curRow, xlCol + 1, curRow, curCol];
+            return curCol;
+        }
+
+        private void GenerateOrderDetailsSubHeader(ExcelWorksheet wsOrderDetail, List<string> exportedFields)
+        {
+            int curCol = _col + 1;
+            int curRow = _row + 18;
+            SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, "LINE");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.MFRNo, "MFR No");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.TDNo, "TD No");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Quantity, "QTY");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.UnitCost, "UNIT COST");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Freight, "FREIGHT");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.ExtendedCost, "EXTENDED COST");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Status, "STATUS");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Tracking, "TRACKING");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Carrier, "CARRIER");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.ShipDate, "SHIP DATE / ESTIMATED SHIP DATE");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.Invoice, "INVOICE");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.SerialNo, "SERIAL NUMBERS");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.LicenseKeys, "LICENSE KEYS");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.VendorOrderNo, "VENDOR ORDER No");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.TDPurchaseOrderNo, "TD PO No");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.ContractNo, "CONTRACT No");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.StartDate, "START DATE");
+            curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.EndDate, "END DATE");
+            
+            var subheaderRng = wsOrderDetail.Cells[curRow, _col + 1, curRow, curCol];
             subheaderRng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
-        private void GenerateOrderDetailsHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private int CheckExportedFieldAndSetOrderHeaderStyle(ExcelWorksheet wsOrderDetail, List<string> exportedFields, int curCol, int curRow, OrderDetailsExportedFields field, string text)
         {
-            SetOrderHeaderStyle(xlRow + 16, xlCol, xlRow + 16, xlCol + 19, wsOrderDetail, "Order Details");
-            ExcelRange headerRange = wsOrderDetail.Cells[xlRow + 16, xlCol, xlRow + 16, xlCol + 19];
+            if (exportedFields.Contains(nameof(field)))
+            {
+                curCol++;
+                SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, text);
+            }
+
+            return curCol;
+        }
+
+        private void GenerateOrderDetailsHeader(ExcelWorksheet wsOrderDetail)
+        {
+            SetOrderHeaderStyle(_row + 16, _col, _row + 16, _col + 19, wsOrderDetail, "Order Details");
+            ExcelRange headerRange = wsOrderDetail.Cells[_row + 16, _col, _row + 16, _col + 19];
             headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
-        private void GenerateEndUserShipToDetailSection(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, Address endUser, Address shipTo)
+        private void GenerateEndUserShipToDetailSection(ExcelWorksheet wsOrderDetail, Address endUser, Address shipTo)
         {
-            SetCell(xlRow + 11, xlCol + 2, wsOrderDetail, "End Customer:");
-            SetCell(xlRow + 11, xlCol + 3, wsOrderDetail, endUser.CompanyName);
-            SetCell(xlRow + 12, xlCol + 2, wsOrderDetail, "End Customer Address:");
-            SetCell(xlRow + 12, xlCol + 3, wsOrderDetail, endUser.Line1);
-            SetCell(xlRow + 13, xlCol + 2, wsOrderDetail, "City, State, ZIP, Country:");
-            SetCell(xlRow + 13, xlCol + 3, wsOrderDetail, $"{endUser.City}, {endUser.State} {endUser.Zip}, {endUser.Country}");
-            SetCell(xlRow + 14, xlCol + 2, wsOrderDetail, "End Customer Phone:");
-            SetCell(xlRow + 14, xlCol + 3, wsOrderDetail, endUser.PhoneNumber);
-            SetCell(xlRow + 11, xlCol + 11, wsOrderDetail, "Ship To:");
-            SetCell(xlRow + 11, xlCol + 12, wsOrderDetail, shipTo.CompanyName);
-            SetCell(xlRow + 12, xlCol + 11, wsOrderDetail, "Ship To Address:");
-            SetCell(xlRow + 12, xlCol + 12, wsOrderDetail, shipTo.Line1);
-            SetCell(xlRow + 13, xlCol + 11, wsOrderDetail, "City,State,ZIP,Country:");
-            SetCell(xlRow + 13, xlCol + 12, wsOrderDetail, $"{shipTo.City}, {shipTo.State} {shipTo.Zip}, {shipTo.Country}");
-            SetCell(xlRow + 14, xlCol + 11, wsOrderDetail, "Ship To Phone:");
-            SetCell(xlRow + 14, xlCol + 12, wsOrderDetail, shipTo.PhoneNumber);
+            SetCell(_row + 11, _col + 2, wsOrderDetail, "End Customer:");
+            SetCell(_row + 11, _col + 3, wsOrderDetail, endUser.CompanyName);
+            SetCell(_row + 12, _col + 2, wsOrderDetail, "End Customer Address:");
+            SetCell(_row + 12, _col + 3, wsOrderDetail, endUser.Line1);
+            SetCell(_row + 13, _col + 2, wsOrderDetail, "City, State, ZIP, Country:");
+            SetCell(_row + 13, _col + 3, wsOrderDetail, $"{endUser.City}, {endUser.State} {endUser.Zip}, {endUser.Country}");
+            SetCell(_row + 14, _col + 2, wsOrderDetail, "End Customer Phone:");
+            SetCell(_row + 14, _col + 3, wsOrderDetail, endUser.PhoneNumber);
+            SetCell(_row + 11, _col + 11, wsOrderDetail, "Ship To:");
+            SetCell(_row + 11, _col + 12, wsOrderDetail, shipTo.CompanyName);
+            SetCell(_row + 12, _col + 11, wsOrderDetail, "Ship To Address:");
+            SetCell(_row + 12, _col + 12, wsOrderDetail, shipTo.Line1);
+            SetCell(_row + 13, _col + 11, wsOrderDetail, "City,State,ZIP,Country:");
+            SetCell(_row + 13, _col + 12, wsOrderDetail, $"{shipTo.City}, {shipTo.State} {shipTo.Zip}, {shipTo.Country}");
+            SetCell(_row + 14, _col + 11, wsOrderDetail, "Ship To Phone:");
+            SetCell(_row + 14, _col + 12, wsOrderDetail, shipTo.PhoneNumber);
         }
 
-        private void GenerateOrderDetailSection(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, string orderNumber, string poDate, string poNumber, string endUserPO)
+        private void GenerateOrderDetailSection(ExcelWorksheet wsOrderDetail, IOrderDetailsDocumentModel orderDetails)
         {
-            SetCell(xlRow + 4, xlCol + 1, wsOrderDetail, "Order No");
-            SetCell(xlRow + 4, xlCol + 2, wsOrderDetail, orderNumber);
-            SetCell(xlRow + 5, xlCol + 1, wsOrderDetail, "Placed On");
-            SetCell(xlRow + 5, xlCol + 2, wsOrderDetail, poDate);
-            SetCell(xlRow + 6, xlCol + 1, wsOrderDetail, "PO No");
-            SetCell(xlRow + 6, xlCol + 2, wsOrderDetail, poNumber);
-            SetCell(xlRow + 7, xlCol + 1, wsOrderDetail, "End Customer PO No");
-            SetCell(xlRow + 7, xlCol + 2, wsOrderDetail, endUserPO);
+            SetCell(_row + 4, _col + 1, wsOrderDetail, "Order No");
+            SetCell(_row + 4, _col + 2, wsOrderDetail, orderDetails.OrderNumber);
+            SetCell(_row + 5, _col + 1, wsOrderDetail, "Placed On");
+            SetCell(_row + 5, _col + 2, wsOrderDetail, orderDetails.PODate);
+            SetCell(_row + 6, _col + 1, wsOrderDetail, "PO No");
+            SetCell(_row + 6, _col + 2, wsOrderDetail, orderDetails.PONumber);
+            SetCell(_row + 7, _col + 1, wsOrderDetail, "End Customer PO No");
+            SetCell(_row + 7, _col + 2, wsOrderDetail, orderDetails.EndUserPO);
         }
 
         private void SetCell(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail, string value)
@@ -362,35 +239,36 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             rng.Style.Font.Name = _settings.CellFontName;
         }
 
-        private void GenerateEndUserShipToDetailHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private void GenerateEndUserShipToDetailHeader(ExcelWorksheet wsOrderDetail)
         {
-            ExcelRange headerRange = wsOrderDetail.Cells[xlRow + 11, xlCol, xlRow + 11, xlCol + 19];
-            SetOrderHeaderStyle(xlRow + 11, xlCol, xlRow + 11, xlCol + 19, wsOrderDetail, "End User & Ship to Details");
+            ExcelRange headerRange = wsOrderDetail.Cells[_row + 11, _col, _row + 11, _col + 19];
+            SetOrderHeaderStyle(_row + 11, _col, _row + 11, _col + 19, wsOrderDetail, "End User & Ship to Details");
             headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
-        private void GenerateOrderReportHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private void GenerateOrderReportHeader(ExcelWorksheet wsOrderDetail)
         {
-            ExcelRange rng = wsOrderDetail.Cells[xlRow, xlCol, xlRow, xlCol + 11];
+            ExcelRange rng = wsOrderDetail.Cells[_row, _col, _row, _col + 11];
             rng.Merge = true;
             rng.Value = "Tech Data Order Details";
             rng.Style.Font.Size = _settings.HeaderFontSize;
             rng.Style.Font.Name = _settings.HeaderFontName;
             rng.Style.VerticalAlignment = _settings.HeaderVerticalAlignment;
-            wsOrderDetail.Row(xlRow).Height = _settings.HeaderRowHeight;
-            wsOrderDetail.Cells[xlRow, xlCol].Style.WrapText = false;
+            wsOrderDetail.Row(_row).Height = _settings.HeaderRowHeight;
+            wsOrderDetail.Cells[_row, _col].Style.WrapText = false;
 
-            rng = wsOrderDetail.Cells[xlRow, xlCol + 12, xlRow, xlCol + 19];
+            rng = wsOrderDetail.Cells[_row, _col + 12, _row, _col + 19];
             rng.Merge = true;
             rng.Style.VerticalAlignment = _settings.HeaderVerticalAlignment;
-            wsOrderDetail.Row(xlRow).Height = _settings.HeaderRowHeight;
-            wsOrderDetail.Cells[xlRow, xlCol].Style.WrapText = false;
+            wsOrderDetail.Row(_row).Height = _settings.HeaderRowHeight;
+            wsOrderDetail.Cells[_row, _col].Style.WrapText = false;
         }
 
-        private void GenerateOrderDetailHeader(int xlRow, int xlCol, ExcelWorksheet wsOrderDetail)
+        private void GenerateOrderDetailHeader(ExcelWorksheet wsOrderDetail)
         {
-            var headerRange = wsOrderDetail.Cells[xlRow + 2, xlCol, xlRow + 2, xlCol + 19];
-            SetOrderHeaderStyle(xlRow + 2, xlCol, xlRow + 2, xlCol + 19, wsOrderDetail, "PO No Please cancel test order Order Details");
+            var headerRange = wsOrderDetail.Cells[_row + 2, _col, _row + 2, _col + 19];
+            SetOrderHeaderStyle(_row + 2, _col, _row + 2, _col + 19, wsOrderDetail,
+                "PO No Please cancel test order Order Details");
             headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
         }
 
@@ -411,14 +289,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             for (int col = 1; col <= 22; col++)
             {
-                try
-                {
                     wsOrderDetail.Column(col).AutoFit();
-                }
-                catch (Exception ex)
-                {
-                    string message = ex.Message;
-                }
             }
         }
     }
