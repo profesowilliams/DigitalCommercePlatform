@@ -145,11 +145,18 @@ function ProductLinesGrid({
       sortable: false,
       expandable: true,
       rowClass: ({ node, data }) => {
-        return `cmp-product-lines-grid__row ${
-            !data?.children || data.children.length === 0
-                ? "cmp-product-lines-grid__row--notExpandable"
-                : ""
-        }`;
+        return `${
+          !data?.children || data.children.length === 0
+              ? "`cmp-product-lines-grid__row`"
+              : ""
+        }`
+      },
+      cellClass: ({ node, data }) => {
+        return `${
+          !data?.children || data.children.length === 0
+              ? "cmp-product-lines-grid__row--notExpandable--orders"
+              : ""
+        }`
       },
       detailRenderer: ({ data }) => {
         return (
@@ -788,7 +795,6 @@ function ProductLinesGrid({
           requestLocalFilter={(request) =>
             filteringExtension.requestLocalFilter(request)
           }
-          handlerIsRowMaster={handlerIsRowMaster}
         ></Grid>
       </div>
       {modal && <Modal

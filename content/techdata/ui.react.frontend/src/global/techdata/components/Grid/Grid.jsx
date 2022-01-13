@@ -73,6 +73,8 @@ function Grid(props) {
       isRowMaster={function (dataItem) {
         if (typeof handlerIsRowMaster === "function") {
           return handlerIsRowMaster(dataItem);
+        } else {
+          return true
         }
       }}
       key={Math.floor(1000 * Math.random()).toString()}
