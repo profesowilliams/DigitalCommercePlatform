@@ -145,7 +145,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         private int CheckExportedFieldsAndSetCell(ExcelWorksheet wsOrderDetail, int curXlRow, IOrderDetailsDocumentModel model,
             int curCol, OrderDetailsExportedFields field, string text)
         {
-            if (model.ExportedFields.Contains(nameof(field)))
+            if (model.ExportedFields.Contains(((OrderDetailsExportedFields)field).ToString()))
             {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, text);
             }
@@ -183,7 +183,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private int CheckExportedFieldAndSetOrderHeaderStyle(ExcelWorksheet wsOrderDetail, List<string> exportedFields, int curCol, int curRow, OrderDetailsExportedFields field, string text)
         {
-            if (exportedFields.Contains(nameof(field)))
+            if (exportedFields.Contains(((OrderDetailsExportedFields)field).ToString()))
             {
                 curCol++;
                 SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, text);
