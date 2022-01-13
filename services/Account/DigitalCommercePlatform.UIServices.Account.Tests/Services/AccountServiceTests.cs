@@ -2,10 +2,15 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Orders;
+using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -497,6 +502,126 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                     addresses = new()
                 }
             });
+        }
+
+        [Fact]
+        public async Task GetTopOrdersAsync_RequestToSortDescTop1_RunsGetWithValid()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<OrdersContainer>(It.IsAny<string>(), It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>())).ReturnsAsync(new OrdersContainer()
+                {
+                    Data = new List<OrderModel>()
+                });
+
+            var request = new GetTopOrders.Request()
+            {
+                Sortby = null,
+                SortDirection = "desc",
+                Top = 1
+            };
+            var urlExpected = "Find?&SortBy=Price&SortAscending=False&pageSize=1&WithPaginationInfo=false";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetTopOrdersAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<OrdersContainer>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task GetTopOrdersAsync__RequestToSortAscByDate_RunsGetWithValid()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<OrdersContainer>(It.IsAny<string>(), It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>())).ReturnsAsync(new OrdersContainer()
+                {
+                    Data = new List<OrderModel>()
+                });
+
+            var request = new GetTopOrders.Request()
+            {
+                Sortby = "Date",
+                SortDirection = "asc",
+                Top = 1
+            };
+            var urlExpected = "Find?&SortBy=Date&SortAscending=True&pageSize=1&WithPaginationInfo=false";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetTopOrdersAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<OrdersContainer>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task GetTopQuotesAsync__RequestToSortAscByDate_RunsGetWithValid()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new Models.Quotes.FindResponse<IEnumerable<QuoteModel>>());
+
+            var request = new GetTopQuotes.Request()
+            {
+                Sortby = "Date",
+                SortDirection = "asc",
+                Top = 1
+            };
+            var urlExpected = "find?&SortBy=Date&SortAscending=True&pageSize=1";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetTopQuotesAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+        }
+
+        [Fact]
+        public async Task GetTopQuotesAsync__RequestToSortDescByPrice_RunsGetWithValid()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new Models.Quotes.FindResponse<IEnumerable<QuoteModel>>());
+
+            var request = new GetTopQuotes.Request()
+            {
+                Sortby = "",
+                SortDirection = "desc",
+                Top = 1
+            };
+            var urlExpected = "find?&SortBy=Price&SortAscending=False&pageSize=1";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetTopQuotesAsync(request);
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<Models.Quotes.FindResponse<IEnumerable<QuoteModel>>>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
         }
 
         private AccountService GetService()
