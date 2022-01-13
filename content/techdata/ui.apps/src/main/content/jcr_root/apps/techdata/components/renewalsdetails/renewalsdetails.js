@@ -36,13 +36,13 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }
-
-    if (this.agGridLicenseKey) {
-        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+    
+    if (this.serviceData.agGridLicenseKey){
+        jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
     }
 
-    if (this.renewalDetailLineItemEndpoint) {
-        jsonObject["renewalDetailLineItemEndpoint"] = this.renewalDetailLineItemEndpoint;
+    if (this.serviceData.renewalDetailLineItemEndpoint){
+        jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || '';
     }
 
     if (properties && properties["quotePreviewlabel"]) {
