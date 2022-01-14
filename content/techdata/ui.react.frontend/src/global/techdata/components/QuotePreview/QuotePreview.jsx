@@ -142,15 +142,18 @@ function QuotePreview(props) {
   }
 
   const generalInfoChange = (generalInformation) =>{
-    setQuoteDetails((previousQuoteDetails) => (
-      {
+    setQuoteDetails((previousQuoteDetails) => {
+      let newGeneralDetails = {
         ...previousQuoteDetails,
         tier: generalInformation.tier,
         spaId: generalInformation.spaId,
         quoteReference: generalInformation.quoteReference,
         deal: generalInformation.deal,
       }
-    ));
+      newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
+
+      return newGeneralDetails;
+    });
   }
 
   const endUserInfoChange = (endUserlInformation) =>{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Info from '../../common/quotes/DisplayItemInfo';
 import Button from '../../Widgets/Button';
 import { validateRequiredEnduserFields } from "../QuoteTools";
@@ -43,6 +43,13 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
         setInfoState(initialState);
         closeEditMode();
     };
+
+    useEffect(() => {
+      setInfoState({
+        ...infoState,
+        companyName: endUser.companyName,
+      })
+    }, [endUser.companyName]);
 
     const values = validateRequiredEnduserFields(infoState);
 
