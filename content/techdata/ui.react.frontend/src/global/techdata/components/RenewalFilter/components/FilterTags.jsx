@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 
 
 function FilterTags() {
   const [showMore, setShowMore] = useState(false);
   const filterList = useRenewalGridState(state => state.filterList);
+  const dateSelected = useRenewalGridState((state) => state.dateSelected);
   const effects = useRenewalGridState(state => state.effects);
-  const { setFilterList } = effects;
+  const { setFilterList, clearDateFilters } = effects;
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
@@ -43,7 +45,7 @@ function FilterTags() {
       <span onClick={handleShowMore} className="filter-tags-more"></span>
       {filterList &&
         filterList.map((filter, index) => {
-          if (filter.childIds?.length === 0 && filter.checked === true) {
+          if (filter.childIds?.length === 0 && filter.checked === true ) {
             return (
               <div className="filter-tags" key={index}>
                 <span className="filter-tags__title" key={index}>
@@ -58,6 +60,16 @@ function FilterTags() {
             return null;
           }
         })}
+      <If condition={dateSelected}>
+        <div className="filter-tags">
+          <span className="filter-tags__title">
+            Date {" "}
+          </span>
+          <span onClick={() => clearDateFilters()}>
+            <i className="fas fa-times filter-tags__close"></i>
+          </span>
+        </div>
+      </If>
     </div>
   );
 }

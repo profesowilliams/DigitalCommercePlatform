@@ -12,6 +12,7 @@ const Count = ({ children }) => {
 
 function Filter({ id }) {  
   const filterList = useRenewalGridState((state) => state.filterList);
+  const dateSelected = useRenewalGridState((state) => state.dateSelected);
   const { setFilterList } = useRenewalGridState((state) => state.effects);
 
   if (!filterList) return null;
@@ -42,6 +43,9 @@ function Filter({ id }) {
     childIds.map((childId) => <SubFilter key={childId} id={childId} />);
 
   const checkCount = (f) => {
+    if (dateSelected && f.field === 'date') {
+      return 1
+    }
     let c = [];
     let k = 0;
     if (f.childIds.length > 0) {
