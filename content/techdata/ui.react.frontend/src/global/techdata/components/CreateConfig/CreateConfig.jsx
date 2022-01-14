@@ -7,7 +7,7 @@ import { usPost } from "../../../../utils/api";
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText }  = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
-  const [redirectUrl, setRedirectUrl] = useState(false);s
+  const [redirectUrl, setRedirectUrl] = useState(false);
   const [loading, setLoading] = useState(false);
   const POST_BACK_URL = "https://shop.techdata.com";
 
