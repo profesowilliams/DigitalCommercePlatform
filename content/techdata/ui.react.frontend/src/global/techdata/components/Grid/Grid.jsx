@@ -17,7 +17,8 @@ function Grid(props) {
     onModelUpdateFinished,
     requestInterceptor,
     onSortChanged,
-    handlerIsRowMaster,
+    handlerIsRowMaster,        
+    icons,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.2.0";
@@ -38,6 +39,7 @@ function Grid(props) {
   const gridApi = useRef(null);
   const DEFAULT_ROW_HEIGHT = 25;
 
+
   const updatingFinished =
     typeof onModelUpdateFinished === "function"
       ? debouncer(200, () => onModelUpdateFinished())
@@ -50,7 +52,7 @@ function Grid(props) {
     return "autoHeight";
   };
 
-  const CustomNoRowsOverlay = (props) => {
+  const CustomNoRowsOverlay = (props) => {   
     return (
       <div className=" customErrorNoRows">
         {props.noRowsMessageFunc()}
@@ -73,8 +75,6 @@ function Grid(props) {
       isRowMaster={function (dataItem) {
         if (typeof handlerIsRowMaster === "function") {
           return handlerIsRowMaster(dataItem);
-        } else {
-          return true
         }
       }}
       key={Math.floor(1000 * Math.random()).toString()}
@@ -113,6 +113,7 @@ function Grid(props) {
       onCellValueChanged={onModelUpdated}
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}
+      icons={icons}
     >
       {filteredColumns.map((column) => {
         return (
@@ -236,8 +237,8 @@ function Grid(props) {
       let pathName = url.pathname ?? "";
       pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${url.search !== "" ? "&" : "?"
-        }${pages}${sortParams}`;
-      let response = null;
+    }${pages}${sortParams}`;
+    let response = null;    
       // check if request interceptor is attached and use it.
       // otherwise get data according to grid state
       if (typeof requestInterceptor === "function") {

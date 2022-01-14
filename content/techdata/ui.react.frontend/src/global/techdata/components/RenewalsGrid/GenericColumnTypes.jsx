@@ -68,8 +68,8 @@ export const buttonListColumn = ({
   sortable: sortable,
   expandable: true,
   valueFormatter: () => "",
-  detailRenderer: ({ data, evt }) => (
-    <DropdownDownloadList data={data} moreData={evt} />
+  detailRenderer: ({ data }) => (
+    <DropdownDownloadList data={data}  />
   ),
 });
 

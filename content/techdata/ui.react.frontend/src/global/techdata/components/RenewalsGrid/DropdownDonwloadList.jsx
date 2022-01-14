@@ -2,9 +2,8 @@ import React from "react";
 
 function DropdownDownloadList({ data }) {
   const redirectToRenewalDetail = () => {
-    const renewalDetailsURL = "content/techdata/testingbranch/shika/renewaldetails.html?wcmmode=disabled"
-    // console.log("window", window.location);
-    window.location.pathname = renewalDetailsURL
+    const renewalDetailsURL = encodeURI(`${window.location.origin}${window.location.pathname.replace('.html', `/RenewalsPreview.html?id=${data?.reseller?.id}`)}`)
+    window.location.href = renewalDetailsURL
   };
   return (
     <div className="icon-container">

@@ -3742,7 +3742,8 @@ app.get("/ui-config/v1/estimations/validate/", function (req, res) {
   });
 });
 
-app.post("/ui-renewal/v1/Search", (req, res) => {
+app.post("/ui-renewal/v1/Search", (req, res) => { 
+  
   const response = {
     content: {
       items: {
@@ -6612,8 +6613,7 @@ app.post("/ui-renewal/v1/Search", (req, res) => {
     error: { code: 0, messages: [], isError: false },
   };
   // {ProgramName: [],endUserType: []}
-  const payload = req.body;
-  console.log(payload);
+  const payload = req.body; 
 
   const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
   let responseItemList = response.content.items.response;
@@ -6648,8 +6648,7 @@ app.post("/ui-renewal/v1/Search", (req, res) => {
   );
 });
 
-app.get("/ui-renewal/v1/Search", function (req, res) {
-  //vendor=SupportandSubscriber&endUserType=Academic
+app.get("/ui-renewal/v1/Search", function (req, res) {  
   const response = {
     content: {
       items: {
@@ -9517,8 +9516,7 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
       },
     },
     error: { code: 0, messages: [], isError: false },
-  };
-  console.log("❗❗ req query", req.query);
+  };  
   const query = req.query;
   const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
   let responseItemList = response.content.items.response;

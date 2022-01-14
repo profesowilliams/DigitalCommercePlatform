@@ -1,26 +1,18 @@
-import React, { useState, useMemo } from "react";
-import {
-  pageCalculator,
-  maxCounterCalculator,
-  minCounterCalculator,
-} from "../../../../utils/paginationUtil";
+import React, { useMemo, useState } from "react";
 import useGridFiltering from "../../hooks/useGridFiltering";
-import GridRenewal from "../Grid/GridRenewal";
+import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
-import SearchFilter from "./SearchFilter";
-import { RENEWALS } from "./FilterOptions";
+import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
+import SearchFilter from "./SearchFilter";
+import { useRenewalGridState } from "./store/RenewalsStore";
 
 function RenewalsGrid(props) {
-  const [paginationData, setPaginationData] = useState({
-    totalCounter: 0,
-    stepBy: 25,
-    currentPage: 1,
-    currentResultsInPage: 0,
-  });
-  const {onAfterGridInit, onQueryChanged, requestInterceptor} = useGridFiltering();
-  const { totalCounter, stepBy, currentPage, currentResultsInPage } = paginationData; 
+ 
+  const { onAfterGridInit, onQueryChanged, requestInterceptor } =
+    useGridFiltering();
+  const effects = useRenewalGridState(state => state.effects);
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
   const options = {
@@ -29,91 +21,67 @@ function RenewalsGrid(props) {
   };
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
-
-  const onRowFilter = () => {
-    console.log("this is where the filtering logic goes");
-  };
-
-  const totalPaginationCounter = useMemo(
-    () => pageCalculator(totalCounter, stepBy),
-    [totalCounter]
-  );
-
-  const minPaginationCounter = useMemo(
-    () => minCounterCalculator(stepBy, currentPage),
-    [currentPage]
-  );
-
-  const maxPaginationCounter = useMemo(
-    () => maxCounterCalculator(minPaginationCounter, totalCounter, stepBy, currentResultsInPage),
-    [minPaginationCounter, totalCounter, currentResultsInPage]
-  );
-
-  const incrementHandler = () => {
-    setPaginationData((prevSt) => {
-      return {
-        ...prevSt,
-        currentPage: (prevSt.currentPage += 1),
-      };
-    });
-  };
-
-  const decrementHandler = () => {
-    setPaginationData((prevSt) => {
-      return {
-        ...prevSt,
-        currentPage: (prevSt.currentPage -= 1),
-      };
-    });
-  };
-
+  
   const gridConfig = {
     ...componentProp,
     paginationStyle: "none",
-    noRowsErrorMessage:'No data found',
-    errorGettingDataMessage: 'Internal server error please refresh the page'
+    noRowsErrorMessage: "No data found",
+    errorGettingDataMessage: "Internal server error please refresh the page",
   };
+
+  function mapServiceData(response) {
+    const mappedResponse = {...response};
+    const items = mappedResponse?.data?.content?.items?.response;
+    const itemsWithActions = items.map((data) => ({ ...data, actions: true }));
+    // renewal server is not returning pagination yet
+    mappedResponse.data.content = {items:itemsWithActions,totalItems:20 };
+    return mappedResponse;
+  }
+
+  const customRequestInterceptor = async (request) => {
+    const response = await requestInterceptor(request);
+    // temporarely map until renewal service retorn the proper data structure
+    const mappedResponse = mapServiceData(response); 
+    effects.setPagination({
+      currentResultsInPage: mappedResponse?.data?.content?.items.length,
+      totalCounter: mappedResponse?.data?.content?.totalItems,   
+      stepBy: 25,
+      currentPage: 1      
+    })
+    return mappedResponse;
+  }
 
   return (
     <section>
       <div className="cmp-renewals-subheader">
-        <div className="navigation">
-          <p>
-            {minPaginationCounter}-{maxPaginationCounter} of {totalCounter}{" "}
-            results
-          </p>
-          <p>
-            <button disabled={currentPage === 1} onClick={decrementHandler}>
-              <i className="fas fa-chevron-left"></i>
-            </button>
-            {currentPage} of {totalPaginationCounter}{" "}
-            <button
-              disabled={currentPage === totalPaginationCounter || !totalPaginationCounter}
-              onClick={incrementHandler}
-            >
-              <i className="fas fa-chevron-right"></i>
-            </button>
-          </p>
-        </div>
+        <CustomRenewalPagination/>
         <div className="renewal-filters">
-          <div className="cmp-renewal-search">
-            <SearchFilter callback={onRowFilter} options={searchOptionsList} onQueryChanged={onQueryChanged} />
-          </div>
+          <SearchFilter              
+            options={searchOptionsList}
+            onQueryChanged={onQueryChanged}
+          />
           <VerticalSeparator />
-          <div className="cmp-renewal-filter">
-            <RenewalFilter aemData={componentProp} onQueryChanged={onQueryChanged} />
-          </div>
+          <RenewalFilter
+            aemData={componentProp}
+            onQueryChanged={onQueryChanged}
+          />
         </div>
       </div>
 
       <div className="cmp-renewals-grid">
-        <GridRenewal
-          getPaginationData={setPaginationData}         
+        <Grid         
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
           onAfterGridInit={onAfterGridInit}
-          requestInterceptor={requestInterceptor}
+          requestInterceptor={customRequestInterceptor}        
+          mapServiceData={mapServiceData}       
+          isRenewals={true}   
+          handlerIsRowMaster={() => true}
+          icons={{
+            groupExpanded: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
+            groupContracted: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
+          }}
         />
       </div>
     </section>

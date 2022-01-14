@@ -6,7 +6,8 @@ import { mountStoreDevtool } from "simple-zustand-devtools";
 
 
 const DATE_DEFAULT_OPTIONS = [
-  {DueDateFrom: new Date(),
+  {
+    DueDateFrom: new Date(),
     label: "overdue",
     field: "overdue",
   },
@@ -41,7 +42,13 @@ const INITIAL_STATE = {
   dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: false })),
   dateSelected: null,
   datePickerState: null,
-  finalResults: []
+  finalResults: [],
+  pagination: {
+    totalCounter: 0,
+    stepBy: 25,
+    currentPage: 1,
+    currentResultsInPage: 0
+  },
 };
 
 const store = (set, get, a) => ({

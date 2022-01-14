@@ -103,6 +103,7 @@ function SearchFilter({
       ({searchKey}) => searchKey === option
     ).searchLabel;
     return (
+      <div div className="cmp-renewal-search">
       <div className="cmp-search-select-container">
         <div className="cmp-search-select-container__box">
           <input className="inputStyle" autoFocus placeholder={`Enter a ${chosenFilter}`} ref={inputRef} onKeyDown={triggerSearchOnEnter} />
@@ -121,11 +122,12 @@ function SearchFilter({
           </div>
         </If>
       </div>     
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="cmp-renewal-search">
     <If condition={!isDropdownVisible}>
     <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
       <span>search</span>
@@ -153,7 +155,7 @@ function SearchFilter({
       </div>   
     </If>
     
-    </>
+    </div>
   );
 }
 

@@ -17,7 +17,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   };
 
   return (
-    <div>
+    <div className="cmp-renewal-filter">
       <div className="cmp-renewals-filter-container">
       <Button btnClass="cmp-renewals-filter__button" onClick={handleFilterClick}>
         Filter

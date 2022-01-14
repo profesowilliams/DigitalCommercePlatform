@@ -42,6 +42,10 @@ export const renewalsEffects = (set, get) => {
     set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null })
   }
 
+  function setPagination(pagination){
+    set({pagination})
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -49,6 +53,7 @@ export const renewalsEffects = (set, get) => {
     closeAllSections,
     setDateOptionsList,
     setDatePickerState,
-    clearDateFilters
+    clearDateFilters,
+    setPagination
   };
 };
