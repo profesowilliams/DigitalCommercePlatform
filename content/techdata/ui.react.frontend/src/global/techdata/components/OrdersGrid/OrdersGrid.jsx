@@ -121,7 +121,6 @@ function OrdersGrid(props) {
         }
     }
 
-
     function downloadAllInvoice(orderId) {
         return async () => {
             downloadFileBlob(orderId);
@@ -133,10 +132,18 @@ function OrdersGrid(props) {
         const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
         requestFileBlob(invoiceUrl,'',{redirect:true});
     }
-
-    function getInvoices(line) {
+    
+    /**
+     * Function that return a JSX component with the values and actions to open
+     * the PDF files of an a single invoice or a multiples invioces
+     * @param {any[]} invoices 
+     * @param {React.Dispatch<React.SetStateAction<any>>} setValueParam 
+     * @param {any} line 
+     * @returns 
+     */
+    const getInvoices = (invoices, setValueParam, line) => {
         const url = componentProp.downloadAllInvoicesEndpoint;
-        if (line.invoices.length && line.invoices.length > 1) {
+        if (invoices?.length && invoices.length > 1) {
             return (
                 <div onClick={() => invokeModal({
                     content: (
@@ -162,18 +169,21 @@ function OrdersGrid(props) {
                 </div>
             );
         } else {
-            if (line.invoices[0]?.id === 'Pending') {
+            if (invoices && invoices[0]?.id === 'Pending') {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
-              
             } else {
-                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(line.invoices[0]?.id, line.id)}>
-                    {line.invoices[0]?.id}
+                const invoiceId = invoices && invoices.length ? invoices[0]?.id : invoices;
+
+                if (invoices && invoices.length) {
+                    setValueParam(invoiceId); // set the value of the single invoice and this permit copy the value
+                    // not is necessary in the multiples or pending values because that overwrite the value for a string
+                }
+                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(invoiceId, line.id)}>
+                    {invoiceId}
                 </div>) ?? null;
             }
         }
-    }
-    
-
+    };
 
     const columnDefs = [
         {
@@ -233,7 +243,7 @@ function OrdersGrid(props) {
             headerName: 'Invoice #',
             field: 'invoices',
             sortable: true,
-            cellRenderer: (props) => getInvoices(props.data),
+            cellRenderer: ({ node, api, setValue, data, value }) => getInvoices(value, setValue, data),
         },
         {
             headerName: 'Status',
