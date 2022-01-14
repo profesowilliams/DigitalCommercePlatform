@@ -1163,6 +1163,20 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/order-details.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "genetic-email-template",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/email-templates/genetic-email-template.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "apac-email-template",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/email-templates/apac-email-template.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

@@ -65,6 +65,7 @@ $color-palette: (
         'v-divider-gray': #e6e6e6,
         'v-divider-darkgray': #c6c6c6,
         'brand-light-gray2': #E6E6E6,
+        'brand-light-gray3': #f6f6f6,
         "brand-text-gray": #555555,
         "brand-text-lightgray": #888888,
         "brand-light-blue-icon": #009FD4,
@@ -76,7 +77,9 @@ $color-palette: (
         "brand-box-shadow": rgba(0, 0, 0, 0.5),
         "light-see-through-background": rgba(255, 255, 255, 0.5),
         "input-border": #BDBDBD,
-		"brand-orange" : #FFBA30
+		"brand-orange": #FFBA30,
+        "td-brand-space-light": #334B76,
+        
 );
 
 $white: #ffffff; // Default white

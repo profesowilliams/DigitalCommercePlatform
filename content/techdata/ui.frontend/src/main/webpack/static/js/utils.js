@@ -6,6 +6,11 @@ if (componentFilter) {
     const componentItems = componentItemsParent ? componentItemsParent.getElementsByTagName("li") : null;
     const pageItemsParent = document.getElementById("pageItems");
     const pageItems = pageItemsParent ? pageItemsParent.getElementsByTagName("li") : null;
+    const reactItemsParent = document.getElementById("reactItems");
+    const reactItems = reactItemsParent ? reactItemsParent.getElementsByTagName("li") : null;
+    const utilityItemsParent = document.getElementById("utilityItems");
+    const utilityItems = utilityItemsParent ? utilityItemsParent.getElementsByTagName("li") : null;
+    
 
     function hideShowElement(typedText, elements) {
         if (!elements) {
@@ -29,6 +34,8 @@ if (componentFilter) {
 
         hideShowElement(typedText, componentItems);
         hideShowElement(typedText, pageItems);
+        hideShowElement(typedText, reactItems);
+        hideShowElement(typedText, utilityItems);
 
     };
 
