@@ -9,6 +9,8 @@ PassEnv DISP_ID
 	ServerAlias stage.dc.tdebusiness.cloud techdata-digital-stage.adobecqms.net
 	ServerAlias prod.dc.tdebusiness.cloud preprod.dc.tdebusiness.cloud preprod-author.dc.tdebusiness.cloud
 	ServerAlias www.techdata.com techdata.com asia.techdata.com techdata-digital-prod.adobecqms.net
+	ServerAlias  dispatcher1eastus2.dev.techdata-digital.adobecqms.net
+	ServerAlias  dispatcher2eastus2.stage.techdata-digital.adobecqms.net   dispatcher1eastus2.stage.techdata-digital.adobecqms.net
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
 	# Add header breadcrumbs for help in troubleshooting
