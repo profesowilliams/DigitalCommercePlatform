@@ -94,19 +94,18 @@
 
   &--sub-nav {
     background-color: get-color(td-dark-blue);
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-auto-rows: rem(43px);
     width: 100%;
     line-height: rem(60px);
     height: rem(43px);
-    display: grid !important;
-    grid-template-columns: 75% 25%;
-    grid-auto-rows: rem(43px);
-
 
     >ol {
       margin: 0;
       padding: 0;
       align-self: center;
-      display: flex !important;
+      display: flex;
       justify-content: space-between;
 
       &.cmp-tabs__tablist li {
@@ -161,151 +160,19 @@
       }
     }
 
-    // below is subHeader hamburger menu //
-
-
-    .subheader-menu {
-      display: flex;
-      flex-direction: row;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      >li {
-        margin: 0 1rem;
-      }
-    }
-
-    .subheader-button-container {
-      display: none;
-      height: 100%;
-      width: 30px;
-      cursor: pointer;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #subheader-toggle {
-      display: none;
-
-      &:checked {
-        + {
-          .subheader-button-container {
-            .subheader-button {
-              &::before {
-                margin-top: 0px;
-                transform: rotate(405deg);
-              }
-
-              background: rgba(255, 255, 255, 0);
-
-              &::after {
-                margin-top: 0px;
-                transform: rotate(-405deg);
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .subheader-button {
-      display: block;
-      background-color: #fff;
-      position: absolute;
-      left: 8px;
-      height: 2px;
-      width: 20px;
-      transition: transform 300ms cubic-bezier(0.25, 1, 0.55, 1);
-
-      &::before {
-        display: block;
-        background-color: #fff;
-        position: absolute;
-        height: 2px;
-        width: 20px;
-        transition: transform 300ms cubic-bezier(0.25, 1, 0.55, 1);
-        content: '';
-        margin-top: -6px;
-      }
-
-      &::after {
-        display: block;
-        background-color: #fff;
-        position: absolute;
-        height: 2px;
-        width: 20px;
-        transition: transform 300ms cubic-bezier(0.25, 1, 0.55, 1);
-        content: '';
-        margin-top: 6px;
-      }
-    }
-
+    
     @include mobile {
+        display: flex !important;
+
       ol {
         display: none;
       }
-
       .cmp-sub-header__wrapper ul li+li {
         display: none !important;
         border-left: rem(0px) solid get-color(brand-white);
       }
 
-      .subheader-button-container {
-        display: flex;
-      }
-
-      .subheader {
-        position: absolute;
-        top: 0;
-        margin-top: 50px;
-        left: 0;
-        flex-direction: column;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-
-        >li {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          margin: 0;
-          width: 100%;
-        }
-      }
-
-      #subheader-toggle {
-        ~ {
-          .subheader {
-            li {
-              height: 0;
-              margin: 0;
-              padding: 0;
-              border: 0;
-              transition: height 200ms cubic-bezier(0.25, 1, 0.55, 1);
-            }
-          }
-        }
-
-        &:checked {
-          ~ {
-            .subheader {
-              li {
-                border: 1px solid #fff;
-                height: 2.5em;
-                padding: 0.5em;
-                transition: height 200ms cubic-bezier(0.25, 1, 0.55, 1);
-                background-color: get-color(brand-button-blue);
-              }
-            }
-          }
-        }
-      }
     }
-
-    /// above is THE END of subHeader hamburger menu ///
 
   }
 }
