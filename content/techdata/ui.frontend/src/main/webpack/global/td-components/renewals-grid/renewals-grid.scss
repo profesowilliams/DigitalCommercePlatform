@@ -22,4 +22,39 @@
 	.cmp-due-date-column{
 		text-align: left;
 	}
+	.cmp-renewal-plan-column{
+		display: flex;
+		flex-direction: row-reverse;
+		padding: 20px;
+		.card {
+			border-left: 1px solid rgba(0, 0, 0, 0.2);
+			max-width: 420px;
+			height: 200px;
+			padding: 20px;
+			text-align: left;
+			.rightHeader {
+				float: right;
+			}
+			.clear {
+				clear: both;
+			}
+			.leftHeader {
+				float: left;
+			}
+			.planDetails {
+				text-align: left;
+				font-size: 12px;
+			}
+			.currentPlan {
+				text-align: left;
+				font-style: italic;
+			}
+			button {
+				width : 130px;
+			}
+			p {
+				line-height: 0.5em;
+			}
+		  }
+	}
 }
