@@ -79,9 +79,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             },
                             Stock = new StockDto
                             {
-                                VendorDesignated=null,
+                                VendorDesignated=0,
                                 Td=1,
-                                Total=2
+                                Total=2,
                             },
                             Plants = new List<PlantDto>
                             {
@@ -136,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         {
                             TotalAvailable=2,
                             Corporate = 1,
-                            VendorDirectInventory=null,
+                            VendorDirectInventory=0,
                             VendorShipped=true,
                             Plants = new List<PlantModel>
                             {

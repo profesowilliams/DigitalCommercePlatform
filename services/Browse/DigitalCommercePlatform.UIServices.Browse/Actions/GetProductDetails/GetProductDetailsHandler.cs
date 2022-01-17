@@ -25,57 +25,34 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
     public static class GetProductDetailsHandler
     {
-        public class Request : IRequest<Response>
-        {
-            public IReadOnlyCollection<string> Id { get; set; }
-            public string SalesOrg { get; set; }
-            public string Site { get; set; }
-
-            public Request(IReadOnlyCollection<string> id, string salesOrg, string site)
-            {
-                Id = id;
-                SalesOrg = salesOrg;
-                Site = site;
-            }
-        }
-
-        public class Response : ResponseBase<IEnumerable<ProductModel>>
-        {
-            public Response(IEnumerable<ProductModel> products)
-            {
-                Content = products;
-            }
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, Response>
         {
             private const string ALLOW = "ALLOW";
-            private const string DisplayStatus = "DisplayStatus";
-            private const string PhasedOut = "PhasedOut";
             private const string AuthRequiredPrice = "AuthRequiredPrice";
-            private const string N = "N";
-            private const string Orderable = "Orderable";
-            private const string Y = "Y";
-            private const string New = "New";
-            private const string Returnable = "Returnable";
-            private const string EndUserRequired = "EndUserRequired";
-            private const string Refurbished = "Refurbished";
+            private const string DisplayStatus = "DisplayStatus";
             private const string DropShip = "DropShip";
-            private const string Warehouse = "Warehouse";
-            private const string Virtual = "Virtual";
-            private const string Logo = "Logo";
-            private const string PromoText = "PromoText";
+            private const string EndUserRequired = "EndUserRequired";
             private const string FreightPolicyException = "FreightPolicyException";
             private const string FreightPolicyExceptionValue = "X";
+            private const string Logo = "Logo";
+            private const string N = "N";
+            private const string New = "New";
+            private const string Orderable = "Orderable";
+            private const string PhasedOut = "PhasedOut";
+            private const string PromoText = "PromoText";
+            private const string Refurbished = "Refurbished";
+            private const string Returnable = "Returnable";
             private const string SalesOrg0100 = "0100";
-            private readonly IBrowseService _productRepositoryServices;
+            private const string Virtual = "Virtual";
+            private const string Warehouse = "Warehouse";
+            private const string Y = "Y";
             private readonly string _imageSize;
-            private readonly IMapper _mapper;
-            private readonly ITranslationService _translationService;
-            private readonly string _onOrderArrivalDateFormat;
-
             private readonly Dictionary<string, string> _indicatorsTranslations = null;
+            private readonly IMapper _mapper;
+            private readonly string _onOrderArrivalDateFormat;
+            private readonly IBrowseService _productRepositoryServices;
+            private readonly ITranslationService _translationService;
 
             public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper, ITranslationService translationService)
             {
@@ -129,23 +106,78 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return new Response(await Task.WhenAll(result));
             }
 
-            private void MapDocuments(ProductDto x, ProductModel product)
+            private static Flags ExtractFlags(IEnumerable<ValidateDto> validateDto, ProductDto productDto, string salesOrg, string site)
             {
-                if (x.Marketing == null)
-                    return;
+                var flags = new Flags();
 
-                var documents = new List<DocumentModel>();
-                var quickStartGuide = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.QuickStartGuide));
-                if (quickStartGuide != null)
-                    documents.Add(quickStartGuide);
-                var userManual = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.UserManual));
-                if (userManual != null)
-                    documents.Add(userManual);
-                var productDataSheet = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductDataSheet));
-                if (productDataSheet != null)
-                    documents.Add(productDataSheet);
-                if (documents.Any())
-                    product.Documents = documents;
+                flags.IsValid = validateDto.Any(v => v.Source.Id == productDto.Source.Id && v.Source.System == productDto.Source.System && v.Restriction == ALLOW);
+
+                var indicators = ProductMapperHelper.ExtractFinalIndicators(productDto.Indicators, salesOrg, site);
+
+                flags.PhasedOut = indicators.ContainsKey(DisplayStatus) && string.Equals(indicators[DisplayStatus].Value, PhasedOut, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.CanViewPrice = flags.IsValid || (indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, N, System.StringComparison.InvariantCultureIgnoreCase));
+                flags.CanOrder = flags.IsValid && indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.NewProduct = indicators.ContainsKey(New) && string.Equals(indicators[New].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.Returnable = indicators.ContainsKey(Returnable) && string.Equals(indicators[Returnable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.EndUserRequired = indicators.ContainsKey(EndUserRequired) && string.Equals(indicators[EndUserRequired].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.Refurbished = indicators.ContainsKey(Refurbished) && string.Equals(indicators[Refurbished].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.DropShip = indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.Warehouse = indicators.ContainsKey(Warehouse) && string.Equals(indicators[Warehouse].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.VirtualProduct = indicators.ContainsKey(Virtual) && string.Equals(indicators[Virtual].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+
+                flags.DisplayStatus = indicators.ContainsKey(DisplayStatus) ? indicators[DisplayStatus].Value : null;
+
+                flags.FreeShipping = !(salesOrg == SalesOrg0100 && indicators.ContainsKey(FreightPolicyException) && string.Equals(indicators[FreightPolicyException].Value, FreightPolicyExceptionValue, System.StringComparison.InvariantCultureIgnoreCase));
+
+                return flags;
+            }
+
+            private static (string keySellingPointsUrl, string marketingDescriptionUrl, string productFeaturesUrl, string whatsInTheBox) GetMarketingUrls(IEnumerable<MarketingDto> marketings)
+            {
+                var keySellingPointsUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.KeySellingPoints)?.Url;
+                var marketingDescriptionUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.MarketingDescription)?.Url;
+                var productFeaturesUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductFeatures)?.Url;
+                var whatsInTheBox = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.WhatsInTheBox)?.Url;
+
+                return (keySellingPointsUrl, marketingDescriptionUrl, productFeaturesUrl, whatsInTheBox);
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0008:Use explicit type", Justification = "<Pending>")]
+            private static async Task<XmlDocument> GetXmlDocument(string url)
+            {
+                if (string.IsNullOrEmpty(url))
+                    return null;
+                XmlDocument xml = new();
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
+                var wrq = WebRequest.Create(url) as HttpWebRequest;
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
+                var response = await wrq.GetResponseAsync().ConfigureAwait(false);
+                xml.Load(new XmlTextReader(response.GetResponseStream()));
+                return xml;
+            }
+
+            private static void MapAuthorizations(ProductModel product, Flags flags)
+            {
+                product.Authorization = new AuthorizationModel
+                {
+                    CanOrder = flags.CanOrder,
+                    CanViewPrice = flags.CanViewPrice
+                };
+            }
+
+            private static void MapBaseInformation(Request request, ProductDto x, ProductModel product, Flags flags)
+            {
+                product.Id = x.Source.Id;
+                product.MaterialType = x.MaterialType;
+                product.DisplayName = x.DisplayName;
+                product.Description = x.Description;
+                product.SubstituteMaterialNumber = x.Plants?.FirstOrDefault()?.SubstituteMaterialNumber;
+                product.ManufacturerPartNumber = x.ManufacturerPartNumber;
+
+                var saleorgPlant = x.SalesOrganizations?.FirstOrDefault(s => s.Id == request.SalesOrg)?.DeliveryPlant;
+                product.UPC_EAN = !string.IsNullOrWhiteSpace(saleorgPlant) ? x.Plants?.FirstOrDefault(p => p.Id == saleorgPlant)?.UPC : null;
+
+                product.Status = flags.DisplayStatus;
             }
 
             private static async Task MapMarketing(ProductDto x, ProductModel product)
@@ -173,35 +205,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.WhatsInTheBox = SerializeUlList(whatsInTheDoc)?.Ul?.Li?.Select(x => x.Text).ToArray();
             }
 
-            private void MapStock(ProductDto x, ProductModel product, Flags flags)
+            private static void MapNotes(ProductDto x, ProductModel product, string salesOrg)
             {
-                if (x.Stock == null)
-                    return;
-
-                product.Stock = new StockModel
-                {
-                    TotalAvailable = x.Stock.Total,
-                    Corporate = x.Stock.Td,
-                    VendorDirectInventory = x.Stock.VendorDesignated,
-                    VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == null,
-                    Plants = x.Plants?.Select(p => new PlantModel
-                    {
-                        Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise,
-                        OnOrder = MapOnOrder(p.Stock?.OnOrder),
-                    })
-                };
-            }
-
-            private OnOrderModel MapOnOrder(OnOrderDto onOrder)
-            {
-                return onOrder == null
-                    ? null
-                    : new OnOrderModel
-                    {
-                        Stock = onOrder.Stock,
-                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
-                    };
+                product.Notes = x.SalesOrganizations
+                                    ?.FirstOrDefault(s => s.Id == salesOrg)
+                                    ?.ProductNotes
+                                    ?.Where(n => string.Equals(n.Type, PromoText, System.StringComparison.InvariantCultureIgnoreCase))
+                                    .Select(n => new NoteModel
+                                    {
+                                        Value = n.Note
+                                    });
             }
 
             private static void MapSpecifications(ProductDto x, ProductModel product)
@@ -233,76 +246,33 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Specifications = specifications.MainSpecifications != null || specifications.ExtendedSpecifications != null ? specifications : null;
             }
 
-            private void MapIndicators(ProductModel product, Flags flags)
+            private static UlListXmlDto SerializeUlList(XmlDocument document)
             {
-                product.IndicatorsFlags = new IndicatorFlags
-                {
-                    DropShip = flags.DropShip,
-                    EndUserRequired = flags.EndUserRequired,
-                    New = flags.NewProduct,
-                    Refurbished = flags.Refurbished,
-                    Returnable = flags.Returnable,
-                    Virtual = flags.VirtualProduct,
-                    Warehouse = flags.Warehouse,
-                    FreeShipping = flags.FreeShipping,
-                    FreeShippingLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.FreeShipping)}.{flags.FreeShipping}".ToUpperInvariant())
-                };
+                if (document == null)
+                    return null;
+                XmlSerializer serializer = new(typeof(UlListXmlDto));
+                using XmlReader reader = new XmlNodeReader(document);
+                var response = (UlListXmlDto)serializer.Deserialize(reader);
+                return response;
             }
 
-            private static void MapNotes(ProductDto x, ProductModel product, string salesOrg)
+            private void MapDocuments(ProductDto x, ProductModel product)
             {
-                product.Notes = x.SalesOrganizations
-                                    ?.FirstOrDefault(s => s.Id == salesOrg)
-                                    ?.ProductNotes
-                                    ?.Where(n => string.Equals(n.Type, PromoText, System.StringComparison.InvariantCultureIgnoreCase))
-                                    .Select(n => new NoteModel
-                                    {
-                                        Value = n.Note
-                                    });
-            }
-
-            private static void MapAuthorizations(ProductModel product, Flags flags)
-            {
-                product.Authorization = new AuthorizationModel
-                {
-                    CanOrder = flags.CanOrder,
-                    CanViewPrice = flags.CanViewPrice
-                };
-            }
-
-            private static void MapBaseInformation(Request request, ProductDto x, ProductModel product, Flags flags)
-            {
-                product.Id = x.Source.Id;
-                product.MaterialType = x.MaterialType;
-                product.DisplayName = x.DisplayName;
-                product.Description = x.Description;
-                product.SubstituteMaterialNumber = x.Plants?.FirstOrDefault()?.SubstituteMaterialNumber;
-                product.ManufacturerPartNumber = x.ManufacturerPartNumber;
-
-                var saleorgPlant = x.SalesOrganizations?.FirstOrDefault(s => s.Id == request.SalesOrg)?.DeliveryPlant;
-                product.UPC_EAN = !string.IsNullOrWhiteSpace(saleorgPlant) ? x.Plants?.FirstOrDefault(p => p.Id == saleorgPlant)?.UPC : null;
-
-                product.Status = flags.DisplayStatus;
-            }
-
-            private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice)
-            {
-                if (x.Price == null)
+                if (x.Marketing == null)
                     return;
 
-                product.Price = new PriceModel
-                {
-                    ListPrice = x.Price.ListPrice,
-                    BasePrice = canViewPrice ? x.Price.BasePrice : null,
-                    BestPrice = canViewPrice ? x.Price.BestPrice : null,
-                    BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration : null,
-                    BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
-                    VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
-                    {
-                        Price = v.Price,
-                        MinQuantity = v.MinQuantity ?? 0
-                    })
-                };
+                var documents = new List<DocumentModel>();
+                var quickStartGuide = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.QuickStartGuide));
+                if (quickStartGuide != null)
+                    documents.Add(quickStartGuide);
+                var userManual = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.UserManual));
+                if (userManual != null)
+                    documents.Add(userManual);
+                var productDataSheet = _mapper.Map<DocumentModel>(x.Marketing.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductDataSheet));
+                if (productDataSheet != null)
+                    documents.Add(productDataSheet);
+                if (documents.Any())
+                    product.Documents = documents;
             }
 
             private void MapImages(ProductDto x, ProductModel product)
@@ -330,81 +300,110 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Images = imagesModel.Any() ? imagesModel : null;
             }
 
-            private static Flags ExtractFlags(IEnumerable<ValidateDto> validateDto, ProductDto productDto, string salesOrg, string site)
+            private void MapIndicators(ProductModel product, Flags flags)
             {
-                var flags = new Flags();
-
-                flags.IsValid = validateDto.Any(v => v.Source.Id == productDto.Source.Id && v.Source.System == productDto.Source.System && v.Restriction == ALLOW);
-
-                var indicators = ProductMapperHelper.ExtractFinalIndicators(productDto.Indicators, salesOrg, site);
-
-                flags.PhasedOut = indicators.ContainsKey(DisplayStatus) && string.Equals(indicators[DisplayStatus].Value, PhasedOut, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.CanViewPrice = flags.IsValid || (indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, N, System.StringComparison.InvariantCultureIgnoreCase));
-                flags.CanOrder = flags.IsValid && indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.NewProduct = indicators.ContainsKey(New) && string.Equals(indicators[New].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.Returnable = indicators.ContainsKey(Returnable) && string.Equals(indicators[Returnable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.EndUserRequired = indicators.ContainsKey(EndUserRequired) && string.Equals(indicators[EndUserRequired].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.Refurbished = indicators.ContainsKey(Refurbished) && string.Equals(indicators[Refurbished].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.DropShip = indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.Warehouse = indicators.ContainsKey(Warehouse) && string.Equals(indicators[Warehouse].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.VirtualProduct = indicators.ContainsKey(Virtual) && string.Equals(indicators[Virtual].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-
-                flags.DisplayStatus = indicators.ContainsKey(DisplayStatus) ? indicators[DisplayStatus].Value : null;
-
-                flags.FreeShipping = !(salesOrg == SalesOrg0100 && indicators.ContainsKey(FreightPolicyException) && string.Equals(indicators[FreightPolicyException].Value, FreightPolicyExceptionValue, System.StringComparison.InvariantCultureIgnoreCase));
-
-                return flags;
+                product.IndicatorsFlags = new IndicatorFlags
+                {
+                    DropShip = flags.DropShip,
+                    EndUserRequired = flags.EndUserRequired,
+                    New = flags.NewProduct,
+                    Refurbished = flags.Refurbished,
+                    Returnable = flags.Returnable,
+                    Virtual = flags.VirtualProduct,
+                    Warehouse = flags.Warehouse,
+                    FreeShipping = flags.FreeShipping,
+                    FreeShippingLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.FreeShipping)}.{flags.FreeShipping}".ToUpperInvariant())
+                };
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0008:Use explicit type", Justification = "<Pending>")]
-            private static async Task<XmlDocument> GetXmlDocument(string url)
+            private OnOrderModel MapOnOrder(OnOrderDto onOrder)
             {
-                if (string.IsNullOrEmpty(url))
-                    return null;
-                XmlDocument xml = new();
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-                var wrq = WebRequest.Create(url) as HttpWebRequest;
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
-                var response = await wrq.GetResponseAsync().ConfigureAwait(false);
-                xml.Load(new XmlTextReader(response.GetResponseStream()));
-                return xml;
+                return onOrder == null
+                    ? null
+                    : new OnOrderModel
+                    {
+                        Stock = onOrder.Stock,
+                        ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
+                    };
             }
 
-            private static UlListXmlDto SerializeUlList(XmlDocument document)
+            private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice)
             {
-                if (document == null)
-                    return null;
-                XmlSerializer serializer = new(typeof(UlListXmlDto));
-                using XmlReader reader = new XmlNodeReader(document);
-                var response = (UlListXmlDto)serializer.Deserialize(reader);
-                return response;
+                if (x.Price == null)
+                    return;
+
+                product.Price = new PriceModel
+                {
+                    ListPrice = x.Price.ListPrice,
+                    BasePrice = canViewPrice ? x.Price.BasePrice : null,
+                    BestPrice = canViewPrice ? x.Price.BestPrice : null,
+                    BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration : null,
+                    BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
+                    VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
+                    {
+                        Price = v.Price,
+                        MinQuantity = v.MinQuantity ?? 0
+                    })
+                };
             }
 
-            private static (string keySellingPointsUrl, string marketingDescriptionUrl, string productFeaturesUrl, string whatsInTheBox) GetMarketingUrls(IEnumerable<MarketingDto> marketings)
+            private void MapStock(ProductDto x, ProductModel product, Flags flags)
             {
-                var keySellingPointsUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.KeySellingPoints)?.Url;
-                var marketingDescriptionUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.MarketingDescription)?.Url;
-                var productFeaturesUrl = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.ProductFeatures)?.Url;
-                var whatsInTheBox = marketings.FirstOrDefault(x => x.Name == MarketingConstHelper.WhatsInTheBox)?.Url;
+                if (x.Stock == null)
+                    return;
 
-                return (keySellingPointsUrl, marketingDescriptionUrl, productFeaturesUrl, whatsInTheBox);
+                product.Stock = new StockModel
+                {
+                    TotalAvailable = x.Stock.Total,
+                    Corporate = x.Stock.Td,
+                    VendorDirectInventory = x.Stock.VendorDesignated,
+                    VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == 0,
+                    Plants = x.Plants?.Select(p => new PlantModel
+                    {
+                        Name = p.Stock?.LocationName,
+                        Quantity = p.Stock?.AvailableToPromise,
+                        OnOrder = MapOnOrder(p.Stock?.OnOrder),
+                    })
+                };
             }
 
             private struct Flags
             {
-                public bool IsValid { get; set; }
-                public bool PhasedOut { get; set; }
-                public bool CanViewPrice { get; set; }
                 public bool CanOrder { get; set; }
-                public bool NewProduct { get; set; }
-                public bool Returnable { get; set; }
-                public bool EndUserRequired { get; set; }
-                public bool Refurbished { get; set; }
-                public bool DropShip { get; set; }
-                public bool Warehouse { get; set; }
-                public bool VirtualProduct { get; set; }
+                public bool CanViewPrice { get; set; }
                 public string DisplayStatus { get; set; }
+                public bool DropShip { get; set; }
+                public bool EndUserRequired { get; set; }
                 public bool FreeShipping { get; set; }
+                public bool IsValid { get; set; }
+                public bool NewProduct { get; set; }
+                public bool PhasedOut { get; set; }
+                public bool Refurbished { get; set; }
+                public bool Returnable { get; set; }
+                public bool VirtualProduct { get; set; }
+                public bool Warehouse { get; set; }
+            }
+        }
+
+        public class Request : IRequest<Response>
+        {
+            public Request(IReadOnlyCollection<string> id, string salesOrg, string site)
+            {
+                Id = id;
+                SalesOrg = salesOrg;
+                Site = site;
+            }
+
+            public IReadOnlyCollection<string> Id { get; set; }
+            public string SalesOrg { get; set; }
+            public string Site { get; set; }
+        }
+
+        public class Response : ResponseBase<IEnumerable<ProductModel>>
+        {
+            public Response(IEnumerable<ProductModel> products)
+            {
+                Content = products;
             }
         }
 

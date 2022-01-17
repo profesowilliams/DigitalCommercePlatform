@@ -91,7 +91,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
                 var warehouse = indicators.ContainsKey(Warehouse) && string.Equals(indicators[Warehouse].Value, Y, StringComparison.InvariantCultureIgnoreCase);
                 var dropShip = indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, StringComparison.InvariantCultureIgnoreCase);
-                var vendorShipped = x.Stock?.VendorDesignated == null && dropShip && !warehouse;
+                var vendorShipped = x.Stock?.VendorDesignated == 0 && dropShip && !warehouse;
 
                 var orderable = indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, StringComparison.InvariantCultureIgnoreCase);
 
