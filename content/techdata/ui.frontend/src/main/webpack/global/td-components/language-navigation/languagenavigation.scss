@@ -112,7 +112,8 @@
       font-weight: normal !important;
       text-align: center;
       margin-top: 0;
-      text-transform: uppercase;
+      text-transform: uppercase;    
+      box-shadow: 0 0 0 18px  get-color(brand-white);
     }
   
   
@@ -191,7 +192,7 @@
     &__content {
       background-color: #fefefe;
       margin: auto;
-      padding: 20px;
+      padding: rem(40px) rem(20px);
       width: rem(1280px);
       box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
       border-top: rem(2px) solid get-color(td-dark-blue);
@@ -237,7 +238,7 @@
       &__column {
         float: left;
         width: 50%;
-        padding: 20px;
+        padding: 0px;
   
         &:nth-of-type(2) {
           border-left: rem(1px) solid get-color(v-divider-darkgray);
@@ -247,6 +248,23 @@
             border-left: 0 solid get-color(v-divider-darkgray);
             border-right: 0 solid get-color(v-divider-darkgray);
           }
+        }
+  
+        &:first-child,
+        &:last-child {
+          width: 25%;
+          padding: 0px 35px;
+          overflow: hidden;
+          white-space: normal;
+  
+          @include mobile {
+            width: unset;
+            padding: unset;
+          }
+        }
+  
+        &:last-child>&__seperator {
+          border-right: none;
         }
   
         @include mobile {
@@ -280,23 +298,6 @@
         &__seperator-r {
           float: left;
           width: 50%;
-        }
-  
-        &:first-child,
-        &:last-child {
-          width: 25%;
-          padding: 20px 35px;
-          overflow: hidden;
-          white-space: normal;
-  
-          @include mobile {
-            width: unset;
-            padding: unset;
-          }
-        }
-  
-        &:last-child>&__seperator {
-          border-right: none;
         }
       }
     }
