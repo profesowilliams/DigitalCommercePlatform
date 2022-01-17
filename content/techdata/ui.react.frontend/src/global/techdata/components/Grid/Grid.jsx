@@ -225,10 +225,12 @@ function Grid(props) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
       const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
-      const createdFrom = new Date();
-      let createdTo = new Date();
-      createdTo.setDate(createdTo.getDate() - 31);
-      const createdParam = `&createdFrom=${createdFrom.toLocaleDateString()}&createdTo=${createdTo.toLocaleDateString()}`;
+      const createdTo = new Date();
+      let createdFrom = new Date();
+      createdFrom.setDate(createdTo.getDate() - 31);
+      const createdToString = createdTo.toISOString().slice(0, 10);
+      const createdFromString = createdFrom.toISOString().slice(0, 10);
+      const createdParam = `&createdFrom=${createdFromString}&createdTo=${createdToString}`;
 
       const sortParams =
         sortKey && sortDir
