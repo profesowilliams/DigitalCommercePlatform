@@ -1426,7 +1426,9 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     },
   };
 
-  const response = type ? renewalDetailsResponse : quoteDetailsResponse;
+  const response = id === "empty"
+                  ? {"content":{"details":null},"error":{"code":0,"messages":[],"isError":false}}
+                  : (type ? renewalDetailsResponse : quoteDetailsResponse);
 
   setTimeout(() => {
     res.json(id == 00000 ? errorObject : response);

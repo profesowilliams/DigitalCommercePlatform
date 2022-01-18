@@ -81,6 +81,11 @@
                                                 fieldLabel="UI Service End Point Link"
                                                 name="./uiServiceEndPoint"
                                                 rootPath="/content/techdata"/>
+                                            <quoteNotFoundMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Quote Not Found Message"
+                                                name="./quoteNotFoundMessage"/>
                                         </items>
                                     </column>
                                 </items>

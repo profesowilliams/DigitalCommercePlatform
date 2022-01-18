@@ -46,6 +46,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["expiresDateLabel"] = properties["expiresDateLabel"];
     }
 
+    if (properties && properties["quoteNotFoundMessage"]) {
+        jsonObject["quoteNotFoundMessage"] = properties["quoteNotFoundMessage"];
+    }
+
     if (properties && properties["subTotalLabel"]) {
         jsonObject["subTotalLabel"] = properties["subTotalLabel"];
     }

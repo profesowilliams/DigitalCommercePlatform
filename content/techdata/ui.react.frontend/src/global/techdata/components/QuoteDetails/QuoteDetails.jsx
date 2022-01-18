@@ -35,6 +35,7 @@ const QuoteDetails = ({ componentProp }) => {
     quoteOptions,
     checkout,
     whiteLabel,
+    quoteNotFoundMessage,
     shopDomainPage
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
@@ -163,7 +164,24 @@ const QuoteDetails = ({ componentProp }) => {
   useEffect(() => {
     response?.content?.details && setQuoteDetails(response.content.details);
 
-  }, [response]);
+    if(!isLoading && error == null  && !response?.content?.details)
+    {
+      setModal((previousInfo) => (
+        {
+          content: (
+            <div>{quoteNotFoundMessage}</div>
+          ),
+          properties: {
+              title: `Quote Details`,
+          },
+            ...previousInfo,
+          }
+      ));
+    }
+    else {
+      setModal(null);
+    }
+  }, [response, error, isLoading]);
 
   useEffect(() => {
     quoteOption &&
@@ -259,16 +277,8 @@ const QuoteDetails = ({ componentProp }) => {
     return generalInformationData;
   }
 
-  return quoteDetails ? (
-    <div className="cmp-quote-details">
-      <QuotesSubHeader
-        label={subheaderLabel}
-        title={subheaderTitle}
-        quoteDetails={quoteDetails}
-        dateLabels={{ createdDateLabel, expiresDateLabel }}
-      />
-      {
-        whiteLabelMode
+  const renderHeader = () => {
+    return whiteLabelMode
           ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} setWhiteLabelOptions={setWhiteLabelOptions} /> )
           : (
             <>
@@ -293,36 +303,62 @@ const QuoteDetails = ({ componentProp }) => {
                 readOnly={true}
             />
           </>
-          )
-      }
-      <ProductLinesGrid
-        gridProps={productLines}
-        labels={whiteLabel}
-        data={quoteDetails}
-        quoteOption={quoteOption}
-        quoteDetailColumns={productLines?.columnList}
-        whiteLabelColumns={whiteLabel?.columnList}
-        shopDomainPage={shopDomainPage}
-        onMarkupChanged={(quote) => {
-          setQuoteWithMarkup([...quote]);
-        }}
-      />
-      <QuoteSubtotal
-        labels={whiteLabel}
-        amount={quoteDetails?.subTotal}
-        currencySymbol={
-          quoteDetails?.currencySymbol ? quoteDetails?.currencySymbol : ""
-        }
-        quoteWithMarkup={quoteWithMarkup}
-        quoteOption={quoteOption}
-        onMarkupChanged={(data) => setActualQuoteLinesData(data)}
-      />
-      <QuoteDetailsCheckout
-        labels={quoteOptions}
-        onQuoteCheckout={onQuoteCheckout}
-        onQuoteOptionChanged={onOptionChanged}
-        quoteDetails={quoteDetails}
-      />
+        );
+  }
+
+  const renderQuoteDetails = () => {
+    return (
+      <>
+        <QuotesSubHeader
+          label={subheaderLabel}
+          title={subheaderTitle}
+          quoteDetails={quoteDetails}
+          dateLabels={{ createdDateLabel, expiresDateLabel }}
+        />
+        {renderHeader()}
+        <ProductLinesGrid
+          gridProps={productLines}
+          labels={whiteLabel}
+          data={quoteDetails}
+          quoteOption={quoteOption}
+          quoteDetailColumns={productLines?.columnList}
+          whiteLabelColumns={whiteLabel?.columnList}
+          shopDomainPage={shopDomainPage}
+          onMarkupChanged={(quote) => {
+            setQuoteWithMarkup([...quote]);
+          }}
+        />
+        <QuoteSubtotal
+          labels={whiteLabel}
+          amount={quoteDetails?.subTotal}
+          currencySymbol={
+            quoteDetails?.currencySymbol ? quoteDetails?.currencySymbol : ""
+          }
+          quoteWithMarkup={quoteWithMarkup}
+          quoteOption={quoteOption}
+          onMarkupChanged={(data) => setActualQuoteLinesData(data)}
+        />
+        <QuoteDetailsCheckout
+          labels={quoteOptions}
+          onQuoteCheckout={onQuoteCheckout}
+          onQuoteOptionChanged={onOptionChanged}
+          quoteDetails={quoteDetails}
+        />
+      </>
+    )
+  }
+
+  return (
+    <div className="cmp-quote-details">
+      {quoteDetails ? renderQuoteDetails() : error ?
+      <ErrorMessage
+          error={error}
+          messageObject={{"message401" : "You need to be logged in to view this"}}
+      /> : (
+        <FullScreenLoader>
+          <Loader visible={true} />
+        </FullScreenLoader>
+      )}
       {modal && <Modal
           modalAction={modal.action}
           modalContent={modal.content}
@@ -332,14 +368,6 @@ const QuoteDetails = ({ componentProp }) => {
           onModalClosed={() => setModal(null)}
       ></Modal>}
     </div>
-  ) : error ?
-    <ErrorMessage
-        error={error}
-        messageObject={{"message401" : "You need to be logged in to view this"}}
-    /> : (
-    <FullScreenLoader>
-      <Loader visible={true} />
-    </FullScreenLoader>
   );
 };
 
