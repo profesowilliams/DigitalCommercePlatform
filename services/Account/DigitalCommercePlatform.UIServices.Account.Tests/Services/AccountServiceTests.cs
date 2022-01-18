@@ -4,12 +4,16 @@ using DigitalCommercePlatform.UIServices.Account.Actions.ActionItemsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.ConfigurationsSummary;
 using DigitalCommercePlatform.UIServices.Account.Actions.CustomerAddress;
 using DigitalCommercePlatform.UIServices.Account.Actions.DealsSummary;
+using DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor;
 using DigitalCommercePlatform.UIServices.Account.Actions.GetMyQuotes;
 using DigitalCommercePlatform.UIServices.Account.Actions.MyOrders;
+using DigitalCommercePlatform.UIServices.Account.Actions.SavedCartsList;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopConfigurations;
+using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Models;
+using DigitalCommercePlatform.UIServices.Account.Models.Carts;
 using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
@@ -58,12 +62,31 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             _uiContext = new Mock<IUIContext>();
         }
 
-        #region GetConfigurationsSummaryAsync
+        #region GetTopDeals Unit Tests
+
+        [Fact]
+        public async Task GetTopDeals_ValidRequest_ResponseNotNullAndValidType()
+        {
+            //Arrange
+            var request = new GetTopDeals.Request();
+
+            //Act
+            var sut = GetService();
+            var result = sut.GetTopDeals(request);
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<DealModel>(result);
+        }
+
+        #endregion GetTopDeals Unit Tests
+
+        #region GetConfigurationsSummaryAsync Unit Tests
 
         [Fact]
         public async Task GetConfigurationsSummaryAsync_Test()
         {
-            //arrange
+            //Arrange
             GetConfigurationsSummary.Request request = new();
             request.Criteria = "123";
             //Act
@@ -124,7 +147,90 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             await Assert.ThrowsAsync<UIServiceException>(act);
         }
 
-        #endregion GetConfigurationsSummaryAsync
+        #endregion GetConfigurationsSummaryAsync Unit Tests
+
+        #region GetSavedCartListAsync Unit Tests
+
+        [Fact]
+        public async Task GetSavedCartListAsync_ValidRequest_RunsWithValidUrl()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<List<SavedCartDetailsModel>>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new List<SavedCartDetailsModel>());
+
+            var urlExpected = "listsavedcarts";
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetSavedCartListAsync(new GetCartsList.Request(true, 1));
+
+            //Assert
+            _middleTierHttpClient.Verify(x => x.GetAsync<List<SavedCartDetailsModel>>(It.Is<string>(s => s.EndsWith(urlExpected)),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()), Times.Once());
+
+            Assert.IsType<List<SavedCartDetailsModel>>(result);
+        }
+
+        [Fact]
+        public async Task GetSavedCartListAsync_ValidRequest_ReturnsValidType()
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.GetAsync<List<SavedCartDetailsModel>>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .ReturnsAsync(new List<SavedCartDetailsModel>());
+
+            //Act
+            var sut = GetService();
+            var result = await sut.GetSavedCartListAsync(new GetCartsList.Request(true, 1));
+
+            //Assert
+            Assert.IsType<List<SavedCartDetailsModel>>(result);
+        }
+
+        #endregion GetSavedCartListAsync Unit Tests
+
+        #region GetConfigurationsFor Unit Tests
+
+        [Fact]
+        public async Task GetConfigurationsFor_ValidRequest_ResponseNotNullAndValidType()
+        {
+            //Arrange
+            var request = new GetConfigurationsFor.Request(GetConfigurationsFor.RequestType.ConfigurationId);
+
+            //Act
+            var sut = GetService();
+            var result = sut.GetConfigurationsFor(request);
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<GetConfigurationsForModel>(result);
+        }
+
+        [Fact]
+        public async Task GetConfigurationsFor_ValidRequest_ResponseItemsCountIsValid()
+        {
+            //Arrange
+            var request = new GetConfigurationsFor.Request(GetConfigurationsFor.RequestType.ConfigurationId);
+
+            //Act
+            var sut = GetService();
+            var result = sut.GetConfigurationsFor(request);
+
+            //Assert
+            Assert.NotNull(result);
+            result.Items.Count.Should().Be(20);
+        }
+
+        #endregion GetConfigurationsFor Unit Tests
 
         #region GetAddress Unit Tests
 
@@ -1102,7 +1208,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
 
         #endregion GetMyOrdersSummaryAsync Unit Tests
 
-        #region GetDealsSummaryAsync
+        #region GetDealsSummaryAsync Unit Tests
 
         [Fact]
         public async Task GetDealsSummaryAsync_RunsClientWithValidUrl()
@@ -1132,7 +1238,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                 It.IsAny<Dictionary<string, string>>()), Times.Once());
         }
 
-        #endregion GetDealsSummaryAsync
+        #endregion GetDealsSummaryAsync Unit Tests
+
+        #region GetRenewalsExpirationDatesAsync Unit Tests
 
         [Fact]
         public async Task GetRenewalsExpirationDatesAsync_OneRenewalReturnedByService_ReturnsValidResponseList()
@@ -1150,6 +1258,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             //Assert
             result.Should().BeEquivalentTo(new List<string>() { response[0].ExpirationDate.ToShortDateString() });
         }
+
+        #endregion GetRenewalsExpirationDatesAsync Unit Tests
+
+        #region GetTopConfigurationsAsync Unit Tests
 
         [Fact]
         public async Task GetTopConfigurationsAsync_RunsWithValidUrlOnce()
@@ -1183,6 +1295,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                 It.IsAny<Dictionary<string, string>>()), Times.Once());
         }
 
+        #endregion GetTopConfigurationsAsync Unit Tests
+
+        #region MyQuotesSummaryAsync Unit Tests
+
         [Fact]
         public async Task MyQuotesSummaryAsync_RunsWithValidUrl()
         {
@@ -1209,6 +1325,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                 It.IsAny<Dictionary<string, object>>(),
                 It.IsAny<Dictionary<string, string>>()), Times.Once());
         }
+
+        #endregion MyQuotesSummaryAsync Unit Tests
 
         private AccountService GetService()
         {

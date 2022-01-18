@@ -18,22 +18,21 @@ using DigitalCommercePlatform.UIServices.Account.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Account.Models.Deals;
 using DigitalCommercePlatform.UIServices.Account.Models.Orders;
 using DigitalCommercePlatform.UIServices.Account.Models.Quotes;
-using DigitalFoundation.Common.Features.Client;
-using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using RenewalsService;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using DigitalFoundation.Common.Features.Client.Exceptions;
-using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 
 namespace DigitalCommercePlatform.UIServices.Account.Services
 {
