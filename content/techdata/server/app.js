@@ -9550,7 +9550,9 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     content: {
       quotePreview: {
         quoteDetails: {
+          isExclusive: false,
           shipTo: null,
+          buyMethod: "sap46",
           endUser: [
             {
               id: null,

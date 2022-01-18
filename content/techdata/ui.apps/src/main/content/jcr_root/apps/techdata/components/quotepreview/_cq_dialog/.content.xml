@@ -440,6 +440,40 @@
                                     </column>
                                 </items>
                             </noteTab>
+                            <modalConfigTab
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Modal Configuration"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <avgValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter AVG Label"
+                                                fieldLabel="Enter AVG Label"
+                                                name="./avgValue"/>
+                                            <techDataValue
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter TechData Label"
+                                                fieldLabel="Setup TechData Label"
+                                                name="./techDataValue"/>
+                                            <title
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Title Of The Modal"
+                                                fieldLabel="Setup Title Of The Modal"
+                                                name="./title"/>
+                                        </items>
+                                    </column>
+                                </items>
+
+                            </modalConfigTab>
                         </items>
                     </tabs>
                 </items>

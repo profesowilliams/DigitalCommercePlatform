@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import useGet from "../../hooks/useGet";
 import QuotePreviewGrid from "./ProductLines/ProductLinesGrid";
 import QuotePreviewNote from "./QuotePreviewNote";
+import ModalQuoteCreateModal from "./ModalQuoteCreateModal";
 import QuotePreviewContinue from './QuotePreviewContinue';
 import QuotePreviewSubTotal from "./QuotePreviewSubTotal";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
@@ -25,7 +26,29 @@ function QuotePreview(props) {
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
   const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
   const [modal, setModal] = useState(null);
+  const [isExclusiveFlag, setIsExclusiveFlag] = useState(false);
+  const [systemInfoDone, setSystemInfoDone] = useState(false);
 
+  const modalConfig = componentProp?.modalConfig;
+
+  /**
+   * Getting the value to know if the quote is exclusive
+   */
+  useEffect(() => {
+    if (apiResponse) {
+      const isExclusive = apiResponse?.content?.quotePreview?.quoteDetails.isExclusive;
+      if (isExclusive) {
+        setIsExclusiveFlag(true);
+      } else {
+        setIsExclusiveFlag(false);
+      }
+    }
+  }, [apiResponse ,isExclusiveFlag]);
+
+  //Please do not change the below method without consulting your Dev Lead
+  function invokeModal(modal) {
+    setModal(modal);
+  }
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
   useEffect(() => {
@@ -46,6 +69,7 @@ function QuotePreview(props) {
   );
 
   const closeModal = () => setModal(null);
+
   const showErrorModal = () => showSimpleModal('Create Quote', (
     <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
   ));
@@ -63,7 +87,15 @@ function QuotePreview(props) {
     setDidQuantitiesChange(didQuantitiesChange);
   };
 
-  const createQuote = async (quoteDetailsResponse) => {
+  /**
+   * Function that format the quote-Object and send to a service
+   * that save for the system and return the quoteID to show to 
+   * the end user and redirect to ordersGrid
+   * @param {any} quoteDetailsResponse 
+   * @param {string} buyMethodParam 
+   * @returns 
+   */
+  const createQuote = async (quoteDetailsResponse, buyMethodParam = '') => {
     try {
       setLoadingCreateQuote(true);
       let { activeCustomer = false } = JSON.parse(localStorage.getItem("userData"));
@@ -73,8 +105,10 @@ function QuotePreview(props) {
         quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
       }
 
+      if (quoteDetails.buyMethod && buyMethodParam !== '' && activeCustomer) {
+        quoteDetails.buyMethod = buyMethodParam;
+      }
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
-
       if (!result.data?.error?.isError && result.data?.content?.confirmationId) {
         const { confirmationId } = result.data.content;
         showSimpleModal('Create Quote', (
@@ -105,11 +139,51 @@ function QuotePreview(props) {
     });
   };
 
+  /**
+   * Function that validate if the quote have the field
+   * isExclusive true and show a modal to select the
+   * SAP system and keep the logic
+   * @param {boolean} isStandarPrice 
+   */
+  const validateCreateQuoteSystem = (isStandarPrice = false) => {
+    if (!isExclusiveFlag) {
+      showSimpleModal('Create Quote', (
+        <ModalQuoteCreateModal 
+          setSystemInfoDone={setSystemInfoDone} 
+          createQuote={createQuote} 
+          quoteDetails={quoteDetails} 
+          setModal={setModal}
+          isStandarPrice={isStandarPrice}
+          urlQuotesGrid={URL_QUOTES_GRID}
+          modalConfig={modalConfig}
+        />
+      ), onModalClosed => closeModal());
+    } else {
+      if (isStandarPrice) {
+        createQuote(quoteDetails)
+      } else {
+        createQuote(quoteDetailsCopy).then(res => {
+          window.location.href = URL_QUOTES_GRID
+        });  
+      }
+    }
+  };
+
   const handleQuickQuote = useCallback((e) => {
     const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
           dealRequired = isDealRequired(quoteDetails, true),
           userMissingFields = isEndUserMissing(quoteDetails, true);
 
+    if(pricingRequired || dealRequired || userMissingFields) {
+      scrollToTopError();
+      e.preventDefault();
+
+      setQuoteWithoutEndUser(userMissingFields);
+      setQuoteWithoutDealPricing(pricingRequired);
+      setQuoteWithoutDeal(dealRequired);
+    }
+
+    
     tryCreateQuote(e, pricingRequired, dealRequired, userMissingFields, quoteDetails);
   }, [quoteDetails]);
 
@@ -123,9 +197,9 @@ function QuotePreview(props) {
     if (quoteDetailsCopy.hasOwnProperty("deal")) {
       delete quoteDetailsCopy.deal;
     }
-
     tryCreateQuote(e, pricingRequired, false, userMissingFields, quoteDetailsCopy);
   };
+  
 
   const tryCreateQuote = (e, pricingRequired, dealRequired, userMissingFields, quote) => {
     if(pricingRequired || dealRequired || userMissingFields) {
@@ -135,9 +209,12 @@ function QuotePreview(props) {
       setQuoteWithoutEndUser(userMissingFields);
       setQuoteWithoutDealPricing(pricingRequired);
       setQuoteWithoutDeal(dealRequired);
-    }
-    else {
-      createQuote(quote);
+    } else {
+      if (!isExclusiveFlag && !systemInfoDone) {
+        validateCreateQuoteSystem();
+      } else {
+        createQuote(quote);
+      }
     }
   }
 
@@ -252,5 +329,3 @@ function QuotePreview(props) {
 }
 
 export default QuotePreview;
-
-

@@ -206,3 +206,56 @@
 		}
 	}
 }
+
+// Quote create modal conten style //
+.cmp-quote-create{
+	&__container{
+		justify-content: center;
+		display: flex;
+		align-content: space-between;
+		align-items: center;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+
+	&__title{
+		width: 65%;
+		display: flex;
+    	justify-content: center;
+		color: get-color(secondary-link-blue);;
+		margin-bottom: 5vh;
+	}
+
+	&__subtitle{
+		width: 50%;
+		display: flex;
+    	justify-content: space-around;
+		background-color: get-color(secondary-link-blue);
+		color: white;
+	}
+	&__checkbox{
+		width: 50%;
+		display: flex;
+    	justify-content: space-around;
+		align-items: center;
+		padding-top: 3vh;
+		padding-bottom: 3vh;
+	}
+
+	&__button-container{
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		margin-top: 10vh;
+		margin-bottom: 10vh;
+	}
+
+	&__button{
+		background-color: get-color(secondary-link-blue);
+		color: white;
+	}
+	&__button-cancel{
+		text-decoration: underline;
+		margin: 0;
+	}
+}

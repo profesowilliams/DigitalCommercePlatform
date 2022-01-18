@@ -7,6 +7,7 @@ use(['../common/utils.js'], function (utils) {
     var informationTab = {};
     var listValues = [];
     var resourceResolver = resource.getResourceResolver();
+    var modalConfig = {};
 
     var node = resourceResolver.getResource(currentNode.getPath() + "/columnList");
 
@@ -216,6 +217,18 @@ use(['../common/utils.js'], function (utils) {
         productLinesGrid["noLabel"]  = properties["noLabel"];
     }
 
+    if (properties && properties["avgValue"]) {
+        modalConfig["avgValue"]  = properties["avgValue"];
+    }
+
+    if (properties && properties["techDataValue"]) {
+        modalConfig["techDataValue"]  = properties["techDataValue"];
+    }
+
+    if (properties && properties["title"]) {
+        modalConfig["title"]  = properties["title"];
+    }
+
     if (this.productEmptyImageUrl) {
         productLinesGrid["productEmptyImageUrl"] = this.productEmptyImageUrl;
     }
@@ -256,6 +269,10 @@ use(['../common/utils.js'], function (utils) {
     }
     if (noteGrid != null) {
         jsonObject["note"] = noteGrid;
+    }
+
+    if (modalConfig != null) {
+        jsonObject["modalConfig"] = modalConfig;
     }
 
 
