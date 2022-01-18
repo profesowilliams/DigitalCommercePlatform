@@ -1,305 +1,295 @@
 .languagenavigation {
-    position: relative;
-  
-    @include tablet {
-      margin-left: auto;
-    }
-  
-    #regionSelectDropdown {
-      position: absolute;
-      z-index: 100;
-      right: 0;
-      top: 55px;
-  
-      @include tablet {
-        position: fixed;
-        top: 48px;
-      }
-    }
+  position: relative;
+
+  @include tablet {
+    margin-left: auto;
   }
-  
-  .languagenavigation svg {
-    height: rem(26px);
-    width: rem(26px);
-    padding-right: rem(4px);
-    //box-shadow: 0 0 0 rem(1px) get-color(td-lighter-gray);
-    position: relative;
-    top: rem(1px);
-  }
-  
+
   #regionSelectDropdown {
-    background-color: get-color(brand-white);
-  }
-  
-  .cmp-region-select-dropdown {
-    box-shadow: inset 0 rem(2px) rem(1px) 0 get-color(td-dark-blue);
-    border: rem(0rem);
-    display: flex;
-    flex-direction: column;
-    line-height: rem(45px);
-    margin: 0 !important;
-  }
-  
-  #regionSelectDropdown .languageselection-button {
-    display: flex !important;
-  }
-  
-  .cmp-form-options--radio {
-    padding: rem(22px) 0 0 rem(15px);
-    border: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .cmp-form-options__field-description {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    top: rem(-16px);
-    left: rem(20px);
-  }
-  
-  .cmp-dropbtn {
-    display: flex;
-    align-items: center;
-    font-size: $font-size-small;
-    padding: 0;
-    min-height: 30px;
-    background: none;
-    color: get-color(brand-black);
-    ;
-    border: none;
-    cursor: pointer;
-  
-    &:hover {
-      box-shadow: 0 3px 0 0px get-color(brand-light-blue);
-    }
-  
-    &:active {
-      box-shadow: 0 3px 0 0px get-color(brand-light-blue);
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    top: 55px;
+
+    @include tablet {
+      position: fixed;
+      top: 48px;
     }
   }
-  
-  .cmp-dropdown {
-    position: relative;
-    display: inline-block;
+}
+
+.languagenavigation svg {
+  height: rem(26px);
+  width: rem(26px);
+  padding-right: rem(4px);
+  //box-shadow: 0 0 0 rem(1px) get-color(td-lighter-gray);
+  position: relative;
+  top: rem(1px);
+}
+
+#regionSelectDropdown {
+  background-color: get-color(brand-white);
+}
+
+.cmp-region-select-dropdown {
+  box-shadow: inset 0 rem(2px) rem(1px) 0 get-color(td-dark-blue);
+  border: rem(0rem);
+  display: flex;
+  flex-direction: column;
+  line-height: rem(45px);
+  margin: 0 !important;
+}
+
+#regionSelectDropdown .languageselection-button {
+  display: flex !important;
+}
+
+.cmp-form-options--radio {
+  padding: rem(22px) 0 0 rem(15px);
+  border: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cmp-form-options__field-description {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  top: rem(-16px);
+  left: rem(20px);
+}
+
+.cmp-dropbtn {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-small;
+  padding: 0;
+  min-height: 30px;
+  background: none;
+  color: get-color(brand-black);
+  ;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 3px 0 0px get-color(brand-light-blue);
   }
-  
-  .cmp-dropdown-content {
-    display: none;
-    width: 250px;
+
+  &:active {
+    box-shadow: 0 3px 0 0px get-color(brand-light-blue);
   }
-  
-  .cmp-show {
-    display: block;
+}
+
+.cmp-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.cmp-dropdown-content {
+  display: none;
+  width: 250px;
+}
+
+.cmp-show {
+  display: block;
+}
+
+.cmp-languagenavigation__item-link {
+  text-decoration: none;
+  color: get-color(brand-black);
+}
+
+
+
+.cmp-region-list {
+  &__title {
+    font-size: $font-size-medium;
+    color: get-color(brand-text-gray);
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8;
+    margin-bottom: rem(20px);
+    font-weight: normal !important;
+    text-align: center;
+    margin-top: 0;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 18px get-color(brand-white);
   }
-  
-  .cmp-languagenavigation__item-link {
-    text-decoration: none;
-    color: get-color(brand-black);
-  }
-  
-  
-  
-  .cmp-region-list {
-    &__title {
-      font-size: $font-size-medium;
-      color: get-color(brand-text-gray);
+
+
+  &__countries {
+    font-size: $font-size-custom-xxsmall;
+    color: get-color(brand-text-gray);
+    text-transform: uppercase;
+    line-height: 1.8;
+    margin-bottom: rem(20px);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    a {
+      color: get-color(brand-text-gray) !important;
+      text-decoration: none !important;
+    }
+
+    &--flag {
+      width: rem(22px);
+      margin-right: rem(5px);
+
+      svg {
+        height: auto;
+        width: rem(22px);
+        padding-right: rem(4px);
+        box-shadow: 0 0 0 rem(1px) get-color(td-lighter-gray);
+        position: relative;
+        top: rem(1px);
+      }
+
+    }
+
+    &--name {
       display: flex;
       flex-direction: column;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
-      font-weight: normal !important;
-      text-align: center;
-      margin-top: 0;
-      text-transform: uppercase;    
-      box-shadow: 0 0 0 18px  get-color(brand-white);
     }
-  
-  
-    &__countries {
-      font-size: $font-size-custom-xxsmall;
-      color: get-color(brand-text-gray);
-      text-transform: uppercase;
-      line-height: 1.8;
-      margin-bottom: rem(20px);
+  }
+
+  &__language {
+    font-size: $font-size-xsmall;
+    color: get-color(brand-text-lightgray) !important;
+    text-transform: none !important;
+
+    a {
+      color: get-color(brand-text-lightgray) !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
+/* The Modal (background) */
+
+#countriesListModal {
+  .modal {
+    padding-top: rem(45px) !important;
+  }
+}
+
+.language-modal {
+  font-family: $font-family;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: rem(50px);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: get-color(td-dark-blue-shade);
+  z-index: 9999;
+
+  /* Modal Content */
+
+  &__content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: rem(40px) rem(20px);
+    width: rem(1280px);
+    box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
+    border-top: rem(2px) solid get-color(td-dark-blue);
+    box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
+
+    @include mobile {
+      width: rem(320px);
+    }
+
+    /* The Close Button */
+    &__close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    &__row {
       display: flex;
+      -ms-flex-direction: row;
       flex-direction: row;
-      align-items: flex-start;
-  
-      a {
-        color: get-color(brand-text-gray) !important;
-        text-decoration: none !important;
-      }
-  
-      &--flag {
-        width: rem(22px);
-        margin-right: rem(5px);
-  
-        svg {
-          height: auto;
-          width: rem(22px);
-          padding-right: rem(4px);
-          box-shadow: 0 0 0 rem(1px) get-color(td-lighter-gray);
-          position: relative;
-          top: rem(1px);
-        }
-  
-      }
-  
-      &--name {
-        display: flex;
+      align-items: stretch;
+
+      @include mobile {
+        -ms-flex-direction: column;
         flex-direction: column;
       }
-    }
-  
-    &__language {
-      font-size: $font-size-xsmall;
-      color: get-color(brand-text-lightgray) !important;
-      text-transform: none !important;
-  
-      a {
-        color: get-color(brand-text-lightgray) !important;
-        text-decoration: none !important;
+
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
       }
     }
-  }
-  
-  /* The Modal (background) */
-  
-  #countriesListModal {
-    .modal {
-      padding-top: rem(45px) !important;
-    }
-  }
-  
-  .language-modal {
-    font-family: $font-family;
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: rem(50px);
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: get-color(td-dark-blue-shade);
-    z-index: 9999;
-  
-    /* Modal Content */
-  
-    &__content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: rem(40px) rem(20px);
-      width: rem(1280px);
-      box-shadow: 0 5px 5px 0 get-color(td-dark-blue);
-      border-top: rem(2px) solid get-color(td-dark-blue);
-      box-shadow: inset 0 0 0 rem(1px) get-color(td-dark-blue-shade);
-  
-      @include mobile {
-        width: rem(320px);
-      }
-  
-      /* The Close Button */
-      &__close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-  
-        &:hover,
-        &:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
-        }
-      }
-  
-      &__row {
-        display: flex;
-        -ms-flex-direction: row;
-        flex-direction: row;
-        align-items: stretch;
-  
+
+    &__column {
+      float: left;
+      width: 50%;
+      padding: 0px;
+
+      &:nth-of-type(2) {
+        border-left: rem(1px) solid get-color(v-divider-darkgray);
+        border-right: rem(1px) solid get-color(v-divider-darkgray);
+
         @include mobile {
-          -ms-flex-direction: column;
-          flex-direction: column;
-        }
-  
-        &:after {
-          content: "";
-          display: table;
-          clear: both;
+          border-left: 0 solid get-color(v-divider-darkgray);
+          border-right: 0 solid get-color(v-divider-darkgray);
         }
       }
-  
-      &__column {
-        float: left;
-        width: 50%;
-        padding: 0px;
-  
-        &:nth-of-type(2) {
-          border-left: rem(1px) solid get-color(v-divider-darkgray);
-          border-right: rem(1px) solid get-color(v-divider-darkgray);
-  
-          @include mobile {
-            border-left: 0 solid get-color(v-divider-darkgray);
-            border-right: 0 solid get-color(v-divider-darkgray);
-          }
-        }
-  
-        &:first-child,
-        &:last-child {
-          width: 25%;
-          padding: 0px 35px;
-          overflow: hidden;
-          white-space: normal;
-  
-          @include mobile {
-            width: unset;
-            padding: unset;
-          }
-        }
-  
-        &:last-child>&__seperator {
-          border-right: none;
-        }
-  
+
+      &:first-child,
+      &:last-child {
+        width: 25%;
+        padding: 0px 35px;
+        overflow: hidden;
+        white-space: normal;
+
         @include mobile {
-          float: none;
           width: unset;
           padding: unset;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
         }
-  
-        &__seperator {
-          border-right: 0px solid get-color(brand-text-lightgray);
-          //height: 300px; this is causing an issue in UAT bug 199700
-          column-width: 200px;
-  
-          &--europe {
-            column-width: auto;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+      }
+
+      &:last-child>&__separator {
+        border-right: none;
+      }
+
+      @include mobile {
+        float: none;
+        width: unset;
+        padding: unset;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      &__separator {
+        border-right: 0px solid get-color(brand-text-lightgray);
+        column-width: 200px;
+
+        &:nth-of-type(2) {
+          padding-left: rem(50px);
+        }
+
+        @include mobile {
+          &:nth-of-type(2) {
+            padding-left: 0;
           }
-        }
-  
-        &__seperator-l {
-          float: left;
-          width: 50%;
-          padding: 0 0 0 rem(35px) !important;
-        }
-  
-        &__seperator-r {
-          float: left;
-          width: 50%;
         }
       }
     }
   }
-  
+}
