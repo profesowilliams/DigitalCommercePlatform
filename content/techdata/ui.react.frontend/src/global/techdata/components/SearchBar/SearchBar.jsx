@@ -76,12 +76,8 @@ const SearchBar = ({ data, componentProp }) => {
   }, [searchTermText]);
 
   useEffect(() => {
-    console.log("🚀 ~ file: OrdersGridSearch.jsx ~ line 30 ~ useEffect ~ window.location", window.location)
     const urlOrigin = window.location.origin;
-    console.log("🚀 ~ file: SearchBar.jsx ~ line 81 ~ useEffect ~ urlOrigin", urlOrigin)
     setOriginURL(urlOrigin);
-    // const params = new URLSearchParams(window.location.search);
-    // console.log("🚀 ~ file: SearchBar.jsx ~ line 80 ~ useEffect ~ params", params)
   }, []);
 
   const replaceSearchTerm = (originalStr, searchTerm) => {

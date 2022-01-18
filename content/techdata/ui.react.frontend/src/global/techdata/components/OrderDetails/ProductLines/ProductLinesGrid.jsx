@@ -795,6 +795,7 @@ function ProductLinesGrid({
           requestLocalFilter={(request) =>
             filteringExtension.requestLocalFilter(request)
           }
+          handlerIsRowMaster={handlerIsRowMaster}
         ></Grid>
       </div>
       {modal && <Modal
