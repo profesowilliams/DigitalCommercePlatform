@@ -46,6 +46,14 @@ export const renewalsEffects = (set, get) => {
     set({pagination})
   }
 
+  function setCustomStartDate(customStartDate){
+    set({customStartDate})
+  }
+
+  function setCustomEndDate(customEndDate){
+    set({customEndDate})
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -54,6 +62,8 @@ export const renewalsEffects = (set, get) => {
     setDateOptionsList,
     setDatePickerState,
     clearDateFilters,
-    setPagination
+    setPagination,
+    setCustomStartDate,
+    setCustomEndDate
   };
 };

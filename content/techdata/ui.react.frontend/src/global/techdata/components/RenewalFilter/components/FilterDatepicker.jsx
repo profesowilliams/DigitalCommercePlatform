@@ -12,12 +12,11 @@ import { DateOptionsList } from "./DateOptionsList";
 
 export default function FilterDatePicker({ isOpen = false }) {  
 
-  const [startDate, setStartDate] = React.useState();
-  const [endDate, setEndDate] = React.useState();
   const [focusedInput, setFocusedInput] = React.useState();
   const effects = useRenewalGridState(state => state.effects);
   const dateSelected = useRenewalGridState(state => state.dateSelected);  
-
+  const customStartDate = useRenewalGridState(state => state.customStartDate); 
+  const customEndDate = useRenewalGridState(state => state.customEndDate); 
 
   return (
     <>
@@ -26,16 +25,14 @@ export default function FilterDatePicker({ isOpen = false }) {
           <DateOptionsList/>
           <If condition={dateSelected === 'custom'}>                
           <DateRangePicker     
-            startDate={startDate}
-
+            startDate={customStartDate}
             startDateId="start-date"  
-            endDate={endDate}
-
+            endDate={customEndDate}
             endDateId="end-date"            
             verticalHeight={468}          
-            onDatesChange={({ startDate, endDate }) => {
-              setStartDate(startDate);
-              setEndDate(endDate);
+            onDatesChange={({ startDate, endDate }) => {              
+              effects.setCustomStartDate(startDate);            
+              effects.setCustomEndDate(endDate);
               if (startDate, endDate ) {
                 effects.setDatePickerState(startDate.toDate(), endDate.toDate())
               }

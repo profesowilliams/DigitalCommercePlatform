@@ -49,6 +49,8 @@ const INITIAL_STATE = {
     currentPage: 1,
     currentResultsInPage: 0
   },
+  customStartDate:undefined,
+  customEndDate:undefined
 };
 
 const store = (set, get, a) => ({
