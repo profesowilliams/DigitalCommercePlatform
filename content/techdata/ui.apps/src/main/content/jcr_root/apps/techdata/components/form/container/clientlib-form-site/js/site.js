@@ -1,5 +1,4 @@
 (function() {
-
     var errorMessage = document.getElementById("errorMessage");
         var errorBlockId = "cmp-form-error-block";
         var WRONG_FILE_SIZE_STATUS = "-1";
@@ -208,7 +207,7 @@
                         e.preventDefault();
                         console.warn('validation failed for form');
                     } else {
-                        let endPoint = "/content/techdata/apis/tdpostform";
+                        let endPoint = "/bin/form";
                         var xhr = new XMLHttpRequest();
                         var handlePOSTRequest = function () { // Call a function when the state changes.
                             if (xhr.status === 200) {
