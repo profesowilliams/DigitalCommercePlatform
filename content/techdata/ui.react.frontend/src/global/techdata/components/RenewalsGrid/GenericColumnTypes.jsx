@@ -90,9 +90,10 @@ export const renewalPlanColumn = ({
   },
 });
 
-export const plainResellerColumnFn = ({ columnLabel, columnKey, sortable }) => {
+export const plainResellerColumnFn = (definition) => {
   // check if Its a reseller or techdata employee
   //refactor needed
+  const { columnLabel, columnKey, sortable } = definition;
   const isInternal =
     IS_TD_INTERNAL &&
     hasAccess({
@@ -105,6 +106,7 @@ export const plainResellerColumnFn = ({ columnLabel, columnKey, sortable }) => {
       headerName: columnLabel,
       field: columnKey,
       sortable: sortable,
+      cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps)
     };
   } else {
     return null;

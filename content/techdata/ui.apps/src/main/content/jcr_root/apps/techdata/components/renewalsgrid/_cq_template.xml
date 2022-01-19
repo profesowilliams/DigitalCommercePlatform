@@ -41,28 +41,28 @@
             jcr:primaryType="nt:unstructured"
             columnLabel="Reseller name"
             columnKey="reseller"
-            sortable="{Boolean}false"
-            columnType="plainText"
+            sortable="{Boolean}true"
+            columnType="plainResellerColumn"
         />
         <item1
             jcr:primaryType="nt:unstructured"
             columnLabel="End user name"
             columnKey="endUser"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item2
             jcr:primaryType="nt:unstructured"
             columnLabel="Vendor and program"
             columnKey="vendor"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item3
             jcr:primaryType="nt:unstructured"
             columnLabel="Agreement No"
             columnKey="agreementNumber"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item4
@@ -83,14 +83,14 @@
             jcr:primaryType="nt:unstructured"
             columnLabel="Due Date"
             columnKey="dueDate"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item7
             jcr:primaryType="nt:unstructured"
             columnLabel="Price (USD)"
             columnKey="price"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item8
