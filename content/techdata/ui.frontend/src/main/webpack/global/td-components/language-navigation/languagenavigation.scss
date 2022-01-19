@@ -276,17 +276,24 @@
         justify-content: flex-start;
       }
 
+
+
       &__separator {
         border-right: 0px solid get-color(brand-text-lightgray);
         column-width: 200px;
 
         &:nth-of-type(2) {
-          padding-left: rem(50px);
+          //padding-left: rem(74px);
+          display: flex;
+          flex-wrap: nowrap;
+          flex-direction: row;
+          align-content: space-between;
+          justify-content: space-around;
         }
 
         @include mobile {
           &:nth-of-type(2) {
-            padding-left: 0;
+            flex-direction: column;
           }
         }
       }
