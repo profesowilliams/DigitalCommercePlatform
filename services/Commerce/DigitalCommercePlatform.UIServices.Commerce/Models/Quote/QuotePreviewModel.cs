@@ -37,7 +37,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string Vendor { get; set; }
         public string BuyMethod { get; set; }
         public bool? IsExclusive { get; set; }
+        public List<AttributeModel> Attributes { get; set; }
+    }
 
+
+    [ExcludeFromCodeCoverage]
+    public class AttributeModel
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }
 
