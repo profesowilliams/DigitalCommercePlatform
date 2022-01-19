@@ -19,6 +19,7 @@ function Grid(props) {
     onSortChanged,
     handlerIsRowMaster,        
     icons,
+    omitCreatedQuery = false
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.2.0";
@@ -231,9 +232,8 @@ function Grid(props) {
       let createdFrom = new Date();
       createdFrom.setDate(createdTo.getDate() - 31);
       const createdToString = createdTo.toISOString().slice(0, 10);
-      const createdFromString = createdFrom.toISOString().slice(0, 10);
-      const createdParam = `&createdFrom=${createdFromString}&createdTo=${createdToString}`;
-
+      const createdFromString = createdFrom.toISOString().slice(0, 10);   
+      const createdParam = !omitCreatedQuery ? `&createdFrom=${createdFromString}&createdTo=${createdToString}` : '';
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${createdParam}`

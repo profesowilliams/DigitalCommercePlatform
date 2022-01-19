@@ -82,6 +82,7 @@ function RenewalsGrid(props) {
             groupExpanded: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
             groupContracted: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
           }}
+          omitCreatedQuery={true}
         />
       </div>
     </section>
