@@ -13,6 +13,5 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interface
         int HeaderFontSize { get; set; }
 
         string CellFontName { get; set; }
-        int CellFontSize { get; set; }
     }
 }

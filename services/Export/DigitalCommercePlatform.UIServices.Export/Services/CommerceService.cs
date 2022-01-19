@@ -22,7 +22,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private string _appOrderServiceUrl;
         private readonly ILogger<CommerceService> _logger;
-        private readonly IExportService _helperService;
         private readonly IUIContext _uiContext;
         private readonly IAppSettings _appSettings;
         private string _appQuoteServiceUrl;
@@ -32,12 +31,10 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             ILogger<CommerceService> logger,
             IAppSettings appSettings,
             IUIContext uiContext,
-            IMapper mapper,
-            IExportService helperService)
+            IMapper mapper)
         {
             _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _helperService = helperService;
             _uiContext = uiContext;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _appSettings = appSettings;

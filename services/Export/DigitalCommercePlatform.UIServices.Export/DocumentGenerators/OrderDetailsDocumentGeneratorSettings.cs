@@ -18,7 +18,6 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         public int HeaderFontSize { get; set; } = 22;
 
         public string CellFontName { get; set; } = "Calibri";
-        public int CellFontSize { get; set; } = 11;
 
         public OrderDetailsDocumentGeneratorSettings()
         {

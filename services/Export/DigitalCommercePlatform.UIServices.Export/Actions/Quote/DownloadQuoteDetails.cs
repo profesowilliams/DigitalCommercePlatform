@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces;
 using DigitalCommercePlatform.UIServices.Export.Models.Common;
 using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using DigitalCommercePlatform.UIServices.Export.Models.UIServices.Commerce;
@@ -8,6 +9,7 @@ using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -30,8 +32,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
 
             public Request()
             {
-                AncillaryItems = System.Array.Empty<AncillaryItem>();
-                LineMarkup = System.Array.Empty<LineMarkup>();
+                AncillaryItems = Array.Empty<AncillaryItem>();
+                LineMarkup = Array.Empty<LineMarkup>();
             }
         }
 
@@ -40,13 +42,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
         {
             public byte[] BinaryContent { get; set; }
             public string MimeType { get; set; }
-
-            public Response() {}
-
-            public Response(byte[] binaryContent)
-            {
-                BinaryContent = binaryContent;
-            }
         }
 
         [ExcludeFromCodeCoverage]
@@ -55,17 +50,18 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
             private readonly ICommerceService _commerceService;
-            private readonly IExportService _helperService;
+            private readonly IQuoteDetailsDocumentGenerator _documentGenerator;
 
             public Handler(ICommerceService commerceService,
                            IMapper mapper,
                            ILogger<Handler> logger,
-                           IExportService helperService)
+                           IQuoteDetailsDocumentGenerator documentGenerator
+                           )
             {
                 _commerceService = commerceService;
                 _mapper = mapper;
                 _logger = logger;
-                _helperService = helperService;
+                _documentGenerator = documentGenerator;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
@@ -77,7 +73,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                 if (quoteModel != null)
                 {
                     var quoteDetails = _mapper.Map<QuoteDetails>(quoteModel);
-                    var binaryContentXls = await _helperService.GetQuoteDetailsAsXls(quoteDetails, request);
+                    quoteDetails.Request = request;
+                    var binaryContentXls = await _documentGenerator.XlsGenerate(quoteDetails);
                     DownloadableFile file = new (binaryContentXls, request.QuoteId + ".xls", mimeType);
                     response.BinaryContent = file.BinaryContent;
                     response.MimeType = file.MimeType;

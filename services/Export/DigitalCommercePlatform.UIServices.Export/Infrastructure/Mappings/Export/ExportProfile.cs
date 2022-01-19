@@ -97,6 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
 
                 .ForMember(d => d.Notes, o => o.Ignore())
                 .ForMember(d => d.SPAId, o => o.Ignore())
+                .ForMember(d => d.Request, o => o.Ignore())
                 ;
 
             CreateMap<Item, Line>()

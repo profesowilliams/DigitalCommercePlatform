@@ -9,7 +9,9 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Models.Ab
     public abstract class DocumentGeneratorBase<T, U> : IDocumentGenerator<U> 
         where T : IDocumentGeneratorSettings where U : IDocumentModel
     {
-        protected abstract T _settings { get; set; }
+        protected const string NOT_AVAILABLE = "Not available";
+
+        protected abstract T Settings { get; set; }
 
         public abstract Task<byte[]> XlsGenerate(U model);
     }

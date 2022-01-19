@@ -1,17 +1,15 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Export.Actions.Quote;
-using DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces;
+using DigitalCommercePlatform.UIServices.Export.Models;
 using DigitalCommercePlatform.UIServices.Export.Models.Internal;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
+namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces
 {
-    [ExcludeFromCodeCoverage]
-    public class QuoteDetails : IQuoteDetailsDocumentModel
+    public interface IQuoteDetailsDocumentModel : IDocumentModel
     {
         public DownloadQuoteDetails.Request Request { get; set; }
-     
+
         public Address ShipTo { get; set; }
         public Address EndUser { get; set; }
         public Address Reseller { get; set; }
@@ -25,7 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public string EndUserPO { get; set; }
         public string QuoteReference { get; set; }
         public string SPAId { get; set; }
-        public string Currency { get; set; } = "USD";
+        public string Currency { get; set; }
         public decimal SubTotal { get; set; }
         public string SubTotalFormatted { get; set; }
         public string Tier { get; set; }

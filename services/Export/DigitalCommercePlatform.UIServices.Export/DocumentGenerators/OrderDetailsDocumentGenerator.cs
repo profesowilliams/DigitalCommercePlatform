@@ -10,7 +10,6 @@ using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,24 +20,23 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         DocumentGeneratorBase<IOrderDetailsDocumentGeneratorSettings, IOrderDetailsDocumentModel>,
         IOrderDetailsDocumentGenerator
     {
-        protected override IOrderDetailsDocumentGeneratorSettings _settings { get; set; }
+        protected override IOrderDetailsDocumentGeneratorSettings Settings { get; set; }
 
-        private static readonly string _notAvailable = "Not available";
-        private static readonly TrackingDetails _notAvailableTracking = new() { TrackingNumber = _notAvailable, Carrier = _notAvailable, InvoiceNumber = _notAvailable };
+        private static readonly TrackingDetails _notAvailableTracking = new() { TrackingNumber = NOT_AVAILABLE, Carrier = NOT_AVAILABLE, InvoiceNumber = NOT_AVAILABLE };
 
         private static readonly int _col = 2;
         private static readonly int _row = 2;
 
         public OrderDetailsDocumentGenerator(IOrderDetailsDocumentGeneratorSettings settings)
         {
-            _settings = settings;
+            Settings = settings;
         }
 
         public override Task<byte[]> XlsGenerate(IOrderDetailsDocumentModel orderDetails)
         {
             using var p = new ExcelPackage();
-            ExcelWorksheet wsOrderDetail = p.Workbook.Worksheets.Add(_settings.WorkSheetName);
-            p.Workbook.Worksheets.MoveToStart(_settings.WorkSheetName);
+            ExcelWorksheet wsOrderDetail = p.Workbook.Worksheets.Add(Settings.WorkSheetName);
+            p.Workbook.Worksheets.MoveToStart(Settings.WorkSheetName);
 
             GenerateOrderReportHeader(wsOrderDetail);
             GenerateOrderDetailHeader(wsOrderDetail);
@@ -80,7 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             SetCell(currentRow + 10, _col + 15, wsOrderDetail, paymentDetails.Total.Value.ToString());
 
             var rng = wsOrderDetail.Cells[currentRow + 4, _col + 13, currentRow + 11, _col + 18];
-            rng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            rng.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private void GeneratePaymentMethodSection(int currentRow, ExcelWorksheet wsOrderDetail)
@@ -96,7 +94,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             rng.Value = "30 days net";
 
             rng = wsOrderDetail.Cells[currentRow + 4, _col + 1, currentRow + 11, _col + 4];
-            rng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            rng.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private void GeneratePaymentDetailsHeader(int currentRow, ExcelWorksheet wsOrderDetail)
@@ -126,26 +124,26 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.TDNo, line.TDNumber);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Quantity, line.Quantity.ToString());
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.UnitCost, line.UnitPrice?.ToString());
-            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Freight, _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Freight, NOT_AVAILABLE);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ExtendedCost, line.ExtendedPrice);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Status, line.Status ?? string.Empty);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Tracking, firstTracking.TrackingNumber);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Carrier, firstTracking.Carrier);
-            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ShipDate, firstTracking.Date.HasValue ? firstTracking.Date.Value.ToString() : _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ShipDate, firstTracking.Date.HasValue ? firstTracking.Date.Value.ToString() : NOT_AVAILABLE);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.Invoice, firstTracking.InvoiceNumber);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.SerialNo, string.Join(',', line.Serials));
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.LicenseKeys, line.License);
-            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.VendorOrderNo, _notAvailable);
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.VendorOrderNo, NOT_AVAILABLE);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.TDPurchaseOrderNo, model.PONumber);
             curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.ContractNo, line.ContractNo);
-            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.StartDate, line.StartDate == DateTime.MinValue ? _notAvailable : line.StartDate.ToString());
-            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.EndDate, line.EndDate == DateTime.MinValue ? _notAvailable : line.EndDate.ToString());
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.StartDate, line.StartDate == DateTime.MinValue ? NOT_AVAILABLE : line.StartDate.ToString());
+            curCol = CheckExportedFieldsAndSetCell(wsOrderDetail, curXlRow, model, curCol, OrderDetailsExportedFields.EndDate, line.EndDate == DateTime.MinValue ? NOT_AVAILABLE : line.EndDate.ToString());
         }
 
         private int CheckExportedFieldsAndSetCell(ExcelWorksheet wsOrderDetail, int curXlRow, IOrderDetailsDocumentModel model,
             int curCol, OrderDetailsExportedFields field, string text)
         {
-            if (model.ExportedFields.Contains(((OrderDetailsExportedFields)field).ToString()))
+            if (model.ExportedFields.Contains(field.ToString()))
             {
                 SetCell(curXlRow, ++curCol, wsOrderDetail, text);
             }
@@ -178,12 +176,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             curCol = CheckExportedFieldAndSetOrderHeaderStyle(wsOrderDetail, exportedFields, curCol, curRow, OrderDetailsExportedFields.EndDate, "END DATE");
             
             var subheaderRng = wsOrderDetail.Cells[curRow, _col + 1, curRow, curCol];
-            subheaderRng.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            subheaderRng.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private int CheckExportedFieldAndSetOrderHeaderStyle(ExcelWorksheet wsOrderDetail, List<string> exportedFields, int curCol, int curRow, OrderDetailsExportedFields field, string text)
         {
-            if (exportedFields.Contains(((OrderDetailsExportedFields)field).ToString()))
+            if (exportedFields.Contains(field.ToString()))
             {
                 curCol++;
                 SetOrderHeaderStyle(curRow, curCol, curRow, curCol, wsOrderDetail, text);
@@ -196,7 +194,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             SetOrderHeaderStyle(_row + 16, _col, _row + 16, _col + 19, wsOrderDetail, "Order Details");
             ExcelRange headerRange = wsOrderDetail.Cells[_row + 16, _col, _row + 16, _col + 19];
-            headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            headerRange.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private void GenerateEndUserShipToDetailSection(ExcelWorksheet wsOrderDetail, Address endUser, Address shipTo)
@@ -235,15 +233,15 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             ExcelRange rng = wsOrderDetail.Cells[xlRow, xlCol];
             rng.Value = value;
-            rng.Style.Font.Size = _settings.CellFontSize;
-            rng.Style.Font.Name = _settings.CellFontName;
+            rng.Style.Font.Size = Settings.CellFontSize;
+            rng.Style.Font.Name = Settings.CellFontName;
         }
 
         private void GenerateEndUserShipToDetailHeader(ExcelWorksheet wsOrderDetail)
         {
             ExcelRange headerRange = wsOrderDetail.Cells[_row + 11, _col, _row + 11, _col + 19];
             SetOrderHeaderStyle(_row + 11, _col, _row + 11, _col + 19, wsOrderDetail, "End User & Ship to Details");
-            headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            headerRange.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private void GenerateOrderReportHeader(ExcelWorksheet wsOrderDetail)
@@ -251,16 +249,16 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             ExcelRange rng = wsOrderDetail.Cells[_row, _col, _row, _col + 11];
             rng.Merge = true;
             rng.Value = "Tech Data Order Details";
-            rng.Style.Font.Size = _settings.HeaderFontSize;
-            rng.Style.Font.Name = _settings.HeaderFontName;
-            rng.Style.VerticalAlignment = _settings.HeaderVerticalAlignment;
-            wsOrderDetail.Row(_row).Height = _settings.HeaderRowHeight;
+            rng.Style.Font.Size = Settings.HeaderFontSize;
+            rng.Style.Font.Name = Settings.HeaderFontName;
+            rng.Style.VerticalAlignment = Settings.HeaderVerticalAlignment;
+            wsOrderDetail.Row(_row).Height = Settings.HeaderRowHeight;
             wsOrderDetail.Cells[_row, _col].Style.WrapText = false;
 
             rng = wsOrderDetail.Cells[_row, _col + 12, _row, _col + 19];
             rng.Merge = true;
-            rng.Style.VerticalAlignment = _settings.HeaderVerticalAlignment;
-            wsOrderDetail.Row(_row).Height = _settings.HeaderRowHeight;
+            rng.Style.VerticalAlignment = Settings.HeaderVerticalAlignment;
+            wsOrderDetail.Row(_row).Height = Settings.HeaderRowHeight;
             wsOrderDetail.Cells[_row, _col].Style.WrapText = false;
         }
 
@@ -269,7 +267,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             var headerRange = wsOrderDetail.Cells[_row + 2, _col, _row + 2, _col + 19];
             SetOrderHeaderStyle(_row + 2, _col, _row + 2, _col + 19, wsOrderDetail,
                 "PO No Please cancel test order Order Details");
-            headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            headerRange.Style.Border.BorderAround(Settings.DefaultBorder);
         }
 
         private void SetOrderHeaderStyle(int xlRowStart, int xlColStart, int xlRowEnd, int xlColEnd, ExcelWorksheet wsOrderDetail, string text)
@@ -278,18 +276,18 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             headerRange.Merge = true;
             headerRange.Value = text;
             headerRange.Style.Font.Bold = true;
-            headerRange.Style.Font.Size = 10;
+            headerRange.Style.Font.Size = Settings.HeaderFontSize;
             headerRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             headerRange.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            headerRange.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(197, 217, 241));
+            headerRange.Style.Fill.BackgroundColor.SetColor(Settings.DefaultBackgroundColor);
         }
 
         private static void AdjustAllColumnWidths(ExcelWorksheet wsOrderDetail)
         {
             for (int col = 1; col <= 22; col++)
             {
-                    wsOrderDetail.Column(col).AutoFit();
+                wsOrderDetail.Column(col).AutoFit();
             }
         }
     }
