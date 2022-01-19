@@ -45,11 +45,13 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
     };
 
     useEffect(() => {
-      setInfoState({
-        ...infoState,
-        companyName: endUser.companyName,
-      })
-    }, [endUser.companyName]);
+      if (endUser?.companyName) {
+        setInfoState({
+          ...infoState,
+          companyName: endUser?.companyName,
+        })
+      }
+    }, [endUser?.companyName]);
 
     const values = validateRequiredEnduserFields(infoState);
 

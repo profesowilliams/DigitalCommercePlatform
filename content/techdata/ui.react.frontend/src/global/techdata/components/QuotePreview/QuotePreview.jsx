@@ -227,6 +227,9 @@ function QuotePreview(props) {
         quoteReference: generalInformation.quoteReference,
         deal: generalInformation.deal,
       }
+
+      newGeneralDetails.endUser = newGeneralDetails.endUser || [];
+      newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ? newGeneralDetails.endUser[0] : {};
       newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
 
       return newGeneralDetails;
