@@ -248,6 +248,42 @@
                                                 fieldDescription="Previous Purchase Order Number"
                                                 fieldLabel="Previous Purchase Order Number"
                                                 name="./previousPurchaseOrderNoLabel"/>
+                                        <resellerSAPaccountnumber
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Reseller SAP account number"
+                                                fieldLabel="Reseller SAP account number label"
+                                                name="./resellerSAPaccNoLabel"/>
+                                                <previousResellerorderNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Previous Reseller Order Number"
+                                                fieldLabel="Previous Reseller Order Number"
+                                                name="./previousResellerorderNoLabel"/>
+                                                <typeEndUser
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Type of End User"
+                                                fieldLabel="Type of End User"
+                                                name="./typeEndUserLabel"/>
+                                                <vendorAccountNoRes
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Vendor account No"
+                                                fieldLabel="Vendor account No"
+                                                name="./vendorAccountNoResLabel"/>
+                                                <previousPurchaseOrderNoEnd
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Previous purchase order No:"
+                                                fieldLabel="Previous purchase order No:"
+                                                name="./previousPurchaseOrderNoEndLabel"/>
+                                                <previousOrderNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Previous Order Number"
+                                                fieldLabel="Previous  order Number"
+                                                name="./previousOrderNoLabel"/>
                                         </items>
                                     </column>
                                 </items>
@@ -342,6 +378,12 @@
                                                 fieldDescription="Disti Quote Number Label"
                                                 fieldLabel="Disti Quote Number Label"
                                                 name="./distiQuoteNoLabel"/>
+                                             <distiQuoteID
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Disti Quote ID Label"
+                                                fieldLabel="Disti Quote ID Label"
+                                                name="./distiQuoteIDLabel"/>
                                             <agreementNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

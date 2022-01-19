@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
+    lineItemDetailsLabel="Line Item Details"
     line="Line"
     note="Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations."
     productdescription="Product Description"
@@ -31,5 +32,12 @@
     quoteExpiryDateLabel="Quote Expiry Date:"
     agreeStartDateLabel="Agree Start Date:"
     agreeEndDateLabel="Agree End Date :"
+    distiQuoteIDLabel="Disti Quote ID"
     usageStartDateLabel="Usage Start Date:"
-    usageEndDateLabel="Usage End Date:"/>
+    usageEndDateLabel="Usage End Date:"
+    resellerSAPaccNoLabel="Reseller SAP account number"
+    previousResellerorderNoLabel="Previous Reseller Order Number" 
+    typeEndUserLabel="Type of End User"
+    vendorAccountNoResLabel="Vendor account No"
+    previousPurchaseOrderNoEndLabel="Previous Purchase Order Number"
+    previousOrderNoLabel="Previous Order Number"/>

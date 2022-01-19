@@ -36,12 +36,12 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }
-    
-    if (this.serviceData.agGridLicenseKey){
+
+    if (this.serviceData.agGridLicenseKey) {
         jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
     }
 
-    if (this.serviceData.renewalDetailLineItemEndpoint){
+    if (this.serviceData.renewalDetailLineItemEndpoint) {
         jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || '';
     }
 
@@ -61,7 +61,30 @@ use(['../common/utils.js'], function(utils) {
     }
 
     if (properties && properties["previousPurchaseOrderNoLabel"]) {
-        reseller["previousPurchaseOrderNoLabel"] = quotePreview["previousPurchaseOrderNoLabel"];
+        reseller["previousPurchaseOrderNoLabel"] = properties["previousPurchaseOrderNoLabel"];
+    }
+
+    if (properties && properties["resellerSAPaccNoLabel"]) {
+        reseller["resellerSAPaccNoLabel"] = properties["resellerSAPaccNoLabel"];
+    }
+
+
+    if (properties && properties["previousResellerorderNoLabel"]) {
+        reseller["previousResellerorderNoLabel"] = properties["previousResellerorderNoLabel"];
+    }
+
+
+    if (properties && properties["typeEndUserLabel"]) {
+        reseller["typeEndUserLabel"] = properties["typeEndUserLabel"];
+    }
+    if (properties && properties["vendorAccountNoResLabel"]) {
+        reseller["vendorAccountNoResLabel"] = properties["vendorAccountNoResLabel"];
+    }
+    if (properties && properties["previousPurchaseOrderNoEndLabel"]) {
+        reseller["previousPurchaseOrderNoEndLabel"] = properties["previousPurchaseOrderNoEndLabel"];
+    }
+    if (properties && properties["previousOrderNoLabel"]) {
+        reseller["previousOrderNoLabel"] = properties["previousOrderNoLabel"];
     }
 
     if (reseller != null) {
@@ -109,6 +132,9 @@ use(['../common/utils.js'], function(utils) {
     }
     if (properties && properties["distiQuoteNoLabel"]) {
         agreementInfo["distiQuoteNoLabel"] = properties["distiQuoteNoLabel"];
+    }
+    if (properties && properties["distiQuoteIDLabel"]) {
+        agreementInfo["distiQuoteIDLabel"] = properties["distiQuoteIDLabel"];
     }
     if (properties && properties["agreementNoLabel"]) {
         agreementInfo["agreementNoLabel"] = properties["agreementNoLabel"];
