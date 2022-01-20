@@ -125,11 +125,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="name">{info.nameLabel}</label>
                   <input
-                    className={
-                      infoState.name === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.name}
                     name="name"
                     id="name"
@@ -140,11 +136,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="line1">{info.addressLabel + " 1"}</label>
                   <input
-                    className={
-                      infoState.line1 === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.line1}
                     name="line1"
                     id="line1"
@@ -166,11 +158,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="city">{info.cityLabel}</label>
                   <input
-                    className={
-                      infoState.city === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.city}
                     name="city"
                     id="city"
@@ -181,11 +169,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="state">{info.stateLabel}</label>
                   <input
-                    className={
-                      infoState.state === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.state}
                     name="state"
                     id="state"
@@ -196,11 +180,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="postalCode">{info.zipLabel}</label>
                   <input
-                    className={
-                      infoState.postalCode === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.postalCode}
                     name="postalCode"
                     id="postalCode"
@@ -211,11 +191,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="country">{info.countryLabel}</label>
                   <input
-                    className={
-                      infoState.country === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.country}
                     name="country"
                     id="country"
@@ -226,11 +202,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="email">{info.emailLabel}</label>
                   <input
-                    className={
-                      infoState.email === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.email}
                     name="email"
                     id="email"
@@ -241,11 +213,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
                 <div className="form-check">
                   <label htmlFor="phoneNumber">{info.phoneLabel}</label>
                   <input
-                    className={
-                      infoState.phoneNumber === ""
-                        ? "field element errorInput"
-                        : "field element"
-                    }
+                    className="field element"
                     value={infoState.phoneNumber}
                     name="phoneNumber"
                     id="phoneNumber"
