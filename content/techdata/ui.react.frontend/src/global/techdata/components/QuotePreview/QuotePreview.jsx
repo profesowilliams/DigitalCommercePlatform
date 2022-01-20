@@ -49,6 +49,8 @@ function QuotePreview(props) {
   function invokeModal(modal) {
     setModal(modal);
   }
+  const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
+
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
   useEffect(() => {
@@ -196,6 +198,8 @@ function QuotePreview(props) {
     // remove deal if present
     if (quoteDetailsCopy.hasOwnProperty("deal")) {
       delete quoteDetailsCopy.deal;
+
+      quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
     }
     tryCreateQuote(e, pricingRequired, false, userMissingFields, quoteDetailsCopy);
   };
@@ -231,6 +235,17 @@ function QuotePreview(props) {
       newGeneralDetails.endUser = newGeneralDetails.endUser || [];
       newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ? newGeneralDetails.endUser[0] : {};
       newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
+
+      newGeneralDetails.attributes = newGeneralDetails.attributes || [];
+      let dealIdAttribute = newGeneralDetails.attributes.filter((attribute) => attribute.name.toUpperCase() === DEAL_ATTRIBUTE_FIELDNAME);
+
+      if (dealIdAttribute.length === 0) {
+        dealIdAttribute = [{ name: DEAL_ATTRIBUTE_FIELDNAME }];
+
+        newGeneralDetails.attributes.push(dealIdAttribute[0]);
+      }
+
+      dealIdAttribute[0].value = generalInformation.deal.dealId;
 
       return newGeneralDetails;
     });
