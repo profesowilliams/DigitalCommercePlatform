@@ -5,22 +5,6 @@
     xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="sling:Folder">
     <https jcr:primaryType="sling:OrderedFolder">
-        <prod.dc.tdebusiness.cloud
-            jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
-            <redirect
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
-                sling:match="(.+)$"/>
-        </prod.dc.tdebusiness.cloud>
-        <preprod.dc.tdebusiness.cloud
-            jcr:primaryType="sling:Mapping"
-            sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
-            <redirect
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
-                sling:match="(.+)$"/>
-        </preprod.dc.tdebusiness.cloud>
         <techdata.com
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac,/content/techdata/americas,/content/techdata/europe]">
