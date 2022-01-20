@@ -37,8 +37,8 @@ use(['../common/utils.js'], function(utils) {
         productLines["note"] = properties["note"];
     }
 
-    if (this.serviceData.agGridLicenseKey) {
-        jsonObject["agGridLicenseKey"] = this.serviceData.agGridLicenseKey;
+    if (this.agGridLicenseKey) {
+        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
 
     if (this.serviceData.renewalDetailLineItemEndpoint) {
