@@ -330,6 +330,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             line.Logos = product.Logos;
             line.MSRP = product?.Price?.UnpromotedPrice;
             line.MFRNumber = product?.ManufacturerPartNumber;
+            line.Authorization=product?.Authorization;
         }
 
 

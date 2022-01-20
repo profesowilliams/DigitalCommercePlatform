@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string GlobalManufacturer { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public PriceModel Price { get; set; }
+        public AuthorizationModel Authorization { get; set; }
 
     }
     [ExcludeFromCodeCoverage]
@@ -66,5 +67,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
     {
         public string Id { get; set; }
         public string Url { get; set; }
+    }
+    
+    [ExcludeFromCodeCoverage]
+    public class AuthorizationModel
+    {
+        public bool CanOrder { get; set; }
+        public bool CanViewPrice { get; set; }
+        public bool CustomerCanView { get; set; }
     }
 }
