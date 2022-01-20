@@ -38,5 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public DateTime? CreatedTo { get; set; }
         public DateTime? ExpiresFrom { get; set; }
         public DateTime? ExpiresTo { get; set; }
+        public string SerialNumber { get; set; }
+        public string Instance { get; set; }
     }
 }
