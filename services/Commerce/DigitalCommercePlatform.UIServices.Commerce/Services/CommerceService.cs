@@ -569,11 +569,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Line1 = objEndUser?.Address.Address1,
                     Line2 = objEndUser?.Address.Address2,
                     Line3 = objEndUser?.Address.Address3,
-                    State = objEndUser?.Address.City,
+                    City = objEndUser?.Address.City,
+                    State = objEndUser?.Address.State,
                     Country = objEndUser?.Address.Country,
                     PostalCode = objEndUser?.Address.PostalCode,
                     Email = objEndUser?.Contact?.EmailAddress,
                     Name = objEndUser?.Contact?.FirstName + " " + objEndUser?.Contact?.LastName,
+                    CompanyName = objEndUser?.Name,
                 };
                 quotePreview.EndUser = new List<Address> { endUser };
             }
@@ -586,10 +588,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Line1 = objReseller?.Address?.Address1,
                     Line2 = objReseller?.Address?.Address2,
                     Line3 = objReseller?.Address?.Address3,
-                    State = objReseller?.Address?.City,
+                    City = objReseller?.Address?.City,
+                    State = objReseller?.Address?.State,
                     Country = objReseller?.Address?.Country,
                     PostalCode = objReseller?.Address?.PostalCode,
                     Email = objReseller?.ContactModel?.EmailAddress,
+                    Id = objReseller?.Id,
                     CompanyName = objReseller?.Name,
                     Name = objReseller?.ContactModel?.FirstName + " " + objReseller?.ContactModel?.LastName,
                 };
