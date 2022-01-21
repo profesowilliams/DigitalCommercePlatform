@@ -202,23 +202,38 @@
     <searchOptionsList jcr:primaryType="nt:unstructured">
         <item0
             jcr:primaryType="nt:unstructured"
-            searchKey="serial"
-            searchLabel="Serial №"/>
+            searchKey="ContractID"
+            searchLabel="Agreement number"
+            showIfInternal="false"/>
         <item1
             jcr:primaryType="nt:unstructured"
-            searchKey="agreement"
-            searchLabel="Agreement №"/>
+            searchKey="VendorQuoteID"
+            searchLabel="Vendor Quote ID"
+            showIfInternal="false"/>
         <item2
             jcr:primaryType="nt:unstructured"
-            searchKey="instance"
-            searchLabel="Instance №"/>
+            searchKey="Instance"
+            searchLabel="Instance number"
+            showIfInternal="false"/>
         <item3
             jcr:primaryType="nt:unstructured"
-            searchKey="resellerPreviousOrder"
-            searchLabel="Reseller Previous Order №"/>
+            searchKey="EndUser"
+            searchLabel="End-User Name"
+            showIfInternal="false"/>
         <item4
             jcr:primaryType="nt:unstructured"
-            searchKey="endUserPreviousOrder"
-            searchLabel="End User Previous Order №"/>
+            searchKey="EndUserEmail"
+            searchLabel="End-User Email Address"
+            showIfInternal="false"/>
+        <item5
+            jcr:primaryType="nt:unstructured"
+            searchKey="ResellerName"
+            searchLabel="Reseller Name"
+            showIfInternal="true"/>
+        <item6
+            jcr:primaryType="nt:unstructured"
+            searchKey="ResellerId"
+            searchLabel="Reseller Number"
+            showIfInternal="true"/>
     </searchOptionsList>
 </jcr:root>

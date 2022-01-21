@@ -297,7 +297,54 @@
                                                     <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
                                                         <items jcr:primaryType="nt:unstructured">
                                                             <searchLabel jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Enter Search Label" fieldLabel="Search Label" name="./searchLabel" />
-                                                            <searchKey jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Enter Search Key" fieldLabel="Search Key" name="./searchKey" />
+                                                            <searchKey
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                    fieldDescription="This key will match with the service request"
+                                                                    fieldLabel="Enter Search Key"
+                                                                    name="./searchKey">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <contractId
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="ContractID"
+                                                                            value="ContractID"/>
+                                                                        <vendorId
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="VendorQuoteID"
+                                                                            value="VendorQuoteID"/>
+                                                                        <serialNumber
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="SerialNumber"
+                                                                            value="SerialNumber"/>
+                                                                        <instanceNumber
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Instance"
+                                                                            value="Instance"/>
+                                                                        <enduserName
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="EndUser"
+                                                                            value="EndUser"/>
+                                                                        <endUserEmail
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="EndUserEmail"
+                                                                            value="EndUserEmail"/>
+                                                                        <resellerName
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="ResellerName"
+                                                                            value="ResellerName"/>
+                                                                        <resellerId
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="ResellerId"
+                                                                            value="ResellerId"/>
+                                                                    </items>
+                                                                </searchKey>
+                                                            <sortable
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                                name="./showIfInternal"
+                                                                text="Show if Internal"
+                                                                uncheckedValue="false"
+                                                                value="{Boolean}true"/>
                                                         </items>
                                                     </column>
                                                 </items>

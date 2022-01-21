@@ -31,6 +31,7 @@ use(['../common/utils.js'], function(utils) {
         let itemData = {};
         itemData.searchLabel = childResource.properties["searchLabel"];
         itemData.searchKey = childResource.properties["searchKey"];
+        itemData.showIfInternal = childResource.properties["showIfInternal"];
         return itemData;
     });
 

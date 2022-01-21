@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useCallback } from "react";
+import { IS_TD_INTERNAL } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 
 
@@ -98,6 +99,18 @@ function SearchFilter({
     }
   }
 
+  const renderWithPermissions = (option) => {
+    const hasNotPrivilege = (option?.showIfInternal === "true") && !IS_TD_INTERNAL;
+    if (hasNotPrivilege) return <></>; 
+    return (
+      <>     
+        <label key={option.searchKey} onClick={() => changeHandler(option.searchKey)}>
+          {option.searchLabel}
+        </label>
+      </>
+    )
+  } 
+
   if (option.length) {    
     const chosenFilter = options.find(
       ({searchKey}) => searchKey === option
@@ -144,11 +157,7 @@ function SearchFilter({
             </div>      
           <If condition={true}>
           <div className="cmp-search-options">
-            {options.map((option) => (
-              <label key={option.searchKey} onClick={() => changeHandler(option.searchKey)}>
-            {option.searchLabel}
-          </label>
-        ))}
+            {options.map((option) => renderWithPermissions(option))}
           <label onClick={() => fetchAll()}>Reset</label>
           </div>   
         </If>

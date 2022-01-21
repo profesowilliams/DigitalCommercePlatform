@@ -114,49 +114,44 @@
             "type":"buttonList"
          }
       ],
-      "searchOptionsList":[
-         {
-            "searchLabel":"Serial No",
-            "searchKey":"SerialNo"
-         },
-         {
-            "searchLabel":"Agreement No",
-            "searchKey":"agreementNumber"
-         },
-         {
-            "searchLabel":"Instance No",
-            "searchKey":"instanceNo"
-         },
-         {
-            "searchLabel":"Reseller Previous Order No",
-            "searchKey":"resellerPreviousOrderNo"
-         },
-         {
-            "searchLabel":"End User Previous Order No",
-            "searchKey":"endUserPreviousOrderNo"
-         }
-      ],
-      "searchCriteria":{
-         "keywordDropdown":{
-            
-         },
-         "configurationTypesDropdown":{
-            "items":[
-               {
-                  "key":"Estimate",
-                  "value":"Estimate"
-               },
-               {
-                  "key":"VendorQuote",
-                  "value":"Vendor Quote"
-               },
-               {
-                  "key":"Deal",
-                  "value":"Deal"
-               }
-            ]
-         }
+    searchOptionsList: [
+      {
+        searchLabel: "Agreement number",
+        searchKey: "ContractID",
+        showIfInternal: "false",
       },
+      {
+        searchLabel: "Vendor Quote ID",
+        searchKey: "VendorQuoteID",
+        showIfInternal: "false",
+      },
+      {
+        searchLabel: "Instance number",
+        searchKey: "Instance",
+        showIfInternal: "false",
+      },
+      {
+        searchLabel: "End-User Name",
+        searchKey: "EndUser",
+        showIfInternal: "false",
+      },
+      {
+        searchLabel: "End-User Email Address",
+        searchKey: "EndUserEmail",
+        showIfInternal: "false",
+      },
+      {
+        searchLabel: "Reseller Name",
+        searchKey: "ResellerName",
+        showIfInternal: "true",
+      },
+      {
+        searchLabel: "Reseller Number",
+        searchKey: "ResellerId",
+        showIfInternal: "true",
+      },
+              
+            ],    
       "checkout":{
          "uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
          "redirectUrl":"https://shop.techdata.com/cart"

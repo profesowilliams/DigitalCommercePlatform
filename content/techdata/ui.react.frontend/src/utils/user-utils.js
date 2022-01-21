@@ -10,7 +10,7 @@ export const RENEWALS_TYPE = {
 
 export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
 
-export const IS_TD_INTERNAL = getUserDataInitialState()?.email?.toUpperCase().includes("@TECHDATA.COM") || null;
+export const IS_TD_INTERNAL = getUserDataInitialState()?.email?.toUpperCase().includes("@TECHDATA.COM") || false;
 
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
