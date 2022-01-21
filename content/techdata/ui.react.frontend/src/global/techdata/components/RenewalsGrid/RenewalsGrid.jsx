@@ -34,7 +34,7 @@ function RenewalsGrid(props) {
 
   function mapServiceData(response) {
     const mappedResponse = {...response};
-    const items = mappedResponse?.data?.content?.items?.response;
+    const items = mappedResponse?.data?.content?.items;
     const itemsWithActions = items.map((data) => ({ ...data, actions: true }));
     // renewal server is not returning pagination yet
     mappedResponse.data.content = {items:itemsWithActions,totalItems:items.length };

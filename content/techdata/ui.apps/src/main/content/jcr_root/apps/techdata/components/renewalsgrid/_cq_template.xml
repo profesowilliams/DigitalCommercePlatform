@@ -69,7 +69,7 @@
             jcr:primaryType="nt:unstructured"
             columnLabel="Renewal Plan"
             columnKey="renewal"
-            sortable="{Boolean}false"
+            sortable="{Boolean}true"
             columnType="plainText"
         />
         <item5
