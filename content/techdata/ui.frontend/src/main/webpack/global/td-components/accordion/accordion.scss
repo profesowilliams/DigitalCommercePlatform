@@ -1,4 +1,17 @@
-@import "../../../components/styles/_accordion.scss";
+@mixin accordionIcon($isFontAwesome, $content) {
+  content: $content;
+
+  @if $isFontAwesome=="true" {
+    font-family: "Font Awesome 5 Free";
+    margin-left: rem(6px);
+    font-size: rem(12px);
+  }
+
+  @else {
+    font-size: 0.375rem;
+    vertical-align: auto;
+  }
+}
 
 // The next rule its temporal because its a core component class
 .cmp-accordion__panel.cmp-accordion__panel--hidden {
@@ -140,4 +153,203 @@
             padding-left: rem(22px);
         }
     }
+}
+
+@mixin accordionIcon($isFontAwesome, $content) {
+  content: $content;
+
+  @if $isFontAwesome=="true" {
+    font-family: "Font Awesome 5 Free";
+    margin-left: rem(6px);
+    font-size: rem(12px);
+  }
+
+  @else {
+    font-size: 0.375rem;
+    vertical-align: auto;
+  }
+}
+
+.cmp-accordion,
+.dp-accordion {
+  &__footer {
+    &.cmp-accordion__chevronFooter {
+      .cmp-accordion__button[aria-expanded="false"]::after {
+        @include accordionIcon("true", "\f054");
+      }
+
+      .cmp-accordion__button[aria-expanded="true"]::after {
+        @include accordionIcon("true", "\f078");
+      }
+    }
+
+    background-color: #000c21;
+
+    .cmp-accordion__button {
+      color: white;
+      font-size: rem(11.2px);
+      font-weight: 700;
+      border: none;
+      background-color: transparent;
+      padding-bottom: 1.375rem;
+      outline: none;
+    }
+
+    .cmp-accordion__button[aria-expanded="false"]::after {
+      @include accordionIcon("false", "\A0 \A0 \25BA");
+    }
+
+    .cmp-accordion__button[aria-expanded="true"]::after {
+      @include accordionIcon("false", "\A0 \A0 \25BC");
+    }
+
+    .cmp-accordion__button[aria-expanded="true"] {
+      padding-bottom: 0;
+    }
+
+    .cmp-accordion__panel--expanded {
+      color: #ffffff;
+      font-family: $font-family;
+      font-size: 0.7rem;
+      letter-spacing: 0;
+      line-height: 0.875rem;
+
+      & ul {
+        list-style: none;
+        padding-left: 0.375rem;
+      }
+    }
+
+    .cmp-accordion__panel {
+      margin-bottom: 1.375rem;
+    }
+
+    .cmp-list__item-link {
+      text-decoration: none;
+      color: #ffffff;
+    }
+  }
+
+  &__expanded {
+    .cmp-accordion__button {
+      padding: 0 1.5rem 0 1.125rem;
+      cursor: pointer;
+    }
+
+    .cmp-accordion__button[aria-expanded="false"]::after {
+      content: "+";
+      font-size: 1.25rem;
+      position: absolute;
+      right: 1.6875rem;
+    }
+
+    .cmp-accordion__button[aria-expanded="true"]::after {
+      content: "-";
+      font-size: 1.25rem;
+      position: absolute;
+      right: 1.9375rem;
+    }
+  }
+}
+
+.cmp-where-we-are-section {
+  padding-left: rem(12px);
+
+  .cmp-accordion {
+    &__button {
+      color: get-color(text-light-charcoal);
+      font-size: $font-size-custom-xxsmall;
+      padding-bottom: rem(5px);
+      background-color: transparent;
+      font-weight: normal;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &:focus-visible,
+      &:focus-within {
+        font-weight: $font-weight-bold;
+        color: get-color(brand-blue);
+        outline: none !important;
+      }
+    }
+  }
+
+  .cmp-accordion__panel {
+    .text {
+      color: get-color(text-light-charcoal);
+      font-size: $font-size-xsmall;
+      padding-left: rem(22px);
+    }
+  }
+}
+
+.cmp-accordion__body {
+  .cmp-accordion {
+    color: get-color(text-mid-charcoal);
+    font-family: $font-family;
+    font-size: rem(14px);
+    font-weight: $font-weight-normal;
+
+    .cmp-accordion__header,
+    .cmp-accordion__item {
+      margin-bottom: rem(24px);
+    }
+
+    .cmp-accordion__button {
+      position: relative;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: row;
+      height: rem(24px);
+      overflow: hidden;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      cursor: pointer;
+
+      .cmp-accordion__title {
+        font-weight: $font-weight-semi-bold;
+        font-size: rem(16px);
+        height: rem(24px);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: get-color(brand-blue);
+      }
+
+      .cmp-accordion__icon {
+        width: rem(24px);
+        height: rem(24px);
+        margin-left: auto;
+      }
+
+        &::after {
+          color: get-color(text-light-charcoal);
+          font-family: $fontawesome-font-family;
+          font-size: rem(14px);
+          font-weight: $font-weight-normal;
+          position: absolute;
+          right: 0;
+          width: rem(24px);
+        }
+
+      &[aria-expanded="true"] {
+        .cmp-accordion__title {
+          font-weight: $font-weight-extra-bold;
+        }
+
+        &::after {
+          content: fa-content($fa-var-chevron-up);
+        }
+      }
+
+      &[aria-expanded="false"]::after {
+        content: fa-content($fa-var-chevron-down);
+      }
+    }
+  }
 }
