@@ -89,11 +89,11 @@ const config = {
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? formateDatePicker(query.from.value)
+        ? formateDatePicker(query.from.value, '&createdFrom=')
         : "";
     let to =
       query.to?.key && query.to?.value
-        ?  formateDatePicker(query.to.value)
+        ?  formateDatePicker(query.to.value, '&createdTo=')
         : "";
     // Filters by URL
     let general =    

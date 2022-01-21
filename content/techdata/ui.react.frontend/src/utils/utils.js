@@ -201,11 +201,12 @@ export const validateDatePicker = (value, partnerValue ,setStateParam) =>
  * Function that format in a single format used for the GRID
  * and the date pickers
  * @param {Date} dateValue 
+ * @param {string} filterTag 
  * @returns 
  */
-export const formateDatePicker = (dateValue) =>  new Date(
-        new Date(Date.UTC(dateValue.getFullYear(),dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
-      ).toISOString();
+ export const formateDatePicker = (dateValue, filterTag = '') => filterTag + new Date(
+    new Date(Date.UTC(dateValue.getFullYear(),dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
+  ).toISOString();
 
 
 /**
