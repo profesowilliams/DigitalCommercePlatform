@@ -155,21 +155,6 @@
     }
 }
 
-@mixin accordionIcon($isFontAwesome, $content) {
-  content: $content;
-
-  @if $isFontAwesome=="true" {
-    font-family: "Font Awesome 5 Free";
-    margin-left: rem(6px);
-    font-size: rem(12px);
-  }
-
-  @else {
-    font-size: 0.375rem;
-    vertical-align: auto;
-  }
-}
-
 .cmp-accordion,
 .dp-accordion {
   &__footer {
