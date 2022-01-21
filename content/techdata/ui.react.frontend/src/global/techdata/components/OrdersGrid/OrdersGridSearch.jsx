@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
+import { formateDatePicker, validateDatePicker } from "../../../../utils/utils";
 
 function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const defaultKeywordDropdown = {
@@ -18,8 +19,8 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   const flagKeyword = useRef(false);
   const flagManufacturer = useRef(false);
   const flagMethod = useRef(false);
-  const flagFrom = useRef(false);
-  const flagTo = useRef(false);
+  const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
+  const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
 
   /**
    * Effect if there is a ID param in the URL catch and
@@ -37,9 +38,9 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         const res = handleFilterChange({key:'general', value: _id}, "general"); // Force the General key
         onSearchRequest({ queryString: res }) // execute the filter afther get the new filter value
     }
-
   }, [idParam, componentProp])
 
+  
   const defaultVendorsDropdown = {
     label: "Vendors",
     items: [
@@ -73,8 +74,6 @@ const config = {
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
   };
 
-  
-
   function dispatchQueryChange(query) {
     let keyword =
       query.keyword?.key && query.keyword?.value
@@ -90,21 +89,22 @@ const config = {
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? `&createdFrom=${new Date(
-            Date.UTC(query.from.value.getFullYear(),query.from.value.getMonth(), query.from.value.getDate())
-          ).toISOString()}`
+        ? formateDatePicker(query.from.value)
         : "";
     let to =
       query.to?.key && query.to?.value
-        ? `&createdTo=${new Date(
-            new Date(Date.UTC(query.to.value.getFullYear(),query.to.value.getMonth(), query.to.value.getDate())).setUTCHours(23, 59, 59)
-          ).toISOString()}`
+        ?  formateDatePicker(query.to.value)
         : "";
     // Filters by URL
     let general =    
       query.general?.key && query.general?.value
         ? `&idType=GENERAL&id=${query.general.value}`
         : "";
+
+    // From DatePicker Validation
+    validateDatePicker(query.from, query.to, setDateDefaultToValue);
+    // To DatePicker Validation
+    validateDatePicker(query.to, query.from, setDateDefaultFromValue);
 
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
     if (isQueryValid(query)) {
@@ -147,7 +147,6 @@ const config = {
           } else {
             flagKeyword.current = true;     
           }
-          
         }}
         onKeyPress={(isEnter) => onKeyPress(isEnter)}
       ></QueryInput>
@@ -160,9 +159,7 @@ const config = {
           } else {
             flagManufacturer.current = true
           }
-        }
-          
-        }
+        }}
       ></SimpleDropDown>
       <SimpleDropDown
         key={"method"}
@@ -173,39 +170,24 @@ const config = {
           } else {
             flagMethod.current = true
           }
-        }
-          
-        }
+        }}
       ></SimpleDropDown>
       <SimpleDatePicker
         pickerKey={"from"}
         placeholder={config.datePlaceholder}
         label={config.fromLabel}
         forceZeroUTC={false}
-        onSelectedDateChanged={(change) => {
-          if (flagFrom.current) {
-            handleFilterChange(change, "from")
-          } else {
-            flagFrom.current = true
-          }
-        }
-          
-        }
+        onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
+        isDateFrom={true}
+        defaultValue={dateDefaultFromValue}
       ></SimpleDatePicker>
       <SimpleDatePicker
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}
         forceZeroUTC={false}
-        onSelectedDateChanged={(change) => {
-          if (flagTo.current) {
-            handleFilterChange(change, "to")
-          } else {
-            flagTo.current = true
-          }
-        }
-          
-        }
+        onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
+        defaultValue={dateDefaultToValue}
       ></SimpleDatePicker>
     </div>
   );

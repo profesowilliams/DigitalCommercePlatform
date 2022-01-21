@@ -3,6 +3,7 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from 'ag-grid-enterprise';
 import { get } from "../../../../utils/api";
+import { formateDatePicker } from "../../../../utils/utils";
 
 function Grid(props) {
   let {
@@ -231,8 +232,10 @@ function Grid(props) {
       const createdTo = new Date();
       let createdFrom = new Date();
       createdFrom.setDate(createdTo.getDate() - 31);
-      const createdToString = createdTo.toISOString().slice(0, 10);
-      const createdFromString = createdFrom.toISOString().slice(0, 10);   
+      
+      const createdToString = formateDatePicker(createdTo)
+      const createdFromString = formateDatePicker(createdFrom);
+
       const createdParam = !omitCreatedQuery ? `&createdFrom=${createdFromString}&createdTo=${createdToString}` : '';
       const sortParams =
         sortKey && sortDir

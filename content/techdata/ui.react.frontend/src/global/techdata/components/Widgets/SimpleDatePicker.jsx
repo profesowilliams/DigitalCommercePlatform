@@ -1,9 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 
-function SimpleDatePicker({ pickerKey, label, placeholder, selectedDate, forceZeroUTC, onSelectedDateChanged }) {
-	const [pickedDate, setPickedDate] = useState(selectedDate);
+function SimpleDatePicker({
+	pickerKey,
+	label,
+	placeholder,
+	forceZeroUTC,
+	onSelectedDateChanged,
+	isDateFrom = false,
+	defaultValue = true,
+}) {
+    
+	const [pickedDate, setPickedDate] = useState(null);
 	const pickerRef = useRef(null);
+
+	// Set the default dates data
+	useEffect(() => {
+		if (pickedDate === null && defaultValue) {
+            
+			if (isDateFrom) {
+				const dateOneMounthAgo = new Date();
+				dateOneMounthAgo.setDate(dateOneMounthAgo.getDate() - 31)
+				setPickedDate(dateOneMounthAgo)
+			} else {
+				setPickedDate(new Date())
+			}
+		}
+		if (!defaultValue) {
+			setPickedDate(null)
+		}
+	}, [isDateFrom, pickedDate, defaultValue]);
 
 	function openPicker() {
 		pickerRef.current.setOpen(true);

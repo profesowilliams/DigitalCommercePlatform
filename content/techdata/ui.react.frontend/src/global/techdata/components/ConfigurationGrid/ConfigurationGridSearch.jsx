@@ -3,6 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
+import { formateDatePicker, validateDatePicker } from "../../../../utils/utils";
 
 function ConfigurationGridSearch({
   componentProp,
@@ -44,6 +45,8 @@ function ConfigurationGridSearch({
   };
 
   const _query = useRef({});
+  const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
+  const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
 
   function dispatchQueryChange(query) {
     let keyword =
@@ -57,16 +60,18 @@ function ConfigurationGridSearch({
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? `&createdFrom=${new Date(
-            Date.UTC(query.from.value.getFullYear(),query.from.value.getMonth(), query.from.value.getDate())
-          ).toISOString()}`
+        ? formateDatePicker(query.from.value)
         : "";
     let to =
       query.to?.key && query.to?.value
-        ? `&createdTo=${new Date(
-            new Date(Date.UTC(query.to.value.getFullYear(),query.to.value.getMonth(), query.to.value.getDate())).setUTCHours(23, 59, 59)
-          ).toISOString()}`
+        ? formateDatePicker(query.to.value)
         : "";
+
+    // From DatePicker Validation
+    validateDatePicker(query.from, query.to, setDateDefaultToValue);
+    // To DatePicker Validation
+    validateDatePicker(query.to, query.from, setDateDefaultFromValue);
+
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
       onQueryChanged(concatedQuery);
@@ -116,6 +121,8 @@ function ConfigurationGridSearch({
         label={config.fromLabel}
         forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
+        isDateFrom={true}
+        defaultValue={dateDefaultFromValue}
       ></SimpleDatePicker>
       <SimpleDatePicker
         pickerKey={"to"}
@@ -123,6 +130,7 @@ function ConfigurationGridSearch({
         label={config.toLabel}
         forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
+        defaultValue={dateDefaultToValue}
       ></SimpleDatePicker>
     </div>
   );

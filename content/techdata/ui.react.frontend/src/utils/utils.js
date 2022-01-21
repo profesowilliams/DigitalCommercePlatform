@@ -172,6 +172,43 @@ export const getBase64FromUrl = async (url) => {
 }
 
 /**
+ * Function that validate if the value is a null or undefined
+ * and return true or false for this case
+ * @param {any} value 
+ * @returns 
+ */
+export const isNotEmptyValue = (value) => (value !== null && value !== undefined)
+
+/**
+ * Function that validate if the value and the partner
+ * is not and empty value and set a default flag to the
+ * Date picker component
+ * 
+ * Used in Grids of Orders / Quotes / Configurations
+ * @param {any} value 
+ * @param {any} partnerValue 
+ * @param {React.Dispatch<React.SetStateAction<boolean>>} setStateParam 
+ * @returns 
+ */
+export const validateDatePicker = (value, partnerValue ,setStateParam) =>
+    setStateParam(
+    isNotEmptyValue(value) ? 
+        !isNotEmptyValue(partnerValue) ? false : true
+        : true
+);
+
+/**
+ * Function that format in a single format used for the GRID
+ * and the date pickers
+ * @param {Date} dateValue 
+ * @returns 
+ */
+export const formateDatePicker = (dateValue) =>  new Date(
+        new Date(Date.UTC(dateValue.getFullYear(),dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
+      ).toISOString();
+
+
+/**
 * Remove the style attribute on body tag if sessionId is present
 */
 window.onload = function() {

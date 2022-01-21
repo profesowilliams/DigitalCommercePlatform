@@ -26,9 +26,17 @@ export default function useGridFiltering() {
 
   function stripCreatedToParam(url) {
     const Filter = filter.current.toLowerCase();
-    if(Filter.includes("createdfrom") || Filter.includes("CreatedTo"))
+    if(Filter.includes("createdfrom") || Filter.includes("createdto"))
     {
-      return url.split("&createdFrom")[0];
+      let urlCustomResponse = '';
+      if (Filter.includes("createdfrom")) {
+        urlCustomResponse += url.split("&createdFrom")[0];
+      }
+      if (Filter.includes("createdto")) {
+        const urlSplitTo = url.split("&createdFrom");
+        urlCustomResponse += urlSplitTo[0];
+      }
+      return urlCustomResponse;
     }
     else
     {

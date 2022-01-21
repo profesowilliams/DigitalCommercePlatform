@@ -27,7 +27,7 @@ function GridSearchCriteria({
 	let [filterActive, setFilterActive] = useState(false);
 	const [externalFilterActive, setExternalFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
-	const [expanded, setExpanded] = useState(false);
+	const [expanded, setExpanded] = useState(true); // Forcing to be open in the first load
 	const flagOpenButton = HeaderButtonOptions !== null ? true : false; // Prop from config data 
 	function isEmptyOrSpaces(str) {
 		return str === null || str.match(/^ *$/) !== null;
