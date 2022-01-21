@@ -146,7 +146,18 @@ function QuotesGrid(props) {
         );
       },
     },
-  ];
+    ];
+
+  async function detailRedirectHandler(request){
+    let response = await filteringExtension.requestInterceptor(request);
+    if (response?.data?.content?.items?.length === 1) {
+      const detailsRow = response.data.content.items[0];
+      const redirectUrl = `${window.location.origin + componentProp.quoteDetailUrl}?id=${detailsRow.id}`;
+      window.location.href = redirectUrl;
+    } else {
+      return response;
+    }
+  }
 
   return (
     <section>
@@ -167,7 +178,7 @@ function QuotesGrid(props) {
             filteringExtension.onAfterGridInit(config)
           }
           requestInterceptor={(request) =>
-            filteringExtension.requestInterceptor(request)
+              detailRedirectHandler(request)
           }
         ></Grid>
       </div>
