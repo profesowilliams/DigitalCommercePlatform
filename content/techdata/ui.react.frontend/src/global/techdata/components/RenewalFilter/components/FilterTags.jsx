@@ -45,7 +45,7 @@ function FilterTags() {
       <span onClick={handleShowMore} className="filter-tags-more"></span>
       {filterList &&
         filterList.map((filter, index) => {
-          if (filter.childIds?.length === 0 && filter.checked === true ) {
+          if (filter.childIds?.length === 0 && filter.checked) {
             return (
               <div className="filter-tags" key={index}>
                 <span className="filter-tags__title" key={index}>
@@ -56,8 +56,17 @@ function FilterTags() {
                 </span>
               </div>
             );
-          } else {
-            return null;
+          } else if (filter.field === "ProgramName" && filter.checked ) {
+            return (
+              <div className="filter-tags" key={index}>
+                <span className="filter-tags__title" key={index}>
+                  {filter.title}{" "}
+                </span>
+                <span onClick={() => handleTagsCloseClick(filter)}>
+                  <i className="fas fa-times filter-tags__close"></i>
+                </span>
+              </div>
+            )
           }
         })}
       <If condition={dateSelected}>

@@ -1,14 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import {
-  DateRangePicker,
-  SingleDatePicker,
-  DayPickerRangeController,
+  DateRangePicker
 } from "react-dates";
 import "react-dates/initialize";
-import "./datePicker.scss";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
+import "./datePicker.scss";
+
 
 export default function FilterDatePicker({ isOpen = false }) {  
 
@@ -26,20 +25,23 @@ export default function FilterDatePicker({ isOpen = false }) {
           <If condition={dateSelected === 'custom'}>                
           <DateRangePicker     
             startDate={customStartDate}
-            startDateId="start-date"  
+            startDateId="start-date"              
             endDate={customEndDate}
             endDateId="end-date"            
-            verticalHeight={468}          
+            verticalHeight={468}   
+            showClearDates
+            reopenPickerOnClearDates       
             onDatesChange={({ startDate, endDate }) => {              
               effects.setCustomState({key:'customStartDate',value:startDate});         
               effects.setCustomState({key:'customEndDate',value:endDate});        
               if (startDate, endDate ) {
-                effects.setDatePickerState(startDate.toDate(), endDate.toDate())
+                effects.setDatePickerState(startDate?.toDate(), endDate?.toDate())
               }
             }}
+            isOutsideRange={() => false}
             numberOfMonths={1}            
             noBorder={true}
-            regular={true}
+            regular={false}
             transitionDuration={300}
             daySize={50}
             focusedInput={focusedInput}

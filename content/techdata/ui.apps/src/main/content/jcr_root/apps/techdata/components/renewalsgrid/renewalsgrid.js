@@ -6,7 +6,7 @@ use(['../common/utils.js'], function(utils) {
     var productGrid = {};
 
     if (properties && properties["detailUrl"]) {
-        jsonObject["detailUrl"] = properties["detailUrl"] + properties["detailUrlSuffix"];
+        jsonObject["detailUrl"] = properties["detailUrl"];
     }
 
     //Column definition

@@ -17,7 +17,7 @@ function RenewalsDetails(props) {
 
   useEffect(() => {
     if (apiResponse?.content?.details) {
-      setRenewalsDetails(apiResponse?.content?.details);
+      setRenewalsDetails(apiResponse?.content?.details[0]);
     }
   }, [apiResponse]);
 
