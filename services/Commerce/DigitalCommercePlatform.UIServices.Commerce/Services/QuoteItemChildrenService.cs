@@ -71,7 +71,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     VendorPartNo = item.VendorPartNo,
                     Images = item.Images,
                     Logos = item.Logos,
-                    Children = subLines
+                    Children = subLines,
+                    Authorization=item.Authorization
                 });
 
             }

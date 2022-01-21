@@ -208,6 +208,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     {
                         line.DisplayName = string.IsNullOrWhiteSpace(line?.Description) ? string.Empty : line?.Description;
                         line.ShortDescription = line.DisplayName;
+                        line.Authorization = new AuthorizationModel
+                        {
+                            CanOrder = false,
+                            CanViewPrice = false,
+                            CustomerCanView = false,
+                        };
                     }
                 }
             }
@@ -330,7 +336,30 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             line.Logos = product.Logos;
             line.MSRP = product?.Price?.UnpromotedPrice;
             line.MFRNumber = product?.ManufacturerPartNumber;
-            line.Authorization=product?.Authorization;
+            line.Authorization = MapAutorization(product?.Authorization);
+        }
+
+        /// <summary>
+        /// Map Order / Quote Lines 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="line"></param>
+        public AuthorizationModel MapAutorization(AuthorizationModel authorization)
+        {
+            AuthorizationModel auth = new AuthorizationModel();
+            if (authorization is null)
+            {
+                auth.CustomerCanView = false;
+                auth.CanOrder = false;
+                auth.CanViewPrice = false;
+            }
+            else
+            {
+                auth.CustomerCanView = authorization.CustomerCanView;
+                auth.CanOrder = authorization.CustomerCanView;
+                auth.CanViewPrice = authorization.CustomerCanView;
+            }
+            return auth;
         }
 
 

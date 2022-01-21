@@ -72,8 +72,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
     [ExcludeFromCodeCoverage]
     public class AuthorizationModel
     {
-        public bool CanOrder { get; set; }
-        public bool CanViewPrice { get; set; }
-        public bool CustomerCanView { get; set; }
+        public bool CanOrder { get; set; } = false;
+        public bool CanViewPrice { get; set; } = false;
+        public bool CustomerCanView { get; set; } = false;
     }
 }

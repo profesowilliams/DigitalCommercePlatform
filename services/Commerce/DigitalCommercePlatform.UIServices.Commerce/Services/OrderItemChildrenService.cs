@@ -90,18 +90,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     ShipDates = item.ShipDates,
                     PAKs = item.PAKs,
                     Trackings = item.Trackings,
-                    Children = subLines
+                    Children = subLines,
+                    Authorization = item.Authorization,
+                    DisplayName = item.DisplayName,
+                    Images = item.Images,
+                    Logos = item.Logos
                 });
 
             }
-            lines = _helperQueryService.PopulateLinesFor(lines, string.Empty).Result;
             return lines;
         }
 
         private List<Models.Order.TrackingDetails> GetSubLineTracking(List<Line> subLines)
         {
             var trackingDetails = new List<Models.Order.TrackingDetails>();
-            subLines.ForEach(line => {
+            subLines.ForEach(line =>
+            {
                 if (line.Trackings != null)
                 {
                     trackingDetails.AddRange(line.Trackings);

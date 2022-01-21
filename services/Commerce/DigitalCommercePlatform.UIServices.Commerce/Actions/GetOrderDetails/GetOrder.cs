@@ -88,6 +88,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 var orderResponse = _mapper.Map<OrderDetailModel>(order);
                 var response = new Response(orderResponse);
 
+                response.Items = _helperQueryService.PopulateLinesFor(response.Items, "").Result;
+
+
                 if (response.Items != null)                
                     response.Items = _orderItemChildrenService.GetOrderLinesWithChildren(response);                    
                 

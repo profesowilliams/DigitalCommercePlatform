@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,5 +14,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<string> GetOrderType(string poType, string docType);
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);
         Task<AccountDetails> GetCustomerAccountDetails();
+        AuthorizationModel MapAutorization(AuthorizationModel authorization);
     }
 }

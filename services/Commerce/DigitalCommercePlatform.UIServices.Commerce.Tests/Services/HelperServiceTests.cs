@@ -310,6 +310,54 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.Equal(string.Empty, result);
         }
 
+        [Fact]
+        public void MapLinesTests()
+        {
+            // Arrange
+            Line line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+
+            SourceModel Source = new SourceModel()
+            {
+                ID = "123",SalesOrg="0100",Key ="12",System="12",TargetSystem="12"
+            };
+            ProductsModel product = new ProductsModel(){Source = Source};
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapLines" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { product,line });
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void MapAutorizationTests()
+        {
+            // Arrange
+            AuthorizationModel Authorization = new AuthorizationModel();
+
+            
+            // Act
+            var result = GetHelperService().MapAutorization(Authorization);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
         /*
          "images": {
                         "75x75": [

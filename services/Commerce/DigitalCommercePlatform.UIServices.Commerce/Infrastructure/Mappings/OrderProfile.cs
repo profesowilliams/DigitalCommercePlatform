@@ -44,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>())
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
+                .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
                 .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
                 .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)));
@@ -63,6 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom(src => src.Invoices))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
+                .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
                 .ForMember(dest => dest.UnitPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.UnitPrice)))
                 .ForMember(dest => dest.TotalPriceFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalPrice)));
