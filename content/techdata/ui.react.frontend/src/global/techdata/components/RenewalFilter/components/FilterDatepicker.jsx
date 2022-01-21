@@ -31,8 +31,8 @@ export default function FilterDatePicker({ isOpen = false }) {
             endDateId="end-date"            
             verticalHeight={468}          
             onDatesChange={({ startDate, endDate }) => {              
-              effects.setCustomStartDate(startDate);            
-              effects.setCustomEndDate(endDate);
+              effects.setCustomState({key:'customStartDate',value:startDate});         
+              effects.setCustomState({key:'customEndDate',value:endDate});        
               if (startDate, endDate ) {
                 effects.setDatePickerState(startDate.toDate(), endDate.toDate())
               }

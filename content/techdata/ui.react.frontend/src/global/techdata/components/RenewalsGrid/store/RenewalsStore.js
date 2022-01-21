@@ -36,6 +36,7 @@ const DATE_DEFAULT_OPTIONS = [
     field: 'custom'
   },
 ].map(item => ({ ...item, checked: false }));
+
 const INITIAL_STATE = {
   filterList: null,
   isFilterModalOpen: false,
@@ -44,13 +45,14 @@ const INITIAL_STATE = {
   datePickerState: null,
   finalResults: [],
   pagination: {
-    totalCounter: 0,
+  totalCounter: 0,
     stepBy: 25,
     currentPage: 1,
     currentResultsInPage: 0
   },
   customStartDate:undefined,
-  customEndDate:undefined
+  customEndDate:undefined,
+  aemConfig:null
 };
 
 const store = (set, get, a) => ({

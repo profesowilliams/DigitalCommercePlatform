@@ -42,16 +42,8 @@ export const renewalsEffects = (set, get) => {
     set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null })
   }
 
-  function setPagination(pagination){
-    set({pagination})
-  }
-
-  function setCustomStartDate(customStartDate){
-    set({customStartDate})
-  }
-
-  function setCustomEndDate(customEndDate){
-    set({customEndDate})
+  function setCustomState({key='', value }){
+    set({[key]:value})
   }
 
   return {
@@ -61,9 +53,7 @@ export const renewalsEffects = (set, get) => {
     closeAllSections,
     setDateOptionsList,
     setDatePickerState,
-    clearDateFilters,
-    setPagination,
-    setCustomStartDate,
-    setCustomEndDate
+    clearDateFilters,   
+    setCustomState
   };
 };

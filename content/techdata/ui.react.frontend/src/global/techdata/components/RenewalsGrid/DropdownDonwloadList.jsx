@@ -1,9 +1,12 @@
 import React from "react";
+import { useRenewalGridState } from "./store/RenewalsStore";
 
 function DropdownDownloadList({ data }) {
+  const {detailUrl = ''} = useRenewalGridState(state => state.aemConfig)
   const redirectToRenewalDetail = () => {
-    const renewalDetailsURL = encodeURI(`${window.location.origin}${window.location.pathname.replace('.html', `/RenewalsPreview.html?id=${data?.reseller?.id}`)}`)
-    window.location.href = renewalDetailsURL
+    // detailUrl = content/techdata/americas/us/en/dcp/renewals/renewal-details.html?id
+    const renewalDetailsURL = encodeURI(`${window.location.origin}${detailUrl}=${data.source?.id ?? ''}`)
+    window.location.href = renewalDetailsURL 
   };
   return (
     <div className="icon-container">

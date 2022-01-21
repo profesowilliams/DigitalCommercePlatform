@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -15,10 +15,13 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
+
   const options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "asc",
   };
+
+  useEffect(()=>effects.setCustomState({key:'aemConfig',value:componentProp}),[])
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
   
@@ -34,7 +37,7 @@ function RenewalsGrid(props) {
     const items = mappedResponse?.data?.content?.items?.response;
     const itemsWithActions = items.map((data) => ({ ...data, actions: true }));
     // renewal server is not returning pagination yet
-    mappedResponse.data.content = {items:itemsWithActions,totalItems:20 };
+    mappedResponse.data.content = {items:itemsWithActions,totalItems:items.length };
     return mappedResponse;
   }
 
@@ -42,12 +45,13 @@ function RenewalsGrid(props) {
     const response = await requestInterceptor(request);
     // temporarely map until renewal service retorn the proper data structure
     const mappedResponse = mapServiceData(response); 
-    effects.setPagination({
+    const value = {
       currentResultsInPage: mappedResponse?.data?.content?.items.length,
       totalCounter: mappedResponse?.data?.content?.totalItems,   
       stepBy: 25,
       currentPage: 1      
-    })
+    }
+    effects.setCustomState({key:'pagination',value})
     return mappedResponse;
   }
 

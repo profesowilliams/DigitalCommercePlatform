@@ -5,7 +5,7 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 
 function CustomRenewalPagination() {
   const paginationData = useRenewalGridState(state => state.pagination);
-  const setPaginationData = useRenewalGridState(state => state.effects.setPagination);
+  const setPaginationData = useRenewalGridState(state => state.effects.setCustomState);
 
   const { totalCounter, stepBy, currentPage, currentResultsInPage } =
     paginationData;
@@ -32,19 +32,19 @@ function CustomRenewalPagination() {
   );
 
     const incrementHandler = () => {
-        setPaginationData({
-            ...paginationData,
-            currentPage: (paginationData.currentPage += 1),
-        }
-        );
+      const value = {
+        ...paginationData,
+        currentPage: (paginationData.currentPage += 1),
+      }
+        setPaginationData({key:'pagination',value});
     };
 
   const decrementHandler = () => {
-    setPaginationData({
-        ...paginationData,
-        currentPage: (paginationData.currentPage -= 1),
-      }
-    );
+    const value = {
+      ...paginationData,
+      currentPage: (paginationData.currentPage -= 1),
+    }
+    setPaginationData({key:'pagination',value});
   };
 
   return (
