@@ -91,6 +91,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals
                 {
                     RuleFor(x => x.Pricing).IsInEnum();
                 });
+                When(x => x.Sort.HasValue, () =>
+                {
+                    RuleFor(x => x.Sort).IsInEnum();
+                });
             }
         }
     }
