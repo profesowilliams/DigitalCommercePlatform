@@ -6,7 +6,7 @@ import RadioButtons from '../Widgets/RadioButtons';
 import ManuallyTyped from './ManuallyTyped';
 import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 
-const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
+const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel }) => {
 	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
@@ -83,6 +83,7 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next }) => {
 					estimatedIdListEndpoint={estimatedIdListEndpoint}
 					estimatedIddetailsEndpoint={estimatedIdDetailsEndpoint}
 					label={method.dropdownPlaceholder}
+					buttonLabel={buttonLabel}
 				/>
 			)}
 			{step === 0 && (

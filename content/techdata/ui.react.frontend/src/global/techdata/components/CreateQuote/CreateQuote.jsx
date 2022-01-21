@@ -160,6 +160,7 @@ const QuoteCreate = ({
           methods={methods}
           next={goToPricing}
           endpoints={endpoints}
+          buttonLabel = {"Select Cart"}
           />
       }
       {methodSelected && methodSelected.key === 'estimate' && step === 0 && (
@@ -169,6 +170,7 @@ const QuoteCreate = ({
 					methods={methods}
           next={goToPricing}
 					endpoints={endpoints}
+          buttonLabel = {"Select Estimate"}
 				/>
 			)}
       {

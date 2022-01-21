@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 
-const WidgetList = ({ items, onChange, openlist }) => {
+const WidgetList = ({ items, onChange, openlist, buttonLabel }) => {
   const [localSelected, setLocalSelected] = useState(false);
   const onSelect = (item) => {
     setLocalSelected(item);
@@ -9,6 +9,7 @@ const WidgetList = ({ items, onChange, openlist }) => {
   const confirm = () =>{
     onChange(localSelected);
   }
+ 
   return(
     <div className={`cmp-widget-list__list-wrapper ${ openlist ? 'cmp-widget-list__list-wrapper--open' : '' }`}>
       <ul className="cmp-widget-list__list-wrapper-content">
@@ -20,7 +21,7 @@ const WidgetList = ({ items, onChange, openlist }) => {
           </li>
         })}
       </ul>
-      <Button btnClass="cmp-quote-button" disabled={!localSelected} onClick={confirm}>Select Cart</Button>
+      <Button btnClass="cmp-quote-button" disabled={!localSelected} onClick={confirm}>{buttonLabel}</Button>
     </div>
   );
 };

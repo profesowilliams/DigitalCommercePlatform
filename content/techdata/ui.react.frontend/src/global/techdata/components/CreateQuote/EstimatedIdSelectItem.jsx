@@ -3,7 +3,7 @@ import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 
-const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, estimatedIddetailsEndpoint, label }) => {
+const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, estimatedIddetailsEndpoint, label, buttonLabel }) => {
 // const EstimatedIdSelectItem = ({ onClick, buttonTitle }) => {
   const [selected, setSelected] = useState(false);
   const [estimatedIdList, setEstimatedIdList] = useState([]);
@@ -51,7 +51,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
   }
   return(
     <>
-      { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} />}
+      { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} buttonLabel={buttonLabel} />}
       { estimatedIdList.length === 0 && estimatedIdListError &&
         <p className="cmp-error-message cmp-error-message__red">No Estimated ID's available </p>
       }

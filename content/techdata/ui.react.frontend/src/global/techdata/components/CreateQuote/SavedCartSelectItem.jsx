@@ -3,7 +3,7 @@ import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 
-const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdetailsEndpoint, label="Search Cart Name" }) => {
+const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdetailsEndpoint, label="Search Cart Name", buttonLabel}) => {
   const [selected, setSelected] = useState(false);
   const [cartList, setCartList] = useState([]);
   const [cartListError, setCartListError] = useState(false);
@@ -50,7 +50,7 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
   }
   return(
     <>
-      { cartList.length > 0 && <SearchList items={cartList} selected={selected} onChange={onChange} label={label}/>}
+      { cartList.length > 0 && <SearchList items={cartList} selected={selected} onChange={onChange} buttonLabel={buttonLabel} label={label}/>}
       { cartList.length === 0 && cartListError &&
         <p className="cmp-error-message cmp-error-message__red">No cart available <a className="cmp-error-message__link" href="https://shop.techdata.com/cart">Go to my cart</a></p> 
       }

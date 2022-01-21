@@ -12,6 +12,7 @@ const SavedCart = ({
   methods, 
   endpoints,
   next,
+  buttonLabel
  }) => {
   const { cartslistEndpoint, cartdetailsEndpoint } = endpoints;
   const cartTypes = [
@@ -85,6 +86,7 @@ const SavedCart = ({
             cartslistEndpoint={cartslistEndpoint} 
             cartdetailsEndpoint={cartdetailsEndpoint}
             label={method.dropdownPlaceholder}
+            buttonLabel={buttonLabel}
           />
       }
       { step === 0 && <Button btnClass="cmp-quote-button" disabled={!cartType} onClick={nextStep}>Next</Button>}
