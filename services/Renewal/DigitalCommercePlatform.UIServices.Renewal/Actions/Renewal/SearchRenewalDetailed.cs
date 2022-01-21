@@ -1,8 +1,8 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
+using DigitalCommercePlatform.UIServices.Renewal.Models;
 using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
-using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Features.Cache;
 using DigitalFoundation.Common.Features.Contexts;
@@ -21,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
     [ExcludeFromCodeCoverage]
     public sealed class SearchRenewalDetailed
     {
-        public class Request : IRequest<ResponseBase<Response>>
+        public class Request : IRequest<ResponseBase<PaginatedResponseModel<DetailedModel>>>
         {
             public string Id { get; set; }
             public string EndUserEmail { get; set; }
@@ -56,14 +56,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public string Instance { get; set; }
         }
 
-        public class Response
-        {
-            public DetailedResponseModel Items { get; set; }
-            public RefinementGroupsModel RefinementGroups { get; set; }
-        }
-
         [ExcludeFromCodeCoverage]
-        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<PaginatedResponseModel<DetailedModel>>>
         {
             private readonly IRenewalService _renewalsService;
             private readonly IUIContext _context;
@@ -71,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             private readonly string _homeAccount;
             private readonly int _cacheExpiration;
 
-            public GetRenewalsHandler(IRenewalService renewalsService, 
+            public GetRenewalsHandler(IRenewalService renewalsService,
                 IUIContext context,
                 ISessionIdBasedCacheProvider sessionIdBasedCacheProvider,
                 IAppSettings appSettings)
@@ -83,7 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<PaginatedResponseModel<DetailedModel>>> Handle(Request request, CancellationToken cancellationToken)
             {
                 DetailedResponseModel renewalsResponse = await _renewalsService.GetRenewalsDetailedFor(request);
                 RefinementGroupsModel refainmentGroup = new();
@@ -99,13 +93,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
                     }
                 }
 
-                var response = new Response
+                var response = new PaginatedResponseModel<DetailedModel>
                 {
-                    Items = renewalsResponse,
-                    RefinementGroups = refainmentGroup
+                    Items = renewalsResponse.Response,
+                    RefinementGroups = refainmentGroup,
+                    TotalItems = request.WithPaginationInfo ? renewalsResponse.Count : null,
+                    PageSize = request.WithPaginationInfo ? request.PageSize : null,
+                    PageNumber = request.WithPaginationInfo ? request.Page : null
                 };
 
-                return new ResponseBase<Response> { Content = response };
+                return new ResponseBase<PaginatedResponseModel<DetailedModel>> { Content = response };
             }
 
             public class Validator : AbstractValidator<Request>

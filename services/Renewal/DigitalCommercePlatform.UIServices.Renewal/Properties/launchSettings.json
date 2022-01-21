@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DigitalCommercePlatform.UIServices.Renewal": {
+      "commandName": "Project",
+      "commandLineArgs": "-c debug --n=\"UI.Renewal\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5610 --urls=\"http://localhost\" --islocal=1",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

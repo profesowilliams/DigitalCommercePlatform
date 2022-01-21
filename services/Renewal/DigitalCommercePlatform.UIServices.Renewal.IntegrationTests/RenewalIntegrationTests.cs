@@ -1,6 +1,8 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Models;
+using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
@@ -74,7 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 
             var client = _fixture.CreateClient().SetDefaultHeaders();
             client.DefaultRequestHeaders.Add("TraceId", "35345345-Browse");
-            var response = await client.GetResult<ResponseBase<SearchRenewalSummary.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
+            var response = await client.GetResult<ResponseBase<PaginatedResponseModel<SummaryModel>>>(c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
 
             response.Response.StatusCode.Should().Be(HttpStatusCode.OK);
         }

@@ -1,6 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 
-using AutoMapper;
+using DigitalCommercePlatform.UIServices.Renewal.Models;
 using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
@@ -21,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
     [ExcludeFromCodeCoverage]
     public sealed class SearchRenewalSummary
     {
-        public class Request : IRequest<ResponseBase<Response>>
+        public class Request : IRequest<ResponseBase<PaginatedResponseModel<SummaryModel>>>
         {
             public string Id { get; set; }
             public string EndUserEmail { get; set; }
@@ -57,14 +57,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
 
         }
 
-        public class Response
-        {
-            public SummaryResponseModel Items { get; set; }
-            public RefinementGroupsModel RefinementGroups { get; set; }
-        }
-
         [ExcludeFromCodeCoverage]
-        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<Response>>
+        public class GetRenewalsHandler : IRequestHandler<Request, ResponseBase<PaginatedResponseModel<SummaryModel>>>
         {
             private readonly IRenewalService _renewalsService;
             private readonly IUIContext _context;
@@ -84,15 +78,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                 _sessionIdBasedCacheProvider = sessionIdBasedCacheProvider;
             }
 
-            public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<ResponseBase<PaginatedResponseModel<SummaryModel>>> Handle(Request request, CancellationToken cancellationToken)
             {
                 SummaryResponseModel renewalsResponse = await _renewalsService.GetRenewalsSummaryFor(request);
                 RefinementGroupsModel refainmentGroup = new();
-                
-                if(_homeAccount != _context.ImpersonatedAccount)
+
+                if (_homeAccount != _context.ImpersonatedAccount)
                 {
                     refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
-                    
+
                     if (refainmentGroup == null)
                     {
                         refainmentGroup = await _renewalsService.GetRefainmentGroup(new RefinementRequest() { Type = "Renewal" }).ConfigureAwait(false);
@@ -100,13 +94,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                     }
                 }
 
-                var response = new Response
+                var response = new PaginatedResponseModel<SummaryModel>
                 {
-                    Items = renewalsResponse,
-                    RefinementGroups = refainmentGroup
+                    Items = renewalsResponse.Response,
+                    RefinementGroups = refainmentGroup,
+                    TotalItems = request.WithPaginationInfo ? renewalsResponse.Count : null,
+                    PageSize = request.WithPaginationInfo ? request.PageSize : null,
+                    PageNumber = request.WithPaginationInfo ? request.Page : null
                 };
 
-                return new ResponseBase<Response> { Content = response };
+                return new ResponseBase<PaginatedResponseModel<SummaryModel>> { Content = response };
             }
 
             public class Validator : AbstractValidator<Request>
