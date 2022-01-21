@@ -26,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public List<string> EndUserType { get; set; }
         public List<string> ProgramName { get; set; }
         public string VendorQuoteID { get; set; }
-        public List<string> ContractId { get; set; }
         public string ContractID { get; set; }
         public string SessionId { get; set; }
         public List<string> DUNS { get; set; }
