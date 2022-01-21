@@ -70,6 +70,7 @@ const SearchBar = ({ data, componentProp }) => {
   
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
+  const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
   useEffect(() => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
     return () => clearTimeout(timeOutId);
@@ -91,9 +92,11 @@ const SearchBar = ({ data, componentProp }) => {
           replaceSearchTerm(typeAheadDomain, searchTerm)
         );
         setTypeAheadSuggestions(response.data);
+        setAreaSelectionOpen(true);
       }
     } else {
       setTypeAheadSuggestions([]);
+      setAreaSelectionOpen(false);
     }
   };
 
@@ -196,6 +199,7 @@ const SearchBar = ({ data, componentProp }) => {
     setSelectedArea(areaConfiguration);
 
     setTypeAheadSuggestions([]);
+    setAreaSelectionOpen(false);
   };
 
   const gotFocus = () => {
@@ -211,11 +215,12 @@ const SearchBar = ({ data, componentProp }) => {
       setChecked(false);
       setFocus(false);
     }
-    
+    setAreaSelectionOpen(false);
   };
 
   const toggleSearchIcon = () => {
     setClicked(!isClicked);
+    setAreaSelectionOpen(!areaSelectionOpen);
   };
 
   const toggleFocusSearchStyles = () => {
@@ -273,6 +278,7 @@ const SearchBar = ({ data, componentProp }) => {
             aria-autocomplete="list"
             aria-haspopup="true"
             aria-invalid="false"
+            aria-expanded={areaSelectionOpen}
             onChange={onSearchTermTextChange}
             onKeyPress={onSearchTermTextKeyPress}
             onFocus={toggleFocusSearchStyles}
@@ -331,6 +337,7 @@ const SearchBar = ({ data, componentProp }) => {
             aria-autocomplete="list"
             aria-haspopup="true"
             aria-invalid="false"
+            aria-expanded={areaSelectionOpen}
             onChange={onSearchTermTextChange}
             onKeyPress={onSearchTermTextKeyPress}
             onFocus={() => setFocus(true)}
