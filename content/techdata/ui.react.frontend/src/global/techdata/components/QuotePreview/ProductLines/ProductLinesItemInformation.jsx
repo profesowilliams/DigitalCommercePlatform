@@ -1,4 +1,5 @@
 import React,{useCallback} from "react";
+import { dateToString } from "../../../helpers/formatting";
 
 function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
 
@@ -55,15 +56,15 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
                 <div className="cmp-product-lines-grid__subscription-terms">
                   <p>
                     <b>Start Date:</b>
-                    <span>{ line.annuity.startDate }</span>
+                    <span>{ dateToString(line.annuity.startDate, "MM/dd/yy") }</span>
                   </p>
                   <p>
                     <b>Auto Renew:</b>
-                    <span>{ line.annuity.isAnnuity }</span>
+                    <span>{ line.annuity.autoRenewal ? "Yes" : "No"}</span>
                   </p>
                   <p>
                     <b>Duration:</b>
-                    <span>{ line.annuity.duration }</span>
+                    <span>{ "{duration} months".replace("{duration}", line.annuity.duration) }</span>
                   </p>
                   <p>
                     <b>Billing:</b>
