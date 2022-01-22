@@ -9,7 +9,7 @@ import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
-import DropdownDownloadList from "./DropdownDonwloadList";
+import DropdownDownloadList from "./DropdownDownloadList";
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
