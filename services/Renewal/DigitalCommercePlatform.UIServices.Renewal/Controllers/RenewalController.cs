@@ -50,7 +50,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-
+                if (response == null)
+                {
+                    return NoContent();
+                }
                 return Ok(response);
             }
             else
@@ -72,7 +75,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-
+                if (response == null)
+                {
+                    return NoContent();
+                }
                 return Ok(response);
             }
             else
