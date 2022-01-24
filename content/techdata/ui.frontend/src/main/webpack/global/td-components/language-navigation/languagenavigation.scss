@@ -263,6 +263,13 @@
         }
       }
 
+      &:last-child {
+        padding-right: 95px;
+        @include mobile {
+          padding: unset;
+        }
+      }
+
       &:last-child>&__separator {
         border-right: none;
       }
