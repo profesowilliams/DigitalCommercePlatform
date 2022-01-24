@@ -276,7 +276,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             headerRange.Merge = true;
             headerRange.Value = text;
             headerRange.Style.Font.Bold = true;
-            headerRange.Style.Font.Size = Settings.HeaderFontSize;
+            headerRange.Style.Font.Size = Settings.CellFontSize;
             headerRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             headerRange.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
