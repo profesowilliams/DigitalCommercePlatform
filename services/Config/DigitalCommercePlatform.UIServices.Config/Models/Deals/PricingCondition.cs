@@ -17,10 +17,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
 
     public enum PricingOption
     {
-        HigherEducation = 'H',
-        LowerEducation = 'L',
-        State = 'S',
-        Federal = 'F',
-        Medical = 'M'
+        EduHigher ,
+        EduK12 ,
+        GovtState ,
+        GovtFederal ,
+        Medical 
     }
 }
