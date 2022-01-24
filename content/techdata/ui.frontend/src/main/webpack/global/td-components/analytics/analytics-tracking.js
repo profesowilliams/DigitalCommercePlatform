@@ -30,6 +30,7 @@
     const MEGAMENU_CLASSNAME = "cmp-megamenu__analytics-link";
     const MEGAMENU_TABS_CLASSNAME = "cmp-megamenu__tab-text";
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
+    const LIST_CLASSNAME = "cmp-list__item-link-analytics";
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
@@ -161,6 +162,19 @@
 
     }
 
+    function  listClickEventHandler(elemClicked) {
+        const label = elemClicked.getAttribute('data-title');
+        const category = elemClicked.getAttribute('data-category') || '';
+        const clickInfo = {};
+
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = label;
+        clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = category;
+
+        pushToDataLayer(clickInfo);
+
+    }
+
     function megamenuClickEventHandler(elemClicked) {
         const mastheadlevel = elemClicked.getAttribute('data-level');
         let clickHier =  elemClicked.getAttribute('data-hier');
@@ -204,6 +218,8 @@
             imageClickEventHandler(event.currentTarget.id, event.currentTarget);
         } else if (className && (className.startsWith(MEGAMENU_CLASSNAME) || className.startsWith(MEGAMENU_TABS_CLASSNAME))) {
             megamenuClickEventHandler(event.currentTarget);
+        } else if (className && className.indexOf(LIST_CLASSNAME) > -1) {
+            listClickEventHandler(event.currentTarget);
         } else {
             var element = event.currentTarget;
             var componentId = getClickId(element);

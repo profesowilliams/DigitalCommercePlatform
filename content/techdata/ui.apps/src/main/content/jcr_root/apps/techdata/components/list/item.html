@@ -26,7 +26,7 @@
 </template>
 <template data-sly-template.article="${@ list, item}">
     <article data-filter-list="${item.dropdownCategoryTags}">
-        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+        <a class="cmp-list__item-link cmp-list__item-link-analytics" href="${item.URL}" data-cmp-clickable="true" data-category="${properties.analyticsCategory}" data-title="${item.title}" data-sly-unwrap="${!list.linkItems}">
             <sly data-sly-test=${item.vendorIcon}>
                 <figure class="cmp-image__image-figure">
                     <img data-sly-test="${!item.isIconSVG}" class="cmp-image__image" src=${item.vendorIcon} />
