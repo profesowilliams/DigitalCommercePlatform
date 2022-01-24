@@ -19,5 +19,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Accounts
         public IList<Role> RoleList { get; set; }
         public IEnumerable<Customer> CustomersV2 { get; set; }
         public Customer ActiveCustomer { get; set; }
+        public bool IsInternal { get; set; }
     }
 }
