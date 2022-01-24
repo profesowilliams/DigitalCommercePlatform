@@ -397,11 +397,17 @@ function OrdersGrid(props) {
 
     async function handleRequestInterceptor(request) {
         const response = await filteringExtension.requestInterceptor(request)
-        if (hasToSortAgain.current) {
-            sortPreservedState();
-            hasToSortAgain.current = false;
+        if (response?.data?.content?.items?.length === 1) {
+            const detailsRow = response.data.content.items[0];
+            const redirectUrl = `${window.location.origin + componentProp.orderDetailUrl}?id=${detailsRow.id}`;
+            window.location.href = redirectUrl;
+        } else {
+            if (hasToSortAgain.current) {
+                sortPreservedState();
+                hasToSortAgain.current = false;
+            }
+            return response;
         }
-        return response;
     }
     
     const handleOnSearchRequest = (query) => {
