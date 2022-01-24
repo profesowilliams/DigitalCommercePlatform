@@ -2,7 +2,7 @@ import React from "react";
 import {
   getUserDataInitialState,
   hasAccess,
-  IS_TD_INTERNAL,
+  isInternalUser,
   RENEWALS_TYPE,
 } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
@@ -95,7 +95,7 @@ export const plainResellerColumnFn = (definition) => {
   //refactor needed
   const { columnLabel, columnKey, sortable } = definition;
   const isInternal =
-    IS_TD_INTERNAL &&
+    isInternalUser &&
     hasAccess({
       user: getUserDataInitialState(),
       accessType: RENEWALS_TYPE.resellerName,

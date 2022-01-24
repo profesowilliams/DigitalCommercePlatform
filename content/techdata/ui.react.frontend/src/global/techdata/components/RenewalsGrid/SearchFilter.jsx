@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useCallback } from "react";
-import { IS_TD_INTERNAL } from "../../../../utils/user-utils";
+import { isInternalUser } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 
 
@@ -100,7 +100,7 @@ function SearchFilter({
   }
 
   const renderWithPermissions = (option) => {
-    const hasNotPrivilege = (option?.showIfInternal === "true") && !IS_TD_INTERNAL;
+    const hasNotPrivilege = (option?.showIfInternal === "true") && !isInternalUser;
     if (hasNotPrivilege) return <></>; 
     return (
       <>     

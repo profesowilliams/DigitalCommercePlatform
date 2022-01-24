@@ -131,6 +131,7 @@ app.post("/login", function (req, res) {
         phone: null,
         customers: ["0038048612", "0009000325", "0009000325"],
         roles: null,
+        isInternal: true,
         roleList: [
           {
             entitlement: "CanManageOwnProfile",

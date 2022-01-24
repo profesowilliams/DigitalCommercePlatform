@@ -44,7 +44,7 @@ function Filter({ id }) {
 
   const checkCount = (f) => {
     if (dateSelected && f.field === 'date') {
-      return 1
+      return 1;
     }
     let c = [];
     let k = 0;
