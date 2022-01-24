@@ -41,7 +41,7 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
     getDataLayer().push({
       event: eventName,
-      eventInfo: eventInfo,
+      clickInfo: eventInfo,
       ...extraData
     });
   }
