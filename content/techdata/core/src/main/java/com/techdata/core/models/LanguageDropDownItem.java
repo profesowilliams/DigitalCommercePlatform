@@ -2,8 +2,10 @@ package com.techdata.core.models;
 
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.Rendition;
+import com.day.cq.wcm.api.LanguageManager;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
+import com.day.cq.wcm.api.PageManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.slf4j.Logger;
@@ -13,10 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class LanguageDropDownItem  {
 
@@ -26,6 +25,7 @@ public class LanguageDropDownItem  {
     private boolean active;
     private String title;
     private String svgFlag;
+    private String languagePageUrl;
 //    This needs to be configurable. Due to time constraints, this will be hard-coded
     private static final  String DAM_TECHDATA_COUNTRY_FLAGS = "/content/dam/techdata/country-flags";
 
@@ -38,7 +38,6 @@ public class LanguageDropDownItem  {
     public String getSvgFlag() {
         return this.svgFlag;
     }
-
 
     private String initSVGFlag(Page page)
     {  
@@ -80,8 +79,6 @@ public class LanguageDropDownItem  {
         }
         return strBuilder.toString();
     }
-
-
     LanguageDropDownItem(Page page, boolean active) {
         this.page = page;
         this.active = active;
@@ -96,7 +93,6 @@ public class LanguageDropDownItem  {
         this.title = page.getPageTitle();
         this.svgFlag = initSVGFlag(page);
 
-
         Iterator<Page> it = page.listChildren(new PageFilter());
         if(it != null) {
             while (it.hasNext()) {
@@ -109,8 +105,14 @@ public class LanguageDropDownItem  {
             }
         }
         this.children = childPages;
+        if(!children.isEmpty()) {
+            this.languagePageUrl = children.get(0).getURL();
+        }
     }
 
+    public String getLanguagePageUrl() {
+        return languagePageUrl;
+    }
 
     public void setActive(boolean active)
     {

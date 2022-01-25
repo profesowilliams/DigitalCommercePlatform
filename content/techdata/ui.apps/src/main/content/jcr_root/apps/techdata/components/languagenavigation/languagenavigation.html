@@ -88,14 +88,14 @@
             <sly data-sly-list.continentItems="${model.regionListItems}">
               <div class="language-modal__content__column">
                 <h2 class="cmp-region-list__title">${continentItems.title}</h2>
-                <div class="language-modal__content__column__separator">
+                <div class="language-modal__content__column__seperator">
                   <sly data-sly-list.countryItems="${continentItems.children}">
                     <div class="cmp-region-list__countries">
                       <div class="cmp-region-list__countries--flag">
-                        ${countryItems.svgFlag @ context = 'scriptComment'}
+                        <a href="${countryItems.languagePageUrl}"> ${countryItems.svgFlag @ context = 'scriptComment'} </a>
                       </div>
                       <div class="cmp-region-list__countries--name">
-                        ${countryItems.title}
+                        <a href="${countryItems.languagePageUrl}"> ${countryItems.title}  </a>
                         <span class="cmp-region-list__language">
                           <sly data-sly-list.LanguageItems="${countryItems.children}">
                             <a href="${LanguageItems.URL}">${LanguageItems.displayLanguage}</a>${LanguageItemsList.last
