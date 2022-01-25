@@ -241,7 +241,7 @@
         }
 
         @include mobile {
-            font-size: 1rem;
+            font-size: 0.8rem;
             line-height: inherit;
             padding-right: 2.438rem;
         }
@@ -795,10 +795,11 @@
     }
 }
 
- .cmp-text-color--onDark-theme {
+.cmp-text-color--onDark-theme {
     color: get-color(brand-white) !important;
 
-    .cmp-teaser__desc-link, .cmp-teaser__title-link {
+    .cmp-teaser__desc-link,
+    .cmp-teaser__title-link {
         color: get-color(brand-white) !important;
         text-decoration: none;
     }
@@ -807,17 +808,99 @@
 .cmp-text-color--onLight-theme {
     color: get-color(text-light-gray) !important;
 
-    .cmp-teaser__desc-link, .cmp-teaser__title-link {
+    .cmp-teaser__desc-link,
+    .cmp-teaser__title-link {
         color: get-color(text-light-gray) !important;
         text-decoration: none;
     }
 }
+
 // cmp button green styles
 
 .cmp-teaser-button-green {
     &.cmp-teaser--button {
         .cmp-teaser:not(:hover) svg circle {
             fill: #003030;
+        }
+    }
+}
+
+
+// US 188398 Teaser style update "Services" for 3 teasers
+
+
+.cmp-three-teasers-apac {
+    padding: rem(32px);
+    .cmp-teaser {
+        width: rem(365px);
+        height: rem(490.37px);
+        padding: 0;
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        background-color: get-color(brand-white);
+        display: grid;
+        align-content: space-between;
+        grid-template-rows: rem(202.21px) rem(288.16px);
+        transition: all .3s;
+
+        &:hover {
+            outline: rem(2px) solid get-color(brand-blue) !important;
+            box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+            transition: all .3s;
+
+            .cmp-teaser__title {
+                background-color: get-color(brand-white) !important;
+                color: get-color(brand-light-blue) !important;
+
+                .cmp-teaser__title-link {
+                    color: get-color(brand-light-blue) !important;
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: fill;
+        }
+
+        .cmp-teaser__title {
+            width: 100%;
+            min-height: rem(45px);
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            text-align: center;
+            font-size: $font-size-custom-medium;
+            font-weight: $font-weight-bold;
+            padding-top: rem(5px);
+            margin: 0;
+
+            .cmp-teaser__title-link {
+                text-decoration: none;
+                color: get-color(brand-white);
+            }
+        }
+
+        .cmp-teaser__content {
+            font-size: $font-size-custom-xxsmall;
+            color: get-color(brand-text-gray);
+            //   min-height: rem(390px);
+            min-height: auto;
+
+            &-title {
+                font-size: $font-size-medium;
+                font-weight: bold;
+            }
+
+            .cmp-teaser__description {
+                padding: rem(20px) rem(30px);
+                line-height: rem(16px);
+            }
+        }
+
+        &__image {
+            width: 100%;
+            height: rem(202.21px);
+            object-fit: fill;
         }
     }
 }
