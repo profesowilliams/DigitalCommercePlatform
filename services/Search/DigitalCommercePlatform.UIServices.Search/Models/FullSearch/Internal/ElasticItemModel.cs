@@ -25,6 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
         public List<MainSpecificationModel> MainSpecifications { get; set; }
         public List<PlantModel> Plants { get; set; }
         public AuthorizationModel Authorization { get; set; }
-        public List<IndicatorModel> Indicators { get; set; }
+        public Dictionary<string, string> Indicators { get; set; }
     }
 }

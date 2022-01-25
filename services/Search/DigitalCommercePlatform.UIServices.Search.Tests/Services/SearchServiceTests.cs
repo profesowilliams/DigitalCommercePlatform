@@ -399,6 +399,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             };
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
                 .Returns(Task.FromResult(appResponse));
+            _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((Dictionary<string, string> dict, string key, string fallback) => { return $"{key}_Translated"; });
 
             //Act
             var result = await _searchService.GetFullSearchProductData(request, true);
@@ -406,7 +408,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Assert
             result.Should().NotBeNull();
             result.Products[0].Indicators.Should().NotBeNullOrEmpty();
-            result.Products[0].Indicators.Find(e => e.Type == FreeShipping).Should().NotBeNull();
+            result.Products[0].Indicators[FreeShipping].Should().NotBeNull();
         }
 
         [Theory]
@@ -629,8 +631,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             sut.Invoke(_searchService, new object[] { productDto, productModel });
             //Assert
             _translationServiceMock.VerifyAll();
-            productModel.Indicators.FirstOrDefault(x => x.Type == "FreeShipping").Should().NotBeNull();
-            productModel.Indicators.First(x => x.Type == "FreeShipping").Value.Should().Be(expectedValue);
+            productModel.Indicators.Should().ContainKey("FreeShipping");
+            productModel.Indicators["FreeShipping"].Should().Be(expectedValue);
         }
 
         public static IEnumerable<object> AddFreeShuppingIndicator_Test_Data()

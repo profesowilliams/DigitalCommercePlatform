@@ -136,16 +136,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
             if (freeShipping != null)
             {
-                freeShipping.Value = _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{freeShipping.Value}", freeShipping.Value);
-                productModel.Indicators.Add(_mapper.Map<IndicatorModel>(freeShipping));
+                productModel.Indicators.Add(FreeShipping, _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{freeShipping.Value}", freeShipping.Value));
             }
             else
             {
-                productModel.Indicators.Add(new IndicatorModel
-                {
-                    Type = FreeShipping,
-                    Value = _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{N}", N)
-                });
+                productModel.Indicators.Add(FreeShipping, _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{N}", N));
             }
         }
 
