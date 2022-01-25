@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.EndUserPO, opt => opt.MapFrom(src => src.EndUserPO))
             .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
-            .ForPath(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+            .ForMember(dest => dest.Attributes, opt => opt.MapFrom<AttributeResolver>())
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.Source, opt => opt.MapFrom<VendorReferenceResolver>())
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
@@ -115,7 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<DiscountDto, Discount>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<ItemDto, Line>()                
+            CreateMap<ItemDto, Line>()
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Qty))
                 .ForMember(dest => dest.VendorPartNo, opt => opt.MapFrom(src => src.VendorPartNo))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.ListPrice))
@@ -284,6 +284,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         }
     }
 
+    [ExcludeFromCodeCoverage]
+    public class AttributeResolver : IValueResolver<QuoteModel, QuoteDetails, List<Models.Quote.AttributeModel>>
+    {
+        public List<Models.Quote.AttributeModel> Resolve(QuoteModel source, QuoteDetails destination, List<Models.Quote.AttributeModel> destMember, ResolutionContext context)
+        {
+            List<Models.Quote.AttributeModel> lstAttributes = new List<Models.Quote.AttributeModel>();
+            if (source.Attributes != null)
+            {
+                foreach (var reference in source.Attributes)
+                {
+                    Models.Quote.AttributeModel attributeModel = new Models.Quote.AttributeModel();
 
+                    attributeModel.Name = reference.Name = string.IsNullOrWhiteSpace(reference.Name) ? "" : reference.Name.ToUpper();
+                    attributeModel.Value = reference.Value = string.IsNullOrWhiteSpace(reference.Value) ? "" : reference.Value.ToUpper();
+
+                    lstAttributes.Add(attributeModel);
+                }
+            }
+            return lstAttributes;
+        }
+    }
 }
 
