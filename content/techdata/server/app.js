@@ -653,17 +653,27 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
       : false
     : false;
   function getRandom(maxValue) {
-    return Math.floor(Math.random() * maxValue);
+    return Math.abs(Math.floor(Math.random() * maxValue));
   }
 
   function getInvoices(noOfInvoices) {
+    noOfInvoices = noOfInvoices < 0 ? 1 : noOfInvoices;
     const invoices = [];
+    const forcePending = noOfInvoices >= 8;
+    if (forcePending) {
+      const errorObject = []
+        errorObject.push({
+          "id": "Pending",
+          "line": "",
+          "quantity": 1,
+          "price": 5041.7,
+          "created": null
+      });
+      return errorObject
+    }
     for (let i = 0; i <= noOfInvoices; i++) {
       const invoice = {
-        id:
-          i % 2
-            ? Number(`${pageNumber}${4009754974 + i + getRandom(10)}`)
-            : "Pending",
+        id: forcePending ?  "Pending" : Number(`${pageNumber}${4009754974 + i + getRandom(10)}`),
         line: i % 2 ? 1 + getRandom(10) : "",
         quantity: 1 + getRandom(100),
         price: 4750.7 + getRandom(1000),
@@ -771,6 +781,9 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     },
   };
   res.json(response);
+
+  // const response = utils.getOrdersGridResponse();
+  // res.json(response);
 });
 
 app.get("/browse", function (req, res) {

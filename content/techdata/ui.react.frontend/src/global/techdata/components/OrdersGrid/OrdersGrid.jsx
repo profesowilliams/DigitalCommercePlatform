@@ -143,7 +143,7 @@ function OrdersGrid(props) {
      */
     const getInvoices = (invoices, setValueParam, line) => {
         const url = componentProp.downloadAllInvoicesEndpoint;
-        if (invoices?.length && invoices.length > 1) {
+        if (typeof invoices !== 'string' && invoices?.length && invoices.length > 1) {
             return (
                 <div onClick={() => invokeModal({
                     content: (
@@ -172,7 +172,8 @@ function OrdersGrid(props) {
             if (invoices && invoices[0]?.id === 'Pending') {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
             } else {
-                const invoiceId = invoices && invoices.length ? invoices[0]?.id : invoices;
+                const invoiceId = typeof invoices === 'string' ? invoices :
+                    invoices && invoices.length ? invoices[0]?.id : invoices;
 
                 if (invoices && invoices.length) {
                     setValueParam(invoiceId); // set the value of the single invoice and this permit copy the value
