@@ -8,12 +8,14 @@ using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.Internal
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Services
@@ -42,15 +44,23 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
             _logger.LogInformation($"GetRenewalsDetailedFor {req}");
 
-            var coreResult = await _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
-            var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
-            var count = coreResult.Count;
-            
-            return new DetailedResponseModel()
+            try
             {
-                Count = count,
-                Response = modelList
-            };
+                var coreResult = await _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
+                var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
+                var count = coreResult.Count;
+
+                return new DetailedResponseModel()
+                {
+                    Count = count,
+                    Response = modelList
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Can't retrieve Renewal data, details: {ex.Message}");
+                return new DetailedResponseModel { Count = 0, Response = null };
+            }
         }
 
         public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
@@ -58,11 +68,20 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
             _logger.LogInformation($"GetRenewalsSummaryFor {req}");
+            try
+            {
+                var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
+                var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
+                var count = coreResult.Count;
+                return new SummaryResponseModel() { Count = count, Response = modelList };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Can't retrieve Renewal data, summary: {ex.Message}");
+                return new SummaryResponseModel { Count = 0, Response = null };
+            }
 
-            var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
-            var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
-            var count = coreResult.Count;
-            return new SummaryResponseModel(){Count = count, Response = modelList};
+
         }
 
         public async Task<int> GetRenewalsSummaryCountFor(RefinementRequest request)

@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
+
 namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
 {
     [ExcludeFromCodeCoverage]
@@ -50,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-                if (response == null)
+                if (response.Content.Items == null)
                 {
                     return NoContent();
                 }
@@ -60,7 +61,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalSummary.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-
+                if (response.Content.Items == null)
+                {
+                    return NoContent();
+                }
                 return Ok(response);
             }
         }
@@ -75,7 +79,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalDetailed.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-                if (response == null)
+                if (response.Content.Items == null)
                 {
                     return NoContent();
                 }
@@ -85,7 +89,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Controllers
             {
                 var request = _mapper.Map<SearchRenewalSummary.Request>(model);
                 var response = await Mediator.Send(request).ConfigureAwait(false);
-
+                if (response.Content.Items == null)
+                {
+                    return NoContent();
+                }
                 return Ok(response);
             }
         }
