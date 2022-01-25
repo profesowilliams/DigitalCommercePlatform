@@ -94,14 +94,7 @@ export const plainResellerColumnFn = (definition) => {
   // check if Its a reseller or techdata employee
   //refactor needed
   const { columnLabel, columnKey, sortable } = definition;
-  const isInternal =
-    isInternalUser &&
-    hasAccess({
-      user: getUserDataInitialState(),
-      accessType: RENEWALS_TYPE.resellerName,
-    });
-  // const testVariable = true;
-  if (isInternal) {
+  if (isInternalUser) {
     return {
       headerName: columnLabel,
       field: columnKey,
