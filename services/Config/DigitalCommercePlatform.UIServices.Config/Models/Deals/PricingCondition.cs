@@ -21,6 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Deals
         EduK12 ,
         GovtState ,
         GovtFederal ,
-        Medical 
+        Medical ,
+        Commercial
     }
 }

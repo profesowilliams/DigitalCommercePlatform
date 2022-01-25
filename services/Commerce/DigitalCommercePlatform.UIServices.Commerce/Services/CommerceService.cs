@@ -192,6 +192,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             else
             {
+                lstPricingConditions.Add(new PricingCondition("Commercial (Non-Govt)", "Commercial"));
                 lstPricingConditions.Add(new PricingCondition("Higher Education", "EduHigher"));
                 lstPricingConditions.Add(new PricingCondition("Lower Education", "EduK12"));
                 lstPricingConditions.Add(new PricingCondition("State", "GovtState"));
