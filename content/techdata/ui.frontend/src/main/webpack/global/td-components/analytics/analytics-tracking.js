@@ -23,6 +23,7 @@
     const ANALYTICS_EVENTINFO_SELECTION_DEPTH_PN = "selectionDepth";
     const ANALYTICS_EVENTINFO_TYPE_PN = "type";
     const ANALYTICS_EVENTINFO_TYPE_LINK_VAL = "link";
+    const ANALYTICS_EVENTINFO_TYPE_LIST_VAL = "list";
     const ANALYTICS_EVENTINFO_TYPE_IMAGE_VAL = "image";
     const ANALYTICS_EVENTINFO_TYPE_CTA_VAL = "cta";
     const IMAGE_CSS_CLASSNAME = "cmp-image";
@@ -167,7 +168,7 @@
         const category = elemClicked.getAttribute('data-category') || '';
         const clickInfo = {};
 
-        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LIST_VAL;
         clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = label;
         clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = category;
 
