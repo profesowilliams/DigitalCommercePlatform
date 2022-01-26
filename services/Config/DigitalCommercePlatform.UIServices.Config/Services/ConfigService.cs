@@ -6,19 +6,21 @@ using DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
+using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
-using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Features.Contexts.Models;
-using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
-using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
+using DigitalFoundation.Common.Features.Contexts.Models;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Flurl;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -26,11 +28,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
-using Newtonsoft.Json;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
 {
@@ -221,8 +220,65 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
         {
             var mappingResult = _mapper.Map<IEnumerable<Configuration>>(configurationFindResponse.Data);
+            mappingResult = MapQuotesAsync(mappingResult).Result;
             result.Count = configurationFindResponse.Count;
             result.Data = mappingResult;
+        }
+
+        private async Task<IEnumerable<Configuration>> MapQuotesAsync(IEnumerable<Configuration> mappingResult)
+        {
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            
+            foreach (var configuration in mappingResult)
+            {
+                try
+                {
+                    var query = new QuoteRequestModel { VendorReference = configuration.ConfigId, Details = false };
+                    var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);
+
+                    _logger.LogInformation("calling Quote Service using configuration id " + quoteURL);
+
+                    var quoteResponse = await _middleTierHttpClient.GetAsync<Quote>(quoteURL);
+                    if (quoteResponse != null)
+                    {
+                        var lstQuotes = new List<TdQuoteIdDetails>();
+
+                        foreach (var quote in quoteResponse?.Data)
+                        {
+                            var configQuote = new TdQuoteIdDetails
+                            {
+                                Id = quote.Source.ID,
+                                Status = quote.Status,
+                                Total = string.Format("{0:N2}", quote.Price),
+                                System = quote.Source.TargetSystem,
+                                SalesOrg = quote.Source.SalesOrg,
+                            };
+
+                            lstQuotes.Add(configQuote);
+                        }
+
+                        configuration.Quotes = lstQuotes;
+                    }
+                }
+                catch (RemoteServerHttpException ex)
+                {
+                    if (ex.Message.Contains("Reported an error: NotFound"))
+                    {
+                        _logger.LogError(ex, "Exception calling quote service using config id  : " + configuration.ConfigId );
+                    }
+                    else
+                    {
+                        _logger.LogError(ex, "Exception at : " + nameof(ConfigService));                        
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
+                    throw;
+                }
+
+            }
+            return mappingResult;
         }
 
         private Models.Configurations.Internal.FindModel BuildConfigurationsAppServiceRequest(GetConfigurations.Request request)

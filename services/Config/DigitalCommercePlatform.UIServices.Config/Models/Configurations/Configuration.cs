@@ -18,4 +18,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string Action { get; set; } = ConfigurationAction.CreateQuote.ToString();
         public IList<TdQuoteIdDetails> Quotes { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class QuoteRequestModel
+    {
+        public string VendorReference { get; set; }
+        public bool? Details { get; set; }
+
+    }
 }

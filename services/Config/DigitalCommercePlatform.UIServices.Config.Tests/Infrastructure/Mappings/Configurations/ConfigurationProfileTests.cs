@@ -5,7 +5,6 @@ using DigitalCommercePlatform.UIServices.Config.Tests.Infrastructure.Mappings.Co
 using FluentAssertions;
 using System;
 using Xunit;
-using System.Collections.Generic;
 
 
 using DCPC = DigitalCommercePlatform.UIServices.Config.Models.Configurations;

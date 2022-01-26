@@ -10,5 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string Id { get; set; }
         public string SalesOrg { get; set; }
         public string System { get; set; }
+        public string Status { get; set; }
+        public string Total { get; set; }
     }
 }
