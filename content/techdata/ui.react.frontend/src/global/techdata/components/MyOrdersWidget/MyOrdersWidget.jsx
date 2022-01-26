@@ -2,6 +2,7 @@ import React, { useEffect, useState, createRef } from "react";
 import Chart from "chart.js";
 import "chartjs-gauge";
 import { get } from "../../../../utils/api";
+import { pushData } from "../../../../utils/dataLayerUtils";
 
 // import "./style.css";
 
@@ -16,7 +17,12 @@ const MyOrdersWidget = ({ componentProp }) => {
     async function  toDateToggle() {
         let updatedEndPoint = endpoint;
 
-        console.log("toggle mtd");
+        pushData({
+            event: "orderDaysSelected",
+            order: {
+                selectedDays: toggle ? 30 : 90
+            }
+        });
 
         if (!toggle)
             updatedEndPoint = endpoint.replace("true", "false")
