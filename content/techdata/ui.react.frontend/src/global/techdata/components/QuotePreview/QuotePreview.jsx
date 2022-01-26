@@ -331,7 +331,10 @@ function QuotePreview(props) {
             quoteDetails={quoteDetails}
             disableQuickQuoteButton={false}
             handleQuickQuote={handleQuickQuote}
-            handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}/>
+            handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}
+            apiResponse={apiResponse}
+            isConfig={isEstimateId}
+            />
         </section>
       )}
       {modal && <Modal
