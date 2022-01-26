@@ -246,6 +246,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (_uiContext.User != null)
             {
+                createModelFrom.VendorQuoteType = input.QuoteDetails?.Source?.Type ?? string.Empty;
                 createModelFrom.System = "Q";
                 input.QuoteDetails.BuyMethod = input.QuoteDetails?.BuyMethod ?? "tdavnet67";
                 if (input.QuoteDetails.BuyMethod.ToLower().Equals("tdavnet67"))
@@ -349,13 +350,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
-                        Id = !string.IsNullOrWhiteSpace(item.TDNumber) ?  item.TDNumber : item.MFRNumber,
-                        Type = !string.IsNullOrWhiteSpace(item.TDNumber) ? "TECHDATA" : "MANUFACTURER",
+                        Id = item.MFRNumber,   // always pass mfg part # bug # 240973
+                        Type = "MANUFACTURER", // always pass "MANUFACTURER" # bug # 240973 ,
                         Manufacturer = item.Manufacturer,
                         Name = !string.IsNullOrWhiteSpace(item.ShortDescription) ?  item.ShortDescription : item.MFRNumber,
                     }
                 };
-            //vendorquoteid
+
             var requestItem = new ItemModel
             {
                 Id = item.Id,

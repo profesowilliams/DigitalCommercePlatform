@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
     [ExcludeFromCodeCoverage]
     public class CreateQuoteModel
     {
+        public string VendorQuoteType { get; set; }
         public string SalesOrg { get; set; }
         public string TargetSystem { get; set; }
         public string System { get; set; }
