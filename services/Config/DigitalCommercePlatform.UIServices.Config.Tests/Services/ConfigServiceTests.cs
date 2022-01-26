@@ -1,6 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
+using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
@@ -60,6 +61,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
         {
             //arrange
             List<Configuration> mappingResult = new List<Configuration>(3);
+
+
             mappingResult.Add(new Configuration
             {
                 ConfigId = "DD132151240CM",
@@ -98,6 +101,56 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
 
             var result = queryLine.Invoke(objType, new object[] { mappingResult });
             Assert.NotNull(mappingResult);
+
+        }
+
+        [Fact]
+        public void BuildQuotesForConfiguration_Test()
+        {
+            //arrange
+            
+            var configuration = new Configuration
+            {
+                ConfigId = "DD132151240CM",
+                ConfigName = "Estimate_DD132151240CM",
+                Expires = "n/a",
+                Vendor = "CISCO",
+                Quotes = null
+
+            };
+
+            var lstquotes = new List<QuoteModel>();
+            var quote = new QuoteModel
+            {
+                Source = new SourceModel
+                {
+                    ID = "1234567",
+                    SalesOrg = "0100",
+                    TargetSystem = "R3",
+                    System = "Q",
+                    Key = "R3"
+                },
+                Created = DateTime.Now,
+                Price = 1000.00m,
+                Status = "OPEN"
+            };
+            lstquotes.Add(quote);
+
+            var quoteResponse = new Quote
+            {
+                Data = lstquotes
+            };
+
+
+            Type type;
+            object objType;
+            InitiateConfigService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildQuotesForConfiguration" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { configuration, quoteResponse });
+            Assert.NotNull(configuration.Quotes);
 
         }
 

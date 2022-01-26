@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,6 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public SourceModel Source { get; set; }
         public string Status { get; set; }
         public decimal Price { get; set; }
+        public DateTime Created { get; set; }
     }
 
     [ExcludeFromCodeCoverage]

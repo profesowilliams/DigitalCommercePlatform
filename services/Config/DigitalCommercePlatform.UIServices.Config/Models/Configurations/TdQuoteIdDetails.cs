@@ -11,6 +11,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public string SalesOrg { get; set; }
         public string System { get; set; }
         public string Status { get; set; }
-        public string Total { get; set; }
+        public decimal Price { get; set; }
+        public string PriceFormatted { get; set; }
+        public string Currency { get; set; } = "USD";
+        public string CurrencySymbol { get; set; } = "$";
+        public string Created { get; set; }
     }
 }

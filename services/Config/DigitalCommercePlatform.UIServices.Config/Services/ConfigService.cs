@@ -239,26 +239,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                     _logger.LogInformation("calling Quote Service using configuration id " + quoteURL);
 
                     var quoteResponse = await _middleTierHttpClient.GetAsync<Quote>(quoteURL);
-                    if (quoteResponse != null)
-                    {
-                        var lstQuotes = new List<TdQuoteIdDetails>();
-
-                        foreach (var quote in quoteResponse?.Data)
-                        {
-                            var configQuote = new TdQuoteIdDetails
-                            {
-                                Id = quote.Source.ID,
-                                Status = quote.Status,
-                                Total = string.Format("{0:N2}", quote.Price),
-                                System = quote.Source.TargetSystem,
-                                SalesOrg = quote.Source.SalesOrg,
-                            };
-
-                            lstQuotes.Add(configQuote);
-                        }
-
-                        configuration.Quotes = lstQuotes;
-                    }
+                    BuildQuotesForConfiguration(configuration, quoteResponse);
                 }
                 catch (RemoteServerHttpException ex)
                 {
@@ -279,6 +260,34 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             }
             return mappingResult;
+        }
+
+        private void BuildQuotesForConfiguration(Configuration configuration, Quote quoteResponse)
+        {
+            if (quoteResponse != null)
+            {
+                var lstQuotes = new List<TdQuoteIdDetails>();
+
+                foreach (var quote in quoteResponse?.Data)
+                {
+                    var configQuote = new TdQuoteIdDetails
+                    {
+                        Id = quote.Source.ID,
+                        Status = quote.Status,
+                        Price = quote.Price,
+                        PriceFormatted = string.Format("{0:N2}", quote.Price),
+                        System = quote.Source.TargetSystem,
+                        SalesOrg = quote.Source.SalesOrg,
+                        Currency = "USD",
+                        CurrencySymbol = "$",
+                        Created = quote.Created.ToString("MM/dd/yy")
+                    };
+
+                    lstQuotes.Add(configQuote);
+                }
+
+                configuration.Quotes = lstQuotes;
+            }
         }
 
         private Models.Configurations.Internal.FindModel BuildConfigurationsAppServiceRequest(GetConfigurations.Request request)
