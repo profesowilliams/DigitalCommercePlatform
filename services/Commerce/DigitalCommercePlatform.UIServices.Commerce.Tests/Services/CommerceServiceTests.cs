@@ -572,6 +572,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void BuildAttibute_Test()
+        {
+            //arrange
+
+            string id = "TT132145197LJ"; 
+            string attributeName = "ORIGINALESTIMATEID";
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildAttribute" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { id, attributeName });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
         public void GetAccountDetails()
         {
             //arrange 

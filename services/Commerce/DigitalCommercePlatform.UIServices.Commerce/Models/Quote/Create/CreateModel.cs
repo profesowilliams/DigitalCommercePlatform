@@ -23,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create
         public VendorReferenceModel VendorReference { get; set; }
         public IEnumerable<ItemModel> Items { get; set; }
         public IEnumerable<AgreementModel> Agreements { get; set; }
+        public List<AttributeDto> Attributes { get; set; }
         public bool? IsExclusive{get;set;}
 
     }

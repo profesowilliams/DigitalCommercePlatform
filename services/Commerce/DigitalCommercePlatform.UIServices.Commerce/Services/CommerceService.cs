@@ -312,6 +312,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Type = input.QuoteDetails.Source.Type ?? string.Empty,  // Expected Values : Estimate / Renewal / VendorQuote / ""
                     Value = input.QuoteDetails.Source.Value ?? string.Empty // 
                 };
+                createModelFrom.Attributes = BuildAttribute(createModelFrom.VendorReference.Value, "ORIGINALESTIMATEID");
             }
 
             return createModelFrom;
@@ -368,20 +369,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 TotalPrice = (decimal)item.UnitPrice * item.Quantity,
                 UnitCost = (decimal)item.UnitPrice,
                 Product = lstProduct,
-                Attributes = BuildAttribute(id)
+                Attributes = BuildAttribute(id, "vendorquoteid")
 
 
             };
             return requestItem;
         }
 
-        private List<AttributeDto> BuildAttribute(string id)
+        private List<AttributeDto> BuildAttribute(string id, string attributeName = "vendorquoteid")
         {
             if (string.IsNullOrWhiteSpace(id)) return new List<AttributeDto>();
 
             List<AttributeDto> lstAttributes = new List<AttributeDto>
             {
-                new AttributeDto {Name= "vendorquoteid", Value=id }
+                new AttributeDto {Name= attributeName, Value=id }
             };
 
             return lstAttributes;
