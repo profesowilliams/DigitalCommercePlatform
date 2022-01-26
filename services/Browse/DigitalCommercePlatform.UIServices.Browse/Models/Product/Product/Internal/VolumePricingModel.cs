@@ -6,7 +6,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     [ExcludeFromCodeCoverage]
     public class VolumePricingModel
     {
-        public decimal Price { get; set; }
-        public int? MinQuantity { get; set; }
+        public string MinQuantity { get; set; }
+        public string Price { get; set; }
     }
 }

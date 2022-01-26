@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
+using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
 using FluentValidation;
@@ -20,7 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 {
     public class GetProductsCompare
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, CompareModel>
         {
             private const string ALLOW = "ALLOW";
@@ -31,15 +31,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             private const string Thumbnail = "75x75";
             private const string Warehouse = "Warehouse";
             private const string Y = "Y";
+            private readonly ICultureService _cultureService;
             private readonly IMiddleTierHttpClient _httpClient;
             private readonly string _onOrderArrivalDateFormat;
             private readonly string _productAppUrl;
+            private readonly ITranslationService _translationService;
+            private Dictionary<string, string> _translations = null;
 
-            public Handler(IMiddleTierHttpClient httpClient, IAppSettings appSettings, ISiteSettings siteSettings)
+            public Handler(
+                IMiddleTierHttpClient httpClient,
+                IAppSettings appSettings,
+                ISiteSettings siteSettings,
+                ICultureService cultureService,
+                ITranslationService translationService)
             {
                 _httpClient = httpClient;
                 _productAppUrl = appSettings.GetSetting("Product.App.Url");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
+                _cultureService = cultureService;
+                _translationService = translationService;
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)
@@ -54,6 +64,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
                 var validateDto = await validateDtoTask.ConfigureAwait(false);
 
+                _cultureService.Process(request.Culture);
+                _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref _translations);
+
                 IEnumerable<ProductModel> productsModel = MapProducts(request, productsDto, validateDto);
 
                 return new CompareModel
@@ -61,8 +74,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                     Products = productsModel,
                     SpecificationGroups = specGroups
                 };
-
-                throw new NotImplementedException();
             }
 
             private static Dictionary<string, HashSet<string>> CreateSpecificationGroupMatrix(IEnumerable<ProductDto> productsDto)
@@ -118,30 +129,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 return product;
             }
 
-            private static void MapPrice(ProductDto x, ProductModel product)
-            {
-                product.Price = new PriceModel
-                {
-                    BasePrice = x.Price?.BasePrice,
-                    BestPrice = x.Price?.BestPrice,
-                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration : null,
-                    ListPrice = x.Price?.ListPrice,
-                    BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
-                    VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
-                    {
-                        MinQuantity = p.MinQuantity.Value,
-                        Price = p.Price
-                    })
-                };
-            }
-
             private static void MapStock(ProductDto x, ProductModel product, bool vendorShipped)
             {
                 product.Stock = new StockModel
                 {
-                    TotalAvailable = x.Stock?.Total,
-                    Corporate = x.Stock?.Td,
-                    VendorDirectInventory = x.Stock?.VendorDesignated,
+                    TotalAvailable = x.Stock?.Total.Format(),
+                    Corporate = x.Stock?.Td.Format(),
+                    VendorDirectInventory = x.Stock?.VendorDesignated.Format(),
                     VendorShipped = vendorShipped
                 };
             }
@@ -210,14 +204,33 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                     new PlantModel
                     {
                         Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise ?? 0,
+                        Quantity = p.Stock?.AvailableToPromise.Format("0"),
                         OnOrder = MapOnOrder(p.Stock?.OnOrder)
                     });
                 }
             }
 
+            private void MapPrice(ProductDto x, ProductModel product, string naLabel)
+            {
+                product.Price = new PriceModel
+                {
+                    BasePrice = x.Price?.BasePrice.Format(),
+                    BestPrice = x.Price?.BestPrice.Format(),
+                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration.Format() : null,
+                    ListPrice = x.Price?.ListPrice.Format(naLabel) ?? naLabel,
+                    PromoAmount = FormatHelper.FormatSubtraction(x.Price?.BasePrice, x.Price?.BestPrice),
+                    BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
+                    VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
+                    {
+                        MinQuantity = p.MinQuantity.Format(),
+                        Price = p.Price.Format()
+                    })
+                };
+            }
+
             private IEnumerable<ProductModel> MapProducts(Request request, IEnumerable<ProductDto> productsDto, IEnumerable<ValidateDto> validateDto)
             {
+                var naLabel = _translationService.Translate(_translations, TransaltionsConst.NALabel);
                 return productsDto.Select(x =>
                 {
                     ProductModel product = MapBasedInformation(x);
@@ -232,7 +245,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
                     MapAuthorizations(product, isValid, orderable, authrequiredprice);
 
-                    MapPrice(x, product);
+                    MapPrice(x, product, naLabel);
 
                     return product;
                 }).ToList();
@@ -255,6 +268,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
         public class Request : IRequest<CompareModel>
         {
+            public string Culture { get; set; }
             public IEnumerable<string> Ids { get; set; }
             public string SalesOrg { get; set; }
             public string Site { get; set; }

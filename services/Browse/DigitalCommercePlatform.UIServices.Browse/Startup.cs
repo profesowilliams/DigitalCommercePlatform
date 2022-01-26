@@ -6,6 +6,7 @@ using DigitalFoundation.Common.Security.Token;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using DigitalFoundation.Common.Services.Providers.Localization;
+using DigitalFoundation.Common.Services.Providers.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace DigitalCommercePlatform.UIService.Browse
         {
         }
 
+        protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
         protected override string HealthCheckEndpoint => "http://app-catalog/health/heartbeat";
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
@@ -36,8 +38,10 @@ namespace DigitalCommercePlatform.UIService.Browse
             services.AddSingleton<ITranslationService, TranslationService>();
 
             services.AddSingleton<IMemoryCache, MemoryCache>();
-        }
 
-        protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
+            services.AddProfileProvider(StartupLogger);
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<ICultureService, CultureService>();
+        }
     }
 }

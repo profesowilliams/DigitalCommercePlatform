@@ -40,7 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
-            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site };
+            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site, Culture = Context.Language };
 
             var data = await Mediator.Send(request).ConfigureAwait(false);
 

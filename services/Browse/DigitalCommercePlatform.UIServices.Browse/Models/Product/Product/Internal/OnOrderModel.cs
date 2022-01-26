@@ -3,7 +3,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
 {
     public class OnOrderModel
     {
-        public int Stock { get; set; }
         public string ArrivalDate { get; set; }
+        public string Stock { get; set; }
     }
 }

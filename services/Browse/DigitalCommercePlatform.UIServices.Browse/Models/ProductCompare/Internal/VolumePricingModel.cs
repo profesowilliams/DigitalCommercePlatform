@@ -3,7 +3,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Intern
 {
     public class VolumePricingModel
     {
-        public int MinQuantity { get; set; }
-        public decimal Price { get; set; }
+        public string MinQuantity { get; set; }
+        public string Price { get; set; }
     }
 }

@@ -25,7 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 {
     public static class GetProductDetailsHandler
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public class Handler : IRequestHandler<Request, Response>
         {
             private const string ALLOW = "ALLOW";
@@ -47,14 +46,21 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string Virtual = "Virtual";
             private const string Warehouse = "Warehouse";
             private const string Y = "Y";
+            private readonly ICultureService _cultureService;
             private readonly string _imageSize;
             private readonly Dictionary<string, string> _indicatorsTranslations = null;
             private readonly IMapper _mapper;
             private readonly string _onOrderArrivalDateFormat;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
+            private Dictionary<string, string> _translations = null;
 
-            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper, ITranslationService translationService)
+            public Handler(
+                IBrowseService productRepositoryServices,
+                ISiteSettings siteSettings,
+                IMapper mapper,
+                ITranslationService translationService,
+                ICultureService cultureService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
@@ -62,6 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _mapper = mapper;
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
+                _cultureService = cultureService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -75,6 +82,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 var productDetails = productDetailsTask.Result;
 
+                _cultureService.Process(request.Culture);
+                _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref _translations);
+                var naLabel = _translationService.Translate(_translations, TransaltionsConst.NALabel);
+
                 var result = productDetails.Select(async x =>
                 {
                     var product = new ProductModel();
@@ -84,7 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                     MapImages(x, product);
 
-                    MapPrice(x, product, flags.CanViewPrice);
+                    MapPrice(x, product, flags.CanViewPrice, naLabel);
 
                     MapAuthorizations(product, flags);
 
@@ -322,27 +333,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     ? null
                     : new OnOrderModel
                     {
-                        Stock = onOrder.Stock,
+                        Stock = onOrder.Stock.Format(),
                         ArrivalDate = onOrder.ArrivalDate.ToString(_onOrderArrivalDateFormat),
                     };
             }
 
-            private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice)
+            private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice, string naLabel)
             {
                 if (x.Price == null)
                     return;
 
                 product.Price = new PriceModel
                 {
-                    ListPrice = x.Price.ListPrice,
-                    BasePrice = canViewPrice ? x.Price.BasePrice : null,
-                    BestPrice = canViewPrice ? x.Price.BestPrice : null,
-                    BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration : null,
+                    ListPrice = x.Price.ListPrice.Format(naLabel),
+                    BasePrice = canViewPrice ? x.Price.BasePrice.Format() : null,
+                    BestPrice = canViewPrice ? x.Price.BestPrice.Format() : null,
+                    BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration.Format() : null,
                     BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
+                    PromoAmount = FormatHelper.FormatSubtraction(x.Price.BasePrice, x.Price.BestPrice),
                     VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
                     {
-                        Price = v.Price,
-                        MinQuantity = v.MinQuantity ?? 0
+                        Price = v.Price.Format(),
+                        MinQuantity = v.MinQuantity.Format("0")
                     })
                 };
             }
@@ -354,14 +366,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 product.Stock = new StockModel
                 {
-                    TotalAvailable = x.Stock.Total,
-                    Corporate = x.Stock.Td,
-                    VendorDirectInventory = x.Stock.VendorDesignated,
+                    TotalAvailable = x.Stock.Total.Format(),
+                    Corporate = x.Stock.Td.Format(),
+                    VendorDirectInventory = x.Stock.VendorDesignated.Format(),
                     VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == 0,
                     Plants = x.Plants?.Select(p => new PlantModel
                     {
                         Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise,
+                        Quantity = p.Stock?.AvailableToPromise.Format(),
                         OnOrder = MapOnOrder(p.Stock?.OnOrder),
                     })
                 };
@@ -387,13 +399,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
         public class Request : IRequest<Response>
         {
-            public Request(IReadOnlyCollection<string> id, string salesOrg, string site)
+            public Request(IReadOnlyCollection<string> id, string salesOrg, string site, string culture)
             {
                 Id = id;
                 SalesOrg = salesOrg;
                 Site = site;
+                Culture = culture;
             }
 
+            public string Culture { get; set; }
             public IReadOnlyCollection<string> Id { get; set; }
             public string SalesOrg { get; set; }
             public string Site { get; set; }

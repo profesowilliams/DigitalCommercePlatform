@@ -11,6 +11,79 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 {
     public class ProductDetailsValidationTests
     {
+        public static IEnumerable<object> ProductDetailsValidations_ReturnInvalid_Data()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        null,
+                        "0100",
+                        "US",
+                        "en-US"
+                    ),
+                    "Id"
+                },
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        Array.Empty<string>(),
+                        "0100",
+                        "US",
+                        "en-US"
+                    ),
+                    "Id"
+                },
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        new string[]{"1" },
+                        null,
+                        "US",
+                        "en-US"
+                    ),
+                    "SalesOrg"
+                },
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        new string[]{"1" },
+                        "",
+                        "US",
+                        "en-US"
+                    ),
+                    "SalesOrg"
+                },
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        new string[]{"1" },
+                        "0100",
+                        "",
+                        ""
+                    ),
+                    "Site"
+                },
+                new object[]
+                {
+                    new GetProductDetailsHandler.Request
+                    (
+                        new string[]{"1" },
+                        "0100",
+                        null,
+                        null
+                    ),
+                    "Site"
+                }
+            };
+        }
+
         [Theory]
         [AutoDomainData]
         public async Task ProductDetailsValidations(GetProductDetailsHandler.Request request)
@@ -29,73 +102,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             var result = await validator.TestValidateAsync(request);
 
             result.ShouldHaveValidationErrorFor(errorProperty);
-        }
-
-        public static IEnumerable<object> ProductDetailsValidations_ReturnInvalid_Data()
-        {
-            return new[]
-            {
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        null,
-                        "0100",
-                        "US"
-                    ),
-                    "Id"
-                },
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        Array.Empty<string>(),
-                        "0100",
-                        "US"
-                    ),
-                    "Id"
-                },
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        new string[]{"1" },
-                        null,
-                        "US"
-                    ),
-                    "SalesOrg"
-                },
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        new string[]{"1" },
-                        "",
-                        "US"
-                    ),
-                    "SalesOrg"
-                },
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        new string[]{"1" },
-                        "0100",
-                        ""
-                    ),
-                    "Site"
-                },
-                new object[]
-                {
-                    new GetProductDetailsHandler.Request
-                    (
-                        new string[]{"1" },
-                        "0100",
-                        null
-                    ),
-                    "Site"
-                }
-            };
         }
     }
 }

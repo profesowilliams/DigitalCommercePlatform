@@ -7,8 +7,8 @@ using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
 
-            var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site, Context.Language)).ConfigureAwait(false);
             return Ok(response);
         }
 

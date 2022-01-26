@@ -8,18 +8,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Intern
     [ExcludeFromCodeCoverage]
     public class ProductModel
     {
-        public string Id { get; set; }
-        public int? Quantity { get; set; }
-        public string ManufacturerPartNumber { get; set; }
-        public string DisplayName { get; set; }
-        public string ThumbnailImage { get; set; }
         public AuthorizationModel Authorization { get; set; }
-        public PriceModel Pricing { get; set; }
+        public string DisplayName { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<MainSpecificationModel> MainSpecifications { get; set; }
 
+        public string ManufacturerPartNumber { get; set; }
+        public PriceModel Pricing { get; set; }
+        public string Quantity { get; set; }
+
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ServicePriority { get; set; }
+
+        public string ThumbnailImage { get; set; }
     }
 }

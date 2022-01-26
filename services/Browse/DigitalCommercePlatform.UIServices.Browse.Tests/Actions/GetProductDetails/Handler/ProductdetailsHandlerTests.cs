@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
+using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
@@ -27,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
     public class ProductDetailsHandlerTests
     {
         private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly Mock<ICultureService> _cultureServiceMock;
         private readonly Mapper _mapper;
         private readonly Mock<IBrowseService> _mockBrowseService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
@@ -49,7 +51,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
-            _sut = new GetProductDetailsHandler.Handler(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
+            _cultureServiceMock = new Mock<ICultureService>();
+
+            _sut = new GetProductDetailsHandler.Handler(
+                _mockBrowseService.Object,
+                _siteSettingsMock.Object,
+                _mapper,
+                _translationServiceMock.Object,
+                _cultureServiceMock.Object);
         }
 
         public bool Details { get; private set; }
@@ -127,7 +136,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Price = new PriceDto
                             {
                                 BasePrice=10,
-                                BestPrice=1,
+                                BestPrice=10,
                                 BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
@@ -254,16 +263,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         DisplayName = "DisplayName",
                         Stock = new StockModel
                         {
-                            TotalAvailable=2,
-                            Corporate = 1,
-                            VendorDirectInventory=1,
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="1",
                             VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1
+                                    Quantity="1"
                                 }
                             }
                         },
@@ -274,16 +283,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         },
                         Price = new PriceModel
                         {
-                            BasePrice=10,
-                            BestPrice=1,
-                            BestPriceExpiration=new DateTime(2100,1,1),
-                            ListPrice=2,
+                            BasePrice="$10.00",
+                            BestPrice="$10.00",
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            ListPrice="$2.00",
+                            PromoAmount="$0.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
                                 new VolumePricingModel
                                 {
-                                    MinQuantity=1,
-                                    Price=3
+                                    MinQuantity="1",
+                                    Price="$3.00"
                                 }
                             }
                         },
@@ -508,16 +518,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         DisplayName = "DisplayName",
                         Stock = new StockModel
                         {
-                            TotalAvailable=2,
-                            Corporate = 1,
-                            VendorDirectInventory=1,
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="1",
                             VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1
+                                    Quantity="1"
                                 }
                             }
                         },
@@ -528,18 +538,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         },
                         Price = new PriceModel
                         {
-                            BasePrice=10,
-                            BestPrice=1,
-                            BestPriceExpiration=new DateTime(2100,1,1),
-                            ListPrice=2,
+                            BasePrice="$10.00",
+                            BestPrice="$1.00",
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
                                 new VolumePricingModel
                                 {
-                                    MinQuantity=1,
-                                    Price=3
+                                    MinQuantity="1",
+                                    Price="$3.00"
                                 }
-                            }
+                            },
+                            PromoAmount="$9.00"
                         },
                         Images = new List<ImageModel>
                         {
@@ -767,16 +778,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         DisplayName = "DisplayName",
                         Stock = new StockModel
                         {
-                            TotalAvailable=2,
-                            Corporate = 1,
-                            VendorDirectInventory=1,
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="1",
                             VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1
+                                    Quantity="1"
                                 }
                             }
                         },
@@ -787,16 +798,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         },
                         Price = new PriceModel
                         {
-                            BasePrice=10,
-                            BestPrice=1,
-                            BestPriceExpiration=new DateTime(2100,1,1),
-                            ListPrice=2,
+                            BasePrice="$10.00",
+                            BestPrice="$1.00",
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            ListPrice="$2.00",
+                            PromoAmount="$9.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
                                 new VolumePricingModel
                                 {
-                                    MinQuantity=1,
-                                    Price=3
+                                    MinQuantity="1",
+                                    Price="$3.00"
                                 }
                             }
                         },
@@ -874,13 +886,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                        ))
                    .ReturnsAsync(expected);
 
-            var request = new GetProductDetailsHandler.Request(Id, "0100", "US");
+            var request = new GetProductDetailsHandler.Request(Id, "0100", "US", "pl-Pl");
 
             var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
 
             result.Should().NotBeNull();
             result.Content.First().Stock.Plants.First().OnOrder.Should().NotBeNull();
-            result.Content.First().Stock.Plants.First().OnOrder.Stock.Should().Be(44);
+            result.Content.First().Stock.Plants.First().OnOrder.Stock.Should().Be("44");
             result.Content.First().Stock.Plants.First().OnOrder.ArrivalDate.Should().Be("2044/12/31");
         }
 
@@ -927,17 +939,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             {
                 Price = new PriceModel
                 {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPrice = 75.55m.Format(),
+                    BasePrice = 89.99m.Format(),
+                    BestPriceExpiration = DateTime.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
                 },
             };
             var canViewPrice = true;
-
+            const string naLabel = "n/a";
             MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
+
             //Act
-            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice });
+            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice, naLabel });
+
             //Assert
             productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
             productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
@@ -945,6 +959,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
         }
 
-        private GetProductDetailsHandler.Handler GetHandler() => new(_mockBrowseService.Object, _siteSettingsMock.Object, _mapper, _translationServiceMock.Object);
+        private GetProductDetailsHandler.Handler GetHandler() => new(
+            _mockBrowseService.Object,
+            _siteSettingsMock.Object,
+            _mapper,
+            _translationServiceMock.Object,
+            _cultureServiceMock.Object);
     }
 }

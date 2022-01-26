@@ -3,8 +3,10 @@
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
+using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
+using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
@@ -24,19 +26,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
     public class GetProductsCompareTests
     {
         private readonly Mock<IAppSettings> _appSettingsMock;
+        private readonly Mock<ICultureService> _cultureServiceMock;
         private readonly Mock<IMiddleTierHttpClient> _httpClientMock;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
+        private readonly Mock<ITranslationService> _translationServiceMock;
 
         public GetProductsCompareTests()
         {
             _httpClientMock = new Mock<IMiddleTierHttpClient>();
             _appSettingsMock = new Mock<IAppSettings>();
             _siteSettingsMock = new Mock<ISiteSettings>();
+            _cultureServiceMock = new Mock<ICultureService>();
+            _translationServiceMock = new Mock<ITranslationService>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
-            _sut = new Browse.Actions.GetProductsCompare.Handler(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
+            _sut = new Browse.Actions.GetProductsCompare.Handler(
+                _httpClientMock.Object,
+                _appSettingsMock.Object,
+                _siteSettingsMock.Object,
+                _cultureServiceMock.Object,
+                _translationServiceMock.Object);
         }
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
@@ -134,16 +145,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         ThumbnailImage="url",
                         Stock = new StockModel
                         {
-                            TotalAvailable=2,
-                            Corporate = 1,
-                            VendorDirectInventory=0,
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="0",
                             VendorShipped=true,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1,
+                                    Quantity="1",
                                     OnOrder = new OnOrderModel
                                     {
                                         Stock = 44,
@@ -159,18 +170,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         },
                         Price = new PriceModel
                         {
-                            BasePrice=10,
-                            BestPrice=1,
-                            BestPriceExpiration=new DateTime(2100,1,1),
-                            ListPrice=2,
+                            BasePrice="$10.00",
+                            BestPrice="$1.00",
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
                                 new VolumePricingModel
                                 {
-                                    MinQuantity=1,
-                                    Price=3
+                                    MinQuantity="1",
+                                    Price="$3.00"
                                 }
-                            }
+                            },
+                            PromoAmount = "$9.00"
                         }
                     }
                 },
@@ -241,16 +253,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         ThumbnailImage="url",
                         Stock = new StockModel
                         {
-                            TotalAvailable=2,
-                            Corporate = 1,
-                            VendorDirectInventory=1,
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="1",
                             VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
                                 {
                                     Name="Warehouse 123",
-                                    Quantity=1
+                                    Quantity="1"
                                 }
                             }
                         },
@@ -261,18 +273,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         },
                         Price = new PriceModel
                         {
-                            BasePrice=10,
-                            BestPrice=1,
-                            BestPriceExpiration=new DateTime(2100,1,1),
-                            ListPrice=2,
+                            BasePrice="$10.00",
+                            BestPrice="$1.00",
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
                                 new VolumePricingModel
                                 {
-                                    MinQuantity=1,
-                                    Price=3
+                                    MinQuantity="1",
+                                    Price="$3.00"
                                 }
-                            }
+                            },
+                            PromoAmount = "$9.00"
                         }
                     }
                 }
@@ -434,6 +447,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     BasePrice = 89.99m,
                     BestPriceExpiration = DateTime.MaxValue,
                     BestPriceIncludesWebDiscount = true,
+                    ListPrice = 44.44m
                 },
             };
 
@@ -441,9 +455,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             {
                 Price = new PriceModel
                 {
-                    BestPrice = 75.55m,
-                    BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPrice = 75.55m.Format(),
+                    BasePrice = 89.99m.Format(),
+                    BestPriceExpiration = DateTime.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
                 },
                 Authorization = new AuthorizationModel
@@ -452,15 +466,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 },
             };
 
-            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.NonPublic | BindingFlags.Instance);
             var handler = GetHandler();
+            const string naLabel = "n/a";
+
             //Act
-            sut.Invoke(handler, new object[] { productDto, productModel });
+            sut.Invoke(handler, new object[] { productDto, productModel, naLabel });
+
             //Assert
             productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
             productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
             productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
             productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
+            productModel.Price.ListPrice.Should().Equals(naLabel);
         }
 
         [Theory]
@@ -491,6 +509,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             result.ShouldNotHaveAnyValidationErrors();
         }
 
-        private Browse.Actions.GetProductsCompare.Handler GetHandler() => new(_httpClientMock.Object, _appSettingsMock.Object, _siteSettingsMock.Object);
+        private Browse.Actions.GetProductsCompare.Handler GetHandler() => new(
+            _httpClientMock.Object,
+            _appSettingsMock.Object,
+            _siteSettingsMock.Object,
+            _cultureServiceMock.Object,
+            _translationServiceMock.Object);
     }
 }

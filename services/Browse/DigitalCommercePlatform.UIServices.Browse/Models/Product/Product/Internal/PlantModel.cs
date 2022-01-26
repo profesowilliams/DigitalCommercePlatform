@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
     public class PlantModel
     {
         public string Name { get; set; }
-        public int? Quantity { get; set; }
         public OnOrderModel OnOrder { get; set; }
+        public string Quantity { get; set; }
     }
 }
