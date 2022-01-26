@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsSummaryCountFor(request).Result;
             
-            result.Should().Be(2);
+            result.Should().Be(5);
         }
 
         [Theory]
@@ -67,6 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var result = service.GetRenewalsDetailedFor(request).Result;
             
             result.Should().NotBeNull();
+            result.Count.Should().Be(3);
         }
 
         [Theory]
@@ -80,7 +81,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsSummaryFor(request).Result;
             
-            result.Should().NotBeNull();            
+            result.Should().NotBeNull();
+            result.Count.Should().Be(6);
         }
 
         [Theory]
@@ -106,7 +108,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             return new ResponseSummaryDto
             {
-                Count = 5,
+                Count = 6,
                 Data = new List<SummaryDto>() 
                 { 
                     new SummaryDto
@@ -120,7 +122,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         private ResponseDetailedDto ReturnedDetailedData()
         {
-            return new ResponseDetailedDto { Count = 2, Data = new List<DetailedDto>() };
+            return new ResponseDetailedDto { Count = 3, Data = new List<DetailedDto>() };
         }
 
         [Theory]
@@ -144,7 +146,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         private ResponseSummaryDto ReturnedData()
         {
-            return new ResponseSummaryDto() { Count = 2, Data = new List<SummaryDto>() };
+            return new ResponseSummaryDto() { Count = 5, Data = new List<SummaryDto>() };
         }
     }
 }
