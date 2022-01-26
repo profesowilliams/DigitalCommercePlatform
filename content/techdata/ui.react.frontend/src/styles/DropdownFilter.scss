@@ -65,6 +65,7 @@ $secondary-link-blue: #006bae;
   height: 50px;
   &__button {
     background-color: $brand-blue;
+    cursor: pointer;
     i, svg {
       color: white !important;
     }
