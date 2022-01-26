@@ -40,7 +40,8 @@
 # Enable specific mime types clientlibs directories
 /0105 { /type "allow" /extension '(gltf|stl|obj|usdz|glb)' /method "GET" /path "/content/dam/*" }
 /0106 { /type "allow" /method "POST" /url "/bin/form" }  # form servlet allow
-/0109 { /type "allow" /method "POST" /url "/content/techdata/apis/tdpostform" }  # form servlet allow
+/0109 { /type "allow" /method "GET"  /url "/content/techdata/apis/tdpostform" } # form servlet allow
+/0110 { /type "allow" /method "POST" /url "/content/techdata/apis/tdpostform" } # form servlet allow
 
 # filter allow rules for POST/GET for cisco punch-out urls
 /0107 { /type "allow" /method "POST" /url "*/Quotes/GetCXML*" } # servlet allow

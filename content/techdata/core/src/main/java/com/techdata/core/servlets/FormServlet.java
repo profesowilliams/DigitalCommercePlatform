@@ -37,7 +37,8 @@ import java.util.regex.Pattern;
                 "service.description=Form Submission Servlet",
                 "service.vendor=techdata.com",
                 "sling.servlet.methods=" + HttpConstants.METHOD_POST,
-                "sling.servlet.paths=/bin/form"
+                "sling.servlet.resourcetypes=techdata/components/tdpostform",
+
         }
 )
 public class FormServlet extends SlingAllMethodsServlet {
@@ -48,10 +49,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "internalEmailSubject";
         private static final int ONE_MB_IN_BYTES = 1000000;
         public static final String A_TO_Z_LOWERCASE = "a-z";
-
         @Reference
-        private transient EmailService emailService;
 
+        private transient EmailService emailService;
         private String[] toEmailAddresses;
         private String submitterEmailFieldName = StringUtils.EMPTY;
         private String internalEmailTemplatePath = StringUtils.EMPTY;
@@ -74,7 +74,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         @Override
-        protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws IOException {
                 Map<String, String> emailParams = new HashMap<>();
                 ResourceResolver resourceResolver = request.getResourceResolver();
                 Map<String, DataSource> attachments = new HashMap<>();
@@ -106,9 +106,10 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 }
                         }
                 }
-                catch (Exception e) {
+                catch (IOException e) {
                         LOG.error("Exception occurred during form submission", e);
                         response.sendError(403, "Cannot proceed, invalid form request.");
+
                 }
         }
 
@@ -267,4 +268,3 @@ public class FormServlet extends SlingAllMethodsServlet {
         // new line, carriage-returns, slashes
         private static final String EXTRA_REGEX_CHARS = "\r\n\\\\";
 }
-

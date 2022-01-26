@@ -134,23 +134,23 @@ class FormServletTest {
     }
 
 
-        @Test
-        void testGettingGeneratingGroupMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-            Method underTestMethod;
-            underTestMethod = underTest.getClass().getDeclaredMethod("getMapOfEmailAddress", String[].class);
-            underTestMethod.setAccessible(true);
-            String[] arrayFromCA = new String[] {"apac|test@gmail.com,apac@apac.com", "hk|hk@hk.com"};
-            String[] arrayFromCA2 = new String[] {"apac&test@gmail.com,apac@apac.com", "hk&hk@hk.com"};
+    @Test
+    void testGettingGeneratingGroupMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method underTestMethod;
+        underTestMethod = underTest.getClass().getDeclaredMethod("getMapOfEmailAddress", String[].class);
+        underTestMethod.setAccessible(true);
+        String[] arrayFromCA = new String[] {"apac|test@gmail.com,apac@apac.com", "hk|hk@hk.com"};
+        String[] arrayFromCA2 = new String[] {"apac&test@gmail.com,apac@apac.com", "hk&hk@hk.com"};
 
-            Map<String, String[]> mapFromMethod = (Map<String, String[]>) underTestMethod.invoke(underTest, new Object[] {arrayFromCA});
-            String[] val = mapFromMethod.get("apac");
-            assertNotNull(val);
-            assertEquals("test@gmail.com", val[0]);
-            Map<String, String[]> mapFromMethod2 = (Map<String, String[]>) underTestMethod.invoke(underTest, new Object[] {arrayFromCA2});
-            String[] val2 = mapFromMethod2.get("apac");
-            assertNull(val2);
+        Map<String, String[]> mapFromMethod = (Map<String, String[]>) underTestMethod.invoke(underTest, new Object[] {arrayFromCA});
+        String[] val = mapFromMethod.get("apac");
+        assertNotNull(val);
+        assertEquals("test@gmail.com", val[0]);
+        Map<String, String[]> mapFromMethod2 = (Map<String, String[]>) underTestMethod.invoke(underTest, new Object[] {arrayFromCA2});
+        String[] val2 = mapFromMethod2.get("apac");
+        assertNull(val2);
 
-        }
+    }
 
     @Test
     void testPopulateEmailAttributesFromCAConfig() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -201,12 +201,12 @@ class FormServletTest {
 
     }
 
-        @Test
-        void testIsValidFileInEmailRequest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-            for (int i = 0;  i < 1000000; i++) {
-                fileBytesMaxAllowed[i] = 'a';
-                fileBytesAbove[i] = 'a';
-            }
+    @Test
+    void testIsValidFileInEmailRequest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+        for (int i = 0;  i < 1000000; i++) {
+            fileBytesMaxAllowed[i] = 'a';
+            fileBytesAbove[i] = 'a';
+        }
 
         List<String> allowedFileTypesMockValues = new ArrayList<>();
         allowedFileTypesMockValues.add(".pdf");
