@@ -10,6 +10,11 @@ function ConfigurationGridSearch({
   onQueryChanged,
   onKeyPress,
 }) {
+  //Optional values to make limitations on the ranges of dates selected on datepicker//
+  const [toMinDate, setToMinDate] = useState()
+  const [fromMinDate, setFromMinDate] = useState()
+  const currentDate = new Date();
+
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -74,6 +79,8 @@ function ConfigurationGridSearch({
 
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
+      setToMinDate(query.from?.value)
+      setFromMinDate(currentDate)
       onQueryChanged(concatedQuery);
     } else {
       onQueryChanged("");
@@ -93,7 +100,7 @@ function ConfigurationGridSearch({
   }
 
   function handleFilterChange(change, filterName) {
-    if (change) {
+    if (change) {    
       _query.current[filterName] = change;
       dispatchQueryChange(_query.current);
     }
@@ -116,6 +123,7 @@ function ConfigurationGridSearch({
         }
       ></SimpleDropDown>
       <SimpleDatePicker
+        maxDate={fromMinDate}
         pickerKey={"from"}
         placeholder={config.datePlaceholder}
         label={config.fromLabel}
@@ -125,6 +133,7 @@ function ConfigurationGridSearch({
         defaultValue={dateDefaultFromValue}
       ></SimpleDatePicker>
       <SimpleDatePicker
+        minDate={toMinDate}
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}

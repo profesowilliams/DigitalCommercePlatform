@@ -9,6 +9,8 @@ function SimpleDatePicker({
 	onSelectedDateChanged,
 	isDateFrom = false,
 	defaultValue = true,
+	minDate,
+	maxDate
 }) {
     
 	const [pickedDate, setPickedDate] = useState(null);
@@ -37,25 +39,31 @@ function SimpleDatePicker({
 
 	function pickerValueChanged(date) {
 		const _date = forceZeroUTC ? new Date(date.setTime(date.getTime() - date.getTimezoneOffset() * 60 * 1000)) : date;
+		
 		setPickedDate(date);
+
 		onSelectedDateChanged({ key: pickerKey, value: _date });
 	}
 
 	return (
-		<span className='cmp-simple-date-picker'>
-			{label && <div className='cmp-simple-date-picker__label'>{label}</div>}
-			<div className='cmp-simple-date-picker__picker'>
-				<DatePicker
-					selected={pickedDate}
-					onChange={(date) => pickerValueChanged(date)}
-					placeholderText={placeholder}
-					ref={(c) => (pickerRef.current = c)}
-				></DatePicker>
-			</div>
-			<div className='cmp-simple-date-picker__icon' onClick={openPicker}>
-				<i className='fas fa-calendar-alt'></i>
-			</div>
-		</span>
+		<>
+			<span className='cmp-simple-date-picker'>
+				{label && <div className='cmp-simple-date-picker__label'>{label}</div>}
+				<div className='cmp-simple-date-picker__picker'>
+					<DatePicker
+						maxDate={maxDate}
+						minDate={minDate}
+						selected={pickedDate}
+						onChange={(date) => pickerValueChanged(date)}
+						placeholderText={placeholder}
+						ref={(c) => (pickerRef.current = c)}
+					></DatePicker>
+				</div>
+				<div className='cmp-simple-date-picker__icon' onClick={openPicker}>
+					<i className='fas fa-calendar-alt'></i>
+				</div>
+			</span>
+		</>
 	);
 }
 export default SimpleDatePicker;
