@@ -319,8 +319,8 @@
                                             <endCustomerType
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="End Customer Label"
-                                                fieldLabel="End Customer Label"
+                                                fieldDescription="End Customer Type Label"
+                                                fieldLabel="End Customer Type Label"
                                                 name="./endCustomerType"/>
                                             <vendorAccountNo
                                                 jcr:primaryType="nt:unstructured"
