@@ -668,6 +668,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "csr-three-teasers",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/teaser/csr-three-teasers.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "top-five-open-config",
                 template: path.resolve(
                     __dirname,
