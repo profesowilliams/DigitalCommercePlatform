@@ -48,11 +48,13 @@ const INITIAL_STATE = {
   totalCounter: 0,
     stepBy: 25,
     currentPage: 1,
-    currentResultsInPage: 0
+    currentResultsInPage: 0,
+    pageNumber: 1
   },
   customStartDate:undefined,
   customEndDate:undefined,
-  aemConfig:null
+  aemConfig:null,
+  gridApi:null
 };
 
 const store = (set, get, a) => ({

@@ -9,11 +9,46 @@
   padding: 5px 1rem;
   border-bottom: 2px solid #030f24;
   align-items: center;
-  .navigation {
+  .cmp-navigation {
     display: flex;
     gap: 1rem;
+    align-items: center;
     p {
       margin: 0;
+      color: #555555;
+      font-size: .9rem;
+      display: flex;
+      button {
+        background: none;
+        cursor: pointer;
+      }
+    } 
+    &__actions{
+      button {
+        margin: 0;
+        padding: 0;
+      }
+      &-labels{
+        display: flex;
+        padding: 0 4px;
+        gap: 6px;
+        span.selected{
+          position: relative;
+          display: block;
+          width: 13px;
+          text-align: center;
+          &::after{
+            content: "";
+            width: 13px;
+            background: #b7b7b7;
+            height: 2px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+      }
     }
   }
   .renewal-filters {
@@ -64,6 +99,9 @@
         margin-right: 0.7em;
       }
     }
+  }
+  .cmp-grid.ag-theme-alpine .ag-paging-panel {
+    position: relative !important;
   }
 }
 

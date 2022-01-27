@@ -1,11 +1,10 @@
 export const pageCalculator = (totalItems, step) =>
   parseInt(Math.floor(totalItems / step), 10);
 
-export const maxCounterCalculator = (minCounter, totalCount, step, resultsInPage) => {
-  const maxCounter = (minCounter += step);
-  return totalCount > maxCounter ? minCounter : resultsInPage;
+export const maxCounterCalculator = (currentResultsInPage, getCurrentPage) => {
+  return (currentResultsInPage * getCurrentPage)
 };
 
-export const minCounterCalculator = (step, currentPage) => {
-  return currentPage === 1 ? currentPage : step * currentPage
+export const minCounterCalculator = (getCurrentPage, currentResultsInPage) => {
+  return getCurrentPage === 1 ? getCurrentPage : ((currentResultsInPage * (getCurrentPage - 1)) +1)
 };

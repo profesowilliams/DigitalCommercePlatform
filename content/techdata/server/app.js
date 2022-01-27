@@ -661,19 +661,21 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
     const invoices = [];
     const forcePending = noOfInvoices >= 8;
     if (forcePending) {
-      const errorObject = []
-        errorObject.push({
-          "id": "Pending",
-          "line": "",
-          "quantity": 1,
-          "price": 5041.7,
-          "created": null
+      const errorObject = [];
+      errorObject.push({
+        id: "Pending",
+        line: "",
+        quantity: 1,
+        price: 5041.7,
+        created: null,
       });
-      return errorObject
+      return errorObject;
     }
     for (let i = 0; i <= noOfInvoices; i++) {
       const invoice = {
-        id: forcePending ?  "Pending" : Number(`${pageNumber}${4009754974 + i + getRandom(10)}`),
+        id: forcePending
+          ? "Pending"
+          : Number(`${pageNumber}${4009754974 + i + getRandom(10)}`),
         line: i % 2 ? 1 + getRandom(10) : "",
         quantity: 1 + getRandom(100),
         price: 4750.7 + getRandom(1000),
@@ -1440,9 +1442,15 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     },
   };
 
-  const response = id === "empty"
-                  ? {"content":{"details":null},"error":{"code":0,"messages":[],"isError":false}}
-                  : (type ? renewalDetailsResponse : quoteDetailsResponse);
+  const response =
+    id === "empty"
+      ? {
+          content: { details: null },
+          error: { code: 0, messages: [], isError: false },
+        }
+      : type
+      ? renewalDetailsResponse
+      : quoteDetailsResponse;
 
   setTimeout(() => {
     res.json(id == 00000 ? errorObject : response);
@@ -5241,7 +5249,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
 
   res.json(response);
 });
-app.get("/ui-renewal/v1/Details", function (req, res) { 
+app.get("/ui-renewal/v1/Details", function (req, res) {
   const response = {
     content: {
       details: [

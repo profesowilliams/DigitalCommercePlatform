@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -27,7 +27,7 @@ function RenewalsGrid(props) {
   
   const gridConfig = {
     ...componentProp,
-    paginationStyle: "none",
+    // paginationStyle: "none",
     noRowsErrorMessage: "No data found",
     errorGettingDataMessage: "Internal server error please refresh the page",
   };
@@ -36,29 +36,36 @@ function RenewalsGrid(props) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items;
     const itemsWithActions = items.map((data) => ({ ...data, actions: true }));
-    // renewal server is not returning pagination yet
-    mappedResponse.data.content = {items:itemsWithActions,totalItems:items.length };
+    const totalItems = mappedResponse?.data?.content?.totalItems ?? items.length;
+    const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
+    const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
+    mappedResponse.data.content = {items:itemsWithActions,totalItems,pageCount,pageNumber};
     return mappedResponse;
   }
 
   const customRequestInterceptor = async (request) => {
-    const response = await requestInterceptor(request);
-    // temporarely map until renewal service retorn the proper data structure
-    const mappedResponse = mapServiceData(response); 
+    const response = await requestInterceptor(request);   
+    const mappedResponse = mapServiceData(response);  
+    const {pageCount, pageNumber, totalItems} = mappedResponse?.data?.content;
     const value = {
       currentResultsInPage: mappedResponse?.data?.content?.items.length,
-      totalCounter: mappedResponse?.data?.content?.totalItems,   
-      stepBy: 25,
-      currentPage: 1      
+      totalCounter: totalItems,   
+      pageCount,
+      pageNumber          
     }
     effects.setCustomState({key:'pagination',value})
     return mappedResponse;
   }
 
+  const _onAfterGridInit = (config) => {    
+    effects.setCustomState({key:'gridApi',value:config});      
+    onAfterGridInit(config);
+  }
+
   return (
-    <section>
+    <section>     
       <div className="cmp-renewals-subheader">
-        <CustomRenewalPagination/>
+        <CustomRenewalPagination />
         <div className="renewal-filters">
           <SearchFilter              
             options={searchOptionsList}
@@ -77,7 +84,7 @@ function RenewalsGrid(props) {
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
-          onAfterGridInit={onAfterGridInit}
+          onAfterGridInit={_onAfterGridInit}
           requestInterceptor={customRequestInterceptor}        
           mapServiceData={mapServiceData}       
           isRenewals={true}   
