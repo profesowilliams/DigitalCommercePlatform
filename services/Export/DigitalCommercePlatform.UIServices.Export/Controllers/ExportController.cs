@@ -43,6 +43,16 @@ namespace DigitalCommercePlatform.UIServices.Export.Controllers
         }
 
         [HttpPost]
+        [Route("downloadRenewalQuoteDetails")]
+        public async Task<ActionResult> DownloadRenewalQuoteDetails(DownloadRenewalQuoteDetails.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+            if (response?.Content?.BinaryContent == null)
+                return new NotFoundResult();
+            return new FileContentResult(response.Content.BinaryContent, response.Content.MimeType);
+        }
+
+        [HttpPost]
         [Route("downloadOrderDetails")]
         public async Task<ActionResult> DownloadOrderDetails(DownloadOrderDetails.Request request)
         {

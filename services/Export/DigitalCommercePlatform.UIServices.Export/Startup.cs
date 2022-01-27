@@ -25,12 +25,14 @@ namespace DigitalCommercePlatform.UIServices.Export
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<ICommerceService, CommerceService>();
+            services.AddTransient<IRenewalService, RenewalService>();
 
             services.AddTransient<IOrderDetailsDocumentGenerator, OrderDetailsDocumentGenerator>();
             services.AddSingleton<IOrderDetailsDocumentGeneratorSettings, OrderDetailsDocumentGeneratorSettings>();
-
             services.AddTransient<IQuoteDetailsDocumentGenerator, QuoteDetailsDocumentGenerator>();
             services.AddSingleton<IQuoteDetailsDocumentGeneratorSettings, QuoteDetailsDocumentGeneratorSettings>();
+            services.AddTransient<IRenewalQuoteDetailsDocumentGenerator, RenewalQuoteDetailsDocumentGenerator>();
+            services.AddSingleton<IRenewalQuoteDetailsDocumentGeneratorSettings, RenewalQuoteDetailsDocumentGeneratorSettings>();
 
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddHttpClient("OneSourceClient");

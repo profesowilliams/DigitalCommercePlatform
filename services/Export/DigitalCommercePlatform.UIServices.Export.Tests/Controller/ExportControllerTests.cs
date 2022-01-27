@@ -135,6 +135,55 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
             result.Should().BeOfType<NotFoundResult>();
         }
 
+        [Theory]
+        [AutoDomainData]
+        public async Task DownloadRenewalQuoteDetailsShouldReturnFileContentResult(ResponseBase<DownloadRenewalQuoteDetails.Response> expected)
+        {
+            expected.Content.MimeType = DownloadRenewalQuoteDetails.mimeType;
+
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<DownloadRenewalQuoteDetails.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            DownloadRenewalQuoteDetails.Request criteria = new();
+            var controller = GetController();
+            var result = await controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
+
+            result.Should().BeOfType<FileContentResult>();
+        }
+
+        internal class DownloadRenewalQuoteDetailsNotFoundResultData : TheoryData<ResponseBase<DownloadRenewalQuoteDetails.Response>>
+        {
+            public DownloadRenewalQuoteDetailsNotFoundResultData()
+            {
+                Add(null);
+                Add(new ResponseBase<DownloadRenewalQuoteDetails.Response>());
+                Add(new ResponseBase<DownloadRenewalQuoteDetails.Response>()
+                {
+                    Content = new()
+                    {
+                        BinaryContent = null
+                    }
+                });
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(DownloadRenewalQuoteDetailsNotFoundResultData))]
+        public async Task DownloadRenewalQuoteDetailsShouldReturnNotFoundResult(ResponseBase<DownloadRenewalQuoteDetails.Response> response)
+        {
+            _mockMediator.Setup(x => x.Send(
+                       It.IsAny<DownloadRenewalQuoteDetails.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(response);
+
+            DownloadRenewalQuoteDetails.Request criteria = new();
+            var controller = GetController();
+            var result = await controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
         protected ExportController GetController()
         {
             return new ExportController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
