@@ -171,14 +171,13 @@ function QuotePreview(props) {
     }
   };
 
-  const handleQuickQuote = useCallback((e) => {
+  const handleQuickQuote = useCallback(() => {
     const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
           dealRequired = isDealRequired(quoteDetails, true),
           userMissingFields = isEndUserMissing(quoteDetails, true);
 
     if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
-      e.preventDefault();
 
       setQuoteWithoutEndUser(userMissingFields);
       setQuoteWithoutDealPricing(pricingRequired);
@@ -186,7 +185,7 @@ function QuotePreview(props) {
     }
 
     
-    tryCreateQuote(e, pricingRequired, dealRequired, userMissingFields, quoteDetails);
+    tryCreateQuote(pricingRequired, dealRequired, userMissingFields, quoteDetails);
   }, [quoteDetails]);
 
   const handleQuickQuoteWithoutDeals = (e) => {
@@ -201,14 +200,13 @@ function QuotePreview(props) {
 
       quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
     }
-    tryCreateQuote(e, pricingRequired, false, userMissingFields, quoteDetailsCopy);
+    tryCreateQuote(pricingRequired, false, userMissingFields, quoteDetailsCopy);
   };
   
 
-  const tryCreateQuote = (e, pricingRequired, dealRequired, userMissingFields, quote) => {
+  const tryCreateQuote = (pricingRequired, dealRequired, userMissingFields, quote) => {
     if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
-      e.preventDefault();
 
       setQuoteWithoutEndUser(userMissingFields);
       setQuoteWithoutDealPricing(pricingRequired);
