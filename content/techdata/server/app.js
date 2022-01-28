@@ -943,7 +943,11 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         totalPriceFormatted: "0.00",
         msrp: "MRSP",
         invoice: null,
-        discounts: null,
+        discounts: [{
+          type: "Quote",
+          value: 42.00013521974678632634404019,
+          formattedValue: "42.00"
+        }],
         contract: null,
         shortDescription: null,
         mfrNumber: null,

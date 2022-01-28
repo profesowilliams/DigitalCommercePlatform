@@ -126,7 +126,7 @@ function ProductLinesGrid({
       field: "discounts",
       sortable: false,
       valueFormatter: ({ value }) => {
-        return value || 0;
+        return (value && value[0]?.formattedValue) || 0;
       },
     },
     {
