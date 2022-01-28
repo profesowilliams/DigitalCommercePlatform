@@ -1,14 +1,14 @@
 import React from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function ResellerInfo({ reseller }) {
+function ResellerInfo({ reseller, resellerLabels }) {
   const ResellerInfo = ({ reseller }) => {
     return (
       <div className="cmp-renewals-qp__reseller-info--address-group">
-        <p>{reseller.companyName && <Info><b>{reseller.companyName}</b></Info>}</p>
+        <p>{reseller.name && <Info><b>{reseller.name}</b></Info>}</p>
         <p>
-          <Info label="Account No">1234567</Info>
-          <Info label="Previous purchase order No">1234567</Info>
+          {reseller.id && <Info label={resellerLabels.accountNoLabel}>{reseller.id}</Info>}
+          <Info label={resellerLabels.previousPurchaseOrderNoLabel}>1234567</Info>
         </p>
       </div>
     );
@@ -16,7 +16,7 @@ function ResellerInfo({ reseller }) {
 
   return (
     <div className="cmp-renewals-qp__reseller-info">
-      <p className="cmp-renewals-qp__reseller-info--sub-title">Reseller</p>
+      <p className="cmp-renewals-qp__reseller-info--sub-title">{resellerLabels.resellerLabel}</p>
       <ResellerInfo reseller={reseller} />
     </div>
   );

@@ -1,35 +1,62 @@
 import React, { useEffect, useState } from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function AgreementInfo({props}) {
+function AgreementInfo({ contract, programName, dueDate, agreementInfo }) {
   const AgreementInfo = () => {
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
-          <Info label="Program">Support Subscription</Info>
-          <Info label="Duration">1 Year</Info>
-          <Info label="Support level">Basic</Info>
-          <Info label="Vendor quote ID">1234567GJDFH</Info>
-          <Info label="Agreement No">7894561235</Info>
-          <Info label="Reference No">1234567</Info>
-          <Info label="Quote due date">20/06/2021</Info>
+          {programName && (
+            <Info label={agreementInfo.programLabel}>{programName}</Info>
+          )}
+          {contract.duration && (
+            <Info label={agreementInfo.durationLabel}>{contract.duration}</Info>
+          )}
+          {contract.supportLevel && (
+            <Info label={agreementInfo.supportLevelLabel}>
+              {contract.supportLevel}
+            </Info>
+          )}
+          <Info label={agreementInfo.distiQuoteNoLabel}>1234567GJDFH</Info>
+          {contract.id && (
+            <Info label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
+          )}
+          <Info label={agreementInfo.distiQuoteLabel}>1234567</Info>
+          {dueDate && (
+            <Info label={agreementInfo.quotedueDateLabel}>{dueDate}</Info>
+          )}
           <Info label="Quote expiry date">20/06/2021</Info>
-          <Info label="Agreement start date">20/09/2021</Info>
-          <Info label="Agreement end date">20/09/2021</Info>
-          <Info label="Usage start date">20/07/2021</Info>
-          <Info label="Usage end date">20/07/2021</Info>
+          {contract.newAgreementStartDate && (
+            <Info label={agreementInfo.agreeStartDateLabel}>
+              {contract.newAgreementStartDate}
+            </Info>
+          )}
+          {contract.newAgreementEndDate && (
+            <Info label={agreementInfo.agreeEndDateLabel}>
+              {contract.newAgreementEndDate}
+            </Info>
+          )}
+          {contract.newUsagePeriodStartDate && (
+            <Info label={agreementInfo.usageStartDateLabel}>
+              {contract.newUsagePeriodStartDate}
+            </Info>
+          )}
+          {contract.newUsagePeriodEndDate && (
+            <Info label={agreementInfo.usageEndDateLabel}>
+              {contract.newUsagePeriodEndDate}
+            </Info>
+          )}
         </p>
       </div>
     );
   };
 
-  
   return (
     <div className="cmp-renewals-qp__agreement-info">
-        <p className="cmp-renewals-qp__agreement-info--sub-title">
-        Agreement Information
-        </p>
-        <AgreementInfo />
+      <p className="cmp-renewals-qp__agreement-info--sub-title">
+        {agreementInfo.agreementInfoLabel}
+      </p>
+      <AgreementInfo />
     </div>
   );
 }

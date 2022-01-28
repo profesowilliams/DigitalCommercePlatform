@@ -1,27 +1,30 @@
 import React from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function EndUserInfo({ endUser }) {
+function EndUserInfo({ endUser, endUserType, productLines }) {
   const EndUserInfo = ({ endUser }) => {
+    const address = endUser.address;
+    const contact = endUser.contact;
+
     return (
       <div className="cmp-renewals-qp__enduser-info--address-group">
-        <p>{endUser.companyName && <Info><b>{endUser.companyName}</b></Info>}</p>
+        <p>{endUser.nameUpper && <Info><b>{endUser.nameUpper}</b></Info>}</p>
         <p>
           {endUser.name && <Info>{endUser.name}</Info>}
-          {endUser.line1 && <Info>{endUser.line1}</Info>}
+          {address?.line1 && <Info>{address?.line1}</Info>}
           <Info>
-            {(endUser.line2 && `${endUser.line2},`) +
-              (endUser.state && `${endUser.state} `) +
-              (endUser.postalCode && `${endUser.postalCode}`)}
+            {(address?.line2 && `${address?.line2},`) +
+              (address?.state && `${address?.state} `) +
+              (address?.postalCode && `${address?.postalCode}`)}
           </Info>
-          {endUser.city && <Info>{endUser.city}</Info>}
+          {address?.city && <Info>{address?.city}</Info>}
         </p>
         <p>
-          {endUser.email && <Info label="Email">{endUser.email}</Info>}
-          {endUser.phoneNumber && <Info label="Phone">1234567</Info>}
-          <Info label="End user type">Academic</Info>
-          <Info label="Vendor account No">3456789</Info>
-          <Info label="Previous purchase order No">7894561235</Info>
+          {contact?.email && <Info label={productLines.emailLabel}>{contact?.email}</Info>}
+          {contact?.phone && <Info label={productLines.phoneLabel}>{contact?.phone}</Info>}
+          {endUserType && <Info label={productLines.endCustomerType}>{endUserType}</Info>}
+          <Info label={productLines.vendorAccountNo}>3456789</Info>
+          <Info label={productLines.endCustpreviousPurchaseOrderNo}>7894561235</Info>
         </p>
       </div>
     );
@@ -29,7 +32,7 @@ function EndUserInfo({ endUser }) {
 
   return (
     <div className="cmp-renewals-qp__enduser-info">
-      <p className="cmp-renewals-qp__enduser-info--sub-title">End User</p>
+      <p className="cmp-renewals-qp__enduser-info--sub-title">{productLines.endCustomerLabel}</p>
       <EndUserInfo endUser={endUser} />
     </div>
   );

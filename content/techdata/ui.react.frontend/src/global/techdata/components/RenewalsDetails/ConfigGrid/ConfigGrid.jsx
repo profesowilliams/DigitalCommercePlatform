@@ -4,16 +4,31 @@ import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
 
 function ConfigGrid({ data, gridProps }) {
-  const { reseller, endUser } = data;
+  const { reseller, endUser, items, programName, dueDate, endUserType } = data;
+  const { quotePreview } = gridProps;
   return (
     <div className="cmp-renewals-qp__config-grid">
-      <p className="cmp-renewals-qp__config-grid--title">Quote preview</p>
+      <p className="cmp-renewals-qp__config-grid--title">
+        {quotePreview.quotePreviewlabel}
+      </p>
       <div className="info-container">
-        <ResellerInfo reseller={reseller} />
+        <ResellerInfo
+          resellerLabels={quotePreview.reseller}
+          reseller={reseller}
+        />
         <div className="info-divider"></div>
-        <EndUserInfo endUser={endUser} />
+        <EndUserInfo
+          productLines={quotePreview.productLines}
+          endUserType={endUserType}
+          endUser={endUser}
+        />
         <div className="info-divider"></div>
-        <AgreementInfo />
+        <AgreementInfo
+          programName={programName}
+          dueDate={dueDate}
+          agreementInfo={quotePreview.agreementInfo}
+          contract={items[0].contract}
+        />
       </div>
     </div>
   );
