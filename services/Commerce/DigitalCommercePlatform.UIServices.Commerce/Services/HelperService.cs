@@ -258,6 +258,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
                         item.MSRP = price;
                         item.UnitListPrice = (decimal)price;
+                        item.UnitListPriceFormatted = string.Format("{0:N2}", item.UnitListPrice);
                     }
                 }
             }
