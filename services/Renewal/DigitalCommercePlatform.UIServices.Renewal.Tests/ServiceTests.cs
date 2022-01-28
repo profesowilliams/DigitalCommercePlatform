@@ -140,8 +140,218 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             result.Should().NotBeNull();
             result.Group.Should().Be("RenewalAttributes");
             result.Refinements.Should().NotBeEmpty();
-            result.Refinements.Count.Should().Be(3);
-           
+            result.Refinements.Count.Should().Be(3);           
+        }
+
+        [Fact]
+        public void ServicesGetDetailedResellerIdPartialSearch()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+                ResellerId = new List<string> { "302", "343"},
+                ResellerName = "Name",
+                ResellerPO  = "ResellerPO",
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            for (var i = 0; i < request.ResellerId.Count; i++)
+            {
+                request.ResellerId[i].Should().EndWith("*");
+            }
+
+            request.ResellerName.Should().NotEndWith("*");
+            request.ResellerPO.Should().NotEndWith("*");
+            request.EndUser.Should().NotEndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ServicesGetDetailedResellerNamePartialSearch()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+                ResellerName = "Name",
+                ResellerPO = "ResellerPO",
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            request.ResellerName.Should().EndWith("*");
+            request.ResellerPO.Should().NotEndWith("*");
+            request.EndUser.Should().NotEndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ServicesGetDetailedResellerPOPartialSearch()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+                ResellerPO = "ResellerPO",
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            request.ResellerPO.Should().EndWith("*");
+            request.EndUser.Should().NotEndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ServicesGetDetailedEndUserPartialSearch()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            request.EndUser.Should().EndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ServicesGetSummaryResellerNamePartialSearch()
+        {
+            var request = new SearchRenewalSummary.Request()
+            {
+                ResellerName = "Name",
+                ResellerPO = "ResellerPO",
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+
+            request.ResellerName.Should().EndWith("*");
+            request.ResellerPO.Should().NotEndWith("*");
+            request.EndUser.Should().NotEndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(6);
+        }
+
+        [Fact]
+        public void ServicesGetSummaryResellerPOPartialSearch()
+        {
+            var request = new SearchRenewalSummary.Request()
+            {
+                ResellerPO = "ResellerPO",
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+
+            request.ResellerPO.Should().EndWith("*");
+            request.EndUser.Should().NotEndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(6);
+        }
+
+        [Fact]
+        public void ServicesGetSummaryEndUserPartialSearch()
+        {
+            var request = new SearchRenewalSummary.Request()
+            {
+                EndUser = "EndUser",
+                EndUserEmail = "EndUserEmail",
+                ContractID = "ContractID",
+                Instance = "Instance",
+                SerialNumber = "SerialNumber"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+
+            request.EndUser.Should().EndWith("*");
+            request.EndUserEmail.Should().NotEndWith("*");
+            request.ContractID.Should().NotEndWith("*");
+            request.Instance.Should().NotEndWith("*");
+            request.SerialNumber.Should().NotEndWith("*");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(6);
         }
 
         private ResponseSummaryDto ReturnedData()

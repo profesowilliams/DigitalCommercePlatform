@@ -40,14 +40,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
-            if (!string.IsNullOrWhiteSpace(request.Instance))
+            var found = AddPartialSearchReseller(request);
+
+            if (!found)
             {
-                request.Instance += "*";
+                found = AddPartialSearchEndUser(request);
             }
-            else if (!string.IsNullOrWhiteSpace(request.SerialNumber))
+            
+            if (!found)
             {
-                request.SerialNumber += "*";
-            }
+                _ = AddPartialSearchOthers(request);
+            } 
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -75,14 +78,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
-            if (!string.IsNullOrWhiteSpace(request.Instance))
+            var found = AddPartialSearchReseller(request);
+
+            if (!found)
             {
-                request.Instance += "*";
+                found = AddPartialSearchEndUser(request);
             }
-            else if (!string.IsNullOrWhiteSpace(request.SerialNumber))
+            
+            if (!found)
             {
-                request.SerialNumber += "*";
-            }
+                _ = AddPartialSearchOthers(request);
+            }            
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -102,15 +108,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
                 return new SummaryResponseModel { Count = 0, Response = null };
             }
-
-
         }
 
         public async Task<int> GetRenewalsSummaryCountFor(RefinementRequest request)
         {
-            if (!string.IsNullOrWhiteSpace(request.ResellerId))
+            if (!string.IsNullOrWhiteSpace(request.ResellerId) && !request.ResellerId.EndsWith("*"))
             {
                 request.ResellerId += "*";
+            }
+            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
+            {
+                request.ResellerName += "*";
             }
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
@@ -153,6 +161,149 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             rgroupModel.Refinements.Add(GetRenewalType(coreResult));
 
             return rgroupModel;
+        }
+
+        private static void AddPartialSearchResellerId(List<string> resellerIds)
+        {
+            for (var i = 0; i < resellerIds.Count; i++)
+            {
+                if (!resellerIds[i].EndsWith("*"))
+                {
+                    resellerIds[i] += "*";
+                }
+            }
+        }
+
+        private static bool AddPartialSearchReseller(SearchRenewalDetailed.Request request)
+        {
+            if (request.ResellerId != null && request.ResellerId.Count > 0)
+            {
+                AddPartialSearchResellerId(request.ResellerId);
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
+            {
+                request.ResellerName += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.ResellerPO) && !request.ResellerPO.EndsWith("*"))
+            {
+                request.ResellerPO += "*";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddPartialSearchEndUser(SearchRenewalDetailed.Request request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.EndUser) && !request.EndUser.EndsWith("*"))
+            {
+                request.EndUser += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.EndUserEmail) && !request.EndUserEmail.EndsWith("*"))
+            {
+                request.EndUserEmail += "*";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddPartialSearchOthers(SearchRenewalDetailed.Request request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.ContractID) && !request.ContractID.EndsWith("*"))
+            {
+                request.ContractID += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.Instance) && !request.Instance.EndsWith("*"))
+            {
+                request.Instance += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.SerialNumber) && !request.SerialNumber.EndsWith("*"))
+            {
+                request.SerialNumber += "*";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddPartialSearchReseller(SearchRenewalSummary.Request request)
+        {
+            if (request.ResellerId != null && request.ResellerId.Count > 0)
+            {
+                AddPartialSearchResellerId(request.ResellerId);
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
+            {
+                request.ResellerName += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.ResellerPO) && !request.ResellerPO.EndsWith("*"))
+            {
+                request.ResellerPO += "*";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddPartialSearchEndUser(SearchRenewalSummary.Request request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.EndUser) && !request.EndUser.EndsWith("*"))
+            {
+                request.EndUser += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.EndUserEmail) && !request.EndUserEmail.EndsWith("*"))
+            {
+                request.EndUserEmail += "*";
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddPartialSearchOthers(SearchRenewalSummary.Request request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.ContractID) && !request.ContractID.EndsWith("*"))
+            {
+                request.ContractID += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.Instance) && !request.Instance.EndsWith("*"))
+            {
+                request.Instance += "*";
+
+                return true;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.SerialNumber) && !request.SerialNumber.EndsWith("*"))
+            {
+                request.SerialNumber += "*";
+
+                return true;
+            }
+
+            return false;
         }
 
         private async Task<List<SummaryDto>> GetSummary(int TotalCount, RefinementRequest request)
