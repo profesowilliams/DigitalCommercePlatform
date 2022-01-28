@@ -84,6 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             CreateMap<QuoteModel, QuotesForGridModel>()
              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
+             .ForMember(dest => dest.CheckoutSystem, opt => opt.MapFrom(src => src.Source.System.Equals("Q")?"6.8":"4.6"))
              .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
              .ForMember(dest => dest.Vendor, opt => opt.MapFrom<VendorResolver>())
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))

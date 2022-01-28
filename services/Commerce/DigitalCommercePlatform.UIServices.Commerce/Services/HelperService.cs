@@ -465,5 +465,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return string.Empty;
         }
 
+
+        public string GetCheckoutSystem(SourceModel source)
+        {
+            
+            if (source?.System == "Q")
+                return "6.8";
+            else
+                return "4.6";
+        }
+
     }
 }

@@ -58,10 +58,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var getQuoteResponse = new Response();
-                var productDetails = await _commerceRepositoryServices.GetQuote(request).ConfigureAwait(false);
-                if (productDetails != null)
+                var quoteDetails = await _commerceRepositoryServices.GetQuote(request).ConfigureAwait(false);
+                if (quoteDetails != null)
                 {
-                    getQuoteResponse.Details = _mapper.Map<QuoteDetails>(productDetails);
+                    getQuoteResponse.Details = _mapper.Map<QuoteDetails>(quoteDetails);
                     if (getQuoteResponse.Details != null)
                     {
                         getQuoteResponse.Details.Items = await _helperQueryService.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty, getQuoteResponse.Details.QuoteSource.System);
@@ -69,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         var accountDetail = await _helperQueryService.GetCustomerAccountDetails();
                         getQuoteResponse.Details.BuyMethod = accountDetail?.BuyMethod ?? "TDShop46";
                         getQuoteResponse.Details.IsExclusive = accountDetail?.IsExclusive;
+                        getQuoteResponse.Details.CheckoutSystem = _helperQueryService.GetCheckoutSystem(quoteDetails.Source);
                     }
                 }
                 else

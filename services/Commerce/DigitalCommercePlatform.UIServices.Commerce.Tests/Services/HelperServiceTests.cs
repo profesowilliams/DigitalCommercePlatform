@@ -358,6 +358,24 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void GetCheckoutSystem_Test()
+        {
+            //arrange 
+            SourceModel source = new SourceModel()
+            {
+                ID = "any",
+                Key = "any",
+                SalesOrg = "any",
+                System = "any",
+                TargetSystem = "any"
+            };
+
+            //Act
+            var result = GetHelperService().GetCheckoutSystem(source);
+            Assert.NotNull(result);
+        }
+
         /*
          "images": {
                         "75x75": [

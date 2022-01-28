@@ -98,7 +98,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 };
                 var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                 var getProductResponse = _mapper.Map<Response>(quoteDetails);
-
+                
                 getProductResponse = new Response
                 {
                     Items = QuoteGridItems(getProductResponse),
@@ -117,32 +117,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
                 if (quotes == null) { return new List<QuotesForGridModel>(); }
                 var vendorValue = response.Items.Where(x => x.Deals == null).ToList();
-
-
-                //if (IsDummyData == "true" && vendorValue.Count == 0)
-                //{
-                //    var secondQuote = quotes.ElementAtOrDefault(1);
-
-                //    if (secondQuote != null)
-                //    {
-                //        secondQuote.Deals = new List<VendorReferenceModel>
-                //        {
-                //            new VendorReferenceModel { Value = "1", Type = "2323232"}
-                //        };
-                //    }
-
-                //    var thirdQuote = quotes.ElementAtOrDefault(2);
-
-                //    if (thirdQuote != null)
-                //    {
-                //        thirdQuote.Deals = new List<VendorReferenceModel>
-                //        {
-                //            new VendorReferenceModel {  Value = "1", Type = "7755444" },
-                //            new VendorReferenceModel { Value = "1", Type = "9871234"}
-                //        };
-                //    }
-
-                //}
 
                 return quotes;
             }

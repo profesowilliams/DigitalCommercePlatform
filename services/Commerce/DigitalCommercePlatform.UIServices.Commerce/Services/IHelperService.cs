@@ -15,5 +15,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName, string source);
         Task<AccountDetails> GetCustomerAccountDetails();
         AuthorizationModel MapAutorization(AuthorizationModel authorization);
+        string GetCheckoutSystem(SourceModel source);
     }
 }

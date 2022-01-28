@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public List<string> Deals { get; set; }
         public List<AttributeModel> Attributes { get; set; }
         public bool? IsExclusive { get; set; }
+        public string CheckoutSystem { get; set; }
 
 
     }
