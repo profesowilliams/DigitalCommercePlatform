@@ -15,6 +15,7 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
+  const componentJustMounted = useRef(true);
 
   const options = {
     defaultSortingColumnKey: "dueDate",
@@ -32,6 +33,15 @@ function RenewalsGrid(props) {
     errorGettingDataMessage: "Internal server error please refresh the page",
   };
 
+  function buildDueDateAscInitialRequest(request) {
+    const {url} = request;
+    const sortByValue = url?.match(/SortBy=(\w+)/)[1]; // id
+    const sortReplaced = url.replace(sortByValue,'dueDate') // SortBy=dueDate    
+    const sortDirection = sortReplaced?.match(/SortDirection=(\w+)/)[1]; // desc
+    const replaced = sortReplaced.replace(sortDirection,'asc') // SortDirection=asc
+    return {...request,url:replaced}
+  }
+
   function mapServiceData(response) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items;
@@ -44,6 +54,10 @@ function RenewalsGrid(props) {
   }
 
   const customRequestInterceptor = async (request) => {
+    if (componentJustMounted.current) {
+      request = buildDueDateAscInitialRequest(request);
+      componentJustMounted.current = false;
+    }
     const response = await requestInterceptor(request);   
     const mappedResponse = mapServiceData(response);  
     const {pageCount, pageNumber, totalItems} = mappedResponse?.data?.content;
@@ -101,3 +115,5 @@ function RenewalsGrid(props) {
 }
 
 export default RenewalsGrid;
+
+

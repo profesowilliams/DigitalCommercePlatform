@@ -63,7 +63,9 @@ export function generateFilterFields(
   const postDataWithDate = {
     ...POSTDATA,
     ...mapToObject(MAP_OPTIONS[dateSelected]),
-    "WithPaginationInfo":true
+    "WithPaginationInfo":true,
+    "Details":false,
+    "Type":["Renewal"],   
   };
   return postDataWithDate;
 }
