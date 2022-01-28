@@ -10,6 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
     public class ProductModel
     {
         public string Id { get; set; }
+        public string CNETMappedId { get; set; }
         public string MaterialType { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }

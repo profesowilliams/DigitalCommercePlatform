@@ -179,6 +179,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private static void MapBaseInformation(Request request, ProductDto x, ProductModel product, Flags flags)
             {
                 product.Id = x.Source.Id;
+                product.CNETMappedId = x.CNETMappedId;
                 product.MaterialType = x.MaterialType;
                 product.DisplayName = x.DisplayName;
                 product.Description = x.Description;

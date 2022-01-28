@@ -13,6 +13,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product
         public string DisplayName { get; set; }
         public string Description { get; set; }
         public string ShortDescription { get; set; }
+        public string CNETMappedId { get; set; }
         public IEnumerable<MainSpecificationDto> MainSpecifications { get; set; }
         public IEnumerable<ExtendedSpecificationDto> ExtendedSpecifications { get; set; }
         public IDictionary<string, IEnumerable<ImageDto>> Images { get; set; }

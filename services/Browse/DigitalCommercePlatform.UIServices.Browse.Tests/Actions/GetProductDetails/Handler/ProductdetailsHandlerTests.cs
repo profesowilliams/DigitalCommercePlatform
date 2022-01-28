@@ -75,6 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         new ProductDto
                         {
                             Source=new SourceDto{ Id =  "p1", System="2"},
+                            CNETMappedId = "00000p1",
                             ManufacturerPartNumber="ManufacturerPartNumber1",
                             Description="Description1",
                             DisplayName="DisplayName",
@@ -258,6 +259,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     new ProductModel
                     {
                         Id="p1",
+                        CNETMappedId = "00000p1",
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "DisplayName",
