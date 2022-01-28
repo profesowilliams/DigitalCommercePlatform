@@ -113,7 +113,7 @@ use(['../common/utils.js'], function(utils) {
         endCustomer["endCustpreviousPurchaseOrderNo"] = properties["endCustpreviousPurchaseOrderNo"];
     }
     if (endCustomer != null) {
-        quotePreview["productLines"] = endCustomer;
+        quotePreview["endCustomer"] = endCustomer;
     }
 
     if (properties && properties["agreementInfoLabel"]) {
@@ -145,8 +145,8 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["quotedueDateLabel"]) {
         agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
     }
-    if (properties && properties["quotedueDateLabel"]) {
-        agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
+    if (properties && properties["quoteExpiryDateLabel"]) {
+        agreementInfo["quoteExpiryDateLabel"] = properties["quoteExpiryDateLabel"];
     }
     if (properties && properties["agreeStartDateLabel"]) {
         agreementInfo["agreeStartDateLabel"] = properties["agreeStartDateLabel"];
