@@ -255,10 +255,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     foreach (var item in items)
                     {
+                        Discount[] discount = new Discount[1];
                         var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
                         item.MSRP = price;
                         item.UnitListPrice = (decimal)price;
                         item.UnitListPriceFormatted = string.Format("{0:N2}", item.UnitListPrice);
+                        discount = GetLineDiscount(item, discount);
+                        item.Discounts = discount;
                     }
                 }
             }
@@ -266,6 +269,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 _logger.LogError(ex, "Exception at getting product Unit price from Shop API : " + nameof(CommerceService));
             }            
+        }
+
+        private Discount[] GetLineDiscount(Line item, Discount[] discount)
+        {
+            if (item.UnitListPrice > 0 && item.UnitPrice > 0 && (item.UnitListPrice > item.UnitPrice))
+            {
+                decimal? dicountPercent = ((item.UnitListPrice - item.UnitPrice) * 100) / item.UnitListPrice;
+                if (dicountPercent >= 0.1M)
+                {
+                    Discount lineDiscount = new Discount
+                    {
+                        Type = "Quote",
+                        Value = (decimal)dicountPercent,
+                        FormattedValue = string.Format("{0:N2}", dicountPercent)
+                    };
+
+                    discount = new Discount[1] { lineDiscount };
+
+                }
+            }
+
+            return discount;
         }
 
         private ShopProductRequest BuildShopProductAPIRequest(List<Line> items)

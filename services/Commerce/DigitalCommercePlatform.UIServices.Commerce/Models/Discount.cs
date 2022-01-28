@@ -5,5 +5,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
     {
         public string Type { get; set; }
         public decimal Value { get; set; }
+        public string FormattedValue { get; set; }
+
     }
 }

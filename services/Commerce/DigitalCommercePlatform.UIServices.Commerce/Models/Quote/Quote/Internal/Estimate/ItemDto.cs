@@ -42,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
     {
         public string Id { get; set; }
         public decimal Value { get; set; }
+        public string FormattedValue { get; set; }
     }
 
     public class ContractDto

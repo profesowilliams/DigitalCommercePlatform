@@ -35,16 +35,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         private HelperService GetHelperService()
         {
-            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
+            return new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
         }
 
         private void InitiateHelperService(out Type type, out object objType)
         {
             type = typeof(HelperService);
             objType = Activator.CreateInstance(type,
-                _logger.Object, 
-                _context.Object, 
-                _middleTierHttpClient.Object, 
+                _logger.Object,
+                _context.Object,
+                _middleTierHttpClient.Object,
                 _appSettings.Object,
                 _httpClientFactory.Object
                 );
@@ -67,13 +67,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             List<Line> lstItems = new() { testLine };
             //Act
-            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco","");
+            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco", "");
             Assert.NotNull(result);
         }
 
         [Fact]
         public void GetAccountDetails()
-        {         
+        {
             var result = GetHelperService().GetCustomerAccountDetails();
             Assert.NotNull(result);
         }
@@ -117,7 +117,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void TestPrivateMethods()
         {
             Type type = typeof(HelperService);
-            var objType = Activator.CreateInstance(type, 
+            var objType = Activator.CreateInstance(type,
                 _logger.Object,
                 _context.Object,
                 _middleTierHttpClient.Object,
@@ -175,7 +175,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 TDNumber = "13517170",
                 TotalPrice = (decimal?)12.08,
             };
-            
+
             string productId = "SVS-UMB-SUP-E";
             // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
             StringBuilder sbManufacturer = new();
@@ -239,7 +239,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Description = "C9200-NM-4X Description",
                 Name = "C9200-NM-4X Name"
             };
-            
+
             Type type;
             object objType;
             InitiateHelperService(out type, out objType);
@@ -248,7 +248,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetImageUrlForProduct" && x.IsPrivate);
 
             var result = queryLine.Invoke(objType, new object[] { product });
-            Assert.Equal(string.Empty,result);
+            Assert.Equal(string.Empty, result);
 
         }
 
@@ -326,9 +326,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             SourceModel Source = new SourceModel()
             {
-                ID = "123",SalesOrg="0100",Key ="12",System="12",TargetSystem="12"
+                ID = "123",
+                SalesOrg = "0100",
+                Key = "12",
+                System = "12",
+                TargetSystem = "12"
             };
-            ProductsModel product = new ProductsModel(){Source = Source};
+            ProductsModel product = new ProductsModel() { Source = Source };
 
             // Act
             Type type;
@@ -338,7 +342,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "MapLines" && x.IsPrivate);
 
-            var result = apiQuery.Invoke(objType, new object[] { product,line, "" });
+            var result = apiQuery.Invoke(objType, new object[] { product, line, "" });
 
             // Assert
             Assert.Null(result);
@@ -350,7 +354,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Arrange
             AuthorizationModel Authorization = new AuthorizationModel();
 
-            
+
             // Act
             var result = GetHelperService().MapAutorization(Authorization);
 
@@ -534,7 +538,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+        [Fact]
+        public void GetLineDiscount_Tests()
+        {
+            // Arrange
 
+            Line line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)80.20,
+                UnitListPrice = 100.00M,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)80.08,
+            };
+            Discount[] discount = new Discount[1];
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetLineDiscount" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { line, discount });
+
+            // Assert
+            Assert.NotNull(result);
+        }
 
 
         [Fact]
@@ -543,6 +576,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var orderLevel = GetHelperService().GetOrderType("ZZED", "ZZED");
             Assert.NotNull(orderLevel);
         }
-        
+
     }
 }
