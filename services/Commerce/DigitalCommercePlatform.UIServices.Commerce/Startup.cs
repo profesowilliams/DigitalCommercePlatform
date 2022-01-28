@@ -43,7 +43,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce
                 options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                 options.SerializerSettings.DateFormatString = "MM-dd-yyyy";
             });
-            services.AddHttpClient("CustomerAPIClient");
         }
 
         public override void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, TelemetryClient telemetryClient)

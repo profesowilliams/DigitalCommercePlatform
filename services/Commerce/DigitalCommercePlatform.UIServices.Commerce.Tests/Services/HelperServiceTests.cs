@@ -67,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             List<Line> lstItems = new() { testLine };
             //Act
-            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco");
+            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco","");
             Assert.NotNull(result);
         }
 
@@ -217,7 +217,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "MapLines" && x.IsPrivate);
 
-            var result = queryLine.Invoke(objType, new object[] { product, line });
+            var result = queryLine.Invoke(objType, new object[] { product, line, "" });
             Assert.Null(result);
 
         }
@@ -338,7 +338,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "MapLines" && x.IsPrivate);
 
-            var result = apiQuery.Invoke(objType, new object[] { product,line });
+            var result = apiQuery.Invoke(objType, new object[] { product,line, "" });
 
             // Assert
             Assert.Null(result);
@@ -435,6 +435,89 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         //    var result = queryLine.Invoke(objType, new object[] { manufacturer, system, arrProductIds, arrManufacturer, i, line });
         //    Assert.Null(result);
         //}
+
+        [Fact]
+        public void GetUnitListPriceFromAPIAsync_Tests()
+        {
+            // Arrange
+            List<Line> lstLines = new List<Line>();
+            Line line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+            Line line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "5P1000R",
+                TDNumber = "11086168",
+                TotalPrice = (decimal?)12.08,
+            };
+            lstLines.Add(line);
+            lstLines.Add(line1);
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetUnitListPriceFromAPIAsync" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { lstLines });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+
+        [Fact]
+        public void BuildShopProductAPIRequest_Tests()
+        {
+            // Arrange
+            List<Line> lstLines = new List<Line>();
+            Line line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)12.08,
+            };
+            Line line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                Manufacturer = "CISCO",
+                MFRNumber = "5P1000R",
+                TDNumber = "11086168",
+                TotalPrice = (decimal?)12.08,
+            };
+            lstLines.Add(line);
+            lstLines.Add(line1);
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildShopProductAPIRequest" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { lstLines });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+
 
         [Fact]
         public void TestOrderLevel()

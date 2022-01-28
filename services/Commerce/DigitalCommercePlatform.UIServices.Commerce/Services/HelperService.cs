@@ -188,7 +188,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         /// <param name="items"></param>
         /// <param name="vendorName"></param>
         /// <returns></returns>
-        public async Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName)
+        public async Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName, string source)
         {
             ProductData productDetails;
             string productUrl = BuildQueryForProductApiCall(items, vendorName);
@@ -197,12 +197,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
                 ProductsModel product;
+                if (source.Equals("2"))
+                {
+                    await GetUnitListPriceFromAPIAsync(items);
+                }
                 foreach (var line in items)
                 {
                     product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.MFRNumber).FirstOrDefault();
                     if (product != null && line != null)
                     {
-                        MapLines(product, line);
+                        MapLines(product, line, source);
                     }
                     else
                     {
@@ -224,6 +228,61 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             return items;
         }
+
+        private async Task GetUnitListPriceFromAPIAsync(List<Line> items)
+        {
+            try
+            {
+                ShopProductRequest request = BuildShopProductAPIRequest(items);
+                const string keyForGettingUrlFromSettings = "External.ShopProducts.Url";
+
+                var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
+                ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+
+                _logger.LogInformation($"Requested url is: {requestUrl}");
+
+                //requestUrl = "https://svcinternal.prod.svc.us.tdworldwide.com/ProductService/api/ShopProducts/getProducts"; // for testing locally
+
+
+                var httpClient = _httpClientFactory.CreateClient("ProductAPIClient");
+                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+                var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
+
+                httpResponse.EnsureSuccessStatusCode();
+
+                var result = await System.Text.Json.JsonSerializer.DeserializeAsync<Response>(httpResponse.Content.ReadAsStream());
+                if (result != null)
+                {
+                    foreach (var item in items)
+                    {
+                        var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
+                        item.MSRP = price;
+                        item.UnitListPrice = (decimal)price;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting product Unit price from Shop API : " + nameof(CommerceService));
+            }            
+        }
+
+        private ShopProductRequest BuildShopProductAPIRequest(List<Line> items)
+        {
+            List<GetProductRequest> lstProducts = new List<GetProductRequest>();
+            foreach (var line in items)
+            {
+                var product = new GetProductRequest
+                {
+                    ManufacturerPartNumber = line.MFRNumber,
+                    MaterialNumber = line.TDNumber
+                };
+                lstProducts.Add(product);
+            }
+            ShopProductRequest request = new ShopProductRequest { Products = lstProducts };
+            return request;
+        }
+
         /// <summary>
         /// Return Buy Type of customre 
         /// Possible values 
@@ -326,15 +385,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         /// </summary>
         /// <param name="product"></param>
         /// <param name="line"></param>
-        private void MapLines(ProductsModel product, Line line)
+        private void MapLines(ProductsModel product, Line line, string source)
         {
+            source = source ?? string.Empty;
             line.ShortDescription = string.IsNullOrWhiteSpace(product.ShortDescription) ? line.ShortDescription : product.ShortDescription;
             line.DisplayName = string.IsNullOrWhiteSpace(product.DisplayName) ? line.ShortDescription : product.DisplayName;
             line.TDNumber = product?.Source.ID;
             line.URLProductImage = GetImageUrlForProduct(product);
             line.Images = product.Images;
-            line.Logos = product.Logos;
-            line.MSRP = product?.Price?.UnpromotedPrice;
+            line.Logos = product.Logos;      
             line.MFRNumber = product?.ManufacturerPartNumber;
             line.Authorization = MapAutorization(product?.Authorization);
         }

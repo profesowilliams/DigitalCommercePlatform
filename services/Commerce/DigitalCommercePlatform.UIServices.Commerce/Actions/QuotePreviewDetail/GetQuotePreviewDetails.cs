@@ -59,9 +59,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var quoteDetailsModel = await _quoteService.QuotePreview(request);
-                if (quoteDetailsModel?.QuoteDetails != null)
+                if (quoteDetailsModel?.QuoteDetails.Items != null)
                 {
                     quoteDetailsModel.QuoteDetails.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(quoteDetailsModel);
+                }
+                else
+                {
+                    return new ResponseBase<Response>
+                    {
+                        Error = new ErrorInformation
+                        {
+                            IsError = true,
+                            Code = 404,
+                            Messages = new System.Collections.Generic.List<string>{ "Not Found" }
+                        }
+                    };
                 }
                 // No need to map, returning Model var getcartResponse = _mapper.Map<Response>(quoteDetails);
                 var response = new Response(quoteDetailsModel);

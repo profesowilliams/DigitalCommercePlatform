@@ -14,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
     [ExcludeFromCodeCoverage]
     public class Line
     {
+
         public string Id { get; set; }
         public string Parent { get; set; }
         public string VendorPartNo { get; set; }
@@ -36,7 +37,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public string MFRNumber { get; set; }
         public string TDNumber { get; set; }
         public string UPCNumber { get; set; }
-        public string UnitListPrice { get; set; }
+        public string UnitPriceCurrency { get; set; }
+        public decimal UnitCost { get; set; }
+        public string UnitCostCurrency { get; set; }
+        public decimal UnitListPrice { get; set; }
+        public string UnitListPriceCurrency { get; set; }
+        public decimal ExtendedListPrice { get; set; }
         public string UnitListPriceFormatted { get; set; }
         public string ExtendedPrice { get; set; }
         public string ExtendedPriceFormatted { get { return string.Format(Constants.MoneyFormat, ExtendedPrice); } }

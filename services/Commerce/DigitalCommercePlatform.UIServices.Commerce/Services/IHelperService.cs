@@ -12,7 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         string GetParameterName(string parameter);
         bool GetOrderPricingConditions(string pricingConditionId, out TypeModel orderType, out LevelModel orderLevel);
         Task<string> GetOrderType(string poType, string docType);
-        Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName);
+        Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName, string source);
         Task<AccountDetails> GetCustomerAccountDetails();
         AuthorizationModel MapAutorization(AuthorizationModel authorization);
     }

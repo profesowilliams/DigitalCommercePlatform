@@ -541,10 +541,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 var configurationFindResponse = await _middleTierHttpClient
                         .GetAsync<FindResponse<List<DetailedDto>>>(url);
 
-                var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse.Data.FirstOrDefault());
+                var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse?.Data?.FirstOrDefault());
+                if (quotePreview == null)
+                {
+                    QuotePreviewModel result = new QuotePreviewModel
+                    {
+                        QuoteDetails = new QuotePreview()
+                    };
+                    return result;
+                }
 
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
-                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name);
+                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name,string.Empty);
 
                 var isExclusive = _helperService.GetCustomerAccountDetails().Result.IsExclusive;
                 quotePreview.IsExclusive = isExclusive;
@@ -564,7 +572,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private bool MapEndUserAndResellerForQuotePreview(FindResponse<List<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
         {
-            if (configurationFindResponse.Data?.FirstOrDefault().EndUser != null)
+            if (configurationFindResponse?.Data?.FirstOrDefault()?.EndUser != null)
             {
                 var objEndUser = configurationFindResponse.Data?.FirstOrDefault().EndUser;
                 Address endUser = new()
@@ -583,7 +591,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 quotePreview.EndUser = new List<Address> { endUser };
             }
 
-            if (configurationFindResponse.Data?.FirstOrDefault().Reseller != null)
+            if (configurationFindResponse?.Data?.FirstOrDefault().Reseller != null)
             {
                 var objReseller = configurationFindResponse.Data?.FirstOrDefault().Reseller;
                 Address reseller = new()

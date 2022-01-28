@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -13,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
     }
     public class QuoteDetails
     {
+        public SourceModel QuoteSource { get; set; }
         public Address ShipTo { get; set; }
         public Address EndUser { get; set; }
         public Address Reseller { get; set; }
