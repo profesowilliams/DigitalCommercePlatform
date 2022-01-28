@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
 
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
@@ -16,8 +16,10 @@ using FluentValidation.TestHelper;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -48,6 +50,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 _siteSettingsMock.Object,
                 _cultureServiceMock.Object,
                 _translationServiceMock.Object);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
 
         public static IEnumerable<object> Handler_ProperlyMapProducts_Data()
@@ -172,7 +176,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
@@ -275,7 +279,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {

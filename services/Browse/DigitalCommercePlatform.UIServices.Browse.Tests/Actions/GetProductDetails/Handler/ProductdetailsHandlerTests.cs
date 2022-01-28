@@ -17,6 +17,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -59,6 +60,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 _mapper,
                 _translationServiceMock.Object,
                 _cultureServiceMock.Object);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
 
         public bool Details { get; private set; }
@@ -287,7 +290,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$10.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             PromoAmount="$0.00",
                             VolumePricing= new List<VolumePricingModel>
@@ -542,7 +545,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
@@ -802,7 +805,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(),
+                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             PromoAmount="$9.00",
                             VolumePricing= new List<VolumePricingModel>
