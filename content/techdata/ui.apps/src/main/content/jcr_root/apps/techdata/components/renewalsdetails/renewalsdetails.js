@@ -113,7 +113,7 @@ use(['../common/utils.js'], function(utils) {
         endCustomer["endCustpreviousPurchaseOrderNo"] = properties["endCustpreviousPurchaseOrderNo"];
     }
     if (endCustomer != null) {
-        quotePreview["endCustomer"] = endCustomer;
+        quotePreview["productLines"] = endCustomer;
     }
 
     if (properties && properties["agreementInfoLabel"]) {
