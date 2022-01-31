@@ -72,6 +72,49 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void PopulateLinesForWithSyatem_2_Test()
+        {
+            //arrange 
+            Line testLine = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)80.08,
+                UnitListPrice = 100.08M,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)80.08,
+            };
+
+            List<Line> lstItems = new() { testLine };
+            //Act
+            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco", "2");
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public void PopulateLinesForWithSyatem_Q_Test()
+        {
+            //arrange 
+            Line testLine = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)35.08,
+                UnitListPrice = 100.08M,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)35.08,
+            };
+
+            List<Line> lstItems = new() { testLine };
+            //Act
+            var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco", "Q");
+            Assert.NotNull(result);
+        }
+
+        
+
+        [Fact]
         public void GetAccountDetails()
         {
             var result = GetHelperService().GetCustomerAccountDetails();
@@ -498,6 +541,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+
+        [Fact]
+        public void MapDiscount_Q_Test()
+        {
+            string source = "Q";
+            Line line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)80.20,
+                UnitListPrice = 100.00M,
+                Manufacturer = "CISCO",
+                MFRNumber = "C9200-NM-4X",
+                TDNumber = "13517170",
+                TotalPrice = (decimal?)80.08,
+            };
+            Discount[] discount = new Discount[1];
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapDiscount" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { source, line });
+
+            // Assert
+            Assert.NotNull(line);
+        }
 
         [Fact]
         public void BuildShopProductAPIRequest_Tests()

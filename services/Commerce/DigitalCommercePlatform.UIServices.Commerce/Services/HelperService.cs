@@ -219,6 +219,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                             CustomerCanView = false,
                         };
                     }
+
+                    // populate discount only for Quote Details Page
+
+                    MapDiscount(source, line);
                 }
             }
             catch (Exception ex)
@@ -227,6 +231,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
 
             return items;
+        }
+
+        private void MapDiscount(string source, Line line)
+        {
+            if (source.Equals("2") || source.Equals("Q"))
+            {
+                Discount[] discount = new Discount[1];
+
+                discount = GetLineDiscount(line, discount);
+                line.Discounts = discount;
+            }
         }
 
         private async Task GetUnitListPriceFromAPIAsync(List<Line> items)
@@ -254,42 +269,50 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 if (result != null)
                 {
                     foreach (var item in items)
-                    {
-                        Discount[] discount = new Discount[1];
+                    {                        
                         var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
                         item.MSRP = price;
                         item.UnitListPrice = (decimal)price;
                         item.UnitListPriceFormatted = string.Format("{0:N2}", item.UnitListPrice);
-                        discount = GetLineDiscount(item, discount);
-                        item.Discounts = discount;
                     }
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at getting product Unit price from Shop API : " + nameof(CommerceService));
-            }            
+            }
         }
 
         private Discount[] GetLineDiscount(Line item, Discount[] discount)
         {
-            if (item.UnitListPrice > 0 && item.UnitPrice > 0 && (item.UnitListPrice > item.UnitPrice))
+            Discount lineDiscount = new Discount
             {
-                decimal? dicountPercent = ((item.UnitListPrice - item.UnitPrice) * 100) / item.UnitListPrice;
-                if (dicountPercent >= 0.1M)
+                Type = "Quote",
+                Value = 0.0M,
+                FormattedValue = string.Format("{0:N2}", 0.00)
+            };
+            discount = new Discount[1] { lineDiscount };
+            try
+            {
+                if (item.UnitListPrice > 0 && item.UnitPrice > 0 && (item.UnitListPrice > item.UnitPrice))
                 {
-                    Discount lineDiscount = new Discount
+                    decimal? dicountPercent = ((item.UnitListPrice - item.UnitPrice) * 100) / item.UnitListPrice;
+                    if (dicountPercent >= 0.1M)
                     {
-                        Type = "Quote",
-                        Value = (decimal)dicountPercent,
-                        FormattedValue = string.Format("{0:N2}", dicountPercent)
-                    };
-
-                    discount = new Discount[1] { lineDiscount };
-
-                }
+                        Discount quoteDiscount = new Discount
+                        {
+                            Type = "Quote",
+                            Value = (decimal)dicountPercent,
+                            FormattedValue = string.Format("{0:N2}", dicountPercent)
+                        };
+                        discount = new Discount[1] { quoteDiscount };
+                    }
+                }                
             }
-
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error While calculating discount " + ex.Message);                
+            }
             return discount;
         }
 
@@ -419,7 +442,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             line.TDNumber = product?.Source.ID;
             line.URLProductImage = GetImageUrlForProduct(product);
             line.Images = product.Images;
-            line.Logos = product.Logos;      
+            line.Logos = product.Logos;
             line.MFRNumber = product?.ManufacturerPartNumber;
             line.Authorization = MapAutorization(product?.Authorization);
         }
@@ -493,7 +516,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         public string GetCheckoutSystem(SourceModel source)
         {
-            
+
             if (source?.System == "Q")
                 return "6.8";
             else
