@@ -15,7 +15,12 @@ import { isNotEmptyValue } from "../../../../utils/utils";
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
-
+  const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
+  const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
+  const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Configuration Table Interactions';
+  const ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION = 'Create quote';
+  const ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS = 'Clear all filters';
+  const ADOBE_DATA_LAYER_QUOTES_OPTIONS = 'From Config';
   const [modal, setModal] = useState(null);
 
   const { spaDealsIdLabel } = componentProp;
@@ -99,6 +104,51 @@ function ConfigurationGrid(props) {
   const getConfigurationDetailsUrl = (props) => {
     return componentProp.configDetailUrl?.replace("{id}", props.value);
   }
+
+  /**
+   * handler event that push a click event
+   * information to adobeDataLayer
+   */
+  /**
+   * handler event that push a click event
+   * information to adobeDataLayer
+   * @param {string} param 
+   */
+  const handlerAnalyticsClickEvent = (param = '') => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
+      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
+      name : param,
+    };
+    const quotes = {
+      options: ADOBE_DATA_LAYER_QUOTES_OPTIONS
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+      clickInfo,
+      quotes,
+    }
+    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
+  };
+
+  /**
+   * handler event that push a click event
+   * coming from the button Clear Filters
+   * information to adobeDataLayer
+   */
+  const handlerAnalyticsClearClickEvent = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
+      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+      clickInfo
+    }
+    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
+  };
+
   const columnDefs = [
     {
       headerName: "Config ID",
@@ -106,12 +156,14 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <a
-            className="cmp-grid-url-underlined"
-            href={getQuotePreviewUrl(props)}
-          >
-            {props.value}
-          </a>
+          <div onClick={() => handlerAnalyticsClickEvent(props.value)} >
+            <a
+              className="cmp-grid-url-underlined"
+              href={getQuotePreviewUrl(props)}
+            >
+              {props.value}
+            </a>
+          </div>
         );
       },
     },
@@ -177,7 +229,7 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div>
+          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION)}>
             <a className="cmp-grid-url-not-underlined" href={getQuotePreviewUrl(props)}>
               {componentProp.actionColumnLabel}
             </a>
@@ -227,6 +279,7 @@ function ConfigurationGrid(props) {
           componentProp={componentProp.searchCriteria}
           onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
+          analyticsEvent={handlerAnalyticsClearClickEvent}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

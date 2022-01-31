@@ -12,6 +12,7 @@ import Button from "../Widgets/Button";
  * @param {() => void} props.onClearRequest
  * @param {JSX.Element} props.HeaderButtonOptions
  * @param {JSX.Element} props.ButtonsComponentHeader
+ * @param {() => void} props.analyticsEvent
  * @returns 
  */
 function GridSearchCriteria({
@@ -23,6 +24,7 @@ function GridSearchCriteria({
   HeaderButtonOptions,
   ButtonsComponentHeader,
   uiServiceEndPoint,
+  analyticsEvent,
 }) {
 	const filter = useRef(null);
 	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
@@ -58,6 +60,9 @@ function GridSearchCriteria({
 	function onClear() {
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
+			if (typeof analyticsEvent === 'function') {
+				analyticsEvent()	
+			}
 		}
 		setReset(!reset);
 		setFilterActive(false);
