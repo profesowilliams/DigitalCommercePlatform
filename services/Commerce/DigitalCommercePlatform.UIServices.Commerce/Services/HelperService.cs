@@ -195,12 +195,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             try
             {
-                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
-                ProductsModel product;
                 if (source.Equals("2"))
                 {
                     await GetUnitListPriceFromAPIAsync(items);
                 }
+                productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
+                ProductsModel product;
+               
                 foreach (var line in items)
                 {
                     product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.MFRNumber).FirstOrDefault();
@@ -271,6 +272,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     foreach (var item in items)
                     {                        
                         var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
+                        if(price==null)
+                        {
+                            price= result.Products.Where(p => p.Article.TechDataPartNumber.Equals(item.TDNumber)).FirstOrDefault()?.Article.MSRP;
+                        }
                         item.MSRP = price;
                         item.UnitListPrice = (decimal)price;
                         item.UnitListPriceFormatted = string.Format("{0:N2}", item.UnitListPrice);
@@ -323,7 +328,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 var product = new GetProductRequest
                 {
-                    ManufacturerPartNumber = line.MFRNumber,
+                    ManufacturerPartNumber = string.Equals(line.MFRNumber,line.TDNumber)?String.Empty:line.MFRNumber,
                     MaterialNumber = line.TDNumber
                 };
                 lstProducts.Add(product);
