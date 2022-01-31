@@ -2,7 +2,15 @@ import React, { Fragment } from "react";
 import { usPut } from "../../../../utils/api";
 import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 
-export async function redirectToCart(quoteId, config, onErrorHandler) {
+export async function redirectToCart(checkoutSystem, quoteId, config, onErrorHandler) {
+    if (checkoutSystem === '4.6') {
+        system46Checkout(quoteId, config, onErrorHandler);
+    } else {
+        window.location.replace(config.expressCheckoutRedirectUrl);
+    }
+}
+
+const system46Checkout = async (quoteId, config, onErrorHandler) => {
   try {
     const response = await usPut(
       config.uiServiceEndPoint + `?Id=${quoteId}&type=quote`
@@ -47,7 +55,7 @@ function Checkout({ line, checkoutConfig, onErrorHandler }) {
   return (
     <div
       onClick={() => {
-        line.canCheckOut && redirectToCart(line.id, config, onErrorHandler);
+        line.canCheckOut && redirectToCart(line.checkoutSystem, line.id, config, onErrorHandler);
       }}
     >
       {line.canCheckOut && <i className="fas fa-shopping-cart"></i>}

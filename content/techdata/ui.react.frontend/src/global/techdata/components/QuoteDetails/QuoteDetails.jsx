@@ -54,7 +54,7 @@ const QuoteDetails = ({ componentProp }) => {
   productLines.agGridLicenseKey = agGridLicenseKey;
 
   function onQuoteCheckout() {
-    redirectToCart(id, checkout, onErrorHandler);
+    redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
   }
 
   const onErrorHandler = (error) => {

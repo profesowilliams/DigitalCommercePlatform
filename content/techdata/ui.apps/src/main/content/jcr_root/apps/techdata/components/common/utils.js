@@ -35,6 +35,10 @@ use(function () {
             checkoutConfigurations.redirectUrl = serviceData.shopDomain+serviceData.cartURL;
         }
 
+        if (serviceData.expressCheckoutRedirectUrl != null) {
+            checkoutConfigurations.expressCheckoutRedirectUrl = serviceData.shopDomain+serviceData.expressCheckoutRedirectUrl;
+        }
+
         return checkoutConfigurations;
     }
     return {

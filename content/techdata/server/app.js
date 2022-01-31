@@ -546,6 +546,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
       created: utils.getRandomDate(),
       expires: utils.getRandomDate(),
       endUserName: null,
+      checkoutSystem: i % 2 ? "4.6": "111",
       deals: utils.getRandomArrayWithIds(4),
       status: i % 2 ? "OPEN" : "CLOSED",
       quoteValue: 73002.31 + getRandom(1000),

@@ -17,5 +17,8 @@ public @interface MiniCartConfiguration {
     @Property(label = "TD Part Smart", description = "TD Part Smart", order = 3)
     String tdPartSmart();
 
+    @Property(label = "Express Checkout Redirect Url", description = "Express Checkout Redirect Url", order = 4)
+    String expressCheckoutRedirectUrl();
+
 
 }

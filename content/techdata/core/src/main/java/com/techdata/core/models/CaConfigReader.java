@@ -96,6 +96,8 @@ public class CaConfigReader {
 
     private String cartURL;
 
+    private String expressCheckoutRedirectUrl;
+
     private String tdPartSmart;
 
     private String analyticsSnippet;
@@ -237,6 +239,7 @@ public class CaConfigReader {
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
         renewalDetailLineItemEndpoint = serviceEndPointsConfiguration.renewalDetailLineItemEndpoint();
         cartURL = mcConfiguration.cartURL();
+        expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
         allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
@@ -420,6 +423,8 @@ public class CaConfigReader {
     public String getCartURL() {
         return cartURL;
     }
+
+    public String getExpressCheckoutRedirectUrl(){ return expressCheckoutRedirectUrl; }
 
     public String getTdPartSmart() {
         return tdPartSmart;
