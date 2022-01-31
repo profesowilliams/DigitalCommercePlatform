@@ -1,5 +1,6 @@
 import React,{useCallback} from "react";
 import { dateToString } from "../../../helpers/formatting";
+import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
 
@@ -19,6 +20,24 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
     return null
   },[])
 
+  const handleClick = () => {
+    DataLayerUtils.pushEvent(
+      "click",
+      {
+        name: line.displayName,
+        type: "link",
+      },
+      {
+        click: {
+          category: "Quote Detail Table Interactions",
+        },
+        products: {
+          productInfo: { parentSKU: line.tdNumber, name: line.displayName },
+        },
+      }
+    );
+  };
+
   const ProductImage = () =>
   (
     <img
@@ -28,7 +47,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
   );
   return (
     <section>
-      <div className="cmp-product-lines-grid__item-information">
+      <div onClick={handleClick} className="cmp-product-lines-grid__item-information">
         <a
           href={formatShopDomainUrl()}
           target="_blank"

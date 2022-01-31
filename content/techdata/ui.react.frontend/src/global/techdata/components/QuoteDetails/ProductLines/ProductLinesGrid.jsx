@@ -6,6 +6,7 @@ import ProductLinesMarkupGlobal from "./ProductLinesMarkupGlobal";
 import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 import { thousandSeparator } from "../../../helpers/formatting";
+import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesGrid({
   gridProps,
@@ -47,6 +48,18 @@ function ProductLinesGrid({
   };
 
   function expandAll() {
+    DataLayerUtils.pushEvent(
+      "click",
+      {
+        name: "Open All",
+        type: "link",
+      },
+      {
+        click: {
+          category: "Quote Detail Table Interactions",
+        },
+      }
+    );
     gridApi?.forEachNode((node) => {
       node.expanded = true;
     });
@@ -54,6 +67,18 @@ function ProductLinesGrid({
   }
 
   function collapseAll() {
+    DataLayerUtils.pushEvent(
+      "click",
+      {
+        name: "Collapse All",
+        type: "link",
+      },
+      {
+        click: {
+          category: "Quote Detail Table Interactions",
+        },
+      }
+    );
     gridApi?.forEachNode((node) => {
       node.expanded = false;
     });
@@ -78,6 +103,35 @@ function ProductLinesGrid({
       width: "100px",
       sortable: false,
       expandable: true,
+      onCellDoubleClicked: (event) => {
+        if (event.node.expanded === true) {
+          DataLayerUtils.pushEvent(
+            "click",
+            {
+              name: "Open Line Item",
+              type: "button",
+            },
+            {
+              click: {
+                category: "Quote Detail Table Interactions",
+              },
+            }
+          );
+        } else {
+          DataLayerUtils.pushEvent(
+            "click",
+            {
+              name: "Collapse Line Item",
+              type: "button",
+            },
+            {
+              click: {
+                category: "Quote Detail Table Interactions",
+              },
+            }
+          );
+        }
+      },
       rowClass: ({ node, data }) => {
         return `cmp-product-lines-grid__row ${
           !data?.children || data.children.length === 0
