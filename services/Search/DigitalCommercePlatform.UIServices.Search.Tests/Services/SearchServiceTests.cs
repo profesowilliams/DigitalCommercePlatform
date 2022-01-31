@@ -150,7 +150,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     Value = N
                 }
             };
-            appResponse.Products[0].Stock.VendorDesignated = 0;
+            appResponse.Products[0].Stock.VendorDesignated = null;
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
                 .Returns(Task.FromResult(appResponse));
 

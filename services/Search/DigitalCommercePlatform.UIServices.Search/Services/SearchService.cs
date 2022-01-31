@@ -123,7 +123,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         private static void SetVendorShipped(ElasticItemDto appSearchProduct, ElasticItemModel product)
         {
-            if (appSearchProduct.Stock?.VendorDesignated == 0 &&
+            if (appSearchProduct.Stock == null)
+                return;
+            if (appSearchProduct.Stock.VendorDesignated == null &&
                 appSearchProduct.Indicators?.FirstOrDefault(i => string.Equals(i.Type, DropShip, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, Y, StringComparison.InvariantCultureIgnoreCase)) != null &&
                 appSearchProduct.Indicators.FirstOrDefault(i => string.Equals(i.Type, Warehouse, StringComparison.InvariantCultureIgnoreCase) && string.Equals(i.Value, N, StringComparison.InvariantCultureIgnoreCase)) != null)
             {
