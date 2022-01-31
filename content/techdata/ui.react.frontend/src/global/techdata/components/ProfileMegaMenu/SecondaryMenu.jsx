@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TertiaryMenu from "../ProfileMegaMenu/TertiaryMenu";
 import FontIcon from "../Widgets/FontIcon";
 import { hasDCPAccess } from "../../../../utils/user-utils";
+import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
 function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
   const [isOpen, setIsOpen] = useState(null);
@@ -13,6 +14,22 @@ function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
       if (prevIsOpen === index) return null;
       return (prevIsOpen = index);
     });
+  };
+
+  const handleSecondaryLinkClick = (linkUrl, dcpLink, linkTitle) => {
+    let finalLinkUrl = hasDCPAccess(userData) ? dcpLink : linkUrl;
+    if (finalLinkUrl != undefined) {
+      DataLayerUtils.pushEvent(
+        "click",
+        {
+          name: linkTitle,
+          selectionDepth: "",
+          type: "link",
+          category: "profile dropdown",
+        }
+      );
+      window.location.href = finalLinkUrl;
+    }
   };
 
   return (
@@ -41,7 +58,13 @@ function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
                 item.tertiaryMenus ? "has-child" : ""
               } ${isOpen === index ? "active" : ""}`}
             >
-              <a href={hasDCPAccess(userData) ? item.secondaryDcpLink : item.secondaryLink}>
+              <a onClick={() =>
+                  handleSecondaryLinkClick(
+                    item.secondaryLink,
+                    item.secondaryDcpLink,
+                    item.secondaryLabel
+                  )
+                }>
                 {item.secondaryLabel}
               </a>
               {item.tertiaryMenus ? (
