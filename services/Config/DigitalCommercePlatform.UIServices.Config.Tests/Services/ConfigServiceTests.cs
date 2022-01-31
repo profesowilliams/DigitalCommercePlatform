@@ -30,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
             _appSettings = new Mock<IAppSettings>();
             _appSettings.Setup(s => s.GetSetting("App.Configuration.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-configuration/v1");
             _appSettings.Setup(s => s.GetSetting("App.Price.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-price/v1");
+            _appSettings.Setup(s => s.GetSetting("App.Spa.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-spa/v1");
             _mapper = new Mock<IMapper>();
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _logger = new Mock<ILogger<ConfigService>>();
