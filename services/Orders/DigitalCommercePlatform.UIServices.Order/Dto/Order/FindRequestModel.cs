@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
-using DigitalCommercePlatform.UIServices.Order.Enum;
 
 namespace DigitalCommercePlatform.UIServices.Order.Dto.Order
 {
     [ExcludeFromCodeCoverage]
     public class FindRequestModel
     {
-        public string CustomerPO;
+        public string CustomerPO { get; set; }
         public string ID { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 50;
