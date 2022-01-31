@@ -3,7 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, validateDatePicker } from "../../../../utils/utils";
+import { formateDatePicker, validateDatePicker, setTimestamp } from "../../../../utils/utils";
 
 function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const _query = useRef({});
@@ -90,15 +90,14 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   }
 
   function isQueryValid(query) {
-    if (
-      query.from?.value &&
-      query.to?.value &&
-      query.to?.value < query.from?.value
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+      if (query.from?.value) {
+          query.from.value = setTimestamp(query.from?.value);
+      }
+      if (query.to?.value) {
+          query.to.value = setTimestamp(query.to?.value);
+      }
+      return (query.from?.value && query.to?.value) &&
+          (query.to?.value >= query.from?.value);
   }
 
   function handleFilterChange(change, filterName) {

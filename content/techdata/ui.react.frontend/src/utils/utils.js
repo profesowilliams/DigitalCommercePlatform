@@ -190,12 +190,12 @@ export const isNotEmptyValue = (value) => (value !== null && value !== undefined
  * @param {React.Dispatch<React.SetStateAction<boolean>>} setStateParam 
  * @returns 
  */
-export const validateDatePicker = (value, partnerValue ,setStateParam) =>
+export const validateDatePicker = (value, partnerValue, setStateParam) =>
     setStateParam(
     isNotEmptyValue(value) ? 
         !isNotEmptyValue(partnerValue) ? false : true
         : true
-);
+    );
 
 /**
  * Function that format in a single format used for the GRID
@@ -208,7 +208,9 @@ export const validateDatePicker = (value, partnerValue ,setStateParam) =>
     new Date(Date.UTC(dateValue.getFullYear(),dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
   ).toISOString();
 
-
+export const setTimestamp = (dateValue) => new Date(
+    new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
+  );
 /**
 * Remove the style attribute on body tag if sessionId is present
 */

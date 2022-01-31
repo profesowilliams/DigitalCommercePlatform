@@ -3,7 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, isNotEmptyValue, validateDatePicker } from "../../../../utils/utils";
+import { formateDatePicker, isNotEmptyValue, validateDatePicker, setTimestamp } from "../../../../utils/utils";
 function ConfigurationGridSearch({
   componentProp,
   onQueryChanged,
@@ -99,15 +99,14 @@ function ConfigurationGridSearch({
   }
 
   function isQueryValid(query) {
-    if (
-      query.from?.value &&
-      query.to?.value &&
-      query.to?.value < query.from?.value
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+      if (query.from?.value) {
+          query.from.value = setTimestamp(query.from?.value);
+      }
+      if (query.to?.value) {
+          query.to.value = setTimestamp(query.to?.value);
+      }
+      return (query.from?.value && query.to?.value) &&
+          (query.to?.value >= query.from?.value);
   }
 
   function handleFilterChange(change, filterName) {
