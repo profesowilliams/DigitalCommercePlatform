@@ -3,6 +3,7 @@ import useGet from "../../../hooks/useGet";
 import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
+import { pushData } from '../../../../utils/dataLayerUtils';
 
 function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
@@ -235,6 +236,11 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
     }
 
     const loadDeals = async (searchTerm) => {
+        console.log("Vijay: dealsSearch");
+        pushData({
+            event: "dealsSearch"
+        });
+
         setIsLoadingDeals(true);
         setNoDealsFound(false);
         setErrorGettingDeals(false);
