@@ -47,6 +47,17 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
   }
 };
 
+// https://github.com/adobe/adobe-client-data-layer/wiki#push
+/**
+ * 
+ * @param {{event: string, eventInfo: any}} filter 
+ */
+export const pushEventAnalyticsGlobal = (filter) => {
+  if (isDataLayerEnabled()) {
+    getDataLayer().push(filter);
+  }
+};
+
 // https://github.com/adobe/adobe-client-data-layer/wiki#getstate
 export const getState = reference => {
   if (isDataLayerEnabled()) {

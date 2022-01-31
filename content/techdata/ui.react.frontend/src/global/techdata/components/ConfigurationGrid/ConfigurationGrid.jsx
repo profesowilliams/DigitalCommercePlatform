@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useRef } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
@@ -9,6 +9,8 @@ import {
   MultipleQuotesInvokeModal,
   SingleQuotesInvokeModal,
 } from "./QuotesModals";
+import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
+import { isNotEmptyValue } from "../../../../utils/utils";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -17,7 +19,7 @@ function ConfigurationGrid(props) {
   const [modal, setModal] = useState(null);
 
   const { spaDealsIdLabel } = componentProp;
-
+  const analyticModel = useRef(null)
   const getDateTransformed = (dateUTC) => {
     function isValidDate(d) {
       return d instanceof Date && !isNaN(d);
@@ -185,6 +187,37 @@ function ConfigurationGrid(props) {
     },
   ];
 
+  const handleFilterComponent = (analyticObjectParam, responseLength) => {
+    const configuration = {
+      searchTerm: analyticObjectParam.searchTerm,
+      searchOption: analyticObjectParam.searchOption ,
+      configFilter: analyticObjectParam.configFilter ,
+      fromDate: analyticObjectParam.fromDate ,
+      toDate: analyticObjectParam.toDate ,
+      nullSearch: responseLength === 0,
+      
+    };
+    const objectToSend = {
+      event: "configSearch",
+      configuration,
+    }
+    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
+  }
+  const handleOnSearchRequest = (query) => {
+    filteringExtension.onQueryChanged(query);
+    analyticModel.current = query.analyticsData;
+  }
+
+  async function handleRequestInterceptor(request) {
+    const response = await filteringExtension.requestInterceptor(request)
+    if (isNotEmptyValue(response?.data?.content?.items?.length)) {
+      if (analyticModel.current !== null ) {
+        handleFilterComponent(analyticModel.current, response?.data?.content?.items?.length)
+      }
+    }
+    return response;
+  }
+
   return (
     <section>
       <div className="cmp-configurations-grid">
@@ -192,7 +225,7 @@ function ConfigurationGrid(props) {
           Filters={ConfigurationGridSearch}
           label={componentProp.searchCriteria?.title ?? "Filter Configurations"}
           componentProp={componentProp.searchCriteria}
-          onSearchRequest={filteringExtension.onQueryChanged}
+          onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
         ></GridSearchCriteria>
         <Grid
@@ -202,9 +235,7 @@ function ConfigurationGrid(props) {
           onAfterGridInit={(config) =>
             filteringExtension.onAfterGridInit(config)
           }
-          requestInterceptor={(request) =>
-            filteringExtension.requestInterceptor(request)
-          }
+          requestInterceptor={handleRequestInterceptor}
         ></Grid>
         {modal}
       </div>

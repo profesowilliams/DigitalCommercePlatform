@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { isNotEmptyValue } from "../../../../utils/utils";
 import Button from "../Widgets/Button";
 
 /**
@@ -24,6 +25,7 @@ function GridSearchCriteria({
   uiServiceEndPoint,
 }) {
 	const filter = useRef(null);
+	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
 	let [filterActive, setFilterActive] = useState(false);
 	const [externalFilterActive, setExternalFilterActive] = useState(false);
 	const [reset, setReset] = useState(false);
@@ -33,9 +35,10 @@ function GridSearchCriteria({
 		return str === null || str.match(/^ *$/) !== null;
 	}
 
-  function handleChange(change) {
+  function handleChange(change, analyticObject) {
     if (change && !isEmptyOrSpaces(change)) {
       filter.current = change;
+	  analyticsData.current = analyticObject;
       setFilterActive(true);
     } else {
       setFilterActive(false);
@@ -44,7 +47,11 @@ function GridSearchCriteria({
 
   function onSearch() {
     if (typeof onSearchRequest === "function" && filter.current) {
-      onSearchRequest({ queryString: filter.current });
+		onSearchRequest(
+			isNotEmptyValue(analyticsData.current) ?
+				{ queryString: filter.current, analyticsData: analyticsData.current } :
+				{ queryString: filter.current }
+		);
     }
   }
 
@@ -94,7 +101,7 @@ function GridSearchCriteria({
 						key={reset}
 						componentProp={componentProp}
 						onSearch={onSearch}
-						onQueryChanged={(query) => handleChange(query)}
+						onQueryChanged={(query, analyticObject) => handleChange(query, analyticObject)}
 						setFilterActive={setFilterActive}
 						setExternalFilterActive={setExternalFilterActive}
 						onKeyPress={(isEnter) => isEnter && onSearch()}

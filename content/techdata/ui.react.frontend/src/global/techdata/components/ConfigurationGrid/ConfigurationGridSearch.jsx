@@ -3,8 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, validateDatePicker } from "../../../../utils/utils";
-
+import { formateDatePicker, isNotEmptyValue, validateDatePicker } from "../../../../utils/utils";
 function ConfigurationGridSearch({
   componentProp,
   onQueryChanged,
@@ -53,6 +52,16 @@ function ConfigurationGridSearch({
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
 
+  const dispatchAnalyticsChange = (query) => {
+    return {
+      searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
+      searchOption: isNotEmptyValue(query.keyword?.value),
+      configFilter: false,
+      fromDate: isNotEmptyValue(query.from?.key),
+      toDate: isNotEmptyValue(query.to?.key),
+    };
+  }
+
   function dispatchQueryChange(query) {
     let keyword =
       query.keyword?.key && query.keyword?.value
@@ -79,9 +88,11 @@ function ConfigurationGridSearch({
 
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
+      const analyticObject = dispatchAnalyticsChange(query);
       setToMinDate(query.from?.value)
       setFromMinDate(currentDate)
-      onQueryChanged(concatedQuery);
+      onQueryChanged(concatedQuery, analyticObject);
+
     } else {
       onQueryChanged("");
     }
