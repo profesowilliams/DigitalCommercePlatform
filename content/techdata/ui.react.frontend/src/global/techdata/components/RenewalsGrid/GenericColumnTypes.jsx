@@ -15,13 +15,14 @@ const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
   const { value, data } = eventProps;
   const columnFields = {
-    reseller: value?.name,
+    resellername: data?.reseller?.name,
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
-    renewal: <ContractColumn data={data} />,
-    dueDateDays: <DueDateDayColumn columnValue={data?.dueDate} />,
-    dueDate: <DueDateColumn columnValue={value} />,
+    renewedduration: <ContractColumn data={data} />,
+    dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
+    duedate: <DueDateColumn columnValue={data?.dueDate} />,
     price: thousandSeparator(value),
+    agreementnumber: data?.agreementNumber 
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
   return columnFields[columnKey] || defaultValue();

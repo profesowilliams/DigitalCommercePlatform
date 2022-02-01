@@ -40,7 +40,7 @@
         <item0
             jcr:primaryType="nt:unstructured"
             columnLabel="Reseller name"
-            columnKey="reseller"
+            columnKey="resellername"
             sortable="{Boolean}true"
             columnType="plainResellerColumn"
         />
@@ -61,21 +61,21 @@
         <item3
             jcr:primaryType="nt:unstructured"
             columnLabel="Agreement No"
-            columnKey="agreementNumber"
+            columnKey="agreementnumber"
             sortable="{Boolean}true"
             columnType="plainText"
         />
         <item4
             jcr:primaryType="nt:unstructured"
             columnLabel="Renewal Plan"
-            columnKey="renewal"
+            columnKey="renewedduration"
             sortable="{Boolean}true"
             columnType="plainText"
         />
         <item5
             jcr:primaryType="nt:unstructured"
             columnLabel="Due in (days)"
-            columnKey="dueDateDays"
+            columnKey="dueDays"
             sortable="{Boolean}true"
             columnType="plainText"
         />
