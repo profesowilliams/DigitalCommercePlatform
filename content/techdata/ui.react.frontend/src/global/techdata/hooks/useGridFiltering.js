@@ -31,8 +31,8 @@ export default function useGridFiltering() {
         const response = await usPost(request.url, postData );
         willDoPostRequest.current = false
         return response;
-      }
-        const url = request.url;
+      } 
+      const url = filter.current ? request.url + filter.current : request.url;     
       let response = await request.get(url);
       return response;
     } catch (error) {

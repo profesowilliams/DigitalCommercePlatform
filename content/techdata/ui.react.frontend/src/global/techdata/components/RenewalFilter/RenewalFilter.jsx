@@ -18,8 +18,8 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
 
   return (
     <div className="cmp-renewal-filter">
-      <div className="cmp-renewals-filter-container">
-      <Button btnClass="cmp-renewals-filter__button" onClick={handleFilterClick}>
+      <div className="cmp-renewals-filter-container" onClick={handleFilterClick}>
+      <Button btnClass="cmp-renewals-filter__button">
         Filter
       </Button>
       <i className="fas fa-sliders-h"></i>
