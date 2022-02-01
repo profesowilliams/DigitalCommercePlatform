@@ -9,6 +9,7 @@ using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,6 +51,24 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             // assert
             result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void SearchSummaryHandler_Handle_ThrowException(SearchRenewalSummary.Request request)
+        {
+            // arrange
+            var _service = new Mock<IRenewalService>();
+
+            _service.Setup(x => x.GetRenewalsSummaryFor(It.IsAny<SearchRenewalSummary.Request>())).Throws(new Exception("test"));
+
+            var handler = new SearchRenewalSummary.GetRenewalsHandler(_service.Object, Context.Object, Provider.Object, AppSettings.Object);
+
+            // act
+            Func<Task> act = async () => { await handler.Handle(request, new CancellationToken()).ConfigureAwait(false); };
+
+            //assert
+            act.Should().ThrowAsync<Exception>();
         }
     }
 }

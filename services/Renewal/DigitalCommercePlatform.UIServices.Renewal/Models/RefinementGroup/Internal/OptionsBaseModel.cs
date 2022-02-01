@@ -12,6 +12,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.Inte
         [JsonProperty(Order = 2)]
         public string Text { get; set; }
         [JsonProperty(Order = 3)]
+        public string SearchKey { get; set; }
+        [JsonProperty(Order = 4)]
         public string Selected { get; set; }
     }
 }

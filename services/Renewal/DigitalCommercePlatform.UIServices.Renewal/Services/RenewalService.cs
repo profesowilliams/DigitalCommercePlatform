@@ -8,14 +8,12 @@ using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.Internal
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
-using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Services
@@ -331,9 +329,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
             foreach (var vendor in vendors)
             {
-                var subModel = list?.Where(x => x.Vendor.Name == vendor)?.Select(x => x.ProgramName)?.Distinct()?.Select(x => new OptionsBaseModel { Text = x }).ToList();
-                var element = new OptionsModel() { Text = vendor, SubOptions = subModel };
+               var subModel = list?.Where(x => x.Vendor.Name == vendor)?.Select(x => x.ProgramName)?.Distinct()?.Select(x => new OptionsBaseModel { Text = x, SearchKey = "ProgramName" }).ToList();
+               var element = new OptionsModel() { Text = vendor, SubOptions = subModel, SearchKey = "VendorName" };
 
+               
                 options.Add(element);
             }
 
@@ -348,6 +347,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             RefinementsModel result = new()
             { 
                 Name = "End user type",
+                SearchKey = "EndUserType",
                 Options = list?.Select(x => x.EndUserType)?.Distinct()?.Where(x => x != null)?.Select(w => new OptionsModel() { Text = w }).ToList()
             };
 
@@ -359,6 +359,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             RefinementsModel result = new()
             {
                 Name = "Renewal Type",
+                SearchKey = "Type",
                 Options = list?.Select(x => x.Source.Type)?.Distinct()?.Where(x => x != null)?.Select(w => new OptionsModel() { Text = w }).ToList()
             };
 
