@@ -15,6 +15,7 @@ import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
 import { generateExcelFileFromPost } from "../../../../utils/utils";
+import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -50,8 +51,20 @@ const QuoteDetails = ({ componentProp }) => {
   const [whiteLabelLogoUpload, setWhiteLabelLogoUpload] = useState(null);
   const [ancillaryItems, setAncillaryItems] = useState(null);
   const [modal, setModal] = useState(null);
-
+  const ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT = 'quoteExport';
   productLines.agGridLicenseKey = agGridLicenseKey;
+
+  const handlerAnalyticExportEvent = (exportTypeParam) => {
+    const quoteDetails = {
+      quoteID : id,
+      exportType: exportTypeParam,
+    }
+    const objectToSend = {
+      quoteDetails,
+      event: ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  }
 
   function onQuoteCheckout() {
     redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
@@ -72,6 +85,7 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   const downloadClickedEvent = (whiteLabelLogo = null, ancillaryItemsProps = null) => {
+    handlerAnalyticExportEvent('PDF')
     downloadClicked(quoteDetails,
       true,
       logoURL,
@@ -93,6 +107,7 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   async function exportToCSV() {
+    handlerAnalyticExportEvent('CSV')
     // call API to get CSV according to actual data
     let extraOptions = {
       resellerLogo: false,
