@@ -522,7 +522,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public string GetCheckoutSystem(SourceModel source)
         {
 
-            if (source?.System == "Q")
+            if (source?.System?.ToUpper() == "Q" && source?.TargetSystem?.ToUpper() == "ECC")
                 return "6.8";
             else
                 return "4.6";
