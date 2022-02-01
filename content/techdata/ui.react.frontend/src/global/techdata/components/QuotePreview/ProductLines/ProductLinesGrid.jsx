@@ -111,7 +111,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       onDetailsShown: (row) => {},
       onDetailsHidden: (row) => {},
       valueFormatter: ({ data }) => {
-        return "$" + thousandSeparator(data.unitPrice * data.quantity);
+        return "$" + thousandSeparator(data.unitListPrice * data.quantity);
       },
       sortable: false,
     },
@@ -120,7 +120,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
   function onSelectionChanged({ api }) {
     selectedLinesModel.length = 0;
     api.forEachNode((rowNode) => {
-      const _price = rowNode.data.quantity * rowNode.data.unitPrice;
+      const _price = rowNode.data.quantity * rowNode.data.unitListPrice;
       rowNode.data.extendedPrice = _price;
       const _row = Object.assign({}, rowNode.data);
       delete _row.extendedPriceFormatted;
