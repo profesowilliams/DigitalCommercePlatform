@@ -12,6 +12,7 @@ import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing } from "./QuoteTools";
 import Modal from '../Modal/Modal';
+import { pushEvent } from '../../../../utils/dataLayerUtils';
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -222,6 +223,7 @@ function QuotePreview(props) {
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => {
+      setDealApplyAnalytics(generalInformation);
       let newGeneralDetails = {
         ...previousQuoteDetails,
         tier: generalInformation.tier,
@@ -248,6 +250,19 @@ function QuotePreview(props) {
       return newGeneralDetails;
     });
   }
+
+  const setDealApplyAnalytics = (generalInfo) => {
+    pushEvent(
+      "qpDealApply",
+      {},
+      {
+        quotePreview: {
+          dealId: generalInfo.deal.dealId,
+          genTier: generalInfo.tier,
+        },
+      }
+    );
+  };
 
   const endUserInfoChange = (endUserlInformation) =>{
     setQuoteWithoutEndUser(false);
