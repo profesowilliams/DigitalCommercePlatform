@@ -52,6 +52,10 @@ const QuoteDetails = ({ componentProp }) => {
   const [ancillaryItems, setAncillaryItems] = useState(null);
   const [modal, setModal] = useState(null);
   const ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT = 'quoteExport';
+  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_EVENT = 'click';
+  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY = 'Quote Details Table Interactions';
+  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME = 'Checkout';
+  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE = 'CTA';
   productLines.agGridLicenseKey = agGridLicenseKey;
 
   const handlerAnalyticExportEvent = (exportTypeParam) => {
@@ -66,7 +70,35 @@ const QuoteDetails = ({ componentProp }) => {
     pushEventAnalyticsGlobal(objectToSend);
   }
 
+  const handlerAnalyticCheckoutEvent = () => {
+    /**
+     * @type {any[]}
+     */
+    const itemsToPopulate = quoteDetails.items;
+    const productToSend = itemsToPopulate.map(item => {
+      return {
+        productInfo: {
+          parentSKU : item.tdNumber,
+          name: item.displayName
+        }
+      }
+    });
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_EVENT,
+      clickInfo: {
+        type: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
+        name: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME
+      },
+      click: {
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY
+      },
+      products: productToSend
+    }
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
   function onQuoteCheckout() {
+    handlerAnalyticCheckoutEvent()
     redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
   }
 
