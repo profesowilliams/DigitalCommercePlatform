@@ -24,7 +24,7 @@ function OrdersGrid(props) {
     const [modal, setModal] = useState(null);
     const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
-
+    const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Orders Table Interactions';
     const STATUS = {
         onHold: 'onHold',
         inProcess: 'inProcess',
@@ -429,6 +429,7 @@ function OrdersGrid(props) {
                     onSearchRequest={handleOnSearchRequest}
                     onClearRequest={filteringExtension.onQueryChanged}
                     uiServiceEndPoint={uiServiceEndPoint}
+                    category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}

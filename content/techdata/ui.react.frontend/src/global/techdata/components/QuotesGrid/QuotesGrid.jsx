@@ -5,10 +5,16 @@ import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from '../Modal/Modal';
+import {pushEventAnalyticsGlobal} from '../../../../utils/dataLayerUtils';
 
 function QuotesGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
+
+  const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
+  const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
+  const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Quotes Table Interactions';
+  const ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION = 'Checkout';
 
   const [modal, setModal] = useState(null);
 
@@ -54,6 +60,27 @@ function QuotesGrid(props) {
     filteringExtension.onQueryChanged(query);
   }
 
+  /**
+   * handler event that push a click event
+   * information to adobeDataLayer
+   * @param {string} param 
+   */
+   const handlerAnalyticsClickEvent = (param = '') => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
+      name : param,
+    };
+    const click = {
+      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+      clickInfo,
+      click
+    }
+    pushEventAnalyticsGlobal(objectToSend);
+  };
+
   const columnDefs = [
     {
       headerName: "TD Quote ID",
@@ -61,7 +88,7 @@ function QuotesGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div>
+          <div onClick={() => handlerAnalyticsClickEvent(props.value)} >
             <a
               className="cmp-grid-url-underlined"
               href={`${
@@ -134,7 +161,10 @@ function QuotesGrid(props) {
       sortable: false,
       cellRenderer: (props) => {
         return (
-          <div className="cmp-quotes-grid__checkout-icon">
+          <div
+            className="cmp-quotes-grid__checkout-icon"
+            onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION)}
+          >
             {props.value && (
               <Checkout
                 line={props.data}
@@ -169,6 +199,7 @@ function QuotesGrid(props) {
           onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
           uiServiceEndPoint={uiServiceEndPoint}
+          category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

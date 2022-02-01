@@ -7,6 +7,7 @@ const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl, handlerAnal
   }
 
   /**
+   * 
    * Event to handler the analytic
    * data recolected by the searchBar component
    * @param {string} searchString 

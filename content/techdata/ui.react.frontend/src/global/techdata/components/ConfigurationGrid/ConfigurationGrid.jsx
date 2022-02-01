@@ -105,10 +105,7 @@ function ConfigurationGrid(props) {
     return componentProp.configDetailUrl?.replace("{id}", props.value);
   }
 
-  /**
-   * handler event that push a click event
-   * information to adobeDataLayer
-   */
+
   /**
    * handler event that push a click event
    * information to adobeDataLayer
@@ -127,24 +124,6 @@ function ConfigurationGrid(props) {
       event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
       clickInfo,
       quotes,
-    }
-    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
-  };
-
-  /**
-   * handler event that push a click event
-   * coming from the button Clear Filters
-   * information to adobeDataLayer
-   */
-  const handlerAnalyticsClearClickEvent = () => {
-    const clickInfo = {
-      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
-      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS,
-    };
-    const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
-      clickInfo
     }
     DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
   };
@@ -282,7 +261,7 @@ function ConfigurationGrid(props) {
           componentProp={componentProp.searchCriteria}
           onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
-          analyticsEvent={handlerAnalyticsClearClickEvent}
+          category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 let dataLayerEnabled = null;
 let dataLayer = null;
+const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
+const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
+const ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS = 'Clear all filters';
 
 export const isDataLayerEnabled = () => {
   if (dataLayerEnabled === null) {
@@ -78,4 +81,25 @@ export const removeEventListener = (eventName, handler) => {
   if (isDataLayerEnabled()) {
     getDataLayer().removeEventListener(eventName, handler);
   }
+};
+
+/**
+ * Global funtion to handler the click event into analytics
+ * for the Clear All Filters button in all the grids
+ * @param {string} category 
+ */
+export const handlerAnalyticsClearClickEvent = (category = '') => {
+  const clickInfo = {
+      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
+      name : ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS,
+    };
+  const click = {
+    category : category,
+  }
+  const objectToSend = {
+    event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+    clickInfo,
+    click
+  }
+  pushEventAnalyticsGlobal(objectToSend);
 };

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { handlerAnalyticsClearClickEvent } from "../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import Button from "../Widgets/Button";
 
@@ -12,7 +13,7 @@ import Button from "../Widgets/Button";
  * @param {() => void} props.onClearRequest
  * @param {JSX.Element} props.HeaderButtonOptions
  * @param {JSX.Element} props.ButtonsComponentHeader
- * @param {() => void} props.analyticsEvent
+ * @param {string} props.category
  * @returns 
  */
 function GridSearchCriteria({
@@ -24,7 +25,7 @@ function GridSearchCriteria({
   HeaderButtonOptions,
   ButtonsComponentHeader,
   uiServiceEndPoint,
-  analyticsEvent,
+  category = '',
 }) {
 	const filter = useRef(null);
 	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
@@ -60,9 +61,7 @@ function GridSearchCriteria({
 	function onClear() {
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
-			if (typeof analyticsEvent === 'function') {
-				analyticsEvent()	
-			}
+			handlerAnalyticsClearClickEvent(category)	// Analytic event handler
 		}
 		setReset(!reset);
 		setFilterActive(false);
