@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 import {getUserDataInitialState, hasDCPAccess} from "../../../../utils/user-utils";
+import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
 function getShopLoginUrlPrefix() {
   let prefixShopAuthUrl = "";
@@ -53,7 +54,7 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
     dcpDomain,
   } = JSON.parse(componentProp);
-
+  const ADOBE_DATA_LAYER_SEARCH_BAR_EVENT = 'internalSearch';
   const [userData, setUserData] = useState(getUserDataInitialState);
   
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
@@ -140,6 +141,7 @@ const SearchBar = ({ data, componentProp }) => {
    * @returns 
    */
   const getSearchUrl = async (searchTerm) => {
+    handlerAnalyticsSearchEvent(searchTerm, selectedArea.area, 0);
     // if the user have DCP Access can search by the DCP domain
     if (hasDCPAccess(userData) && (selectedArea.area === "quote" || selectedArea.area === "order")) {
       const urlResponse = await getURLToSearchInGrid(searchTerm)
@@ -152,6 +154,30 @@ const SearchBar = ({ data, componentProp }) => {
       }
       return getShopLoginUrlPrefix() + searchTargetUrl;
     }
+  };
+
+  /**
+   * handler event that push a search event
+   * information to adobeDataLayer
+   * @param {string} searchTerm 
+   * @param {string} searchType 
+   * @param {string} typeAhead 
+   */
+  const handlerAnalyticsSearchEvent = (
+    searchTerm = '',
+    searchType = '',
+    typeAhead = 0
+   ) => {
+    const search = {
+      searchTerm  : searchTerm,
+      searchType  : searchType,
+      typeAhead : typeAhead,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_SEARCH_BAR_EVENT,
+      search,
+    }
+    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
   };
 
   const getTypeAheadSearchUrl = (searchTerm, itemIndex, refinementId) => {
@@ -256,6 +282,7 @@ const SearchBar = ({ data, componentProp }) => {
         <SearchSuggestions
           suggestionsList={typeAheadSuggestions.Suggestions}
           getTypeAheadSearchUrl={getTypeAheadSearchUrl}
+          handlerAnalyticEvent={handlerAnalyticsSearchEvent}
         ></SearchSuggestions>
       </div>
     );

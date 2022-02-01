@@ -261,11 +261,14 @@ function ConfigurationGrid(props) {
   }
 
   async function handleRequestInterceptor(request) {
-    const response = await filteringExtension.requestInterceptor(request)
-    if (isNotEmptyValue(response?.data?.content?.items?.length)) {
-      if (analyticModel.current !== null ) {
-        handleFilterComponent(analyticModel.current, response?.data?.content?.items?.length)
-      }
+    const response = await filteringExtension.requestInterceptor(request);
+    if (analyticModel.current !== null ) {
+      handleFilterComponent(
+        analyticModel.current,
+        isNotEmptyValue(response?.data?.content?.items?.length) ? 
+          response?.data?.content?.items?.length :
+          0
+      );
     }
     return response;
   }
