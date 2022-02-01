@@ -3,7 +3,7 @@ import useGet from "../../../hooks/useGet";
 import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
-import { pushData } from '../../../../utils/dataLayerUtils';
+import { pushData, pushEvent } from '../../../../../utils/dataLayerUtils';
 
 function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
@@ -110,11 +110,25 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
     };
 
     const handleEditModeChange = () => {
+        handleEditModeChangeAnalytics();
         setGeneralInfoState(initialGeneralInfoState);
-
         updateTierFriendlyLabel(quoteDetails.tier);
-
         setEditMode(prevEditMode => !prevEditMode);
+    };
+
+    const handleEditModeChangeAnalytics = () => {
+        pushEvent(
+            "click",
+            {
+                name: "General Information",
+                type: "button",
+            },
+            {
+                click: {
+                category: "Quote Preview Table Interactions",
+                },
+            }
+        );
     };
 
     const closeEditMode = () => {

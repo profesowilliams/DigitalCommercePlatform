@@ -5,6 +5,7 @@ import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
+import { pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -57,6 +58,8 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   };
 
   const handleTitleClick = () => {
+    handleCompanyInfoAnalytics();
+
     /* don't make API call if customer address was already fetched. */
     if (addresses.length !== 0) {
       setEditView(true);
@@ -80,6 +83,21 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     };
 
     fetchCustomerAddress();
+  };
+
+  const handleCompanyInfoAnalytics = () => {
+    pushEvent(
+      "click",
+      {
+        name: "Your Company Information",
+        type: "button",
+      },
+      {
+        click: {
+          category: "Quote Preview Table Interactions",
+        },
+      }
+    );
   };
 
   const CompanyInfo = () => {
