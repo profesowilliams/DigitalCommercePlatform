@@ -181,6 +181,10 @@ use(function () {
     checkoutData.redirectUrl = this.shopDomain + this.cartURL;
   }
 
+  if (this.expressCheckoutRedirectUrl != null) {
+    checkoutData.expressCheckoutRedirectUrl = this.shopDomain+this.expressCheckoutRedirectUrl;
+  }
+
   if (checkoutData != null) {
     jsonObject["checkout"] = checkoutData;
   }

@@ -6,7 +6,7 @@ export async function redirectToCart(checkoutSystem, quoteId, config, onErrorHan
     if (checkoutSystem === '4.6') {
         system46Checkout(quoteId, config, onErrorHandler);
     } else {
-        window.location.replace(config.expressCheckoutRedirectUrl);
+        window.location.replace(config.expressCheckoutRedirectUrl.replace("{quote-id}", quoteId));
     }
 }
 
@@ -50,6 +50,7 @@ function Checkout({ line, checkoutConfig, onErrorHandler }) {
     redirectUrl: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.redirectUrl
       : "https://shop.techdata.com/cart",
+    expressCheckoutRedirectUrl: checkoutConfig?.expressCheckoutRedirectUrl
   };
 
   return (

@@ -17,9 +17,11 @@
         {"columnLabel":"Expires","columnKey":"expires", "sortable": false},
         {"columnLabel":"Quote Value","columnKey":"quoteValue", "sortable": true},
         {"columnLabel":"Checkout","columnKey":"canCheckOut", "sortable": false}],
-        "checkout":{"uiServiceEndPoint":"http://localhost:3000/ui-content/v1/replaceCart",
-        "redirectUrl": "https://shop.techdata.com/cart",
-        "expressCheckoutRedirectUrl": "https://shop.techdata.com/cart"},
+        "checkout": {
+            "uiServiceEndPoint":"http://localhost:3000/ui-content/v1/replaceCart",
+            "redirectUrl": "https://shop.techdata.com/cart",
+            "expressCheckoutRedirectUrl": "https://shop.techdata.com/expresscheckout/{quote-id}"
+        },
         "spaDealsIdLabel": "multiple",
         "agGridLicenseKey": "ThisIsAnInvalidAgGridLicenseKey"}'
     ></div>

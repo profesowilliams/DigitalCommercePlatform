@@ -223,7 +223,7 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["productLines"] = productLinesTab;
     }
 
-    jsonObject["checkout"] = utils.getCheckoutConfigurations(this.serviceData);
+    jsonObject["checkout"] = utils.getCheckoutConfigurations(this.serviceData, this);
 
     if (properties && properties["dropdownLabel"]) {
         quoteOptionsTab["dropdownLabel"] = properties["dropdownLabel"];

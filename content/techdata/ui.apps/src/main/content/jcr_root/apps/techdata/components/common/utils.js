@@ -24,7 +24,7 @@ use(function () {
             targetObject['agGridLicenseKey'] = serviceData['agGridLicenseKey'];
         }
     }
-    function getCheckoutConfigurations (serviceData) {
+    function getCheckoutConfigurations (serviceData, componentData) {
         var checkoutConfigurations = {};
 
         if (serviceData.replaceCartEndpoint != null) {
@@ -35,8 +35,8 @@ use(function () {
             checkoutConfigurations.redirectUrl = serviceData.shopDomain+serviceData.cartURL;
         }
 
-        if (serviceData.expressCheckoutRedirectUrl != null) {
-            checkoutConfigurations.expressCheckoutRedirectUrl = serviceData.shopDomain+serviceData.expressCheckoutRedirectUrl;
+        if (componentData.expressCheckoutRedirectUrl != null) {
+            checkoutConfigurations.expressCheckoutRedirectUrl = serviceData.shopDomain+componentData.expressCheckoutRedirectUrl;
         }
 
         return checkoutConfigurations;
