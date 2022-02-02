@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
 using DigitalFoundation.Common.Services.Base;
-using DigitalFoundation.Common.Security.PolicyAuthorization.Attributes;
 
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
 {
@@ -22,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
     public class OrderController : BaseController /*BaseUIServiceController*/
     {
 
-        public OrderController(IMediator mediator,
+        public OrderController(IMediator mediator, 
             ILogger<BaseUIServiceController> logger) : base(mediator, logger)
         {
 
@@ -30,7 +29,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
 
         [HttpPost]
         [Route("GetOrder")]
-        [RoleAuthorize(Roles = "CanViewOrders")]
         public async Task<IActionResult> GetOrder([FromBody] NuanceWebChatRequest request)
         {
             var response = await Mediator.Send(new GetOrder.Request{WbChatRequest = request}).ConfigureAwait(false);
