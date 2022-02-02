@@ -24,6 +24,24 @@ export default function useGridFiltering() {
     }
   }
 
+    function stripCreatedToParamDates(url) {
+        const Filter = filter.current.toLowerCase();
+        if (Filter.includes("createdfrom") || Filter.includes("createdto")) {
+            let urlToSplit = ''
+            if (url.includes('&createdFrom')) {
+                urlToSplit = url.split('&createdFrom')[0]
+
+            } else if (url.includes('&createdTo')) {
+                urlToSplit = url.split('&createdTo')[0]
+            }
+            const responseNew = urlToSplit + filter.current;
+            return responseNew;
+        }
+        else {
+            return url + filter.current;
+        }
+    }
+
   async function requestInterceptor(request) {
     try {      
       if (willDoPostRequest.current){
@@ -32,7 +50,10 @@ export default function useGridFiltering() {
         willDoPostRequest.current = false
         return response;
       } 
-      const url = filter.current ? request.url + filter.current : request.url;     
+
+      const url = filter?.current
+        ? stripCreatedToParamDates(request.url)
+        : request.url;
       let response = await request.get(url);
       return response;
     } catch (error) {
