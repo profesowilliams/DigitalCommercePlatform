@@ -6,18 +6,17 @@ import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from '../Modal/Modal';
 import {pushEventAnalyticsGlobal} from '../../../../utils/dataLayerUtils';
+import {
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+  ADOBE_DATA_LAYER_LINK_TYPE,
+  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME,
+  ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY
+} from "../../../../utils/constants";
 
 function QuotesGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
-
-  const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
-  const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
-  const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Quotes Table Interactions';
-  const ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION = 'Checkout';
-
   const [modal, setModal] = useState(null);
-
   const { spaDealsIdLabel } = componentProp;
 
   const getDateTransformed = (dateUTC) => {
@@ -67,14 +66,14 @@ function QuotesGrid(props) {
    */
    const handlerAnalyticsClickEvent = (param = '') => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
       name : param,
     };
     const click = {
-      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
+      category : ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY,
     };
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
       click
     }
@@ -163,7 +162,7 @@ function QuotesGrid(props) {
         return (
           <div
             className="cmp-quotes-grid__checkout-icon"
-            onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION)}
+            onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)}
           >
             {props.value && (
               <Checkout
@@ -199,7 +198,7 @@ function QuotesGrid(props) {
           onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
           uiServiceEndPoint={uiServiceEndPoint}
-          category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
+          category={ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

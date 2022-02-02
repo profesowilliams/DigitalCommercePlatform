@@ -16,6 +16,14 @@ import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
 import { generateExcelFileFromPost } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
+import {
+  ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,
+  ADOBE_DATA_LAYER_QUOTE_PAGE_VIEW_EVENT,
+  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
+  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME,
+  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+} from "../../../../utils/constants";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -51,12 +59,9 @@ const QuoteDetails = ({ componentProp }) => {
   const [whiteLabelLogoUpload, setWhiteLabelLogoUpload] = useState(null);
   const [ancillaryItems, setAncillaryItems] = useState(null);
   const [modal, setModal] = useState(null);
-  const ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT = 'quoteExport';
-  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_EVENT = 'click';
-  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY = 'Quote Details Table Interactions';
-  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME = 'Checkout';
-  const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE = 'CTA';
   productLines.agGridLicenseKey = agGridLicenseKey;
+  const [analyticsProduct, setAnalyticsProduct] = useState([]);
+  const [flagAnalytic, setFlagAnalytic] = useState(true);
 
   const handlerAnalyticExportEvent = (exportTypeParam) => {
     const quoteDetails = {
@@ -70,12 +75,8 @@ const QuoteDetails = ({ componentProp }) => {
     pushEventAnalyticsGlobal(objectToSend);
   }
 
-  const handlerAnalyticCheckoutEvent = () => {
-    /**
-     * @type {any[]}
-     */
-    const itemsToPopulate = quoteDetails.items;
-    const productToSend = itemsToPopulate.map(item => {
+  const getPopulateProdutcsToAnalytics = (quoteDetailsParam) => {
+    const productsToSend = quoteDetailsParam.items.map(item => {
       return {
         productInfo: {
           parentSKU : item.tdNumber,
@@ -83,19 +84,32 @@ const QuoteDetails = ({ componentProp }) => {
         }
       }
     });
+    setAnalyticsProduct(productsToSend);
+  }
+
+  const handlerAnalyticCheckoutEvent = () => {
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_EVENT,
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo: {
         type: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
-        name: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME
-      },
-      click: {
+        name: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME,
         category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY
       },
-      products: productToSend
+      products: analyticsProduct
     }
     pushEventAnalyticsGlobal(objectToSend)
   };
+
+  const handlerAnalyticPageView = () => {
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_QUOTE_PAGE_VIEW_EVENT,
+      quotes: {
+        quoteID : id,
+      },
+      products: analyticsProduct
+    }
+    pushEventAnalyticsGlobal(objectToSend)
+  }
 
   function onQuoteCheckout() {
     handlerAnalyticCheckoutEvent()
@@ -209,8 +223,15 @@ const QuoteDetails = ({ componentProp }) => {
   }, [whiteLabel]);
 
   useEffect(() => {
-    response?.content?.details && setQuoteDetails(response.content.details);
+    if (analyticsProduct?.length > 0 && flagAnalytic) {
+      setFlagAnalytic(false)
+      handlerAnalyticPageView()
+    }
+  }, [analyticsProduct])
 
+  useEffect(() => {
+    response?.content?.details && setQuoteDetails(response.content.details);
+    response?.content?.details && getPopulateProdutcsToAnalytics(response.content.details);
     if(!isLoading && error == null  && !response?.content?.details)
     {
       setModal((previousInfo) => (

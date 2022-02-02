@@ -11,16 +11,16 @@ import {
 } from "./QuotesModals";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../utils/utils";
+import { 
+  ADOBE_DATA_LAYER_LINK_TYPE,
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+  ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS,
+  ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY,
+} from "../../../../utils/constants";
 
 function ConfigurationGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const filteringExtension = useGridFiltering();
-  const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
-  const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
-  const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Configuration Table Interactions';
-  const ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION = 'Create quote';
-  const ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS = 'Clear all filters';
-  const ADOBE_DATA_LAYER_QUOTES_OPTIONS = 'From Config';
   const [modal, setModal] = useState(null);
 
   const { spaDealsIdLabel } = componentProp;
@@ -113,15 +113,15 @@ function ConfigurationGrid(props) {
    */
   const handlerAnalyticsClickEvent = (param = '') => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
-      category : ADOBE_DATA_LAYER_CLICKINFO_CATEGORY,
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
+      category : ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY,
       name : param,
     };
     const quotes = {
-      options: ADOBE_DATA_LAYER_QUOTES_OPTIONS
+      options: ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS
     };
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
       quotes,
     }
@@ -208,7 +208,7 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CLICKINFO_NAME_ACTION)}>
+          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS)}>
             <a className="cmp-grid-url-not-underlined" href={getQuotePreviewUrl(props)}>
               {componentProp.actionColumnLabel}
             </a>
@@ -261,7 +261,7 @@ function ConfigurationGrid(props) {
           componentProp={componentProp.searchCriteria}
           onSearchRequest={handleOnSearchRequest}
           onClearRequest={filteringExtension.onQueryChanged}
-          category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
+          category={ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY}
         ></GridSearchCriteria>
         <Grid
           columnDefinition={columnDefs}

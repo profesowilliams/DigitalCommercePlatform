@@ -5,6 +5,7 @@ import SearchAreas from "./SearchAreas";
 import SearchSuggestions from "./SearchSuggestions";
 import {getUserDataInitialState, hasDCPAccess} from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
+import { ADOBE_DATA_LAYER_SEARCH_BAR_EVENT } from "../../../../utils/constants";
 
 function getShopLoginUrlPrefix() {
   let prefixShopAuthUrl = "";
@@ -54,7 +55,6 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
     dcpDomain,
   } = JSON.parse(componentProp);
-  const ADOBE_DATA_LAYER_SEARCH_BAR_EVENT = 'internalSearch';
   const [userData, setUserData] = useState(getUserDataInitialState);
   
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());

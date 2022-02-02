@@ -7,6 +7,7 @@ import Loader from "../../Widgets/Loader";
 import FullScreenLoader from "../../Widgets/FullScreenLoader";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
+import { ADOBE_DATA_LAYER_QUOTE_WHITE_LABEL_EVENT } from "../../../../../utils/constants";
 
 const WhiteLabelQuoteHeader = ({ componentProp, logoUploadHandler, setWhiteLabelOptions }) => {
   const { uiServiceEndPoint, whiteLabel, logoURL } = JSON.parse(componentProp);
@@ -15,15 +16,13 @@ const WhiteLabelQuoteHeader = ({ componentProp, logoUploadHandler, setWhiteLabel
   const [response, loading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
   const [quoteDetails, setQuoteDetails] = useState(null);
   
-  const ADOBE_DATA_LAYER_WHITE_LABEL_EVENT = 'qpWhiteLabel';
-  
   const handlerAnalyticWhiteLabelEvent = () => {
     const quoteDetails = {
       quoteID : id,
     }
     const objectToSend = {
       quoteDetails,
-      event: ADOBE_DATA_LAYER_WHITE_LABEL_EVENT
+      event: ADOBE_DATA_LAYER_QUOTE_WHITE_LABEL_EVENT
     };
     pushEventAnalyticsGlobal(objectToSend);
   };

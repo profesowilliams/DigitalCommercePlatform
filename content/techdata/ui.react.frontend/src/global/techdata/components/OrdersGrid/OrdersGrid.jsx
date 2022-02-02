@@ -9,6 +9,7 @@ import { requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 import { usePreservedStore } from '../../hooks/usePreservedStore';
 import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
+import { ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY } from '../../../../utils/constants';
 
 const Grid = React.memo(GridComponent);
 
@@ -24,7 +25,6 @@ function OrdersGrid(props) {
     const [modal, setModal] = useState(null);
     const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
-    const ADOBE_DATA_LAYER_CLICKINFO_CATEGORY = 'Orders Table Interactions';
     const STATUS = {
         onHold: 'onHold',
         inProcess: 'inProcess',
@@ -429,7 +429,7 @@ function OrdersGrid(props) {
                     onSearchRequest={handleOnSearchRequest}
                     onClearRequest={filteringExtension.onQueryChanged}
                     uiServiceEndPoint={uiServiceEndPoint}
-                    category={ADOBE_DATA_LAYER_CLICKINFO_CATEGORY}
+                    category={ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}
