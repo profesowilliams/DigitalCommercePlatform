@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public List<string> LinkedRenewals { get; set; }
         public string RenewalGroupId { get; set; }
         public DateTime DueDate { get; set; }
-        public string DueDays { get; set; }
+        public int? DueDays { get; set; }
         public bool? Incumbent { get; set; }
         public decimal? TotalReinstatementFeeCost { get; set; }
         public decimal? TotalReinstatementFeeSell { get; set; }

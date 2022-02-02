@@ -83,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var result = service.GetRenewalsSummaryFor(request).Result;
             
             result.Should().NotBeNull();
-            result.Count.Should().Be(6);
+            result.Count.Should().Be(3);
         }
 
         [Theory]
@@ -109,7 +109,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             return new ResponseSummaryDto
             {
-                Count = 6,
+                Count = 3,
                 Data = new List<SummaryDto>() 
                 { 
                     new SummaryDto
@@ -121,6 +121,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                     {
                         EndUserPO = "Test 2",
                         DueDate = DateTime.Now.AddDays(2)
+                    },
+                    new SummaryDto
+                    {
+                        EndUserPO = "Test 3",
+                        DueDate = DateTime.Now.AddDays(7)
                     }
                 }
             };
@@ -142,6 +147,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                     {
                         EndUserPO = "Test 2",
                         DueDate = DateTime.Now.AddDays(2)
+                    },
+                    new DetailedDto
+                    {
+                        EndUserPO = "Test 3",
+                        DueDate = DateTime.Now.AddDays(7)
                     }
                 }
             };
@@ -317,7 +327,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             request.Instance.Should().NotEndWith("*");
             request.SerialNumber.Should().NotEndWith("*");
             result.Should().NotBeNull();
-            result.Count.Should().Be(6);
+            result.Count.Should().Be(3);
         }
 
         [Fact]
@@ -346,7 +356,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             request.Instance.Should().NotEndWith("*");
             request.SerialNumber.Should().NotEndWith("*");
             result.Should().NotBeNull();
-            result.Count.Should().Be(6);
+            result.Count.Should().Be(3);
         }
 
         [Fact]
@@ -373,7 +383,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             request.Instance.Should().NotEndWith("*");
             request.SerialNumber.Should().NotEndWith("*");
             result.Should().NotBeNull();
-            result.Count.Should().Be(6);
+            result.Count.Should().Be(3);
         }
 
         [Fact]
@@ -393,7 +403,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
             result.Should().NotBeNull();
-            result.Count.Should().Be(6);
+            result.Count.Should().Be(3);
         }
 
         [Fact]
@@ -411,7 +421,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
-            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 1");
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 3");
             result.Should().NotBeNull();
             result.Count.Should().Be(3);
         }

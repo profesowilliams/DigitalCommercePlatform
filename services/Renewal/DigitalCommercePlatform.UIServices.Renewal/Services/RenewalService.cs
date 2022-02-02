@@ -60,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
                 var count = coreResult.Count;
 
-                switch(request.SortBy?.ToLowerInvariant())
+                switch (request.SortBy?.ToLowerInvariant())
                 {
                     case "duedays":
                         if (request.SortAscending)

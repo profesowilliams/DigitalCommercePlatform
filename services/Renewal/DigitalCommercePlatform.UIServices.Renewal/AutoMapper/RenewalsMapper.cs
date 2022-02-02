@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
             CreateMap<SourceDto, SourceModel>();
             CreateMap<TypeValueDto, QuoteTypeValueModel>();
             CreateMap<DetailedDto, DetailedModel>()
-                .ForMember(x=>x.DueDays, y => y.MapFrom(s=> (s.DueDate - DateTime.Now).Days));
+                .ForMember(x => x.DueDays, y => y.MapFrom(s => (s.DueDate - DateTime.Now).Days));
             CreateMap<SummaryDto, SummaryModel>()
                 .ForMember(x => x.DueDays, y => y.MapFrom(s => (s.DueDate - DateTime.Now).Days));
             CreateMap<PartyDetailedDto, PartyDetailedModel>();
