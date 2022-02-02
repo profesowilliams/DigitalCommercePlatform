@@ -144,6 +144,40 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Products.First().Price.ListPrice.Should().Be(formattedListPrice);
         }
 
+        [Theory]
+        [AutoDomainData]
+        public async Task FullSearchProduct_Price_Is_Null(SearchRequestDto request, SearchResponseDto appResponse)
+        {
+            //Arrange
+            appResponse.Products.First().Price = null;
+
+            var fakeLogger = new FakeLogger<SearchService>();
+            var appSettingsMock = new Mock<IAppSettings>();
+            var siteSettingsMock = new Mock<ISiteSettings>();
+            var contextMock = new Mock<IUIContext>();
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
+            var translationServiceMock = new Mock<ITranslationService>();
+            var profileServiceMock = new Mock<IProfileService>();
+            var cultureServiceMock = new Mock<ICultureService>();
+
+
+            var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
+            middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
+                .Returns(Task.FromResult(appResponse));
+
+
+            var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
+                contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureServiceMock.Object));
+
+            //Act
+            var result = await searchService.GetFullSearchProductData(request, true);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Products.Should().NotBeNull();
+            result.Products.First().Price.Should().BeNull();
+        }
+
 
 
         [Theory]

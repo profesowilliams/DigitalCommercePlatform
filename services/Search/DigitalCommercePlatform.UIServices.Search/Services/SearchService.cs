@@ -221,15 +221,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             {
                 var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
 
-                product.Price = new PriceModel
-                {
-                    BasePrice = appSearchProduct.Price?.BasePrice?.Format(),
-                    BestPrice = appSearchProduct.Price?.BestPrice?.Format(),
-                    BestPriceExpiration = appSearchProduct.Price?.BestPriceExpiration.Format(),
-                    BestPriceIncludesWebDiscount = appSearchProduct.Price?.BestPriceIncludesWebDiscount,
-                    ListPrice = appSearchProduct.Price?.ListPrice.Format(notAvailableLabelText),
-                    PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price?.BasePrice, appSearchProduct.Price?.BestPrice)
-                };
+                product.Price = MapPrice(appSearchProduct, notAvailableLabelText);
 
                 product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
                 var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
@@ -252,6 +244,24 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                     o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
                 });
             });
+        }
+
+        private static PriceModel MapPrice(ElasticItemDto appSearchProduct, string notAvailableLabelText)
+        {
+            if (appSearchProduct?.Price == null)
+            {
+                return null;
+            }
+
+            return new PriceModel
+            {
+                BasePrice = appSearchProduct.Price.BasePrice?.Format(),
+                BestPrice = appSearchProduct.Price.BestPrice?.Format(),
+                BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
+                BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount,
+                ListPrice = appSearchProduct.Price.ListPrice.Format(notAvailableLabelText),
+                PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice)
+            };
         }
 
         private List<RefinementModel> NotTranslatedRefinemntsModel(RefinementGroupResponseDto group)
