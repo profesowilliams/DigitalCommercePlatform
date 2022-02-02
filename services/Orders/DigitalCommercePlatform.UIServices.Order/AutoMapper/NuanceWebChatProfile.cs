@@ -149,7 +149,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             { Status.ON_HOLD, "IN REVIEW" },
             { Status.IN_PROCESS, "OPEN & IN PROCESS" },
             { Status.SHIPPED, "SHIPPED" },
-            { Status.CANCELLED, "CANCELLED" },
+            { Status.CANCELLED, "CANCELED" },
         };
 
         private readonly Dictionary<Status, string> ItemStatusMap = new Dictionary<Status, string>()
