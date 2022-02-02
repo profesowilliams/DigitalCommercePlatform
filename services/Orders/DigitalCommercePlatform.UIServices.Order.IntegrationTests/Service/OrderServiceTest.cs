@@ -69,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
             var result = service.GetOrders(request).Result;
 
             result.Should().NotBeNull();
+            result.Creator.Should().Be("Creator3");
         }
         [Theory]
         [AutoDomainData]
@@ -99,7 +100,59 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
                 {
                     new OrderDto()
                     {
-                        Creator = "Creator1"
+                        Source = new Dto.Order.Internal.SourceDto()
+                        {
+                            System = "2"
+                        },
+                        Creator = "Creator1",
+                        TDOSSearchable = true,
+                        Items = new List<Dto.Order.Internal.ItemDto>()
+                        {
+                            new Dto.Order.Internal.ItemDto()
+                            {
+                                TDOSSearchable = false
+                            }
+                        }
+                    },
+                    new OrderDto()
+                    {
+                        Source = new Dto.Order.Internal.SourceDto()
+                        {
+                            System = "2"
+                        },
+                        Creator = "Creator2",
+                        TDOSSearchable = true,
+                        Items = new List<Dto.Order.Internal.ItemDto>()
+                        {
+                            new Dto.Order.Internal.ItemDto()
+                            {
+                                TDOSSearchable = false
+                            },
+                            new Dto.Order.Internal.ItemDto()
+                            {
+                                TDOSSearchable = false
+                            }
+                        }
+                    },
+                    new OrderDto()
+                    {
+                        Source = new Dto.Order.Internal.SourceDto()
+                        {
+                            System = "2"
+                        },
+                        Creator = "Creator3",
+                        TDOSSearchable = true,
+                        Items = new List<Dto.Order.Internal.ItemDto>()
+                        {
+                            new Dto.Order.Internal.ItemDto()
+                            {
+                                TDOSSearchable = true
+                            },
+                            new Dto.Order.Internal.ItemDto()
+                            {
+                                TDOSSearchable = false
+                            }
+                        }
                     }
                 }
             };

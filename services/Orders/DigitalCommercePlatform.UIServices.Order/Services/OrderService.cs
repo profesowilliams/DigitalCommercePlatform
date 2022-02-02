@@ -37,10 +37,18 @@ namespace DigitalCommercePlatform.UIServices.Order.Services
             try
             {
                 _logger.LogInformation("Call Order");
-                var finfRequest = _mapper.Map<FindRequestModel>(request);
+                var findRequest = _mapper.Map<FindRequestModel>(request);
+                findRequest.TDOSSearchable = true;
                 var coreResult = await
-                    _dfHttpClient.GetAsync<ResponseDto>(_appOrderServiceUrl.AppendPathSegment("Find").BuildQuery(finfRequest), request.Header.EcId).ConfigureAwait(false);
-                var modelList = _mapper.Map<List<OrderModel>>(coreResult.Data);
+                    _dfHttpClient.GetAsync<ResponseDto>(_appOrderServiceUrl.AppendPathSegment("Find").BuildQuery(findRequest), request.Header.EcId).ConfigureAwait(false);
+                var filteredResult = new List<OrderDto>();
+                foreach (var r in coreResult?.Data)
+                {
+                    if ((r.Source?.System == "2" || r.Source?.System == "3") && r.Items?.Count > 0)
+                        r.Items.RemoveAll(x => !x.TDOSSearchable);
+                    if (r.Items?.Count > 0) filteredResult.Add(r);
+                }
+                var modelList = _mapper.Map<List<OrderModel>>(filteredResult);
                 return modelList.FirstOrDefault();
             }
             catch(Exception ex)
