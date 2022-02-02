@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
               ;
             CreateMap<Models.Order.Internal.ItemModel,
                     DigitalCommercePlatform.UIServices.Order.Models.Internal.ItemModel>()
-                .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src.Status)))
+                .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetItemStatus(src)))
                 .ForMember(x=> x.TechDataPartNumber, y=>y.MapFrom(s=>s.Product.FirstOrDefault(f=> f.Type == ProductType.TECHDATA).ID))
                 .ForMember(x => x.Name, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.TECHDATA).Name))
                 .ForMember(x => x.LineId, y => y.MapFrom(s => s.ID))
@@ -87,7 +88,6 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 
                 ;
         }
-        
 
         private List<StatusCountModel> GetStatusCount(List<Models.Order.Internal.ItemModel> model)
         {
@@ -133,21 +133,31 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 
         private string GetStatus(Status status)
         {
-            switch (status)
-            {
-                case Status.OPEN:
-                    return "OPEN";
-                case Status.IN_PROCESS:
-                    return "OPEN AND IN PROCESS";
-                case Status.ON_HOLD:
-                    return "IN REVIEW";
-                case Status.SHIPPED:
-                    return "SHIPPED";
-                case Status.CANCELLED:
-                    return "CANCELLED";
-                default:
-                    return "WRONG STATUS";
-            }
+            return OrderStatusMap.ContainsKey(status) ? OrderStatusMap[status] : "WRONG STATUS";
         }
+
+        private object GetItemStatus(Models.Order.Internal.ItemModel item)
+        {
+            if (item.BackOrderIndicator == "Y") return "Back Ordered";
+            return ItemStatusMap.ContainsKey(item.Status) ? ItemStatusMap[item.Status] : "WRONG STATUS";
+        }
+
+        private readonly Dictionary<Status, string> OrderStatusMap = new Dictionary<Status, string>()
+        {
+            { Status.OPEN, "OPEN" },
+            { Status.ON_HOLD, "IN REVIEW" },
+            { Status.IN_PROCESS, "OPEN & IN PROCESS" },
+            { Status.SHIPPED, "SHIPPED" },
+            { Status.CANCELLED, "CANCELLED" },
+        };
+
+        private readonly Dictionary<Status, string> ItemStatusMap = new Dictionary<Status, string>()
+        {
+            { Status.OPEN, "In Process" },
+            { Status.ON_HOLD, "In Process" },
+            { Status.IN_PROCESS, "In Process" },
+            { Status.SHIPPED, "Shipped" },
+            { Status.CANCELLED, "Canceled" },
+        };
     }
 }
