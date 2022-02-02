@@ -10,6 +10,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const [showSecondary, setShowSecondary] = useState(false);
   const [secondaryItems, setSecondaryItems] = useState(null);
   const { id: userId, firstName: userName } = userDataCheck;
+  const [isSelected, setIsSelected] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const handlePrimaryClick = (obj) => {
     if (obj.secondaryMenus) {
@@ -60,6 +62,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       <button
         data-component="DropdownMenu"
         className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
+        onClick={(e) => {
+          setIsSelected(e.type === 'click');
+          setShowMenu(true);
+        }}
       >
         <svg width="26px" height="26px" viewBox="0 0 23 28" version="1.1">
           <g
@@ -102,7 +108,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
         </svg>
         {userName}
       </button>
-      <div className="cmp-sign-in-list cmp-sign-in--container">
+      <div className={`cmp-sign-in-list cmp-sign-in--container ${isSelected ? "selected" : ""} ${showMenu ? "showMenu" : ""}`}>
         {!showSecondary ? (
           <>
             <p className="user-greet">
@@ -118,10 +124,15 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                 <li
                   key={Symbol(linkTitle).toString()}
                   className="cmp-sign-in-list-content--item"
+                  onBlur={(e) => {
+                    if (!e.relatedTarget) {
+                      setIsSelected(false);
+                    }                                        
+                  }}
                 >
                   <a
                     onClick={() => handleLinkClick(linkUrl, dcpLink, linkTitle, linkTarget )}
-                    className="cmp-sign-in-list-content--item-link"
+                    className="cmp-sign-in-list-content--item-link" tabIndex="0"
                   >
                     <i
                       className={`cmp-sign-in-list-content--item-link--icon ${iconUrl}`}
@@ -138,6 +149,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
             <button
               className="cmp-sign-in-signout"
               onClick={() => handleSignOut()}
+              onBlur={() => setIsSelected(false)}
             >
               Log Out
             </button>

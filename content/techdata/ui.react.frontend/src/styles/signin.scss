@@ -45,7 +45,7 @@
       }
     }
     &:focus {
-      outline: inset; border-radius: 5px;
+      outline: inset; border-radius: 5px; padding: 5px;
     }
 
     svg {
@@ -55,6 +55,10 @@
         margin-right: 0;
       }
     }
+  }
+
+  .cmp-sign-in--container.selected, .cmp-sign-in--container.showMenu:focus {
+    display: block;
   }
 
   $offset-lg: 30px;
