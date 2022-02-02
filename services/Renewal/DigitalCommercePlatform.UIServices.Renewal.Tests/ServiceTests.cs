@@ -115,7 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                     new SummaryDto
                     {                
                         EndUserPO = "Test 1",
-                        DueDate = DateTime.Now.AddDays(5)
+                        DueDate = DateTime.Now.AddDays(5)                        
                     },
                     new SummaryDto
                     {
@@ -381,7 +381,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var request = new SearchRenewalSummary.Request()
             {
-                SortBy = "duedays"
+                SortBy = "duedays",
+                SortAscending = true
             };
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
@@ -400,7 +401,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var request = new SearchRenewalDetailed.Request()
             {
-                SortBy = "duedays"
+                SortBy = "duedays",
+                SortAscending = false
             };
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
@@ -409,7 +411,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
-            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 1");
             result.Should().NotBeNull();
             result.Count.Should().Be(3);
         }

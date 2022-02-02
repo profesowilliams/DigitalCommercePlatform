@@ -63,7 +63,14 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 switch(request.SortBy?.ToLowerInvariant())
                 {
                     case "duedays":
-                        modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        if (request.SortAscending)
+                        {
+                            modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        }
+                        else
+                        {
+                            modelList = modelList.OrderByDescending(x => x.DueDays).ToList();
+                        }
                         break;
                 }
 
@@ -108,7 +115,14 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 switch (request.SortBy?.ToLowerInvariant())
                 {
                     case "duedays":
-                        modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        if (request.SortAscending)
+                        {
+                            modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        }
+                        else
+                        {
+                            modelList = modelList.OrderByDescending(x => x.DueDays).ToList();
+                        }
                         break;
                 }
 
