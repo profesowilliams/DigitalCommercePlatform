@@ -80,5 +80,30 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //assert
             result1.Should().BeNull();
         }
+
+        [Theory]
+        [AutoDomainData]
+        public void GetCultureProfile_CallOncePerRequest(SearchProfileId searchProfileId, CultureProfileDto cultureProfileDto, CultureProfileModel cultureProfileModel)
+        {
+            //arrange
+            _profileProviderMock.Setup(x => x.GetProfile<CultureProfileDto>(searchProfileId.Account, searchProfileId.UserId, "UI.Profile"))
+                .Returns(cultureProfileDto)
+                .Verifiable();
+
+            _mapperMock.Setup(x => x.Map<CultureProfileModel>(cultureProfileDto)).Returns(cultureProfileModel);
+
+            //act
+            var result1 = _sut.GetCultureProfile(searchProfileId);
+            var result2 = _sut.GetCultureProfile(searchProfileId);
+
+            //assert
+            result1.Should().Be(result2);
+            result1.Should().Be(cultureProfileModel);
+
+            _mapperMock.Verify(x => x.Map<CultureProfileModel>(cultureProfileDto), Times.Once);
+            _profileProviderMock.Verify(x => x.GetProfile<CultureProfileDto>(searchProfileId.Account, searchProfileId.UserId, "UI.Profile"), Times.Once);
+        }
+
+
     }
 }

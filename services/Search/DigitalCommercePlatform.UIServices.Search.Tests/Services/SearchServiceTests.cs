@@ -16,6 +16,7 @@ using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly SearchService _searchService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Mock<ITranslationService> _translationServiceMock;
+        private readonly Mock<ICultureService> _cultureServiceMock;
+
 
         public SearchServiceTests()
         {
@@ -50,8 +53,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
 
             _translationServiceMock = new Mock<ITranslationService>();
+            _cultureServiceMock = new Mock<ICultureService>();
 
-            _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _siteSettingsMock.Object, mapper, _translationServiceMock.Object));
+
+            _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _siteSettingsMock.Object, mapper, _translationServiceMock.Object, _cultureServiceMock.Object));
         }
 
         [Theory]
@@ -83,6 +88,63 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Should().NotBeNull();
             result.Products[0].Stock.Should().BeNull();
         }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task FullSearchProduct_Price_Is_Formatted(SearchRequestDto request, SearchResponseDto appResponse)
+        {
+            //Arrange
+            decimal basePrice = 100;
+            decimal bestPrice = 80;
+            decimal listPrice = 120;
+            string culture = "pl-PL";
+
+            appResponse.Products.First().Price = new PriceDto
+            {
+                    BasePrice = basePrice,
+                    BestPrice = bestPrice,
+                    BestPriceExpiration = null, 
+                    BestPriceIncludesWebDiscount = false,
+                    ListPrice = listPrice
+            };
+
+            var cultureInfo = CultureInfo.GetCultureInfo(culture);
+            var formattedBasePrice = String.Format(cultureInfo, "{0:C}", basePrice);
+            var formattedBestPrice = String.Format(cultureInfo, "{0:C}", bestPrice);
+            var formattedListPrice = String.Format(cultureInfo, "{0:C}", listPrice);
+
+
+            request.Culture = culture;
+            var fakeLogger = new FakeLogger<SearchService>();
+            var appSettingsMock = new Mock<IAppSettings>();
+            var siteSettingsMock = new Mock<ISiteSettings>();
+            var contextMock = new Mock<IUIContext>();
+            var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
+            var translationServiceMock = new Mock<ITranslationService>();
+            var profileServiceMock = new Mock<IProfileService>();
+
+            var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
+            middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
+                .Returns(Task.FromResult(appResponse));
+
+            var cultureService = new CultureService(profileServiceMock.Object, siteSettingsMock.Object);
+
+            var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object, 
+                contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureService));
+
+            //Act
+            var result = await searchService.GetFullSearchProductData(request, true);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Products.Should().NotBeNull();
+            result.Products.First().Price.Should().NotBeNull();
+            result.Products.First().Price.BasePrice.Should().Be(formattedBasePrice);
+            result.Products.First().Price.BestPrice.Should().Be(formattedBestPrice);
+            result.Products.First().Price.ListPrice.Should().Be(formattedListPrice);
+        }
+
+
 
         [Theory]
         [AutoDomainData]

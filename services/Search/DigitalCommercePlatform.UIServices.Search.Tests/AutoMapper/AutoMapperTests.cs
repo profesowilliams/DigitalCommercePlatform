@@ -1,8 +1,13 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
+using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalFoundation.Common.TestUtilities;
+using FluentAssertions;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Search.Tests.AutoMapper
@@ -59,5 +64,18 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.AutoMapper
             resultOrderable.Equals(true);
             resultAuthrequiredprice.Equals(true);
         }
+
+        [Theory]
+        [AutoDomainData]
+        public void ProductPriceIgnoredInMapping(SearchResponseDto appSearchResponse)
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<SearchProfile>());
+            var mapper = config.CreateMapper();
+
+            var result = mapper.Map<FullSearchResponseModel>(appSearchResponse);
+
+            result.Products.Select(p => p.Price).Should().OnlyContain(p => p == null);
+        }
+
     }
 }

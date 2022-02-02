@@ -11,6 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
         public SearchProfileProfile()
         {
             CreateMap<SearchProfileModel, SearchProfileDto>().ReverseMap();
+            CreateMap<CultureProfileDto, CultureProfileModel>();
         }
     }
 }

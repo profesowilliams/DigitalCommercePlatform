@@ -45,7 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("FullSearch")]
         public async Task<ActionResult<FullSearchResponseModel>> FullSearch(FullSearchRequestModel productSearch)
         {
-            var response = await Mediator.Send(new FullSearch.Request(!IsLoggedIn, productSearch, new(_context.User?.ID, _context.User?.ActiveCustomer?.CustomerNumber))).ConfigureAwait(false);
+            var response = await Mediator.Send(new FullSearch.Request(!IsLoggedIn, productSearch, new(_context.User?.ActiveCustomer?.CustomerNumber, _context.User?.ID), Context.Language)).ConfigureAwait(false);
             response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("KeywordSearch")]
         public async Task<ActionResult<FullSearchResponseModel>> KeywordSearch(string keyword, string categoryId)
         {
-            var response = await Mediator.Send(new KeywordSearch.Request(!IsLoggedIn, keyword, categoryId, new(_context.User?.ID, _context.User?.ActiveCustomer?.CustomerNumber))).ConfigureAwait(false);
+            var response = await Mediator.Send(new KeywordSearch.Request(!IsLoggedIn, keyword, categoryId, new(_context.User?.ActiveCustomer?.CustomerNumber, _context.User?.ID),Context.Language)).ConfigureAwait(false);
             response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }

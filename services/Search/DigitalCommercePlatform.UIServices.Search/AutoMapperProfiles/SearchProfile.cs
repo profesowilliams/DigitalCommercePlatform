@@ -26,19 +26,19 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             CreateMap<FullSearchRequestModel, SearchRequestDto>()
                 .ForMember(dest => dest.RangeFilters, opt => opt.Ignore())
                 .ForMember(dest => dest.GetDetails, opt => opt.Ignore())
-                ;
+                .ForMember(dest => dest.SearchProfileId, opt => opt.Ignore())
+                .ForMember(dest => dest.Culture, opt => opt.Ignore());
+
             CreateMap<MainSpecificationDto, MainSpecificationModel>();
             CreateMap<ImageDto, ImageModel>();
-            CreateMap<ElasticPriceDto, ElasticPriceModel>();
-            CreateMap<PriceDto, PriceModel>()
-                .ForMember(dest => dest.VolumePricing, opt => opt.Ignore())
-                .ForMember(dest => dest.PromoAmount, opt => opt.Ignore());
+
             CreateMap<ProductNoteDto, ProductNoteModel>();
             CreateMap<SalesOrgStocksDto, StockModel>()
                 .ForMember(dest => dest.TotalAvailable, opt => opt.MapFrom(x => x.Total))
                 .ForMember(dest => dest.Corporate, opt => opt.MapFrom(x => x.Td))
                 .ForMember(dest => dest.VendorDirectInventory, opt => opt.MapFrom(x => x.VendorDesignated))
                 .ForMember(dest => dest.VendorShipped, opt => opt.Ignore());
+            
             CreateMap<ElasticItemDto, ElasticItemModel>()
                 .ForMember(dest => dest.Plants, opt => opt.Ignore())
                 .ForMember(dest => dest.Status, opt => opt.Ignore())
@@ -50,7 +50,9 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.FirstOrDefault().Value))
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.Indicators, opt => opt.Ignore())
+                .ForMember(dest => dest.Price, opt => opt.Ignore())
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.ShortDescription ?? src.Name));
+            
             CreateMap<ElasticItemDto, ProductSearchPreviewModel>()
                 .ForMember(dest => dest.DisplayName, opt => opt.MapFrom(src => src.ShortDescription ?? src.Name))
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ProductImages.FirstOrDefault().Value.FirstOrDefault().Url));
@@ -86,7 +88,9 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.SearchString, opt => opt.MapFrom(src => src.SearchString))
                 .ForMember(dest => dest.Sort, opt => opt.MapFrom(src => src.Sort))
                 .ForMember(dest => dest.Territories, opt => opt.MapFrom(src => src.Territories))
-            ;
+                .ForMember(dest => dest.SearchProfileId, opt => opt.Ignore())
+                .ForMember(dest => dest.Culture, opt => opt.Ignore());
+
 
             CreateMap<IndicatorDto, IndicatorModel>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.Value) ? null : src.Value))

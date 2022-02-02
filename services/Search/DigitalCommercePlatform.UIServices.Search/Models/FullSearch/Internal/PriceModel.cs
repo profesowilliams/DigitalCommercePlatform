@@ -8,11 +8,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
     [ExcludeFromCodeCoverage]
     public class PriceModel : ElasticPriceModel
     {
-        public decimal? BasePrice { get; set; }
-        public decimal? BestPrice { get; set; }
-        public DateTime? BestPriceExpiration { get; set; }
+        public string BasePrice { get; set; }
+        public string BestPrice { get; set; }
+        public string BestPriceExpiration { get; set; }
         public bool? BestPriceIncludesWebDiscount { get; set; }
-        public decimal? PromoAmount { get; set; }
+        public string PromoAmount { get; set; }
         public List<VolumePricing> VolumePricing { get; set; }
     }
 }

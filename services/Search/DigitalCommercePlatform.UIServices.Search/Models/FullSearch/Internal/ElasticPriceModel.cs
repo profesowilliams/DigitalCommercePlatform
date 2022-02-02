@@ -7,6 +7,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal
     [ExcludeFromCodeCoverage]
     public class ElasticPriceModel
     {
-        public decimal? ListPrice { get; set; }
+        public string ListPrice { get; set; }
     }
 }

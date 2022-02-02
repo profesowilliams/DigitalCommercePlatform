@@ -1,6 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Enums;
+using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,5 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
         public SortRequestDto Sort { get; set; }
         public string[] Territories { get; set; }
         public Dictionary<Details, bool> GetDetails { get; set; }
+        public SearchProfileId SearchProfileId { get; set; }
+        public string Culture { get; set; }
     }
 }

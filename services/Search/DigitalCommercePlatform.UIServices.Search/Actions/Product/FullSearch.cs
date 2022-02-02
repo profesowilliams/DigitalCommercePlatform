@@ -22,12 +22,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public bool IsAnonymous { get; set; }
             public FullSearchRequestModel FullSearchRequestModel { get; set; }
             public SearchProfileId ProfileId { get; set; }
+            public string Culture { get; set; }
 
-            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel, SearchProfileId profileId)
+
+            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel, SearchProfileId profileId,string culture)
             {
                 IsAnonymous = isAnonymous;
                 FullSearchRequestModel = fullSearchRequestModel;
                 ProfileId = profileId;
+                Culture = culture;
             }
         }
 
@@ -66,6 +69,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 }
 
                 var appRequest = _mapper.Map<SearchRequestDto>(request.FullSearchRequestModel);
+                appRequest.SearchProfileId = request.ProfileId;
+                appRequest.Culture = request.Culture;
                 appRequest.GetDetails ??= new Dictionary<Details, bool>();
                 if (!request.IsAnonymous)
                 {

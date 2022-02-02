@@ -25,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<ISortService> _sortServiceMock;
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
 
+
         public FullSearchTests()
         {
             _logger = new FakeLogger<FullSearch.Handler>();
@@ -123,7 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         {
             //arrange
             var sut = new FullSearch.Validator();
-            var request = new FullSearch.Request(false, new Models.FullSearch.FullSearchRequestModel(), null);
+            var request = new FullSearch.Request(false, new FullSearchRequestModel(), null,"en-US");
 
             //act
             var result = sut.TestValidate(request);

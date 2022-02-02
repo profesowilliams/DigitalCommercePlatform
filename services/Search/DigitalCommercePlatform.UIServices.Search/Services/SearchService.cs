@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.Search;
@@ -28,24 +29,28 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             IUIContext Context,
             ISiteSettings SiteSettings,
             IMapper Mapper,
-            ITranslationService TranslationService);
+            ITranslationService TranslationService,
+            ICultureService cultureService);
 
     public class SearchService : ISearchService
     {
         private const string CNETAttributes = "CNETAttributes";
         private const string General = "General";
         private const string TopRefinements = "TopRefinements";
+        private const string NotAvailableLabel = "NALabel";
         private readonly string _appProductUrl;
         private readonly string _appSearchUrl;
         private readonly IUIContext _context;
         private readonly Dictionary<string, string> _internalRefinementsTranslations = null;
         private readonly Dictionary<string, string> _indicatorsTranslations = null;
+        private readonly Dictionary<string, string> _priceLabelTranslations = null;
         private readonly ILogger<SearchService> _logger;
         private readonly IMapper _mapper;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly List<string> _refinementsGroupThatShouldBeLocalized;
         private readonly ISiteSettings _siteSettings;
         private readonly ITranslationService _translationService;
+        private readonly ICultureService _cultureService;
 
         public SearchService(SearchServiceArgs args)
         {
@@ -58,11 +63,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _mapper = args.Mapper;
 
             _translationService = args.TranslationService;
+            _cultureService = args.cultureService;
 
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
 
             _translationService.FetchTranslations("Search.UI.InternalRefinements", ref _internalRefinementsTranslations);
             _translationService.FetchTranslations("Search.UI.Indicators", ref _indicatorsTranslations);
+            _translationService.FetchTranslations("Search.UI.PriceLabel", ref _priceLabelTranslations);
         }
 
         public async Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request)
@@ -84,6 +91,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         public async Task<FullSearchResponseModel> GetFullSearchProductData(SearchRequestDto request, bool isAnonymous)
         {
+            _cultureService.SetCurrentCultureFor(request.SearchProfileId, request.Culture);
+
             var appSearchResponse = await GetProductData(request);
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
 
@@ -206,13 +215,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
+            var notAvailableLabelText = _translationService.Translate(_priceLabelTranslations, NotAvailableLabel);
+
             foreach (var product in fullSearchResponse.Products)
             {
                 var appSearchProduct = appSearchResponse.Products.Find(x => x.Id == product.Id);
-                if (product.Price?.BasePrice != null && product.Price?.BestPrice != null)
+
+                product.Price = new PriceModel
                 {
-                    product.Price.PromoAmount = product.Price.BasePrice - product.Price.BestPrice;
-                }
+                    BasePrice = appSearchProduct.Price?.BasePrice?.Format(),
+                    BestPrice = appSearchProduct.Price?.BestPrice?.Format(),
+                    BestPriceExpiration = appSearchProduct.Price?.BestPriceExpiration.Format(),
+                    BestPriceIncludesWebDiscount = appSearchProduct.Price?.BestPriceIncludesWebDiscount,
+                    ListPrice = appSearchProduct.Price?.ListPrice.Format(notAvailableLabelText),
+                    PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price?.BasePrice, appSearchProduct.Price?.BestPrice)
+                };
+
                 product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
                 var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
                 SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);

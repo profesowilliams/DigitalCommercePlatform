@@ -25,13 +25,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public string CategoryId { get; set; }
             public string Catalog { get; set; }
             public SearchProfileId ProfileId { get; set; }
+            public string Culture { get; set; }
 
-            public Request(bool isAnonymous, string keyword, string categoryId, SearchProfileId profileId)
+            public Request(bool isAnonymous, string keyword, string categoryId, SearchProfileId profileId,string culture)
             {
                 IsAnonymous = isAnonymous;
                 Keyword = keyword;
                 CategoryId = categoryId;
                 ProfileId = profileId;
+                Culture = culture;
             }
         }
 
@@ -45,7 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             }
         }
 
-        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService);
+        public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, 
+            ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -74,6 +77,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 var appRequest = new SearchRequestDto();
+                appRequest.SearchProfileId = request.ProfileId;
+                appRequest.Culture = request.Culture;
+
                 if (!string.IsNullOrEmpty(request.Keyword))
                 {
                     appRequest.SearchString = request.Keyword;
