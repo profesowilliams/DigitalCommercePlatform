@@ -157,9 +157,6 @@
 
     .select-items div {
       cursor: pointer;
-      &:first-child {
-        display: none;
-      }
     }
 
     .select-items {
