@@ -163,10 +163,7 @@
         var tdForm = document.getElementById("tdForm");
         var redirectSuccess = document.getElementsByName(":redirect");
 
-        if (!tdForm)
-        {
-            console.error("Form ID not configured");
-        } else {
+        if (tdForm) {
             initValidation(tdForm);
         }
 
@@ -228,8 +225,6 @@
                 }
 
             });
-        } else {
-            console.error("Submit Button Not Configured.");
         }
     });
 
