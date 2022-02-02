@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -113,16 +114,37 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                 { 
                     new SummaryDto
                     {                
-                        EndUserPO = "Test 2222"
-            
-                    } 
+                        EndUserPO = "Test 1",
+                        DueDate = DateTime.Now.AddDays(5)
+                    },
+                    new SummaryDto
+                    {
+                        EndUserPO = "Test 2",
+                        DueDate = DateTime.Now.AddDays(2)
+                    }
                 }
             };
         }
 
         private ResponseDetailedDto ReturnedDetailedData()
         {
-            return new ResponseDetailedDto { Count = 3, Data = new List<DetailedDto>() };
+            return new ResponseDetailedDto
+            {
+                Count = 3,
+                Data = new List<DetailedDto>()
+                {
+                    new DetailedDto
+                    {
+                        EndUserPO = "Test 1",
+                        DueDate = DateTime.Now.AddDays(5)
+                    },
+                    new DetailedDto
+                    {
+                        EndUserPO = "Test 2",
+                        DueDate = DateTime.Now.AddDays(2)
+                    }
+                }
+            };
         }
 
         [Theory]
@@ -352,6 +374,44 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             request.SerialNumber.Should().NotEndWith("*");
             result.Should().NotBeNull();
             result.Count.Should().Be(6);
+        }
+
+        [Fact]
+        public void ServicesGetSummarySortByDueDaysSearch()
+        {
+            var request = new SearchRenewalSummary.Request()
+            {
+                SortBy = "duedays"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(6);
+        }
+
+        [Fact]
+        public void ServicesGetDetailedSortByDueDaysSearch()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+                SortBy = "duedays"
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
+            result.Should().NotBeNull();
+            result.Count.Should().Be(3);
         }
 
         private ResponseSummaryDto ReturnedData()

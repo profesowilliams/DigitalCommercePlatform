@@ -60,6 +60,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
                 var count = coreResult.Count;
 
+                switch(request.SortBy?.ToLowerInvariant())
+                {
+                    case "duedays":
+                        modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        break;
+                }
+
                 return new DetailedResponseModel()
                 {
                     Count = count,
@@ -97,6 +104,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
                 var count = coreResult.Count;
+
+                switch (request.SortBy?.ToLowerInvariant())
+                {
+                    case "duedays":
+                        modelList = modelList.OrderBy(x => x.DueDays).ToList();
+                        break;
+                }
 
                 return new SummaryResponseModel() { Count = count, Response = modelList };
             }
