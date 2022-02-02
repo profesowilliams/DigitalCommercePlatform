@@ -77,6 +77,8 @@ public class LinkItem {
     @Inject
     private String sessionID;
 
+    @Inject
+    private String randomID;
 
     List<SubNavLinks> subLinks = new ArrayList<>();
 
@@ -157,6 +159,10 @@ public class LinkItem {
 
     public String getLinkUrl() {
         return this.linkUrl;
+    }
+
+    public String getRandomID() {
+        return UUID.randomUUID().toString();
     }
 
    
