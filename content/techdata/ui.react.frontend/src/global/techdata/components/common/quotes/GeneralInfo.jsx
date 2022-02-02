@@ -246,7 +246,7 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
     }
 
     const loadDeals = async (searchTerm) => {
-        console.log("Vijay: dealsSearch");
+       
         pushData({
             event: "dealsSearch"
         });
