@@ -91,12 +91,8 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       {
         name: "Your Company Information",
         type: "button",
+        category: "Quote Preview Table Interactions",
       },
-      {
-        click: {
-          category: "Quote Preview Table Interactions",
-        },
-      }
     );
   };
 

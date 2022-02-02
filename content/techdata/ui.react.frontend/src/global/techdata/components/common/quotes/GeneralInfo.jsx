@@ -122,12 +122,8 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
             {
                 name: "General Information",
                 type: "button",
-            },
-            {
-                click: {
                 category: "Quote Preview Table Interactions",
-                },
-            }
+            },
         );
     };
 

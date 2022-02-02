@@ -37,12 +37,8 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
         {
           name: "End User Information",
           type: "button",
+          category: "Quote Preview Table Interactions",
         },
-        {
-          click: {
-            category: "Quote Preview Table Interactions",
-          },
-        }
       );
     }
 
