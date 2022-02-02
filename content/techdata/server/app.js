@@ -1134,7 +1134,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         ],
       });
     }
-    console.log(id == 00000 ? errorObject : items);
     return id == 00000 ? errorObject : items;
   }
 

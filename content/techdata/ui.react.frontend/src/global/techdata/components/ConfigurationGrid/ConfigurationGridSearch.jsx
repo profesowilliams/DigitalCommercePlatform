@@ -4,6 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { formateDatePicker, isNotEmptyValue, validateDatePicker, setTimestamp } from "../../../../utils/utils";
+import { useEffect } from "react";
 function ConfigurationGridSearch({
   componentProp,
   onQueryChanged,
@@ -48,6 +49,18 @@ function ConfigurationGridSearch({
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
   };
 
+  const [defaultValues, setDefaultValues] = useState(null);
+  useEffect(() => {
+    if (isNotEmptyValue(config?.keywordDropdown?.items?.length) && isNotEmptyValue(config?.configurationTypesDropdown?.items?.length)) {
+      const defaultKeyDropDownValue = config?.keywordDropdown?.items[0].key;
+      const configurationTypesDropdownValue = config?.configurationTypesDropdown?.items[0].key;
+      setDefaultValues({
+        keywordDropdown: defaultKeyDropDownValue,
+        configurationTypesDropdown: configurationTypesDropdownValue,
+      })
+    }
+  }, []);
+    
   const _query = useRef({});
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
@@ -56,7 +69,7 @@ function ConfigurationGridSearch({
     return {
       searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
       searchOption: isNotEmptyValue(query.keyword?.value),
-      configFilter: false,
+      configFilter: query.configurations.key === defaultValues.configurationTypesDropdown && query.keyword.key === defaultValues.keywordDropdown,
       fromDate: isNotEmptyValue(query.from?.key),
       toDate: isNotEmptyValue(query.to?.key),
     };
@@ -88,10 +101,9 @@ function ConfigurationGridSearch({
 
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
-      const analyticObject = dispatchAnalyticsChange(query);
       setToMinDate(query.from?.value)
       setFromMinDate(currentDate)
-      onQueryChanged(concatedQuery, analyticObject);
+      onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
 
     } else {
       onQueryChanged("");
