@@ -97,15 +97,17 @@
                     if (elem.closest('.cmp-form-text') && elem.closest('.cmp-form-text').querySelector('label')) {
                         const labelText = elem.closest('.cmp-form-text').querySelector('label').innerText;
                     } else if (elem.closest('.cmp-form-options') && elem.closest('.cmp-form-options').querySelector('label')) {
-                        const labelText = elem.closest('.cmp-form-options').querySelector('label').innerText;
-                        const tag = document.createElement("option");
-                        const text = document.createTextNode(labelText);
-                        tag.setAttribute('value', '');
-                        tag.setAttribute('selected', '');
-                        tag.setAttribute('hidden', '');
-                        tag.setAttribute('disabled', '');
-                        tag.appendChild(text);
-                        elem.prepend(tag);
+                        const helpEle = elem.closest('.cmp-form-options').querySelector('.cmp-form-options__help-message');
+                        if (helpEle &&  helpEle.innerText !== '') {
+                            const tag = document.createElement("option");
+                            const text = document.createTextNode( helpEle.innerText);
+                            tag.setAttribute('value', '');
+                            tag.setAttribute('selected', '');
+                            tag.setAttribute('hidden', '');
+                            tag.setAttribute('disabled', '');
+                            tag.appendChild(text);
+                            elem.prepend(tag);
+                        }
                     }
                 });
             });

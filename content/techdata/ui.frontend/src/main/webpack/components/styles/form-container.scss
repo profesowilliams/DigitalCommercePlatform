@@ -114,8 +114,9 @@
       font-size: 12px;
     }
 
-    select {
-      display: none;
+    select:not([multiple]),
+    .cmp-form-options__help-message {
+         display: none;
     }
     fieldset {
       margin-bottom: rem(40px);
