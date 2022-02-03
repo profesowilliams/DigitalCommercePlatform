@@ -21,11 +21,15 @@ using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Security.Extensions;
 using DigitalFoundation.Common.Features.Swagger;
+using DigitalFoundation.Common.Security.PolicyAuthorization.AuthorizationHandlers;
+using DigitalFoundation.Common.Security.PolicyAuthorization.Providers;
 using DigitalFoundation.Common.Services.Features.HealthChecks.Extensions;
 using Microsoft.AspNetCore.Routing;
 using DigitalFoundation.Common.Services.Features.HealthChecks.Types;
 using Microsoft.Extensions.Hosting;
 using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
@@ -86,11 +90,19 @@ namespace DigitalCommercePlatform.UIServices.Order
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
             services.AddScoped<IDigitalFoundationClient, DigitalFoundationClient>();
+            services.AddScoped<IUserInfoService, UserInfoService>();
 
             services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
             services.AddScoped<IHashingService, DefaultHashingService>();
             services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
             services.AddNuanceAuthentication();
+
+            services.AddSingleton<IAuthorizationHandler, RoleHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider>((serviceProvider) =>
+            {
+                var options = serviceProvider.GetRequiredService<IOptions<AuthorizationOptions>>();
+                return new RolePolicyProvider(options, "NuanceAuth");
+            });
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)

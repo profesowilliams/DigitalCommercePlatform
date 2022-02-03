@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
+using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;

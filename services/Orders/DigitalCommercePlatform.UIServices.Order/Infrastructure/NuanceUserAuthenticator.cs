@@ -5,6 +5,7 @@ using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Features.Contexts.Models.Nuance;
 using DigitalFoundation.Common.Interfaces;
 using DigitalFoundation.Common.Security;
+using DigitalFoundation.Common.Security.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -15,12 +16,16 @@ namespace DigitalCommercePlatform.UIServices.Order.Infrastructure
         private readonly ILogger<NuanceUserAuthenticator> _logger;
         private readonly IHashingService _hashingService;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IUserInfoService _userInfoService;
 
-        public NuanceUserAuthenticator(ILogger<NuanceUserAuthenticator> logger, IHashingService hashingService, IHttpContextAccessor contextAccessor)
+        public NuanceUserAuthenticator(
+            ILogger<NuanceUserAuthenticator> logger, IHashingService hashingService,
+            IHttpContextAccessor contextAccessor, IUserInfoService userInfoService)
         {
             _logger = logger;
             _hashingService = hashingService;
             _contextAccessor = contextAccessor;
+            _userInfoService = userInfoService;
         }
 
         public User GetUser()
@@ -33,16 +38,25 @@ namespace DigitalCommercePlatform.UIServices.Order.Infrastructure
                 return null;
             }
 
-            return new User()
+            var user = GetUserInformation(requestUserHeader.EcId, requestUserHeader.ResellerId);
+
+            return user;
+        }
+
+        private User GetUserInformation(string userId, string resellerId)
+        {
+            User retUser;
+            try
             {
-                ID = requestUserHeader.EcId,
-                FirstName = requestUserHeader.Name,
-                LastName = requestUserHeader.LastName,
-                ActiveCustomer = new Customer()
-                {
-                    CustomerNumber = requestUserHeader.ResellerId
-                }
-            };
+                retUser = _userInfoService.LookupUserData(userId, resellerId);
+            }
+            catch (UnauthorizedImpersonationRequestException)
+            {
+                _logger.LogError("Authentication Failed. Application not allowed to impersonate User");
+                return null;
+            }
+
+            return retUser;
         }
 
         private RequestHeader GetNuanceRequestHeader(HttpContext context)

@@ -1,17 +1,19 @@
-﻿using DigitalFoundation.Common.Features.Contexts;
+﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Contexts.Constants;
 using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Security;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DigitalCommercePlatform.UIServices.Order.Infrastructure
 {
@@ -48,14 +50,23 @@ namespace DigitalCommercePlatform.UIServices.Order.Infrastructure
 
         private AuthenticationTicket GenerateTicket(User user)
         {
-            var claims = new List<Claim>();
-
-            claims.Add(new Claim(UserClaimTypes.ID, user.ID));
-            claims.Add(new Claim(UserClaimTypes.FirstName, user.FirstName));
-            claims.Add(new Claim(UserClaimTypes.LastName, user.LastName));
+            var claims = new List<Claim>
+            {
+                new(UserClaimTypes.ID, user.ID),
+                new(UserClaimTypes.FirstName, user.FirstName),
+                new(UserClaimTypes.LastName, user.LastName)
+            };
 
             if (user.ActiveCustomer != null)
-                claims.Add(new Claim(UserClaimTypes.ActiveCustomer, user.ActiveCustomer.CustomerNumber));
+                claims.Add(new Claim(UserClaimTypes.ActiveCustomer, JsonConvert.SerializeObject(user.ActiveCustomer)));
+
+            if (user.RoleList?.Any() == true)
+            {
+                foreach (var role in user.RoleList)
+                {
+                    claims.Add(new Claim(UserClaimTypes.Role, JsonConvert.SerializeObject(role)));
+                }
+            }
 
             var identity = new ClaimsIdentity(claims.ToArray(), Scheme.Name, UserClaimTypes.ID, null);
             var principal = new ClaimsPrincipal(identity);

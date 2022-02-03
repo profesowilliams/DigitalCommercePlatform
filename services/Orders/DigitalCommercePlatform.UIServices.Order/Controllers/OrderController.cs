@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Security.BasicAuthorizationHelper;
+using DigitalFoundation.Common.Security.PolicyAuthorization.Attributes;
 using DigitalFoundation.Common.Services.Base;
 
 namespace DigitalCommercePlatform.UIServices.Order.Controllers
@@ -18,6 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Controllers
     [Authorize(AuthenticationSchemes = "NuanceAuth")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}")]
+    [RoleAuthorize(Roles = "CanViewOrders")]
     public class OrderController : BaseController /*BaseUIServiceController*/
     {
 

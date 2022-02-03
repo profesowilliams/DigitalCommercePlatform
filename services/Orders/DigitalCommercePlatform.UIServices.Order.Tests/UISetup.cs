@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 
 namespace DigitalCommercePlatform.UIServices.Order.Tests
 {

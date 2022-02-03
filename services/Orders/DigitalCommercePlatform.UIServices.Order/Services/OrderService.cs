@@ -7,6 +7,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
+using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
