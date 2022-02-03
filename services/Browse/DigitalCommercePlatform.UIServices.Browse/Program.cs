@@ -1,5 +1,4 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIService.Browse;
 using DigitalFoundation.Common.Services.Layer.UI;
 using System.Diagnostics.CodeAnalysis;
 

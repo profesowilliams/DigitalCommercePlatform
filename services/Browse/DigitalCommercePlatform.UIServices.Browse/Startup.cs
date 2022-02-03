@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Browse
+namespace DigitalCommercePlatform.UIServices.Browse
 {
     [ExcludeFromCodeCoverage]
     public class Startup : BaseUIServiceStartup
@@ -29,7 +29,6 @@ namespace DigitalCommercePlatform.UIService.Browse
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IBrowseService, BrowseService>();
-            services.AddSingleton<ICachingService, CachingService>();
             services.AddTransient<ISortingService, SortingService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
 

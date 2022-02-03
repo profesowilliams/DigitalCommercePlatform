@@ -1,11 +1,14 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Services;
+using DigitalFoundation.Common.Features.Cache;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
@@ -14,6 +17,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,13 +26,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
 {
     public class BrowseServiceTests
     {
-        private readonly ICachingService _cachingService;
+        private readonly Mock<ICacheProvider> _cacheProvider;
         private readonly IBrowseService _browseService;
         private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
         private readonly Mock<ILogger<BrowseService>> _logger;
-        private readonly Mock<ILogger<CachingService>> _cachelogger;
         private readonly Mock<IUIContext> _uiContext;
-        private readonly Mock<IMapper> _mapper;
+        private readonly IMapper _mapper;
         private readonly Mock<IAppSettings> _appSettings;
         private readonly IMemoryCache _memoryCache;
 
@@ -36,17 +39,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
         {
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _logger = new Mock<ILogger<BrowseService>>();
-            _cachelogger = new Mock<ILogger<CachingService>>();
             _appSettings = new Mock<IAppSettings>();
             _appSettings.Setup(s => s.GetSetting("Catalog.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1");
             _appSettings.Setup(s => s.GetSetting("Feature.DF.ProuctCatalog")).Returns("false");
             _appSettings.Setup(s => s.GetSetting("Browse.UI.External.Catalog.Url")).Returns("https://mtapnew.stage.svc.us.cstenet.com/ProductService/api/VendorProduct/getProductCatalog");
             _uiContext = new Mock<IUIContext>();
-            _uiContext.SetupGet(x => x.User).Returns(new User { ActiveCustomer = new Customer { CustomerNumber = "123", System = "2" }, Customers = new List<string>() });
-            _mapper = new Mock<IMapper>();
-            _memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _cachingService = new CachingService(_memoryCache, _cachelogger.Object);
-            _browseService = new BrowseService(_middleTierHttpClient.Object, _cachingService, _appSettings.Object, _mapper.Object, _logger.Object);
+            _uiContext.SetupGet(x => x.User).Returns(new User { ActiveCustomer = new Customer { CustomerNumber = "123", System = "2" }, Customers = new List<string>() });                       
+            _memoryCache = new MemoryCache(new MemoryCacheOptions());           
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new CatalogProfile())));
+            _cacheProvider = new();
+            _browseService = new BrowseService(_middleTierHttpClient.Object, _cacheProvider.Object, _appSettings.Object, _mapper, _logger.Object);
         }
 
         [Theory]
@@ -69,12 +71,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             Assert.NotNull(result);
         }
 
-        [Theory]
-        [AutoDomainData]
-        public async Task GetProductCatalog(ProductCatalog productCatalog)
+        [Fact]
+        public async Task GetProductCatalog()
         {
             // Arrange
-            productCatalog = new ProductCatalog
+            var productCatalog = new ProductCatalogRequest
             {
                 CorporateCode = "0100",
                 CultureName = "",
@@ -88,6 +89,38 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             var result = await _browseService.GetProductCatalogDetails(request);
             // Assert
             result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetCatalogUsingDF_WithResults(ProductCatalogRequest request, CatalogDto response)
+        {
+            // Arrange
+            _middleTierHttpClient.Setup(e =>
+                  e.GetAsync<CatalogDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()))
+             .ReturnsAsync(response);
+
+            //Act
+            var result = await _browseService.GetCatalogUsingDF(request);
+
+            // Assert
+            result.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void GetCatalogUsingDF_WithException(ProductCatalogRequest request)
+        {
+            // Arrange
+            _middleTierHttpClient.Setup(e =>
+                  e.GetAsync<CatalogDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()))
+             .ThrowsAsync(new RemoteServerHttpException());
+
+            //Act
+            Func<Task> act = () => _browseService.GetCatalogUsingDF(request);
+
+            // Assert
+            act.Should().ThrowAsync<Exception>();
         }
     }
 }

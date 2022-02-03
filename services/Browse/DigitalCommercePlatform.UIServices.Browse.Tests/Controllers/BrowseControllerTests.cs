@@ -1,13 +1,13 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Contexts.Models;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -104,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductCatalogService(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalog model)
+        public async Task GetProductCatalogService(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalogRequest model)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetProductCatalogHandler.Request>(),
@@ -114,11 +114,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var controller = GetController();
             var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
             result.Should().NotBeNull();
-        }
+        }       
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductCatalogService_BadRequest(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalog model)
+        public async Task GetProductCatalogService_BadRequest(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalogRequest model)
         {
             mockMediator.Setup(x => x.Send(
                        It.IsAny<GetProductCatalogHandler.Request>(),

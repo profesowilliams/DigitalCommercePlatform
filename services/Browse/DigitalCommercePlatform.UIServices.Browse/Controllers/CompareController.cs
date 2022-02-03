@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
@@ -17,13 +17,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [SetContextFromHeader]
     [ApiController]
     [ApiVersion("1")]
-    [Route("/v{apiVersion}/[controller]")]
+    [Route("/v{version:apiVersion}/[controller]")]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class CompareController : BaseUIServiceController
     {
         public CompareController(
             IMediator mediator,
-            ILogger<BrowseController> logger,
+            ILogger<CompareController> logger,
             IUIContext context,
             IAppSettings appSettings,
             ISiteSettings siteSettings)

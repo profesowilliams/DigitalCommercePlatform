@@ -1,6 +1,5 @@
 //2022 (c) Tech Data Corporation - All Rights Reserved.
 
-using DigitalCommercePlatform.UIService.Browse;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalFoundation.Common.Features.Client;

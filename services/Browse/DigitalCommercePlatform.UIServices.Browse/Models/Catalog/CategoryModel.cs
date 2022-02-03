@@ -1,10 +1,10 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 
 using DigitalFoundation.Common.Features.Contexts.Models;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Browse.Models.Catalogue
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Catalog
 {
     [ExcludeFromCodeCoverage]
     public class CatalogModel

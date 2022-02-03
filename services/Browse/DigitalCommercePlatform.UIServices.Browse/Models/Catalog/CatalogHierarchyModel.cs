@@ -1,9 +1,9 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog.Internal;
 
-namespace DigitalCommercePlatform.UIService.Browse.Models.Catalog
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Catalog
 {
     [ExcludeFromCodeCoverage]
     public class CatalogHierarchyModel

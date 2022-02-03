@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
 {
-    public class GetProductCatalogHandler
+    public class GetProductCatalogHandlerV2
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -31,15 +31,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails
         {
             private readonly IBrowseService _browseService;
 
-            public Handler(IBrowseService browseService)
+            public Handler(IBrowseService broseService)
             {
-                _browseService = browseService;
+                _browseService = broseService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var CatalogDetails = await _browseService.GetProductCatalogDetails(request);
-                return new ResponseBase<Response> { Content = new Response { Items = CatalogDetails } };
+                var catalog = await _browseService.GetCatalogUsingDF(request.Input);
+
+                return new ResponseBase<Response> { Content = new Response { Items = catalog } };
             }
         }
 

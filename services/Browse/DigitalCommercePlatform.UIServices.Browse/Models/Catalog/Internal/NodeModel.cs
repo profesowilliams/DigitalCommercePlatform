@@ -1,8 +1,8 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIService.Browse.Models.Catalog.Internal
+namespace DigitalCommercePlatform.UIServices.Browse.Models.Catalog.Internal
 {
     [ExcludeFromCodeCoverage]
     public class NodeModel

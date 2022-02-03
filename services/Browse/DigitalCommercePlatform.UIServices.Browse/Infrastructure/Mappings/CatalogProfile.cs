@@ -1,6 +1,6 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings

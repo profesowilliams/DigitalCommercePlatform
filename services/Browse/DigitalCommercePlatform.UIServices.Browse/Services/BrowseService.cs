@@ -1,4 +1,4 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -6,9 +6,10 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalFoundation.Common.Extensions;
+using DigitalFoundation.Common.Features.Cache;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Providers.Settings;
@@ -31,16 +32,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         private readonly string _appProductURL;
         private readonly string _productCatalogFeature;
         private readonly ILogger<BrowseService> _logger;
-        private readonly ICachingService _cachingService;
+        private readonly ICacheProvider _cacheProvider;
         private readonly IMapper _mapper;
 
         public BrowseService(IMiddleTierHttpClient middleTierHttpClient,
-            ICachingService cachingService,
+            ICacheProvider cacheProvider,
             IAppSettings appSettings,
             IMapper mapper, ILogger<BrowseService> logger)
         {
             _middleTierHttpClient = middleTierHttpClient;
-            _cachingService = cachingService;
+            _cacheProvider = cacheProvider;
             _mapper = mapper;
             _logger = logger;
             _appCatalogURL = appSettings.GetSetting("Catalog.App.Url");
@@ -70,36 +71,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<List<CatalogResponse>> GetProductCatalogDetails(GetProductCatalogHandler.Request request)
         {
-            List<CatalogResponse> catalog = new List<CatalogResponse>();
+            List<CatalogResponse> catalog = new();
             try
             {
-                request.Input.CorporateCode = "0100"; //Need to fix this
+                request.Input.CorporateCode = "0100"; //Need to fix this                
 
-                string featureFromCache = await _cachingService.GetFeatureFromCache("useDFeatureToggle", _productCatalogFeature);
-                if (featureFromCache != _productCatalogFeature)
-                {
-                    var clearResult = await _cachingService.ClearFromCache(request.Input.Id);
-                }
+                var key = $"{request.Input.Id}_{request.Input.CultureName}_{request.Input.CorporateCode}_{request.Input.Level}_{request.Input.ShortenSubcategories}";
 
-                bool IsSourceDF = false;
-                var result = Boolean.TryParse(_productCatalogFeature, out IsSourceDF);
-
+                bool result = Boolean.TryParse(_productCatalogFeature, out bool IsSourceDF);
                 if (IsSourceDF && result)
-                {
-                    catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
-                    if (catalog != null) return catalog;
+                    return await GetCatalogUsingDF(request.Input).ConfigureAwait(false);
 
-                    catalog = await GetCatalogUsingDF(request).ConfigureAwait(false);
-                }
-                else
-                {
-                    catalog = await _cachingService.GetCatalogFromCache(request.Input.Id);
-                    if (catalog != null) return catalog;
+                catalog = _cacheProvider.Get<List<CatalogResponse>>(key);
 
-                    catalog = await GetCatalogUsingProductService(request);
-                }
+                if (catalog != null)
+                    return catalog;
 
-                await _cachingService.SetCatalogCache(catalog, request.Input.Id);
+                catalog = await GetCatalogUsingProductService(request);
+
+                _cacheProvider.Put(key, catalog);
                 _logger.LogInformation($"URL used is {_productCatalogURL}:{"Feature toggle input"}:{_productCatalogFeature} ");
             }
             catch (RemoteServerHttpException ex)
@@ -142,10 +132,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             return catalog;
         }
 
-        private async Task<List<CatalogResponse>> GetCatalogUsingDF(GetProductCatalogHandler.Request request)
+        public async Task<List<CatalogResponse>> GetCatalogUsingDF(ProductCatalogRequest request)
         {
-            List<CatalogResponse> catalog = new List<CatalogResponse>();
+            List<CatalogResponse> catalog = new();
             string catalogURL = _appCatalogURL.BuildQuery(request);
+
+            //catalogData are cached in app layer.
             var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
 
             if (response != null && response.Catalogs.Any())
@@ -153,7 +145,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 var tempResponse = _mapper.Map<CatalogModel>(response);
                 var objCatalogResponse = new CatalogResponse
                 {
-                    Key = request.Input.Id,
+                    Key = request.Id,
                     Name = null,
                     DocCount = 0, //Fix This
                     Children = tempResponse.Catalogs

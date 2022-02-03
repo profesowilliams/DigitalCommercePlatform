@@ -1,10 +1,10 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalogue;
+using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
@@ -21,10 +21,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 {
     [SetContextFromHeader]
     [ApiController]
-    [ApiVersion("1")]
-    [Route("/v{apiVersion}")]
+    [ApiVersion("1")]    
+    [Route("/v{version:apiVersion}")]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
-    public class BrowseController : BaseUIServiceController
+    public partial class BrowseController : BaseUIServiceController
     {
         public BrowseController(
             IMediator mediator,
@@ -59,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("getProductCatalog")]
-        public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalog input)
+        public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalogRequest input)
         {
             var response = await Mediator.Send(new GetProductCatalogHandler.Request(input)).ConfigureAwait(false);
             return Ok(response);
