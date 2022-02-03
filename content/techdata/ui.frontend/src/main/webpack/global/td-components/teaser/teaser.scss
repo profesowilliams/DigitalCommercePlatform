@@ -97,6 +97,17 @@
     }
 }
 
+@mixin teaser-synnex-color ($brand-color) {
+    .cmp-teaser {
+            &:hover {
+                outline: rem(2px) solid $brand-color !important;
+            }
+            .cmp-teaser__title {
+                background-color: $brand-color !important;
+            }
+        }
+}
+
 .hero-style-1 {
     @include teaser-default();
 
@@ -552,6 +563,31 @@
             bottom: 0;
             padding: 0;
             margin: 0;
+        }
+    }
+}
+
+// Teaser Synnex
+.cmp-quadriptych-teaser {
+    &.cmp-quadriptych-teaser-synnex {
+        @include teaser-synnex-color(get-color(brand-green-synnex));
+    }
+}
+
+// Reverse Teaser Synnex
+.cmp-quadriptych-teaser {
+    &.cmp-quadriptych-teaser-reverse {
+        &.cmp-quadriptych-teaser-synnex {
+            @include teaser-synnex-color(get-color(brand-green-synnex));
+            .cmp-teaser {
+                &:hover {
+                    box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
+                    .cmp-teaser__title {
+                        background-color: get-color(brand-green-synnex) !important;
+                    }
+                }
+            }
         }
     }
 }
