@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                     response.MimeType = file.MimeType;
                 }
 
-                return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                return new ResponseBase<Response> { Content = response };
             }
         }
 

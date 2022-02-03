@@ -61,7 +61,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
                 var quoteDetailedModels = await _renewalService.GetRenewalsQuoteDetailedFor(getRenewalRequest);
                 Response response = new();
 
-                if (quoteDetailedModels != null)
+                if (quoteDetailedModels?.Count > 0)
                 {
                     RenewalQuoteDetails renewalDetails = new() 
                     {

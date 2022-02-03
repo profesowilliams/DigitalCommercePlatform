@@ -18,14 +18,14 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
 
         public ExportControllerFixture()
         {
-            AppSettingsMock = new Mock<IAppSettings>();
+            AppSettingsMock = new ();
             AppSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
 
-            MockMediator = new Mock<IMediator>();
-            MockLoggerFactory = new Mock<ILogger<BaseUIServiceController>>();
-            MockContext = new Mock<IUIContext>();
+            MockMediator = new ();
+            MockLoggerFactory = new ();
+            MockContext = new ();
             MockContext.SetupGet(x => x.Language).Returns("en-us");
-            MockSiteSettings = new Mock<ISiteSettings>();
+            MockSiteSettings = new ();
         }
 
     }

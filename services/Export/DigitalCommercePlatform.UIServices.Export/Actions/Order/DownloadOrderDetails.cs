@@ -53,18 +53,19 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Order
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 var orderModel = await _commerceService.GetOrderByIdAsync(request.OrderId);
-                var orderDetailsDocumentModel = _mapper.Map<OrderDetailModel>(orderModel);
-                orderDetailsDocumentModel.ExportedFields = request.ExportedFields;
-                var binaryContentXls = await _documentGenerator.XlsGenerate(orderDetailsDocumentModel);
-                var file = new DownloadableFile(binaryContentXls, request.OrderId + ".xls", mimeType);
 
-                var response = new Response()
+                Response response = new();
+                if (orderModel != null)
                 {
-                    BinaryContent = file.BinaryContent,
-                    MimeType = file.MimeType,
-                };
+                    var orderDetailsDocumentModel = _mapper.Map<OrderDetailModel>(orderModel);
+                    orderDetailsDocumentModel.ExportedFields = request.ExportedFields;
+                    var binaryContentXls = await _documentGenerator.XlsGenerate(orderDetailsDocumentModel);
+                    var file = new DownloadableFile(binaryContentXls, request.OrderId + ".xls", mimeType);
+                    response.BinaryContent = file.BinaryContent;
+                    response.MimeType = file.MimeType;
+                }
 
-                return await Task.FromResult(new ResponseBase<Response> { Content = response });
+                return new ResponseBase<Response> { Content = response };
             }
         }
 

@@ -26,14 +26,18 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
         private readonly Mock<IUIContext> _mockContext;
         private readonly Mock<ISiteSettings> _mockSiteSettings;
 
+        private readonly ExportController _controller;
+
         public ExportControllerTests(ExportControllerFixture fixture)
         {
             _appSettingsMock = fixture.AppSettingsMock;
-
             _mockMediator = fixture.MockMediator;
             _mockLoggerFactory = fixture.MockLoggerFactory;
             _mockContext = fixture.MockContext;
             _mockSiteSettings = fixture.MockSiteSettings;
+
+            _controller = new ExportController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
+                _appSettingsMock.Object, _mockSiteSettings.Object);
         }
 
         [Theory]
@@ -48,8 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(expected);
 
             DownloadQuoteDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<FileContentResult>();
         }
@@ -79,8 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(response);
 
             DownloadQuoteDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -97,8 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(expected);
 
             DownloadOrderDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<FileContentResult>();
         }
@@ -129,8 +130,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(response);
 
             DownloadOrderDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadOrderDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -147,8 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(expected);
 
             DownloadRenewalQuoteDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
 
             result.Should().BeOfType<FileContentResult>();
         }
@@ -179,15 +178,8 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(response);
 
             DownloadRenewalQuoteDetails.Request criteria = new();
-            var controller = GetController();
-            var result = await controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadRenewalQuoteDetails(criteria).ConfigureAwait(false);
             result.Should().BeOfType<NotFoundResult>();
-        }
-
-        protected ExportController GetController()
-        {
-            return new ExportController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
-                _appSettingsMock.Object, _mockSiteSettings.Object);
         }
     }
 }
