@@ -48,8 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.ID, s => s.MapFrom(y => y.OrderQuery.OrderId))
                 .ForMember(x => x.Page, y => y.Ignore())
                 .ForMember(x => x.PageSize, y => y.Ignore())
-                .ForMember(x => x.Details, y => y.Ignore())
-                .ForMember(x => x.TDOSSearchable, y => y.Ignore());
+                .ForMember(x => x.Details, y => y.Ignore());
             CreateMap<OrderModel, NuanceChatBotResponseModel>()
                 .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src.Status)))
                 .ForMember(x => x.OrderId, y => y.MapFrom(s => s.Source.Id))

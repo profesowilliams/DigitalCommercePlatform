@@ -6,7 +6,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Dto.Order
     [ExcludeFromCodeCoverage]
     public class FindRequestModel
     {
-        public bool TDOSSearchable { get; set; }
         public string CustomerPO { get; set; }
         public string ID { get; set; }
         public int Page { get; set; } = 1;
