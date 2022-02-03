@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         private readonly string _quoteServiceURL;
         private readonly string _cartServiceURL;
         private readonly string _customerServiceURL;
-        private readonly string _spaServiceURL;
+        private readonly string _priceServiceURL;
         private readonly IUIContext _uiContext;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<AccountService> _logger;
@@ -70,7 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _ordersServiceUrl = args.appSettings.GetSetting("App.Order.Url");
             _quoteServiceURL = args.appSettings.GetSetting("App.Quote.Url");
             _cartServiceURL = args.appSettings.GetSetting("App.Cart.Url");
-            _spaServiceURL = args.appSettings.GetSetting("App.Spa.Url");
+            _priceServiceURL = args.appSettings.GetSetting("App.Price.Url");
             _renewalsService = args.renewalsService ?? throw new ArgumentNullException(nameof(args.renewalsService));
             _customerServiceURL = args.appSettings.GetSetting("App.Customer.Url");
         }
@@ -138,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
-            var url = _spaServiceURL.AppendPathSegments("Spa", "Find")
+            var url = _priceServiceURL.AppendPathSegments("Spa", "Find")
                          .SetQueryParams(new
                          {
                              ValidTo = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"),
@@ -260,7 +260,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         private async Task<int> GetExpiringDeals()
         {
-            var url = _spaServiceURL.AppendPathSegments("Spa", "Find")
+            var url = _priceServiceURL.AppendPathSegments("Spa", "Find")
                         .SetQueryParams(new
                         {
                             ValidTo = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"),

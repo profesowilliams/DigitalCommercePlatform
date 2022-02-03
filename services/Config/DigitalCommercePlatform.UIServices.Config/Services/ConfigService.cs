@@ -45,7 +45,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _appConfigurationUrl;
         private readonly string _appPriceUrl;
-        private readonly string _appSpaUrl;
 
         public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
             ILogger<ConfigService> logger, IHttpClientFactory httpClientFactory)
@@ -57,7 +56,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _appConfigurationUrl = _appSettings.GetSetting("App.Configuration.Url");
             _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
-            _appSpaUrl = _appSettings.GetSetting("App.Spa.Url");
         }
 
         /// <summary>
@@ -408,7 +406,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private async Task<FindResponse<DealsBase>> GetDealsDetails<T>(T request)
         {
-            var requestUrl = _appSpaUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
             var getSpaResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
             return getSpaResponse;
         }
@@ -461,7 +459,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public async Task<SPADetails.Response> GetSPADetails(SPADetails.Request request)
         {
             List<string> mfrPartNumbers = request.ProductIds?.Split(",").ToList();
-            var requestUrl = _appSpaUrl.AppendPathSegments("/Spa").BuildQuery(request);
+            var requestUrl = _appPriceUrl.AppendPathSegments("/Spa").BuildQuery(request);
             SPADetails.Response response = new SPADetails.Response();
             var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
             if (spaResponse.Any())
