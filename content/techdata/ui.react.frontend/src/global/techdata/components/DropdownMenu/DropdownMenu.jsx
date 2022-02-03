@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { signOut } from "../../../../utils";
 import SubHeaderMenuContainer from "../ProfileMegaMenu/SubHeaderMenuContainer";
@@ -12,6 +12,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const { id: userId, firstName: userName } = userDataCheck;
   const [isSelected, setIsSelected] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const refs = useRef([]);
+  const refCursor = useRef(0);
+  const refLogOff = useRef(null);
+  const refLogIn = useRef(null);
 
   const handlePrimaryClick = (obj) => {
     if (obj.secondaryMenus) {
@@ -33,6 +37,58 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
           window.location.href = finalLinkUrl;
       }
   }
+
+  const addToRefs = (el) => {
+    if (el && !refs.current.includes(el)) {
+      refs.current.push(el);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    switch (true) {
+      case e.keyCode === 37 && refCursor.current === 0:
+        setIsSelected(false);
+        setShowMenu(false);
+        setRefLogIn();
+        break;
+
+      case e.keyCode === 37 && refCursor.current > 0:
+        refs.current[--refCursor.current].focus();
+        break;
+
+      case e.keyCode === 39 && refCursor.current === refs.current.length - 1:
+        setRefLogOff();
+        break;
+
+      case e.keyCode === 39 && refCursor.current <= refs.current.length - 1:
+        refs.current[++refCursor.current].focus();
+        break;
+
+      case e.shiftKey && e.keyCode === 9:
+        refCursor.current--;
+        break;
+
+      case e.keyCode === 9:
+        refCursor.current++;
+        break;
+
+      case e.keyCode === 27:
+        setIsSelected(false);
+        setShowMenu(false);
+        setRefLogIn();
+        break;
+
+      default: // Do nothing
+    }
+  };
+
+  const setRefLogOff = () => {
+    refLogOff.current.focus();
+  };
+
+  const setRefLogIn = () => {
+    refLogIn.current.focus();
+  };
 
   const handleBackBtnClick = () => {
     setShowSecondary((prevSecondary) => !prevSecondary);
@@ -62,9 +118,14 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       <button
         data-component="DropdownMenu"
         className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
+        ref={(o) => (refLogIn.current = o)}
         onClick={(e) => {
           setIsSelected(e.type === 'click');
           setShowMenu(true);
+        }}
+        onKeyDown={(e) => {
+          refCursor.current = -1;
+          handleKeyDown(e)
         }}
       >
         <svg width="26px" height="26px" viewBox="0 0 23 28" version="1.1">
@@ -125,14 +186,20 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                   key={Symbol(linkTitle).toString()}
                   className="cmp-sign-in-list-content--item"
                   onBlur={(e) => {
+                    
                     if (!e.relatedTarget) {
                       setIsSelected(false);
+                      refCursor.current = 0;
                     }                                        
+                  }}
+                  onKeyDown={(e) => {
+                    handleKeyDown(e)
                   }}
                 >
                   <a
                     onClick={() => handleLinkClick(linkUrl, dcpLink, linkTitle, linkTarget )}
                     className="cmp-sign-in-list-content--item-link" tabIndex="0"
+                    ref={addToRefs}
                   >
                     <i
                       className={`cmp-sign-in-list-content--item-link--icon ${iconUrl}`}
@@ -149,7 +216,17 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
             <button
               className="cmp-sign-in-signout"
               onClick={() => handleSignOut()}
-              onBlur={() => setIsSelected(false)}
+              onBlur={(e) => {
+                if (e.relatedTarget.className !== 'cmp-sign-in-list-content--item-link') {
+                      setIsSelected(false);
+                      refCursor.current = 0;
+                    }
+              }}
+              ref={(o) => (refLogOff.current = o)}
+              onKeyDown={(e) => {
+                refCursor.current = refs.current.length;
+                handleKeyDown(e)
+              }}
             >
               Log Out
             </button>
