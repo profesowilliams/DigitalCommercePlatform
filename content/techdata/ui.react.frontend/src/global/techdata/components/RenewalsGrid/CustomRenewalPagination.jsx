@@ -46,7 +46,7 @@ function CustomRenewalPagination() {
         {minPaginationCounter()}-{maxPaginationCounter()} of {totalCounter} results
       </p>
       <p className="cmp-navigation__actions">
-        <button disabled={currentPage === 1} onClick={decrementHandler}>
+        <button style={{cursor:getCurrentPage() !== 1 && 'pointer'}} disabled={getCurrentPage() === 1} onClick={decrementHandler}>
           <i className="fas fa-chevron-left"></i>
         </button>
         <div className="cmp-navigation__actions-labels">
@@ -54,7 +54,7 @@ function CustomRenewalPagination() {
           <span>of</span>
           <span>{paginationGetTotalPages() }</span>         
         </div>
-        <button onClick={incrementHandler}>
+        <button disabled={getCurrentPage() === pageCount} onClick={incrementHandler} style={{cursor:getCurrentPage() !== pageCount && 'pointer'}}>
           <i className="fas fa-chevron-right"></i>
         </button>
       </p>

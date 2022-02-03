@@ -38,20 +38,23 @@ function RenewalsGrid(props) {
   function mapServiceData(response) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items;
-    const itemsWithActions = items.map((data) => ({ ...data, actions: true }));
-    const totalItems = mappedResponse?.data?.content?.totalItems ?? items.length;
+    const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
+    const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
+    if (mappedResponse.status !== 200 && !(mappedResponse.data)){
+      return {data:{content: {items:null,totalItems,pageCount,pageNumber}}}
+    }
     mappedResponse.data.content = {items:itemsWithActions,totalItems,pageCount,pageNumber};
     return mappedResponse;
   }
 
   const customRequestInterceptor = async (request) => {
     const response = await requestInterceptor(request);   
-    const mappedResponse = mapServiceData(response);  
+    const mappedResponse = mapServiceData(response);      
     const {pageCount, pageNumber, totalItems} = mappedResponse?.data?.content;
     const value = {
-      currentResultsInPage: mappedResponse?.data?.content?.items.length,
+      currentResultsInPage: mappedResponse?.data?.content?.items?.length,
       totalCounter: totalItems,   
       pageCount,
       pageNumber          
