@@ -44,7 +44,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (request) => {
+    const {e, linkUrl, dcpLink, linkTitle, linkTarget} = request
     switch (true) {
       case e.keyCode === 37 && refCursor.current === 0:
         setIsSelected(false);
@@ -76,6 +77,14 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
         setIsSelected(false);
         setShowMenu(false);
         setRefLogIn();
+        break;
+
+      case e.keyCode === 13 && e.currentTarget.className === 'cmp-sign-in-list-content--item':
+        handleLinkClick(linkUrl, dcpLink, linkTitle, linkTarget );
+        break;
+
+      case e.keyCode === 13 && e.currentTarget.className === 'cmp-sign-in-signout':
+        handleSignOut();
         break;
 
       default: // Do nothing
@@ -125,7 +134,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
         }}
         onKeyDown={(e) => {
           refCursor.current = -1;
-          handleKeyDown(e)
+          handleKeyDown({e})
         }}
       >
         <svg width="26px" height="26px" viewBox="0 0 23 28" version="1.1">
@@ -193,7 +202,14 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                     }                                        
                   }}
                   onKeyDown={(e) => {
-                    handleKeyDown(e)
+                    const request = {
+                      e,
+                      linkUrl,
+                      dcpLink,
+                      linkTitle,
+                      linkTarget
+                    }
+                    handleKeyDown(request)
                   }}
                 >
                   <a
@@ -225,7 +241,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               ref={(o) => (refLogOff.current = o)}
               onKeyDown={(e) => {
                 refCursor.current = refs.current.length;
-                handleKeyDown(e)
+                handleKeyDown({e})
               }}
             >
               Log Out
