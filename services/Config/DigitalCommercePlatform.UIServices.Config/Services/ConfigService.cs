@@ -425,6 +425,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
                 return ConfigurationType.AppendPathSegment("&type=Estimate");
             }
+            if (request.Criteria.ConfigurationType == ConfigType.Deal)
+            {
+                return ConfigurationType.AppendPathSegment("&type=Deal");
+            }
             else if (request.Criteria.ConfigurationType == ConfigType.Renewal)
             {
                 return ConfigurationType.AppendPathSegment("&type=Renewal");
@@ -451,7 +455,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
             else
             {
-                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate");
+                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate&type=Deal");
             }
 
         }
