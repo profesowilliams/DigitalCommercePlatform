@@ -64,14 +64,26 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
                     result.Items = result.Items.Where(x => x.ManufacturerPartNumber == request.WbChatRequest.OrderQuery.ManufacturerPartNumber)
                         .ToList();
                 }
-                result.OrderDetailsLink = GetOrderLink(result.OrderId);
+                var orderLink = GetOrderLink(result.OrderId);
+                if (orderLink != null)
+                {
+                    result.OrderDetailsLink = orderLink;
+                }
                 return result;
             }
 
             private string GetOrderLink(string orderId)
             {
-                var shopUrl = _appSettings.GetSetting("External.ShopOrder.Url");
-                return $"{shopUrl}/{orderId}";
+                try
+                {
+                    var shopUrl = _appSettings.GetSetting("External.ShopOrder.Url");
+                    return $"{shopUrl}/{orderId}";
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Error while getting ShopOrder URL {Message}", e.Message);
+                    return null;
+                }
             }
 
         }
