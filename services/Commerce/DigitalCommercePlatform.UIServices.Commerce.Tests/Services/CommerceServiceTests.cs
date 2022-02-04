@@ -208,6 +208,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             //Act
             var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+
+            //Assert
             Assert.NotNull(testLine);
             Assert.NotNull(result);
 
@@ -460,12 +462,34 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [AutoDomainData]
         public async Task CreateQuoteFrom(CreateQuote.Request request)
         {
+            List<Line> lstline = new List<Line>();
+
+            Line line = new Line()
+            {
+                Id = "any",
+                ConfigID = "any",
+                UnitPrice = 1,
+                VendorPartNo = "any"
+
+            };
+            lstline.Add(line);
+            QuotePreview quotePreview = new QuotePreview()
+            {
+                BuyMethod = "any",
+                Currency = "USD",
+                Id = "any",
+                Items = lstline
+            };
+            QuotePreviewModel quotePreviewModel = new QuotePreviewModel()
+            {
+                QuoteDetails = quotePreview
+            };
+            request = new CreateQuote.Request(quotePreviewModel);
             // Act
             var result = await _commerceService.CreateQuoteFrom(request);
             // Assert
             Assert.Null(result);
         }
-
 
         [Theory]
         [AutoDomainData]

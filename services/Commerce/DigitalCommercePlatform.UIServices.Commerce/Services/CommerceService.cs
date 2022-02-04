@@ -349,6 +349,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private ItemModel GetLinesforRequest(Line item, string id)
         {
+            if(item.UnitPrice==null)
+                item.UnitPrice = 0;
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
                         Id = item.MFRNumber,   // always pass mfg part # bug # 240973
