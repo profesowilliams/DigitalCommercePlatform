@@ -16,6 +16,7 @@ import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
   ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS,
   ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY,
+  ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_NAME_ACTION,
 } from "../../../../utils/constants";
 
 function ConfigurationGrid(props) {
@@ -208,7 +209,7 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS)}>
+          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_NAME_ACTION)}>
             <a className="cmp-grid-url-not-underlined" href={getQuotePreviewUrl(props)}>
               {componentProp.actionColumnLabel}
             </a>
