@@ -1,15 +1,26 @@
 import React from "react";
 import Grid from "../../Grid/Grid";
+import { downloadClicked } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 
-function GridHeader({ gridProps }) {
+function GridHeader({ gridProps, data }) {
+  const downloadPDFClickHandler = () => {
+    downloadClicked(
+      data,
+      true,
+      'logo',
+      'link text',
+    )
+  }
+  
+
   return (
     <div className="cmp-product-lines-grid__header">
       <span className="cmp-product-lines-grid__header__title">
         {gridProps.label}
       </span>
       <div className="cmp-renewal-preview__download">
-        <span>{gridProps.pdf}</span>
+        <span id="pdfDownloadLink" onClick={() => downloadPDFClickHandler()}>{gridProps.pdf || 'Donload PDF'}</span>
         <span>{gridProps.xls}</span>
       </div>
     </div>
@@ -73,7 +84,7 @@ function RenewalPreviewGrid({ data, gridProps }) {
   return (
     <div className="cmp-product-lines-grid">
       <section>
-        <GridHeader gridProps={gridProps} />
+        <GridHeader data={data} gridProps={gridProps} />
         <Grid
           columnDefinition={columnDefs}
           config={gridConfig}

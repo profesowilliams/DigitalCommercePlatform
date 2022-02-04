@@ -16,27 +16,48 @@
     p {
       margin: 0;
       color: #555555;
-      font-size: .9rem;
+      font-size: 0.9rem;
       display: flex;
       button {
         background: none;        
       }
-    } 
-    &__actions{
+    }
+    &__actions {
       button {
         margin: 0;
         padding: 0;
       }
-      &-labels{
+      &-labels {
         display: flex;
         padding: 0 4px;
         gap: 6px;
-        span.selected{
+        input {
+          max-width: 1.3em;
+          max-height: 1.3em;
+          outline: none;
+          border: none;
+          border-block-end: 2px groove;
+          margin: 0.1em auto 0;
+          text-align: center;
+        }
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        /* Firefox */
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+
+        span.selected {
           position: relative;
           display: block;
           width: 13px;
           text-align: center;
-          &::after{
+          &::after {
             content: "";
             width: 13px;
             background: #b7b7b7;
@@ -64,7 +85,8 @@
       background: none;
       color: #555555;
     }
-    i, svg {
+    i,
+    svg {
       color: #00558c;
     }
     &__button {
@@ -94,7 +116,8 @@
     button {
       cursor: pointer;
       background-color: inherit;
-      svg, i {
+      svg,
+      i {
         margin-right: 0.7em;
       }
     }
