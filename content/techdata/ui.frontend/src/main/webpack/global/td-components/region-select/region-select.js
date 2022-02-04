@@ -1,6 +1,7 @@
 (function () {
   "use strict";
   var countriesListModal = document.getElementById("countriesListModal");
+  const userIsLoggedIn = localStorage.getItem("sessionId") ? true : false;
   if (!countriesListModal) return;
 
   function showRegionSelectDropdown() {
@@ -8,6 +9,9 @@
   }
 
   function hideRegionSelectDropdown() {
+    if (userIsLoggedIn) {
+      document.getElementsByClassName("languagenavigation")[0].style.display = "none";
+    }
     document
       .getElementById("regionSelectDropdown")
       .classList.remove("cmp-show");
@@ -15,6 +19,9 @@
 
   function showCountriesListPopup() {
     showRegionSelectDropdown(); // this is necessary since countries pop-up is inside this div.
+    if (userIsLoggedIn) {
+      document.getElementsByClassName("languagenavigation")[0].style.display = "block";
+    }
     document.getElementById("countriesListModal").style.display = "block";
   }
 
