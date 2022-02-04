@@ -96,15 +96,18 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Arrange
             decimal basePrice = 100;
             decimal bestPrice = 80;
+            DateTime bestPriceExpiration = new DateTime(2022, 02, 04);
+            bool bestPriceIncludesWebDiscount = true;
             decimal listPrice = 120;
+            decimal promoAmmount = 20;
             string culture = "pl-PL";
 
             appResponse.Products.First().Price = new PriceDto
             {
                     BasePrice = basePrice,
                     BestPrice = bestPrice,
-                    BestPriceExpiration = null, 
-                    BestPriceIncludesWebDiscount = false,
+                    BestPriceExpiration = bestPriceExpiration, 
+                    BestPriceIncludesWebDiscount = bestPriceIncludesWebDiscount,
                     ListPrice = listPrice
             };
 
@@ -112,6 +115,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var formattedBasePrice = String.Format(cultureInfo, "{0:C}", basePrice);
             var formattedBestPrice = String.Format(cultureInfo, "{0:C}", bestPrice);
             var formattedListPrice = String.Format(cultureInfo, "{0:C}", listPrice);
+            var formattedPromoAmmount = String.Format(cultureInfo, "{0:C}", promoAmmount);
+            var formattedPriceExpiration = bestPriceExpiration.ToString(cultureInfo);
 
 
             request.Culture = culture;
@@ -141,14 +146,18 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Products.First().Price.Should().NotBeNull();
             result.Products.First().Price.BasePrice.Should().Be(formattedBasePrice);
             result.Products.First().Price.BestPrice.Should().Be(formattedBestPrice);
+            result.Products.First().Price.BestPriceExpiration.Should().Be(formattedPriceExpiration);
+            result.Products.First().Price.BestPriceIncludesWebDiscount.Should().Be(bestPriceIncludesWebDiscount);
             result.Products.First().Price.ListPrice.Should().Be(formattedListPrice);
+            result.Products.First().Price.PromoAmount.Should().Be(formattedPromoAmmount);
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task FullSearchProduct_Price_Is_Null(SearchRequestDto request, SearchResponseDto appResponse)
+        public async Task FullSearchProduct_Price_ListPrice_Is_NA(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            const string NALabel = "NA";
             appResponse.Products.First().Price = null;
 
             var fakeLogger = new FakeLogger<SearchService>();
@@ -156,7 +165,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var siteSettingsMock = new Mock<ISiteSettings>();
             var contextMock = new Mock<IUIContext>();
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
+            
             var translationServiceMock = new Mock<ITranslationService>();
+            translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>())).Returns(NALabel);
+
+
             var profileServiceMock = new Mock<IProfileService>();
             var cultureServiceMock = new Mock<ICultureService>();
 
@@ -175,7 +188,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Assert
             result.Should().NotBeNull();
             result.Products.Should().NotBeNull();
-            result.Products.First().Price.Should().BeNull();
+            result.Products.First().Price.Should().NotBeNull();
+            result.Products.First().Price.ListPrice.Should().Be(NALabel);
+            result.Products.First().Price.BasePrice.Should().BeNull();
+            result.Products.First().Price.BestPrice.Should().BeNull();
+            result.Products.First().Price.BestPriceExpiration.Should().BeNull();
+            result.Products.First().Price.BestPriceIncludesWebDiscount.Should().BeNull();
+            result.Products.First().Price.PromoAmount.Should().BeNull();
         }
 
 

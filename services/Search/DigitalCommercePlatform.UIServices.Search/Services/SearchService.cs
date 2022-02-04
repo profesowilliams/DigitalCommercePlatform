@@ -250,17 +250,17 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         {
             if (appSearchProduct?.Price == null)
             {
-                return null;
+                return new PriceModel { ListPrice = notAvailableLabelText };
             }
 
             return new PriceModel
             {
-                BasePrice = appSearchProduct.Price.BasePrice?.Format(),
-                BestPrice = appSearchProduct.Price.BestPrice?.Format(),
+                BasePrice = appSearchProduct.Price.BasePrice.Format(),
+                BestPrice = appSearchProduct.Price.BestPrice.Format(),
                 BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
-                BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount,
                 ListPrice = appSearchProduct.Price.ListPrice.Format(notAvailableLabelText),
-                PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice)
+                PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice),
+                BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount
             };
         }
 
