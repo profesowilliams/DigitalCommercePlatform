@@ -3,8 +3,9 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, isNotEmptyValue, validateDatePicker, setTimestamp } from "../../../../utils/utils";
+import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
 import { useEffect } from "react";
+
 function ConfigurationGridSearch({
   componentProp,
   onQueryChanged,
@@ -76,6 +77,7 @@ function ConfigurationGridSearch({
   }
 
   function dispatchQueryChange(query) {
+    query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`
@@ -108,17 +110,6 @@ function ConfigurationGridSearch({
     } else {
       onQueryChanged("");
     }
-  }
-
-  function isQueryValid(query) {
-      if (query.from?.value) {
-          query.from.value = setTimestamp(query.from?.value);
-      }
-      if (query.to?.value) {
-          query.to.value = setTimestamp(query.to?.value);
-      }
-      return (query.from?.value && query.to?.value) &&
-          (query.to?.value >= query.from?.value);
   }
 
   function handleFilterChange(change, filterName) {

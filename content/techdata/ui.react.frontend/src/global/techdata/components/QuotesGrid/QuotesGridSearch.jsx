@@ -3,7 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, validateDatePicker, setTimestamp } from "../../../../utils/utils";
+import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
 
 function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const _query = useRef({});
@@ -58,6 +58,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   };
 
   function dispatchQueryChange(query) {
+    query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`
@@ -87,17 +88,6 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
       onQueryChanged("");
     }
     return concatedQuery;
-  }
-
-  function isQueryValid(query) {
-      if (query.from?.value) {
-          query.from.value = setTimestamp(query.from?.value);
-      }
-      if (query.to?.value) {
-          query.to.value = setTimestamp(query.to?.value);
-      }
-      return (query.from?.value && query.to?.value) &&
-          (query.to?.value >= query.from?.value);
   }
 
   function handleFilterChange(change, filterName) {

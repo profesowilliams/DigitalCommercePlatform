@@ -204,13 +204,32 @@ export const validateDatePicker = (value, partnerValue, setStateParam) =>
  * @param {string} filterTag 
  * @returns 
  */
- export const formateDatePicker = (dateValue, filterTag = '') => filterTag + new Date(
-    new Date(Date.UTC(dateValue.getFullYear(),dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
-  ).toISOString();
+export const formateDatePicker = (dateValue, filterTag = '') => {
+    dateValue = filterTag.toLowerCase().includes('from')
+        ? new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 0, 0, 0))
+        : new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 23, 59, 59));
+        
+    return filterTag + dateValue.toISOString();
+}
+export const setTimestamps = (query) => {
+  if (query.from?.value) {
+    query.from.value = setTimestamp(query.from.value);
+  }
+  if (query.to?.value) {
+    query.to.value = setTimestamp(query.to.value);
+  }
+  return query;
+};
+/**
+ * Function that returns a Date with the time set to 23:59:59. This should allow conversion to From/To date ranges regardless of timezone
+ * @param {Date} dateValue
+ */
+const setTimestamp = (dateValue) => new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 23, 59, 59));
 
-export const setTimestamp = (dateValue) => new Date(
-    new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate())).setUTCHours(23, 59, 59)
-  );
+export const isQueryValid = (query) =>
+  (query.from?.value && query.to?.value) &&
+  (query.to?.value >= query.from?.value);
+
 /**
 * Remove the style attribute on body tag if sessionId is present
 */
