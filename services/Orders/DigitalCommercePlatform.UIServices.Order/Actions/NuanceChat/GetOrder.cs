@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalCommercePlatform.UIServices.Order.Services;
+using DigitalFoundation.Common.Providers.Settings;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -26,12 +27,14 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
         {
             private readonly IOrderService _orderService;
             private readonly IMapper _mapper;
+            private readonly IAppSettings _appSettings;
             private readonly ILogger<GetOrder> _logger;
 
-            public Handler(IOrderService orderService, IMapper mapper, ILogger<GetOrder> logger)
+            public Handler(IOrderService orderService, IMapper mapper, IAppSettings appSettings, ILogger<GetOrder> logger)
             {
                 _orderService = orderService;
                 _mapper = mapper;
+                _appSettings = appSettings;
                 _logger = logger;
             }
             public async Task<NuanceChatBotResponseModel> Handle(Request request, CancellationToken cancellationToken)
@@ -61,9 +64,16 @@ namespace DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat
                     result.Items = result.Items.Where(x => x.ManufacturerPartNumber == request.WbChatRequest.OrderQuery.ManufacturerPartNumber)
                         .ToList();
                 }
+                result.OrderDetailsLink = GetOrderLink(result.OrderId);
                 return result;
             }
-          
+
+            private string GetOrderLink(string orderId)
+            {
+                var shopUrl = _appSettings.GetSetting("External.ShopOrder.Url");
+                return $"{shopUrl}/{orderId}";
+            }
+
         }
         public class Validator : AbstractValidator<Request>
         {

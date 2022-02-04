@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Services;
+using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Actions
             Init();
         }
         private static Mock<ILogger<GetOrder>> Logger => new();
+        private static Mock<IAppSettings> AppSettings = new();
         private static IMapper mapper;
 
         private static IMapper GetMapper()
@@ -44,6 +46,8 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Actions
             });
 
             SetMapper(config.CreateMapper());
+
+            AppSettings.Setup(s => s.GetSetting("External.ShopOrder.Url")).Returns("http://test.com/order");
         }
         [Theory]
         [AutoDomainData]
@@ -51,16 +55,18 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Actions
         {
             // arrange
             var _service = new Mock<IOrderService>();
+            dtos.Source.Id = "1234567890";
             
             _service.Setup(x => x.GetOrders(It.IsAny<NuanceWebChatRequest>())).ReturnsAsync(dtos);
 
-            var handler = new GetOrder.Handler(_service.Object,GetMapper(), Logger.Object);
+            var handler = new GetOrder.Handler(_service.Object,GetMapper(), AppSettings.Object, Logger.Object);
 
             // act
             var result = await handler.Handle(request, new CancellationToken());
 
             // assert
             result.Should().NotBeNull();
+            result.OrderDetailsLink.Should().Be("http://test.com/order/1234567890");
         }
     }
 }

@@ -30,7 +30,8 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             var culture = CultureInfo.InvariantCulture.Clone() as CultureInfo;
             culture.NumberFormat.NumberDecimalSeparator = ".";
             CreateMap<AddressDto, AddressModel>();
-            CreateMap<ItemDto, ItemModel>();
+            CreateMap<ItemDto, ItemModel>()
+                .ForMember(x => x.IsDropShip, y => y.Ignore());
             CreateMap<ResellerDto, ResellerModel>();
             CreateMap<ShipmentsDto, ShipmentsModel>();
             CreateMap<DigitalCommercePlatform.UIServices.Order.Models.Order.Internal.ShipmentModel,DigitalCommercePlatform.UIServices.Order.Models.Internal.ShipmentsModel > ()
@@ -50,12 +51,13 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.PageSize, y => y.Ignore())
                 .ForMember(x => x.Details, y => y.Ignore());
             CreateMap<OrderModel, NuanceChatBotResponseModel>()
-                .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src.Status)))
+                .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src)))
                 .ForMember(x => x.OrderId, y => y.MapFrom(s => s.Source.Id))
                 .ForMember(x => x.StatusCount, y => y.MapFrom((src, dest, context) => GetStatusCount(src.Items)))
                 .ForMember(x => x.OrderDetailsLink, y => y.MapFrom((src, dest, context) => GetLink(src.Source.Id)))
                 .ForMember(x => x.Reseller, y => y.MapFrom((src, dest, context) => GetReseller(src.Reseller)))
                 .ForMember(x => x.IsDropShip, y => y.Ignore())
+                .BeforeMap((src, dest) => src.Items = GroupItems(src.Items))
               ;
             CreateMap<Models.Order.Internal.ItemModel,
                     DigitalCommercePlatform.UIServices.Order.Models.Internal.ItemModel>()
@@ -65,6 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.LineId, y => y.MapFrom(s => s.ID))
                 .ForMember(x => x.Manufacturer, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.TECHDATA).Manufacturer))
                 .ForMember(x => x.ManufacturerPartNumber, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.MANUFACTURER).ID))
+                .ForMember(x => x.IsDropShip, y => y.MapFrom((src, dest, context) => IsDropShip(src.ItemCategory)))
                 ;
             CreateMap<ResellerModel, AddressModel>()
                 .ForMember(x => x.State, y => y.MapFrom(s => s.Address.State))
@@ -89,10 +92,23 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 ;
         }
 
+        private static List<Models.Order.Internal.ItemModel> GroupItems(List<Models.Order.Internal.ItemModel> items)
+        {
+            var lines = items.Where(i => i.Parent == "0").ToList();
+            foreach (var line in lines)
+            {
+                var subLines = items.Where(i => i.Parent == line.ID);
+                if (!subLines.Any()) continue;
+                line.Shipments.AddRange(subLines.SelectMany(i => i.Shipments).ToList());
+                line.DeliveryNotes.AddRange(subLines.SelectMany(i => i.DeliveryNotes).ToList());
+            }
+            return lines;
+        }
+
         private List<StatusCountModel> GetStatusCount(List<Models.Order.Internal.ItemModel> model)
         {
-            var statusList = model.GroupBy(n => n.Status)
-                .Select(x => new StatusCountModel() { Status = GetStatus(x.Key), Count = x.Count() }).ToList();
+            var statusList = model.GroupBy(n => GetItemStatus(n))
+                .Select(x => new StatusCountModel() { Status = x.Key, Count = x.Count() }).ToList();
             return statusList;
         }
 
@@ -131,12 +147,13 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             };
         }
 
-        private string GetStatus(Status status)
+        private string GetStatus(OrderModel order)
         {
-            return OrderStatusMap.ContainsKey(status) ? OrderStatusMap[status] : "WRONG STATUS";
+            if (order.Items.Any(i => i.Status == Status.SHIPPED)) return "OPEN & IN PROCESS";
+            return OrderStatusMap.ContainsKey(order.Status) ? OrderStatusMap[order.Status] : "WRONG STATUS";
         }
 
-        private object GetItemStatus(Models.Order.Internal.ItemModel item)
+        private string GetItemStatus(Models.Order.Internal.ItemModel item)
         {
             if (item.BackOrderIndicator == "Y") return "Back Ordered";
             return ItemStatusMap.ContainsKey(item.Status) ? ItemStatusMap[item.Status] : "WRONG STATUS";
@@ -159,5 +176,21 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             { Status.SHIPPED, "Shipped" },
             { Status.CANCELLED, "Canceled" },
         };
+
+        private readonly IEnumerable<string> DropShipCategories = new HashSet<string>()
+        {
+            "ZSBO",
+            "ZLIC",
+            "ZSBN",
+            "ZSER",
+            "ZSA2",
+            "ZZFC",
+            "ZZSB"
+        };
+
+        private bool IsDropShip(string itemCategory)
+        {
+            return DropShipCategories.Contains(itemCategory);
+        }
     }
 }
