@@ -101,6 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 if (!subLines.Any()) continue;
                 line.Shipments.AddRange(subLines.SelectMany(i => i.Shipments).ToList());
                 line.DeliveryNotes.AddRange(subLines.SelectMany(i => i.DeliveryNotes).ToList());
+                line.BackOrderIndicator = subLines.Select(i => i.BackOrderIndicator).FirstOrDefault();
             }
             return lines;
         }
