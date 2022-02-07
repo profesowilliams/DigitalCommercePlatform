@@ -150,7 +150,8 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 
         private string GetStatus(OrderModel order)
         {
-            if (order.Items.Any(i => i.Status == Status.SHIPPED)) return "OPEN & IN PROCESS";
+            if (order.Items.Any(i => i.Status == Status.SHIPPED) && order.Items.Any(i => i.Status != Status.SHIPPED && i.Status != Status.CANCELLED)) 
+                return "OPEN & IN PROCESS";
             return OrderStatusMap.ContainsKey(order.Status) ? OrderStatusMap[order.Status] : "WRONG STATUS";
         }
 
