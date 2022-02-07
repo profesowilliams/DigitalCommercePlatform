@@ -150,6 +150,55 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void MapEndUserAndResellerFromConfig()
+        {
+
+            var detailedDto = new DetailedDto
+            {
+                Source = new SourceDto
+                {
+                    Id = "123",
+                    System = "abc",
+                    Type = "abc"
+                },
+                SalesOrg = "0100",
+                Reseller = new ResellerDto
+                {
+                    Address = new AddressDto
+                    {
+                        Address1 = "123 ABC",
+                        City = "My City",
+                        State = "AZ",
+                        PostalCode = "85284"
+                    },
+                    Name = "My Company",
+                    Id = "3800000"
+                },
+                EndUser = null
+            };
+            // Arrange
+            var details = new List<DetailedDto> { detailedDto };
+
+            FindResponse<List<DetailedDto>> configurationFindResponse = new FindResponse<List<DetailedDto>>();
+            configurationFindResponse.Data = details;
+
+            var quotePreview = new QuotePreview();
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapEndUserAndResellerForQuotePreview" && x.IsPrivate);
+            //Act
+            requestToQuote.Invoke(objType, new object[] { configurationFindResponse, quotePreview });
+            Assert.NotNull(quotePreview.Reseller);
+            Assert.NotEmpty(quotePreview.Reseller);
+            Assert.Equal("My Company", quotePreview.Reseller[0].CompanyName);
+            Assert.Equal("123 ABC", quotePreview.Reseller[0].Line1);
+        }
+
+        [Fact]
         public void MapQuoteLinesForCreatingQuote()
         {
 

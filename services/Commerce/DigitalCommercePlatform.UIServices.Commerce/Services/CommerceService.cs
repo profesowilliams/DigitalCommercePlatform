@@ -124,8 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (request.IsEstimateId)
             {
-                QuotePreviewModel preview = await CreateResponseUsingEstimateId(request);
-                return preview;
+                return await CreateResponseUsingEstimateId(request);
             }
             return await Task.FromResult(new QuotePreviewModel());
         }
@@ -601,11 +600,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 quotePreview.EndUser = new List<Address> { endUser };
             }
-
-            if (configurationFindResponse?.Data?.FirstOrDefault().Reseller != null)
+            Address reseller = new Address();
+            if (configurationFindResponse?.Data?.FirstOrDefault().Reseller?.Address != null)
             {
                 var objReseller = configurationFindResponse.Data?.FirstOrDefault().Reseller;
-                Address reseller = new()
+                reseller = new()
                 {
                     Line1 = objReseller?.Address?.Address1,
                     Line2 = objReseller?.Address?.Address2,
@@ -619,8 +618,30 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     CompanyName = objReseller?.Name,
                     Name = objReseller?.ContactModel?.FirstName + " " + objReseller?.ContactModel?.LastName,
                 };
-                quotePreview.Reseller = new List<Address> { reseller };
             }
+            else
+            {
+                var address = GetAddress("CUS", false).Result;
+                if (address != null && address.Any())
+                {
+                    var addresses = address.ToList();
+                    reseller = new()
+                    {
+                        Line1 = addresses.First().addresses.First().AddressLine1,
+                        Line2 = addresses.First().addresses.First().AddressLine2,
+                        Line3 = addresses.First().addresses.First().AddressLine3,
+                        City = addresses.First().addresses.First().City,
+                        State = addresses.First().addresses.First().State,
+                        Country = addresses.First().addresses.First().Country,
+                        PostalCode = addresses.First().addresses.First().Zip,
+                        Email = addresses.First().addresses.First().Email,
+                        Id = _uiContext.User?.ActiveCustomer == null ? _uiContext.User?.CustomerList?.First().CustomerNumber : _uiContext.User?.ActiveCustomer?.CustomerNumber,
+                        CompanyName = addresses.First().Name,
+                    };
+                }
+            }
+            quotePreview.Reseller = new List<Address> { reseller };
+
             return true;
         }
 
@@ -649,7 +670,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     Address = createModelFrom.ShipTo.Address,
                     Contact = contactList,
-                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerName,
                     Id = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerNumber : _uiContext.User.ActiveCustomer.CustomerNumber,
                 };
                 createModelFrom.Creator = _uiContext.User.ID;
@@ -677,7 +698,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private async Task<IEnumerable<AccountAddressDetails>> GetAddress(string criteria, bool ignoreSalesOrganization)
         {
-            var customerId = _uiContext.User.Customers.FirstOrDefault();
+            var customerId = _uiContext.User?.Customers?.FirstOrDefault();
             string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
             var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
             var response = await _middleTierHttpClient.GetAsync<IEnumerable<AccountAddressDetails>>(customerURL);
