@@ -156,7 +156,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 
         private string GetItemStatus(Models.Order.Internal.ItemModel item)
         {
-            if (item.BackOrderIndicator == "Y") return "Back Ordered";
+            if (item.BackOrderIndicator == "Y" && item.Status != Status.CANCELLED) return "Back Ordered";
             return ItemStatusMap.ContainsKey(item.Status) ? ItemStatusMap[item.Status] : "WRONG STATUS";
         }
 
