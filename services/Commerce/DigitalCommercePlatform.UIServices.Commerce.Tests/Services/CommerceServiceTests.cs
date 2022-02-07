@@ -207,7 +207,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id,"Estimate" });
 
             //Assert
             Assert.NotNull(testLine);
@@ -241,7 +241,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate" });
 
             //Assert
             Assert.NotNull(testLine);
@@ -273,7 +273,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate"});
 
             //Assert
             Assert.NotNull(testLine);
@@ -530,19 +530,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             Line line = new Line()
             {
-                Id = "any",
-                ConfigID = "any",
+                Id = "54390",
+                ConfigID = "3478",
                 UnitPrice = 1,
-                VendorPartNo = "any"
+                VendorPartNo = "Chg-YUt"
 
             };
             lstline.Add(line);
+            VendorReferenceModel Type = new VendorReferenceModel()
+            {
+                Type = "Estimate",
+                Value = "010101"
+            };
             QuotePreview quotePreview = new QuotePreview()
             {
-                BuyMethod = "any",
+                BuyMethod = "tdavnet67",
                 Currency = "USD",
-                Id = "any",
-                Items = lstline
+                Id = "875439076",
+                Items = lstline,
+                Source=Type
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel()
             {

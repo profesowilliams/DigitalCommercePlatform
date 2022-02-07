@@ -325,6 +325,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             var lstItems = new List<ItemModel>();
             string configId = string.Empty;
+            string Type = input.QuoteDetails.Source?.Type.ToLower();
+
             if (!string.IsNullOrWhiteSpace(input.QuoteDetails.ConfigurationId))
             {
                 configId = input.QuoteDetails.ConfigurationId;
@@ -332,14 +334,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             foreach (var item in input.QuoteDetails.Items)
             {
-                ItemModel requestItem = GetLinesforRequest(item, configId);
+                ItemModel requestItem = GetLinesforRequest(item, configId, Type);
                 lstItems.Add(requestItem);
 
                 if (item.Children != null)
                 {
                     foreach (var subline in item.Children)
                     {
-                        ItemModel sublineItem = GetLinesforRequest(subline, configId);
+                        ItemModel sublineItem = GetLinesforRequest(subline, configId, Type);
                         lstItems.Add(sublineItem);
                     }
                 }
@@ -348,10 +350,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             createModelFrom.Items = lstItems;
         }
 
-        private ItemModel GetLinesforRequest(Line item, string id)
+        private ItemModel GetLinesforRequest(Line item, string id,string Type)
         {
             if (item.UnitPrice == null || item.UnitPrice < 0.1M)
                 item.UnitPrice = item.UnitListPrice;
+
+            if (Type.ToLower() == "estimate")
+                item.PurchaseCost = item.UnitListPrice;
+            else if (Type.ToLower() == "deal" || Type.ToLower() == "vendorquote")
+                item.PurchaseCost = item.PurchaseCost;
 
             var lstProduct = new List<ProductModel>{
                     new ProductModel {

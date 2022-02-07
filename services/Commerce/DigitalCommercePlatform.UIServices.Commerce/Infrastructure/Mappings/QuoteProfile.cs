@@ -41,6 +41,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Trackings, opt => opt.Ignore())
                 .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
+                .ForMember(dest => dest.PurchaseCost, opt => opt.Ignore())
+                .ForMember(dest => dest.FomattedPurchaseCost, opt => opt.Ignore())
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements));
 
             CreateMap<AddressModel, Address>();
@@ -138,6 +140,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.Trackings, opt => opt.Ignore())
                 .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
+                .ForMember(dest => dest.PurchaseCost, opt => opt.Ignore())
+                .ForMember(dest => dest.FomattedPurchaseCost, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 ;
 
