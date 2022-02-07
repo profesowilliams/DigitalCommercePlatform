@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
@@ -647,23 +648,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void FilterOrderKitLines_Tests()
         {
             // Arrange 
-            
-            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
-            Models.Order.Internal.Item line = new()
+
+            List<Item> lstLines = new List<Item>();
+            Item line = new()
             {
                 Quantity = 1,
-                UnitPrice = (decimal?)12.08,               
+                UnitPrice = (decimal?)12.08,
                 TotalPrice = (decimal?)12.08,
                 POSType = "KC"
             };
-            Models.Order.Internal.Item line1 = new()
+            Item line1 = new()
             {
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08,
                 POSType = "KC",
                 TotalPrice = (decimal?)12.08,
             };
-            Models.Order.Internal.Item line2 = new()
+            Item line2 = new()
             {
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08,
@@ -694,35 +695,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
-        public void FilterOrderGATPLines_Tests()
+        public void FilterOrderSingleGATPLines_Tests()
         {
             // Arrange 
 
-            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
-            Models.Order.Internal.Item line = new()
-            {
-                Quantity = 1,
-                UnitPrice = (decimal?)12.08,
-                TotalPrice = (decimal?)12.08,
-                POSType = "KC"
-            };
-            Models.Order.Internal.Item line1 = new()
-            {
-                Quantity = 1,
-                UnitPrice = (decimal?)12.08,
-                POSType = "KC",
-                TotalPrice = (decimal?)12.08,
-            };
-            Models.Order.Internal.Item line2 = new()
-            {
-                Quantity = 1,
-                UnitPrice = (decimal?)12.08,
-                POSType = "KH",
-                TotalPrice = (decimal?)12.08,
-            };
-            lstLines.Add(line);
-            lstLines.Add(line1);
-            lstLines.Add(line2);
+            List<Item> lstLines = ArrageLinesForFilterMethods();
 
             Models.Order.Internal.OrderModel order = new()
             {
@@ -745,35 +722,265 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
-        public void FilterOrderLines_Tests()
+        public void MapSingleShipments_Tests()
         {
             // Arrange 
 
-            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
-            Models.Order.Internal.Item line = new()
+
+            List<Item> lines = ArrageLinesForFilterMethods();
+            Item line = lines.Where(x => x.ID == "100").FirstOrDefault();
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapShipments" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { line, lines });
+
+            // Assert
+            Assert.NotNull(line);
+        }
+
+        [Fact]
+        public void MapMultipleShipments_Tests()
+        {
+            // Arrange 
+
+            List<Item> lines = ArrageLinesForFilterMethods();
+            Item line = lines.Where(x => x.ID == "300").FirstOrDefault();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapShipments" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { line, lines });
+
+            // Assert
+            Assert.NotNull(line);
+        }
+
+        [Fact]
+        public void MapSerials_Tests()
+        {
+            // Arrange 
+
+            List<Item> lines = ArrageLinesForFilterMethods().Where(x => x.Parent == "100").ToList();
+            Item line = ArrageLinesForFilterMethods().Where(x => x.ID == "100").FirstOrDefault();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapSerials" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { line, lines });
+
+            // Assert
+            Assert.NotNull(line);
+        }
+
+        [Fact]
+        public void MapInvoices_Tests()
+        {
+            // Arrange 
+
+            List<Item> lines = ArrageLinesForFilterMethods().Where(x => x.Parent == "300").ToList();
+            Item line = ArrageLinesForFilterMethods().Where(x => x.ID == "300").FirstOrDefault();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapInvoices" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { line, lines });
+
+            // Assert
+            Assert.NotNull(line);
+        }
+
+        private static List<Item> ArrageLinesForFilterMethods()
+        {
+            var invoices = new List<InvoiceModel>();
+
+            invoices.Add(new InvoiceModel
             {
+                ID = "800123455",
+                Line = "100",
+                Quantity = 5,
+                Price = 101.00M
+            });
+
+            var invoices1 = new List<InvoiceModel>();
+            invoices1.Add(new InvoiceModel
+            {
+                ID = "800123456",
+                Line = "101",
+                Quantity = 5,
+                Price = 101.00M
+            });
+
+            invoices1.Add(new InvoiceModel
+            {
+                ID = "800123455",
+                Line = "100",
+                Quantity = 5,
+                Price = 101.00M
+            });
+
+            var shipments = new List<ShipmentModel>();
+            shipments.Add(new ShipmentModel
+            {
+                TrackingNumber = "123123123234234",
+                Carrier = "FedEx",
+                Date = DateTime.Now,
+                ServiceLevel = "OT"
+            });
+            shipments.Add(new ShipmentModel
+            {
+                TrackingNumber = "KCF234234234234",
+                Carrier = "AIG",
+                Date = DateTime.Now,
+                ServiceLevel = "OT"
+            });
+
+            var shipments1 = new List<ShipmentModel>();
+            shipments1.Add(new ShipmentModel
+            {
+                TrackingNumber = "XYZ234234234234",
+                Carrier = "UPS",
+                Date = DateTime.Now,
+                ServiceLevel = "OT"
+            });
+            var shipments2 = new List<ShipmentModel>();
+            shipments2.Add(new ShipmentModel
+            {
+                TrackingNumber = "USPS234234234",
+                Carrier = "USPS",
+                Date = DateTime.Now,
+                ServiceLevel = "OT"
+            });
+            // Line Items 
+            List<Item> lstLines = new List<Item>();
+            Item line = new()
+            {
+                Parent = "0",
+                ID = "100",
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08,
                 TotalPrice = (decimal?)12.08,
-                POSType = "KC"
+                POSType = "AH",
+                Invoices = invoices,
+                Serials = new List<string> { "1", "2", "3" }
             };
-            Models.Order.Internal.Item line1 = new()
+
+            Item line1 = new()
             {
+                Parent = "100",
+                ID = "101",
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08,
-                POSType = "KC",
+                POSType = "AI",
                 TotalPrice = (decimal?)12.08,
+                Invoices = invoices1,
+                Shipments = shipments,
+                Serials = new List<string> { "1", "2", "5", "3" }
             };
-            Models.Order.Internal.Item line2 = new()
+
+            Item line2 = new()
             {
+                Parent = "0",
+                ID = "200",
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08,
                 POSType = "KH",
                 TotalPrice = (decimal?)12.08,
             };
+
+            Item line3 = new()
+            {
+                Parent = "0",
+                ID = "300",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                POSType = "AH",
+                Shipments = shipments2,
+                Invoices = invoices,
+                Serials = new List<string> { "1", "2", "3" }
+            };
+            Item line4 = new()
+            {
+                Parent = "300",
+                ID = "301",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "AI",
+                TotalPrice = (decimal?)12.08,
+                Shipments = shipments,
+                Invoices = invoices,
+                Serials = new List<string> { "4", "5", "3" }
+            };
+            Item line5 = new()
+            {
+                Parent = "300",
+                ID = "302",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "AI",
+                TotalPrice = (decimal?)12.08,
+                Shipments = shipments1,
+                Invoices = invoices1,
+                Serials = new List<string> { "4", "5", "3", "6" }
+            };
+            Item line6 = new()
+            {
+                Parent = "200",
+                ID = "201",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                POSType = "KC"
+            };
+            Item line7 = new()
+            {
+                Parent = "200",
+                ID = "202",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KC",
+                TotalPrice = (decimal?)12.08,
+            };
+
             lstLines.Add(line);
             lstLines.Add(line1);
             lstLines.Add(line2);
+            lstLines.Add(line3);
+            lstLines.Add(line4);
+            lstLines.Add(line5);
+            lstLines.Add(line6);
+            lstLines.Add(line7);
+
+            return lstLines;
+        }
+
+        [Fact]
+        public void FilterOrderLinesSysyem3_Tests()
+        {
+            // Arrange 
+
+            List<Item> lstLines = ArrageLinesForFilterMethods();
+
 
             Models.Order.Internal.OrderModel order = new()
             {
@@ -788,7 +995,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+        [Fact]
+        public void FilterOrderLinesSysyem2_Tests()
+        {
+            // Arrange 
 
+            List<Item> lstLines = ArrageLinesForFilterMethods();
+
+
+            Models.Order.Internal.OrderModel order = new()
+            {
+                Source = new() { ID = "I009092146", SalesOrg = "0100", System = "2" },
+                Items = lstLines
+            };
+
+            // Act         
+
+            var result = GetHelperService().FilterOrderLines(order);
+
+            // Assert
+            Assert.NotNull(result);
+        }
         [Fact]
         public void TestOrderLevel()
         {

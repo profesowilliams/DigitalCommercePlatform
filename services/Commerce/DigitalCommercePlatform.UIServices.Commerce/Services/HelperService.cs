@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalFoundation.Common.Extensions;
@@ -201,10 +202,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
                 productDetails = await _middleTierHttpClient.GetAsync<ProductData>(productUrl);
                 ProductsModel product;
-               
+
                 foreach (var line in items)
                 {
-                    product = productDetails.Data.Where(p => p.ManufacturerPartNumber == line.MFRNumber).FirstOrDefault();
+                    product = productDetails?.Data?.Where(p => p.ManufacturerPartNumber == line.MFRNumber).FirstOrDefault();
                     if (product != null && line != null)
                     {
                         MapLines(product, line, source);
@@ -270,11 +271,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 if (result != null)
                 {
                     foreach (var item in items)
-                    {                        
+                    {
                         var price = result.Products.Where(p => p.Article.ManufacturerPartNumber.Equals(item.VendorPartNo)).FirstOrDefault()?.Article.MSRP;
-                        if(price==null)
+                        if (price == null)
                         {
-                            price= result.Products.Where(p => p.Article.TechDataPartNumber.Equals(item.TDNumber)).FirstOrDefault()?.Article.MSRP;
+                            price = result.Products.Where(p => p.Article.TechDataPartNumber.Equals(item.TDNumber)).FirstOrDefault()?.Article.MSRP;
                         }
                         item.MSRP = price;
                         item.UnitListPrice = (decimal)price;
@@ -312,11 +313,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         };
                         discount = new Discount[1] { quoteDiscount };
                     }
-                }                
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogInformation("Error While calculating discount " + ex.Message);                
+                _logger.LogInformation("Error While calculating discount " + ex.Message);
             }
             return discount;
         }
@@ -328,7 +329,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 var product = new GetProductRequest
                 {
-                    ManufacturerPartNumber = string.Equals(line.MFRNumber,line.TDNumber)?String.Empty:line.MFRNumber,
+                    ManufacturerPartNumber = string.Equals(line.MFRNumber, line.TDNumber) ? String.Empty : line.MFRNumber,
                     MaterialNumber = line.TDNumber
                 };
                 lstProducts.Add(product);
@@ -542,12 +543,83 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private Models.Order.Internal.OrderModel FilterOrderGATPLines(Models.Order.Internal.OrderModel orderDetail)
         {
+            var parents = orderDetail.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.ID);
+
+            Parallel.ForEach(parents,
+                new ParallelOptions { MaxDegreeOfParallelism = 3 }, line => {
+                    if (line.POSType?.ToUpper() == "AH")
+                    {
+                        var subLines = orderDetail.Items.Where(i => (i.Parent == line.ID && i.POSType?.ToUpper() == "AI"))?.ToList();
+                        if (subLines.Count == 1)
+                        {
+                            MapShipments(line, subLines);
+                            MapSerials(line, subLines);
+                            MapInvoices(line, subLines);
+                            // remove AI line 
+                            orderDetail.Items.Remove(subLines.FirstOrDefault());
+                        }
+                    }
+                });
+
             return orderDetail; /// Fix this 
+        }
+
+        private void MapSerials(Item line, List<Item> subLines)
+        {
+
+            var serials = new List<string>();
+            if (line.Serials != null && line.Serials?.Count > 0)
+                serials = line.Serials;
+
+            if (subLines?.FirstOrDefault()?.Serials != null && subLines?.FirstOrDefault()?.Serials?.Count > 0)
+                serials.AddRange(subLines?.FirstOrDefault()?.Serials.Except(serials)); // avoid duplicates while adding serial number
+
+            line.Serials = serials;
+
+        }
+
+        private void MapShipments(Item line, List<Item> subLines)
+        {
+            var shipments = new List<ShipmentModel>();
+
+            if (line.Shipments != null && line.Shipments?.Count > 0)
+                shipments = line.Shipments;
+
+            if (subLines?.FirstOrDefault()?.Shipments != null && subLines?.FirstOrDefault()?.Shipments?.Count > 0)
+            {
+                foreach (var shipment in subLines.FirstOrDefault().Shipments)
+                {
+                    if ((!string.IsNullOrWhiteSpace(shipment.TrackingNumber) && shipments.Where(x => x.TrackingNumber == shipment.TrackingNumber).Count() == 0))
+                        shipments.Add(shipment);
+                }
+            }
+
+            line.Shipments = shipments;
+        }
+
+        private void MapInvoices(Item line, List<Item> subLines)
+        {
+            var invoices = new List<InvoiceModel>();
+
+            if (line.Invoices != null && line.Invoices?.Count > 0)
+                invoices = line.Invoices;
+
+            if (subLines?.FirstOrDefault()?.Invoices != null && subLines?.FirstOrDefault()?.Invoices?.Count > 0)
+            {
+
+                foreach (var invoice in subLines?.FirstOrDefault()?.Invoices)
+                {
+                    if (invoices.Where(x => x.ID == invoice.ID).Count() == 0)
+                        invoices.Add(invoice);
+                }
+            }
+
+            line.Invoices = invoices;
         }
 
         private Models.Order.Internal.OrderModel FilterOrderKitLines(Models.Order.Internal.OrderModel orderDetail)
         {
-            orderDetail.Items = orderDetail.Items.Where( i=>i.POSType?.ToUpper() != "KC").ToList();
+            orderDetail.Items = orderDetail.Items.Where(i => i.POSType?.ToUpper() != "KC").ToList();
             return orderDetail;
         }
     }
