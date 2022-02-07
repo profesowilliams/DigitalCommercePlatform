@@ -258,7 +258,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 BasePrice = appSearchProduct.Price.BasePrice.Format(),
                 BestPrice = appSearchProduct.Price.BestPrice.Format(),
                 BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
-                ListPrice = appSearchProduct.Price.ListPrice.Format(notAvailableLabelText),
+                ListPrice = appSearchProduct.Price.ListPrice.IsAvailable() ? appSearchProduct.Price.ListPrice.Value.Format() : notAvailableLabelText,
                 PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice),
                 BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount
             };

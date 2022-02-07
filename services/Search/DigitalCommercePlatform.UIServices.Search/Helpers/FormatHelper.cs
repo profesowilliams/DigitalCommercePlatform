@@ -48,5 +48,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Helpers
         {
             return minuend.HasValue && subtrahend.HasValue ? Format((decimal)(minuend - subtrahend)) : null;
         }
+
+        public static bool IsAvailable(this decimal? input)
+        {
+            return input.HasValue && input.Value != 0;
+        }
     }
 }

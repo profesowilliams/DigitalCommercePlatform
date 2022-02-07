@@ -153,19 +153,36 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         }
 
         [Theory]
-        [AutoDomainData]
-        public async Task FullSearchProduct_Price_ListPrice_Is_NA(SearchRequestDto request, SearchResponseDto appResponse)
+        [MemberData(nameof(ListPriceData))]
+        public async Task FullSearchProduct_Price_ListPrice_Is_NA(decimal? listPrice)
         {
             //Arrange
             const string NALabel = "NA";
-            appResponse.Products.First().Price = null;
+
+            var appResponse = new SearchResponseDto
+            {
+                Products = new List<ElasticItemDto>
+                {
+                    new ElasticItemDto
+                    {
+                        Price = new PriceDto
+                        {
+                            ListPrice = listPrice,
+                            BasePrice = null,
+                            BestPrice = null,
+                            BestPriceExpiration = null,
+                            BestPriceIncludesWebDiscount = null
+                        }
+                    }
+                }
+            };
 
             var fakeLogger = new FakeLogger<SearchService>();
             var appSettingsMock = new Mock<IAppSettings>();
             var siteSettingsMock = new Mock<ISiteSettings>();
             var contextMock = new Mock<IUIContext>();
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
-            
+
             var translationServiceMock = new Mock<ITranslationService>();
             translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>())).Returns(NALabel);
 
@@ -183,7 +200,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureServiceMock.Object));
 
             //Act
-            var result = await searchService.GetFullSearchProductData(request, true);
+            var result = await searchService.GetFullSearchProductData(new SearchRequestDto(), true);
 
             //Assert
             result.Should().NotBeNull();
@@ -784,6 +801,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     },
                     "FreeShipping.Y_Translated"
                 }
+            };
+        }
+
+        public static IEnumerable<object[]> ListPriceData()
+        {
+            return new List<object[]>
+            {
+                new object[] {null},
+                new object[] {0m}
             };
         }
     }
