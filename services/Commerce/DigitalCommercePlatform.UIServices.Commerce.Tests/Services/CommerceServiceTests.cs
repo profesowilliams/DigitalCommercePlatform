@@ -217,6 +217,70 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
 
         [Fact]
+        public void GetLinesforRequest_Zero_Test()
+        {
+
+            //arrange
+            Line testLine = new()
+            {
+                TDNumber = "1231234444",
+                MFRNumber = "CISCO_35345",
+                Manufacturer = "CISCO",
+                ShortDescription = "TEST PRODUCT",
+                Quantity = 1,
+                UnitPrice = (decimal?)0.00,
+                UnitListPrice = 100.00M
+            };
+
+            string id = "4735561697";
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var requestItemModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
+
+            //Act
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+
+            //Assert
+            Assert.NotNull(testLine);
+            Assert.NotNull(result);
+
+        }
+
+        [Fact]
+        public void GetLinesforRequest_Null_Test()
+        {
+
+            //arrange
+            Line testLine = new()
+            {
+                TDNumber = "1231234444",
+                MFRNumber = "CISCO_35345",
+                Manufacturer = "CISCO",
+                ShortDescription = "TEST PRODUCT",
+                Quantity = 1,                
+                UnitListPrice = 100.00M
+            };
+
+            string id = "4735561697";
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var requestItemModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
+
+            //Act
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id });
+
+            //Assert
+            Assert.NotNull(testLine);
+            Assert.NotNull(result);
+
+        }
+        [Fact]
         public void MapAddress_Test()
         {
             //arrange

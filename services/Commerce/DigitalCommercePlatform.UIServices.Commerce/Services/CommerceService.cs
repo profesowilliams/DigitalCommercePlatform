@@ -329,6 +329,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 configId = input.QuoteDetails.ConfigurationId;
             }
+
             foreach (var item in input.QuoteDetails.Items)
             {
                 ItemModel requestItem = GetLinesforRequest(item, configId);
@@ -349,8 +350,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private ItemModel GetLinesforRequest(Line item, string id)
         {
-            if(item.UnitPrice==null)
-                item.UnitPrice = 0;
+            if (item.UnitPrice == null || item.UnitPrice < 0.1M)
+                item.UnitPrice = item.UnitListPrice;
+
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
                         Id = item.MFRNumber,   // always pass mfg part # bug # 240973
@@ -554,7 +556,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
 
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
-                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name,string.Empty);
+                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name, string.Empty);
 
                 var isExclusive = _helperService.GetCustomerAccountDetails().Result.IsExclusive;
                 quotePreview.IsExclusive = isExclusive;
