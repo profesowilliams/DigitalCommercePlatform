@@ -150,7 +150,8 @@
                                                     name="./configDetailUrl"/>
                                             <configDetailUrlSuffix
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Config Details URL Id Suffix"
+                                                    fieldLabel="Config Details URL parameters Suffix"
+                                                    fieldDescription="Make sure to add .html at the beginning of the suffix"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
                                                     name="./configDetailUrlSuffix"/>
@@ -162,7 +163,8 @@
                                                     name="./quoteDetailUrl"/>
                                             <quoteDetailUrlSuffix
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Quote Details URL Id Suffix"
+                                                    fieldLabel="Quote Details URL parameters Suffix"
+                                                    fieldDescription="Make sure to add .html at the beginning of the suffix"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
                                                     name="./quoteDetailUrlSuffix"/>
@@ -181,6 +183,7 @@
                                             <createQuoteUrlSuffix
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                     fieldLabel="Create Quote URL parameters Suffix"
+                                                    fieldDescription="Make sure to add .html at the beginning of the suffix"
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
                                                     name="./createQuoteUrlSuffix"/>

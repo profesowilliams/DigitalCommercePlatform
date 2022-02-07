@@ -34,7 +34,7 @@
                                             <successRedirectPage
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Succes Redirect Page"
+                                                fieldLabel="Success Redirect Page"
                                                 name="./successRedirectPage"/>
                                             <subtotalLabel
                                                 jcr:primaryType="nt:unstructured"

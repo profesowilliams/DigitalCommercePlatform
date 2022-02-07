@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    configDetailUrlSuffix="?id={id}"
-    quoteDetailUrlSuffix="?id={id}"
+    configDetailUrlSuffix=".html?id={id}"
+    quoteDetailUrlSuffix=".html?id={id}"
     modalTitle="Config ID"
     modalContent="There are multiple items associated with this Config ID. Please choose the item you would like to review:"
     modalQuotePreffixLabel="Quote: "
     paginationStyle="scroll"
     itemsPerPage="25"
     actionColumnLabel="Create Quote"
-    createQuoteUrlSuffix="?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
+    createQuoteUrlSuffix=".html?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
     defaultSortingColumnKey="created"
     defaultSortingDirection="desc"
 >
