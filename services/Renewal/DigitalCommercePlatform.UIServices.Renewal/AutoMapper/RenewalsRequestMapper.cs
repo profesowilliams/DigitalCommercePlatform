@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.PageSize, y => y.MapFrom(s => s.PageSize))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
-                .ForMember(x => x.SortAscending, y => y.MapFrom(s => s.SortAscending))
+                .ForMember(x => x.SortAscending, y => y.MapFrom(s => ConvertSortDirection(s.SortDirection)))
                 .ForMember(x => x.WithPaginationInfo, y => y.MapFrom(s => s.WithPaginationInfo))
                 .ForMember(x => x.Details, y => y.MapFrom(s => s.Details))
                 .ForMember(x => x.SessionId, y => y.MapFrom(s => s.SessionId))
@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.PageSize, y => y.MapFrom(s => s.PageSize))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
-                .ForMember(x => x.SortAscending, y => y.MapFrom(s => s.SortAscending))
+                .ForMember(x => x.SortAscending, y => y.MapFrom(s => ConvertSortDirection(s.SortDirection)))
                 .ForMember(x => x.WithPaginationInfo, y => y.MapFrom(s => s.WithPaginationInfo))
                 .ForMember(x => x.Details, y => y.MapFrom(s => s.Details))
                 .ForMember(x => x.SessionId, y => y.MapFrom(s => s.SessionId))
@@ -72,7 +72,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
                 .ForMember(x => x.DueDateTo, y => y.MapFrom(s => s.DueDateTo))
                 .ForMember(x => x.ResellerPO, y => y.MapFrom(s => s.VendorQuoteID))
                 .ForMember(x => x.VendorName, y => y.MapFrom(s => s.VendorName));
-
         }
+
+        private static bool ConvertSortDirection(string value) => value?.ToLowerInvariant() == "asc";
     }
 }
