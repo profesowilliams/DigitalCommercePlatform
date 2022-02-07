@@ -7,5 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
     public class Source
     {
         public string ID { get; set; }
+        public string System { get; set; }
+        public string SalesOrg { get; set; }
     }
 }

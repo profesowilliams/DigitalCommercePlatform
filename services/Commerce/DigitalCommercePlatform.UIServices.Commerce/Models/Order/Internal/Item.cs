@@ -41,6 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         public string LocationID { get; set; }
         public AddressModel EndUser { get; set; }
         public List<string> Serials { get; set; }
+        public string POSType { get; set; } = "";
     }
 
     [ExcludeFromCodeCoverage]

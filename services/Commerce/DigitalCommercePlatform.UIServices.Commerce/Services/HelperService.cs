@@ -528,5 +528,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return "4.6";
         }
 
+        public Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel orderDetail)
+        {
+            if (orderDetail.Source?.System == "3") // for 6.8 orders return all lines
+                return orderDetail;
+            else
+            {
+                orderDetail = FilterOrderKitLines(orderDetail);
+                orderDetail = FilterOrderGATPLines(orderDetail);
+            }
+            return orderDetail;
+        }
+
+        private Models.Order.Internal.OrderModel FilterOrderGATPLines(Models.Order.Internal.OrderModel orderDetail)
+        {
+            return orderDetail; /// Fix this 
+        }
+
+        private Models.Order.Internal.OrderModel FilterOrderKitLines(Models.Order.Internal.OrderModel orderDetail)
+        {
+            orderDetail.Items = orderDetail.Items.Where( i=>i.POSType?.ToUpper() != "KC").ToList();
+            return orderDetail;
+        }
     }
 }

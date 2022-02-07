@@ -76,5 +76,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public IDictionary<string, IEnumerable<LogoModel>> Logos { get; set; }
         public string DisplayName { get; internal set; }
         public AuthorizationModel Authorization { get; set; }
+        public string POSType { get; set; } = "";
     }
 }

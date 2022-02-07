@@ -98,6 +98,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
 
+            result = _helperService.FilterOrderLines(result);
+            
             return result;
         }
 

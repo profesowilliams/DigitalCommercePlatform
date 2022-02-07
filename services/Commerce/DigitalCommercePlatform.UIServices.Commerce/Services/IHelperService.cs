@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<AccountDetails> GetCustomerAccountDetails();
         AuthorizationModel MapAutorization(AuthorizationModel authorization);
         string GetCheckoutSystem(SourceModel source);
+        Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel OrderDetail);
     }
 }

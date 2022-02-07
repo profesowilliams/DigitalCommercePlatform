@@ -611,6 +611,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+
         [Fact]
         public void GetLineDiscount_Tests()
         {
@@ -642,6 +643,151 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void FilterOrderKitLines_Tests()
+        {
+            // Arrange 
+            
+            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
+            Models.Order.Internal.Item line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,               
+                TotalPrice = (decimal?)12.08,
+                POSType = "KC"
+            };
+            Models.Order.Internal.Item line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KC",
+                TotalPrice = (decimal?)12.08,
+            };
+            Models.Order.Internal.Item line2 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KH",
+                TotalPrice = (decimal?)12.08,
+            };
+            lstLines.Add(line);
+            lstLines.Add(line1);
+            lstLines.Add(line2);
+            Models.Order.Internal.OrderModel order = new()
+            {
+                Source = new() { ID = "I009092146", SalesOrg = "0100", System = "3" },
+                Items = lstLines
+            };
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "FilterOrderKitLines" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { order });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void FilterOrderGATPLines_Tests()
+        {
+            // Arrange 
+
+            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
+            Models.Order.Internal.Item line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                POSType = "KC"
+            };
+            Models.Order.Internal.Item line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KC",
+                TotalPrice = (decimal?)12.08,
+            };
+            Models.Order.Internal.Item line2 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KH",
+                TotalPrice = (decimal?)12.08,
+            };
+            lstLines.Add(line);
+            lstLines.Add(line1);
+            lstLines.Add(line2);
+
+            Models.Order.Internal.OrderModel order = new()
+            {
+                Source = new() { ID = "I009092146", SalesOrg = "0100", System = "3" },
+                Items = lstLines
+            };
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "FilterOrderGATPLines" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { order });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void FilterOrderLines_Tests()
+        {
+            // Arrange 
+
+            List<Models.Order.Internal.Item> lstLines = new List<Models.Order.Internal.Item>();
+            Models.Order.Internal.Item line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                POSType = "KC"
+            };
+            Models.Order.Internal.Item line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KC",
+                TotalPrice = (decimal?)12.08,
+            };
+            Models.Order.Internal.Item line2 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                POSType = "KH",
+                TotalPrice = (decimal?)12.08,
+            };
+            lstLines.Add(line);
+            lstLines.Add(line1);
+            lstLines.Add(line2);
+
+            Models.Order.Internal.OrderModel order = new()
+            {
+                Source = new() { ID = "I009092146", SalesOrg = "0100", System = "3" },
+                Items = lstLines
+            };
+
+            // Act         
+
+            var result = GetHelperService().FilterOrderLines(order);
+
+            // Assert
+            Assert.NotNull(result);
+        }
 
         [Fact]
         public void TestOrderLevel()
