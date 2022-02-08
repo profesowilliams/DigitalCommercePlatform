@@ -10,7 +10,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
     {
         public QuoteSourceDto Source { get; set; }
         public DateTime Published { get; set; }
-        public PartyDetailedDto Reseller { get; set; }
+        public ResellerDetailedDto Reseller { get; set; }
         public PartyDetailedDto EndUser { get; set; }
         public PartyDetailedDto ShipTo { get; set; }
         public TypeValueDto AlternateIdentifier { get; set; }

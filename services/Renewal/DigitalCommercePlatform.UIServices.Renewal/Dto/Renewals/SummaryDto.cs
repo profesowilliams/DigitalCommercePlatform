@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public string Support { get; set; }
         public SourceDto Source { get; set; }
         public VendorDto Vendor { get; set; }
-        public PartyDto Reseller { get; set; }
+        public ResellerDto Reseller { get; set; }
         public PartyDto EndUser { get; set; }
         public PartyDto ShipTo { get; set; }
         public string RenewedDuration { get; set; }

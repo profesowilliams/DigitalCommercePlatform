@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     {
         public QuoteSourceModel Source { get; set; }
         public DateTime Published { get; set; }
-        public PartyDetailedModel Reseller { get; set; }
+        public ResellerDetailedModel Reseller { get; set; }
         public PartyDetailedModel EndUser { get; set; }
         public PartyDetailedModel ShipTo { get; set; }
         public QuoteTypeValueModel AlternateIdentifier { get; set; }

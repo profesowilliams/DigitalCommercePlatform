@@ -18,7 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
     public class SummaryModel : BaseResponseModel
     {
         public SourceModel Source { get; set; }
-        public PartyModel Reseller { get; set; }
+        public ResellerModel Reseller { get; set; }
         public PartyModel EndUser { get; set; }
         public PartyModel ShipTo { get; set; }
         public DateTime Published { get; set; }
