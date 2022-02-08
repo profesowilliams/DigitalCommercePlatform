@@ -99,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
 
             result = _helperService.FilterOrderLines(result);
-            
+
             return result;
         }
 
@@ -156,7 +156,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     try
                     {
                         var findReturnsDTO = await _middleTierHttpClient.GetAsync<FindResponse<IEnumerable<ReturnModel>>>(_appreturn);
-                        if (findReturnsDTO.Data.Any())
+                        if (findReturnsDTO != null && findReturnsDTO.Data.Any())
                         {
                             item.Return = true;
                             break;
@@ -164,13 +164,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     }
                     catch (RemoteServerHttpException ex)
                     {
-                        if (ex.Code == HttpStatusCode.NotFound)                        
-                            _logger.LogInformation("Calling App-Retrun to get return formation: returned Involice not found ! ");                        
+                        if (ex.Code == HttpStatusCode.NotFound)
+                            _logger.LogInformation("Calling App-Retrun to get return formation: returned Involice not found ! ");
                         else if (ex.Code == HttpStatusCode.InternalServerError)
                             _logger.LogInformation("Calling App-Retrun to get return formation: returned Internal server error ! ");
                         else
                             _logger.LogInformation("Calling App-Retrun to get return formation: returned error ! " + ex.Message.ToString());
 
+                        item.Return = false;
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Calling App-Retrun to get return formation: returned error ! " + ex.Message.ToString());
                         item.Return = false;
                         break;
                     }
@@ -197,7 +203,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             else
                 orderParameters.Origin = null;
 
-            if(!string.IsNullOrWhiteSpace(orderParameters.Id))
+            if (!string.IsNullOrWhiteSpace(orderParameters.Id))
             {
                 orderParameters.Id = orderParameters.Id + "*";
             }
