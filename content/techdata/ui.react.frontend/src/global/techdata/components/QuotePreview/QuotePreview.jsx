@@ -257,8 +257,8 @@ function QuotePreview(props) {
       {},
       {
         quotePreview: {
-          dealId: generalInfo.deal.dealId,
-          genTier: generalInfo.tier,
+          dealId: generalInfo.deal.dealId || "",
+          genTier: generalInfo.tier || "",
         },
       }
     );
