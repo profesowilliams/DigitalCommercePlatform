@@ -31,8 +31,22 @@
         {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
         {"columnLabel":"TD Quote Id","columnKey":"quotes", "sortable": false},
         {"columnLabel":"Action","columnKey":"action", "sortable": false}],
-        "searchCriteria":{
-          "keywordDropdown":{},
+        "searchCriteria": {
+          "title": "Filter Configurations",
+          "searchButtonLabel": "Apply",
+          "clearButtonLabel": "Clear all filters",
+          "inputPlaceholder": "Enter Your Search",
+          "fromLabel": "From:",
+          "toLabel": "To:",
+          "datePlaceholder": "MM/DD/YYYY",
+          "keywordDropdown": {
+            "label": "Search",
+            "items": [
+              { "key": "configId", "value": "Config ID" },
+              { "key": "configName", "value": "Config Name" },
+              { "key": "EndUser", "value": "End User" }
+            ]
+          },
           "configurationTypesDropdown": {
             "items": [
               { "value": "All Configuration Types" },
