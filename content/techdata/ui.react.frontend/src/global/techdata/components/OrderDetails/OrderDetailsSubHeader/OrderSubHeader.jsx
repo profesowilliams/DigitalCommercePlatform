@@ -3,6 +3,7 @@ import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Modal from "../../Modal/Modal";
 import LineItemsExportXls from "../OrderDetailItemExport/LineItemsExportXls";
 import  { orderStatusValues } from "../orderStatus";
+import { pushEvent } from '../../../../../utils/dataLayerUtils';
 
 const OrderSubHeader = ({
       headerConfig,
@@ -27,6 +28,18 @@ const downloadXls = () => (fieldsList) => {
 
 }
 const handleClickCSV = () => {
+
+    pushEvent('click', 
+    {
+       name: headerConfig.exportCSVLabel
+    },
+    {
+        click:
+        {
+            category: 'Order Detail Table Interactions',
+        }
+    })
+
     const modal = {
         properties:{
             title: 'Export XLS',
