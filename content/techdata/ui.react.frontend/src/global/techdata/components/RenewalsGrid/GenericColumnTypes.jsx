@@ -67,7 +67,7 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  expandable: true,
+  expandable:true,
   valueFormatter: () => "",
   detailRenderer: ({ data }) => (
     <DropdownDownloadList data={data}  />
@@ -82,13 +82,15 @@ export const renewalPlanColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  expandable: true,
-  rowClass: ({ node, data }) => {
-    return `cmp-renewals_plan`;
+  // expandable: true,
+  resizable: true,
+  width:"300px",
+  cellRenderer: ({data}) => {     
+    return <ContractColumn data={data} />
   },
-  detailRenderer: ({ data }) => {
-    return <div>Custom Renewals Plan Row Details</div>;
-  },
+  // detailRenderer: ({ data }) => {
+  //   return <div>Custom Renewals Plan Row Details</div>;
+  // },
 });
 
 export const plainResellerColumnFn = (definition) => {
@@ -117,7 +119,6 @@ const columnTypes = {
 
 export const getColumnDefinitions = (originalDefinitions) => {
   const colDefs = originalDefinitions.map((definition) => {
-    // console.log(definition.type, columnTypes[definition.type], columnTypes)
     return columnTypes[definition.type](definition);
   });
   const res = colDefs.filter((columnDef) => columnDef !== null);

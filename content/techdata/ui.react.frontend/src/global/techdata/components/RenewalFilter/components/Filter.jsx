@@ -20,19 +20,13 @@ function Filter({ id }) {
   const filter = filterList[id]; 
   const childIds = filter.childIds;
 
+
   const handleFilterClick = ({ target }) => {
-  
     const filtersCopy = produce(filterList, (draft) => {
       if (!("parentId" in filter))
         draft[filter.id].open = !draft[filter.id].open;
       for (let id of childIds) {
-        draft[id].open = !draft[id].open;
-        let subChildIds = draft[id].childIds;
-        if (subChildIds.length) {
-          for (let subId of subChildIds) {
-            draft[subId].open = draft[subId].checked && !draft[subId].open;
-          }
-        }
+        draft[id].open = !draft[id].open;           
       }
     });
 
