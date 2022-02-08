@@ -10,7 +10,6 @@ using DigitalCommercePlatform.UIServices.Order.Dto.Order;
 using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalFoundation.Common.Extensions;
-using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;

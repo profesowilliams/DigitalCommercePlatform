@@ -13,7 +13,6 @@ using DigitalCommercePlatform.UIServices.Order.Models;
 using DigitalCommercePlatform.UIServices.Order.Models.Internal;
 using DigitalCommercePlatform.UIServices.Order.Models.Order;
 using DigitalCommercePlatform.UIServices.Order.Models.Order.Internal;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Techdata.Common.Utility.CarrierTracking;
 using Techdata.Common.Utility.CarrierTracking.Model;
 using AddressDto = DigitalCommercePlatform.UIServices.Order.Dto.Internal.AddressDto;
@@ -34,22 +33,23 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.IsDropShip, y => y.Ignore());
             CreateMap<ResellerDto, ResellerModel>();
             CreateMap<ShipmentsDto, ShipmentsModel>();
-            CreateMap<DigitalCommercePlatform.UIServices.Order.Models.Order.Internal.ShipmentModel,DigitalCommercePlatform.UIServices.Order.Models.Internal.ShipmentsModel > ()
+            CreateMap<ShipmentModel, ShipmentsModel > ()
                 .ForMember(x=> x.Carrier, y=> y.MapFrom(s=> s.Carrier))
                 .ForMember(x => x.TrackingNumber, y => y.MapFrom(s => s.TrackingNumber))
                 .ForMember(x => x.Description, y => y.MapFrom(s => s.Description))
                 .ForMember(x => x.Date, y => y.MapFrom(s => s.Date))
-                .ForMember(x=>x.TrackingLink, y=> y.MapFrom((src, dest, context) => GetTrackingLink(src)))
-                ;
+                .ForMember(x=>x.TrackingLink, y=> y.MapFrom((src, dest, context) => GetTrackingLink(src)));
+
             CreateMap<StatusCountDto, StatusCountModel>();
             CreateMap<NuanceChatBotResponseDto, NuanceChatBotResponseModel>();
             CreateMap<NuanceWebChatRequest, FindRequestModel>()
                 .ForMember(x => x.CustomerPO, s => s.MapFrom(y => y.OrderQuery.CustomerPo))
                 .ForMember(x => x.ManufacturerPartNumber, s => s.MapFrom(y => y.OrderQuery.ManufacturerPartNumber))
-                .ForMember(x => x.ID, s => s.MapFrom(y => y.OrderQuery.OrderId))
+                .ForMember(x => x.ID, s => s.MapFrom(y => !string.IsNullOrEmpty(y.OrderQuery.OrderId) ? y.OrderQuery.OrderId.ToUpperInvariant() : null))
                 .ForMember(x => x.Page, y => y.Ignore())
                 .ForMember(x => x.PageSize, y => y.Ignore())
                 .ForMember(x => x.Details, y => y.Ignore());
+
             CreateMap<OrderModel, NuanceChatBotResponseModel>()
                 .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetStatus(src)))
                 .ForMember(x => x.OrderId, y => y.MapFrom(s => s.Source.Id))
@@ -57,18 +57,17 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.OrderDetailsLink, y => y.MapFrom((src, dest, context) => GetLink(src.Source.Id)))
                 .ForMember(x => x.Reseller, y => y.MapFrom((src, dest, context) => GetReseller(src.Reseller)))
                 .ForMember(x => x.IsDropShip, y => y.Ignore())
-                .BeforeMap((src, dest) => src.Items = GroupItems(src.Items))
-              ;
-            CreateMap<Models.Order.Internal.ItemModel,
-                    DigitalCommercePlatform.UIServices.Order.Models.Internal.ItemModel>()
+                .BeforeMap((src, dest) => src.Items = GroupItems(src.Items));
+
+            CreateMap<Models.Order.Internal.ItemModel, ItemModel>()
                 .ForMember(x => x.Status, y => y.MapFrom((src, dest, context) => GetItemStatus(src)))
                 .ForMember(x=> x.TechDataPartNumber, y=>y.MapFrom(s=>s.Product.FirstOrDefault(f=> f.Type == ProductType.TECHDATA).ID))
                 .ForMember(x => x.Name, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.TECHDATA).Name))
                 .ForMember(x => x.LineId, y => y.MapFrom(s => s.ID))
                 .ForMember(x => x.Manufacturer, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.TECHDATA).Manufacturer))
                 .ForMember(x => x.ManufacturerPartNumber, y => y.MapFrom(s => s.Product.FirstOrDefault(f => f.Type == ProductType.MANUFACTURER).ID))
-                .ForMember(x => x.IsDropShip, y => y.MapFrom((src, dest, context) => IsDropShip(src.ItemCategory)))
-                ;
+                .ForMember(x => x.IsDropShip, y => y.MapFrom((src, dest, context) => IsDropShip(src.ItemCategory)));
+
             CreateMap<ResellerModel, AddressModel>()
                 .ForMember(x => x.State, y => y.MapFrom(s => s.Address.State))
                 .ForMember(x => x.City, y => y.MapFrom(s => s.Address.City))
@@ -76,9 +75,8 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForMember(x => x.Zip, y => y.MapFrom(s => s.Address.Zip))
                 .ForMember(x => x.Line1, y => y.MapFrom(s => s.Address.Line1))
                 .ForMember(x => x.Line2, y => y.MapFrom(s => s.Address.Line2))
-                .ForMember(x => x.Line3, y => y.MapFrom(s => s.Address.Line3))
-                
-                ;
+                .ForMember(x => x.Line3, y => y.MapFrom(s => s.Address.Line3));
+
             CreateMap<ResellerModel, AddressPartyModel>()
                 .ForMember(x => x.ID, y => y.MapFrom(s => s.Id))
                 .ForMember(x => x.Name, y => y.MapFrom(s => s.Name))
@@ -87,9 +85,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
                 .ForPath(x => x.Address.ZIP, y => y.MapFrom(s => s.Address.Zip))
                 .ForPath(x => x.Address.Line1, y => y.MapFrom(s => s.Address.Line1))
                 .ForPath(x => x.Address.Line2, y => y.MapFrom(s => s.Address.Line2))
-                .ForPath(x => x.Address.Line3, y => y.MapFrom(s => s.Address.Line3))
-
-                ;
+                .ForPath(x => x.Address.Line3, y => y.MapFrom(s => s.Address.Line3));
         }
 
         private static List<Models.Order.Internal.ItemModel> GroupItems(List<Models.Order.Internal.ItemModel> items)

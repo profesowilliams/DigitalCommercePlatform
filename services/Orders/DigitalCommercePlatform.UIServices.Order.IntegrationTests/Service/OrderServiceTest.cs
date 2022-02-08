@@ -9,7 +9,6 @@ using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
 using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 using DigitalCommercePlatform.UIServices.Order.Services;
-using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
