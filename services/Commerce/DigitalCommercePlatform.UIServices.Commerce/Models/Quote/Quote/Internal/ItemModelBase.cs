@@ -21,5 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public decimal UnitListPrice { get; set; }
         public decimal ExtendedListPrice { get; set; }
         public EndUserModel EndUser { get; set; }
+        public decimal PurchaseCost { get; set; }
     }
 }

@@ -235,8 +235,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact]
         public void GetLinesforRequest()
         {
-
             //arrange
+
+            var quotePreviewModel = GetQuotePreviewModel();
+            
             Line testLine = new()
             {
                 TDNumber = "1231234444",
@@ -256,7 +258,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id,"Estimate" });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id,"Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -268,8 +270,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact]
         public void GetLinesforRequest_Zero_Test()
         {
-
             //arrange
+
+            var quotePreviewModel = GetQuotePreviewModel();
+
             Line testLine = new()
             {
                 TDNumber = "1231234444",
@@ -290,7 +294,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate" });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -301,17 +305,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact]
         public void GetLinesforRequest_Null_Test()
         {
-
             //arrange
+
+            var quotePreviewModel = GetQuotePreviewModel();
+
             Line testLine = new()
             {
                 TDNumber = "1231234444",
                 MFRNumber = "CISCO_35345",
                 Manufacturer = "CISCO",
                 ShortDescription = "TEST PRODUCT",
-                Quantity = 1,                
-                UnitListPrice = 100.00M
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08
             };
+            
 
             string id = "4735561697";
             Type type;
@@ -322,7 +329,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate"});
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -343,6 +350,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Email = "abc@gmail.com"
             };
             lstAddress.Add(address);
+
             Type type;
             object objType;
             InitiateCommerceService(out type, out objType);
@@ -745,6 +753,54 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             //Assert
             Assert.NotNull(result);
+        }
+        private Task<QuotePreviewModel> GetQuotePreviewModel()
+        {
+            QuotePreview quotePreview = new QuotePreview
+            {
+                BuyMethod = "tdavnet69",
+                Currency = "USD",
+                Id = "123",
+                IsExclusive = true
+            };
+            QuotePreviewModel quotePreviewModel = new QuotePreviewModel
+            {
+                QuoteDetails = quotePreview
+            };
+            return Task.FromResult(quotePreviewModel);
+        }
+        [Fact]
+        public void MapQuotePrice_Test()
+        {
+            //arrange
+
+            var quotePreviewModel = GetQuotePreviewModel();
+
+            Line line = new Line
+            {
+                TDNumber = "1231234444",
+                MFRNumber = "CISCO_35345",
+                Manufacturer = "CISCO",
+                ShortDescription = "TEST PRODUCT",
+                Quantity = 1,
+                UnitPrice = 123.98M,
+                UnitListPrice = 100.00M
+            };
+
+            //Act
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapQuotePrice" && x.IsPrivate);
+
+            imageProductModel.Invoke(objType, new object[] { quotePreviewModel, line });
+
+            //Assert 
+            Assert.NotNull(quotePreviewModel.Result);
+
         }
     }
 }

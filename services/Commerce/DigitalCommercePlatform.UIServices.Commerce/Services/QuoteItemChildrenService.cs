@@ -36,11 +36,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 item.DisplayLineNumber = displayNumber.ToString();
 
                 var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
-                foreach (var child in subLines)
-                {
-                    displayChildNumber = displayChildNumber + 0.1;
-                    child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
-                }
+                var childLines = new List<Line>();
+                displayChildNumber = MapChildrenFromParents(quotePreviewModel, displayNumber, displayChildNumber, subLines, childLines);
 
                 lines.Add(new Line
                 {
@@ -72,17 +69,42 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Images = item.Images,
                     Logos = item.Logos,
                     Children = subLines,
-                    Authorization=item.Authorization
+                    Authorization = item.Authorization,
+                    PurchaseCost = item.PurchaseCost,
                 });
 
             }
-
             return lines;
+        }
+
+        private double MapChildrenFromParents(QuotePreviewModel quotePreviewModel, double displayNumber, double displayChildNumber, List<Line> subLines, List<Line> childLines)
+        {
+            foreach (var child in subLines)
+            {
+                var childSubLineParents = quotePreviewModel.QuoteDetails?.Items?.Where(i => i.Parent == child.Id)?.ToList();
+                childLines.AddRange(childSubLineParents);
+            }
+            if (childLines.Count > 0)
+                subLines.AddRange(childLines);
+            displayChildNumber = GetDisplayChildNumber(quotePreviewModel, displayNumber, displayChildNumber, subLines);
+
+            return displayChildNumber;
+        }
+
+        private double GetDisplayChildNumber(QuotePreviewModel quotePreviewModel, double displayNumber, double displayChildNumber, List<Line> subLines)
+        {
+            foreach (var child in subLines)
+            {
+                displayChildNumber = displayChildNumber + 0.1;
+                child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
+            }
+
+            return displayChildNumber;
         }
 
         private void ApplyIdToItems(QuotePreviewModel quotePreviewModel)
         {
-            var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();           
+            var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();
 
             if (linesWithoutId.Any())
             {
@@ -110,7 +132,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             if (string.IsNullOrWhiteSpace(request)) return 0.00;
 
             int index = request.IndexOf('.');
-            if(index >0)
+            if (index > 0)
                 request = request.Substring(0, index);
 
             double value;

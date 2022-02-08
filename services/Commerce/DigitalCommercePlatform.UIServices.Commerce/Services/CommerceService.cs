@@ -330,17 +330,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 configId = input.QuoteDetails.ConfigurationId;
             }
+            GetQuotePreviewDetails.Request productRequest = new GetQuotePreviewDetails.Request(configId, true, "CISCO");
 
+            var configDetails = CreateResponseUsingEstimateId(productRequest);
             foreach (var item in input.QuoteDetails.Items)
             {
-                ItemModel requestItem = GetLinesforRequest(item, configId, Type);
+
+                ItemModel requestItem = GetLinesforRequest(item, configId, Type, configDetails);
                 lstItems.Add(requestItem);
 
                 if (item.Children != null)
                 {
                     foreach (var subline in item.Children)
                     {
-                        ItemModel sublineItem = GetLinesforRequest(subline, configId, Type);
+                        ItemModel sublineItem = GetLinesforRequest(subline, configId, Type, configDetails);
                         lstItems.Add(sublineItem);
                     }
                 }
@@ -349,15 +352,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             createModelFrom.Items = lstItems;
         }
 
-        private ItemModel GetLinesforRequest(Line item, string id,string Type)
+        private void MapQuotePrice(Task<QuotePreviewModel> configDetails, Line item)
         {
+            var configItem = configDetails.Result.QuoteDetails?.Items?.Where((i => (i.Id == item.Id && i.VendorPartNo?.ToUpper() == item.VendorPartNo.ToUpper()))).FirstOrDefault();
+
+            if (configItem != null)
+            {
+                item.UnitPrice = configItem.UnitPrice;
+                item.UnitListPrice = configItem.UnitListPrice;
+                item.PurchaseCost = configItem.PurchaseCost;
+            };
+        }
+
+        private ItemModel GetLinesforRequest(Line item, string id, string Type, Task<QuotePreviewModel> configDetails)
+        {
+
+            MapQuotePrice(configDetails, item);
+
             if (item.UnitPrice == null || item.UnitPrice < 0.1M)
                 item.UnitPrice = item.UnitListPrice;
 
             if (Type.ToLower() == "estimate")
                 item.PurchaseCost = item.UnitListPrice;
-            else if (Type.ToLower() == "deal" || Type.ToLower() == "vendorquote")
-                item.PurchaseCost = item.PurchaseCost;
 
             var lstProduct = new List<ProductModel>{
                     new ProductModel {
@@ -379,8 +395,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 TotalPrice = (decimal)item.UnitPrice * item.Quantity,
                 UnitCost = (decimal)item.UnitPrice,
                 Product = lstProduct,
-                Attributes = BuildAttribute(id, "vendorquoteid")
-
+                PurchaseCost = item.PurchaseCost,
+                Attributes = BuildAttribute(id, "vendorquoteid"),
 
             };
             return requestItem;
