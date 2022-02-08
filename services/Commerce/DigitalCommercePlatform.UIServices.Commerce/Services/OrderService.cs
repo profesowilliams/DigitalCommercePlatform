@@ -258,7 +258,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 order.Tax = CalculateTax(order);
                 order.Freight = CalculateFreight(order);
                 order.OtherFees = CalculateOtherFees(order);
-                order.SubTotal = order.TotalCharge ?? 0;
+                order.SubTotal = order.Price ?? 0;
                 decimal? subtotal = order.SubTotal ?? 0;
 
                 order.Total = subtotal + order.OtherFees + order.Freight + order.Tax;

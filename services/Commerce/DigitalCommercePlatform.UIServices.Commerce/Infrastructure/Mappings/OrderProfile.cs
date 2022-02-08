@@ -84,7 +84,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.Tax, opt => opt.MapFrom(src => src.Tax))
                 .ForPath(dest => dest.PaymentDetails.Freight, opt => opt.MapFrom(src => src.Freight))
                 .ForPath(dest => dest.PaymentDetails.Total, opt => opt.MapFrom(src => src.Total))
-                .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.TotalCharge))
+                .ForPath(dest => dest.PaymentDetails.Subtotal, opt => opt.MapFrom(src => src.Price))
                 .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.PODate, opt => opt.MapFrom<DateResolver>())
