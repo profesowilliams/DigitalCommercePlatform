@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
-import { useEffect } from "react";
 
 function ConfigurationGridSearch({
   componentProp,
@@ -54,7 +53,7 @@ function ConfigurationGridSearch({
   useEffect(() => {
     if (isNotEmptyValue(config?.keywordDropdown?.items?.length) && isNotEmptyValue(config?.configurationTypesDropdown?.items?.length)) {
       const defaultKeyDropDownValue = config?.keywordDropdown?.items[0].key;
-      const configurationTypesDropdownValue = config?.configurationTypesDropdown?.items[0].key;
+      const configurationTypesDropdownValue = config?.configurationTypesDropdown?.items[0].key ;
       setDefaultValues({
         keywordDropdown: defaultKeyDropDownValue,
         configurationTypesDropdown: configurationTypesDropdownValue,
@@ -70,7 +69,7 @@ function ConfigurationGridSearch({
     return {
       searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
       searchOption: isNotEmptyValue(query.keyword?.value),
-      configFilter: query.configurations.key === defaultValues.configurationTypesDropdown && query.keyword.key === defaultValues.keywordDropdown,
+      configFilter: query.configurations.key !== defaultValues.configurationTypesDropdown,
       fromDate: isNotEmptyValue(query.from?.key),
       toDate: isNotEmptyValue(query.to?.key),
     };

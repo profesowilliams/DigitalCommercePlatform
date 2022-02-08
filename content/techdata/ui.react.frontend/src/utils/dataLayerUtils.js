@@ -92,14 +92,11 @@ export const handlerAnalyticsClearClickEvent = (category = '') => {
   const clickInfo = {
       type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
       name : ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS,
+      category : category,
     };
-  const click = {
-    category : category,
-  }
   const objectToSend = {
     event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
     clickInfo,
-    click
   }
   pushEventAnalyticsGlobal(objectToSend);
 };

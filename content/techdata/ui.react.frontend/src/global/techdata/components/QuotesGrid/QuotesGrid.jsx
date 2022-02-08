@@ -68,14 +68,11 @@ function QuotesGrid(props) {
     const clickInfo = {
       type : ADOBE_DATA_LAYER_LINK_TYPE,
       name : param,
-    };
-    const click = {
       category : ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
-      click
     }
     pushEventAnalyticsGlobal(objectToSend);
   };
