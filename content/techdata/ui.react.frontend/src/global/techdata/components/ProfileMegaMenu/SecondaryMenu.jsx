@@ -4,7 +4,7 @@ import FontIcon from "../Widgets/FontIcon";
 import { hasDCPAccess } from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
-function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
+function SecondaryMenu({ secondaryData, userData, handleBackBtnClick, addToRefs, handleKeyDown, refBackButton }) {
   const [isOpen, setIsOpen] = useState(null);
 
   const handleSecondaryClick = (event, index, hasChild) => {
@@ -42,7 +42,8 @@ function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
       </div>
       <span
         className="cmp-sign-in-secondary__back"
-        onClick={handleBackBtnClick}
+        onClick={handleBackBtnClick} ref={refBackButton}
+        tabIndex="0"  onKeyDown={(e) => handleKeyDown({e})}
       >
         <FontIcon iconClassName="fa-chevron-left" />
       </span>
@@ -64,13 +65,15 @@ function SecondaryMenu({ secondaryData, userData, handleBackBtnClick }) {
                     item.secondaryDcpLink,
                     item.secondaryLabel
                   )
-                }>
+                } tabIndex="0" ref={addToRefs} onKeyDown={(e) => handleKeyDown({e})}>
                 {item.secondaryLabel}
               </a>
               {item.tertiaryMenus ? (
                 <TertiaryMenu
                   userData={userData}
                   tertiaryData={item.tertiaryMenus}
+                  innerRef={addToRefs}
+                  handleKeyDown={handleKeyDown}
                 />
               ) : null}
             </li>

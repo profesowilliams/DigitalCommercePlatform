@@ -16,6 +16,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const refCursor = useRef(0);
   const refLogOff = useRef(null);
   const refLogIn = useRef(null);
+  const refBackButton = useRef(null);
 
   const handlePrimaryClick = (obj) => {
     if (obj.secondaryMenus) {
@@ -41,28 +42,45 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const addToRefs = (el) => {
     if (el && !refs.current.includes(el)) {
       refs.current.push(el);
+      if (refs.current.length === 1) {
+        refCursor.current = 0
+        refs.current[refCursor.current].focus();
+      }
     }
   };
 
   const handleKeyDown = (request) => {
     const {e, linkUrl, dcpLink, linkTitle, linkTarget} = request
+    let parentRefs = refs.current.filter(r => r.offsetParent != null);
     switch (true) {
-      case e.keyCode === 37 && refCursor.current === 0:
+      case (e.keyCode === 38 && refCursor.current === 0) && e.currentTarget.className === '':
+        setRefBackButton();
+        break;
+
+        case (e.keyCode === 37 && refCursor.current === 0) && e.currentTarget.className === 'cmp-sign-in-secondary__back':
+          e.currentTarget.click();
+          refs.current = [];
+          setShowMenu(true);
+          break;
+
+      case e.keyCode === 38 && refCursor.current === 0:
         setIsSelected(false);
         setShowMenu(false);
         setRefLogIn();
         break;
 
-      case e.keyCode === 37 && refCursor.current > 0:
-        refs.current[--refCursor.current].focus();
+      case e.keyCode === 38 && refCursor.current > 0:
+        parentRefs = refs.current.filter(r => r.offsetParent != null);
+        parentRefs[--refCursor.current].focus();
         break;
 
-      case e.keyCode === 39 && refCursor.current === refs.current.length - 1:
+      case e.keyCode === 40 && refCursor.current === refs.current.length - 1:
         setRefLogOff();
         break;
 
-      case e.keyCode === 39 && refCursor.current <= refs.current.length - 1:
-        refs.current[++refCursor.current].focus();
+      case e.keyCode === 40 && refCursor.current <= refs.current.length - 1:
+        parentRefs = refs.current.filter(r => r.offsetParent != null);
+        parentRefs[++refCursor.current].focus();
         break;
 
       case e.shiftKey && e.keyCode === 9:
@@ -81,6 +99,26 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
 
       case e.keyCode === 13 && e.currentTarget.className === 'cmp-sign-in-list-content--item':
         handleLinkClick(linkUrl, dcpLink, linkTitle, linkTarget );
+        break;
+
+      case ((e.keyCode === 39 && refCursor.current <= refs.current.length - 1) || e.keyCode === 13) && (e.currentTarget.className === 'has-child' || e.currentTarget.className === 'cmp-sign-in-secondary__back'):
+        refCursor.current = -1;
+        refs.current = [];
+        e.currentTarget.click();
+        break;
+
+      case (e.keyCode === 38 && refCursor.current === 0) && (e.currentTarget.className === 'cmp-sign-in-secondary__back'):
+        refCursor.current = -1;
+        refs.current = [];
+        e.currentTarget.click();
+        break;
+
+      case (e.keyCode === 37 || e.keyCode === 13) && (e.currentTarget.offsetParent.className === 'cmp-sign-in-list cmp-sign-in--container selected showMenu' || e.currentTarget.offsetParent.className === 'cmp-sign-in__item cmp-sign-in__level-1 has-child active'):
+        e.currentTarget.click();
+        break;
+
+      case (e.keyCode === 39 || e.keyCode === 13) && e.currentTarget.className === '':
+        e.currentTarget.click();
         break;
 
       case e.keyCode === 13 && e.currentTarget.className === 'cmp-sign-in-signout':
@@ -120,6 +158,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       config?.aemAuthUrl ?? null,
       config?.isPrivatePage ?? null
     );
+  };
+
+  const setRefBackButton = () => {
+    refBackButton.current.focus();
   };
 
   return (
@@ -228,6 +270,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
             <SubHeaderMenuContainer
               data={dropDownData}
               handlePrimaryClick={handlePrimaryClick}
+              addToRefs={addToRefs}
+              handleKeyDown={handleKeyDown}
             />
             <button
               className="cmp-sign-in-signout"
@@ -252,6 +296,9 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
             userData={userDataCheck}
             secondaryData={secondaryItems}
             handleBackBtnClick={handleBackBtnClick}
+            addToRefs={addToRefs}
+            handleKeyDown={handleKeyDown}
+            refBackButton={refBackButton}
           />
         )}
       </div>

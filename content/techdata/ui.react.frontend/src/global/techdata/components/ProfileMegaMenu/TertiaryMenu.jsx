@@ -2,7 +2,7 @@ import React from 'react';
 import { hasDCPAccess } from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
-function TertiaryMenu({tertiaryData, userData}) {
+function TertiaryMenu({tertiaryData, userData, innerRef, handleKeyDown}) {
     const handleTertiaryClick = (e) => {
         e.stopPropagation();
     }
@@ -34,7 +34,7 @@ function TertiaryMenu({tertiaryData, userData}) {
                               item.tertiaryDcpLink,
                               item.tertiaryLabel
                             )
-                          }
+                          } tabIndex="0" ref={innerRef} onKeyDown={(e) => handleKeyDown({e})}
                        >
                             {item.tertiaryLabel}
                         </a>
