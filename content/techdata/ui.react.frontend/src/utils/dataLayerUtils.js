@@ -13,8 +13,14 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+import { getSessionId, getUserDataInitialState } from './user-utils';
+
 let dataLayerEnabled = null;
 let dataLayer = null;
+
+let sessionId = getSessionId();
+let userData = getUserDataInitialState();
+
 const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
 const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
 const ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS = 'Clear all filters';
@@ -35,6 +41,8 @@ const getDataLayer = () => {
 // https://github.com/adobe/adobe-client-data-layer/wiki#push
 export const pushData = data => {
   if (isDataLayerEnabled()) {
+    let eventInfo = data[getEventInfoPropName(data)];
+    setVisitorData(eventInfo);
     getDataLayer().push(data);
   }
 };
@@ -44,7 +52,7 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
     getDataLayer().push({
       event: eventName,
-      clickInfo: eventInfo,
+      clickInfo: setVisitorData(eventInfo),
       ...extraData
     });
   }
@@ -57,6 +65,8 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
  */
 export const pushEventAnalyticsGlobal = (filter) => {
   if (isDataLayerEnabled()) {
+    let eventInfo = filter[getEventInfoPropName(filter)];
+    setVisitorData(eventInfo);
     getDataLayer().push(filter);
   }
 };
@@ -100,3 +110,30 @@ export const handlerAnalyticsClearClickEvent = (category = '') => {
   }
   pushEventAnalyticsGlobal(objectToSend);
 };
+
+
+const setVisitorData = (object) => {
+  object.visitor = {
+    ecID: sessionId ? userData.id : null,
+    sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+    loginStatus: sessionId ? "Logged in" : "Logged out"
+  }
+
+  return object;
+}
+
+/**
+ * Get key name of the object entry that contains the event information in the event object.
+ * {'event': 'eventName', 'eventInfo': {....}} 
+ * @param {Object} data 
+ * @returns eventInfo
+ */
+const getEventInfoPropName = (data) => {
+
+  let objectKeys = Object.keys(data);
+
+  let nonEventKey = objectKeys.filter(key => key != 'event');
+
+  // eventInfo:
+  return nonEventKey[0];
+}

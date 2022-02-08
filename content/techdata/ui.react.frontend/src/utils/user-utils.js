@@ -10,6 +10,8 @@ export const RENEWALS_TYPE = {
 
 export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
 
+export const getSessionId = () => window.localStorage.getItem("sessionId");
+
 export const isInternalUser = getUserDataInitialState()?.isInternal ?? false;
 
 export const hasDCPAccess = (user) => {

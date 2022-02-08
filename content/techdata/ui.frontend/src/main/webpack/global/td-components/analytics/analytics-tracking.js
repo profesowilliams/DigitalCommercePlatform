@@ -34,6 +34,9 @@
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
     const LIST_CLASSNAME = "cmp-list__item-link-analytics";
 
+    let sessionId = window.localStorage.getItem("sessionId");
+    let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
         if (linkText.startsWith("|"))
@@ -75,9 +78,19 @@
         window.adobeDataLayer.push(
             {
                 "event": 'click',
-                "clickInfo": clickInfo
+                "clickInfo": setVisitorData(clickInfo)
             });
 
+    }
+
+    function setVisitorData(object) {
+        object.visitor = {
+            ecID: sessionId ? userData.id : null,
+            sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+            loginStatus: sessionId ? "Logged in" : "Logged out"
+        }
+
+        return object;
     }
 
     function carouselTeaserClickHandler(teaserDivElement, carouselItemDivElement, elementClicked) {

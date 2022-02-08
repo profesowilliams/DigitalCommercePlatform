@@ -28,6 +28,10 @@
 <div id="top"></div>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
+          
+          let sessionId = window.localStorage.getItem("sessionId");
+          let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+          
           adobeDataLayer.push({
               event:'page view',
               page: {
@@ -50,7 +54,12 @@
              error: {
                 errorCode: '${page.errorCode @ context='unsafe'}',
                 errorName: '${page.errorName @ context='unsafe'}'
-             }
+            },
+            visitor: {
+                 ecID: sessionId ? userData.id : null,
+                 sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+                 loginStatus: sessionId ? "Logged in" : "Logged out"
+           }
           });
         </script>
 <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
