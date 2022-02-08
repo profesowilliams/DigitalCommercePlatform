@@ -29,6 +29,7 @@
     const IMAGE_CSS_CLASSNAME = "cmp-image";
     const TEASER_CONTENT_CSS_CLASSNAME = "cmp-teaser__content";
     const MEGAMENU_CLASSNAME = "cmp-megamenu__analytics-link";
+    const SUBHEADER_CLASSNAME = "cmp-subheader__analytics-link";
     const MEGAMENU_TABS_CLASSNAME = "cmp-megamenu__tab-text";
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
     const LIST_CLASSNAME = "cmp-list__item-link-analytics";
@@ -176,6 +177,23 @@
 
     }
 
+    function subHeaderClickEventHandler(elemClicked) {
+        const label = elemClicked.getAttribute('data-tab-name');
+        let hier = label;
+        if (elemClicked.closest('.cmp-tools__category-name')) {
+            hier = elemClicked.getAttribute('data-hier') || label;
+        }
+        const clickInfo = {};
+
+        clickInfo[ANALYTICS_EVENTINFO_TYPE_PN] = ANALYTICS_EVENTINFO_TYPE_LINK_VAL;
+        clickInfo[ANALYTICS_EVENTINFO_NAME_PN] = label;
+        clickInfo[ANALYTICS_EVENTINFO_CATEGORY_PN] = 'DCP subheader';
+        clickInfo[ANALYTICS_EVENTINFO_CLICKHEIR_PN] = hier;
+
+        pushToDataLayer(clickInfo);
+
+    }
+
     function megamenuClickEventHandler(elemClicked) {
         const mastheadlevel = elemClicked.getAttribute('data-level');
         let clickHier =  elemClicked.getAttribute('data-hier');
@@ -221,6 +239,8 @@
             megamenuClickEventHandler(event.currentTarget);
         } else if (className && className.indexOf(LIST_CLASSNAME) > -1) {
             listClickEventHandler(event.currentTarget);
+        } else if (className && className.indexOf(SUBHEADER_CLASSNAME) > -1) {
+            subHeaderClickEventHandler(event.currentTarget);
         } else {
             var element = event.currentTarget;
             var componentId = getClickId(element);

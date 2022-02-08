@@ -4,6 +4,7 @@ import VendorConnection from './VendorConnection';
 import {dashboardMenu} from "./dashboardMenu";
 import {getAbsolutePosition} from "../../helpers/absolutePosition";
 import {getQueryStringValue} from "../../../../utils/utils";
+import { pushEvent } from "../../../../utils/dataLayerUtils";
 
 const NewSubheader = ({ componentProp }) => {
 	const dashboardMenuIndex = 0;
@@ -147,6 +148,15 @@ const NewSubheader = ({ componentProp }) => {
 		return hasDCPAccess(userData) ? link : legacyLink;
 	}
 
+	const analyticsData = (label) => {
+        pushEvent('click', {
+            type: 'link',
+            category: 'DCP subheader',
+            name: label,
+            clickHier: label?.trim() || label
+        });
+	}
+
 	const getMenuItems = (menuItems, dashboardMenuItems) => {
 
 		if (!menuItems.length) return null;
@@ -160,7 +170,8 @@ const NewSubheader = ({ componentProp }) => {
 					className={item.active ? "cmp-tabs__tab cmp-tabs__tab--active" : "cmp-tabs__tab"}
 					aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabIndex="0" data-cmp-hook-tabs="tab"
 					aria-selected="true" onClick={(e) => returnClickHandler(index)}>
-					<a href={getMenuLink(item)}>
+					<a href={getMenuLink(item)}
+					    onClick={() => analyticsData(item.title)}>
 						{item.title}
 					</a>
 					{showDashboard && index == 0 ? dashboardMenu(dashboardMenuItems, hasDCPAccess(userData)) : null}

@@ -8,7 +8,7 @@
             ${category.categoryName}
             <sly data-sly-list.link="${category.menuList}">
                 <ul>
-                    <li><a href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}">${link.linkLabel}</a></li>
+                    <li><a class="cmp-subheader__analytics-link"  data-tab-name="${link.linkLabel}" data-hier="Tools > ${category.categoryName} > ${link.linkLabel}" href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}" data-cmp-clickable="true">${link.linkLabel}</a></li>
                 </ul>
             </sly>
         </li>
