@@ -30,11 +30,17 @@ public @interface FormConfigurations {
     @Property(label = "Path of Email template for internal email", description = "Path of Email template for internal email")
     String internalEmailTemplatePath() default StringUtils.EMPTY;
 
-    @Property(label = "Path of Email template for confirmation email sent to submitter", description = "Path of Email template for confirmation email sent to submitter")
-    String confirmationEmailTemplatePath() default StringUtils.EMPTY;
+    @Property(label = "Generic Path of Email template for confirmation email sent to submitter", description = "APAC Path of Email template for confirmation email sent to submitter")
+    String genericConfirmationEmailTemplatePath() default "/etc/notification/email/generic-confirmation-email.html";
+
+    @Property(label = "APAC Path of Email template for confirmation email sent to submitter", description = "Generic Path of Email template for confirmation email sent to submitter")
+    String apacConfirmationEmailTemplatePath() default "/etc/notification/email/apac-confirmation-email.html";
 
     @Property(label = "Confirmation Email Subject", description = "Confirmation Email Subject")
     String confirmationEmailSubject() default StringUtils.EMPTY;
+
+    @Property(label = "Confirmation Help Desk", description = "Confirmation Help Desk")
+    String confirmationHelpDesk() default StringUtils.EMPTY;
 
     @Property(label = "Allowed File Extensions", description = "Specify comma separated list, like .pdf,.zip")
     String[] allowedFileExtensions() default {".pdf"};

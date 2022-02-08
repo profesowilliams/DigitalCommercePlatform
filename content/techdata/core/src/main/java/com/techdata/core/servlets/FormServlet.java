@@ -45,6 +45,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final Logger LOG = LoggerFactory.getLogger(FormServlet.class);
         private static final String FILE_PARAM_NAME = "file";
         private static final String CONFIRMATION_EMAIL_BODY_PARAM_NAME = "confirmationEmailBody";
+        private static final String CONFIRMATION_EMAIL_HELP_DESK = "confirmationHelpDesk";
         private static final String CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME = "confirmationSubject";
         private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "internalEmailSubject";
         private static final int ONE_MB_IN_BYTES = 1000000;
@@ -214,7 +215,13 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
                 internalEmailTemplatePath = formConfigurations.internalEmailTemplatePath();
-                confirmationEmailTemplatePath = formConfigurations.confirmationEmailTemplatePath();
+                if(emailParams.get(":redirect")!= null && emailParams.get(":redirect").contains("apac")) {
+                        confirmationEmailTemplatePath = formConfigurations.apacConfirmationEmailTemplatePath();
+                }else {
+                        confirmationEmailTemplatePath = formConfigurations.genericConfirmationEmailTemplatePath();
+                }
+                String confirmationHelpDesk = formConfigurations.confirmationHelpDesk();
+                emailParams.put(CONFIRMATION_EMAIL_HELP_DESK, confirmationHelpDesk);
                 String emailSubject = formConfigurations.emailSubject();
                 emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
                 String confirmationEmailSubject = formConfigurations.confirmationEmailSubject();

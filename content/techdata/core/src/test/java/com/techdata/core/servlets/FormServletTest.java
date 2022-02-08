@@ -86,7 +86,7 @@ class FormServletTest {
     private static final Logger log = LoggerFactory.getLogger(FormServlet.class);
     @Mock
     RequestParameterMap value;
-
+    Map<String,String> emailParams = new HashMap<>();
 
     @BeforeEach
     void setUp() throws IllegalAccessException, NoSuchFieldException {
@@ -99,6 +99,14 @@ class FormServletTest {
             field = underTest.getClass().getDeclaredField("emailService");
             field.setAccessible(true);
             field.set(underTest, emailService);
+        }catch (NoSuchFieldException | IllegalAccessException e) {
+            log.error("Error occurred in Form Servlet setup", e);
+        }
+        Field paramField = null;
+        try {
+            paramField = underTest.getClass().getDeclaredField("emailParams");
+            paramField.setAccessible(true);
+            paramField.set(underTest, emailParams);
         }catch (NoSuchFieldException | IllegalAccessException e) {
             log.error("Error occurred in Form Servlet setup", e);
         }
@@ -157,8 +165,8 @@ class FormServletTest {
         String[] arrayFromCA = new String[] {"apac|test@gmail.com,apac@apac.com", "hk|hk@hk.com"};
         String[] defaultAddressArray = new String[]{"default@defailt.com"};
         String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
-        Map<String, String[]> emailParams = new HashMap<>();
-
+        Map<String, String> emailParams = new HashMap<>();
+        emailParams.put(":redirect","apac");
         Method underTestMethod;
         underTestMethod = underTest.getClass().getDeclaredMethod("populateEmailAttributesFromCAConfig", FormConfigurations.class, Map.class);
         underTestMethod.setAccessible(true);
@@ -167,10 +175,10 @@ class FormServletTest {
         when(formConfigurations.submitterEmailFieldName()).thenReturn("submitterEmailFieldName");
         when(formConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
         when(formConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
-        when(formConfigurations.confirmationEmailTemplatePath()).thenReturn("confirmationEmailTemplatePath");
+        when(formConfigurations.apacConfirmationEmailTemplatePath()).thenReturn("apacconfirmationEmailTemplatePath");
         when(formConfigurations.emailSubject()).thenReturn("emailSubject");
         when(formConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
-
+        when(formConfigurations.confirmationHelpDesk()).thenReturn("emailSubject");
         underTestMethod.invoke(underTest, formConfigurations, emailParams);
     }
 
@@ -280,7 +288,7 @@ class FormServletTest {
         when(formConfigurations.formSubmissionTargetGroups()).thenReturn(groups);
         when(formConfigurations.confirmationEmailSubject()).thenReturn("Test Subject");
         when(formConfigurations.emailSubject()).thenReturn("Test Subject");
-        when(formConfigurations.confirmationEmailTemplatePath()).thenReturn("/content/template.txt");
+        when(formConfigurations.genericConfirmationEmailTemplatePath()).thenReturn("/content/template.txt");
         when(mockRequest.getMethod()).thenReturn("POST");
         when(mockRequest.getContentType()).thenReturn("multipart/form-data");
         Map emailMap = new HashMap<>();
