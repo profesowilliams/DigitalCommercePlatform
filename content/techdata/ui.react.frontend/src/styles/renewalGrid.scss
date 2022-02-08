@@ -2,6 +2,29 @@
   .ag-theme-alpine .ag-root-wrapper {
     border: none;
   }
+  .cmp-renewal-duration{
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    justify-content: space-between;
+    span{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .cmp-grid.ag-theme-alpine .ag-row{
+    background-color: white !important;
+    border-bottom: 1.2px solid #cdcbcb61;
+  }
+  .cmp-grid.ag-theme-alpine .ag-header{
+    height: 45px !important;
+    padding-top:4px;
+  } 
+  .ag-theme-alpine .ag-header-cell-resize::after{
+    top: calc(50% - 24%);
+    height: 52%;
+  }
 }
 .cmp-renewals-subheader {
   display: flex;
@@ -9,6 +32,7 @@
   padding: 5px 1rem;
   border-bottom: 2px solid #030f24;
   align-items: center;
+  height:45px;
   .cmp-navigation {
     display: flex;
     gap: 1rem;
@@ -104,6 +128,9 @@
 .cmp-renewals-grid {
   .ag-react-container {
     font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .icon-container {
     margin: 0 0.8em;

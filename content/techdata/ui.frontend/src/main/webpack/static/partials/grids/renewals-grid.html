@@ -2,125 +2,72 @@
   <div
     data-component="RenewalsGrid"
     data-cmp-type="react"
-    className="cmp-renewals-grid"   
+    className="cmp-renewals-grid"
   ></div>
 </div>
 <script>
-   const renewalsGridDom = document.querySelector("[data-component='RenewalsGrid']");
-   const AEM_DATA = {
-      "uiServiceEndPoint":"http://localhost:3000/ui-renewal/v1/Search",
-      "configDetailUrl":"/language-masters/en/dcp/config-details?id={id}",
-      "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
-      "detailUrl": "/content/techdata/americas/us/en/dcp/renewals/renewal-details.html?id",
-      "createQuoteUrl":"/quote-preview?id={id}&isEstimateId={is-estimated-id}&vendor={vendor}",
-      "actionColumnLabel":"Create Quote",
-      "agGridLicenseKey": "ThisIsAnInvalidAgGridLicenseKey",
-      "menuCopy": "Copy",
-      "menuCopyWithHeaders": "Copy with headers",
-      "menuExport": "Export",
-      "menuCsvExport": "CSV Export",
-      "menuExcelExport": "Excel Export",
-      "menuOpenLink": "Open link in new tab",
-      "menuCopyLink": "Copy link",
-      "quotesModal":{
-         "title":"Config ID",
-         "content":"There are multiple items associated with this Config ID. Please choose the item you would like to review:",
-         "quotePreffixLabel":"Quote: "
+  const renewalsGridDom = document.querySelector(
+    "[data-component='RenewalsGrid']"
+  );
+  const AEM_DATA = {
+    detailUrl:
+      "/content/techdata/americas-language-masters/en/dcp/renewals/renewal-details",
+    columnList: [
+      {
+        columnLabel: "Reseller name",
+        columnKey: "resellername",
+        sortable: true,
+        type: "plainResellerColumn",
       },
-      "statusLabelsList":[
-         {
-            "labelKey":"Multiple",
-            "labelValue":"Multiple",
-            "labelDescription":"Multiple thingies!"
-         },
-         {
-            "labelKey":"Pending",
-            "labelValue":"Pending",
-            "labelDescription":"There are things still not done!"
-         },
-         {
-            "labelKey":"Expired",
-            "labelValue":"Expired",
-            "labelDescription":"reached the expiration date without being associated to an order.  Click duplicate to create a new clone.",
-            "buttonIcon":"fas fa-download",
-            "buttonLabel":"Duplicate"
-         },
-         {
-            "labelKey":"Failed",
-            "labelValue":"Failed",
-            "labelDescription":"Quote creation failed for an unknown reason.",
-            "buttonIcon":"fas fa-download",
-            "buttonLabel":"Retry"
-         }
-      ],
-      "itemsPerPage":"25",
-      "paginationStyle":"pages",
-      "options":{
-         "defaultSortingColumnKey":"created",
-         "defaultSortingDirection":"desc"
+      {
+        columnLabel: "End user name",
+        columnKey: "endUser",
+        sortable: true,
+        type: "plainText",
       },
-      "columnList":[
-         {
-            "columnLabel":"Reseller name",
-            "columnKey":"resellername",
-            "sortable":true,
-            "type":"plainResellerColumn"
-         },
-         {
-            "columnLabel":"End user name",
-            "columnKey":"endUser",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Vendor and program",
-            "columnKey":"vendor",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Agreement No",
-            "columnKey":"agreementnumber",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"End user type",
-            "columnKey":"endUserType",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Renewal Plan",
-            "columnKey":"renewedduration",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Due in (days)",
-            "columnKey":"dueDays",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Due Date",
-            "columnKey":"duedate",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Price (USD)",
-            "columnKey":"price",
-            "sortable":true,
-            "type":"plainText"
-         },
-         {
-            "columnLabel":"Download",
-            "columnKey":"actions",
-            "sortable":true,
-            "type":"buttonList"
-         }
-      ],
+      {
+        columnLabel: "Vendor and program",
+        columnKey: "vendor",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Agreement No",
+        columnKey: "agreementnumber",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Renewal Plan",
+        columnKey: "renewedduration",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Due in (days)",
+        columnKey: "dueDays",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Due Date",
+        columnKey: "dueDate",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Price (USD)",
+        columnKey: "price",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Actions",
+        columnKey: "actions",
+        sortable: false,
+        type: "buttonList",
+      },
+    ],
     searchOptionsList: [
       {
         searchLabel: "Agreement number",
@@ -157,66 +104,56 @@
         searchKey: "ResellerId",
         showIfInternal: "true",
       },
-              
-            ],    
-      "checkout":{
-         "uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
-         "redirectUrl":"https://shop.techdata.com/cart"
+    ],
+    uiServiceEndPoint:
+      "http://localhost:3000/ui-renewal/v1/Search",
+    agGridLicenseKey:
+      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    itemsPerPage: "25",
+    paginationStyle: "scroll",
+    options: {
+      defaultSortingColumnKey: "dueDate",
+      defaultSortingDirection: "asc",
+    },
+    showResultLabel: "Show Result",
+    filterListValues: [
+      {
+        accordionLabel: "Vendors and Program",
+        filterField: "ProgramName",
+        filterOptionsValues: [
+          {
+            filterOptionLabel: "Veeam",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Pro Partner" },
+              { subFilterOptionsLabel: "Pro Partner Subscriber" },
+            ],
+          },
+          {
+            filterOptionLabel: "VMWare",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Support and Subscriber" },
+            ],
+          },
+        ],
       },
-      "spaDealsIdLabel":"multiple",
-      "filterTitle":"Filters",
-      "clearAllFilterTitle":"clear all filter",
-      "showResultLabel":"Show Result",
-      "filterListValues":[
-         {
-            "accordionLabel":"Vendors and Program",
-            "filterField":"ProgramName",
-            "filterOptionsValues":[
-               {
-                  "filterOptionLabel":"Veeam",
-                  "subFilterOptionsValues":[
-                     {
-                        "subFilterOptionsLabel":"Pro Partner"
-                     },
-                     {
-                        "subFilterOptionsLabel":"Pro Partner Subscriber"
-                     }
-                  ]
-               },
-               {
-                  "filterOptionLabel":"VMWare",
-                  "subFilterOptionsValues":[
-                     {
-                        "subFilterOptionsLabel":"Support and Subscriber"
-                     }
-                  ]
-               }
-            ]
-         },
-         {
-            "accordionLabel":"End User Type",
-            "filterField":"EndUserType",
-            "filterOptionsValues":[
-               {
-                  "filterOptionLabel":"academic"
-               },
-               {
-                  "filterOptionLabel":"educational"
-               },
-               {
-                  "filterOptionLabel":"corporate"
-               },
-               {
-                  "filterOptionLabel":"goverment"
-               }
-            ]
-         },
-         {
-            "accordionLabel":"Date",
-            "filterField":"date"
-         }
-      ]
-   };
-   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
-
+      {
+        accordionLabel: "End User Type",
+        filterField: "endUserType",
+        filterOptionsValues: [
+          { filterOptionLabel: "Academic" },
+          { filterOptionLabel: "Educational" },
+        ],
+      },
+      { accordionLabel: "Date", filterField: "date" },
+    ],
+    productGrid: {
+      quoteIdLabel: "Quote ID:",
+      refNoLabel: "Ref No:",
+      expiryDateLabel: "Expiry Date:",
+      downloadPDFLabel: "Download PDF",
+      downloadXLSLabel: "Download XLS",
+      seeDetailsLabel: "See details",
+    },
+  };
+  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

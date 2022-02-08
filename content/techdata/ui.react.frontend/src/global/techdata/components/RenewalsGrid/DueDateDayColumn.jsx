@@ -20,8 +20,7 @@ function DueDateDayColumn({ columnValue }) {
   return (
     <div className="cmp-due-date-day-column"> 
       {dueIconsMapped(parseInt(days))}
-      {"  "}
-      {days}
+      <p className="cmp-due-date-days-number">{days}</p>
     </div>
   );
 }

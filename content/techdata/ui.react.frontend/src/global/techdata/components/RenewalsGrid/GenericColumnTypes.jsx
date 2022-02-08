@@ -20,7 +20,7 @@ const columnFieldsMap = (definition, eventProps) => {
     vendor: `${value?.name} : ${data?.programName}`,
     renewedduration: <ContractColumn data={data} />,
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
-    duedate: <DueDateColumn columnValue={data?.dueDate} />,
+    dueDate: <DueDateColumn columnValue={data?.dueDate} />,
     price: thousandSeparator(value),
     agreementnumber: data?.agreementNumber 
   };
@@ -47,13 +47,20 @@ const getDateTransformed = (dateUTC) => {
   return isValidDate(dateValue) ? dateValue.toLocaleDateString() : dateUTC;
 };
 
+const columnsWidth  = {
+  "renewedduration" : "250px",
+  "vendor": "250px",
+  "dueDays": "190px"
+}
+
 export const plainTextColumn = (definition) => {
   const { columnLabel, columnKey, sortable = false } = definition;
   return {
     headerName: columnLabel,
     field: columnKey,
     sortable: sortable,
-    width: columnKey == "vendor" ? "300px" : null,
+    cellHeight: () => 45,    
+    width: columnsWidth[columnKey] || null,
     resizable: true,
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
   };
