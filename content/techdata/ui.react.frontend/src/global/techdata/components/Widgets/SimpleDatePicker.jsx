@@ -23,9 +23,18 @@ function SimpleDatePicker({
 			if (isDateFrom) {
 				const dateOneMounthAgo = new Date();
 				dateOneMounthAgo.setDate(dateOneMounthAgo.getDate() - 31)
-				setPickedDate(dateOneMounthAgo)
+				setPickedDate(dateOneMounthAgo);
+				const newFrom = forceZeroUTC
+					? new Date(dateOneMounthAgo.setTime(dateOneMounthAgo.getTime() - dateOneMounthAgo.getTimezoneOffset() * 60 * 1000))
+					: dateOneMounthAgo;
+				onSelectedDateChanged({ key: 'from', value: newFrom });
 			} else {
-				setPickedDate(new Date())
+				const now = new Date();
+				setPickedDate(now);
+				const newTo = forceZeroUTC
+					? new Date(now.setTime(now.getTime() - now.getTimezoneOffset() * 60 * 1000))
+					: now;
+				onSelectedDateChanged({ key: 'to', value: newTo });
 			}
 		}
 		if (!defaultValue) {
