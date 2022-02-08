@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
-import { LicenseManager } from 'ag-grid-enterprise';
+import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
 import { formateDatePicker } from "../../../../utils/utils";
 
@@ -18,12 +18,13 @@ function Grid(props) {
     onModelUpdateFinished,
     requestInterceptor,
     onSortChanged,
-    handlerIsRowMaster,        
+    handlerIsRowMaster,
     icons,
-    omitCreatedQuery = false
+    omitCreatedQuery = false,
+    contextMenuItems = undefined,
   } = Object.assign({}, props);
   let isLicenseSet = false;
-  const componentVersion = "1.2.0";
+  const componentVersion = "1.3.0";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const [actualRange, setActualRange] = useState({
@@ -41,7 +42,6 @@ function Grid(props) {
   const gridApi = useRef(null);
   const DEFAULT_ROW_HEIGHT = 25;
 
-
   const updatingFinished =
     typeof onModelUpdateFinished === "function"
       ? debouncer(200, () => onModelUpdateFinished())
@@ -54,7 +54,7 @@ function Grid(props) {
     return "autoHeight";
   };
 
-  const CustomNoRowsOverlay = (props) => {   
+  const CustomNoRowsOverlay = (props) => {
     return (
       <div className=" customErrorNoRows">
         {props.noRowsMessageFunc()}
@@ -64,9 +64,8 @@ function Grid(props) {
   };
 
   const noRowMsg = {
-    noRowsMessageFunc: () => 'Sorry - no rows to display!'
-  }
-
+    noRowsMessageFunc: () => "Sorry - no rows to display!",
+  };
   /*
     function that returns AG grid vnode outside main return function to keep that
     node on useState hook and set it once per component lifecycle or on demand
@@ -78,12 +77,12 @@ function Grid(props) {
         if (typeof handlerIsRowMaster === "function") {
           return handlerIsRowMaster(dataItem);
         } else {
-          return true
+          return true;
         }
       }}
       key={Math.floor(1000 * Math.random()).toString()}
       frameworkComponents={renderers}
-      noRowsOverlayComponent={'CustomNoRowsOverlay'}
+      noRowsOverlayComponent={"CustomNoRowsOverlay"}
       noRowsOverlayComponentParams={noRowMsg}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
@@ -118,6 +117,7 @@ function Grid(props) {
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}
       icons={icons}
+      getContextMenuItems={getContextMenuItems}
     >
       {filteredColumns.map((column) => {
         return (
@@ -136,6 +136,52 @@ function Grid(props) {
     </AgGridReact>
   );
 
+  const getContextMenuItems = (params) => {
+    const extendedItems =
+      typeof contextMenuItems === "function" ? contextMenuItems(params) : [];
+    return [
+      {
+        name: config?.menuCopy,
+        shortcut: "Ctrl+C",
+        action: function () {
+          navigator.clipboard.writeText(params.value);
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      },
+      {
+        name: config?.menuCopyWithHeaders,
+        action: function () {
+          navigator.clipboard.writeText(
+            `${params.column.colDef.headerName}\n${params.value}`
+          );
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      },
+      "separator",
+      {
+        name: config?.menuExport,
+        subMenu: [
+          {
+            name: config?.menuCsvExport,
+            action: function () {
+              gridApi.current.exportDataAsCsv();
+            },
+            icon: '<span class="ag-icon ag-icon-csv" unselectable="on" role="presentation"></span>',
+          },
+          {
+            name: config?.menuExcelExport,
+            action: function () {
+              gridApi.current.exportDataAsExcel();
+            },
+            icon: '<span class="ag-icon ag-icon-excel" unselectable="on" role="presentation"></span>',
+          },
+        ],
+        icon: '<span class="ag-icon ag-icon-save" unselectable="on" role="presentation"></span>',
+      },
+      ...extendedItems,
+    ];
+  };
+
   const setLicenseKey = () => {
     if (isLicenseSet != true) {
       LicenseManager.setLicenseKey(config.agGridLicenseKey);
@@ -144,7 +190,7 @@ function Grid(props) {
   };
 
   const renderers = {
-    CustomNoRowsOverlay: CustomNoRowsOverlay
+    CustomNoRowsOverlay: CustomNoRowsOverlay,
   };
   let filteredColumns = [];
 
@@ -208,18 +254,22 @@ function Grid(props) {
           if (!response?.items || response?.items.length === 0) {
             gridApi.current.showNoRowsOverlay();
           }
-        }
+        };
 
-        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir, handleNoRowMsg).then(
-          (response) => {
-            params.success({
-              rowData: response?.items ?? 0,
-              lastRow: response?.totalItems ?? 0,
-              rowCount: response?.totalItems ?? 0,
-            });
-            handleNoRowMsg(response)
-          }
-        );
+        getGridData(
+          config.itemsPerPage,
+          pageNo,
+          sortKey,
+          sortDir,
+          handleNoRowMsg
+        ).then((response) => {
+          params.success({
+            rowData: response?.items ?? 0,
+            lastRow: response?.totalItems ?? 0,
+            rowCount: response?.totalItems ?? 0,
+          });
+          handleNoRowMsg(response);
+        });
       },
     };
   }
@@ -232,20 +282,23 @@ function Grid(props) {
       const createdTo = new Date();
       let createdFrom = new Date();
       createdFrom.setDate(createdTo.getDate() - 31);
-      
-      const createdToString = formateDatePicker(createdTo)
+
+      const createdToString = formateDatePicker(createdTo);
       const createdFromString = formateDatePicker(createdFrom);
 
-      const createdParam = !omitCreatedQuery ? `&createdFrom=${createdFromString}&createdTo=${createdToString}` : '';
+      const createdParam = !omitCreatedQuery
+        ? `&createdFrom=${createdFromString}&createdTo=${createdToString}`
+        : "";
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${createdParam}`
           : `&SortDirection=desc&SortBy=id&WithPaginationInfo=true${createdParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? "";
       pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
-      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${url.search !== "" ? "&" : "?"
-    }${pages}${sortParams}`;
-    let response = null;    
+      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${
+        url.search !== "" ? "&" : "?"
+      }${pages}${sortParams}`;
+      let response = null;
       // check if request interceptor is attached and use it.
       // otherwise get data according to grid state
       if (typeof requestInterceptor === "function") {
@@ -462,8 +515,9 @@ function Grid(props) {
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
       <Fragment>
         <div
-          className={`page-info ${config.paginationStyle === "scroll" ? "visible" : "hidden"
-            }`}
+          className={`page-info ${
+            config.paginationStyle === "scroll" ? "visible" : "hidden"
+          }`}
         >
           {actualRange.from} - {actualRange.to} of {actualRange.total}
         </div>

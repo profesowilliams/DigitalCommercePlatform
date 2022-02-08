@@ -93,7 +93,42 @@
                                                             value="desc"/>
                                                 </items>
                                             </defaultSortingDirection>
-                                        </items>
+											<menuCopy
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Copy Label"
+                                                    name="./menuCopy"/>
+											<menuCopyWithHeaders
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Copy with headers Label"
+                                                    name="./menuCopyWithHeaders"/>
+											<menuExport
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Export Label"
+                                                    name="./menuExport"/>
+											<menuCsvExport
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="CSV Export Label"
+                                                    name="./menuCsvExport"/>
+											<menuExcelExport
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Excel Export Label"
+                                                    name="./menuExcelExport"/>
+											<menuOpenLink
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Open link Label"
+                                                    name="./menuOpenLink"/>
+											<menuCopyLink
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Copy link Label"
+                                                    name="./menuCopyLink"/>
+										</items>
                                     </column>
                                 </items>
                             </properties>

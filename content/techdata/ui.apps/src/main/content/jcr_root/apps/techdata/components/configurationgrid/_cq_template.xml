@@ -12,6 +12,13 @@
     createQuoteUrlSuffix=".html?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
     defaultSortingColumnKey="created"
     defaultSortingDirection="desc"
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
 >
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0

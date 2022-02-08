@@ -72,6 +72,33 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["showResultLabel"] = properties["showResultLabel"];
     }
 
+    if (properties && properties["menuCopy"]) {
+        jsonObject["menuCopy"] = properties["menuCopy"];
+    }
+
+    if (properties && properties["menuCopyWithHeaders"]) {
+        jsonObject["menuCopyWithHeaders"] = properties["menuCopyWithHeaders"];
+    }
+
+    if (properties && properties["menuExport"]) {
+        jsonObject["menuExport"] = properties["menuExport"];
+    }
+
+    if (properties && properties["menuCsvExport"]) {
+        jsonObject["menuCsvExport"] = properties["menuCsvExport"];
+    }
+
+    if (properties && properties["menuExcelExport"]) {
+        jsonObject["menuExcelExport"] = properties["menuExcelExport"];
+    }
+
+    if (properties && properties["menuOpenLink"]) {
+        jsonObject["menuOpenLink"] = properties["menuOpenLink"];
+    }
+
+    if (properties && properties["menuCopyLink"]) {
+        jsonObject["menuCopyLink"] = properties["menuCopyLink"];
+    }
 
     let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
     let filterListValues = [];

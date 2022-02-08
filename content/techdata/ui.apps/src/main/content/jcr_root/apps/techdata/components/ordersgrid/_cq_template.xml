@@ -4,6 +4,13 @@
     itemsPerPage="25"
     paginationStyle="scroll"
     errorMessage="This data is currently unavailable. Please try again later or contact your sales representative."
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
 >
     <columnList jcr:primaryType="nt:unstructured">
         <item0

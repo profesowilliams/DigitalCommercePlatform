@@ -4,8 +4,8 @@ import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
-import Modal from '../Modal/Modal';
-import {pushEventAnalyticsGlobal} from '../../../../utils/dataLayerUtils';
+import Modal from "../Modal/Modal";
+import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
   ADOBE_DATA_LAYER_LINK_TYPE,
@@ -15,6 +15,7 @@ import {
 
 function QuotesGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
+
   const filteringExtension = useGridFiltering();
   const [modal, setModal] = useState(null);
   const { spaDealsIdLabel } = componentProp;
@@ -24,7 +25,9 @@ function QuotesGrid(props) {
     return formatedDate;
   };
 
-  const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
+  const uiServiceEndPoint = componentProp.uiServiceEndPoint
+    ? componentProp.uiServiceEndPoint
+    : "";
 
   const getDealsIdLabel = (deals) =>
     deals && deals.length > 1
@@ -37,43 +40,48 @@ function QuotesGrid(props) {
     defaultSortingColumnKey: "id",
     defaultSortingDirection: "asc",
   };
+
   function invokeModal(modal) {
-      setModal(modal);
+    setModal(modal);
   }
 
   const onErrorHandler = (error) => {
-    setModal((previousInfo) => (
-        {
-          content: (
-            <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
-          ),
-          properties: {
-              title: `Error`,
-          },
-            ...previousInfo,
-        }
-    ));
-  }
+    setModal((previousInfo) => ({
+      content: (
+        <div>
+          There has been an error creating your quote. Please try again later or
+          contact your sales representative.
+        </div>
+      ),
+      properties: {
+        title: `Error`,
+      },
+      ...previousInfo,
+    }));
+  };
 
   const handleOnSearchRequest = (query) => {
     filteringExtension.onQueryChanged(query);
-  }
+  };
 
   /**
    * handler event that push a click event
    * information to adobeDataLayer
-   * @param {string} param 
+   * @param {string} param
    */
-   const handlerAnalyticsClickEvent = (param = '') => {
+  const handlerAnalyticsClickEvent = (param = "") => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_LINK_TYPE,
-      name : param,
-      category : ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY,
+      type: ADOBE_DATA_LAYER_LINK_TYPE,
+      name: param,
+    };
+    const click = {
+      category: ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
-    }
+      click,
+    };
     pushEventAnalyticsGlobal(objectToSend);
   };
 
@@ -84,7 +92,7 @@ function QuotesGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(props.value)} >
+          <div onClick={() => handlerAnalyticsClickEvent(props.value)}>
             <a
               className="cmp-grid-url-underlined"
               href={`${
@@ -102,11 +110,7 @@ function QuotesGrid(props) {
       field: "quoteReference",
       sortable: false,
       cellRenderer: (props) => {
-        return (
-          <div>
-            {props.value}
-          </div>
-        );
+        return <div>{props.value}</div>;
       },
     },
     {
@@ -159,7 +163,9 @@ function QuotesGrid(props) {
         return (
           <div
             className="cmp-quotes-grid__checkout-icon"
-            onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)}
+            onClick={() =>
+              handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)
+            }
           >
             {props.value && (
               <Checkout
@@ -172,13 +178,39 @@ function QuotesGrid(props) {
         );
       },
     },
-    ];
+  ];
 
-  async function detailRedirectHandler(request){
+  const contextMenuItems = (params) => {
+    const quoteDetailsUrl = `${componentProp.quoteDetailUrl}?id=${params.node.data.id}`;
+    return params.column.colId === "id"
+      ? [
+          "separator",
+          {
+            name: componentProp.menuOpenLink,
+            action: function () {
+              window.open(quoteDetailsUrl);
+            },
+          },
+          {
+            name: componentProp.menuCopyLink,
+            action: function () {
+              navigator.clipboard.writeText(
+                window.location.origin + quoteDetailsUrl
+              );
+            },
+            icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+          },
+        ]
+      : [];
+  };
+
+  async function detailRedirectHandler(request) {
     let response = await filteringExtension.requestInterceptor(request);
     if (response?.data?.content?.items?.length === 1) {
       const detailsRow = response.data.content.items[0];
-      const redirectUrl = `${window.location.origin + componentProp.quoteDetailUrl}?id=${detailsRow.id}`;
+      const redirectUrl = `${
+        window.location.origin + componentProp.quoteDetailUrl
+      }?id=${detailsRow.id}`;
       window.location.href = redirectUrl;
     } else {
       return response;
@@ -200,23 +232,24 @@ function QuotesGrid(props) {
         <Grid
           columnDefinition={columnDefs}
           options={options}
+          contextMenuItems={contextMenuItems}
           config={componentProp}
-          onAfterGridInit={(config) =>
-            filteringExtension.onAfterGridInit(config)
-          }
-          requestInterceptor={(request) =>
-              detailRedirectHandler(request)
-          }
+          onAfterGridInit={(config) => {
+            filteringExtension.onAfterGridInit(config);
+          }}
+          requestInterceptor={(request) => detailRedirectHandler(request)}
         ></Grid>
       </div>
-            {modal && <Modal
-                modalAction={modal.action}
-                modalContent={modal.content}
-                modalProperties={modal.properties}
-                modalAction={modal.modalAction}
-                actionErrorMessage={modal.errorMessage}
-                onModalClosed={() => setModal(null)}
-            ></Modal>}
+      {modal && (
+        <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={() => setModal(null)}
+        ></Modal>
+      )}
     </section>
   );
 }
