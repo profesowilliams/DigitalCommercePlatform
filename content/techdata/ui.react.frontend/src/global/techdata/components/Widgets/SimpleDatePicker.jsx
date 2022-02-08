@@ -24,16 +24,12 @@ function SimpleDatePicker({
 				const dateOneMounthAgo = new Date();
 				dateOneMounthAgo.setDate(dateOneMounthAgo.getDate() - 31)
 				setPickedDate(dateOneMounthAgo);
-				const newFrom = forceZeroUTC
-					? new Date(dateOneMounthAgo.setTime(dateOneMounthAgo.getTime() - dateOneMounthAgo.getTimezoneOffset() * 60 * 1000))
-					: dateOneMounthAgo;
+				const newFrom = getNormalizedDate(dateOneMounthAgo);
 				onSelectedDateChanged({ key: 'from', value: newFrom });
 			} else {
 				const now = new Date();
 				setPickedDate(now);
-				const newTo = forceZeroUTC
-					? new Date(now.setTime(now.getTime() - now.getTimezoneOffset() * 60 * 1000))
-					: now;
+				const newTo = getNormalizedDate(now);
 				onSelectedDateChanged({ key: 'to', value: newTo });
 			}
 		}
@@ -42,12 +38,18 @@ function SimpleDatePicker({
 		}
 	}, [isDateFrom, pickedDate, defaultValue]);
 
+	function getNormalizedDate(dateValue) {
+		return forceZeroUTC
+			? new Date(dateValue.setTime(dateValue.getTime() - dateValue.getTimezoneOffset() * 60 * 1000))
+			: dateValue;
+  }
+
 	function openPicker() {
 		pickerRef.current.setOpen(true);
 	}
 
 	function pickerValueChanged(date) {
-		const _date = forceZeroUTC ? new Date(date.setTime(date.getTime() - date.getTimezoneOffset() * 60 * 1000)) : date;
+		const _date = getNormalizedDate(date);
 		
 		setPickedDate(date);
 
