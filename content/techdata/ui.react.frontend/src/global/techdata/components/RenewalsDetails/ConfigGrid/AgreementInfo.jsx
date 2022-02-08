@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-function AgreementInfo({ contract, programName, dueDate, agreementInfo }) {
+function AgreementInfo({
+  source,
+  contract,
+  programName,
+  dueDate,
+  agreementInfo,
+}) {
   const AgreementInfo = () => {
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
@@ -21,7 +27,9 @@ function AgreementInfo({ contract, programName, dueDate, agreementInfo }) {
           {contract.id && (
             <Info label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
           )}
-          <Info label={agreementInfo.distiQuoteLabel}>1234567</Info>
+          {source.id && (
+            <Info label={agreementInfo.distiQuoteLabel}>{source.id}</Info>
+          )}
           {dueDate && (
             <Info label={agreementInfo.quotedueDateLabel}>{dueDate}</Info>
           )}
