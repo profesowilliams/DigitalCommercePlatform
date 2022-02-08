@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation - All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Order.Models.Order.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,5 +21,6 @@ namespace DigitalCommercePlatform.UIServices.Order.Dto.Internal
         public string BlockReason { get; set; }
         public List<string> Serials { get; set; }
         public List<ShipmentsDto> Shipments { get; set; }
+        public List<DeliveryModel> DeliveryNotes { get; set; }
     }
 }

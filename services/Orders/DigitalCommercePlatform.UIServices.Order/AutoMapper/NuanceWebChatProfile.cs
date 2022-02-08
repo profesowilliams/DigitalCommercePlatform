@@ -19,6 +19,8 @@ using AddressDto = DigitalCommercePlatform.UIServices.Order.Dto.Internal.Address
 using AddressModel = DigitalCommercePlatform.UIServices.Order.Models.Internal.AddressModel;
 using ItemDto = DigitalCommercePlatform.UIServices.Order.Dto.Internal.ItemDto;
 using ItemModel = DigitalCommercePlatform.UIServices.Order.Models.Internal.ItemModel;
+using DeliveryModel = DigitalCommercePlatform.UIServices.Order.Models.Internal.DeliveryModel;
+using DeliveryModelDto = DigitalCommercePlatform.UIServices.Order.Models.Order.Internal.DeliveryModel;
 
 namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 {
@@ -32,6 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             CreateMap<ItemDto, ItemModel>()
                 .ForMember(x => x.IsDropShip, y => y.Ignore());
             CreateMap<ResellerDto, ResellerModel>();
+            CreateMap<DeliveryModelDto, DeliveryModel>();
             CreateMap<ShipmentsDto, ShipmentsModel>();
             CreateMap<ShipmentModel, ShipmentsModel > ()
                 .ForMember(x=> x.Carrier, y=> y.MapFrom(s=> s.Carrier))

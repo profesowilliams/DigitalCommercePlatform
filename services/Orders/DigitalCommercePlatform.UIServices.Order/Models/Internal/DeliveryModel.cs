@@ -3,10 +3,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Order.Dto.Order.Internal
+namespace DigitalCommercePlatform.UIServices.Order.Models.Internal
 {
     [ExcludeFromCodeCoverage]
-    public class DeliveryDto
+    public class DeliveryModel
     {
         public string ID { get; set; }
         public string Line { get; set; }

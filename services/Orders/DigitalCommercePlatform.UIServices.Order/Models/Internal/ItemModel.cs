@@ -20,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Order.Models.Internal
         public string BlockReason { get; set; }
         public List<string> Serials { get; set; }
         public List<ShipmentsModel> Shipments { get; set; }
+        public List<DeliveryModel> DeliveryNotes { get; set; }
         public bool IsDropShip { get; set; }
     }
 }

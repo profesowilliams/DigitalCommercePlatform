@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Order.Dto.Order.Internal
+namespace DigitalCommercePlatform.UIServices.Order.Dto.Internal
 {
     [ExcludeFromCodeCoverage]
     public class DeliveryDto
