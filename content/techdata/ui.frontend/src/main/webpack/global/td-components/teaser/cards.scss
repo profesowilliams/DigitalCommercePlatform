@@ -1,3 +1,32 @@
+.teaser-r-border {	
+	position: relative;
+	box-sizing: border-box;
+	&:after {
+		content: "";
+		position: absolute;
+		bottom: 0px;
+		top: 20%;
+		bottom: 20%;
+		right: 0px;
+		border-right: 1px solid  get-color(brand-light-gray);
+		box-sizing: border-box;
+	  }
+	&:last-of-type {
+		position: relative;
+		box-sizing: border-box;
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: 0px;
+			top: 20%;
+			bottom: 20%;
+			right: 0px;
+			border-right: 0px solid  get-color(brand-light-gray);
+			box-sizing: border-box;
+		  }
+	}
+}
+
 .cmp-teaser,
 .dp-teaser {
 	&__card {
@@ -10,7 +39,7 @@
 		}
 
 		.cmp-teaser {
-			box-shadow: inset rem(-1px) 0 0 0 get-color(brand-light-gray);
+			
 			position: relative;
 			display: flex;
 			-ms-flex-direction: column;
@@ -341,7 +370,6 @@
 			}
 
 			.cmp-teaser {
-				box-shadow: inset rem(-1px) 0 0 0 get-color(brand-light-gray);
 				position: relative;
 				display: flex;
 				-ms-flex-direction: column;
@@ -419,11 +447,11 @@
 					img,
 					svg {
 						border-radius: 50%;
-						width: 6.62rem;
-						height: 6.62rem;
+						width: rem(150px);
+						height: rem(150px);
 						position: absolute;
 						left: 50%;
-						top: 0;
+						top: rem(-5px);
 						transform: translateX(-50%) translateY(-33%);
 					}
 				}
