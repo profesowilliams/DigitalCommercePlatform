@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { signOut } from "../../../../utils";
 import SubHeaderMenuContainer from "../ProfileMegaMenu/SubHeaderMenuContainer";
@@ -12,11 +12,27 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const { id: userId, firstName: userName } = userDataCheck;
   const [isSelected, setIsSelected] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [screenSize, setScreenSize] = useState(null);
   const refs = useRef([]);
   const refCursor = useRef(0);
   const refLogOff = useRef(null);
   const refLogIn = useRef(null);
   const refBackButton = useRef(null);
+
+  useEffect(() => {
+    ['load', 'resize'].forEach(e => {
+      window.addEventListener(e, updateWindowDimensions);
+    });
+    return () => {
+      ['load', 'resize'].forEach(e => {
+        window.removeEventListener(e, updateWindowDimensions);
+      });
+    }
+  }, []);
+
+  const updateWindowDimensions = () => {
+    setScreenSize({ width: window.innerWidth, height: window.innerHeight });
+  };
 
   const handlePrimaryClick = (obj) => {
     if (obj.secondaryMenus) {
@@ -51,35 +67,38 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
 
   const handleKeyDown = (request) => {
     const {e, linkUrl, dcpLink, linkTitle, linkTarget} = request
-    let parentRefs = refs.current.filter(r => r.offsetParent != null);
+    let parentRefs = refs.current.filter(r => (!r.className && r.offsetParent) || (r.className && screenSize?.width < 1024) || (r.className && r.className != 'has-child' && screenSize?.width >= 1024));
     switch (true) {
       case (e.keyCode === 38 && refCursor.current === 0) && e.currentTarget.className === '':
+        e.preventDefault();
         setRefBackButton();
         break;
 
-        case (e.keyCode === 37 && refCursor.current === 0) && e.currentTarget.className === 'cmp-sign-in-secondary__back':
-          e.currentTarget.click();
-          refs.current = [];
-          setShowMenu(true);
-          break;
+      case (e.keyCode === 37 && refCursor.current === 0) && e.currentTarget.className === 'cmp-sign-in-secondary__back':
+        e.currentTarget.click();
+        refs.current = [];
+        setShowMenu(true);
+        break;
 
       case e.keyCode === 38 && refCursor.current === 0:
+        e.preventDefault();
         setIsSelected(false);
         setShowMenu(false);
         setRefLogIn();
         break;
 
       case e.keyCode === 38 && refCursor.current > 0:
-        parentRefs = refs.current.filter(r => r.offsetParent != null);
+        e.preventDefault();
         parentRefs[--refCursor.current].focus();
         break;
 
-      case e.keyCode === 40 && refCursor.current === refs.current.length - 1:
+      case e.keyCode === 40 && refCursor.current === parentRefs.length - 1:
+        e.preventDefault();
         setRefLogOff();
         break;
 
-      case e.keyCode === 40 && refCursor.current <= refs.current.length - 1:
-        parentRefs = refs.current.filter(r => r.offsetParent != null);
+      case e.keyCode === 40 && refCursor.current < parentRefs.length - 1:
+        e.preventDefault();
         parentRefs[++refCursor.current].focus();
         break;
 
@@ -277,15 +296,16 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
               className="cmp-sign-in-signout"
               onClick={() => handleSignOut()}
               onBlur={(e) => {
-                if (e.relatedTarget.className !== 'cmp-sign-in-list-content--item-link') {
+                if (!(e.relatedTarget.className === 'cmp-sign-in-list-content--item-link' || e.relatedTarget.className === 'has-child')) {
                       setIsSelected(false);
                       refCursor.current = 0;
                     }
               }}
               ref={(o) => (refLogOff.current = o)}
               onKeyDown={(e) => {
-                refCursor.current = refs.current.length;
-                handleKeyDown({e})
+                let parentRefs = refs.current.filter(r => (!r.className && r.offsetParent) || (r.className && screenSize?.width < 1024) || (r.className && r.className != 'has-child' && screenSize?.width >= 1024));
+                refCursor.current = parentRefs.length;
+                handleKeyDown({e});
               }}
             >
               Log Out
