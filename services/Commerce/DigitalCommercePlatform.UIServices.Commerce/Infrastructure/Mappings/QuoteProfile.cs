@@ -42,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.PurchaseCost, opt => opt.MapFrom(src => src.PurchaseCost))
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom<LineAttributeResolver>())
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements));
 
             CreateMap<AddressModel, Address>();
@@ -184,6 +185,28 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     }
 
     [ExcludeFromCodeCoverage]
+    public class LineAttributeResolver : IValueResolver<ItemModel, Line, List<Models.Quote.AttributeModel>>
+    {
+        public List<Models.Quote.AttributeModel> Resolve(ItemModel source, Line destination, List<Models.Quote.AttributeModel> destMember, ResolutionContext context)
+        {
+            List<Models.Quote.AttributeModel> lstAttributes = new List<Models.Quote.AttributeModel>();
+            if (source.Attributes != null)
+            {
+                foreach (var reference in source.Attributes)
+                {
+                    Models.Quote.AttributeModel attributeModel = new Models.Quote.AttributeModel();
+
+                    attributeModel.Name = reference.Name = string.IsNullOrWhiteSpace(reference.Name) ? "" : reference.Name.ToUpper();
+                    attributeModel.Value = reference.Value = string.IsNullOrWhiteSpace(reference.Value) ? "" : reference.Value.ToUpper();
+
+                    lstAttributes.Add(attributeModel);
+                }
+            }
+            return lstAttributes;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
     public class VendorResolver : IValueResolver<QuoteModel, QuotesForGridModel, string>
     {
         public string Resolve(QuoteModel source, QuotesForGridModel destination, string destMember, ResolutionContext context)
@@ -312,7 +335,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
 
     [ExcludeFromCodeCoverage]
-    public class CheckOutResolver : IValueResolver<QuoteModel, QuotesForGridModel,string>
+    public class CheckOutResolver : IValueResolver<QuoteModel, QuotesForGridModel, string>
     {
         public string Resolve(QuoteModel source, QuotesForGridModel destination, string destMember, ResolutionContext context)
         {

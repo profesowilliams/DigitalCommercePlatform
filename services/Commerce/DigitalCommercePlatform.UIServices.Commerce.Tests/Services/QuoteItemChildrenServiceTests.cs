@@ -34,18 +34,48 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             var substringService = new SubstringService();
             var sut = new QuoteItemChildrenService(substringService);
+            var lstAttributes = new List<AttributeModel>();
+            var attrLine = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "1.0"
+            };
 
+            var attrParent = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "1.3"
+            };
+            var lstAttributes2 = new List<AttributeModel>();
+            var attrLine2 = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "2.0"
+            };
+
+            var attrParent2 = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "2.0.1"
+            };
+
+            lstAttributes.Add(attrLine2);
+            lstAttributes.Add(attrParent2);
+
+            lstAttributes.Add(attrLine);
+            lstAttributes.Add(attrParent);
             var quotePreviewModel = new QuotePreviewModel
             {
+
                 QuoteDetails = new QuotePreview
                 {
                     Items = new List<Models.Line>
                     {
-                        new Models.Line { Id = "1.0", Parent = null },
-                        new Models.Line { Id = "1.1", Parent = "3232" },
+                        new Models.Line { Id = "1.0", Parent = null},
+                        new Models.Line { Id = "1.1", Parent = "3232", Attributes = lstAttributes },
                         new Models.Line { Id = "1.2", Parent = "3232" },
                         new Models.Line { Id = "1.0.1", Parent = "3232" },
-                        new Models.Line { Id = "2.0", Parent = null },
+                        new Models.Line { Id = "2.0", Parent = null, Attributes = lstAttributes2 },
                         new Models.Line { Id = "2.10", Parent = "5532" },
                         new Models.Line { Id = "2.0.1", Parent = "5532" },
                         new Models.Line { Id = "2.2", Parent = "5532" },
@@ -71,6 +101,39 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void ApplyIdToItems_Test()
         {
             //arrange
+
+
+            var lstAttributes = new List<AttributeModel>();
+            var attrLine = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "1.0"
+            };
+
+            var attrParent = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "1.3"
+            };
+            var lstAttributes2 = new List<AttributeModel>();
+            var attrLine2 = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "2.0"
+            };
+
+            var attrParent2 = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "2.0.1"
+            };
+
+            lstAttributes.Add(attrLine2);
+            lstAttributes.Add(attrParent2);
+
+            lstAttributes.Add(attrLine);
+            lstAttributes.Add(attrParent);
+
             var quotePreviewModel = new QuotePreviewModel
             {
                 QuoteDetails = new QuotePreview
@@ -78,10 +141,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                     Items = new List<Models.Line>
                     {
                         new Models.Line { Id = "1.0", Parent = null },
-                        new Models.Line { Id = "1.1", Parent = "3232" },
+                        new Models.Line { Id = "1.1", Parent = "3232", Attributes = lstAttributes  },
                         new Models.Line { Id = "1.2", Parent = "3232" },
                         new Models.Line { Id = "1.0.1", Parent = "3232" },
-                        new Models.Line { Id = "2.0", Parent = null },
+                        new Models.Line { Id = "2.0", Parent = null, Attributes = lstAttributes2  },
                         new Models.Line { Id = "2.10", Parent = "5532" },
                         new Models.Line { Id = "2.0.1", Parent = "5532" },
                         new Models.Line { Id = "2.2", Parent = "5532" },
@@ -142,8 +205,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void MapChildrenFromParents_Test()
         {
             //arrange
-            double displayNumber = 1.0;
-            double displayChildNumber = 1.1;
             Line line = new Line
             {
                 TDNumber = "1231234444",
@@ -153,8 +214,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Quantity = 1,
                 UnitPrice = 123.98M,
                 UnitListPrice = 100.00M,
-                Parent=null,
-                Id="1.0"
+                Parent = null,
+                Id = "1.0"
             };
             Line subLine = new Line
             {
@@ -166,7 +227,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 UnitPrice = 123.98M,
                 UnitListPrice = 100.00M,
                 Parent = "1.0",
-                Id ="1.1",
+                Id = "1.1",
             };
             Line subLine1 = new Line
             {
@@ -198,7 +259,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Currency = "USD",
                 Id = "123",
                 IsExclusive = true,
-                Items= items
+                Items = items
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel
             {
@@ -212,42 +273,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var MapChildrenFromParents = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "MapChildrenFromParents" && x.IsPrivate);
 
-            var result = MapChildrenFromParents.Invoke(objType, new object[] { quotePreviewModel, displayNumber, displayChildNumber, subLines, childLines });
-            Assert.NotNull(result);
+            MapChildrenFromParents.Invoke(objType, new object[] { quotePreviewModel, subLines, childLines });
+            Assert.NotNull(quotePreviewModel.QuoteDetails.Items);
         }
-
-
-        [Fact]
-        public void GetDisplayChildNumber_Test()
-        {
-            //arrange
-            QuotePreviewModel quotePreviewModel = new QuotePreviewModel();
-            double displayNumber = 1.0;
-            double displayChildNumber = 1.1;
-            Line line = new Line
-            {
-                TDNumber = "1231234444",
-                MFRNumber = "CISCO_35345",
-                Manufacturer = "CISCO",
-                ShortDescription = "TEST PRODUCT",
-                Quantity = 1,
-                UnitPrice = 123.98M,
-                UnitListPrice = 100.00M
-            };
-            List<Line> subLines = new List<Line>();
-            subLines.Add(line);
-
-            Type type;
-            object objType;
-            InitateQuoteItemChildrenService(out type, out objType);
-
-            var GetDisplayChildNumber = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .First(x => x.Name == "GetDisplayChildNumber" && x.IsPrivate);
-
-            var result = GetDisplayChildNumber.Invoke(objType, new object[] { quotePreviewModel, displayNumber, displayChildNumber, subLines });
-            Assert.NotNull(result);
-        }
-
 
     }
 }

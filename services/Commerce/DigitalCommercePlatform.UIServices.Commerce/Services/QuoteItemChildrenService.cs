@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
@@ -18,26 +19,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         public List<Line> GetQuoteLinesWithChildren(QuotePreviewModel quotePreviewModel)
         {
             if (quotePreviewModel?.QuoteDetails?.Items == null)
-            {
                 return new List<Line>();
-            }
+
 
             ApplyIdToItems(quotePreviewModel);
 
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
 
             var lines = new List<Line>();
-            double displayNumber = 0;
-            double displayChildNumber = 0.0;
 
             foreach (var item in parents)
             {
-                displayNumber = displayNumber + 1.0;
-                item.DisplayLineNumber = displayNumber.ToString();
 
                 var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
                 var childLines = new List<Line>();
-                displayChildNumber = MapChildrenFromParents(quotePreviewModel, displayNumber, displayChildNumber, subLines, childLines);
+                MapChildrenFromParents(quotePreviewModel, subLines, childLines);
 
                 lines.Add(new Line
                 {
@@ -77,7 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return lines;
         }
 
-        private double MapChildrenFromParents(QuotePreviewModel quotePreviewModel, double displayNumber, double displayChildNumber, List<Line> subLines, List<Line> childLines)
+        private void MapChildrenFromParents(QuotePreviewModel quotePreviewModel, List<Line> subLines, List<Line> childLines)
         {
             foreach (var child in subLines)
             {
@@ -86,45 +82,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             if (childLines.Count > 0)
                 subLines.AddRange(childLines);
-            displayChildNumber = GetDisplayChildNumber(quotePreviewModel, displayNumber, displayChildNumber, subLines);
-
-            return displayChildNumber;
         }
-
-        private double GetDisplayChildNumber(QuotePreviewModel quotePreviewModel, double displayNumber, double displayChildNumber, List<Line> subLines)
-        {
-            foreach (var child in subLines)
-            {
-                displayChildNumber = displayChildNumber + 0.1;
-                child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
-            }
-
-            return displayChildNumber;
-        }
-
         private void ApplyIdToItems(QuotePreviewModel quotePreviewModel)
         {
-            var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();
 
-            if (linesWithoutId.Any())
-            {
-                var maxLineNumber = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList().OrderByDescending(i => NullableTryParseDouble(i.Id)).FirstOrDefault().Id;
-
-                double parentNumber = 0;
-                double n;
-                bool isNumeric = double.TryParse(maxLineNumber, out n);
-                if (isNumeric)
+            Parallel.ForEach(quotePreviewModel.QuoteDetails.Items,
+                new ParallelOptions { MaxDegreeOfParallelism = 3 }, item =>
                 {
-                    parentNumber = n + 1.0;
-                }
+                    var parent = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGPARENT")).FirstOrDefault()?.Value;
+                    
+                    if (!string.IsNullOrWhiteSpace(parent))
+                    {
+                        var id = NullableTryParseDouble(item.Id);
+                        if (id != null)
+                        {
+                            double parentNumber = 0;
+                            bool isNumeric = double.TryParse(parent, out parentNumber);
+                            if (id != parentNumber)
+                                item.Parent = parent;
+                            else
+                                item.Parent = null;
+                        }
+                    }
 
-                foreach (var item in linesWithoutId)
-                {
-                    parentNumber = parentNumber + 1.0;
-                    item.DisplayLineNumber = parentNumber.ToString();
-                    item.Id = parentNumber.ToString();
-                }
-            }
+                    var configLine = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGLINE")).FirstOrDefault()?.Value;
+                    if (!string.IsNullOrWhiteSpace(configLine))
+                    {
+                        item.DisplayLineNumber = configLine;
+                        item.Id = item.DisplayLineNumber;
+                    }
+
+                });
         }
 
         private double? NullableTryParseDouble(string request)
