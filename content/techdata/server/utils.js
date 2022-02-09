@@ -1450,6 +1450,7 @@ module.exports = {
                   created: "",
                   status: "Pending",
                 },
+                {"id":"220209164308000130","salesOrg":"0100","system":"R3","status":"IN_PIPELINE","price":0.0,"priceFormatted":"0.00","currency":"USD","currencySymbol":"$","created":"01/01/01"}
               ],
               vendorQuoteId: null,
               action: "CreateQuote",
@@ -1493,30 +1494,7 @@ module.exports = {
               endUserName: "EUMETSAT",
               tdQuoteId: null,
               quotes: [
-                {
-                  id: "CD_ID_4735099626_1",
-                  line: "513",
-                  quantity: 8,
-                  price: 49.0,
-                  created: "9/29/2021",
-                  status: "Created",
-                },
-                {
-                  "id:": "CD_ID_4735099626_2",
-                  line: "901",
-                  quantity: 2,
-                  price: 62.0,
-                  created: "9/24/2021",
-                  status: "Created",
-                },
-                {
-                  id: "",
-                  line: "",
-                  quantity: 0,
-                  price: 0.0,
-                  created: "",
-                  status: "Expired",
-                },
+                {"id":"220209164308000130","salesOrg":"0100","system":"R3","status":"IN_PIPELINE","price":0.0,"priceFormatted":"0.00","currency":"USD","currencySymbol":"$","created":"01/01/01"}
               ],
               vendorQuoteId: null,
               action: "CreateQuote",

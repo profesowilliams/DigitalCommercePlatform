@@ -85,22 +85,29 @@ function QuotesGrid(props) {
     pushEventAnalyticsGlobal(objectToSend);
   };
 
+  const enableLinkAndCheckout = (data) => {
+    return data?.status?.toUpperCase() !== "IN_PIPELINE";
+  }
+
   const columnDefs = [
     {
       headerName: "TD Quote ID",
       field: "id",
       sortable: true,
       cellRenderer: (props) => {
+        const enableLink = enableLinkAndCheckout(props.data);
+
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(props.value)}>
-            <a
+          <div onClick={() => enableLink && handlerAnalyticsClickEvent(props.value)}>
+            {enableLink && <a
               className="cmp-grid-url-underlined"
               href={`${
                 window.location.origin + componentProp.quoteDetailUrl
               }?id=${props.value}`}
             >
               {props.value}
-            </a>
+            </a>}
+            {!enableLink && props.value}
           </div>
         );
       },
@@ -160,8 +167,9 @@ function QuotesGrid(props) {
       field: "canCheckOut",
       sortable: false,
       cellRenderer: (props) => {
+        const enableLink = enableLinkAndCheckout(props.data);
         return (
-          <div
+          enableLink && <div
             className="cmp-quotes-grid__checkout-icon"
             onClick={() =>
               handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)

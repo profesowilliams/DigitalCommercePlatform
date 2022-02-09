@@ -104,6 +104,11 @@
             labelKey="Pending"
             labelValue="Pending"
         />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            labelKey="IN_PIPELINE"
+            labelValue="Pending"
+        />
     </statusLabelsList>
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0

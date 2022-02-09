@@ -548,12 +548,12 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
       endUserName: null,
       checkoutSystem: i % 2 ? "4.6": "111",
       deals: utils.getRandomArrayWithIds(4),
-      status: i % 2 ? "OPEN" : "CLOSED",
+      status: i % 2 ? "OPEN" : (i % 3 ? "IN_PIPELINE" : "CLOSED"),
       quoteValue: 73002.31 + getRandom(1000),
       formatedQuoteValue: "USD",
       currencySymbol: "$",
       canUpdate: i % 2 ? true : false,
-      canCheckOut: i % 2 ? true : false,
+      canCheckOut: i % 3 ? true : false,
     });
     count++;
   }

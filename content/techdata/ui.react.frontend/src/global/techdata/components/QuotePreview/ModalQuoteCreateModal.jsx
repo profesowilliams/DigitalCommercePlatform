@@ -13,7 +13,7 @@ const ModalQuoteCreateModal = ({
   const [buyMethod, setBuyMethod] = useState('');
   const [avg, setAVG] = useState(false);
   const AVG_VALUE = modalConfig?.avgValue ? 
-    modalConfig.avgValue : 'AVG';
+    modalConfig.avgValue : 'AVT';
   const TECH_DATA_VALUE = modalConfig?.techDataValue ? 
     modalConfig.techDataValue : 'Tech Data';
   const TITLE = modalConfig?.title ? 
