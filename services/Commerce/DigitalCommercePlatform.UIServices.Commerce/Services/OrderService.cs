@@ -96,9 +96,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var url = _appOrderServiceUrl.SetQueryParams(new { id });
             var getOrderByIdResponse = await _middleTierHttpClient.GetAsync<List<OrderModel>>(url);
 
-            OrderModel result = PopulateOrderDetails(getOrderByIdResponse?.FirstOrDefault());
-
-            result = _helperService.FilterOrderLines(result);
+            OrderModel result = _helperService.FilterOrderLines(getOrderByIdResponse?.FirstOrDefault());
+            result = PopulateOrderDetails(result);
 
             return result;
         }

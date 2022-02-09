@@ -318,7 +318,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public List<Address> Resolve(OrderModel source, OrderDetailModel destination, List<Address> destMember, ResolutionContext context)
         {
-            var orderLines = source.Items.Where(x => x.EndUser != null).ToList();
+            var orderLines = source.Items.Where(x => x.EndUser != null)?.ToList();
             var lstEndUsers = new List<Address>();
 
             foreach (Item orderLine in orderLines)

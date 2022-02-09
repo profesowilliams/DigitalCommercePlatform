@@ -546,24 +546,39 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var parents = orderDetail.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.ID);
 
             Parallel.ForEach(parents,
-                new ParallelOptions { MaxDegreeOfParallelism = 3 }, line => {
+                new ParallelOptions { MaxDegreeOfParallelism = 3 }, line =>
+                {
                     if (line.POSType?.ToUpper() == "AH")
                     {
                         var subLines = orderDetail.Items.Where(i => (i.Parent == line.ID && i.POSType?.ToUpper() == "AI"))?.ToList();
                         if (subLines.Count == 1)
                         {
+                            MovePaymentInformation(line, subLines);
                             MapShipments(line, subLines);
                             MapSerials(line, subLines);
                             MapInvoices(line, subLines);
                             // remove AI line 
                             orderDetail.Items.Remove(subLines.FirstOrDefault());
                         }
+                        else
+                        {
+                            line.Freight = 0.00M;
+                            line.OtherFees = 0.00M;
+                            line.Tax = 0.00M;
+                        }
                     }
                 });
 
             return orderDetail; /// Fix this 
         }
+        private void MovePaymentInformation(Item line, List<Item> subLines)
+        {
 
+            line.Freight =  subLines.FirstOrDefault()?.Freight ?? 0.00M;
+            line.OtherFees =  subLines.FirstOrDefault()?.OtherFees ?? 0.00M;
+            line.Tax =  subLines.FirstOrDefault()?.Tax ?? 0.00M;
+
+        }
         private void MapSerials(Item line, List<Item> subLines)
         {
 

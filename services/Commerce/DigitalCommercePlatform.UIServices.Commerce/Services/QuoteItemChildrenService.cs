@@ -1,9 +1,9 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         if (id != null)
                         {
                             double parentNumber = 0;
-                            bool isNumeric = double.TryParse(parent, out parentNumber);
+
                             if (id != parentNumber)
                                 item.Parent = parent;
                             else

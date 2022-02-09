@@ -1016,6 +1016,121 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
+        private Item ItemModel()
+        {
+            Item line = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                OtherFees = 12.57M,
+                Freight = 35.79M,
+                Tax = 41.89M,
+                ID = "100",
+                POSType = "AH"
+            };
+
+
+            return line;
+        }
+        private List<Item> ListItemModel()
+        {
+            var line = ItemModel();
+            Item line1 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                OtherFees = 1.22M,
+                Freight = 4.79M,
+                Tax = 9.29M,
+                ID = "100",
+                POSType = "AI"
+            };
+
+            Item line2 = new()
+            {
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08,
+                TotalPrice = (decimal?)12.08,
+                OtherFees = 2.75M,
+                Freight = 5.22M,
+                Tax = 12.89M,
+                ID = "102",
+                POSType = "AI"
+            };
+
+
+            List<Item> lstItems = new List<Item>();
+            lstItems.Add(line);
+            lstItems.Add(line1);
+            lstItems.Add(line2);
+
+            return lstItems;
+        }
+        [Fact]
+        public void MovePaymentInformationFreight_Tests()
+        {
+            // Arrange
+            var Item = ItemModel();
+            var lstItem = ListItemModel();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MovePaymentInformation" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { Item, lstItem });
+
+            // Assert
+            Assert.NotNull(Item.Freight);
+        }
+
+        [Fact]
+        public void MovePaymentInformationOtherFees_Tests()
+        {
+            // Arrange
+            var Item = ItemModel();
+            var lstItem = ListItemModel();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MovePaymentInformation" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { Item, lstItem });
+
+            // Assert
+            Assert.NotNull(Item.OtherFees);
+        }
+
+        [Fact]
+        public void MovePaymentInformationTax_Tests()
+        {
+            // Arrange
+            var Item = ItemModel();
+            var lstItem = ListItemModel();
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MovePaymentInformation" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { Item, lstItem });
+
+            // Assert
+            Assert.NotNull(Item.Tax);
+        }
+
         [Fact]
         public void TestOrderLevel()
         {
