@@ -162,7 +162,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
 
         private readonly Dictionary<Status, string> OrderStatusMap = new Dictionary<Status, string>()
         {
-            { Status.OPEN, "OPEN" },
+            { Status.OPEN, "OPEN & IN PROCESS" },
             { Status.ON_HOLD, "IN REVIEW" },
             { Status.IN_PROCESS, "OPEN & IN PROCESS" },
             { Status.SHIPPED, "SHIPPED" },

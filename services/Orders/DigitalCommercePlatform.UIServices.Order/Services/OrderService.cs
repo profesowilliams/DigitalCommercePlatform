@@ -37,9 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Order.Services
             try
             {
                 _logger.LogInformation("Call Order");
-                var finfRequest = _mapper.Map<FindRequestModel>(request);
+                var findRequest = _mapper.Map<FindRequestModel>(request);
                 var coreResult = await
-                    _dfHttpClient.GetAsync<ResponseDto>(_appOrderServiceUrl.AppendPathSegment("Find").BuildQuery(finfRequest), request.Header.EcId).ConfigureAwait(false);
+                    _dfHttpClient.GetAsync<ResponseDto>(_appOrderServiceUrl.AppendPathSegment("Find").BuildQuery(findRequest), request.Header.EcId).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<OrderModel>>(coreResult.Data);
                 return modelList.FirstOrDefault();
             }
