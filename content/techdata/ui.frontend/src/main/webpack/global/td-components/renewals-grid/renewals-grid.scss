@@ -12,24 +12,6 @@
 		margin-top: rem(20px);
 		margin-right: rem(5px);
 	}
-	.cmp-due-date-day-column{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: calc(100% / 2);
-		margin: 0 auto;
-		height:100%;
-		gap: .5rem;
-		.cmp-due-date-days-number{
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			width: 100%;
-		}
-	}
-	.cmp-due-date-column{
-		text-align: left;
-	}
 	.cmp-renewal-plan-column{
 		display: flex;
 		flex-direction: row-reverse;
