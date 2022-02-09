@@ -83,13 +83,15 @@
 
     }
 
+    // Changes made to this method would need to be replicated on the DataLayerUtils.js method as well.
     function setVisitorData(object) {
-        object.visitor = {
-            ecID: sessionId ? userData.id : null,
-            sapID: sessionId ? userData.activeCustomer.customerNumber : null,
-            loginStatus: sessionId ? "Logged in" : "Logged out"
+        if(object) {
+            object.visitor = {
+                ecID: sessionId ? userData.id : null,
+                sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+                loginStatus: sessionId ? "Logged in" : "Logged out"
+            }
         }
-
         return object;
     }
 

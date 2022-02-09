@@ -248,7 +248,8 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
     const loadDeals = async (searchTerm) => {
        
         pushData({
-            event: "qpDealSearch"
+            event: "qpDealSearch",
+            quote: {}
         });
 
         setIsLoadingDeals(true);

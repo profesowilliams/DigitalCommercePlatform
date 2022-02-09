@@ -42,7 +42,9 @@ const getDataLayer = () => {
 export const pushData = data => {
   if (isDataLayerEnabled()) {
     let eventInfo = data[getEventInfoPropName(data)];
-    setVisitorData(eventInfo);
+    if(eventInfo) {
+      setVisitorData(eventInfo);
+    }
     getDataLayer().push(data);
   }
 };
@@ -111,14 +113,15 @@ export const handlerAnalyticsClearClickEvent = (category = '') => {
   pushEventAnalyticsGlobal(objectToSend);
 };
 
-
+// Changes made to this method would need to be replicated on the analytics-tracking.js method as well.
 const setVisitorData = (object) => {
-  object.visitor = {
-    ecID: sessionId ? userData.id : null,
-    sapID: sessionId ? userData.activeCustomer.customerNumber : null,
-    loginStatus: sessionId ? "Logged in" : "Logged out"
+  if(object){
+    object.visitor = {
+      ecID: sessionId ? userData.id : null,
+      sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+      loginStatus: sessionId ? "Logged in" : "Logged out"
+    }
   }
-
   return object;
 }
 
