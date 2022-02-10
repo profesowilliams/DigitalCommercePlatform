@@ -114,8 +114,8 @@ function QuotePreview(props) {
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
       if (!result.data?.error?.isError && result.data?.content?.confirmationId) {
         const { confirmationId } = result.data.content;
-        showSimpleModal('Create Quote', (
-          <div>Your quote is being created and will be available in a few minutes - confirmationId:{confirmationId}</div>
+        showSimpleModal('Quote Submitted Successfully', (
+          <div>Your quote is being created and will be available for your viewing in a few minutes. Quote Confirmation ID: {confirmationId}</div>
         ), onModalClosed => {
           closeModal();
           window.location.href = URL_QUOTES_GRID;
@@ -308,7 +308,7 @@ function QuotePreview(props) {
       <Loader visible={isLoading} />
       {loadingCreateQuote && (
         <FullScreenLoader>
-          Creating Quick Quote...
+          Please wait while Your Quote is created
         </FullScreenLoader>
       )}
       {apiResponse && !isLoading && (

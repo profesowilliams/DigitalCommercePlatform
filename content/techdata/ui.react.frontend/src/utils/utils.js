@@ -6,6 +6,12 @@ export function getQueryStringValue (key) {
     return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
 
+export const getSingleQueryStringParameterFromUrl = (queryStringParameterName) => {
+    const value = new URLSearchParams(window.location.search).get(queryStringParameterName);
+
+    return value && value.length > 0 ? value : null;
+};
+
 // Not updating the TraceId on this function as it does not appear to be used and may be a leftover from a POC
 export const prepareCommonHeader = () => ({
     "TraceId" : "NA",

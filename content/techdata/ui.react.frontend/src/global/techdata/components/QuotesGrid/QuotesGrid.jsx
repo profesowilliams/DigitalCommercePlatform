@@ -5,6 +5,7 @@ import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from "../Modal/Modal";
+import { getSingleQueryStringParameterFromUrl } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
@@ -18,6 +19,7 @@ function QuotesGrid(props) {
 
   const filteringExtension = useGridFiltering();
   const [modal, setModal] = useState(null);
+  const [queryStringIdValue, setQueryStringIdValue] = useState(getSingleQueryStringParameterFromUrl("id"));
   const { spaDealsIdLabel } = componentProp;
 
   const getDateTransformed = (dateUTC) => {
@@ -214,7 +216,7 @@ function QuotesGrid(props) {
 
   async function detailRedirectHandler(request) {
     let response = await filteringExtension.requestInterceptor(request);
-    if (response?.data?.content?.items?.length === 1) {
+    if (queryStringIdValue && response?.data?.content?.items?.length === 1) {
       const detailsRow = response.data.content.items[0];
       const redirectUrl = `${
         window.location.origin + componentProp.quoteDetailUrl
