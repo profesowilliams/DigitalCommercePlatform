@@ -553,11 +553,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [AutoDomainData]
         public async Task GetQuote(GetQuote.Request request)
         {
+            
+
             // Act
             var result = await _commerceService.GetQuote(request);
             // Assert
             Assert.Null(result);
         }
+
+        
 
         [Theory]
         [AutoDomainData]

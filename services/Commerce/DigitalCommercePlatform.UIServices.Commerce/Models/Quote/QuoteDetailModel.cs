@@ -12,6 +12,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
     }
     public class QuoteDetails
     {
+        public string Status { get; set; }
         public SourceModel QuoteSource { get; set; }
         public Address ShipTo { get; set; }
         public Address EndUser { get; set; }

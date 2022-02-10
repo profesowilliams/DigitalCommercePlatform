@@ -73,6 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
             .ForMember(dest => dest.Source, opt => opt.MapFrom<VendorReferenceResolver>())
             .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
             .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
