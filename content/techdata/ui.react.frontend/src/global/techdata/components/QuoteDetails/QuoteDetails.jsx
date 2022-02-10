@@ -230,9 +230,13 @@ const QuoteDetails = ({ componentProp }) => {
   }, [analyticsProduct])
 
   useEffect(() => {
-    response?.content?.details && setQuoteDetails(response.content.details);
-    response?.content?.details && getPopulateProdutcsToAnalytics(response.content.details);
-    if(!isLoading && error == null  && !response?.content?.details)
+    const detailsResponse = response?.content?.details;
+    const quoteHasData = detailsResponse && detailsResponse.status.toUpperCase() !== "IN_PIPELINE";
+
+    quoteHasData && setQuoteDetails(detailsResponse);
+    quoteHasData && getPopulateProdutcsToAnalytics(detailsResponse);
+
+    if(!isLoading && error == null  && !quoteHasData)
     {
       setModal((previousInfo) => (
         {
