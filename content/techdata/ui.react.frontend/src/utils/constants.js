@@ -4,10 +4,10 @@
 // General
 export const ADOBE_DATA_LAYER_CLICK_EVENT = 'click';
 export const ADOBE_DATA_LAYER_LINK_TYPE = 'link';
+export const ADOBE_DATA_LAYER_EVENT_PAGE_VIEW = 'page view';
 
 // Quotes
 export const ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT = 'quoteExport';
-export const ADOBE_DATA_LAYER_QUOTE_PAGE_VIEW_EVENT = 'page view';
 export const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY = 'Quote Details Table Interactions';
 export const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME = 'Checkout';
 export const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE = 'CTA';

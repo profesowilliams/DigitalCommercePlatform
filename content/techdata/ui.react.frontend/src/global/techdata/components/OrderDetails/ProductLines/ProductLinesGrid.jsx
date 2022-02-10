@@ -11,7 +11,7 @@ import { thousandSeparator } from "../../../helpers/formatting";
 import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
-import { requestFileBlob } from "../../../../../utils/utils";
+import { isNotEmptyValue, requestFileBlob } from "../../../../../utils/utils";
 import { ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT } from "../../../../../utils/constants";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 
@@ -664,7 +664,7 @@ function ProductLinesGrid({
     }
 
     return false
-  }
+  };
 
   /**
    * 
@@ -679,7 +679,7 @@ function ProductLinesGrid({
     const displayName = object.displayName?.toLowerCase().includes(valueLowerCase) ? true : false;
     const tdNumber = object.tdNumber?.toLowerCase().includes(valueLowerCase) ? true : false;
     return descriptionVal || vendorPartNoVal || displayName || tdNumber ? true : false
-  }
+  };
 
   /**
    * Filters an array of objects using custom predicates.
@@ -705,7 +705,7 @@ function ProductLinesGrid({
       const searchByDropDownValue = searchByValue !== '' ? filterBySearchDropDown(searchByValue, f) : true
       const _descriptionValue =  filterByQueryInput(descriptionValue, f);
       return _descriptionValue && searchByDropDownValue
-    })
+    });
 
     return result;
   }
@@ -737,7 +737,7 @@ function ProductLinesGrid({
   const onSearchRequest = (query) => {
     handleFilterComponent(query.analyticsData);
     setQuerychange(query);
-  }
+  };
 
   const onClearSearchRequest = () => {
     gridApi.setRowData([]);
@@ -753,14 +753,14 @@ function ProductLinesGrid({
    const handleFilterComponent = (analyticObjectParam) => {
     const orderDetails = {
       searchTerm: analyticObjectParam.searchTerm,
-      searchCategory : analyticObjectParam.category,
+      searchCategory : isNotEmptyValue(analyticObjectParam.category) ? analyticObjectParam.category : "" ,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT,
       orderDetails,
     }
     pushEventAnalyticsGlobal(objectToSend);
-  }
+  };
 
   return (
     <section>

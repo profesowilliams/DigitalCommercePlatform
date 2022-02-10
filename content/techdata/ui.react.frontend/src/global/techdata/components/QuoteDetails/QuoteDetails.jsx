@@ -18,7 +18,7 @@ import { generateExcelFileFromPost } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,
-  ADOBE_DATA_LAYER_QUOTE_PAGE_VIEW_EVENT,
+  ADOBE_DATA_LAYER_EVENT_PAGE_VIEW,
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME,
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
@@ -102,7 +102,7 @@ const QuoteDetails = ({ componentProp }) => {
 
   const handlerAnalyticPageView = () => {
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_QUOTE_PAGE_VIEW_EVENT,
+      event: ADOBE_DATA_LAYER_EVENT_PAGE_VIEW,
       quotes: {
         quoteID : id,
       },

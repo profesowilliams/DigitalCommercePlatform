@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { ADOBE_DATA_LAYER_EVENT_PAGE_VIEW } from "../../../../../utils/constants";
+import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 import { thousandSeparator } from "../../../helpers/formatting";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
@@ -7,6 +9,8 @@ import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
 function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuantityIncrease }) {
   const [gridApi, setGridApi] = useState(null);
+  const [analyticsProduct, setAnalyticsProduct] = useState([]);
+  const [flagAnalytic, setFlagAnalytic] = useState(true);
   const gridData = data.items ?? [];
   /*
     grid data can be mutated intentionally by changing quantity in each row. 
@@ -20,6 +24,52 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
   useEffect(() => {
     gridApi?.selectAll();
   }, [gridApi]);
+
+  /**
+   * function that map the products of the quote and
+   * get the information to attach into the analytics info
+   * @param {any} quoteDetailsParam 
+   */
+  const getPopulateProdutcsToAnalytics = (quoteDetailsParam) => {
+    const productsToSend = quoteDetailsParam.items.map(item => {
+      return {
+        productInfo: {
+          parentSKU : item.tdNumber,
+          name: item.displayName
+        }
+      }
+    });
+    setAnalyticsProduct(productsToSend);
+  };
+
+  /**
+   * Handler function that add info to the analytics
+   * when the page load
+   */
+  const handlerAnalyticPageView = () => {
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_EVENT_PAGE_VIEW,
+      quotePreview: {
+        genTier : '',
+      },
+      products: analyticsProduct
+    }
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
+  useEffect(() => {
+    if (data) {
+      getPopulateProdutcsToAnalytics(data);    
+    }
+    
+  }, [data]);
+
+  useEffect(() => {
+    if (analyticsProduct?.length > 0 && flagAnalytic) {
+      setFlagAnalytic(false)
+      handlerAnalyticPageView()
+    }
+  }, [analyticsProduct])
 
   const gridConfig = {
     ...gridProps,
