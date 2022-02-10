@@ -20,13 +20,11 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const refBackButton = useRef(null);
 
   useEffect(() => {
-    ['load', 'resize'].forEach(e => {
-      window.addEventListener(e, updateWindowDimensions);
-    });
+    window.addEventListener('resize', updateWindowDimensions);
+    updateWindowDimensions();
+    
     return () => {
-      ['load', 'resize'].forEach(e => {
-        window.removeEventListener(e, updateWindowDimensions);
-      });
+      window.removeEventListener('resize', updateWindowDimensions);
     }
   }, []);
 
