@@ -17,10 +17,10 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.2.0" />
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.24" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.24" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.24" />
-    <PackageReference Include="Flurl" Version="3.0.2" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.38" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.38" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.38" />
+    <PackageReference Include="Flurl" Version="3.0.4" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
