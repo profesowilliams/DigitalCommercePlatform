@@ -24,3 +24,6 @@ export const ADOBE_DATA_LAYER_SEARCH_BAR_EVENT = 'internalSearch';
 
 // Orders
 export const ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY = 'Orders Table Interactions';
+
+// Orders details
+export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';

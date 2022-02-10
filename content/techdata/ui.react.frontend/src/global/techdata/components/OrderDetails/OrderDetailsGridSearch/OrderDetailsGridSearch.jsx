@@ -62,6 +62,13 @@ function OrdersDetailsGridSearch({ componentProp, onQueryChanged, onSearch, setF
   };
   const _query = useRef({});
 
+  const dispatchAnalyticsChange = (query) => {
+    return {
+      searchTerm: query?.description?.value ? query?.description?.value : '',
+      category: query?.searchby?.key !== 'allLines' ?  query?.searchby?.value : ''
+    };
+  }
+
   function dispatchQueryChange(query) {
     let keyword =
       query.keyword?.key && query.keyword?.value
@@ -103,7 +110,7 @@ function OrdersDetailsGridSearch({ componentProp, onQueryChanged, onSearch, setF
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${searchby}${description}`;
     if (isQueryValid(query)) {
       setQueryState(query)
-      onQueryChanged(concatedQuery);
+      onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
     } else {
       onQueryChanged("");
     }

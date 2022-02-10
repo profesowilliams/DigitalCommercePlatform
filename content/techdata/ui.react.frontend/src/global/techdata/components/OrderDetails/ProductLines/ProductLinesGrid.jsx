@@ -12,6 +12,8 @@ import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import { requestFileBlob } from "../../../../../utils/utils";
+import { ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT } from "../../../../../utils/constants";
+import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesGrid({
   gridProps,
@@ -732,8 +734,10 @@ function ProductLinesGrid({
     }
   }, [flagData]);
 
-  const onSearchRequest = (query) => 
+  const onSearchRequest = (query) => {
+    handleFilterComponent(query.analyticsData);
     setQuerychange(query);
+  }
 
   const onClearSearchRequest = () => {
     gridApi.setRowData([]);
@@ -741,6 +745,22 @@ function ProductLinesGrid({
     setQuerychange('')
     gridApi.applyTransaction({ add: mutableGridData });
   };
+
+  /**
+   * 
+   * @param {any} analyticObjectParam 
+   */
+   const handleFilterComponent = (analyticObjectParam) => {
+    const orderDetails = {
+      searchTerm: analyticObjectParam.searchTerm,
+      searchCategory : analyticObjectParam.category,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT,
+      orderDetails,
+    }
+    pushEventAnalyticsGlobal(objectToSend);
+  }
 
   return (
     <section>
