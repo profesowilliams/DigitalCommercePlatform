@@ -259,6 +259,7 @@ const NewSubheader = ({ componentProp }) => {
 	}
 
 	function invokeModal(modal) {
+	    analyticsData('Vendor Connections');
 		setModal(
 			<Modal
 				modalAction={modal.properties.action}
