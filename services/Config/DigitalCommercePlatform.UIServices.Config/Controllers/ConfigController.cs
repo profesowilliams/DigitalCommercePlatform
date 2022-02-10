@@ -7,7 +7,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
-using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
+using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.GetProductPrice;
@@ -139,7 +139,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         [Route("applySPA")]
         public async Task<ActionResult> GetSpa([FromQuery] string Id,string ProductIds, bool details=true)
         {
-            var data = new SPADetails.Request { Id=Id,ProductIds=ProductIds,Details=details};
+            var data = new SpaDetails.Request { Id=Id,ProductIds=ProductIds,Details=details};
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

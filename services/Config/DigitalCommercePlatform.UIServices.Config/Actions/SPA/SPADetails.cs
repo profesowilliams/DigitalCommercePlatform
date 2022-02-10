@@ -10,9 +10,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DigitalCommercePlatform.UIServices.Config.Actions.SPA
+namespace DigitalCommercePlatform.UIServices.Config.Actions.Spa
 {
-    public class SPADetails
+    public class SpaDetails
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
@@ -45,10 +45,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.SPA
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var data = await _configService.GetSPADetails(request);
-                var orderResponse = _mapper.Map<Response>(data);
-
-                return new ResponseBase<Response> { Content = orderResponse };
+                var data = await _configService.GetSpaDetails(request);
+                return new ResponseBase<Response> { Content = data };
 
             }
         }

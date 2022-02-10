@@ -1,17 +1,17 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
+using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Common;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.SPA
+namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Spa
 {
     [ExcludeFromCodeCoverage]
-    public class SPAProfile : ProfileBase
+    public class SpaProfile : ProfileBase
     {
-        public SPAProfile()
+        public SpaProfile()
         {
 
-            CreateMap<Models.SPA.SpaDetailModel, SPADetails.Response>()
+            CreateMap<Models.SPA.SpaDetailModel, SpaDetails.Response>()
                .ForPath(d => d.Items, o => o.MapFrom(s => s));
         }
     }

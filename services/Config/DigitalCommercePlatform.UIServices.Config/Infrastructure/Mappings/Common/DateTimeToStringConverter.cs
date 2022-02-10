@@ -6,8 +6,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Comm
 {
     public class DateTimeToStringConverter : ITypeConverter<DateTime?, string>
     {
-        public static readonly string Format = "MM/dd/yyyy";
-        public static readonly string DefaultDateTimeString = "n/a";
+        public const string Format = "MM/dd/yyyy";
+        public const string DefaultDateTimeString = "n/a";
 
         private static readonly DateTime _defaultDateTime = new();
 

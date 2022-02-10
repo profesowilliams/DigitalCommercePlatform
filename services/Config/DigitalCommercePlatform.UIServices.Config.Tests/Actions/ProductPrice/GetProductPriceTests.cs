@@ -1,7 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
-using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
+using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Models.GetProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.TestUtilities;
@@ -21,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.ProductPrice
         private readonly Mock<IConfigService> _iConfigService;
         private readonly Mock<IHttpClientFactory> _iHttpClientFactory;
         private readonly Mock<IMapper> _imapper;
-        private readonly SPADetails.Handler _sut;
+        private readonly SpaDetails.Handler _sut;
 
 
         public GetProductPriceTests()
@@ -30,7 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Actions.ProductPrice
             _iConfigService = new Mock<IConfigService>();
             _iHttpClientFactory = new Mock<IHttpClientFactory>();
             _imapper = new Mock<IMapper>();
-            _sut = new SPADetails.Handler(_imapper.Object, _loggerFactory.Object, _iConfigService.Object, _iHttpClientFactory.Object);
+            _sut = new SpaDetails.Handler(_imapper.Object, _loggerFactory.Object, _iConfigService.Object, _iHttpClientFactory.Object);
         }
 
         [Theory]

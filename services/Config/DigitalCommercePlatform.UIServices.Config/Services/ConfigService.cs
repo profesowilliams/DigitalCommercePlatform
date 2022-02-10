@@ -8,7 +8,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
-using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
+using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
@@ -36,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
     [ExcludeFromCodeCoverage]
     public class ConfigService : IConfigService
     {
-        private static readonly Random getrandom = new Random();
+        private static readonly Random getrandom = new();
 
         private readonly IAppSettings _appSettings;
         private readonly IMapper _mapper;
@@ -181,7 +181,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 var configurationFindUrl = _appConfigurationUrl
                     .AppendPathSegment("find")
                     .SetQueryParams(appServiceRequest);
-                configurationFindUrl = configurationFindUrl + type;
+                configurationFindUrl += type;
                 var stringUrl = configurationFindUrl.ToString();
 
                 if (appServiceRequest.Details)
@@ -308,7 +308,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             {
 
                 _logger.LogError(ex, "Exception at getting Estimation Validate: " + nameof(ConfigService));
-                _logger.LogInformation("$Record's not found for " + request.Criteria.Id + " and " + request.Criteria.ConfigurationType);
+                _logger.LogInformation("Record's not found for {ID} and {TYPE}", request.Criteria.Id, request.Criteria.ConfigurationType);
                 return false;
             }
         }
@@ -317,12 +317,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         {
             try
             {
-                _logger.LogInformation($" {"Action Name is: " + request.ActionName + " Function Name is : " + request.FunctionName + " PostBackURL is : " + request.PostBackUrl + " Vendor Name is : " + request.VendorName + " EstimateId value is " + request.IdValue}");
+                _logger.LogInformation("Action Name is: {ACTION_NAME}. " +
+                    "Function Name is : {FUNCTION_NAME}. " +
+                    "PostBackURL is : {URL}. " +
+                    "Vendor Name is : {VENDOR_NAME}. " +
+                    "EstimateId value is {ID}",
+                    request.ActionName, request.FunctionName, request.PostBackUrl, request.VendorName, request.IdValue);
                 if (request.ActionName?.ToLower() == "edit")
                 {
-                    var estimateRequest = new Models.Configurations.FindModel();
-                    estimateRequest.Id = request.IdValue;
-                    estimateRequest.ConfigurationType = ConfigType.All;
+                    Models.Configurations.FindModel estimateRequest = new()
+                    {
+                        Id = request.IdValue,
+                        ConfigurationType = ConfigType.All
+                    };
 
                     var result = await FindConfigurations(new GetConfigurations.Request { Criteria = estimateRequest });
 
@@ -333,12 +340,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 const string keyForGettingUrlFromSettings = "External.OneSource.PunchOut.Url";
 
                 var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
-                ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
+                    ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
 
                 _logger.LogInformation($"Requested url is: {requestUrl}");
 
                 var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
-                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), 
+                    Encoding.UTF8, "application/json");
                 var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
 
                 httpResponse.EnsureSuccessStatusCode();
@@ -358,7 +366,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exception while calling Punchout url : {ex.Message + " inner Exception is " + ex.InnerException}");
+                _logger.LogInformation("Exception while calling Punchout url : {MESSAGE} inner Exception is {INNEREX}",
+                    ex.Message, ex.InnerException);
                 throw ex;
             }
         }
@@ -368,9 +377,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             string[] MfrPartNumbers = request.ProductIds?.Split(",").ToArray();
 
             if (!string.IsNullOrEmpty(request.Vendor))
-                request.Vendor = request.Vendor + "*";
+                request.Vendor += "*";
 
-            Models.Configurations.Internal.FindSpaCriteriaModel spaRequest = new Models.Configurations.Internal.FindSpaCriteriaModel
+            FindSpaCriteriaModel spaRequest = new ()
             {
                 MfrPartNumbers = MfrPartNumbers,
                 EndUserName = request.EndUserName,
@@ -398,8 +407,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             var result = refreshResponse?.StatusCode ?? HttpStatusCode.OK;
 
-            var response = new RefreshData.Response();
-            response.Items = result == HttpStatusCode.OK ? true : false;
+            var response = new RefreshData.Response
+            {
+                Items = result == HttpStatusCode.OK
+            };
             return response;
 
         }
@@ -411,7 +422,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return getSpaResponse;
         }
 
-        private string GetConfigurationType(GetConfigurations.Request request)
+        private static string GetConfigurationType(GetConfigurations.Request request)
         {
             var ConfigurationType = "";
 
@@ -460,11 +471,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         }
 
-        public async Task<SPADetails.Response> GetSPADetails(SPADetails.Request request)
+        public async Task<SpaDetails.Response> GetSpaDetails(SpaDetails.Request request)
         {
             List<string> mfrPartNumbers = request.ProductIds?.Split(",").ToList();
             var requestUrl = _appSpaUrl.AppendPathSegments("/Spa").BuildQuery(request);
-            SPADetails.Response response = new SPADetails.Response();
+            SpaDetails.Response response = new();
             var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
             if (spaResponse.Any())
             {
@@ -484,12 +495,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 }
                 else
                 {
-                    _logger.LogError("No products returned by app service for SPA id " + request.Id + nameof(ConfigService));
+                    _logger.LogError("No products returned by app service for SPA id {ID} {NAME}", request.Id, nameof(ConfigService));
                 }
             }
             else
             {
-                _logger.LogError("No records returned by app service for SPA id " + request.Id + nameof(ConfigService));
+                _logger.LogError("No records returned by app service for SPA id {ID} {NAME}", request.Id, nameof(ConfigService));
             }
 
             return response;
@@ -500,7 +511,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             
             string _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
             GetProductPrice.Response response;
-            _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(request, Formatting.Indented));
+            string json = JsonConvert.SerializeObject(request, Formatting.Indented);
+            _logger.LogInformation("Calling App-Quote to create a quote {NEWLINE} {JSON}", Environment.NewLine, json);
             try
             {
                 response = await _middleTierHttpClient.PostAsync<GetProductPrice.Response>(_appPriceUrl, null, request);

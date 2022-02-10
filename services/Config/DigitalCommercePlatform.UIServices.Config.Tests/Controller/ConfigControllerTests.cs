@@ -7,7 +7,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentDeals;
 using DigitalCommercePlatform.UIServices.Config.Actions.ProductPrice;
 using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
-using DigitalCommercePlatform.UIServices.Config.Actions.SPA;
+using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Controllers;
 using DigitalCommercePlatform.UIServices.Config.Models.Common;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
@@ -225,9 +225,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
         [Fact]
         public async Task GetSPADetails()
         {
-            ResponseBase<SPADetails.Response> expected = new ResponseBase<SPADetails.Response>();
+            ResponseBase<SpaDetails.Response> expected = new ResponseBase<SpaDetails.Response>();
             _mockMediator.Setup(x => x.Send(
-                      It.IsAny<SPADetails.Request>(),
+                      It.IsAny<SpaDetails.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
 
