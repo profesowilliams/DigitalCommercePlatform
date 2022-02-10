@@ -5,6 +5,6 @@
           vanity.dispatch.enabled="{Boolean}true"
           serve-authenticated-from-cache="{Boolean}true"
           ttl="{Long}300"
-          error-page.system-path="/content/techdata/us/en/errors"
+          error-page.system-path="/content/techdata/americas/us/en/errors"
           error-page.fallback-name="500"
 />
