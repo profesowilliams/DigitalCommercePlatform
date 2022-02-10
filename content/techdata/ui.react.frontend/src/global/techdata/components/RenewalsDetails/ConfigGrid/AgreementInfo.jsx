@@ -18,9 +18,9 @@ function AgreementInfo({
           {contract.duration && (
             <Info label={agreementInfo.durationLabel}>{contract.duration}</Info>
           )}
-          {contract.supportLevel && (
+          {contract.serviceLevel && (
             <Info label={agreementInfo.supportLevelLabel}>
-              {contract.supportLevel}
+              {contract.serviceLevel}
             </Info>
           )}
           <Info label={agreementInfo.distiQuoteNoLabel}>1234567GJDFH</Info>
