@@ -520,7 +520,7 @@ module.exports = {
                   "contractNo": null,
                   "contractType": null,
                   "license": randomStr(10, abc),
-                  "status": "open",
+                  "status": "Sales Review",
                   "vendorStatus": null,
                   "customerPOLine": null,
                   "supplierQuoteRef": null,
@@ -932,7 +932,7 @@ module.exports = {
               "blindPackaging": false,
               "shipComplete": false,
               "canBeExpedited": false,
-              "status": "inProcess"
+              "status": "Sales Review"
             },
             "error": { "code": 0, "messages": [], "isError": false }
           }

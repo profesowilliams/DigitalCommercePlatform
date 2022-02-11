@@ -52,6 +52,7 @@ function ProductLinesGrid({
     open: 'open',
     shipped: 'shipped',
     cancelled: 'cancelled',
+    salesreview: 'salesReview'
   };
   const defaultIcons = [
     { iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
@@ -59,6 +60,7 @@ function ProductLinesGrid({
     { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
     { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
     { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
+    { iconKey: STATUS.salesreview, iconValue: '', iconText: 'In Review' },
   ];
   const [flagData, setFlagData] = useState(false);
 
@@ -97,9 +99,10 @@ function ProductLinesGrid({
   }
 
   function applyStatusIcon(statusKey) {
-    let icon = iconList?.find((icon) => icon.iconKey.toLowerCase() === statusKey.toLowerCase());
-    if (!icon) icon = defaultIcons.find((icon) => icon.iconKey.toLowerCase() === statusKey.toLowerCase());
-    return icon;
+    let icon = iconList?.find((icon) => icon.iconKey.toLowerCase() === statusKey.replace(/\s+/g, '').toLowerCase());
+    return icon
+      ? icon
+      : defaultIcons.find((icon) => icon.iconKey.toLowerCase() === statusKey.replace(/\s+/g, '').toLowerCase());
   }
 
   function getDateTransformed(dateUTC) {
