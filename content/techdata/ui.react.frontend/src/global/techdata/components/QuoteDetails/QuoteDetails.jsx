@@ -120,7 +120,7 @@ const QuoteDetails = ({ componentProp }) => {
     setModal((previousInfo) => (
         {
           content: (
-            <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+            <div>There has been an error creating your order. Please try again later or contact your sales representative.</div>
           ),
           properties: {
               title: `Error`,
