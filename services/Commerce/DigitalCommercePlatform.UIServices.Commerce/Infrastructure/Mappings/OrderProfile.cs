@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Serials, opt => opt.MapFrom(src => src.Serials))
                 .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>())
                 .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>())
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom<LineLevelStatusResolver>())
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
@@ -62,7 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Trackings, opt => opt.MapFrom<LineTrackingsResolver>())
                 .ForMember(dest => dest.ShipDates, opt => opt.MapFrom<LineShippingDatesResolver>())
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom(src => src.Invoices))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom<LineLevelStatusResolver>())
                 .ForMember(dest => dest.PAKs, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom<LineTotalResolver>())
@@ -88,10 +88,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForPath(dest => dest.PaymentDetails.OtherFees, opt => opt.MapFrom(src => src.OtherFees))
                 .ForPath(dest => dest.PONumber, opt => opt.MapFrom(src => src.CustomerPO))
                 .ForMember(dest => dest.PODate, opt => opt.MapFrom<DateResolver>())
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom<OrderDetailStatusResolver>())
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.Source.ID))
                 .ForMember(dest => dest.EndUser, opt => opt.MapFrom<EndUserResolver>());
 
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class OrderDetailStatusResolver : IValueResolver<OrderModel, OrderDetailModel, string>
+    {
+        public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
+        {
+            if (source.Status == Status.ON_HOLD)
+                source.Status = Status.IN_PROCESS;
+
+            return source.Status.ToString().ToTitleCase();
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class LineLevelStatusResolver : IValueResolver<Item, Line, string>
+    {
+        public string Resolve(Item source, Line destination, string destMember, ResolutionContext context)
+        {
+            source.Status = !string.IsNullOrWhiteSpace(source.Status) ? source.Status : string.Empty;
+
+            if (source?.Status == "ON_HOLD")
+                source.Status = "IN_PROCESS";
+
+            return !string.IsNullOrWhiteSpace(source.Status) ? source.Status.ToString().ToTitleCase() : string.Empty;
         }
     }
 
