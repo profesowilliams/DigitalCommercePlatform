@@ -158,6 +158,14 @@
                     pointer-events: none;
                 }
             }
+
+            a[data-cmp-children="menu "]{
+                i,
+                svg {
+                    display: none !important;
+                    pointer-events: none;
+                }
+            }
         }
         .cmp-megamenu__quaternary {
             .cmp-megamenu__wrapper-item {
