@@ -234,7 +234,11 @@ function QuotePreview(props) {
 
       newGeneralDetails.endUser = newGeneralDetails.endUser || [];
       newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ? newGeneralDetails.endUser[0] : {};
-      newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
+
+      if(generalInformation.deal?.endUserName
+        && generalInformation.deal.endUserName.trim().length > 0) {
+        newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
+      }
 
       newGeneralDetails.attributes = newGeneralDetails.attributes || [];
       let dealIdAttribute = newGeneralDetails.attributes.filter((attribute) => attribute.name.toUpperCase() === DEAL_ATTRIBUTE_FIELDNAME);
