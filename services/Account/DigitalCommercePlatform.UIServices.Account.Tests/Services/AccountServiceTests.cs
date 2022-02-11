@@ -54,7 +54,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             _appSettings.Setup(s => s.GetSetting("App.Order.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-order/v1");
             _appSettings.Setup(s => s.GetSetting("App.Quote.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1");
             _appSettings.Setup(s => s.GetSetting("App.Cart.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-cart/v1");
-            _appSettings.Setup(s => s.GetSetting("App.spa.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-spa/v1");
+            _appSettings.Setup(s => s.GetSetting("App.Spa.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-spa/v1");
             _appSettings.Setup(s => s.GetSetting("App.Customer.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-customer/v1");
             _uiContext = new Mock<IUIContext>();
             _mapper = new Mock<IMapper>();

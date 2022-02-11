@@ -138,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         public async Task<List<DealsSummaryModel>> GetDealsSummaryAsync(GetDealsSummary.Request request)
         {
-            var url = _spaServiceURL.AppendPathSegments("Spa", "Find")
+            var url = _spaServiceURL.AppendPathSegments("Find")
                          .SetQueryParams(new
                          {
                              ValidTo = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd"),
@@ -260,7 +260,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         private async Task<int> GetExpiringDeals()
         {
-            var url = _spaServiceURL.AppendPathSegments("Spa", "Find")
+            var url = _spaServiceURL.AppendPathSegments("Find")
                         .SetQueryParams(new
                         {
                             ValidTo = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"),

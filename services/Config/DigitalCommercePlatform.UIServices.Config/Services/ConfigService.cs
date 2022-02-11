@@ -417,7 +417,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private async Task<FindResponse<DealsBase>> GetDealsDetails<T>(T request)
         {
-            var requestUrl = _appSpaUrl.AppendPathSegments("/Spa/Find").BuildQuery(request);
+            var requestUrl = _appSpaUrl.AppendPathSegments("Find").BuildQuery(request);
             var getSpaResponse = await _middleTierHttpClient.GetAsync<FindResponse<DealsBase>>(requestUrl).ConfigureAwait(false);
             return getSpaResponse;
         }
@@ -474,7 +474,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         public async Task<SpaDetails.Response> GetSpaDetails(SpaDetails.Request request)
         {
             List<string> mfrPartNumbers = request.ProductIds?.Split(",").ToList();
-            var requestUrl = _appSpaUrl.AppendPathSegments("/Spa").BuildQuery(request);
+            var requestUrl = _appSpaUrl.BuildQuery(request);
             SpaDetails.Response response = new();
             var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
             if (spaResponse.Any())
