@@ -101,7 +101,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
         {
             if (source.Status == Status.ON_HOLD)
-                source.Status = Status.IN_PROCESS;
+            {
+                source.Status = Status.SALES_REVIEW;
+            }
 
             return source.Status.ToString().ToTitleCase();
         }
@@ -115,7 +117,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             source.Status = !string.IsNullOrWhiteSpace(source.Status) ? source.Status : string.Empty;
 
             if (source?.Status == "ON_HOLD")
-                source.Status = "IN_PROCESS";
+            {
+                source.Status = "SalesReview";
+            }
 
             return !string.IsNullOrWhiteSpace(source.Status) ? source.Status.ToString().ToTitleCase() : string.Empty;
         }

@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal
         ON_HOLD,
         SHIPPED,
         IN_PROCESS,
-        IN_PIPELINE
+        IN_PIPELINE,
+        SALES_REVIEW
     };
 }
