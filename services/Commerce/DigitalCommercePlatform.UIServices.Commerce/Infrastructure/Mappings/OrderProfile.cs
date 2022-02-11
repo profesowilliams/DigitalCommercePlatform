@@ -118,7 +118,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             if (source?.Status == "ON_HOLD")
             {
-                source.Status = "SalesReview";
+                source.Status = "Sales Review";
             }
 
             return !string.IsNullOrWhiteSpace(source.Status) ? source.Status.ToString().ToTitleCase() : string.Empty;
