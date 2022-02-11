@@ -402,7 +402,7 @@ function OrdersGrid(props) {
 
         if (filteredOrderId.current && (!response?.data?.content?.items || response?.data?.content?.items?.length === 0)) {
             const redirectUrl =
-                window.location.origin + componentProp.legacyOrderDetailsUrl.replace("{order-id}", filteredOrderId.current);
+                componentProp.shopDomain + componentProp.legacyOrderDetailsUrl.replace("{order-id}", filteredOrderId.current);
             window.location.href = redirectUrl;
         }
         if (response?.data?.content?.items?.length === 1) {

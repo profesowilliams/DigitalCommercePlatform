@@ -163,6 +163,10 @@ use(function () {
     jsonObject["downloadAllInvoicesEndpoint"] = this.uiServiceDomain + this.downloadAllInvoicesEndpoint;
   }
 
+  if (this.shopDomain) {
+    jsonObject["shopDomain"] = this.shopDomain;
+  }
+
   if (properties && properties["itemsPerPage"]) {
     jsonObject["itemsPerPage"] = properties["itemsPerPage"];
   }

@@ -46,7 +46,7 @@
                                             <legacyOrderDetailsUrl
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                     fieldLabel="Legacy Order Details Url"
-                                                    fieldDescription="Enter Legacy Order Details Url"
+                                                    fieldDescription="Add /{order-id} as a parameter at the end of the URL."
                                                     jcr:primaryType="nt:unstructured"
                                                     name="./legacyOrderDetailsUrl" />
                                             <paginationStyle
