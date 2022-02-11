@@ -41,7 +41,8 @@ namespace DigitalCommercePlatform.UIServices.Order.Services
                 var coreResult = await
                     _dfHttpClient.GetAsync<ResponseDto>(_appOrderServiceUrl.AppendPathSegment("Find").BuildQuery(findRequest), request.Header.EcId).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<OrderModel>>(coreResult.Data);
-                return modelList.FirstOrDefault();
+
+                return modelList.FirstOrDefault(x => x.Reseller.ID == request.Header.ResellerId);
             }
             catch(Exception ex)
             {
