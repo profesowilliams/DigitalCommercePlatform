@@ -1,17 +1,43 @@
 @import '../../../site/variables';
 .cmp-renewals-qp__config-grid {
+    p{
+        margin: 0;
+    }
     &--title {
-        border-bottom: 1px solid get-color(brand-blue);
-        padding: 0 15px;
+        border-bottom: 1px solid #000c21;
+        padding: 18px 15px;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 0;
-        color: get-color(brand-blue);
-        font-size: 18px;
+        color: #000c21;
+        font-size: 24px;
+        text-shadow: 0px 0px .3px #000c21;
+        box-shadow: 0px 0.5px 0px 0px #000c21;
         span {
             color: get-color(brand-text-gray);
             line-height: 30px;
         }
+    }
+    .info-container {
+        display: flex;
+        flex: 1 0 auto;
+        justify-content: space-around;
+        padding: 20px 40px;
+        .cmp-loader-roller {
+            display: flex;
+            flex-basis: 33.33%;
+            flex-grow: 0;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+    }
+    .info-divider {
+        height: 260px;
+        box-shadow: 0px 0px 0.8px #d8d8d8d6;
+        width: 1.4px;
+        background: #d8d8d8d6;
+        border: none;
     }
 }
 
@@ -32,10 +58,12 @@
         }
     }
     &--sub-title {
-        color: get-color(brand-text-gray);
+        color: #000c21;
         font-size: 13px;
         font-weight: 600;
         line-height: 18px;
+        text-shadow: 0px 0px 0px #000c21;
+
     }
     &--address-group {
         color: get-color(brand-text-gray);
@@ -45,28 +73,10 @@
             display: block;
         }
     }
-}
-
-.info-container {
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: space-between;
-    padding: 20px 40px;
-    .cmp-loader-roller {
-        display: flex;
-        flex-basis: 33.33%;
-        flex-grow: 0;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
+    & > div {
+        margin-top:15px;
     }
 }
-
-.info-divider {
-    border-left:1px solid #38546d; 
-    height:260px;
-}
-
 
 .cmp-renewals-grid {
     .cmp-grid.ag-theme-alpine {

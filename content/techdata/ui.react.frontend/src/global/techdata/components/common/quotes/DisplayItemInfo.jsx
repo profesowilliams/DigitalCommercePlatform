@@ -2,7 +2,7 @@ import React from "react";
 import { removeCommaIfContentNull } from "../../../helpers/formatting";
 import { If } from "../../../helpers/If";
 
-function DisplayItemInfo({ children = null, label = null, condition = null }) {
+function DisplayItemInfo({ children = null, label = null, condition = null, noColon=false, boldLabel=false }) {
 
     const SpanInfo = (
         <If condition={children}>
@@ -10,11 +10,13 @@ function DisplayItemInfo({ children = null, label = null, condition = null }) {
         </If>
     );
 
+    const toggleBoldLabel = ( ) => boldLabel ? (<b>{label}</b>) : label;
+
     return (
         <>
             <If condition={label && children} Else={SpanInfo} >
                 <span>
-                    {label} : {children}
+                    {toggleBoldLabel()} {!noColon ? ':' : ''} {children}
                 </span>
             </If>
         </>

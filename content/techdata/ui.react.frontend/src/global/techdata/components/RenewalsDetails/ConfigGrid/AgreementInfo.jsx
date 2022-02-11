@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { dateToString } from "../../../helpers/formatting";
 import Info from "../../common/quotes/DisplayItemInfo";
 
 function AgreementInfo({
@@ -9,49 +10,50 @@ function AgreementInfo({
   agreementInfo,
 }) {
   const AgreementInfo = () => {
+    const formatDate = rawDate => dateToString(rawDate.replace(/[zZ]/g,''),"MM/dd/uu");
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
           {programName && (
-            <Info label={agreementInfo.programLabel}>{programName}</Info>
+            <Info boldLabel noColon label={agreementInfo.programLabel}>{programName}</Info>
           )}
           {contract.duration && (
-            <Info label={agreementInfo.durationLabel}>{contract.duration}</Info>
+            <Info boldLabel noColon label={agreementInfo.durationLabel}>{contract.duration}</Info>
           )}
           {contract.serviceLevel && (
-            <Info label={agreementInfo.supportLevelLabel}>
+            <Info boldLabel noColon label={agreementInfo.supportLevelLabel}>
               {contract.serviceLevel}
             </Info>
           )}
-          <Info label={agreementInfo.distiQuoteNoLabel}>1234567GJDFH</Info>
+          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>1234567GJDFH</Info>
           {contract.id && (
-            <Info label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
+            <Info boldLabel noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
           )}
           {source.id && (
-            <Info label={agreementInfo.distiQuoteLabel}>{source.id}</Info>
-          )}
+            <Info boldLabel noColon label={agreementInfo.distiQuoteLabel}>{source.id}</Info>
+          )} <br/>
           {dueDate && (
-            <Info label={agreementInfo.quotedueDateLabel}>{dueDate}</Info>
+            <Info boldLabel noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
           )}
-          <Info label="Quote expiry date">20/06/2021</Info>
+          <Info boldLabel noColon label="Quote expiry date">20/06/2021</Info> <br />
           {contract.newAgreementStartDate && (
-            <Info label={agreementInfo.agreeStartDateLabel}>
-              {contract.newAgreementStartDate}
+            <Info boldLabel noColon label={agreementInfo.agreeStartDateLabel}>
+              {formatDate(contract.newAgreementStartDate)}
             </Info>
           )}
           {contract.newAgreementEndDate && (
-            <Info label={agreementInfo.agreeEndDateLabel}>
-              {contract.newAgreementEndDate}
+            <Info boldLabel noColon label={agreementInfo.agreeEndDateLabel}>
+              {formatDate(contract.newAgreementEndDate)}
             </Info>
           )}
           {contract.newUsagePeriodStartDate && (
-            <Info label={agreementInfo.usageStartDateLabel}>
-              {contract.newUsagePeriodStartDate}
+            <Info boldLabel noColon label={agreementInfo.usageStartDateLabel}>
+              {formatDate(contract.newUsagePeriodStartDate)}
             </Info>
           )}
           {contract.newUsagePeriodEndDate && (
-            <Info label={agreementInfo.usageEndDateLabel}>
-              {contract.newUsagePeriodEndDate}
+            <Info boldLabel noColon label={agreementInfo.usageEndDateLabel}>
+              {formatDate(contract.newUsagePeriodEndDate)}
             </Info>
           )}
         </p>
