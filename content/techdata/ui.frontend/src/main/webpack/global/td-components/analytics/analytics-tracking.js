@@ -76,22 +76,23 @@
     function pushToDataLayer(clickInfo) {
 
         window.adobeDataLayer.push(
-            {
+            setVisitorData({
                 "event": 'click',
-                "clickInfo": setVisitorData(clickInfo)
-            });
+                "clickInfo": clickInfo
+            }));
 
     }
 
     // Changes made to this method would need to be replicated on the DataLayerUtils.js method as well.
     function setVisitorData(object) {
-        if(object) {
-            object.visitor = {
-                ecID: sessionId ? userData.id : null,
-                sapID: sessionId ? userData.activeCustomer.customerNumber : null,
-                loginStatus: sessionId ? "Logged in" : "Logged out"
-            }
+        object.page = object.page || {};
+
+        object.page.visitor = {
+            ecID: sessionId ? userData.id : null,
+            sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+            loginStatus: sessionId ? "Logged in" : "Logged out"
         }
+
         return object;
     }
 

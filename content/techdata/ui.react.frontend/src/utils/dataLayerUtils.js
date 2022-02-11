@@ -41,22 +41,18 @@ const getDataLayer = () => {
 // https://github.com/adobe/adobe-client-data-layer/wiki#push
 export const pushData = data => {
   if (isDataLayerEnabled()) {
-    let eventInfo = data[getEventInfoPropName(data)];
-    if(eventInfo) {
-      setVisitorData(eventInfo);
-    }
-    getDataLayer().push(data);
+    getDataLayer().push(setVisitorData(data));
   }
 };
 
 // https://github.com/adobe/adobe-client-data-layer/wiki#push
 export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
-    getDataLayer().push({
+    getDataLayer().push(setVisitorData({
       event: eventName,
-      clickInfo: setVisitorData(eventInfo),
+      clickInfo: eventInfo,
       ...extraData
-    });
+    }));
   }
 };
 
@@ -67,9 +63,7 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
  */
 export const pushEventAnalyticsGlobal = (filter) => {
   if (isDataLayerEnabled()) {
-    let eventInfo = filter[getEventInfoPropName(filter)];
-    setVisitorData(eventInfo);
-    getDataLayer().push(filter);
+    getDataLayer().push(setVisitorData(filter));
   }
 };
 
@@ -115,28 +109,14 @@ export const handlerAnalyticsClearClickEvent = (category = '') => {
 
 // Changes made to this method would need to be replicated on the analytics-tracking.js method as well.
 const setVisitorData = (object) => {
-  if(object){
-    object.visitor = {
-      ecID: sessionId ? userData.id : null,
-      sapID: sessionId ? userData.activeCustomer.customerNumber : null,
-      loginStatus: sessionId ? "Logged in" : "Logged out"
-    }
+
+  object.page = object.page || {};
+
+  object.page.visitor = {
+    ecID: sessionId ? userData.id : null,
+    sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+    loginStatus: sessionId ? "Logged in" : "Logged out"
   }
+
   return object;
-}
-
-/**
- * Get key name of the object entry that contains the event information in the event object.
- * {'event': 'eventName', 'eventInfo': {....}} 
- * @param {Object} data 
- * @returns eventInfo
- */
-const getEventInfoPropName = (data) => {
-
-  let objectKeys = Object.keys(data);
-
-  let nonEventKey = objectKeys.filter(key => key != 'event');
-
-  // eventInfo:
-  return nonEventKey[0];
 }
