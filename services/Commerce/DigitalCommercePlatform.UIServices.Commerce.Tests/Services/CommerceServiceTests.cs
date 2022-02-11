@@ -336,6 +336,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
 
         }
+
         [Fact]
         public void MapAddress_Test()
         {
@@ -359,7 +360,34 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "MapAddress" && x.IsPrivate);
 
             //Act
-            var result = imageProductModel.Invoke(objType, new object[] { lstAddress });
+            var result = imageProductModel.Invoke(objType, new object[] { lstAddress, "" });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void MapAddressWithCompanyName_Test()
+        {
+            //arrange
+            List<Address> lstAddress = new();
+            Address address = new Address()
+            {
+                Id = "123",
+                Line1 = "123",
+                Line2 = "123",
+                Line3 = "123",
+                Email = "abc@gmail.com"
+            };
+            lstAddress.Add(address);
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapAddress" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { lstAddress, "SHI LLC" });
             Assert.NotNull(result);
         }
 

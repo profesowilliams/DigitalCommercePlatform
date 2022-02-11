@@ -116,6 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.Zip))
              .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
              .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City))
+             .ForMember(dest => dest.Company, opt => opt.Ignore())
              ;
             CreateMap<DiscountDto, Discount>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Id));

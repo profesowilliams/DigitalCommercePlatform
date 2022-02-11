@@ -291,9 +291,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     createModelFrom.EndUser = new EndUserModel
                     {
-                        Address = MapAddress(input.QuoteDetails.EndUser),
-                        Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.EndUser.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.EndUser.FirstOrDefault().Name, Phone = input.QuoteDetails.EndUser.FirstOrDefault().PhoneNumber } },
-                        Name = input.QuoteDetails.EndUser.FirstOrDefault().CompanyName,
+                        Name = input.QuoteDetails.EndUser.FirstOrDefault()?.Name,
+                        Address = MapAddress(input.QuoteDetails.EndUser, input.QuoteDetails.EndUser.FirstOrDefault()?.CompanyName),
+                        Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.EndUser.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.EndUser.FirstOrDefault().Name, Phone = input.QuoteDetails.EndUser.FirstOrDefault().PhoneNumber } },                        
                         Id = input.QuoteDetails.EndUser.FirstOrDefault().Id,
                     };
                 }
@@ -415,7 +415,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         }
 
-        private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList)
+        private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList, string companyName = "")
         {
             if (addressList.Any())
             {
@@ -429,7 +429,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Line2 = requestAddress.Line2,
                     Line3 = requestAddress.Line3,
                     State = requestAddress.State,
-                    PostalCode = requestAddress.PostalCode
+                    PostalCode = requestAddress.PostalCode,
+                    Company = companyName
                 };
                 return address;
             }
