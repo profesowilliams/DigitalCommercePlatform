@@ -16,11 +16,11 @@ function GridHeader({ gridProps, data }) {
 
   return (
     <div className="cmp-product-lines-grid__header">
-      <span className="cmp-product-lines-grid__header__title">
+      <span className="cmp-product-lines-grid__header">
         {gridProps.label}
       </span>
       <div className="cmp-renewal-preview__download">
-        <span id="pdfDownloadLink" onClick={() => downloadPDFClickHandler()}>{gridProps.pdf || 'Donload PDF'}</span>
+        <span id="pdfDownloadLink" onClick={() => downloadPDFClickHandler()}>{gridProps.pdf || 'Download PDF'}</span>
         <span>{gridProps.xls}</span>
       </div>
     </div>

@@ -8,6 +8,7 @@ function AgreementInfo({
   programName,
   dueDate,
   agreementInfo,
+  expiry
 }) {
   const AgreementInfo = () => {
     const formatDate = rawDate => dateToString(rawDate.replace(/[zZ]/g,''),"MM/dd/uu");
@@ -35,7 +36,7 @@ function AgreementInfo({
           {dueDate && (
             <Info boldLabel noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
           )}
-          <Info boldLabel noColon label="Quote expiry date">20/06/2021</Info> <br />
+          <Info boldLabel noColon label="Quote expiry date">{formatDate(expiry)}</Info> <br />
           {contract.newAgreementStartDate && (
             <Info boldLabel noColon label={agreementInfo.agreeStartDateLabel}>
               {formatDate(contract.newAgreementStartDate)}
