@@ -173,6 +173,10 @@ use(function () {
     jsonObject["orderDetailUrl"] = properties["orderDetailUrl"];
   }
 
+  if (properties && properties["legacyOrderDetailsUrl"]) {
+    jsonObject["legacyOrderDetailsUrl"] = properties["legacyOrderDetailsUrl"];
+  }
+
   if (properties && properties["defaultSortingColumnKey"]) {
     optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
   }

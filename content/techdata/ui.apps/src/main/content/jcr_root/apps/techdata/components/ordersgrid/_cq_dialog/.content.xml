@@ -43,6 +43,12 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     rootPath="/content/techdata"
                                                     name="./orderDetailUrl" />
+                                            <legacyOrderDetailsUrl
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Legacy Order Details Url"
+                                                    fieldDescription="Enter Legacy Order Details Url"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./legacyOrderDetailsUrl" />
                                             <paginationStyle
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"

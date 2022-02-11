@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import GridComponent from '../Grid/Grid';
 import GridSearchCriteria from '../Grid/GridSearchCriteria';
 import Modal from '../Modal/Modal';
@@ -25,6 +25,7 @@ function OrdersGrid(props) {
     const [modal, setModal] = useState(null);
     const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
+    const filteredOrderId = useRef(null);
     const STATUS = {
         onHold: 'onHold',
         inProcess: 'inProcess',
@@ -398,6 +399,12 @@ function OrdersGrid(props) {
 
     async function handleRequestInterceptor(request) {
         const response = await filteringExtension.requestInterceptor(request)
+
+        if (filteredOrderId.current && (!response?.data?.content?.items || response?.data?.content?.items?.length === 0)) {
+            const redirectUrl =
+                window.location.origin + componentProp.legacyOrderDetailsUrl.replace("{order-id}", filteredOrderId.current);
+            window.location.href = redirectUrl;
+        }
         if (response?.data?.content?.items?.length === 1) {
             const detailsRow = response.data.content.items[0];
             const redirectUrl = `${window.location.origin + componentProp.orderDetailUrl}?id=${detailsRow.id}`;
@@ -412,6 +419,15 @@ function OrdersGrid(props) {
     }
     
     const handleOnSearchRequest = (query) => {
+        const queryStringId = query.queryString.split("&").filter(item => item.includes("id="));
+
+        if(queryStringId && queryStringId.length > 0){
+            const id = queryStringId[0].split("=")[1];
+
+            if(id && id.trim().length > 0){
+                filteredOrderId.current = id;
+            }
+        }
         filteringExtension.onQueryChanged(query);
         hasToSortAgain.current = true
     }
