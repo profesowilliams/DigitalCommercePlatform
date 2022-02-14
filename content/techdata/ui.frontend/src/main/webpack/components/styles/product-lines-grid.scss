@@ -43,23 +43,13 @@
     .ag-cell .ag-cell-wrapper {
       .ag-group-contracted {
         .ag-icon-tree-closed {
-          color: get-color(brand-blue);
+          color: get-color(brand-light-blue-icon);
         }
       }
       .ag-group-expanded {
         .ag-icon-tree-open {
-          color: get-color(brand-blue);
+          color: get-color(brand-light-blue-icon);
         }
-      }
-    }
-  }
-  &__th {
-    &__your-cost {
-      &::after {
-      }
-    }
-    &__client-cost {
-      &::after {
       }
     }
   }

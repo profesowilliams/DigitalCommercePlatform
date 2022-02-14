@@ -103,7 +103,7 @@ function ProductLinesGrid({
       width: "100px",
       sortable: false,
       expandable: true,
-      onCellDoubleClicked: (event) => {
+      onCellClicked: (event) => {
         if (event.node.expanded === true) {
           DataLayerUtils.pushEvent(
             "click",
