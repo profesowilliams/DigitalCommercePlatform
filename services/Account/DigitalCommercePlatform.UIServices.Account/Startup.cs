@@ -20,6 +20,7 @@ using DigitalFoundation.Common.Providers.Cryptography;
 using DigitalFoundation.Common.Features.Contexts.Models.Nuance;
 using DigitalFoundation.Common.Security.AuthenticationHandler.Nuance;
 using static DigitalCommercePlatform.UIServices.Account.Services.AccountService;
+using static DigitalCommercePlatform.UIServices.Account.Services.CustomerService;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -61,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Account
             });
 
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddTransient<IVendorService, VendorService>();
             services.AddTransient<ITimeProvider, DefaultTimeProvider>();
@@ -72,6 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Account
             services.AddScoped<INuanceUserObjectBuilder, NuanceUserObjectBuilder>();
             services.AddScoped<INuanceService, NuanceService>();
             services.AddScoped<AccountServiceArgs>();
+            services.AddScoped<CustomerServiceArgs>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };
