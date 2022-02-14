@@ -97,8 +97,8 @@ const orderButton = (status) => {
               <i className="fas fa-chevron-left" />
           </button>
           <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
-          <div>{headerConfig.orderDateLabel} {orderDetails?.orderPlacedDate ? orderDetails?.orderPlacedDate : "Order Date Not Found" }</div>
-          <div>{headerConfig.purchaseOrderLabel} {orderDetails?.purchaseOrder ? orderDetails?.purchaseOrder : "Purchase Order Not Found"}</div>
+        <div>{headerConfig.orderDateLabel} {orderDetails?.poDate ? orderDetails?.poDate : "Order Date Not Found" }</div>
+        <div>{headerConfig.purchaseOrderLabel} {orderDetails?.poNumber ? orderDetails?.poNumber : "Purchase Order Not Found"}</div>
         </div>
 
         <div className="cmp-td-order-details__header__status" onClick={handleClickCSV}>

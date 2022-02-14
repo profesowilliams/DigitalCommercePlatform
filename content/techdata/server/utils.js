@@ -928,7 +928,7 @@ module.exports = {
               "orderNumber": "I008137569",
               "poNumber": "JoseDemoOctober_quote1",
               "endUserPO": "CCWR0007_8:35AM",
-              "poDate": "",
+              "poDate": "1/20/2022",
               "blindPackaging": false,
               "shipComplete": false,
               "canBeExpedited": false,
