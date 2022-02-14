@@ -31,14 +31,9 @@ const handleClickCSV = () => {
 
     pushEvent('click', 
     {
-       name: headerConfig.exportCSVLabel
-    },
-    {
-        click:
-        {
-            category: 'Order Detail Table Interactions',
-        }
-    })
+       name: headerConfig.exportCSVLabel,
+       category: 'Order Detail Table Interactions'
+    });
 
     const modal = {
         properties:{
