@@ -9,5 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
     {
         Task<QuoteModel> GetQuote(GetQuote.Request request);
         Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id);
+        Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel OrderDetail);
     }
 }

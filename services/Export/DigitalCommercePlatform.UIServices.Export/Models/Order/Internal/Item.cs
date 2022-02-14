@@ -43,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Order.Internal
         public AddressModel EndUser { get; set; }
         public List<string> Serials { get; set; }
         public string Status { get; set; }
+        public string POSType { get; set; } = "";
     }
 
     [ExcludeFromCodeCoverage]
