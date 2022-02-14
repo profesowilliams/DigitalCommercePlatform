@@ -147,29 +147,21 @@ function QuotePreview(props) {
    * Function that validate if the quote have the field
    * isExclusive true and show a modal to select the
    * SAP system and keep the logic
-   * @param {boolean} isStandarPrice 
+   * @param {any} quoteParam 
    */
-  const validateCreateQuoteSystem = (isStandarPrice = false) => {
+  const validateCreateQuoteSystem = (quoteParam) => {
     if (!isExclusiveFlag && dealType === QUOTE_PREVIEW_DEAL_TYPE) {
       showSimpleModal('Create Quote', (
         <ModalQuoteCreateModal 
           setSystemInfoDone={setSystemInfoDone} 
           createQuote={createQuote} 
-          quoteDetails={quoteDetails} 
+          quoteDetails={quoteParam} 
           setModal={setModal}
-          isStandarPrice={isStandarPrice}
-          urlQuotesGrid={URL_QUOTES_GRID}
           modalConfig={modalConfig}
         />
       ), onModalClosed => closeModal());
     } else {
-      if (isStandarPrice) {
-        createQuote(quoteDetails)
-      } else {
-        createQuote(quoteDetails).then(res => {
-          window.location.href = URL_QUOTES_GRID
-        });  
-      }
+      createQuote(quoteParam)
     }
   };
 
@@ -215,7 +207,7 @@ function QuotePreview(props) {
       setQuoteWithoutDeal(dealRequired);
     } else {
       if (!isExclusiveFlag && !systemInfoDone) {
-        validateCreateQuoteSystem();
+        validateCreateQuoteSystem(quote);
       } else {
         createQuote(quote);
       }

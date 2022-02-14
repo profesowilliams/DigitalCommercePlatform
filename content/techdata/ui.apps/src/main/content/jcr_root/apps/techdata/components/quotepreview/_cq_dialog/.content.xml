@@ -486,12 +486,12 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <avgValue
+                                            <avtValue
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter AVG Label"
                                                 fieldLabel="Enter AVG Label"
-                                                name="./avgValue"/>
+                                                name="./avtValue"/>
                                             <techDataValue
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"

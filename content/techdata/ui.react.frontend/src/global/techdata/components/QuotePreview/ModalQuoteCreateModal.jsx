@@ -6,15 +6,13 @@ const ModalQuoteCreateModal = ({
     setSystemInfoDone,
     createQuote,
     quoteDetails,
-    isStandarPrice,
-    urlQuotesGrid,
     modalConfig,
   }) => {
   const [techData, setTechData] = useState(false);
   const [buyMethod, setBuyMethod] = useState('');
   const [avg, setAVG] = useState(false);
-  const AVG_VALUE = modalConfig?.avgValue ? 
-    modalConfig.avgValue : 'AVT';
+  const AVT_VALUE = modalConfig?.avtValue ? 
+    modalConfig.avtValue : 'AVT';
   const TECH_DATA_VALUE = modalConfig?.techDataValue ? 
     modalConfig.techDataValue : 'Tech Data';
   const TITLE = modalConfig?.title ? 
@@ -25,7 +23,7 @@ const ModalQuoteCreateModal = ({
    * @param {string} type 
    */
   const handleToggle = (type) => {
-    if (type === AVG_VALUE) {
+    if (type === AVT_VALUE) {
       setAVG(true)
       setTechData(false)
       setBuyMethod(QUOTE_PREVIEW_AVT_TYPE_VALUE);
@@ -38,19 +36,13 @@ const ModalQuoteCreateModal = ({
 
   const veryfyBuyMethodAction = async () => {
     setSystemInfoDone(true);
-    if (isStandarPrice) {
-      setModal(null);
-        createQuote(quoteDetails, buyMethod).then(res => window.location = urlQuotesGrid);
-    } else {
-        setModal(null);
-        await createQuote(quoteDetails, buyMethod, setModal);
-    }
+    setModal(null);
+    await createQuote(quoteDetails, buyMethod, setModal);
   };
   
   const cancelAction = () => {
     setModal(null);
   }
-  
 
   return (
     <section className='cmp-quote-create__container'>
@@ -62,7 +54,7 @@ const ModalQuoteCreateModal = ({
 
       <div className='cmp-quote-create__subtitle'>
         <div>
-          {AVG_VALUE}
+          {AVT_VALUE}
         </div>
         <div>
           {TECH_DATA_VALUE}
@@ -71,7 +63,7 @@ const ModalQuoteCreateModal = ({
       <div className='cmp-quote-create__checkbox'>
         <div className="__container">
             <label>
-                <input type="checkbox" onClick={() => handleToggle(AVG_VALUE)} id={'a'} checked={avg} />
+                <input type="checkbox" onClick={() => handleToggle(AVT_VALUE)} id={'a'} checked={avg} />
                 <span className="checkbox"></span>
             </label>
         </div>

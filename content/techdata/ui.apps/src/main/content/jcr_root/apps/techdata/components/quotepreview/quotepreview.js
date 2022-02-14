@@ -217,8 +217,8 @@ use(['../common/utils.js'], function (utils) {
         productLinesGrid["noLabel"]  = properties["noLabel"];
     }
 
-    if (properties && properties["avgValue"]) {
-        modalConfig["avgValue"]  = properties["avgValue"];
+    if (properties && properties["avtValue"]) {
+        modalConfig["avtValue"]  = properties["avtValue"];
     }
 
     if (properties && properties["techDataValue"]) {
