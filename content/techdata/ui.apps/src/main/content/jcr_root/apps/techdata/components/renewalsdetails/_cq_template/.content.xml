@@ -40,4 +40,11 @@
     typeEndUserLabel="Type of End User"
     vendorAccountNoResLabel="Vendor account No"
     previousPurchaseOrderNoEndLabel="Previous Purchase Order Number"
-    previousOrderNoLabel="Previous Order Number"/>
+    previousOrderNoLabel="Previous Order Number"
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"/>

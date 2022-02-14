@@ -37,6 +37,34 @@ use(['../common/utils.js'], function(utils) {
         productLines["note"] = properties["note"];
     }
 
+    if (properties && properties["menuCopy"]) {
+        productLines["menuCopy"] = properties["menuCopy"];
+    }
+
+    if (properties && properties["menuCopyWithHeaders"]) {
+        productLines["menuCopyWithHeaders"] = properties["menuCopyWithHeaders"];
+    }
+
+    if (properties && properties["menuExport"]) {
+        productLines["menuExport"] = properties["menuExport"];
+    }
+
+    if (properties && properties["menuCsvExport"]) {
+        productLines["menuCsvExport"] = properties["menuCsvExport"];
+    }
+
+    if (properties && properties["menuExcelExport"]) {
+        productLines["menuExcelExport"] = properties["menuExcelExport"];
+    }
+
+    if (properties && properties["menuOpenLink"]) {
+        productLines["menuOpenLink"] = properties["menuOpenLink"];
+    }
+
+    if (properties && properties["menuCopyLink"]) {
+        productLines["menuCopyLink"] = properties["menuCopyLink"];
+    }
+
     if (this.agGridLicenseKey) {
         jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }

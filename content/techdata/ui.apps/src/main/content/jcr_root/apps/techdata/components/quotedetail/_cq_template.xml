@@ -65,6 +65,13 @@
     subTotalLabel="Sub Total"
     makeChoiceLabel="Make this my default choice"
     continueStandardPriceLabel="Continue With Standard Price Text instead"
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
 >
     <columnList jcr:primaryType="nt:unstructured">
         <item0

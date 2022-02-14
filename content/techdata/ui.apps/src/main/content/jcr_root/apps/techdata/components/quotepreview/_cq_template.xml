@@ -12,6 +12,13 @@
     endUserNameLabel="End User:"
     errorGettingDealsLabel="There was an error trying to get the Deals, please try again."
     dealsPricingNote="Note: The pricing updates will be reflected when you create a TD quote."
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
 >
 
     <columnList jcr:primaryType="nt:unstructured">

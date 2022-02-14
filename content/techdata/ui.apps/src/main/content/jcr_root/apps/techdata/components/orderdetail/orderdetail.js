@@ -79,6 +79,35 @@ use(function () {
         productInfo["serialModal"] = properties["serialModal"];
     }
 
+    //Context menu section
+    if (properties && properties["menuCopy"]) {
+        productInfo["menuCopy"] = properties["menuCopy"];
+    }
+
+    if (properties && properties["menuCopyWithHeaders"]) {
+        productInfo["menuCopyWithHeaders"] = properties["menuCopyWithHeaders"];
+    }
+
+    if (properties && properties["menuExport"]) {
+        productInfo["menuExport"] = properties["menuExport"];
+    }
+
+    if (properties && properties["menuCsvExport"]) {
+        productInfo["menuCsvExport"] = properties["menuCsvExport"];
+    }
+
+    if (properties && properties["menuExcelExport"]) {
+        productInfo["menuExcelExport"] = properties["menuExcelExport"];
+    }
+
+    if (properties && properties["menuOpenLink"]) {
+        productInfo["menuOpenLink"] = properties["menuOpenLink"];
+    }
+
+    if (properties && properties["menuCopyLink"]) {
+        productInfo["menuCopyLink"] = properties["menuCopyLink"];
+    }
+
     //Serial No Not present label
     if (properties && properties["serialCellNotFoundMessage"]) {
         productInfo["serialCellNotFoundMessage"] = properties["serialCellNotFoundMessage"];

@@ -205,6 +205,34 @@ use(['../common/utils.js'], function (utils) {
     if (this.productEmptyImageUrl) {
         productLinesTab["productEmptyImageUrl"] = this.productEmptyImageUrl;
     }
+    //Context menu section
+    if (properties && properties["menuCopy"]) {
+        productLinesTab["menuCopy"] = properties["menuCopy"];
+    }
+
+    if (properties && properties["menuCopyWithHeaders"]) {
+        productLinesTab["menuCopyWithHeaders"] = properties["menuCopyWithHeaders"];
+    }
+
+    if (properties && properties["menuExport"]) {
+        productLinesTab["menuExport"] = properties["menuExport"];
+    }
+
+    if (properties && properties["menuCsvExport"]) {
+        productLinesTab["menuCsvExport"] = properties["menuCsvExport"];
+    }
+
+    if (properties && properties["menuExcelExport"]) {
+        productLinesTab["menuExcelExport"] = properties["menuExcelExport"];
+    }
+
+    if (properties && properties["menuOpenLink"]) {
+        productLinesTab["menuOpenLink"] = properties["menuOpenLink"];
+    }
+
+    if (properties && properties["menuCopyLink"]) {
+        productLinesTab["menuCopyLink"] = properties["menuCopyLink"];
+    }
 
     if (node !== null) {
         var childrenList = node.getChildren();

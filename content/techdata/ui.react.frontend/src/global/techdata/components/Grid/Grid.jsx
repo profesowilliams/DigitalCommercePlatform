@@ -32,6 +32,7 @@ function Grid(props) {
     to: null,
     total: null,
   });
+  const [popupParent] = useState(document.querySelector('body'));
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== "none" &&
@@ -118,6 +119,7 @@ function Grid(props) {
       onSortChanged={onSortChanged}
       icons={icons}
       getContextMenuItems={getContextMenuItems}
+      popupParent={popupParent}
     >
       {filteredColumns.map((column) => {
         return (

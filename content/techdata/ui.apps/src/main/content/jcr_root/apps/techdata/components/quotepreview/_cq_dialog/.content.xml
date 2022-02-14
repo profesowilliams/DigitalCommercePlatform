@@ -361,6 +361,41 @@
                                                 fieldDescription="Enter No Label"
                                                 fieldLabel="No Label"
                                                 name="./noLabel"/>
+											<menuCopy
+											    jcr:primaryType="nt:unstructured"
+											    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+											    fieldLabel="Context Menu Copy Label"
+											    name="./menuCopy"/>
+											<menuCopyWithHeaders
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy with headers Label"
+												name="./menuCopyWithHeaders"/>
+											<menuExport
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Export Label"
+												name="./menuExport"/>
+											<menuCsvExport
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu CSV Export Label"
+												name="./menuCsvExport"/>
+											<menuExcelExport
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Excel Export Label"
+												name="./menuExcelExport"/>
+											<menuOpenLink
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Open link Label"
+												name="./menuOpenLink"/>
+											<menuCopyLink
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./menuCopyLink"/>
                                             <actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

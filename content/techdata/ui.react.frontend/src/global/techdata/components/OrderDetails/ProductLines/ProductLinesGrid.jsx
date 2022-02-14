@@ -63,7 +63,7 @@ function ProductLinesGrid({
     { iconKey: STATUS.salesreview, iconValue: '', iconText: 'In Review' },
   ];
   const [flagData, setFlagData] = useState(false);
-
+  
   const trackingModal = {
     title: gridConfig.trackingsModal?.title ?? 'Order',
     buttonIcon: gridConfig.trackingsModal?.buttonIcon ?? 'fas fa-download',
@@ -167,6 +167,7 @@ function ProductLinesGrid({
         return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
+                gridProps={gridProps}
                 license={agGridLicenseKey}
                 columnDefiniton={columnDefsChildren}
                 data={data.children}
