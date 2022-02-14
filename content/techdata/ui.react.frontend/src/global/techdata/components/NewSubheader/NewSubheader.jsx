@@ -148,9 +148,9 @@ const NewSubheader = ({ componentProp }) => {
 		return hasDCPAccess(userData) ? link : legacyLink;
 	}
 
-	const analyticsData = (label) => {
+	const analyticsData = (label, type) => {
         pushEvent('click', {
-            type: 'link',
+            type: type,
             category: 'DCP subheader',
             name: label,
             clickHier: label?.trim() || label
@@ -171,7 +171,7 @@ const NewSubheader = ({ componentProp }) => {
 					aria-controls="tabs-d734aa9c61-item-236e9c3f08-tabpanel" tabIndex="0" data-cmp-hook-tabs="tab"
 					aria-selected="true" onClick={(e) => returnClickHandler(index)}>
 					<a href={getMenuLink(item)}
-					    onClick={() => analyticsData(item.title)}>
+					    onClick={() => analyticsData(item.title, 'link')}>
 						{item.title}
 					</a>
 					{showDashboard && index == 0 ? dashboardMenu(dashboardMenuItems, hasDCPAccess(userData)) : null}
@@ -259,7 +259,7 @@ const NewSubheader = ({ componentProp }) => {
 	}
 
 	function invokeModal(modal) {
-	    analyticsData('Vendor Connections');
+	    analyticsData('Vendor Connections', 'button');
 		setModal(
 			<Modal
 				modalAction={modal.properties.action}
