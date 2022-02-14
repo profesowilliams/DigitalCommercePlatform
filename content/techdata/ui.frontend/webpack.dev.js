@@ -1051,6 +1051,15 @@ module.exports = (env) => {
 
                 ),
             }),
+            
+            new HtmlWebpackPlugin({
+                filename: "scrollbar",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/utilities/scrollbar.html"
+
+                ),
+            }),
             new HtmlWebpackPlugin({
                 filename: "filmstrip-slider",
                 template: path.resolve(
