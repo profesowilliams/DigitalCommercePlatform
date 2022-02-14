@@ -20,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Order
         public string OrderNumber { get; set; }
         public string PONumber { get; set; }
         public string EndUserPO { get; set; }
+        public string Created { get; set; }
         public string PODate { get; set; }
         public string SiteID { get; set; }
         public bool ShipComplete { get; set; }

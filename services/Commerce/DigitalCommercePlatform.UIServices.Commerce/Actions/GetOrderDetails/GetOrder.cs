@@ -38,6 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
             public string OrderNumber { get; set; }
             public string PONumber { get; set; }
             public string EndUserPO { get; set; }
+            public string Created { get; set; }
             public string PODate { get; set; }
             public bool BlindPackaging { get; set; }
             public bool ShipComplete { get; set; }
@@ -54,6 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails
                 OrderNumber = data?.OrderNumber;
                 PONumber = data?.PONumber;
                 PODate = data?.PODate;
+                Created = data?.Created;
                 EndUserPO = data?.EndUserPO;
                 BlindPackaging = data.BlindPackaging;
                 ShipComplete = data.ShipComplete;
