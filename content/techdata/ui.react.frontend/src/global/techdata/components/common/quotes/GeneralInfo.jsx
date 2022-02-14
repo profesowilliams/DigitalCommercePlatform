@@ -5,7 +5,7 @@ import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 import { pushData, pushEvent } from '../../../../../utils/dataLayerUtils';
 
-function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
+function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
 
     const source = quoteDetails.source;
@@ -394,7 +394,7 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
                         {info.referenceMaxCharacterError}
                     </span>
                         <div className="form-check cmp-qp__edit-deal">
-                            <label htmlFor="endUserName">{info.dealLabel}</label>
+                            {(!hideDealSelector || generalInfoState.deal.spaId) && <label htmlFor="endUserName">{info.dealLabel}</label>}
                             <div>
 
                                 {generalInfoState.deal.spaId && (
@@ -409,29 +409,31 @@ function GeneralInfo({quoteDetails, gridProps, isDealRequired, isPricingOptionsR
                                             {generalInfoState.deal.expiryDate}
                                         </div>
 
-                                        <button
+                                        {!hideDealSelector && <button
                                             className="cmp-qp__edit-deal-remove--selected"
                                             onClick={handleClearSelectedDeal}>
                                             <i
                                                 className="fas fa-times"
                                                 data-cmp-hook-search="icon"
                                             ></i>
-                                        </button>
+                                        </button>}
                                     </div>
                                 )}
-                                <input
-                                    className="field element"
-                                    value={generalInfoState.endUserName}
-                                    placeholder={info.searchDealsPlaceholder}
-                                    name="endUserName"
-                                    id="endUserName"
-                                    onChange={handleModelChange}
-                                    onKeyPress={handleEndUserNameKeyPress}
-                                    type="text"/>
-                                <button className="cmp-qp__edit-deal__button" onClick={loadDeals}>
-                                    <i className="cmp-qp__edit-deal__icon fas fa-search" data-cmp-hook-search="icon"></i>
-                                </button>
-                                {displayDealsFound()}
+                                {!hideDealSelector && <>
+                                    <input
+                                        className="field element"
+                                        value={generalInfoState.endUserName}
+                                        placeholder={info.searchDealsPlaceholder}
+                                        name="endUserName"
+                                        id="endUserName"
+                                        onChange={handleModelChange}
+                                        onKeyPress={handleEndUserNameKeyPress}
+                                        type="text"/>
+                                    <button className="cmp-qp__edit-deal__button" onClick={loadDeals}>
+                                        <i className="cmp-qp__edit-deal__icon fas fa-search" data-cmp-hook-search="icon"></i>
+                                    </button>
+                                    {displayDealsFound()}
+                                </>}
                             </div>
                         </div>
                     <div className="form-group">

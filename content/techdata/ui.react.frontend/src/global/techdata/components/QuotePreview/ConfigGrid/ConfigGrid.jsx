@@ -3,7 +3,7 @@ import CompanyInfo from './CompanyInfo';
 import GeneralInfo from '../../common/quotes/GeneralInfo';
 import EndUserInfo from './EndUserInfo';
 
-function ConfigGrid({ quoteDetails, gridProps, isDealRequired, isEndUserMissing, isPricingOptionsRequired, endUserInfoChange, generalInfoChange, companyInfoChange }) {
+function ConfigGrid({ quoteDetails, gridProps, hideDealSelector, isDealRequired, isEndUserMissing, isPricingOptionsRequired, endUserInfoChange, generalInfoChange, companyInfoChange }) {
     const [quotePreview, confirm] = (gridProps.headerLabel).split(':');
 
     return (
@@ -25,6 +25,7 @@ function ConfigGrid({ quoteDetails, gridProps, isDealRequired, isEndUserMissing,
                     onValueChange={endUserInfoChange}
                 />
                 <GeneralInfo
+                    hideDealSelector={hideDealSelector}
                     isDealRequired={isDealRequired}
                     isPricingOptionsRequired={isPricingOptionsRequired}
                     quoteDetails={quoteDetails}

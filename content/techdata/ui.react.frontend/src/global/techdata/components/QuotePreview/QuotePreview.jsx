@@ -10,7 +10,7 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing } from "./QuoteTools";
+import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing, isDealSelectorHidden, isDealConfiguration } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
 import { QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
@@ -197,7 +197,7 @@ function QuotePreview(props) {
     const quoteDetailsCopy = { ...quoteDetails };
 
     // remove deal if present
-    if (quoteDetailsCopy.hasOwnProperty("deal")) {
+    if (!isDealConfiguration(quoteDetails.source) && quoteDetailsCopy.hasOwnProperty("deal")) {
       delete quoteDetailsCopy.deal;
 
       quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
@@ -319,6 +319,7 @@ function QuotePreview(props) {
       {apiResponse && !isLoading && (
         <section>
           <ConfigGrid
+            hideDealSelector={isDealSelectorHidden(quoteDetails)}
             isDealRequired={isDealRequired(quoteDetails, quoteWithoutDeal)}
             isPricingOptionsRequired={isPricingOptionsRequired(quoteDetails, quoteWithoutPricing)}
             isEndUserMissing={isEndUserMissing(quoteDetails, quoteWithoutEndUser)}

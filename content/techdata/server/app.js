@@ -6786,7 +6786,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           reseller: null,
           configID: "WC121011624NR",
           source: {
-            type: isEstimateId === "true" ? "Deal" : "VendorQuote",
+            type: isEstimateId === "true" ? "Estimate" : (id.toLowerCase() === "deal" ? "Deal" : "VendorQuote"),
             value: "QJ128146301OP",
           },
           notes: null,
@@ -7185,7 +7185,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           tier: null,
           configurationId: "QJ128146301OP",
           description: "Deal ID 52296358",
-          vendor: vendor || "CISCO",
+          vendor: vendor || "CISCO"
         },
       },
     },

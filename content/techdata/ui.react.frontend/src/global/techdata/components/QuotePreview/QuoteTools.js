@@ -1,4 +1,4 @@
-export const isDealSelectorHidden = (quoteDetails) => isVendorQuote(quoteDetails.source)
+export const isDealSelectorHidden = (quoteDetails) => isDealConfiguration(quoteDetails.source);
 
 export const isQuickQuoteButtonDisabled = (quoteDetails, didQuantitiesChange) => {
     return isVendorQuote(quoteDetails.source)
@@ -6,6 +6,8 @@ export const isQuickQuoteButtonDisabled = (quoteDetails, didQuantitiesChange) =>
 }
 
 export const isVendorQuote = (source) => source.type === 'VendorQuote'
+
+export const isDealConfiguration = (source) => source.type === 'Deal'
 
 export const isEstimate = (source) => source.type === 'Estimate'
 
@@ -15,7 +17,7 @@ export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetai
 
 export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails.source)
 
-export const isDealRequired = (quoteDetails, quoteWithoutDeal) => quoteWithoutDeal && isEstimate(quoteDetails.source) && !quoteDetails.spaId
+export const isDealRequired = (quoteDetails, quoteWithoutDeal) => !isDealConfiguration(quoteDetails.source) && quoteWithoutDeal && isEstimate(quoteDetails.source) && !quoteDetails.spaId
 
 export const validateRequiredEnduserFields = (enduser) => {
     // This logic may be needed to validate specific scenarios in the future however
