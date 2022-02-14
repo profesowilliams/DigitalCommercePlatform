@@ -637,7 +637,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   const idType = req.query.idType;
 
   const items = [];
-  const status = ["onHold", "inProcess", "open", "shipped", "cancelled"];
+  const status = ["Sales Review", "Open", "Shipped", "Cancelled", "In Process"];
   let pageSizeWithParams;
   if (idType && idType == "GENERAL?id=00000") {
     pageSizeWithParams = 1;

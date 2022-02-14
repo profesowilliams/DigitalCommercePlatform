@@ -27,8 +27,8 @@ function OrdersGrid(props) {
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
     const filteredOrderId = useRef(null);
     const STATUS = {
-        onHold: 'onHold',
-        inProcess: 'inProcess',
+        salesReview: 'salesreview',
+        inProcess: 'inprocess',
         open: 'open',
         shipped: 'shipped',
         cancelled: 'cancelled',
@@ -40,11 +40,11 @@ function OrdersGrid(props) {
     };
 
     const defaultIcons = [
-        { iconKey: STATUS.onHold, iconValue: 'fas fa-hand-paper', iconText: 'On Hold' },
-        { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
+         { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
         { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
         { iconKey: STATUS.shipped, iconValue: 'fas fa-check', iconText: 'Shipped' },
         { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
+        { iconKey: STATUS.salesReview, iconValue: '', iconText: 'In Review' },
     ];
 
     const labelList = [
@@ -89,12 +89,10 @@ function OrdersGrid(props) {
     }
 
     function applyStatusIcon(statusKey) {
-        const compareStatusKey = (status) => status.iconKey.toLowerCase() === statusKey.toLowerCase();
-
-        let icon = componentProp.iconList?.find(compareStatusKey);
-        if (!icon) icon = defaultIcons.find(compareStatusKey);
-
-        return icon;
+      let icon = componentProp.iconList?.find((status) => status.iconKey.toLowerCase() === statusKey.replace(/\s+/g, '').toLowerCase());
+      return icon
+        ? icon
+        : defaultIcons.find((status) => status?.iconKey?.toLowerCase() === statusKey.replace(/\s+/g, '').toLowerCase());
     }
 
     function getDateTransformed(dateUTC) {

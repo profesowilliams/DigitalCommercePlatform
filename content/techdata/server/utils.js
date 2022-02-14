@@ -1028,7 +1028,7 @@ module.exports = {
                     "priceFormatted": "447.71",
                     "currency": "USD",
                     "currencySymbol": "$",
-                    "status": "Shipped",
+                    "status": "Sales Review",
                     "invoice": null,
                     "isReturn": false,
                     "trackings": [],
