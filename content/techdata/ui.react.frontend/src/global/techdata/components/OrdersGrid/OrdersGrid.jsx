@@ -5,11 +5,15 @@ import Modal from '../Modal/Modal';
 import DetailsInfo from '../DetailsInfo/DetailsInfo';
 import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
-import { requestFileBlob } from '../../../../utils/utils';
+import { isNotEmptyValue, requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
 import { usePreservedStore } from '../../hooks/usePreservedStore';
 import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
-import { ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY } from '../../../../utils/constants';
+import {
+    ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY,
+    ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT
+} from '../../../../utils/constants';
+import { pushEventAnalyticsGlobal } from '../../../../utils/dataLayerUtils';
 
 const Grid = React.memo(GridComponent);
 
@@ -18,12 +22,12 @@ const USER_DATA = JSON.parse(localStorage.getItem("userData"));
 function OrdersGrid(props) {
     const componentProp = JSON.parse(props.componentProp);
     const filteringExtension = useGridFiltering();
-    const labelFilterGrid = componentProp.searchCriteria?.labelButtonFilter ? componentProp.searchCriteria.labelButtonFilter : "Open Orders Report"
+    const labelFilterGrid = componentProp.searchCriteria?.labelButtonFilter ? componentProp.searchCriteria.labelButtonFilter : "Open Orders Report";
     const [expandedOpenOrderFilter, setExpandedOpenOrderFilter] = useState(true);
     const [orderReportStatus, setOrderReportStatus] = useState(false);
     const showMoreFlag = componentProp.showMoreFlag ? componentProp.showMoreFlag : false;
     const [modal, setModal] = useState(null);
-    const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS})
+    const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS});
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
     const filteredOrderId = useRef(null);
     const STATUS = {
@@ -82,7 +86,8 @@ function OrdersGrid(props) {
             componentProp.trackingsModal?.pendingInfo ?? 'Tracking is pending and will appear here after shipment is processed',
     };
 
-    
+    const analyticModel = useRef(null);
+
     //Please do not change the below method without consulting your Dev Lead
     function invokeModal(modal) {
         setModal(modal);
@@ -118,7 +123,7 @@ function OrdersGrid(props) {
                 }
             ));
         }
-    }
+    };
 
     function downloadAllInvoice(orderId) {
         return async () => {
@@ -183,6 +188,36 @@ function OrdersGrid(props) {
                 </div>) ?? null;
             }
         }
+    };
+
+    /**
+     * 
+     * @param {any} analyticObjectParam 
+     * @param {number} responseLength 
+     */
+    const handleFilterComponent = (analyticObjectParam, responseLength) => {
+        if  (!isNotEmptyValue(analyticObjectParam)) {
+            return // forcing the return if the object is empty
+        }
+
+        const quotes = {
+            vendorFilter: analyticObjectParam.vendorFilter
+        };
+        const order = {
+            searchTerm: analyticObjectParam.searchTerm,
+            searchOption: analyticObjectParam.searchOption ,
+            license: analyticObjectParam.license ,
+            method: analyticObjectParam.method ,
+            fromDate: analyticObjectParam.fromDate ,
+            toDate: analyticObjectParam.toDate ,
+            nullSearch: isNotEmptyValue(responseLength) // when the UI/service not found a row return a null value, so if the result is empty then this value is true, else false
+        };
+        const objectToSend = {
+          event: ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
+          order,
+          quotes,
+        };
+        pushEventAnalyticsGlobal(objectToSend);
     };
 
     const columnDefs = [
@@ -355,7 +390,7 @@ function OrdersGrid(props) {
         }
         setOrderReportStatus(value);
         filterOpenOrderReportsAction(value, handleChange, onSearch, onClear)
-    }
+    };
 
 	
   /**
@@ -396,7 +431,13 @@ function OrdersGrid(props) {
     const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
 
     async function handleRequestInterceptor(request) {
+        // hasToSortAgain.current // I think this have somehting to have with the rerender
         const response = await filteringExtension.requestInterceptor(request)
+
+        handleFilterComponent(
+            analyticModel.current,
+            response?.data?.content?.items?.length
+        );
 
         if (filteredOrderId.current && (!response?.data?.content?.items || response?.data?.content?.items?.length === 0)) {
             const redirectUrl =
@@ -427,8 +468,9 @@ function OrdersGrid(props) {
             }
         }
         filteringExtension.onQueryChanged(query);
+        analyticModel.current = query.analyticsData;
         hasToSortAgain.current = true
-    }
+    };
 
   if(HAS_ORDER_ACCESS) {
     return (

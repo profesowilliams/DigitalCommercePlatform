@@ -100,11 +100,11 @@ function ConfigurationGrid(props) {
         String(props.data.configurationType === "Estimate")
       )
       .replace("{vendor}", props.data.vendor);
-  }
+  };
 
   const getConfigurationDetailsUrl = (props) => {
     return componentProp.configDetailUrl?.replace("{id}", props.value);
-  }
+  };
 
 
   /**
@@ -125,7 +125,7 @@ function ConfigurationGrid(props) {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
       quotes,
-    }
+    };
     DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
   };
 
@@ -232,13 +232,14 @@ function ConfigurationGrid(props) {
     const objectToSend = {
       event: "configSearch",
       configuration,
-    }
+    };
     DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
-  }
+  };
+  
   const handleOnSearchRequest = (query) => {
     filteringExtension.onQueryChanged(query);
     analyticModel.current = query.analyticsData;
-  }
+  };
 
   async function handleRequestInterceptor(request) {
     const response = await filteringExtension.requestInterceptor(request);

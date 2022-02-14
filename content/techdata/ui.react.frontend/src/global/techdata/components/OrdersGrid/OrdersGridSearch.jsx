@@ -4,7 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
-import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
+import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps, isNotEmptyValue } from "../../../../utils/utils";
 
 function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const defaultKeywordDropdown = {
@@ -38,7 +38,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         const res = handleFilterChange({key:'general', value: _id}, "general"); // Force the General key
         onSearchRequest({ queryString: res }) // execute the filter afther get the new filter value
     }
-  }, [idParam, componentProp])
+  }, [idParam, componentProp]);
 
   
   const defaultVendorsDropdown = {
@@ -72,6 +72,18 @@ const config = {
     fromLabel: componentProp?.fromLabel ?? "From",
     toLabel: componentProp?.toLabel ?? "To",
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
+  };
+
+  const dispatchAnalyticsChange = (query) => {
+    return {
+      searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
+      searchOption: isNotEmptyValue(query.keyword?.value),
+      vendorFilter: isNotEmptyValue(query.manufacturer?.key),
+      license: isNotEmptyValue(query.license?.key),
+      method: isNotEmptyValue(query.method?.key),
+      fromDate: isNotEmptyValue(query.from?.key),
+      toDate: isNotEmptyValue(query.to?.key),
+    };
   };
 
   function dispatchQueryChange(query) {
@@ -109,7 +121,7 @@ const config = {
 
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
     if (isQueryValid(query)) {
-      onQueryChanged(concatedQuery);
+      onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));    
     } else {
       onQueryChanged("");
     }
