@@ -14,6 +14,11 @@ export const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE = 'CTA';
 export const ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY = 'Quotes Table Interactions';
 export const ADOBE_DATA_LAYER_QUOTE_WHITE_LABEL_EVENT = 'qpWhiteLabel';
 
+//Quote Preview
+export const QUOTE_PREVIEW_DEAL_TYPE = 'Deal';
+export const QUOTE_PREVIEW_AVT_TYPE_VALUE = 'tdavnet67';
+export const QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE = 'sap46';
+
 // Configuration
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY = 'Configuration Table Interactions';
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_NAME_ACTION = 'Create quote';

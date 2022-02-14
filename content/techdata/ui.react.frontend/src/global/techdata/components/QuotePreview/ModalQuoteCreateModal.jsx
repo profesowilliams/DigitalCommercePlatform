@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE } from "../../../../utils/constants";
 
 const ModalQuoteCreateModal = ({
     setModal,
@@ -27,11 +28,11 @@ const ModalQuoteCreateModal = ({
     if (type === AVG_VALUE) {
       setAVG(true)
       setTechData(false)
-      setBuyMethod('tdavnet67');
+      setBuyMethod(QUOTE_PREVIEW_AVT_TYPE_VALUE);
     } else {
       setTechData(true)
       setAVG(false)
-      setBuyMethod('sap46');
+      setBuyMethod(QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE);
     }
   };
 
@@ -76,7 +77,7 @@ const ModalQuoteCreateModal = ({
         </div>
         <div className="">
             <label>
-                <input type="checkbox" onClick={() => handleToggle(TECH_DATA_VALUE)} id={'a'} checked={techData} />
+                <input type="checkbox" onClick={() => handleToggle(TECH_DATA_VALUE)} id={'b'} checked={techData} />
                 <span className="checkbox"></span>
             </label>
         </div>

@@ -6786,7 +6786,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           reseller: null,
           configID: "WC121011624NR",
           source: {
-            type: isEstimateId === "true" ? "Estimate" : "VendorQuote",
+            type: isEstimateId === "true" ? "Deal" : "VendorQuote",
             value: "QJ128146301OP",
           },
           notes: null,

@@ -13,6 +13,7 @@ import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
+import { QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -29,6 +30,7 @@ function QuotePreview(props) {
   const [modal, setModal] = useState(null);
   const [isExclusiveFlag, setIsExclusiveFlag] = useState(false);
   const [systemInfoDone, setSystemInfoDone] = useState(false);
+  const [dealType, setDealType] = useState('');
 
   const modalConfig = componentProp?.modalConfig;
 
@@ -38,13 +40,11 @@ function QuotePreview(props) {
   useEffect(() => {
     if (apiResponse) {
       const isExclusive = apiResponse?.content?.quotePreview?.quoteDetails.isExclusive;
-      if (isExclusive) {
-        setIsExclusiveFlag(true);
-      } else {
-        setIsExclusiveFlag(false);
-      }
+      setIsExclusiveFlag(isExclusive ? true : false)
+      const dealTypeParam = apiResponse?.content?.quotePreview?.quoteDetails?.source?.type;
+      setDealType(dealTypeParam);
     }
-  }, [apiResponse ,isExclusiveFlag]);
+  }, [apiResponse]);
 
   //Please do not change the below method without consulting your Dev Lead
   function invokeModal(modal) {
@@ -110,6 +110,8 @@ function QuotePreview(props) {
 
       if (quoteDetails.buyMethod && buyMethodParam !== '' && activeCustomer) {
         quoteDetails.buyMethod = buyMethodParam;
+      } else if (dealType !== QUOTE_PREVIEW_DEAL_TYPE) {
+        quoteDetails.buyMethod = QUOTE_PREVIEW_AVT_TYPE_VALUE; // In case of the dealType are "Deal" force the buyMethod value to tdavnet67
       }
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
       if (!result.data?.error?.isError && result.data?.content?.confirmationId) {
@@ -128,7 +130,6 @@ function QuotePreview(props) {
       return result.data;
     } catch( error ) {
       showErrorModal();
-
       return error;
     } finally {
       setLoadingCreateQuote(false);
@@ -149,7 +150,7 @@ function QuotePreview(props) {
    * @param {boolean} isStandarPrice 
    */
   const validateCreateQuoteSystem = (isStandarPrice = false) => {
-    if (!isExclusiveFlag) {
+    if (!isExclusiveFlag && dealType === QUOTE_PREVIEW_DEAL_TYPE) {
       showSimpleModal('Create Quote', (
         <ModalQuoteCreateModal 
           setSystemInfoDone={setSystemInfoDone} 
@@ -165,7 +166,7 @@ function QuotePreview(props) {
       if (isStandarPrice) {
         createQuote(quoteDetails)
       } else {
-        createQuote(quoteDetailsCopy).then(res => {
+        createQuote(quoteDetails).then(res => {
           window.location.href = URL_QUOTES_GRID
         });  
       }
