@@ -90,6 +90,10 @@ use(function () {
     jsonObject["label"] = properties["label"];
   }
 
+  if (properties && properties["gridErrorMessage"]) {
+    jsonObject["gridErrorMessage"] = properties["gridErrorMessage"];
+  }
+
   if (this.uiServiceDomain != null) {
     jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.quoteGridEndpoint;
   }

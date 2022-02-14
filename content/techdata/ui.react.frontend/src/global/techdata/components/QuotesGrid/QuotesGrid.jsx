@@ -31,6 +31,8 @@ function QuotesGrid(props) {
     ? componentProp.uiServiceEndPoint
     : "";
 
+  const errorMessage = componentProp.gridErrorMessage;  
+
   const getDealsIdLabel = (deals) =>
     deals && deals.length > 1
       ? spaDealsIdLabel
@@ -51,8 +53,7 @@ function QuotesGrid(props) {
     setModal((previousInfo) => ({
       content: (
         <div>
-          There has been an error creating your quote. Please try again later or
-          contact your sales representative.
+          {errorMessage}
         </div>
       ),
       properties: {

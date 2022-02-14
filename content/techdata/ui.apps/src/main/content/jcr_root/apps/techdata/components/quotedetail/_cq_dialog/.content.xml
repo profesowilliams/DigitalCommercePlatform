@@ -86,6 +86,12 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Quote Not Found Message"
                                                 name="./quoteNotFoundMessage"/>
+                                            <quoteErrorMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Quote Detail Error Message"
+                                                description="Error message that will be displayed when an error occurs on creating a quote."
+                                                name="./quoteErrorMessage"/>
                                         </items>
                                     </column>
                                 </items>

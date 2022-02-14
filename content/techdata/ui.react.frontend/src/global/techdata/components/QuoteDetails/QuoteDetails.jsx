@@ -45,6 +45,7 @@ const QuoteDetails = ({ componentProp }) => {
     checkout,
     whiteLabel,
     quoteNotFoundMessage,
+    quoteErrorMessage,
     shopDomainPage
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
@@ -120,7 +121,7 @@ const QuoteDetails = ({ componentProp }) => {
     setModal((previousInfo) => (
         {
           content: (
-            <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+            <div>{quoteErrorMessage}</div>
           ),
           properties: {
               title: `Error`,

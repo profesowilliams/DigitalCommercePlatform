@@ -50,6 +50,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["quoteNotFoundMessage"] = properties["quoteNotFoundMessage"];
     }
 
+    if (properties && properties["quoteErrorMessage"]) {
+        jsonObject["quoteErrorMessage"] = properties["quoteErrorMessage"];
+    }
+
     if (properties && properties["subTotalLabel"]) {
         jsonObject["subTotalLabel"] = properties["subTotalLabel"];
     }
