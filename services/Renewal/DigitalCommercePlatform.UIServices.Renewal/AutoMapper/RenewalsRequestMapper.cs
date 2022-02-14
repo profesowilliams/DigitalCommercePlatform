@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
         {
             CreateMap<SearchModel, SearchRenewalDetailed.Request>()
                 .ForMember(x => x.Id, y => y.MapFrom(s => s.Id))
-                .ForMember(x => x.Page, y => y.MapFrom(s => s.Page))
+                .ForMember(x => x.Page, y => y.MapFrom(s => s.PageNumber))
                 .ForMember(x => x.PageSize, y => y.MapFrom(s => s.PageSize))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
 
             CreateMap<SearchModel, SearchRenewalSummary.Request>()
                 .ForMember(x => x.Id, y => y.MapFrom(s => s.Id))
-                .ForMember(x => x.Page, y => y.MapFrom(s => s.Page))
+                .ForMember(x => x.Page, y => y.MapFrom(s => s.PageNumber))
                 .ForMember(x => x.PageSize, y => y.MapFrom(s => s.PageSize))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
                 .ForMember(x => x.SortBy, y => y.MapFrom(s => s.SortBy))
