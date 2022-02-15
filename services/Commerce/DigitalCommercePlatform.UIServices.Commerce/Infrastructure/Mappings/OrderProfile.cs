@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.Price, opt => opt.MapFrom<OrderPriceResolver>())
                 .ForMember(dest => dest.Invoices, opt => opt.MapFrom<OrderInvoicesResolver>())
                 .ForMember(dest => dest.Trackings, opt => opt.MapFrom<OrderTrackingsResolver>())
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString().ToTitleCase()));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom<OrderStatusResolver>());
 
             CreateMap<Item, Line>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom<TDPartNameResolver>())
@@ -100,6 +100,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     public class OrderDetailStatusResolver : IValueResolver<OrderModel, OrderDetailModel, string>
     {
         public string Resolve(OrderModel source, OrderDetailModel destination, string destMember, ResolutionContext context)
+        {
+            if (source.Status == Status.ON_HOLD)
+            {
+                source.Status = Status.SALES_REVIEW;
+            }
+
+            return source.Status.ToString().ToTitleCase();
+        }
+    }
+    
+    [ExcludeFromCodeCoverage]
+    public class OrderStatusResolver : IValueResolver<OrderModel, RecentOrdersModel, string>
+    {
+        public string Resolve(OrderModel source, RecentOrdersModel destination, string destMember, ResolutionContext context)
         {
             if (source.Status == Status.ON_HOLD)
             {
