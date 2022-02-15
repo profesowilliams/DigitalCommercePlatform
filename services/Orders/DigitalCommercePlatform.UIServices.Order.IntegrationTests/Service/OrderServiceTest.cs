@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Order.Actions.NuanceChat;
 using DigitalCommercePlatform.UIServices.Order.AutoMapper;
 using DigitalCommercePlatform.UIServices.Order.Dto;
 using DigitalCommercePlatform.UIServices.Order.Dto.Order;
+using DigitalCommercePlatform.UIServices.Order.Dto.Order.Internal;
 using DigitalCommercePlatform.UIServices.Order.Infrastructure;
 using DigitalCommercePlatform.UIServices.Order.Services;
 using DigitalFoundation.Common.Providers.Settings;
@@ -36,9 +37,9 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
         {
             var config = new MapperConfiguration(cfg =>
             {
-               
-                    cfg.AddProfile(new NuanceWebChatProfile());
-                    cfg.AddProfile(new OrderProfile());
+
+                cfg.AddProfile(new NuanceWebChatProfile());
+                cfg.AddProfile(new OrderProfile());
 
             });
 
@@ -63,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
             Init();
             var httpClient = new Mock<IDigitalFoundationClient>();
 
-            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(ReturnedData(request.Header.ResellerId));
 
             var service = new OrderService(httpClient.Object, Logger.Object, AppSettings.Object, GetMapper());
             var result = service.GetOrders(request).Result;
@@ -91,7 +92,7 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
             httpClient.Verify(x => x.GetAsync<ResponseDto>(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
-        private static ResponseDto ReturnedData()
+        private static ResponseDto ReturnedData(string resellerId)
         {
             return new ResponseDto()
             {
@@ -99,7 +100,11 @@ namespace DigitalCommercePlatform.UIServices.Order.IntegrationTests.Service
                 {
                     new OrderDto()
                     {
-                        Creator = "Creator1"
+                        Creator = "Creator1",
+                        Reseller = new AddressPartyDto
+                        {
+                            ID = resellerId
+                        }
                     }
                 }
             };
