@@ -11,13 +11,14 @@ import { usePreservedStore } from '../../hooks/usePreservedStore';
 import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
 import {
     ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY,
-    ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT
+    ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
+    LOCAL_STORAGE_KEY_USER_DATA
 } from '../../../../utils/constants';
 import { pushEventAnalyticsGlobal } from '../../../../utils/dataLayerUtils';
 
 const Grid = React.memo(GridComponent);
 
-const USER_DATA = JSON.parse(localStorage.getItem("userData"));
+const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function OrdersGrid(props) {
     const componentProp = JSON.parse(props.componentProp);

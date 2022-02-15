@@ -13,7 +13,8 @@ import FullScreenLoader from "../Widgets/FullScreenLoader";
 import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing, isDealSelectorHidden, isDealConfiguration } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
-import { QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
+import { LOCAL_STORAGE_KEY_USER_DATA, QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
+import { isNotEmptyValue } from "../../../../utils/utils";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -31,6 +32,7 @@ function QuotePreview(props) {
   const [isExclusiveFlag, setIsExclusiveFlag] = useState(false);
   const [systemInfoDone, setSystemInfoDone] = useState(false);
   const [dealType, setDealType] = useState('');
+  const [tier, setTier] = useState('');
 
   const modalConfig = componentProp?.modalConfig;
 
@@ -40,9 +42,9 @@ function QuotePreview(props) {
   useEffect(() => {
     if (apiResponse) {
       const isExclusive = apiResponse?.content?.quotePreview?.quoteDetails.isExclusive;
-      setIsExclusiveFlag(isExclusive ? true : false)
-      const dealTypeParam = apiResponse?.content?.quotePreview?.quoteDetails?.source?.type;
-      setDealType(dealTypeParam);
+      setIsExclusiveFlag(isExclusive ? true : false);
+      setDealType(isNotEmptyValue(apiResponse?.content?.quotePreview?.quoteDetails?.source?.type)) ? apiResponse?.content?.quotePreview?.quoteDetails?.source?.type : '';
+      setTier(isNotEmptyValue(apiResponse?.content?.quotePreview?.quoteDetails.tier) ? apiResponse?.content?.quotePreview?.quoteDetails.tier : '');
     }
   }, [apiResponse]);
 
@@ -101,7 +103,7 @@ function QuotePreview(props) {
   const createQuote = async (quoteDetailsResponse, buyMethodParam = '') => {
     try {
       setLoadingCreateQuote(true);
-      let { activeCustomer = false } = JSON.parse(localStorage.getItem("userData"));
+      let { activeCustomer = null } = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
       const { name, number } = activeCustomer;
       const quoteDetails = { ...quoteDetailsResponse };
       if (quoteDetails.reseller && quoteDetails.reseller.length > 0 && activeCustomer) {
@@ -329,6 +331,7 @@ function QuotePreview(props) {
               isAllowedQuantityIncrease={isAllowedQuantityIncrease(quoteDetails)}
               gridProps={componentProp.productLines}
               data={quoteDetails}
+              tier={tier}
               onQuoteLinesUpdated={onGridUpdate}
             ></QuotePreviewGrid>
             <QuotePreviewSubTotal 

@@ -33,3 +33,6 @@ export const ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT = 'orderSearch';
 
 // Orders details
 export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';
+
+// LocalStorage
+export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';

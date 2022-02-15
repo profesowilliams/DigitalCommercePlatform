@@ -7,7 +7,17 @@ import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "./ProductLinesItemInformation";
 import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
 
-function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuantityIncrease }) {
+/**
+ * 
+ * @param {Object} props 
+ * @param {any} props.gridProps
+ * @param {any} props.data
+ * @param {() => void} props.onQuoteLinesUpdated
+ * @param {boolean} props.isAllowedQuantityIncrease
+ * @param {string} props.tier
+ * @returns 
+ */
+function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuantityIncrease, tier}) {
   const [gridApi, setGridApi] = useState(null);
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
@@ -50,26 +60,25 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     const objectToSend = {
       event: ADOBE_DATA_LAYER_EVENT_PAGE_VIEW,
       quotePreview: {
-        genTier : '',
+        genTier : tier,
       },
       products: analyticsProduct
-    }
-    pushEventAnalyticsGlobal(objectToSend)
+    };
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   useEffect(() => {
     if (data) {
       getPopulateProdutcsToAnalytics(data);    
     }
-    
   }, [data]);
 
   useEffect(() => {
     if (analyticsProduct?.length > 0 && flagAnalytic) {
-      setFlagAnalytic(false)
-      handlerAnalyticPageView()
+      setFlagAnalytic(false);
+      handlerAnalyticPageView();
     }
-  }, [analyticsProduct])
+  }, [analyticsProduct]);
 
   const gridConfig = {
     ...gridProps,
