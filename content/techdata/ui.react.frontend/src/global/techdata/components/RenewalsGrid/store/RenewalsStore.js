@@ -54,7 +54,7 @@ const INITIAL_STATE = {
   customStartDate:undefined,
   customEndDate:undefined,
   aemConfig:null,
-  gridApi:null
+  paginationGridApi:null
 };
 
 const store = (set, get, a) => ({

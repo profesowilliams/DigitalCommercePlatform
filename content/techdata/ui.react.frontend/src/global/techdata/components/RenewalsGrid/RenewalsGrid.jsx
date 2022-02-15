@@ -12,7 +12,7 @@ function RenewalsGrid(props) {
  
   const { onAfterGridInit, onQueryChanged, requestInterceptor } =
     useGridFiltering();
-  const effects = useRenewalGridState(state => state.effects);
+  const effects = useRenewalGridState(state => state.effects); 
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
 
@@ -64,7 +64,8 @@ function RenewalsGrid(props) {
   }
 
   const _onAfterGridInit = (config) => {    
-    effects.setCustomState({key:'gridApi',value:config});      
+    const value =  config.api;     
+    effects.setCustomState({key:'paginationGridApi',value});      
     onAfterGridInit(config);
   }
 
