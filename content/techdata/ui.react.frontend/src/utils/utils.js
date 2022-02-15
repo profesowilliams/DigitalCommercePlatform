@@ -210,31 +210,25 @@ export const validateDatePicker = (value, partnerValue, setStateParam) =>
  * @param {string} filterTag 
  * @returns 
  */
-export const formateDatePicker = (dateValue, filterTag = '') => {
-    dateValue = filterTag.toLowerCase().includes('from')
-        ? new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 0, 0, 0))
-        : new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 23, 59, 59));
-        
-    return filterTag + dateValue.toISOString();
-}
-export const setTimestamps = (query) => {
-  if (query.from?.value) {
-    query.from.value = setTimestamp(query.from.value);
-  }
-  if (query.to?.value) {
-    query.to.value = setTimestamp(query.to.value);
-  }
-  return query;
-};
-/**
- * Function that returns a Date with the time set to 23:59:59. This should allow conversion to From/To date ranges regardless of timezone
- * @param {Date} dateValue
- */
-const setTimestamp = (dateValue) => new Date(Date.UTC(dateValue.getFullYear(), dateValue.getMonth(), dateValue.getDate(), 23, 59, 59));
+export const formateDatePicker = (dateValue, filterTag = '') => filterTag + getDateValue(dateValue);
 
-export const isQueryValid = (query) =>
-  (query.from?.value && query.to?.value) &&
-  (query.to?.value >= query.from?.value);
+export const isQueryValid = (query) => {
+  const from = query.from?.value;
+  const to = query.to?.value;
+  const fromValue = from ? getDateNumber(from) : null;
+  const toValue = to ? getDateNumber(to) : null;
+
+  return (from && to) &&
+    (toValue >= fromValue);
+}
+
+export const getDateValue = (date) => {
+  const dateMonth = date.getMonth() + 1;
+  const dateDay = date.getDate();
+  return `${date.getFullYear()}-${dateMonth < 10 ? '0' + dateMonth : dateMonth}-${dateDay < 10 ? '0' + dateDay : dateDay}`;
+}
+
+const getDateNumber = (dateValue) => Number(`${dateValue.getFullYear()}${dateValue.getMonth()}${dateValue.getDate()}`);
 
 /**
 * Remove the style attribute on body tag if sessionId is present

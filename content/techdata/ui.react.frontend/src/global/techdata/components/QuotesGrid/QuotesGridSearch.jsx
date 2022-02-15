@@ -3,7 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
+import { formateDatePicker, validateDatePicker, isQueryValid } from "../../../../utils/utils";
 
 function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const _query = useRef({});
@@ -58,7 +58,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   };
 
   function dispatchQueryChange(query) {
-    query = setTimestamps(query);
+    //query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`

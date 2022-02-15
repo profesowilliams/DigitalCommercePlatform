@@ -3,7 +3,7 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid, setTimestamps } from "../../../../utils/utils";
+import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid } from "../../../../utils/utils";
 
 function ConfigurationGridSearch({
   componentProp,
@@ -64,7 +64,6 @@ function ConfigurationGridSearch({
   }
 
   function dispatchQueryChange(query) {
-    query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`

@@ -4,7 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
-import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps, isNotEmptyValue } from "../../../../utils/utils";
+import { formateDatePicker, validateDatePicker, isQueryValid, isNotEmptyValue } from "../../../../utils/utils";
 
 function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const defaultKeywordDropdown = {
@@ -87,7 +87,6 @@ const config = {
   };
 
   function dispatchQueryChange(query) {
-    query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`
