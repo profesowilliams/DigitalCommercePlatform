@@ -4,6 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid } from "../../../../utils/utils";
+import { CONFIGURATION_VALUE_ALL_CONFIG_TYPE } from "../../../../utils/constants";
 
 function ConfigurationGridSearch({
   componentProp,
@@ -26,8 +27,7 @@ function ConfigurationGridSearch({
 
   const defaultConfigurationTypesDropdown = {
     label: "Configuration Types",
-    items: [
-      { key: "AllConfigurationTypes", value: "All Configuration Types" },
+    items: [{value: "All Configuration Types" },
       { key: "Estimate", value: "Estimate" },
       { key: "VendorQuote", value: "Vendor Quote" },
       { key: "Deal", value: "Deal" },

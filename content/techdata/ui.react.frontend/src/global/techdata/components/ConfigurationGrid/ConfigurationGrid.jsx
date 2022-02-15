@@ -9,7 +9,7 @@ import {
   MultipleQuotesInvokeModal,
   SingleQuotesInvokeModal,
 } from "./QuotesModals";
-import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
+import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import { 
   ADOBE_DATA_LAYER_LINK_TYPE,
@@ -126,7 +126,7 @@ function ConfigurationGrid(props) {
       clickInfo,
       quotes,
     };
-    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   const columnDefs = [
@@ -233,7 +233,7 @@ function ConfigurationGrid(props) {
       event: "configSearch",
       configuration,
     };
-    DataLayerUtils.pushEventAnalyticsGlobal(objectToSend);
+    pushEventAnalyticsGlobal(objectToSend);
   };
   
   const handleOnSearchRequest = (query) => {
