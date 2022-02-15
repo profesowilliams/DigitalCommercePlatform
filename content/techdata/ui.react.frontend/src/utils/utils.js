@@ -225,10 +225,13 @@ export const isQueryValid = (query) => {
 export const getDateValue = (date) => {
   const dateMonth = date.getMonth() + 1;
   const dateDay = date.getDate();
-  return `${date.getFullYear()}-${dateMonth < 10 ? '0' + dateMonth : dateMonth}-${dateDay < 10 ? '0' + dateDay : dateDay}`;
+  return `${date.getFullYear()}-${zeroPad(dateMonth, 2)}-${zeroPad(dateDay, 2)}`;
 }
 
-const getDateNumber = (dateValue) => Number(`${dateValue.getFullYear()}${dateValue.getMonth()}${dateValue.getDate()}`);
+const getDateNumber = (dateValue) => Number(
+  `${dateValue.getFullYear()}${zeroPad(dateValue.getMonth() + 1, 2)}${zeroPad(dateValue.getDate(), 2)}`);
+
+const zeroPad = (value, length) => String(value).padStart(length, '0');
 
 /**
 * Remove the style attribute on body tag if sessionId is present
