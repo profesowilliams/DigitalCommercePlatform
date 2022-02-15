@@ -150,7 +150,7 @@ function QuotePreview(props) {
    * @param {any} quoteParam 
    */
   const validateCreateQuoteSystem = (quoteParam) => {
-    if (!isExclusiveFlag && dealType === QUOTE_PREVIEW_DEAL_TYPE) {
+    if (!isExclusiveFlag && dealType !== QUOTE_PREVIEW_DEAL_TYPE) {
       showSimpleModal('Create Quote', (
         <ModalQuoteCreateModal 
           setSystemInfoDone={setSystemInfoDone} 
