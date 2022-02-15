@@ -6,7 +6,13 @@ import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
 import { formateDatePicker, validateDatePicker, isQueryValid, isNotEmptyValue } from "../../../../utils/utils";
 
-function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
+function OrdersGridSearch({
+  componentProp,
+  onQueryChanged,
+  onKeyPress,
+  onSearchRequest,
+  uiServiceEndPoint,
+}) {
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -25,22 +31,21 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   /**
    * Effect if there is a ID param in the URL catch and
    * create a filter URL to use and fetch the data
-   * */ 
+   * */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    let _id = params.get('id');
-    params.delete('id');
+    let _id = params.get("id");
+    params.delete("id");
     if (_id && idParam.current === undefined) {
-        const url = new URL(uiServiceEndPoint);
-        let pathName = url.pathname ?? "";
-            pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
-        idParam.current = _id;
-        const res = handleFilterChange({key:'general', value: _id}, "general"); // Force the General key
-        onSearchRequest({ queryString: res }) // execute the filter afther get the new filter value
+      const url = new URL(uiServiceEndPoint);
+      let pathName = url.pathname ?? "";
+      pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
+      idParam.current = _id;
+      const res = handleFilterChange({ key: "general", value: _id }, "general"); // Force the General key
+      onSearchRequest({ queryString: res }); // execute the filter afther get the new filter value
     }
   }, [idParam, componentProp]);
 
-  
   const defaultVendorsDropdown = {
     label: "Vendors",
     items: [
@@ -58,7 +63,7 @@ function OrdersGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
       { key: "PE", value: "Phone/Email" },
     ],
   };
-const config = {
+  const config = {
     keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
       ? componentProp?.keywordDropdown
       : defaultKeywordDropdown,
@@ -76,7 +81,8 @@ const config = {
 
   const dispatchAnalyticsChange = (query) => {
     return {
-      searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
+      searchTerm:
+        query.keyword?.key && query.keyword?.value ? query.keyword?.value : "",
       searchOption: isNotEmptyValue(query.keyword?.value),
       vendorFilter: isNotEmptyValue(query.manufacturer?.key),
       license: isNotEmptyValue(query.license?.key),
@@ -101,14 +107,14 @@ const config = {
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? formateDatePicker(query.from.value, '&createdFrom=')
+        ? formateDatePicker(query.from.value, "&createdFrom=")
         : "";
     let to =
       query.to?.key && query.to?.value
-        ?  formateDatePicker(query.to.value, '&createdTo=')
+        ? formateDatePicker(query.to.value, "&createdTo=")
         : "";
     // Filters by URL
-    let general =    
+    let general =
       query.general?.key && query.general?.value
         ? `&idType=GENERAL&id=${query.general.value}`
         : "";
@@ -120,7 +126,7 @@ const config = {
 
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
     if (isQueryValid(query)) {
-      onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));    
+      onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
     } else {
       onQueryChanged("");
     }
@@ -131,10 +137,10 @@ const config = {
     if (change) {
       _query.current[filterName] = change;
       const res = dispatchQueryChange(_query.current);
-      return res
+      return res;
     }
   }
- 
+
   return (
     <div className="cmp-orders-grid__search">
       <QueryInput
@@ -143,9 +149,9 @@ const config = {
         placeholder={config.inputPlaceholder}
         onQueryChanged={(change) => {
           if (flagKeyword.current) {
-            handleFilterChange(change, "keyword")
+            handleFilterChange(change, "keyword");
           } else {
-            flagKeyword.current = true;     
+            flagKeyword.current = true;
           }
         }}
         onKeyPress={(isEnter) => onKeyPress(isEnter)}
@@ -155,9 +161,9 @@ const config = {
         items={config.vendorsDropdown.items}
         onItemSelected={(change) => {
           if (flagManufacturer.current) {
-            handleFilterChange(change, "manufacturer")
+            handleFilterChange(change, "manufacturer");
           } else {
-            flagManufacturer.current = true
+            flagManufacturer.current = true;
           }
         }}
       ></SimpleDropDown>
@@ -166,9 +172,9 @@ const config = {
         items={config.methodsDropdown.items}
         onItemSelected={(change) => {
           if (flagMethod.current) {
-            handleFilterChange(change, "method")
+            handleFilterChange(change, "method");
           } else {
-            flagMethod.current = true
+            flagMethod.current = true;
           }
         }}
       ></SimpleDropDown>
@@ -189,6 +195,12 @@ const config = {
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
         defaultValue={dateDefaultToValue}
       ></SimpleDatePicker>
+
+      <div className="cmp-search-criteria__header__button">
+        <div className="cmp-search-criteria__header__filter__title">
+          <i className={`cmp-search-criteria__icon-button fas  fa-box-open fs-16`} title="Select Open Orders" ></i>
+        </div>
+      </div>
     </div>
   );
 }

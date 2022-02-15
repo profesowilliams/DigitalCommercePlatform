@@ -370,10 +370,14 @@ function OrdersGrid(props) {
                         }
                     }}
                 >
-                    <i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`}></i>
+                    <i className={`cmp-search-criteria__icon-button fas  fa-box-open`} title='Select Open Orders'></i>
+                </div>
+                
+                <div className='cmp-search-criteria__header__filter__title'>
+                    <i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`} title='Export to PDF' ></i>
                 </div>
                 <div className='cmp-search-criteria__header__filter__title'>
-                    <i className={`cmp-search-criteria__icon-button fas fa-print`}></i>
+                    <i className={`cmp-search-criteria__icon-button fas fa-print`} title='Print'></i>
                 </div>
                 
             </div>
