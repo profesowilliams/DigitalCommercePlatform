@@ -35,7 +35,17 @@ export function removeCommaIfContentNull(child = []) {
     }
 }
 
+export function removeTimeStamp (date) {
+    const deleteTimeRegex = /T((?:\d{2}:){2}.*)$/g;
+    return new Date(date).toISOString().replace(deleteTimeRegex, () => 'T00:00:00.000Z');
+}
+
 export function addDays(days = 0, date = new Date(), ) {
   const dateWithDays = date.setDate(date.getDate() + days);
   return new Date(dateWithDays);
+}
+
+export function removeDays(days, date = new Date()) {
+  const dateWithDays = date.setDate(date.getDate() - days);
+  return removeTimeStamp(dateWithDays);
 }

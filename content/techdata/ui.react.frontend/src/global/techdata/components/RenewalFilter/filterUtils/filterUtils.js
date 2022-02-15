@@ -1,4 +1,4 @@
-import { addDays } from "../../../helpers/formatting";
+import { addDays, removeDays } from "../../../helpers/formatting";
 
 export function areAllFiltersUnchecked(filterList) {
   return !filterList.some((item) => item.checked);
@@ -35,6 +35,7 @@ export function generateFilterFields(
     60: [addDays(31), addDays(60)],
     90: [addDays(61), addDays(90)],
     91: [addDays(90)],
+    overdue: [removeDays(365)],
     custom: [startRangeDate, endRangeDate],
   };
 

@@ -32,9 +32,10 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
-  function setDatePickerState(fromDate = '', toDate = ''){
-    const fromDateNoTime = new Date(fromDate).toISOString().replace(/T((?:\d{2}:){2}.*)$/g, () => 'T00:00:00.000Z');
-    const toDateNoTime = new Date(toDate).toISOString().replace(/T((?:\d{2}:){2}.*)$/g, () => 'T05:00:00.000Z');
+  function setDatePickerState(fromDate = '', toDate = ''){    
+    const deleteTimeZoneRegex = /T((?:\d{2}:){2}.*)$/g;
+    const fromDateNoTime = new Date(fromDate).toISOString().replace(deleteTimeZoneRegex, () => 'T00:00:00.000Z');
+    const toDateNoTime = new Date(toDate).toISOString().replace(deleteTimeZoneRegex, () => 'T05:00:00.000Z');
     set({datePickerState:[fromDateNoTime, toDateNoTime]})
   }
 

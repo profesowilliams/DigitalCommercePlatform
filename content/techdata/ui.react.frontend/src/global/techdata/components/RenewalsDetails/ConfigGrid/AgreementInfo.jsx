@@ -8,7 +8,8 @@ function AgreementInfo({
   programName,
   dueDate,
   agreementInfo,
-  expiry
+  expiry,
+  customerPO
 }) {
   const AgreementInfo = () => {
     const formatDate = rawDate => dateToString(rawDate.replace(/[zZ]/g,''),"MM/dd/uu");
@@ -26,7 +27,7 @@ function AgreementInfo({
               {contract.serviceLevel}
             </Info>
           )}
-          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>1234567GJDFH</Info>
+          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>{customerPO}</Info>
           {contract.id && (
             <Info boldLabel noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
           )}
