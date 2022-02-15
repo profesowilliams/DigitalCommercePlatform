@@ -9,13 +9,16 @@ function FilterTags() {
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
   const effects = useRenewalGridState(state => state.effects);
   const { setFilterList, clearDateFilters } = effects;
+
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
+
   const isOneChecked = (filters, filter) =>
     filters[filter.parentId].childIds.some((id) => {
       return filters[id].checked === true;
     });
+
   const handleTagsCloseClick = (filter) => {
     const filtersCopy = [...filterList].map((item) => {
       const {id} = item;
@@ -34,6 +37,16 @@ function FilterTags() {
         parent.childIds.map((id) => {
           return (filtersCopy[id].open = false);
         });
+      }
+    }
+    /**
+     * to uncheck vendor childs as soon as we toggle off.
+     */
+    if (filter.field === 'ProgramName'){
+      const vendorChilds = filter.childIds;
+      for(const vendor of vendorChilds){
+        filtersCopy[vendor].open = false;
+        filtersCopy[vendor].checked = false;
       }
     }
 
