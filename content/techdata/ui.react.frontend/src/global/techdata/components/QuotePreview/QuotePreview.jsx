@@ -110,7 +110,7 @@ function QuotePreview(props) {
 
       if (quoteDetails.buyMethod && buyMethodParam !== '' && activeCustomer) {
         quoteDetails.buyMethod = buyMethodParam;
-      } else if (dealType !== QUOTE_PREVIEW_DEAL_TYPE) {
+      } else if (dealType === QUOTE_PREVIEW_DEAL_TYPE) {
         quoteDetails.buyMethod = QUOTE_PREVIEW_AVT_TYPE_VALUE; // In case of the dealType are "Deal" force the buyMethod value to tdavnet67
       }
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
