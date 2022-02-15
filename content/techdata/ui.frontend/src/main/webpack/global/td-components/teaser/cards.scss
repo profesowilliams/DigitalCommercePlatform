@@ -456,13 +456,14 @@
 					}
 				}
 
-				&__description {
-					padding: 0 rem(30px);
-					max-height: rem(144px);
+				&__description { 
+					padding: 0 rem(30px) rem(30px);
+					//max-height: rem(144px);
 					word-wrap: break-word;
 					text-overflow: ellipsis;
 					display: -webkit-box;
-					-webkit-line-clamp: 8;
+					
+					//-webkit-line-clamp: 8;
 					-webkit-box-orient: vertical;
 					overflow: hidden;
 
@@ -476,8 +477,6 @@
 						display: block !important;
 						overflow: unset !important;
 					}
-
-
 				}
 			}
 
