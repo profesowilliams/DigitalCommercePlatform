@@ -48,9 +48,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedData);
-           
+
+            var helperQueryService = new Mock<IHelperService>();
+
             var refinementRequest = new Mock<RefinementRequest>();
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryCountFor(request).Result;
             
             result.Should().Be(5);
@@ -63,8 +65,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedDetailedData);
-            
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
             
             result.Should().NotBeNull();
@@ -78,8 +82,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedSummaryData);
-            
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
             
             result.Should().NotBeNull();
@@ -95,7 +101,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null)).ThrowsAsync(new Exception("test 123"));
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             
             //act
             Func<Task> act = async () => await service.GetRenewalsSummaryFor(request);
@@ -164,9 +172,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedData);
-            
+
+            var helperQueryService = new Mock<IHelperService>();
+
             var refinementRequest = new Mock<RefinementRequest>();
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRefainmentGroup(request).Result;
             
             result.Should().NotBeNull();
@@ -193,7 +203,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
             for (var i = 0; i < request.ResellerId.Count; i++)
@@ -229,7 +241,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
             request.ResellerName.Should().EndWith("*");
@@ -259,7 +273,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
             request.ResellerPO.Should().EndWith("*");
@@ -287,7 +303,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
             request.EndUser.Should().EndWith("*");
@@ -316,7 +334,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
 
             request.ResellerName.Should().EndWith("*");
@@ -346,7 +366,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
 
             request.ResellerPO.Should().EndWith("*");
@@ -374,7 +396,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
 
             request.EndUser.Should().EndWith("*");
@@ -398,7 +422,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
 
             result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
@@ -418,7 +444,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
 
-            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper);
+            var helperQueryService = new Mock<IHelperService>();
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
             result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 3");

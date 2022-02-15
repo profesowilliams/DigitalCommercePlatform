@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal
         {
             services.AddTransient<IRenewalService, RenewalService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
-
+            services.AddTransient<IHelperService, HelperService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

@@ -55,5 +55,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal
         public string Instance { get; set; }
         public List<QuoteTypeValueModel> Discounts { get; set; }
         public ContractModel Contract { get; set; }
+        public string TDNumber { get; set; }
+        public string MFRNumber { get; set; }
+        public string ShortDescription { get; set; }
+        public string Manufacturer { get; set; }
+        public string VendorPartNo { get; set; }
     }
 }

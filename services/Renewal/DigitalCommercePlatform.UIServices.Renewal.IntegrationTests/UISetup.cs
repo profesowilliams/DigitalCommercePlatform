@@ -39,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
                                 .Extend("MaxPageSize", "100")
                                 .Extend("App.Renewal.Url", "v1")
                                 .Extend("App.Quote.Url", "v1")
+                                .Extend("App.Product.Url", "")
                    )
                        .MatchContains($"SiteSetting/{serviceName}")
                            .Returns(Defaults.GetSiteSettings())

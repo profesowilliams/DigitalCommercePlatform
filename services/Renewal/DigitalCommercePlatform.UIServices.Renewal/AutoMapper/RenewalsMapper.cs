@@ -25,7 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.AutoMapper
             CreateMap<ContractDto, ContractModel>();
             CreateMap<NameDto, NameModel>();
             CreateMap<ValueDto, ValueModel>();
-            CreateMap<ItemDto, ItemModel>();
             CreateMap<OrderDto, OrderModel>();
             CreateMap<PartyDto, PartyModel>();
             CreateMap<ResellerDto, ResellerModel>();
