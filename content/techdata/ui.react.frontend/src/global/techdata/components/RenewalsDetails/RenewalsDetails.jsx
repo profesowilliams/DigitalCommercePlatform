@@ -29,6 +29,7 @@ function RenewalsDetails(props) {
           <RenewalPreviewGrid
             data={renewalsDetails}
             gridProps={componentProp.productLines}
+            shopDomainPage={componentProp.shopDomainPage}
           />
         </section>
       ) : (

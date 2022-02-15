@@ -7444,6 +7444,11 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 serviceLevel: null,
                 usagePeriod: null,
               },
+              tdNumber: "11311823",
+              mfrNumber: "V-VBRVUL-0I-SU5AR-00",
+              shortDescription: "CANON PIXMA IP8720 - PRINTER - COLOR - INK-JET",
+              manufacturer: "VEEAM",
+              vendorPartNo: "V-VBRVUL-0I-SU5AR-00"
             },
           ],
           attributes: [],

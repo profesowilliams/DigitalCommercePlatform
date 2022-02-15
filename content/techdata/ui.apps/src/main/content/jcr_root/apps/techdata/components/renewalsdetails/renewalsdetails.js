@@ -69,6 +69,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
 
+    if (this.shopDomainPage !== null) {
+        jsonObject["shopDomainPage"] = this.shopDomainPage;
+    }
+
     if (this.serviceData.renewalDetailLineItemEndpoint) {
         jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || '';
     }
