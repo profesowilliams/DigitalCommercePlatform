@@ -178,6 +178,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.TotalCost))
                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
+               .ForMember(dest => dest.DistiBuyMethod, opt => opt.MapFrom(src => src.DistiBuyMethod))
                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
                //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))

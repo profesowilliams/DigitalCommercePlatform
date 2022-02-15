@@ -293,7 +293,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     {
                         Name = input.QuoteDetails.EndUser.FirstOrDefault()?.Name,
                         Address = MapAddress(input.QuoteDetails.EndUser, input.QuoteDetails.EndUser.FirstOrDefault()?.CompanyName),
-                        Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.EndUser.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.EndUser.FirstOrDefault().Name, Phone = input.QuoteDetails.EndUser.FirstOrDefault().PhoneNumber } },                        
+                        Contact = new List<ContactModel> { new ContactModel { Email = input.QuoteDetails.EndUser.FirstOrDefault().ContactEmail, Name = input.QuoteDetails.EndUser.FirstOrDefault().Name, Phone = input.QuoteDetails.EndUser.FirstOrDefault().PhoneNumber } },
                         Id = input.QuoteDetails.EndUser.FirstOrDefault().Id,
                     };
                 }
@@ -577,7 +577,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     };
                     return result;
                 }
+#if DEBUG
 
+                quotePreview.DistiBuyMethod = string.IsNullOrWhiteSpace(quotePreview.DistiBuyMethod) ? "TECH DATA" : quotePreview.DistiBuyMethod;
+#endif
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
                 quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name, string.Empty);
 

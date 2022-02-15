@@ -25,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public ResellerDto Reseller { get; set; }
         public EndUserDto EndUser { get; set; }
         public VendorDto Vendor { get; set; }
+        public string DistiBuyMethod { get; set; } = "TECH DATA";
     }
 
     [ExcludeFromCodeCoverage]

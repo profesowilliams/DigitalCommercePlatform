@@ -43,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _logger = new Mock<ILogger<CommerceService>>();
             _appSettings = new Mock<IAppSettings>();
+            _appSettings.Setup(s => s.GetSetting("App.Configuration.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-configuration/v1");
             _cartService = new Mock<ICartService>();
             _uiContext = new Mock<IUIContext>();
             _helperService = new Mock<IHelperService>();
@@ -110,6 +111,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             requestToQuote.Invoke(objType, new object[] { request });
             Assert.Equal("CON-SNT-CTSIX520", request.Id);
 
+        }
+
+        [Fact]
+        public async void CreateResponseUsingEstimateId_DistiBuyMethod()
+        {
+
+            // Arrange
+            GetQuotePreviewDetails.Request request = new("53761072", true, "cisco");
+
+
+            Type type = typeof(CommerceService);
+            var objType = Activator.CreateInstance(type,
+                _middleTierHttpClient.Object,
+                _logger.Object,
+                _appSettings.Object,
+                _cartService.Object,
+                _uiContext.Object,
+                _mapper.Object,
+                 _helperService.Object
+                );
+
+            var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate);
+            //Act
+            var result = requestToQuote.Invoke(objType, new object[] { request });
+            Assert.NotNull(result);
         }
 
         [Fact]
