@@ -53,7 +53,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "" }) {
                 target="_blank"
                 className="cmp-product-lines-grid__item-information__box-text__header__link"
               >
-                <p className="short-desc">{line.shortDescription}</p>
+                <p className="short-desc">{line.shortDescription || " N/A "}</p>
               </a>
 
               <span>
