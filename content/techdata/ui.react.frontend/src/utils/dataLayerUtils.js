@@ -50,7 +50,7 @@ export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
     getDataLayer().push(setVisitorData({
       event: eventName,
-      clickInfo: eventInfo,
+      ...(eventInfo && {clickInfo: eventInfo}),
       ...extraData
     }));
   }

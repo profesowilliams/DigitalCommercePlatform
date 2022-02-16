@@ -253,7 +253,7 @@ function QuotePreview(props) {
   const setDealApplyAnalytics = (generalInfo) => {
     pushEvent(
       "qpDealApply",
-      {},
+      null,
       {
         quotePreview: {
           dealId: generalInfo.deal.dealId || "",
