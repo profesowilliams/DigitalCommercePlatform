@@ -22,7 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Infrastructure.Mappings
             CreateMap<ItemDto, ItemModel>()
                 .ForMember(dest => dest.Manufacturer, opt => opt.MapFrom<ItemManufacturerResolver>())
                 .ForMember(dest => dest.TDNumber, opt => opt.MapFrom<ItemTDPartNumberResolver>())
-                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<ItemMfrPartNumberResolver>());
+                .ForMember(dest => dest.MFRNumber, opt => opt.MapFrom<ItemMfrPartNumberResolver>())
+                .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom<ItemMfrPartNameResolver>());
         }
     }
 
@@ -52,6 +53,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Infrastructure.Mappings
         public string Resolve(ItemDto source, ItemModel destination, string destMember, ResolutionContext context)
         {
             var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+            return description;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class ItemMfrPartNameResolver : IValueResolver<ItemDto, ItemModel, string>
+    {
+        public string Resolve(ItemDto source, ItemModel destination, string destMember, ResolutionContext context)
+        {
+            var description = source.Product.Any() ? source.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Name : string.Empty;
             return description;
         }
     }
