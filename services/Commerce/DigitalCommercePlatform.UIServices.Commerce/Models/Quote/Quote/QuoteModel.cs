@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote
 
     public class QuoteModel
     {
-        public bool CanDCPCheckOut { get; set; } = true;
+        public bool CanDCPCheckOut { get; set; }
         public DateTime Published { get; set; }
         public SourceModel Source { get; set; }
         public decimal Revision { get; set; }
