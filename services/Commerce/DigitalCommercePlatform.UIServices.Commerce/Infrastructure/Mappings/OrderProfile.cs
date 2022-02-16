@@ -105,7 +105,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             {
                 source.Status = Status.SALES_REVIEW;
             }
-
+            if (source.Status == Status.IN_PIPELINE)
+            {
+                source.Status = Status.IN_PROCESS;
+            }
             return source.Status.ToString().ToTitleCase();
         }
     }
@@ -119,7 +122,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             {
                 source.Status = Status.SALES_REVIEW;
             }
-
+            if (source.Status == Status.IN_PIPELINE)
+            {
+                source.Status = Status.IN_PROCESS;
+            }
             return source.Status.ToString().ToTitleCase();
         }
     }
@@ -133,7 +139,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
 
             if (source?.Status == "ON_HOLD")
             {
-                source.Status = "Sales Review";
+                source.Status = StringConstants.OrderStatus.SALES_REVIEW;
+            }
+            if (source?.Status == "IN_PIPELINE")
+            {
+                source.Status = StringConstants.OrderStatus.IN_PROCESS;
             }
 
             return !string.IsNullOrWhiteSpace(source.Status) ? source.Status.ToString().ToTitleCase() : string.Empty;
