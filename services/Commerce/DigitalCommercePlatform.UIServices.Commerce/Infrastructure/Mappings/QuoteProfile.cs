@@ -78,7 +78,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForMember(dest => dest.Tier, opt => opt.MapFrom(src => src.Type.Value))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Deals, opt => opt.MapFrom<DealDetailResolver>())
-            .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry));
+            .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
+            .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom<QuoteDetailCheckOutResolver>());
 
             CreateMap<QuoteModel, GetQuote.Response>()
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src));
@@ -98,7 +99,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
              .ForMember(dest => dest.QuoteValue, opt => opt.MapFrom(src => src.Price))
              .ForMember(dest => dest.FormatedQuoteValue, opt => opt.MapFrom(src => string.Format("{0:N2}", src.Price)))
              .ForMember(dest => dest.CanUpdate, opt => opt.MapFrom(src => string.Join("", "true")))
-             .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join("", "True")));
+             .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom(src => string.Join("", "True")))
+             .ForMember(dest => dest.CanCheckOut, opt => opt.MapFrom<GridCheckOutResolver>());
 
             CreateMap<FindResponse<IEnumerable<QuoteModel>>, GetQuotesForGrid.Response>()
                  .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Data));
@@ -178,7 +180,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.TotalCost))
                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
-               .ForMember(dest => dest.DistiBuyMethod, opt => opt.MapFrom(src => src.DistiBuyMethod))
+               .ForMember(dest => dest.DistiBuyMethod, opt => opt.MapFrom<BuyMethodResolver>())
                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
                //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
@@ -346,6 +348,52 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 return "6.8";
             else
                 return "4.6";
+        }
+    }
+    [ExcludeFromCodeCoverage]
+    public class GridCheckOutResolver : IValueResolver<QuoteModel, QuotesForGridModel, bool>
+    {
+        public bool Resolve(QuoteModel source, QuotesForGridModel destination, bool destMember, ResolutionContext context)
+        {
+            if (source.CanDCPCheckOut == false)
+                return false;
+            else
+            {
+                if (source.Expiry < DateTime.Today)
+                    return false;
+                else
+                    return true;
+            }
+        }
+    }
+
+
+
+    [ExcludeFromCodeCoverage]
+    public class QuoteDetailCheckOutResolver : IValueResolver<QuoteModel, QuoteDetails, bool>
+    {
+        public bool Resolve(QuoteModel source, QuoteDetails destination, bool destMember, ResolutionContext context)
+        {
+            if (source.CanDCPCheckOut == false)
+                return false;
+            else
+            {
+                if (source.Expiry < DateTime.Today)
+                    return false;
+                else
+                    return true;
+            }
+        }
+    }
+
+
+    [ExcludeFromCodeCoverage]
+    public class BuyMethodResolver : IValueResolver<DetailedDto, QuotePreview, string>
+    {
+        public string Resolve(DetailedDto source, QuotePreview destination, string destMember, ResolutionContext context)
+        {
+            var BuyMethod = source.DistiBuyMethod?.ToUpper();
+            return BuyMethod;
         }
     }
 }

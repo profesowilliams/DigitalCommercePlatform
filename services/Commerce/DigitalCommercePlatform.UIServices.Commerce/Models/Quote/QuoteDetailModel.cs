@@ -39,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public List<AttributeModel> Attributes { get; set; }
         public bool? IsExclusive { get; set; }
         public string CheckoutSystem { get; set; }
+        public bool CanCheckOut { get; set; } = true;
 
 
     }
