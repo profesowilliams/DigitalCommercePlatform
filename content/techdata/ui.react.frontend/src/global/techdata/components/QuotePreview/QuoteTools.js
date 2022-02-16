@@ -9,6 +9,10 @@ export const isVendorQuote = (source) => source.type === 'VendorQuote'
 
 export const isDealConfiguration = (source) => source.type === 'Deal'
 
+export const isTechDataDistiBuy = (distiBuyMethod) => distiBuyMethod?.toUpperCase() === "TECH DATA"
+
+export const isAVTTechDistiBuy = (distiBuyMethod) => distiBuyMethod?.toUpperCase() === "AVT TECHNOLOGY SOLUTIONS LLC" 
+
 export const isEstimate = (source) => source.type === 'Estimate'
 
 export const isPricingOptionsRequired = (quoteDetails, quoteWithoutPricing) => quoteWithoutPricing && !quoteDetails.tier

@@ -229,6 +229,10 @@ use(['../common/utils.js'], function (utils) {
         modalConfig["title"]  = properties["title"];
     }
 
+    if (properties && properties["cannotCreateQuoteForDeal"]) {
+        modalConfig["cannotCreateQuoteForDeal"] = properties["cannotCreateQuoteForDeal"];
+    }
+    
     if (this.productEmptyImageUrl) {
         productLinesGrid["productEmptyImageUrl"] = this.productEmptyImageUrl;
     }

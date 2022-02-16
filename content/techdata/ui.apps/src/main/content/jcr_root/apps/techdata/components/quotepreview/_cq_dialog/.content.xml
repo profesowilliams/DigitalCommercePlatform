@@ -504,6 +504,11 @@
                                                 fieldDescription="Enter Title Of The Modal"
                                                 fieldLabel="Setup Title Of The Modal"
                                                 name="./title"/>
+                                            <cannotCreateQuoteForDeal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Cannot Create Quote For Deal Pop-up Message"
+                                                name="./cannotCreateQuoteForDeal"/>
                                         </items>
                                     </column>
                                 </items>

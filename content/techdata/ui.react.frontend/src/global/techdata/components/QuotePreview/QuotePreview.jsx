@@ -10,7 +10,7 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing, isDealSelectorHidden, isDealConfiguration } from "./QuoteTools";
+import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing, isDealSelectorHidden, isDealConfiguration, isTechDataDistiBuy, isAVTTechDistiBuy } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
 import { LOCAL_STORAGE_KEY_USER_DATA, QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
@@ -36,18 +36,6 @@ function QuotePreview(props) {
 
   const modalConfig = componentProp?.modalConfig;
 
-  /**
-   * Getting the value to know if the quote is exclusive
-   */
-  useEffect(() => {
-    if (apiResponse) {
-      const isExclusive = apiResponse?.content?.quotePreview?.quoteDetails.isExclusive;
-      setIsExclusiveFlag(isExclusive ? true : false);
-      setDealType(isNotEmptyValue(apiResponse?.content?.quotePreview?.quoteDetails?.source?.type)) ? apiResponse?.content?.quotePreview?.quoteDetails?.source?.type : '';
-      setTier(isNotEmptyValue(apiResponse?.content?.quotePreview?.quoteDetails.tier) ? apiResponse?.content?.quotePreview?.quoteDetails.tier : '');
-    }
-  }, [apiResponse]);
-
   //Please do not change the below method without consulting your Dev Lead
   function invokeModal(modal) {
     setModal(modal);
@@ -57,10 +45,30 @@ function QuotePreview(props) {
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
   useEffect(() => {
-    if(apiResponse?.content?.quotePreview?.quoteDetails) {
-      setQuoteDetails(apiResponse?.content?.quotePreview?.quoteDetails);
+    const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
+    if(quoteDetailsResponse) {
+      setQuoteDetails(quoteDetailsResponse);
+      const isExclusive = quoteDetailsResponse.isExclusive;
+      setIsExclusiveFlag(isExclusive ? true : false);
+      setDealType(isNotEmptyValue(quoteDetailsResponse.source?.type)) ? quoteDetailsResponse.source?.type : '';
+      setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
+
+      // Show Modal When Quote Cannot Be Created.
+      if (cannotCreateQuote(quoteDetailsResponse)) {
+        showCannotCreateQuoteForDeal();
+      }
+      
     }
   }, [apiResponse]);
+
+
+  const cannotCreateQuote = (quoteDetailsResponse) => 
+    isDealConfiguration(quoteDetailsResponse.source) 
+      && (
+        (quoteDetailsResponse.isExclusive && isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod)) 
+        || (!isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod) && !isAVTTechDistiBuy(quoteDetailsResponse.distiBuyMethod))
+      );
+
 
   const showSimpleModal = (title, content, onModalClosed=closeModal) =>
     setModal((previousInfo) => ({
@@ -77,6 +85,10 @@ function QuotePreview(props) {
 
   const showErrorModal = () => showSimpleModal('Create Quote', (
     <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
+  ));
+
+  const showCannotCreateQuoteForDeal = () => showSimpleModal('Create Quote', (
+    <div>{modalConfig?.cannotCreateQuoteForDeal}</div>
   ));
 
   const onGridUpdate = (data, didQuantitiesChange) => {
@@ -172,15 +184,6 @@ function QuotePreview(props) {
           dealRequired = isDealRequired(quoteDetails, true),
           userMissingFields = isEndUserMissing(quoteDetails, true);
 
-    if(pricingRequired || dealRequired || userMissingFields) {
-      scrollToTopError();
-
-      setQuoteWithoutEndUser(userMissingFields);
-      setQuoteWithoutDealPricing(pricingRequired);
-      setQuoteWithoutDeal(dealRequired);
-    }
-
-    
     tryCreateQuote(pricingRequired, dealRequired, userMissingFields, quoteDetails);
   }, [quoteDetails]);
 
@@ -201,7 +204,11 @@ function QuotePreview(props) {
   
 
   const tryCreateQuote = (pricingRequired, dealRequired, userMissingFields, quote) => {
-    if(pricingRequired || dealRequired || userMissingFields) {
+    
+    if (cannotCreateQuote(quote)) {
+      showCannotCreateQuoteForDeal();
+    } 
+    else if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
 
       setQuoteWithoutEndUser(userMissingFields);
