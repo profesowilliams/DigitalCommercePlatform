@@ -168,11 +168,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             var coreResult = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteDetailedDto>>(req).ConfigureAwait(false);
             var modelList = _mapper.Map<List<QuoteDetailedModel>>(coreResult);
 
-            modelList.ForEach(async quote =>
+            modelList.ForEach(quote =>
             {
                 if (quote != null)
                 {
-                    await _helperQueryService.PopulateLinesFor(quote.Items, string.Empty);
+                    _helperQueryService.PopulateLinesFor(quote.Items, string.Empty);
                 }
             });
 
