@@ -12,6 +12,7 @@ using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Flurl;
 using Microsoft.Extensions.Logging;
@@ -120,8 +121,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
             }
         }
 
-        public async Task<ReplaceCart.Response> ReplaceCart(ReplaceCart.Request request)
+        public async Task<ResponseBase<ReplaceCart.Response>> ReplaceCart(ReplaceCart.Request request)
         {
+            ReplaceCartModel replaceResponse = new ReplaceCartModel();
             try
             {
                 var requestUrl = "";
@@ -130,12 +132,12 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
                 else
                     requestUrl = _appCartUrl.AppendPathSegment("/CreateByQuote").AppendPathSegment(request.Id);
 
-                var replaceResponse = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(requestUrl, null, null);
+                replaceResponse = await _middleTierHttpClient.PutAsync<ReplaceCartModel>(requestUrl, null, null);
                 var result = replaceResponse?.StatusCode ?? HttpStatusCode.OK;
 
                 var response = new ReplaceCart.Response();
                 response.IsSuccess = result == HttpStatusCode.OK ? true : false;
-                return response;
+                return new ResponseBase<ReplaceCart.Response> { Content = response };
             }
             catch (RemoteServerHttpException ex)
             {
@@ -143,7 +145,17 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
                 {
                     var response = new ReplaceCart.Response();
                     response.IsSuccess = false;
-                    return response;
+                    string error = RenderErrorMessage(ex);
+
+                    return new ResponseBase<ReplaceCart.Response>
+                    {
+                        Content = response,
+                        Error = {
+                           IsError=true,
+                           Code= (int)HttpStatusCode.NotFound,
+                           Messages=new List<string>{ error }
+                        }
+                    };
                     throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 else
@@ -151,13 +163,31 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
                     _logger.LogError(ex, "Exception at : " + nameof(ContentService));
                     throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
-               
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at replace cart by Quote : " + nameof(ContentService));
                 throw ex;
             }
+        }
+
+        private string RenderErrorMessage(RemoteServerHttpException ex)
+        {
+            var error = ex.Details == null?ex.Message.ToUpper():ex?.Details.ToString().ToUpper();
+            error = error.Replace("{", "");
+            error = error.Replace("}", "");
+            error = error.Replace("=", "");
+            error = error.Replace("\"", "");
+            var errorMessage = error?.Split(',').ToList();
+
+            if (!string.IsNullOrWhiteSpace(errorMessage.Where(a => a.Contains("BODY")).FirstOrDefault()))
+            {
+                error = errorMessage.Where(a => a.Contains("BODY")).FirstOrDefault();
+                error.Replace(" BODY ", "");
+            }
+
+            return error;
         }
     }
 }

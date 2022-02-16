@@ -1,10 +1,12 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,9 +49,9 @@ namespace DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
                 request.Type = request.Type ?? string.Empty;
-
                 var isSucess = await _contentServices.ReplaceCart(request).ConfigureAwait(false);
-                return new ResponseBase<Response> { Content = isSucess };
+
+                return new ResponseBase<Response> { Content = isSucess.Content,Error=isSucess.Error };
             }
         }
         public class Validator : AbstractValidator<Request>

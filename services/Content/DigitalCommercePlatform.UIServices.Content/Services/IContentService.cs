@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Content.Actions.SavedCartDetails;
 using DigitalCommercePlatform.UIServices.Content.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Content.Models.Cart;
 using DigitalCommercePlatform.UIServices.Content.Models.Search;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,6 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
         public Task<ActiveCartModel> GetActiveCartDetails();
         Task<AddCartItem.Response> AddItemCart(AddCartItem.Request request);
         Task<GetCreateCartByQuote.Response> CreateCartByQuote(string QuoteId);
-        public Task<ReplaceCart.Response> ReplaceCart(ReplaceCart.Request request);
+        public Task<ResponseBase<ReplaceCart.Response>> ReplaceCart(ReplaceCart.Request request);
     }
 }

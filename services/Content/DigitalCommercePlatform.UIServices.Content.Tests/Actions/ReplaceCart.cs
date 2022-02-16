@@ -1,7 +1,7 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Content.Actions.ReplaceCartQuotes;
 using DigitalCommercePlatform.UIServices.Content.Services;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -29,7 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Content.Tests.Actions
 
         [Theory]
         [AutoDomainData]
-        public async Task GetReplaceCart(Content.Actions.ReplaceCartQuotes.ReplaceCart.Response expected)
+        public async Task GetReplaceCart(ResponseBase<Content.Actions.ReplaceCartQuotes.ReplaceCart.Response> expected)
         {
             _mockContentService.Setup(x => x.ReplaceCart(
                      It.IsAny<Content.Actions.ReplaceCartQuotes.ReplaceCart.Request>()
