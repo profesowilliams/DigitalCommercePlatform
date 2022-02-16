@@ -88,8 +88,8 @@
         object.page = object.page || {};
 
         object.page.visitor = {
-            ecID: sessionId ? userData.id : null,
-            sapID: sessionId ? userData.activeCustomer.customerNumber : null,
+            ecID: sessionId && userData?.id ? userData.id : null,
+            sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
             loginStatus: sessionId ? "Logged in" : "Logged out"
         }
 
