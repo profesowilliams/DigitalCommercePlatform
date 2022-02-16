@@ -22,16 +22,15 @@ function QuotePreviewContinue({
   };
   const dataToPush = (quotePreviewFields) => {
     return {
-      quoteComplete: {
-        quotePreview: {
-          quoteConfig: isConfig,
-          ...quotePreviewFields,
-        },
-        quotes: {
-          quoteID: apiResponse?.content?.quotePreview?.quoteDetails?.configurationId
-        }
+      eventName: "quoteComplete",
+      quotePreview: {
+        quoteConfig: isConfig,
+        ...quotePreviewFields
       },
-    };
+      quotes: {
+        quoteID: ""
+      }
+    }
   };
 
   const clickHandler = (evtName) => {
