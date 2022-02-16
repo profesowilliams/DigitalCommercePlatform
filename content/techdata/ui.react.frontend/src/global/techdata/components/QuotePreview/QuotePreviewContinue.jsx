@@ -17,22 +17,20 @@ function QuotePreviewContinue({
   apiResponse
 }) {
   const [isDefault, setIsDefault] = useState(false);
-
   const handleInputChange = () => {
     setIsDefault(!isDefault);
   };
   const dataToPush = (quotePreviewFields) => {
     return {
-      eventInfo: "quoteComplete",
-      clickInfo: {
+      quoteComplete: {
         quotePreview: {
           quoteConfig: isConfig,
           ...quotePreviewFields,
         },
+        quotes: {
+          quoteID: apiResponse?.content?.quotePreview?.quoteDetails?.configurationId
+        }
       },
-      quotes: {
-        quoteID: apiResponse?.content?.quoteDetails?.configurationId
-      }
     };
   };
 
