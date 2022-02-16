@@ -25,7 +25,7 @@
     menuCsvExport="CSV Export"
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
-    ofListlabel="of"
+    ofTextLabel="of"
     menuCopyLink="Copy link">
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0
