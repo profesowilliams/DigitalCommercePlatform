@@ -3,6 +3,7 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
+import { pushData } from "../../../../utils/dataLayerUtils";
 
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText }  = JSON.parse(componentProp);
@@ -10,6 +11,22 @@ const CreateConfig = ({ componentProp }) => {
   const [redirectUrl, setRedirectUrl] = useState(false);
   const [loading, setLoading] = useState(false);
   const POST_BACK_URL = "https://shop.techdata.com";
+
+  const analyticsData = (vendorName, complete) => {
+      let analyticsObj = {
+           event: "configStart",
+           configuration: {
+               configID: '',
+               vendorName: vendorName,
+               configType: 'Estimate'
+           }
+      }
+
+      if (complete) {
+        analyticsObj.configuration.configComplete = '1'
+      }
+      pushData(analyticsObj);
+  }
 
   const createConfig = async (e) => {
     e.preventDefault();
@@ -25,8 +42,10 @@ const CreateConfig = ({ componentProp }) => {
 
     try {
       const result = await usPost(punchOutUrl, params);
-      if (result?.data?.content?.url)
+      if (result?.data?.content?.url) {
+        analyticsData(methodSelected.label, false);
         window.open(result.data.content.url);
+      }
       return result.data;
     } catch( error ) {
       return error;
@@ -64,6 +83,12 @@ const CreateConfig = ({ componentProp }) => {
     setMethodSelected(val);
     setRedirectUrl(false);
   }
+
+  useEffect(() => {
+    if (document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
+        analyticsData(methodSelected.label, true);
+    }
+  }, [])
 
   useEffect(()=>{
     if( methodSelected && (!methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ))
