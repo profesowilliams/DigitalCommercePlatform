@@ -14,7 +14,7 @@ import {
     ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
     LOCAL_STORAGE_KEY_USER_DATA
 } from '../../../../utils/constants';
-import { pushEventAnalyticsGlobal } from '../../../../utils/dataLayerUtils';
+import { pushEventAnalyticsGlobal, pushEvent } from '../../../../utils/dataLayerUtils';
 
 const Grid = React.memo(GridComponent);
 
@@ -168,7 +168,7 @@ function OrdersGrid(props) {
                     },
                     modalAction: downloadAllInvoice(line.id)
                 })}>
-                    <div className='cmp-grid-url-underlined'>
+                    <div className='cmp-grid-url-underlined' onClick={() => addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice')}>
                         {labelList.find((label) => label.labelKey === 'multiple').labelValue}
                     </div>
                 </div>
@@ -184,7 +184,7 @@ function OrdersGrid(props) {
                     setValueParam(invoiceId); // set the value of the single invoice and this permit copy the value
                     // not is necessary in the multiples or pending values because that overwrite the value for a string
                 }
-                return (<div className="cmp-grid-url-underlined" onClick={() => openInvoicePdf(invoiceId, line.id)}>
+                return (<div className="cmp-grid-url-underlined" onClick={() => {addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice'); openInvoicePdf(invoiceId, line.id)}}>
                     {invoiceId}
                 </div>) ?? null;
             }
@@ -220,6 +220,15 @@ function OrdersGrid(props) {
         };
         pushEventAnalyticsGlobal(objectToSend);
     };
+    
+    const addOrderGridTracking = (event, type, category, name) => {
+        pushEvent(event, 
+            {
+                type,
+                category,
+                name,
+            })
+    }
 
     const columnDefs = [
         {
@@ -230,6 +239,7 @@ function OrdersGrid(props) {
                 return (
                     <div>
                         <a
+                            onClick={() => addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Order ID')}
                             className='cmp-grid-url-underlined'
                             href={`${window.location.origin + componentProp.orderDetailUrl}?id=${props.value}`}
                         >
@@ -302,6 +312,7 @@ function OrdersGrid(props) {
                 return (
                     <div 
                     onClick={() => {
+                        addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Track an Order')
                         invokeModal({
                             content: ( 
                                 <TrackOrderModal 
