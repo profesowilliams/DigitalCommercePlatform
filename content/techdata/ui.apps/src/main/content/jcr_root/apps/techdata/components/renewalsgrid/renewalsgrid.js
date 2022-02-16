@@ -100,6 +100,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["menuCopyLink"] = properties["menuCopyLink"];
     }
 
+    if (properties && properties["ofTextLabel"]) {
+        jsonObject["ofTextLabel"] = properties["ofTextLabel"];
+    }
+
     let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
     let filterListValues = [];
     if (node !== null) {
