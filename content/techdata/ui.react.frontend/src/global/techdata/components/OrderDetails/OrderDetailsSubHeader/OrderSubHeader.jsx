@@ -31,6 +31,7 @@ const handleClickCSV = () => {
 
     pushEvent('click', 
     {
+       type: 'link', 
        name: headerConfig.exportCSVLabel,
        category: 'Order Detail Table Interactions'
     });
